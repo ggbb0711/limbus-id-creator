@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+      "jsx": "react",
+      "baseUrl": "src",
+      "esModuleInterop": true,
+      "module": "es2015"
+    },
+    "include": ["src"],
+    "exclude": ["build"]
+}
