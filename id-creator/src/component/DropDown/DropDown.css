@@ -1,0 +1,36 @@
+.drop-down-container{
+    background-color: black;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    max-width: 150px;
+    position: relative;
+}
+
+.curr-el{
+    padding: 4px;
+    border: solid rgba(177, 161, 161, 0.599) 2px;
+    overflow: hidden;
+}
+
+.drop-down{
+    display: none;
+    background-color: black;
+    width: 130%;
+    position: absolute;
+    z-index: 2;
+}
+
+.drop-down-container:hover .drop-down{
+    display: block;
+}
+
+.drop-down-el{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    border: solid rgba(177, 161, 161, 0.599) 2px;
+    border-top: none;
+    overflow: hidden;
+}
