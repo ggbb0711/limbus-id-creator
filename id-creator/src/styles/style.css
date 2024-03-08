@@ -1,3 +1,24 @@
 :root{
     --Wrath:rgb(141,66,46);
+    --Lust: rgb(174,93,47);
+    --Sloth: rgb(219,131,4);
+    --Glut: rgb(94,126,39);
+    --Gloom: rgb(44,92,106);
+    --Envy: rgb(120,73,137);
+    --Pride: rgb(20,76,123);
+}
+
+.sin-affinity-drop-down,.damage-type-drop-down{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sin-affinity-drop-down img,.damage-type-drop-down img{
+    width: 20px;
+    height: 20px;
+}
+
+.hidden{
+    display: none;
 }

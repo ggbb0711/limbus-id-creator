@@ -33,4 +33,5 @@
     border: solid rgba(177, 161, 161, 0.599) 2px;
     border-top: none;
     overflow: hidden;
+    cursor: pointer;
 }

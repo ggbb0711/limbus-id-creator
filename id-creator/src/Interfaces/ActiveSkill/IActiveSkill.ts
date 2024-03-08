@@ -10,6 +10,6 @@ export interface IActiveSkill extends ISkill{
     coinPow:number,
     coins:ICoinEffect[],//Must be positive
     skillImage:string,
-    skillEffect:IActiveSkillEffect,
+    skillEffect:string,
     skillLabel:string
 }

@@ -2,10 +2,10 @@ import { IActiveSkillEffect } from "./IActiveSkillEffect";
 
 export interface ICoinEffect{
     coin:number,
-    effect:IActiveSkillEffect[]
+    effect:string
 }
 
 export class CoinEffect implements ICoinEffect{
-    coin: number = 0;
-    effect: IActiveSkillEffect[]=[]
+    coin: number = 1;
+    effect: ""
 }
