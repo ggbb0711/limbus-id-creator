@@ -4,4 +4,6 @@
     background: black;
     color: white;
     overflow: hidden;
+    position: fixed;
+    right: -99999999px;
 }

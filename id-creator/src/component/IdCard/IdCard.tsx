@@ -1,14 +1,14 @@
 import { useIdInfoContext } from "component/context/IdInfoContext";
-import React from "react";
+import React, { Ref } from "react";
 import { ReactElement } from "react";
 import './styles/IdCard.css'
 
 
-export default function IdCard():ReactElement{
+export default function IdCard({ref}:{ref:Ref<HTMLDivElement>}):ReactElement{
     const {idInfoValue}=useIdInfoContext()
 
     return(
-        <div className="idCard">
+        <div className="idCard" ref={ref}>
             <div>
                 <div>
                     <p>Name: {idInfoValue.name}</p>

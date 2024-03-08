@@ -39,14 +39,6 @@ export default function GeneralInput():ReactElement{
 
             <label htmlFor="maxSpeed">Max speed:</label>
             <input type="number" id="maxSpeed" name="maxSpeed" onChange={onTextAndNumberInputChange} value={idInfoValue.maxSpeed}/>
-        
-            {/* <DropDown dropDownEl={[{
-                el:<div>Wrath</div>,
-                value:"wrath",
-            },{
-                el:<div>Pride</div>,
-                value:"Pride",
-            }]} cb={(newVal)=>{}}/> */}
         </div>
     )
 }
