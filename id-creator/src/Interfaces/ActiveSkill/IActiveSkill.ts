@@ -1,5 +1,3 @@
-import { ICoinEffect } from "./ICoinEffect";
-import { IActiveSkillEffect } from "./IActiveSkillEffect";
 import ISkill from "Interfaces/SkillAndEffect/ISkill";
 
 export interface IActiveSkill extends ISkill{
@@ -8,8 +6,7 @@ export interface IActiveSkill extends ISkill{
     basePower:number,
     coinNo:number,
     coinPow:number,
-    coins:ICoinEffect[],//Must be positive
     skillImage:string,
     skillEffect:string,
-    skillLabel:string
+    skillLabel:string,
 }

@@ -1,0 +1,15 @@
+.defense-icon-container{
+    width: 76%;
+    height: 70%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.defense-icon-container img{
+    width: 40px;
+    height: 40px;
+}

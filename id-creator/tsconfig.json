@@ -3,8 +3,9 @@
       "jsx": "react",
       "baseUrl": "src",
       "esModuleInterop": true,
+      "moduleResolution":"node",
       "module": "es2015"
     },
     "include": ["src"],
-    "exclude": ["build"]
+    "exclude": ["build"],
 }

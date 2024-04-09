@@ -1,0 +1,12 @@
+.input-tab-container{
+    flex: 1;
+    max-height: 100%;
+    height: 100%;
+    overflow-y: auto;
+    font-family: "Rubik", sans-serif;
+    position: relative;
+}
+
+.input-tab-container *{
+    box-sizing: border-box;
+}

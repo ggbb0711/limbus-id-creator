@@ -13,7 +13,7 @@ export class CustomEffect implements ICustomEffect,IUID{
     inputId: string=uuid();
     name:string="";
     customImg:string="";
-    effectColor:string="";
+    effectColor:string="#F1F1F1";
     effect:string="";
     type:string="CustomEffect";
 }

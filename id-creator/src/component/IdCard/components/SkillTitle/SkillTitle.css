@@ -1,0 +1,28 @@
+.skill-title-container{
+    min-width: 80px;
+    padding: 2px 1px;
+    padding-right: 15px;
+    height: min-content;
+    max-width: 100%;
+    color: white;
+    margin-top: 4px;
+}
+
+.skill-title-block{
+    width: 90%;
+    min-height: 15px;
+    height: 100%;
+    padding: 2px 8px;
+    text-shadow: 2px 2px black;
+    font-weight: 700;
+    text-shadow: 2px 2px black;
+}
+
+.skill-name{
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.skill-name.preview{
+    border: none;
+}

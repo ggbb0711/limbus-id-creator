@@ -1,0 +1,73 @@
+.stat-icon{
+    width: 40px;
+    height: 40px;
+}
+
+.input-stat-page{
+    -webkit-text-stroke: .5px black;
+    color: var(--Normal);
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.sinner-splash-art-input-container,.sinner-stat-inputs{
+    width: 100%;
+    max-width: 100%;
+}
+
+.sinner-icon-input-container,.sinner-color-input-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+}
+
+.sinner-icon-input-container{
+    flex-direction: column;
+}
+
+.sinner-stat-inputs{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:space-around;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+}
+
+.stat-input-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.sinner-splash-art-input-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.sinner-splash-art-input{
+    display: flex;
+    align-items: center;
+}
+
+.sinner-color-input{
+    display: inline;
+}
+
+.delete-splash-art-question{
+    display: fle;
+}
+
+.delete-splash-art-btn{
+    cursor: pointer;
+}
+
+.delete-splash-art-btn:hover{
+    color: red;
+}

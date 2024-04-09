@@ -6,16 +6,22 @@ export interface IPassiveSkill extends ISkill,IUID{
     name:string,
     skillEffect:string,
     affinity:string,
-    req:string,//Res or own
-    reqNo:number
+    req:string,//Res, Own or None
+    reqNo:number,
+    skillLabel: string,
 }
 
 export class PassiveSkill implements IPassiveSkill,IUID{
+    skillLabel:string="PASSIVE";
     inputId: string=uuid();
     name: string ="";
     skillEffect: string ="";
     type: string ="PassiveSkill";
-    affinity:string;
-    req:string="None";//Res or own or none
-    reqNo:number
+    affinity:string="Wrath";
+    req:string="Own";//Res or own or none
+    reqNo:number=1
+    public constructor(name?:string,skillLabel?:string){
+        this.name=(name)?name:""
+        this.skillLabel=(skillLabel)?skillLabel:"PASSIVE"
+    }
 }
