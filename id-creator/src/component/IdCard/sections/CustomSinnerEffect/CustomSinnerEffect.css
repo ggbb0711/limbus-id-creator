@@ -1,0 +1,29 @@
+.custom-effect-container{
+    border: 2px solid #4D3737;
+    padding: 6px;
+    min-height: 85px;
+    min-width: 480px;
+    display: flex;
+    align-items: center;
+}
+
+.custom-effect-container .delete-icon{
+    top: 3px;
+    right: 5px;
+}
+
+.cutom-effect-header{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 4px;
+}
+
+.custom-img{
+    width: 20px;
+    height: 20px;
+}
+
+.custom-effect-title{
+    max-width: 200px;
+}

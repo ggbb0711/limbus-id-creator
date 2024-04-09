@@ -1,0 +1,20 @@
+.skill-title-req{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+    margin-top: 20px;
+}
+
+.req-sin-icon{
+    width: 25px;
+    height: 25px;
+}
+
+.req-container{
+    display: flex;
+    align-items: center;
+    min-width: 160px;
+    height: 32px;
+    gap: 4px;
+}

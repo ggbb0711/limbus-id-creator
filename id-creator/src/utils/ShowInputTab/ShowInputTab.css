@@ -1,0 +1,18 @@
+.show-input-tab-container{
+    display: none;
+    position: fixed;
+    border-radius: 100%;
+    cursor: pointer;
+    padding: 6px;
+    z-index: 999;
+    bottom: 5px;
+    right: 5px;
+    border: 2px solid white;
+    background-color: var(--button);
+}
+
+@media screen and (max-width:800px) {
+    .show-input-tab-container{
+        display: block;
+    }
+}

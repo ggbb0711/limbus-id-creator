@@ -1,0 +1,36 @@
+.input-tab{
+    padding: 8px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 4px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    min-width: 100px;
+}
+
+.input-tab.active{
+    border: 1px solid rgba(253, 241, 18, 0.911);
+}
+
+.delete-tab-icon{
+    font-size: 15px;
+}
+
+.delete-tab-icon:hover{
+    color: red;
+}
+
+.tab-content{
+    max-width: 200px;
+    text-overflow: ellipsis;
+    white-space: nowrap; 
+    overflow: hidden;
+}
+
+.tab-icon{
+    width: 14px;
+    height: 14px;
+}

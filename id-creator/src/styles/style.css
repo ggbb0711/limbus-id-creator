@@ -1,24 +1,193 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
 :root{
     --Wrath:rgb(141,66,46);
     --Lust: rgb(174,93,47);
     --Sloth: rgb(219,131,4);
-    --Glut: rgb(94,126,39);
+    --Gluttony: rgb(94,126,39);
     --Gloom: rgb(44,92,106);
     --Envy: rgb(120,73,137);
     --Pride: rgb(20,76,123);
+    --None: #A16A3C;
+
+    --Lust-input-page: #401D0B;
+    --Pride-input-page:#071724;
+    --Envy-input-page:#170023;
+    --Wrath-input-page:#3B0505;
+    --Gluttony-input-page:#283B09;
+    --Sloth-input-page:#463510;
+    --Gloom-input-page:#04232B;
+    --None-input-page:#332317;
+
+    /* Color for the title shadow */
+    --Wrath-title-shadow: #4a1b14;
+    --Lust-title-shadow: #56250E;
+    --Sloth-title-shadow: #0E0A0A;
+    --Gluttony-title-shadow: #2A310F;
+    --Gloom-title-shadow: #14343A;
+    --Envy-title-shadow: #1E002C;
+    --Pride-title-shadow: #101F2D;
+    --None-title-shadow:#301B10;
+
+    --Yi-Sang-color: #d4dfe8;
+    --Faust-color: #F7ABAF;
+    --Don-color: #ffef23;
+    --Ryōshū-color: #cf0000;
+    --Meursault-color: #293b95;
+    --Hong-Lu-color: #5bffde;
+    --Heathcliff-color: #4e3076;
+    --Ishmael-color: #ff9500;
+    --Rodya-color: #820000;
+    --Sinclair-color: #8b9c15;
+    --Outis-color: #325339;
+    --Gregor-color: #69350b;
+    --Fatal:#601A1F;
+    --Endure:#9B9899;
+    --Normal:#DABD97;
+    --title-color:#9E6B3C;
+
+    --Id-card-width:1440px;
+    --Id-card-height:850px;
+    --Skill-max-width:450px;
+
+    --Buff-color:#D5BE00;
+    --Debuff-color:#C10000;
+    --Neutral-color: #9F6A3A;
+
+    --button:rgba(0, 162, 255, 0.773);
 }
 
-.sin-affinity-drop-down,.damage-type-drop-down{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+*{
+    font-family: "mikioDacs";
+    word-break: break-word;
 }
 
-.sin-affinity-drop-down img,.damage-type-drop-down img{
-    width: 20px;
-    height: 20px;
+label{
+    cursor: pointer;
 }
 
 .hidden{
     display: none;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+button{
+    cursor: pointer;
+}
+
+.input{
+    background: transparent;
+    outline: none;
+    border: 2px solid;
+    width: auto;
+    font-size: inherit;
+    font-family: inherit;
+    color: inherit;
+}   
+
+.input.disable{
+    background-color: rgba(255, 255, 255, 0.296);
+}
+
+.input.block{
+    display: block;
+}
+
+.input.preview{
+    border: none;
+}
+
+.input-number{
+    max-width: 30px;
+    text-align: center;
+}
+
+.status-effect{
+    text-decoration: underline;
+}
+
+.status-icon{
+    width: 15px;
+    height: 15px;
+}
+
+.buff-text-color{
+    color: #FAC400;
+}
+
+.debuff-text-color{
+    color: #C10000;
+}
+
+.neutral-text-color{
+    color: #9F6A3A;
+}
+
+.main-container{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    position: relative;
+}
+
+.preview-container{
+    width: 50%;
+    background-color: rgba(6, 140, 236, 0.21);
+}
+
+.center-element{
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.effect-guide{
+    margin: 8px 0px;
+    color: var(--Normal);
+}
+
+.textcomplete-item{
+    border: 1px solid white;
+    background-color: black;
+    padding: 4px;
+    font-family: "Rubik", sans-serif; 
+    cursor: pointer;  
+}
+
+.textcomplete-item.active{
+    background-color: var(--button);
+}
+
+@media screen and (max-width:800px) {
+    .main-container{
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .preview-container{
+        width: 100%;
+    }
+
+    .main-container>.input-tab-container{
+        position: absolute;
+        width: 100%;
+        opacity: 95%;
+        top: 1999px;
+        transition: all .2s;
+    }
+
+    .main-container.show>.input-tab-container{
+        top: 0;
+    }
 }

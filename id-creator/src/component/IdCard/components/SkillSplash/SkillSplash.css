@@ -1,0 +1,56 @@
+
+
+.skill-splash{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    z-index: 4;
+}
+
+.sin-frame{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 2.5px;
+    bottom: 4px;
+}
+
+.splash-container{
+    width: 76%;
+    height: 70%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+}
+
+.skill-image{
+    width: 100%;
+    height: 100%;
+}
+
+.placeholder-skill{
+    width: 40px;
+    height: 40px;
+}
+
+.skill-power{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.damage-type{
+    width: 25px;
+    height: 25px;
+}
+
+.none-affinity{
+    width: 90%;
+    height: 90%;
+}

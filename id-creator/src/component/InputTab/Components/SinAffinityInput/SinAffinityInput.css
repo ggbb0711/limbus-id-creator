@@ -1,0 +1,34 @@
+.sin-affinity-input-container{
+    max-width: 370px;
+    padding: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    background-color: black;
+    border: 2px solid white;
+    position: relative;
+}
+
+.sin-affinity-input-container>.disabled{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: rgba(255, 255, 255, 0.305);
+    z-index: 10;
+}
+
+.sin-affinity-input-option{
+    width: 40px;
+    height: 40px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    filter: saturate(0) ;
+}
+
+.sin-affinity-input-option.active{
+    filter: none;
+}

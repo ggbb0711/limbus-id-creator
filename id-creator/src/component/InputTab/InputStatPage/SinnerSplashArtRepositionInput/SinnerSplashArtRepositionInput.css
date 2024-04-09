@@ -1,0 +1,9 @@
+.sinner-splash-art-reposition-container{
+    width: 200px;
+    max-height: 200px;
+    border-radius: 100%;
+    height: var(--Id-card-height);
+    border: 2px solid var(--Normal);
+    margin: auto;
+    background-color: black;
+}

@@ -1,0 +1,10 @@
+.mental-skill-header{
+    display: flex;
+    gap: 4px;
+    margin-bottom: 4px;
+}
+
+.sanity-img{
+    width: 90px;
+    height: 90px;
+}
