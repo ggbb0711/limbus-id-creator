@@ -5,7 +5,7 @@
     padding: 6px;
     z-index: 999;
     top: 120px;
-    right: 5px;
+    right: 15px;
     border: 2px solid white;
     background-color: var(--button);
 }
