@@ -23,7 +23,7 @@ export default function CustomSinnerEffect({skillIndex,preview}:{skillIndex:numb
             <div className="skill-section">
                 <div>
                     <div style={{color:effectColor}} className="cutom-effect-header">
-                        <img className={`custom-img ${customImg?"":"hidden"}`} src={customImg} alt="custom_icon" />
+                        {customImg?<img className={`custom-img`} src={customImg} alt="custom_icon" />:<></>}
                         <p className="custom-effect-title">{name}</p>
                     </div>
                     <div>

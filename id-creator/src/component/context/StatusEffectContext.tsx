@@ -20,14 +20,16 @@ const StatusEffectProvider: React.FC<{children:ReactElement}>=({children})=>{
     }
 
     useEffect(()=>{
+        const statusObj={}
         idInfoValue.skillDetails.forEach((skill:(IOffenseSkill|IDefenseSkill|IPassiveSkill|ICustomEffect|IMentalEffect|never))=>{
             if(skill.type==="CustomEffect"){
                 const CustomEffect=skill as ICustomEffect
                 if(CustomEffect.name){
-                    setStatusEffect({...baseStatusEffect,[CustomEffect.name.replace(/\s/g,"_").toLowerCase()]:addNewStatusEffect(CustomEffect)})
+                    statusObj[CustomEffect.name.replace(/\s/g,"_").toLowerCase()]=addNewStatusEffect(CustomEffect)
                 }
             }
         })
+        setStatusEffect({...baseStatusEffect,...statusObj})
     },[idInfoValue.skillDetails])
 
     return <statusEffectContext.Provider value={{statusEffect,setStatusEffect}}>

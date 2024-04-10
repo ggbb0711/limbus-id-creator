@@ -5,8 +5,8 @@
     cursor: pointer;
     padding: 6px;
     z-index: 999;
-    bottom: 5px;
-    right: 5px;
+    bottom: 35px;
+    right: 15px;
     border: 2px solid white;
     background-color: var(--button);
 }

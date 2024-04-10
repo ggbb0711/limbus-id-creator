@@ -40,7 +40,7 @@
 }
 
 .skill-effect-input{
-    height: 200px;
+    min-height: 200px;
 }
 
 .drop-down-container{
