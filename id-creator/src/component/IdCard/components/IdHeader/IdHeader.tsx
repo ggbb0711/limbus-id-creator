@@ -10,10 +10,13 @@ export default function IdHeader():ReactElement{
             <div className="title-field" style={{background:idInfoValue.sinnerColor}}>
                 <p>{idInfoValue.title}</p>
             </div>
-            <div className="name-field" style={{background:idInfoValue.sinnerColor}}>
-                <p>{idInfoValue.name}</p>
+            <div className="center-element">
+                <div className="name-field" style={{background:idInfoValue.sinnerColor}}>
+                    <p>{idInfoValue.name}</p>
+                </div>
                 <img className="sinner-rarity-icon" src={idInfoValue.rarity} alt="sinner-rarity-icon" />
             </div>
+
         </div>
     )
 }

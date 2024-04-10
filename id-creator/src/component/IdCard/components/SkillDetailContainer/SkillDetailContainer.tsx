@@ -75,33 +75,6 @@ export default function SkillDetailContainer({}):ReactElement{
             {idInfoValue.skillDetails.map((skill:((IOffenseSkill|IDefenseSkill|IPassiveSkill|IMentalEffect|ICustomEffect|never)),i:number)=>
                 printSinnerSkill(skill,i)
             )}
-            {/* {preview?<></>:
-            <div>
-                <DropDown dropDownEl={{
-                    OffenseSkill:{
-                        el:<p>Offensive skill</p>,
-                        value:"OffenseSkill"
-                    },
-                    DefenseSkill:{
-                        el:<p>Defense skill</p>,
-                        value:"DefenseSkill"
-                    },
-                    PassiveSkill:{
-                        el:<p>Passive skill</p>,
-                        value:"PassiveSkill"
-                    },
-                    CustomEffect:{
-                        el:<p>Custom effect</p>,
-                        value:"CustomEffect"
-                    },
-                    MentalEffect:{
-                        el:<p>Mental effect</p>,
-                        value:"MentalEffect"
-                    },
-                }} cb={setInputType}/>
-                <button className="sinner-skill-add-btn" onClick={addInput}>Add skill</button>
-            </div>} */}
-            
         </div>
     )
 }
