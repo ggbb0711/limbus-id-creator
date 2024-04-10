@@ -442,4 +442,10 @@ export const baseStatusEffect={
     
     "on_crit":
         "<span class='center-element' contenteditable='false' style='color:#94f140'>[On Crit]</span>",
+    
+    "indiscriminate":
+        "<span class='center-element' contenteditable='false' style='color:#ff0000'>[Indiscriminate]</span>",
+    
+    "combat_start":
+        "<span class='center-element' contenteditable='false' style='color:#94f140'>[Combat start]</span>",
 }
