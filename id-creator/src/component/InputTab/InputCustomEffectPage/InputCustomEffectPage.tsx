@@ -1,25 +1,21 @@
-import { useIdInfoContext } from "component/context/IdInfoContext";
-import useSkillInput from "component/IdCard/util/useInputs";
+import useInputs from "component/util/useInputs";
 import { ICustomEffect } from "Interfaces/CustomEffect/ICustomEffect";
 import React from "react";
 import { ReactElement } from "react";
 import ChangeInputType from "../Components/ChangeInputType/ChangeInputType";
 import UploadImgBtn from "../Components/UploadImgBtn/UploadImgBtn";
 import "../InputPage.css"
-import { useStatusEffectContext } from "component/context/StatusEffectContext";
 import EditableAutoCorrect from "../Components/EditableAutoCorrectInput/EditableAutoCorrect";
 
-export default function InputCustomEffectPage({index}:{index:number}):ReactElement{
-    const {idInfoValue} = useIdInfoContext()
-    const {statusEffect} = useStatusEffectContext()
-    const {onChangeInput,onChangeFileWithName,changeSkillType,onChangeAutoCorrectInput}=useSkillInput(index)
+export default function InputCustomEffectPage({customEffect,keyWordList,changeSkill,changeSkillType}:{customEffect:ICustomEffect,keyWordList:{[key:string]:string},changeSkill:(newInput:{[type:string]:string|number})=>void,changeSkillType:(newVal:string)=>void}):ReactElement{
+    const {onChangeInput,onChangeFileWithName,onChangeAutoCorrectInput}=useInputs(customEffect as any,changeSkill)
 
     const{
         name,
         effectColor,
         effect,
         type
-    } = idInfoValue.skillDetails[index] as ICustomEffect
+    } = customEffect
     
     return <div className="input-page">
         <ChangeInputType changeSkillType={changeSkillType} type={type}/>
@@ -47,7 +43,7 @@ export default function InputCustomEffectPage({index}:{index:number}):ReactEleme
                     <span contentEditable={false}><img className='status-icon' src='Images/status-effect/Coin_Effect_1.png' alt='coin-effect-1' /></span>/
                     <span contentEditable={false} style={{color:'#c7ff94'}}>[Heads Hit]</span>
                 </p>
-                <EditableAutoCorrect inputId={"effect"} content={effect} changeHandler={onChangeAutoCorrectInput("effect")} matchList={statusEffect}/>              
+                <EditableAutoCorrect inputId={"effect"} content={effect} changeHandler={onChangeAutoCorrectInput(keyWordList,"effect")} matchList={keyWordList}/>              
             </div>
         </div>
     </div>

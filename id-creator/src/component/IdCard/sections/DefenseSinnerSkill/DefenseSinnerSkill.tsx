@@ -3,14 +3,12 @@ import React, { useCallback } from "react";
 import { ReactElement } from "react";
 import "../SinnerSkill.css"
 import { useIdInfoContext } from "component/context/IdInfoContext";
-import useSkillInput from "component/IdCard/util/useInputs";
 import SkillEffect from "component/IdCard/components/SkillEffect/SkillEffect";
 import { IDefenseSkill } from "Interfaces/DefenseSkill/IDefenseSkill";
 import DefenseSkillSplash from "component/IdCard/components/SkillSplash/DefenseSkillSplash/DefenseSkillSplash";
 
 export default function DefenseSinnerSkill({skillIndex,preview}:{skillIndex:number,preview:boolean}):ReactElement{
     const {idInfoValue}=useIdInfoContext()
-    const {onChangeInput}=useSkillInput(skillIndex)
     const {
         defenseType,
         damageType,
@@ -24,8 +22,7 @@ export default function DefenseSinnerSkill({skillIndex,preview}:{skillIndex:numb
         skillLabel,
         skillLevel,
         skillAmt,
-        atkWeight,
-        type}=(idInfoValue.skillDetails[skillIndex] as IDefenseSkill)
+        atkWeight}=(idInfoValue.skillDetails[skillIndex] as IDefenseSkill)
 
     
     const printCoins=useCallback(function(coinNo:number):(ReactElement|never)[]{
@@ -78,7 +75,7 @@ export default function DefenseSinnerSkill({skillIndex,preview}:{skillIndex:numb
                             </div>
                             <div className="active-skill-title-container">
                                 <div className="active-skill-title">
-                                    <SkillTitle skillAffinity={skillAffinity} skillTitle={name} preview={preview} onInputChange={onChangeInput("name")}/>
+                                    <SkillTitle skillAffinity={skillAffinity} skillTitle={name} preview={preview}/>
                                 </div>
                             </div>
                         </div>
@@ -93,7 +90,7 @@ export default function DefenseSinnerSkill({skillIndex,preview}:{skillIndex:numb
                         <div>
                             <p><span className="skill-amount">Amt.</span> x{skillAmt}</p>
                         </div>
-                        <SkillEffect effect={skillEffect} preview={preview} onInputChange={onChangeInput("skillEffect")}/>
+                        <SkillEffect effect={skillEffect} preview={preview}/>
                     </div>
                 </div>
             </div>

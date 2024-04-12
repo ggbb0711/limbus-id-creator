@@ -2,14 +2,12 @@ import React, { ReactElement } from "react";
 import "../SinnerSkill.css"
 import "./PassiveSinnerSkill.css"
 import { IPassiveSkill } from "Interfaces/PassiveSkill/IPassiveSkill";
-import useSkillInput from "component/IdCard/util/useInputs";
 import { useIdInfoContext } from "component/context/IdInfoContext";
 import SkillEffect from "component/IdCard/components/SkillEffect/SkillEffect";
 import SkillTitle from "component/IdCard/components/SkillTitle/SkillTitle";
 
 export default function PassiveSinnerSkill({skillIndex,preview}:{skillIndex:number,preview:boolean}):ReactElement{
     const {idInfoValue}=useIdInfoContext()
-    const {onChangeInput}=useSkillInput(skillIndex)
     const {
         skillLabel,
         name,
@@ -26,7 +24,7 @@ export default function PassiveSinnerSkill({skillIndex,preview}:{skillIndex:numb
                 <div>
                     <div className="skill-title-req">
                         <div className="active-skill-title">
-                            <SkillTitle skillAffinity={"None"} skillTitle={name} onInputChange={onChangeInput("name")} preview={preview}/>
+                            <SkillTitle skillAffinity={"None"} skillTitle={name} preview={preview}/>
                         </div>
                         
                         <div className="req-container">
@@ -34,7 +32,7 @@ export default function PassiveSinnerSkill({skillIndex,preview}:{skillIndex:numb
                         </div>
                     </div>
                     <div className="skill-description">
-                        <SkillEffect effect={skillEffect} preview={preview} onInputChange={onChangeInput("skillEffect")}/>
+                        <SkillEffect effect={skillEffect} preview={preview}/>
                     </div>
                 </div>
                 

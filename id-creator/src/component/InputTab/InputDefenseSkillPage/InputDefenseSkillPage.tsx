@@ -1,8 +1,7 @@
 import React from "react";
 import { ReactElement } from "react";
 import "../InputPage.css"
-import useSkillInput from "component/IdCard/util/useInputs";
-import { useIdInfoContext } from "component/context/IdInfoContext";
+import useInputs from "component/util/useInputs";
 import UploadImgBtn from "../Components/UploadImgBtn/UploadImgBtn";
 import "../InputPage.css"
 import ChangeInputType from "../Components/ChangeInputType/ChangeInputType";
@@ -11,12 +10,9 @@ import DamageTypeInput from "../Components/DamageTypeInput/DamageTypeInput";
 import SinAffinityInput from "../Components/SinAffinityInput/SinAffinityInput";
 import DefenseTypeInput from "../Components/DefenseTypeInput/DefenseTypeInput";
 import EditableAutoCorrect from "../Components/EditableAutoCorrectInput/EditableAutoCorrect";
-import { useStatusEffectContext } from "component/context/StatusEffectContext";
 
-export default function InputDefenseSkillPage({index}:{index:number}):ReactElement{
-    const {idInfoValue} = useIdInfoContext()
-    const {statusEffect} = useStatusEffectContext()
-    const {onChangeFileWithName,changeSkillType,onChangeDropDownMenu,onChangeInput,onChangeAutoCorrectInput}=useSkillInput(index)
+export default function InputDefenseSkillPage({defenseSkill,keyWordList,changeSkill,changeSkillType}:{defenseSkill:IDefenseSkill,keyWordList:{[key:string]:string},changeSkill:(newInput:{[type:string]:string|number})=>void,changeSkillType:(newVal:string)=>void}):ReactElement{
+    const {onChangeFileWithName,onChangeDropDownMenu,onChangeInput,onChangeAutoCorrectInput}=useInputs(defenseSkill as any,changeSkill)
 
     const{
         skillLevel,
@@ -32,7 +28,7 @@ export default function InputDefenseSkillPage({index}:{index:number}):ReactEleme
         skillEffect,
         skillLabel,
         type
-    }=idInfoValue.skillDetails[index] as IDefenseSkill
+    }=defenseSkill
 
 
     
@@ -113,7 +109,7 @@ export default function InputDefenseSkillPage({index}:{index:number}):ReactEleme
                     <span contentEditable={false}><img className='status-icon' src='Images/status-effect/Coin_Effect_1.png' alt='coin-effect-1' /></span>/
                     <span contentEditable={false} style={{color:'#c7ff94'}}>[Heads Hit]</span>
                 </p>
-                <EditableAutoCorrect inputId={"skillEffect"} content={skillEffect} changeHandler={onChangeAutoCorrectInput("skillEffect")} matchList={statusEffect}/>             
+                <EditableAutoCorrect inputId={"skillEffect"} content={skillEffect} changeHandler={onChangeAutoCorrectInput(keyWordList,"skillEffect")} matchList={keyWordList}/>             
             </div>
         </div>
     </div>

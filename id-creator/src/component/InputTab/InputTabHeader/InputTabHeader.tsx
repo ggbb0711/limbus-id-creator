@@ -1,36 +1,15 @@
-import { useIdInfoContext } from "component/context/IdInfoContext";
 import React from "react";
 import { ReactElement } from "react";
 import "./InputTabHeader.css"
 import InputTab from "./InputTab/InputTab";
 import { ICustomEffect } from "Interfaces/CustomEffect/ICustomEffect";
-import { DefenseSkill, IDefenseSkill } from "Interfaces/DefenseSkill/IDefenseSkill";
+import { IDefenseSkill } from "Interfaces/DefenseSkill/IDefenseSkill";
 import { IMentalEffect } from "Interfaces/MentalEffect/IMentalEffect";
-import { IOffenseSkill, OffenseSkill } from "Interfaces/OffenseSkill/IOffenseSkill";
+import { IOffenseSkill } from "Interfaces/OffenseSkill/IOffenseSkill";
 import { IPassiveSkill } from "Interfaces/PassiveSkill/IPassiveSkill";
 
-export default function InputTabHeader({changeTab,activeTab}:{changeTab:(newTab:number)=>void,activeTab:number}):ReactElement{
-    const {idInfoValue,setIdInfoValue} = useIdInfoContext()
+export default function InputTabHeader({skillDetails,changeTab,activeTab,addTab,deleteHandler}:{skillDetails:(IOffenseSkill|IDefenseSkill|IPassiveSkill|ICustomEffect|IMentalEffect|never)[],changeTab:(newTab:number)=>void,activeTab:number,addTab:()=>void,deleteHandler:(i:number)=>void}):ReactElement{
 
-    const {skillDetails} = idInfoValue
-
-    function deleteHandler(i:number){
-        let newIndex=i
-        if(newIndex<=activeTab){ 
-            changeTab(newIndex-1)
-        }
-
-        const newIdInfoValue={...idInfoValue}
-
-        newIdInfoValue.skillDetails.splice(newIndex,1)
-        
-        setIdInfoValue({...newIdInfoValue})
-    }
-
-    function addTab(){
-        const newTab=new OffenseSkill()
-        setIdInfoValue({...idInfoValue,skillDetails:[...skillDetails,newTab]})
-    }
 
     function convertTabName(skill:IOffenseSkill|IDefenseSkill|IPassiveSkill|ICustomEffect|IMentalEffect|never){
         const {type}=skill
