@@ -1,5 +1,5 @@
 import { useIdInfoContext } from "component/context/IdInfoContext";
-import useSkillInput from "component/IdCard/util/useSkillInput";
+import useSkillInput from "component/IdCard/util/useInputs";
 import { IPassiveSkill } from "Interfaces/PassiveSkill/IPassiveSkill";
 import React, { useRef } from "react";
 import { ReactElement } from "react";

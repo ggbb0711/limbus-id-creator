@@ -1,7 +1,7 @@
 import { useIdInfoContext } from "component/context/IdInfoContext";
 import SkillEffect from "component/IdCard/components/SkillEffect/SkillEffect";
 import SkillTitle from "component/IdCard/components/SkillTitle/SkillTitle";
-import useSkillInput from "component/IdCard/util/useSkillInput";
+import useSkillInput from "component/IdCard/util/useInputs";
 import { IMentalEffect } from "Interfaces/MentalEffect/IMentalEffect";
 import React, { ReactElement } from "react";
 import "../SinnerSkill.css"

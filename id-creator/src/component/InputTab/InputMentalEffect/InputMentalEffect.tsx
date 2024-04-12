@@ -1,5 +1,5 @@
 import { useIdInfoContext } from "component/context/IdInfoContext";
-import useSkillInput from "component/IdCard/util/useSkillInput";
+import useSkillInput from "component/IdCard/util/useInputs";
 import { IMentalEffect } from "Interfaces/MentalEffect/IMentalEffect";
 import React, { useRef } from "react";
 import { ReactElement } from "react";

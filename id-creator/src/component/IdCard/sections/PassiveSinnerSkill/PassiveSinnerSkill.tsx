@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import "../SinnerSkill.css"
 import "./PassiveSinnerSkill.css"
 import { IPassiveSkill } from "Interfaces/PassiveSkill/IPassiveSkill";
-import useSkillInput from "component/IdCard/util/useSkillInput";
+import useSkillInput from "component/IdCard/util/useInputs";
 import { useIdInfoContext } from "component/context/IdInfoContext";
 import SkillEffect from "component/IdCard/components/SkillEffect/SkillEffect";
 import SkillTitle from "component/IdCard/components/SkillTitle/SkillTitle";
