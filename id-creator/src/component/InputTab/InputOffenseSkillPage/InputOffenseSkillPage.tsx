@@ -1,7 +1,7 @@
 import React from "react";
 import { ReactElement } from "react";
 import "../InputPage.css"
-import useSkillInput from "component/IdCard/util/useSkillInput";
+import useSkillInput from "component/IdCard/util/useInputs";
 import { useIdInfoContext } from "component/context/IdInfoContext";
 import { IOffenseSkill } from "Interfaces/OffenseSkill/IOffenseSkill";
 import UploadImgBtn from "../Components/UploadImgBtn/UploadImgBtn";

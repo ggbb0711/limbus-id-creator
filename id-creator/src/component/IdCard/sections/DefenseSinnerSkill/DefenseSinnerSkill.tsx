@@ -3,7 +3,7 @@ import React, { useCallback } from "react";
 import { ReactElement } from "react";
 import "../SinnerSkill.css"
 import { useIdInfoContext } from "component/context/IdInfoContext";
-import useSkillInput from "component/IdCard/util/useSkillInput";
+import useSkillInput from "component/IdCard/util/useInputs";
 import SkillEffect from "component/IdCard/components/SkillEffect/SkillEffect";
 import { IDefenseSkill } from "Interfaces/DefenseSkill/IDefenseSkill";
 import DefenseSkillSplash from "component/IdCard/components/SkillSplash/DefenseSkillSplash/DefenseSkillSplash";
