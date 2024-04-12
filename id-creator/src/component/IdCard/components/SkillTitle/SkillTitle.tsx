@@ -2,7 +2,7 @@ import React, { ReactElement, useRef } from "react";
 import "./SkillTitle.css"
 import ContentEditable from "react-contenteditable";
 
-export default function SkillTitle({skillAffinity,skillTitle,preview,onInputChange}:{skillAffinity:string,skillTitle:string,preview?:boolean,onInputChange?:(e:React.ChangeEvent<HTMLInputElement>)=>void}):ReactElement{
+export default function SkillTitle({skillAffinity,skillTitle,preview}:{skillAffinity:string,skillTitle:string,preview?:boolean}):ReactElement{
     const contentEditableRef=useRef(null)
     
     return(
@@ -21,7 +21,7 @@ export default function SkillTitle({skillAffinity,skillTitle,preview,onInputChan
                     innerRef={contentEditableRef}
                     disabled={preview}
                     html={skillTitle}
-                    onChange={onInputChange}/>
+                    onChange={(e)=>{}}/>
             </div>
             
         </div>

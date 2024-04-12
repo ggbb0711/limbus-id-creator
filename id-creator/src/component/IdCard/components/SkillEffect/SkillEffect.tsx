@@ -2,7 +2,7 @@ import React, { ReactElement, useRef } from "react";
 import "./SkillEffect.css"
 import ContentEditable from "react-contenteditable";
 
-export default function SkillEffect({effect,preview,onInputChange}:{effect:string,preview:boolean,onInputChange?:(e:React.ChangeEvent<HTMLInputElement>)=>void}):ReactElement{
+export default function SkillEffect({effect,preview}:{effect:string,preview:boolean}):ReactElement{
     const contentEditableRef=useRef<HTMLElement>(null)
     
     return(
@@ -11,6 +11,6 @@ export default function SkillEffect({effect,preview,onInputChange}:{effect:strin
             innerRef={contentEditableRef}
             html={effect}
             disabled={preview}
-            onChange={onInputChange}/>
+            onChange={(e)=>{}}/>
     )
 }

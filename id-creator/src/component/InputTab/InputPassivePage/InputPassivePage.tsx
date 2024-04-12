@@ -1,24 +1,17 @@
-import { useIdInfoContext } from "component/context/IdInfoContext";
-import useSkillInput from "component/IdCard/util/useInputs";
+import useInputs from "component/util/useInputs";
 import { IPassiveSkill } from "Interfaces/PassiveSkill/IPassiveSkill";
-import React, { useRef } from "react";
+import React from "react";
 import { ReactElement } from "react";
 import ChangeInputType from "../Components/ChangeInputType/ChangeInputType";
 import DropDown from "component/DropDown/DropDown";
-import { SinAffinityDropDown } from "component/DropDown/DropDownObjects/SinAffinity";
 import "../InputPage.css"
-import ContentEditable from "react-contenteditable";
 import SinAffinityInput from "../Components/SinAffinityInput/SinAffinityInput";
 import EditableAutoCorrect from "../Components/EditableAutoCorrectInput/EditableAutoCorrect";
-import { useStatusEffectContext } from "component/context/StatusEffectContext";
 
 
 
-export default function InputPassivePage({index}:{index:number}):ReactElement{
-    const {idInfoValue}=useIdInfoContext()
-    const {statusEffect} = useStatusEffectContext()
-    const contentEditableRef=useRef(null)
-    const {changeSkillType,onChangeDropDownMenu,onChangeInput,onChangeAutoCorrectInput}=useSkillInput(index)
+export default function InputPassivePage({passiveSkill,keyWordList,changeSkill,changeSkillType}:{passiveSkill:IPassiveSkill,keyWordList:{[key:string]:string},changeSkill:(newInput:{[type:string]:string|number})=>void,changeSkillType:(newVal:string)=>void}):ReactElement{
+    const {onChangeDropDownMenu,onChangeInput,onChangeAutoCorrectInput}=useInputs(passiveSkill as any,changeSkill)
 
     const {
         name,
@@ -28,7 +21,7 @@ export default function InputPassivePage({index}:{index:number}):ReactElement{
         req,
         reqNo,
         type
-    } = idInfoValue.skillDetails[index] as IPassiveSkill
+    } = passiveSkill
 
     return <div className="input-page input-passive-page">
         <div className="input-group-container" style={{zIndex:"100"}}>
@@ -87,7 +80,7 @@ export default function InputPassivePage({index}:{index:number}):ReactElement{
                     <span contentEditable={false}><img className='status-icon' src='Images/status-effect/Coin_Effect_1.png' alt='coin-effect-1' /></span>/
                     <span contentEditable={false} style={{color:'#c7ff94'}}>[Heads Hit]</span>
                 </p>    
-                <EditableAutoCorrect inputId={"skillEffect"} content={skillEffect} changeHandler={onChangeAutoCorrectInput("skillEffect")} matchList={statusEffect}/>          
+                <EditableAutoCorrect inputId={"skillEffect"} content={skillEffect} changeHandler={onChangeAutoCorrectInput(keyWordList,"skillEffect")} matchList={keyWordList}/>          
             </div>
         </div>
     </div>

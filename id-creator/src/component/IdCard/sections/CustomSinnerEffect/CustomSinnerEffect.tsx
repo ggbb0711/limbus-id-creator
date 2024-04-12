@@ -1,6 +1,5 @@
 import { useIdInfoContext } from "component/context/IdInfoContext";
 import SkillEffect from "component/IdCard/components/SkillEffect/SkillEffect";
-import useSkillInput from "component/IdCard/util/useInputs";
 import { ICustomEffect } from "Interfaces/CustomEffect/ICustomEffect";
 import React, { ReactElement } from "react";
 import "../SinnerSkill.css"
@@ -8,7 +7,6 @@ import "./CustomSinnerEffect.css"
 
 export default function CustomSinnerEffect({skillIndex,preview}:{skillIndex:number,preview?:boolean}):ReactElement{
     const {idInfoValue}=useIdInfoContext()
-    const {onChangeInput}=useSkillInput(skillIndex)
     
     const{
         name,
@@ -27,7 +25,7 @@ export default function CustomSinnerEffect({skillIndex,preview}:{skillIndex:numb
                         <p className="custom-effect-title">{name}</p>
                     </div>
                     <div>
-                        <SkillEffect effect={effect} preview={preview} onInputChange={onChangeInput("effect")}/>
+                        <SkillEffect effect={effect} preview={preview}/>
                     </div>
                 </div>
 

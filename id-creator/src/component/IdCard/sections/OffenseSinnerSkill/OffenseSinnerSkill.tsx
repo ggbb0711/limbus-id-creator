@@ -5,14 +5,12 @@ import { ReactElement } from "react";
 import "./OffenseSinnerSkill.css"
 import "../SinnerSkill.css"
 import { useIdInfoContext } from "component/context/IdInfoContext";
-import useSkillInput from "component/IdCard/util/useInputs";
 import SkillEffect from "component/IdCard/components/SkillEffect/SkillEffect";
 import { IOffenseSkill } from "Interfaces/OffenseSkill/IOffenseSkill";
 
 
 export default function OffenseSinnerSkill({skillIndex,preview}:{skillIndex:number,preview:boolean}):ReactElement{
     const {idInfoValue}=useIdInfoContext()
-    const {onChangeFile,onChangeInput,onChangeAutoCorrectInput,onChangeDropDownMenu,deleteInput,changeSkillType}=useSkillInput(skillIndex)
     const {
         damageType,
         name,
@@ -71,7 +69,7 @@ export default function OffenseSinnerSkill({skillIndex,preview}:{skillIndex:numb
                             </div>
                             <div className="active-skill-title-container">
                                 <div className="active-skill-title">
-                                    <SkillTitle skillAffinity={skillAffinity} skillTitle={name} preview={preview} onInputChange={onChangeInput("name")}/>
+                                    <SkillTitle skillAffinity={skillAffinity} skillTitle={name} preview={preview}/>
                                 </div>
                             </div>
                         </div>
@@ -80,13 +78,13 @@ export default function OffenseSinnerSkill({skillIndex,preview}:{skillIndex:numb
                     <div className="skill-description">
                         <div className="atk-weight-skill-label-section">
                             <div className="attack-weight">
-                                <p>Atk Weight: {preview?atkWeight:<input type="number" className={`small-number-input`} name="atkWeight" style={{backgroundColor:`var(--${skillAffinity})`}} value={atkWeight} onChange={onChangeInput()}/>}</p>
+                                <p>Atk Weight: {atkWeight}</p>
                             </div>
                         </div>
                         <div>
                             <p><span className="skill-amount">Amt.</span> x{skillAmt}</p>
                         </div>
-                        <SkillEffect effect={skillEffect} preview={preview} onInputChange={onChangeAutoCorrectInput("skillEffect")}/>
+                        <SkillEffect effect={skillEffect} preview={preview}/>
                     </div>
                 </div>
             </div>
