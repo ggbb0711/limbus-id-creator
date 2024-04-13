@@ -1,0 +1,17 @@
+.sin-cost-container{
+    font-weight: 500;
+    height: 100%;
+    width: min-content;
+}
+
+.sin-cost{
+    font-size: 25px;
+}
+
+.sin-cost:not(:last-child),.cost-txt{
+    margin-bottom: 20px;
+}
+
+.cost-txt{
+    font-size: 28px;
+}

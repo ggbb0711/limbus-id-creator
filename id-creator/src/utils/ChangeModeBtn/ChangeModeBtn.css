@@ -1,4 +1,4 @@
-.download-btn{
+.change-mode-btn{
     position: fixed;
     border-radius: 100%;
     cursor: pointer;
@@ -9,7 +9,7 @@
     align-items: center;
     justify-content: center;
     z-index: 999;
-    top: 120px;
+    top: 70px;
     left: 15px;
     border: 2px solid white;
     background-color: var(--button);

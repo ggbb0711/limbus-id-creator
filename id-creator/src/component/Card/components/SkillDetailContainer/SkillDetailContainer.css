@@ -1,0 +1,14 @@
+.skill-detail-container{
+    display: flex;
+    height: 95%;
+    flex-wrap: wrap;
+    writing-mode: vertical-lr;
+    min-width: 700px;
+    width: fit-content;
+    gap: 25px;
+    margin: 12px 0px;
+}
+
+.skill-detail-container * {
+    writing-mode: horizontal-tb;
+}
