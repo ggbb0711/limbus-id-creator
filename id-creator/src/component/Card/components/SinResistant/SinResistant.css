@@ -1,0 +1,14 @@
+.sin-resistant-container{
+    display: flex;
+    justify-content: center;
+    width: 850px;
+    text-align: center;
+    gap: 20px;
+    margin: auto;
+}
+
+.sin-resistant{
+    font-weight: 500;
+    font-size: 25px;
+    gap: 4px;
+}

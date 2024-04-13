@@ -1,0 +1,21 @@
+.sinner-ego-icon-container{
+    max-width: 350px;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: black;
+    padding: 8px;
+    gap: 4px;
+    border: 2px solid var(--Normal);
+}
+
+.sinner-ego-icon{
+    flex: 1;
+    cursor: pointer;
+    max-width: 55px;
+    max-height: 55px;
+    filter: saturate(0);
+}
+
+.sinner-ego-icon.active{
+    filter: none;
+}

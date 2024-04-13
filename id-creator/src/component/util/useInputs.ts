@@ -28,6 +28,7 @@ export default function useInput(propInputs:{[type:string]:string|number},change
         }
     }
 
+
     function onChangeFile(e:React.ChangeEvent<HTMLInputElement>){
         const files=e.currentTarget.files
         changeInput({...inputs,[e.target.name]:(files.length>0)?URL.createObjectURL(files[0]):""})
@@ -39,6 +40,7 @@ export default function useInput(propInputs:{[type:string]:string|number},change
             changeInput({...inputs,[inputName]:(files.length>0)?URL.createObjectURL(files[0]):""})
         }
     }
+
 
     useEffect(()=>{
         if(JSON.stringify(propInputs)!==JSON.stringify(inputs)) setInputs(propInputs)
