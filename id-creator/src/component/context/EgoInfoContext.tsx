@@ -13,7 +13,7 @@ const EgoInfoProvider: React.FC<{children:ReactElement}>=({children})=>{
             name:"",
             sanityCost:0,
             splashArt:"",
-            splashArtScale:0,
+            splashArtScale:1,
             splashArtTranslation:{
                 x:0,
                 y:0,
