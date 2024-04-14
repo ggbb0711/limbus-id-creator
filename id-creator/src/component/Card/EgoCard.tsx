@@ -16,10 +16,10 @@ export  const EgoCard=forwardRef<HTMLDivElement>((props,ref):ReactElement=>{
         <div className="Card" ref={ref}>
             <div className="sinner-icon-background" style={{"backgroundImage":`url(${EgoInfoValue.sinnerIcon})`}}></div>
             <div className="Card-container">
-                {/* {EgoInfoValue.splashArt?                
+                {EgoInfoValue.splashArt?                
                 <div className="ego-splash-art-container">
                     <EgoSplashArt/>
-                </div>:<></>} */}
+                </div>:<></>}
 
                 <div className="content-container">
                     <div>
