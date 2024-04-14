@@ -13,10 +13,9 @@
 
 
 .add-icon{
-    font-size: 15px;
     padding: 4px;
     cursor: pointer;
-    color: white;
+    fill: white;
     border-radius: 100%;
 }
 

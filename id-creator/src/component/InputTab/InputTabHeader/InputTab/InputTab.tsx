@@ -1,5 +1,6 @@
 import React, { ReactElement } from "react";
 import "./InputTab.css"
+import Delete_icon from "Icons/Delete_icon";
 
 export default function InputTab({tabName,tabColor,tabIcon,clickHandler,deleteHandler,isActive}:{tabName:string,tabColor:string,tabIcon?:string,clickHandler,deleteHandler?,isActive:boolean}):ReactElement{
     return(
@@ -9,11 +10,11 @@ export default function InputTab({tabName,tabColor,tabIcon,clickHandler,deleteHa
                 {tabName}
             </p>
             {deleteHandler?
-            <span className="material-symbols-outlined delete-tab-icon" onClick={(e:React.MouseEvent<HTMLElement>)=>{
+            <span className="delete-tab-icon" onClick={(e:React.MouseEvent<HTMLElement>)=>{
                     e.stopPropagation()
                     deleteHandler()
                 }}>
-                delete
+                <Delete_icon/>
             </span>:<></>}
         </div>
     )
