@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ReactElement } from "react";
 import "./DropDown.css"
+import Arrow_down_icon from "Icons/Arrow_down_icon";
 
 export interface dropDownEl{
     el:ReactElement,
@@ -22,8 +23,8 @@ export default function DropDown({dropDownEl,propVal,disabled,cb}:{dropDownEl:{[
             {disabled?<div className="disabled-block"></div>:<></>}
             <div className="curr-el" onClick={()=>setIsActive(!isActive)}>
                 {currVal.el}
-                <span className="material-symbols-outlined arrow-down">
-                    keyboard_arrow_down
+                <span className="arrow-down">
+                    <Arrow_down_icon/>
                 </span>    
             </div>
             <ul className={`drop-down ${isActive?"active":""}`}>

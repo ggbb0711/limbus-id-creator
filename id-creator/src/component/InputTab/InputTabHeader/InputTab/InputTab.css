@@ -16,11 +16,13 @@
 }
 
 .delete-tab-icon{
-    font-size: 15px;
+    width: 15px;
+    height: 15px;
+    fill: white;
 }
 
 .delete-tab-icon:hover{
-    color: red;
+    fill: red;
 }
 
 .tab-content{

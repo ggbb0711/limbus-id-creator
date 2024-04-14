@@ -7,6 +7,7 @@ import { IDefenseSkill } from "Interfaces/DefenseSkill/IDefenseSkill";
 import { IMentalEffect } from "Interfaces/MentalEffect/IMentalEffect";
 import { IOffenseSkill } from "Interfaces/OffenseSkill/IOffenseSkill";
 import { IPassiveSkill } from "Interfaces/PassiveSkill/IPassiveSkill";
+import Add_icon from "Icons/Add_icon";
 
 export default function InputTabHeader({skillDetails,changeTab,activeTab,addTab,deleteHandler}:{skillDetails:(IOffenseSkill|IDefenseSkill|IPassiveSkill|ICustomEffect|IMentalEffect|never)[],changeTab:(newTab:number)=>void,activeTab:number,addTab:()=>void,deleteHandler:(i:number)=>void}):ReactElement{
 
@@ -60,8 +61,8 @@ export default function InputTabHeader({skillDetails,changeTab,activeTab,addTab,
             }
             return <InputTab key={skill.inputId} tabName={convertTabName(skill)} tabColor={`var(--${skill.type==="DefenseSkill"||skill.type==="OffenseSkill"?(skill as IOffenseSkill|IDefenseSkill).skillAffinity:"None"}-input-page)`} tabIcon={tabIcon} clickHandler={()=>changeTab(i)} deleteHandler={()=>deleteHandler(i)} isActive={activeTab===i}/>
         })}
-        <span className="material-symbols-outlined add-icon" onClick={addTab}>
-            add
+        <span className="add-icon" onClick={addTab}>
+            <Add_icon/>
         </span>
     </div>
 }
