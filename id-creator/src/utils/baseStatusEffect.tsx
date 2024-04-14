@@ -129,8 +129,8 @@ export const baseStatusEffect={
         "charge":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Charge.png' alt='charge_icon' />Charge</span>",
     
-    "e.g.o_resource_amp":
-        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/EGO_Resource_Amp.png' alt='ego_resource_amp_icon' />E.G.O Resource Amp</span>",
+    "ego_resource_amp":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/E.G.O_Resource_Amp.png' alt='ego_resource_amp_icon' />E.G.O Resource Amp</span>",
     
     "fanatic":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Fanatic.png' alt='fanatic_icon' />Fanatic</span>",

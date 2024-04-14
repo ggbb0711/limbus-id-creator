@@ -70,7 +70,7 @@ export default function InputStatPage():ReactElement{
             <p>Pick a color for your sinner: </p>
             <input className="sinner-color-input" type="color" name="sinnerColor" id="sinnerColor" value={sinnerColor} onChange={onChangeInput("sinnerColor")}/>
         </div>
-        {/* <div>
+        <div>
             <div className="center-element">
                 <p>Upload Splash Art:  </p>
                 <UploadImgBtn onFileInputChange={onChangeFileWithName("splashArt")}/>
@@ -82,7 +82,7 @@ export default function InputStatPage():ReactElement{
                 </span></p>
                 <p style={{textAlign:"center"}}>Control the position of the splash art by dragging and zooming on this circle:</p>
                 <SinnerSplashArtRepositionInput scale={splashArtScale} translation={splashArtTranslation} onChange={(value:{scale,translation:{x,y:number}})=>{setEgoInfoValue({...EgoInfoValue,splashArtScale:value.scale,splashArtTranslation:value.translation})}}/>
-            </div>:<></>} */}
+            </div>:<></>}
         <div className="sinner-input-section-container sinner-stat-inputs">
             <div className="stat-input-container">
                 <label htmlFor="name">Name: </label>
