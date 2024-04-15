@@ -81,13 +81,15 @@ export default function InputIdInfoStatPage():ReactElement{
             <p>Pick the sinner rarity: </p>
             <SinnerRarityIconInput/>
         </div>
-        <div className="sinner-input-section-container sinner-stat-inputs">
-            <div className="stat-input-container">
-                <label htmlFor="title">Title: </label>
-                <input type="text" className="input" id="title" name="title" value={title} onChange={onChangeInput}/>
+        <div className="input-group-container">
+            <div className="input-container">
+                <label className="input-label" htmlFor="title">Title: </label>
+                <input type="text" className="input block" id="title" name="title" value={title} onChange={onChangeInput}/>
             </div>
-            <div className="stat-input-container">
-                <label htmlFor="name">Name: </label>
+        </div>
+        <div className="input-group-container">
+            <div className="input-container">
+                <label className="input-label" htmlFor="name">Name: </label>
                 <input type="text" className="input" id="name" name="name" value={name} onChange={onChangeInput}/>
             </div>
         </div>

@@ -1,6 +1,5 @@
 import { ContenteditableEditor } from "@textcomplete/contenteditable";
 import { Textcomplete } from "@textcomplete/core";
-import { useStatusEffectContext } from "component/context/StatusEffectContext";
 import React from "react";
 import { ReactElement, useEffect, useRef } from "react";
 import ContentEditable from "react-contenteditable";
@@ -15,11 +14,15 @@ export default function EditableAutoCorrect({inputId,content,matchList,changeHan
 
             const textComplete= new Textcomplete(editable,[{
                 match: /\[([\-+\w]*)$/,
-                search(term, callback, match) {
+                search:(term, callback, match)=>{
                     callback(Object.keys(matchList).map(key=>[key,matchList[key]]).filter(value=>value[0].match(term)))
                 },
-                template: ([keyWord, html]) =>html,
-                replace: (result): string => `[${result[0]}] `
+                template: ([_, html]) =>{
+                    return html
+                },
+                replace: (result): string => {
+                    return`[${result[0]}] `
+                }
             }],{dropdown:{maxCount:5,item:{className: "textcomplete-item",activeClassName: "textcomplete-item active",}}})
         }
     },[JSON.stringify(matchList)])
