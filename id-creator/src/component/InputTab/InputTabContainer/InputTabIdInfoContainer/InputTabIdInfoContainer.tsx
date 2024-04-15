@@ -19,6 +19,7 @@ export default function InputTabIdInfoContainer():ReactElement{
     const [activeTab,setActiveTab]=useState(-1)
     const {idInfoValue,setIdInfoValue} = useIdInfoContext()
     const {statusEffect}=useStatusEffectContext()
+    
 
     function deleteHandler(i:number){
         let newIndex=i
@@ -77,7 +78,7 @@ export default function InputTabIdInfoContainer():ReactElement{
                 }
             }
         }
-
+        
         switch(skill.type){
             case "OffenseSkill":{
                 return <InputOffenseSkillPage offenseSkill={skill as IOffenseSkill} keyWordList={statusEffect} changeSkill={changeSkill} changeSkillType={changeSkillType} />
