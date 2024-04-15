@@ -30,7 +30,7 @@ const StatusEffectProvider: React.FC<{children:ReactElement}>=({children})=>{
             }
         })
         setStatusEffect({...baseStatusEffect,...statusObj})
-    },[idInfoValue.skillDetails])
+    },[JSON.stringify(idInfoValue.skillDetails)])
 
     return <statusEffectContext.Provider value={{statusEffect,setStatusEffect}}>
             {children}
