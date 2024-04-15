@@ -39,7 +39,6 @@ export default function InputTabIdInfoContainer():ReactElement{
         setIdInfoValue({...idInfoValue,skillDetails:[...idInfoValue.skillDetails,newTab]})
     }
 
-
     function showInputPage(skill:IOffenseSkill|IDefenseSkill|IPassiveSkill|ICustomEffect|IMentalEffect|never,index:number){
         function changeSkill(newSkill:{[key:string]:string}){
             const newIdInfoValue={...idInfoValue}
