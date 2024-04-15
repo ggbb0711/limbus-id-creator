@@ -309,9 +309,12 @@ export const baseStatusEffect={
     "tremor_burst":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Tremor_Burst.png' alt='tremor_burst_icon' />Tremor Burst</span>",
     
-    "tremor_decay":
+    "tremor_-_decay":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Tremor_-_Decay.png' alt='tremor_decay_icon' />Tremor - Decay</span>",
     
+    "tremor_-_fracture":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Tremor_-_Fracture.png' alt='tremor_fracture_icon' />Tremor - Fracture</span>",
+
     "poison":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Poison.png' alt='poison_icon' />Poison</span>",
     
@@ -355,10 +358,16 @@ export const baseStatusEffect={
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Dimensional_Rift.png' alt='dimensional_rift_icon' />Dimensional Rift</span>",
     
     "spark_discharge":
-        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Spark_Discharge.png' alt='spark_discharge_icon' />Spark Discharge</span>",
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Spark_Discharge.png' alt='spark_discharge_icon' />Spark Discharge</span>",
     
     "echoes_of_the_manor":
-        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Echoes_of_the_Manor.png' alt='echoes_of_the_manor_icon' />Echoes of the Manor</span>",
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Echoes_of_the_Manor.png' alt='echoes_of_the_manor_icon' />Echoes of the Manor</span>",
+
+    "before_the_king":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Before_the_King.png' alt='before_the_king_icon' />Before the King</span>",
+
+    "before_the_king_in_binds":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Before_the_King_in_Binds.png' alt='before_the_king_in_binds_icon' />Before the King in Binds</span>",
     
     "aggro":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Aggro.png' alt='aggro_icon' />Aggro</span>",
@@ -389,6 +398,10 @@ export const baseStatusEffect={
     
     "makeshift_surgery":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Makeshift_Surgery.png' alt='makeshift_surgery_icon' />Makeshift Surgery</span>",
+    
+    "amplitude_conversion":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Amplitude_Conversion.png' alt='amplitude_conversion_icon' />Amplitude Conversion</span>",
+    
     "coin_1":
         "<span class='center-element' contenteditable='false'><img class='status-icon' src='Images/status-effect/Coin_Effect_1.png' alt='coin-effect-1' /></span>",
     
