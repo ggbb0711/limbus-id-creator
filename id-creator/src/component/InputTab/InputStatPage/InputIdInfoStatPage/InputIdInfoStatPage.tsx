@@ -83,12 +83,12 @@ export default function InputIdInfoStatPage():ReactElement{
         </div>
         <div className="sinner-input-section-container sinner-stat-inputs">
             <div className="stat-input-container">
-                <label htmlFor="name">Name: </label>
-                <input type="text" className="input" id="name" name="name" value={name} onChange={onChangeInput}/>
-            </div>
-            <div className="stat-input-container">
                 <label htmlFor="title">Title: </label>
                 <input type="text" className="input" id="title" name="title" value={title} onChange={onChangeInput}/>
+            </div>
+            <div className="stat-input-container">
+                <label htmlFor="name">Name: </label>
+                <input type="text" className="input" id="name" name="name" value={name} onChange={onChangeInput}/>
             </div>
         </div>
         <div className="sinner-stat-inputs">
