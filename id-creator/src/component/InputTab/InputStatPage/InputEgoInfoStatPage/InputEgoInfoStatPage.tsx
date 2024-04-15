@@ -83,13 +83,15 @@ export default function InputStatPage():ReactElement{
                 <p style={{textAlign:"center"}}>Control the position of the splash art by dragging and zooming on this circle:</p>
                 <SinnerSplashArtRepositionInput scale={splashArtScale} translation={splashArtTranslation} onChange={(value:{scale,translation:{x,y:number}})=>{setEgoInfoValue({...EgoInfoValue,splashArtScale:value.scale,splashArtTranslation:value.translation})}}/>
             </div>:<></>}
-        <div className="sinner-input-section-container sinner-stat-inputs">
-            <div className="stat-input-container">
-                <label htmlFor="title">Title: </label>
-                <input type="text" className="input" id="title" name="title" value={title} onChange={onChangeInput()}/>
+        <div className="input-group-container">
+            <div className="input-container">
+                <label className="input-label" htmlFor="title">Title: </label>
+                <input type="text" className="input block" id="title" name="title" value={title} onChange={onChangeInput()}/>
             </div>
-            <div className="stat-input-container">
-                <label htmlFor="name">Name: </label>
+        </div>
+        <div className="input-group-container">
+            <div className="input-container">
+                <label className="input-label" htmlFor="name">Name: </label>
                 <input type="text" className="input" id="name" name="name" value={name} onChange={onChangeInput()}/>
             </div>
         </div>

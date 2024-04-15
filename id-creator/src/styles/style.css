@@ -44,7 +44,7 @@
     --Fatal:#601A1F;
     --Endure:#9B9899;
     --Normal:#DABD97;
-    --title-color:#9E6B3C;
+    --title-color:#A16840;
 
     --Id-card-width:1440px;
     --Id-card-height:990px;
@@ -64,6 +64,12 @@
 
 label{
     cursor: pointer;
+}
+
+@font-face {
+    font-family: "Mikodacs";
+    src: local("Mikodacs"),url("../Font/mikodacs/mikodacs.regular.ttf");
+    font-weight: normal;
 }
 
 .hidden{
