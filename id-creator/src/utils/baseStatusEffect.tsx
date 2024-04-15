@@ -144,7 +144,7 @@ export const baseStatusEffect={
     "unjust_enrichment":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Unjust_Enrichment.png' alt='unjust_enrichment_icon' />Unjust Enrichment</span>",
     
-    "assist_attack_(ishmael)":
+    "assist_attack":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Assist_Attack.png' alt='assist_attack_icon' />Assist Attack</span>",
     
     "heated_gas_harpoon":
