@@ -7,6 +7,7 @@ import UploadImgBtn from "../../Components/UploadImgBtn/UploadImgBtn";
 import SinnerIconInput from "../SinnerIconInput/SinnerIconInput";
 import SinnerSplashArtRepositionInput from "../SinnerSplashArtRepositionInput/SinnerSplashArtRepositionInput";
 import SinnerRarityIconInput from "../SinnerRarityInput/SinnerRarityInput";
+import Delete_icon from "Icons/Delete_icon";
 
 export default function InputIdInfoStatPage():ReactElement{
     const {idInfoValue,setIdInfoValue} = useIdInfoContext()
@@ -47,10 +48,19 @@ export default function InputIdInfoStatPage():ReactElement{
     }
 
     function onFileInputChange(name:string){
-        return((e:React.ChangeEvent<HTMLInputElement>):void=>{
-            const files=e.currentTarget.files
-            setIdInfoValue({...idInfoValue,[name]:(files)?URL.createObjectURL(files[0]):""})
-        })
+        return(e:React.ChangeEvent<HTMLInputElement>)=>{
+            let url="";
+            const fr = new FileReader()
+            console.log(url)
+            if(e.currentTarget.files.length>0){
+                fr.readAsDataURL(e.currentTarget.files[0])
+
+                fr.addEventListener("load",()=>{
+                    url=fr.result as any
+                    setIdInfoValue({...idInfoValue,[name]:url})
+                })
+            }
+        }
     }
 
 
@@ -71,8 +81,8 @@ export default function InputIdInfoStatPage():ReactElement{
             </div>
         </div>
         {splashArt?<div className="input-group-container">
-                <p className="center-element">Delete the splash art? <span className="material-symbols-outlined delete-splash-art-btn" onClick={(e:React.MouseEvent<HTMLElement>)=>{setIdInfoValue({...idInfoValue,splashArt:""})}}>
-                    delete
+                <p className="center-element">Delete the splash art? <span className="delete-splash-art-btn" onClick={(e:React.MouseEvent<HTMLElement>)=>{setIdInfoValue({...idInfoValue,splashArt:""})}}>
+                    <Delete_icon/>
                 </span></p>
                 <p style={{textAlign:"center"}}>Control the position of the splash art by dragging and zooming on this circle:</p>
                 <SinnerSplashArtRepositionInput scale={splashArtScale} translation={splashArtTranslation} onChange={(value:{scale:number,translation:{x:number,y:number}})=>{setIdInfoValue({...idInfoValue,splashArtScale:value.scale,splashArtTranslation:value.translation})}}/>

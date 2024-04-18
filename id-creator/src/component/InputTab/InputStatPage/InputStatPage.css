@@ -66,8 +66,11 @@
 
 .delete-splash-art-btn{
     cursor: pointer;
+    width: 15px;
+    height: 15px;
+    fill: white;
 }
 
 .delete-splash-art-btn:hover{
-    color: red;
+    fill: red;
 }

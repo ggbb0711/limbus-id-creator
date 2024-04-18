@@ -30,14 +30,31 @@ export default function useInput(propInputs:{[type:string]:string|number},change
 
 
     function onChangeFile(e:React.ChangeEvent<HTMLInputElement>){
-        const files=e.currentTarget.files
-        changeInput({...inputs,[e.target.name]:(files.length>0)?URL.createObjectURL(files[0]):""})
+        let url="";
+        const fr = new FileReader()
+        if(e.currentTarget.files.length>0){
+            fr.readAsDataURL(e.currentTarget.files[0])
+
+            fr.addEventListener("load",()=>{
+                url=fr.result as any
+            })
+        }
+        changeInput({...inputs,[e.target.name]:(url)})
     }
 
     function onChangeFileWithName(inputName:string){
         return(e:React.ChangeEvent<HTMLInputElement>)=>{
-            const files=e.currentTarget.files
-            changeInput({...inputs,[inputName]:(files.length>0)?URL.createObjectURL(files[0]):""})
+            let url="";
+            const fr = new FileReader()
+            console.log(url)
+            if(e.currentTarget.files.length>0){
+                fr.readAsDataURL(e.currentTarget.files[0])
+
+                fr.addEventListener("load",()=>{
+                    url=fr.result as any
+                    changeInput({...inputs,[inputName]:url})
+                })
+            }
         }
     }
 
