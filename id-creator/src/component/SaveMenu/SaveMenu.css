@@ -106,3 +106,8 @@
 .save-tab:hover,.save-tab.active{
     border: 2px #FBB627 solid;
 }
+
+.created-time{
+    font-size: 12px;
+    font-family: "Mikodacs" , "Rubik", sans-serif;
+}
