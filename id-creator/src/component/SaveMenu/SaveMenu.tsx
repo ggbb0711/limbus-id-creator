@@ -4,7 +4,6 @@ import "./SaveMenu.css"
 import { ISaveFile } from "Interfaces/ISaveFile";
 import { useIdInfoContext } from "component/context/IdInfoContext";
 import { useEgoInfoContext } from "component/context/EgoInfoContext";
-import Edit_icon from "Icons/Edit_icon";
 import Close_icon from "Icons/Close_icon";
 
 
@@ -23,8 +22,9 @@ export default function SaveMenu({isActive,setIsActive}:{isActive:boolean,setIsA
 
     function createNewSave(){
         const newSaveTabs=[...saveTabs]
-        newSaveTabs.push({
-            saveName:"New save file",
+        newSaveTabs.unshift({
+            saveName:"New save file ("+(newSaveTabs.length+1)+")",
+            saveTime:new Date().toLocaleString(),
             saveInfo:{
                 idInfo:idInfoValue,
                 egoInfo:EgoInfoValue
@@ -37,6 +37,7 @@ export default function SaveMenu({isActive,setIsActive}:{isActive:boolean,setIsA
         return ()=>{
             setIdInfoValue(saveTabs[index].saveInfo.idInfo)
             setEgoInfoValue(saveTabs[index].saveInfo.egoInfo)
+            setIsActive(!isActive)
         }
     }
     
@@ -79,6 +80,7 @@ export default function SaveMenu({isActive,setIsActive}:{isActive:boolean,setIsA
                     {saveTabs.length>0?<>
                         {saveTabs.map((saveTab,i)=>
                             <div className={`save-tab`} key={i}>
+                                <p className="created-time">Created on: {saveTab.saveTime}</p>
                                 <div className="center-element save-tab-input-container">
                                     <input className="input" type="text" onChange={changeSaveName(i)} value={saveTab.saveName}/>
                                 </div>
@@ -89,7 +91,7 @@ export default function SaveMenu({isActive,setIsActive}:{isActive:boolean,setIsA
                                 </div>
                             </div>
                         )}
-                    </>:<p style={{color:"white"}}>There is no save on your local machine</p>}
+                    </>:<p style={{fontFamily:"'Mikodacs' , 'Rubik', sans-serif"}}>There is no save on your local machine</p>}
                 </div>
                 <button onClick={createNewSave} className="new-save-btn">Create a new save</button>
             </div>
