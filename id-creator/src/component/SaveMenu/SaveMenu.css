@@ -1,0 +1,108 @@
+.save-menu-container{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.303);
+    z-index: 9999999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Rubik", sans-serif;
+
+}
+
+.save-menu{
+    padding: 8px;
+    background-color: var(--Neutral-color);
+    border: 2px solid #74503D;
+    background-color: #CEB199;
+    position: relative;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.save-menu-header{
+    font-family: "Mikodacs" , "Rubik", sans-serif;
+    font-size: 18px;
+}
+
+.save-menu-outline{
+    padding: 12px;
+    background-color: #380502;
+    border: 2px solid #74503D;
+    border-radius: 4px;
+}
+
+.close-save-menu{
+    position: absolute;
+    cursor: pointer;
+    top: 5px;
+    right: 5px;
+}
+
+.close-save-menu:hover{
+    fill: red;
+}
+
+.save-menu-list{
+    height: 300px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-y: auto;
+    gap: 4px;
+    padding: 12px 4px;
+    border: 2px solid var(--Normal);
+}
+
+.new-save-btn,.load-save-btn,.delete-save-btn,.overwrite-save-btn{
+    font-family: "Mikodacs" , "Rubik", sans-serif;
+    border: 2px solid #453A32;
+    color: black;
+    background-color: #D3B794;
+    padding: 4px;
+}
+
+.new-save-btn:hover,.load-save-btn:hover,.delete-save-btn:hover,.overwrite-save-btn:hover{
+    background-color: black;
+    border-color: #FBB627;
+    color: #D3B794;
+}
+
+.delete-save-btn,.overwrite-save-btn,.load-save-btn{
+    font-size: 12px;
+}
+
+.load-save-btn.inactive{
+    cursor: auto;
+    opacity: 0.5;
+}
+
+.save-tab-input-container{
+    margin-bottom: 4px;
+    font-family: "Mikodacs" , "Rubik", sans-serif;
+}
+
+.edit-save-name-icon{
+    cursor: pointer;
+}
+
+.edit-save-name-icon:hover{
+    fill: green;
+}
+
+.save-tab{
+    cursor: pointer;
+    padding: 8px;
+    background-color: #ECCAA5;
+}
+
+.save-tab:hover,.save-tab.active{
+    border: 2px #FBB627 solid;
+}

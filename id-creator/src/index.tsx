@@ -14,6 +14,8 @@ import { EgoInfoProvider } from 'component/context/EgoInfoContext';
 import ChangeModeBtn from 'utils/ChangeModeBtn/ChangeModeBtn';
 import { IdCard } from 'component/Card/IdCard';
 import { EgoCard } from 'component/Card/EgoCard';
+import SaveMenu from 'component/SaveMenu/SaveMenu';
+import ActivateSaveMenuBtn from 'utils/ActivateSaveMenuBtn/ActivateSaveMenuBtn';
 
 
 const root = createRoot(document.getElementById('root')!);
@@ -21,6 +23,7 @@ const root = createRoot(document.getElementById('root')!);
 function App():ReactElement{
     const [isShown,setIsShown]=useState(false)
     const [mode,setMode]=useState("IdInfo")
+    const [activeSaveMenu,setActiveSaveMenu] = useState(false)
     const domRef=useRef(null)
 
     const download=async()=>{
@@ -58,7 +61,9 @@ function App():ReactElement{
                                 <InputTabContainer mode={mode}/>
                                 <ShowInputTab isShown={isShown} clickHandler={()=>setIsShown(!isShown)} />
                                 <DownloadBtn clickHandler={download}/>
+                                <ActivateSaveMenuBtn onClickHandler={()=>setActiveSaveMenu(!activeSaveMenu)} />
                                 <ChangeModeBtn mode={mode} setMode={()=>setMode(mode==="IdInfo"?"EgoInfo":"IdInfo")}/>
+                                <SaveMenu isActive={activeSaveMenu} setIsActive={setActiveSaveMenu} />
                             </div>
                         </>
                     </StatusEffectProvider>
