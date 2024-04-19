@@ -1,16 +1,18 @@
-.download-btn{
+.activate-save-menu-btn{
     position: fixed;
     border-radius: 100%;
     cursor: pointer;
     width: 30px;
     height: 30px;
+    font-size: 12px;
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 999;
-    top: 110px;
+    top: 70px;
     left: 15px;
     border: 2px solid white;
     background-color: var(--button);
+    font-family: "Rubik", sans-serif;
 }
