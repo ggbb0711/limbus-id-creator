@@ -66,7 +66,7 @@ const DefenseSinnerSkill = forwardRef<HTMLDivElement, { defenseSkill: IDefenseSk
                 </div>
                 <div>
                     <div className="sinner-skill-header">
-                        <img className={`sinner-skill-affinity-icon ${skillAffinity === "None" ? "hidden" : ""}`} src={`Images/sin-affinity/affinity_${skillAffinity}_big.webp`} alt={`sinner-skill-${skillAffinity}-icon`} />
+                        {skillAffinity === "None"?<></>:<img className={`sinner-skill-affinity-icon`} src={`Images/sin-affinity/affinity_${skillAffinity}_big.webp`} alt={`sinner-skill-${skillAffinity}-icon`} />}
                         <div>
                             <div className="coin-container">
                                 {printCoins(coinNo)}
