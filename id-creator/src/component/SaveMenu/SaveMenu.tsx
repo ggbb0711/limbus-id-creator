@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ReactElement } from "react";
 import "./SaveMenu.css"
 import { ISaveFile } from "Interfaces/ISaveFile";
@@ -12,54 +12,56 @@ export default function SaveMenu({isActive,setIsActive}:{isActive:boolean,setIsA
     const {idInfoValue,setIdInfoValue} = useIdInfoContext()
     const {EgoInfoValue,setEgoInfoValue} = useEgoInfoContext()
 
-    function changeSaveName(index:number){
-        return (e:React.ChangeEvent<HTMLInputElement>)=>{
-            const newSaveTabs=[...saveTabs]
-            newSaveTabs[index].saveName=e.target.value
-            setSaveTabs(newSaveTabs)
-        }
-    }
-
-    function createNewSave(){
-        const newSaveTabs=[...saveTabs]
-        newSaveTabs.unshift({
-            saveName:"New save file ("+(newSaveTabs.length+1)+")",
-            saveTime:new Date().toLocaleString(),
-            saveInfo:{
-                idInfo:idInfoValue,
-                egoInfo:EgoInfoValue
-            }
-        })
+    const changeSaveName = useMemo(() => (index: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log("Change save name")
+        const newSaveTabs = [...saveTabs];
+        newSaveTabs[index].saveName = e.target.value;
         setSaveTabs(newSaveTabs)
-    }
+        localStorage.setItem("SaveTabs",JSON.stringify(newSaveTabs))
+    }, [saveTabs])
 
-    function loadSave(index:number){
-        return ()=>{
-            setIdInfoValue(saveTabs[index].saveInfo.idInfo)
-            setEgoInfoValue(saveTabs[index].saveInfo.egoInfo)
-            setIsActive(!isActive)
-        }
-    }
-    
-    function deleteSave(index:number){
-        return ()=>{
-            const newSaveTabs=[...saveTabs]
-            newSaveTabs.splice(index,1)
-            setSaveTabs(newSaveTabs)
-        }
-    }
+    const createNewSave = useMemo(() => () => {
+        console.log("Create new save")
+        const newSaveTabs = [...saveTabs]
+        newSaveTabs.unshift({
+            saveName: "New save file (" + (newSaveTabs.length + 1) + ")",
+            saveTime: new Date().toLocaleString(),
+            saveInfo: {
+                idInfo: idInfoValue,
+                egoInfo: EgoInfoValue
+            }
+        });
+        setSaveTabs(newSaveTabs)
+        localStorage.setItem("SaveTabs",JSON.stringify(newSaveTabs))
+    }, [saveTabs, idInfoValue, EgoInfoValue])
 
-    function overWriteSave(index:number){
-        return ()=>{
-            const newSaveTabs=[...saveTabs]
-            newSaveTabs[index].saveInfo.idInfo=idInfoValue
-            newSaveTabs[index].saveInfo.egoInfo=EgoInfoValue
-            setSaveTabs(newSaveTabs)
-        }
-    }
+    const loadSave = useMemo(() => (index: number) => () => {
+        console.log("Loading save")
+        setIdInfoValue(saveTabs[index].saveInfo.idInfo)
+        setEgoInfoValue(saveTabs[index].saveInfo.egoInfo)
+        setIsActive(prev => !prev)
+    }, [saveTabs, setIdInfoValue, setEgoInfoValue, setIsActive])
+
+    const deleteSave = useMemo(() => (index: number) => () => {
+        console.log("Delete save")
+        const newSaveTabs = [...saveTabs]
+        newSaveTabs.splice(index, 1)
+        setSaveTabs(newSaveTabs)
+        localStorage.setItem("SaveTabs",JSON.stringify(newSaveTabs))
+    }, [saveTabs])
+
+    const overWriteSave = useMemo(() => (index: number) => () => {
+        console.log("Overwrite")
+        const newSaveTabs = [...saveTabs]
+        newSaveTabs[index].saveInfo.idInfo = idInfoValue;
+        newSaveTabs[index].saveInfo.egoInfo = EgoInfoValue;
+        setSaveTabs(newSaveTabs)
+        localStorage.setItem("SaveTabs",JSON.stringify(newSaveTabs))
+    }, [saveTabs, idInfoValue, EgoInfoValue])
 
     useEffect(()=>{
         if(localStorage.getItem("SaveTabs")){
+            console.log("Get items")
             setSaveTabs(JSON.parse(localStorage.getItem("SaveTabs")))
         }
         else{
@@ -68,7 +70,9 @@ export default function SaveMenu({isActive,setIsActive}:{isActive:boolean,setIsA
     },[])
 
     useEffect(()=>{
-        localStorage.setItem("SaveTabs",JSON.stringify(saveTabs))
+        //For some reason the save tabs state changes when making changes to another skill
+        //But the local storage stays the same
+        setSaveTabs(JSON.parse(localStorage.getItem("SaveTabs")))
     },[JSON.stringify(saveTabs)])
 
     return <div className={isActive?"save-menu-container":"hidden"}>
@@ -79,7 +83,7 @@ export default function SaveMenu({isActive,setIsActive}:{isActive:boolean,setIsA
                 <div className="save-menu-list">
                     {saveTabs.length>0?<>
                         {saveTabs.map((saveTab,i)=>
-                            <div className={`save-tab`} key={i}>
+                            <div className={`save-tab`} key={saveTab.saveTime}>
                                 <p className="created-time">Created on: {saveTab.saveTime}</p>
                                 <div className="center-element save-tab-input-container">
                                     <input className="input" type="text" onChange={changeSaveName(i)} value={saveTab.saveName}/>
