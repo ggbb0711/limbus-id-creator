@@ -26,7 +26,8 @@ const PassiveSinnerSkill = forwardRef<HTMLDivElement, { passiveSkill: IPassiveSk
                         </div>
 
                         <div className="req-container">
-                            <p className={`${req === "None" ? "hidden" : ""}`}>{req}: {reqNo}</p><img className={`req-sin-icon ${affinity === "None" || req === "None" ? "hidden" : ""}`} src={`Images/sin-affinity/affinity_${affinity}_big.webp`} />
+                            {req==="None"||affinity==="None"?<></>:<><p>{req}: {reqNo}</p><img className={`req-sin-icon`} src={`Images/sin-affinity/affinity_${affinity}_big.webp`} /></>}
+                            
                         </div>
                     </div>
                     <div className="skill-description">
