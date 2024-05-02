@@ -24,20 +24,20 @@ export default function useInput(propInputs:{[type:string]:string|number},change
             // const styleRegex =/(?<=<span\s[^>]*\s)style=['"]([^'"]*)['"]/gm
             // const spanRegex =/<span\s[^>]*>/gm
             // const styleAttributes = replaceWords.match(styleRegex)            
-            const cleanInput = sanitizeHtml(replaceWords,{
-                allowedTags:['div','span','br','img'],
-                allowedAttributes:{
-                    span:["style","contenteditable","class"],
-                    img:["class","src","alt"],
-                },
-                allowedStyles:{
-                    'span':{
-                        'color': [/^#(0x)?[0-9a-f]+$/i],
-                        'text-decoration':[/^underline$/]
-                    }
-                },
-                allowedSchemes:['data']
-            })
+            // const cleanInput = sanitizeHtml(replaceWords,{
+            //     allowedTags:['div','span','br','img'],
+            //     allowedAttributes:{
+            //         span:["style","contenteditable","class"],
+            //         img:["class","src","alt"],
+            //     },
+            //     allowedStyles:{
+            //         'span':{
+            //             'color': [/^#(0x)?[0-9a-f]+$/i],
+            //             'text-decoration':[/^underline$/]
+            //         }
+            //     },
+            //     allowedSchemes:['data']
+            // })
             // const spanTagArr = cleanInput.match(spanRegex)
             // const textBetweenSpanTagArr = cleanInput.split(spanRegex)
 
@@ -46,9 +46,9 @@ export default function useInput(propInputs:{[type:string]:string|number},change
             //     textBetweenSpanTagArr[i]+=spanTagArr[i-1].slice(0,6)+styleAttributes[i-1]+spanTagArr[i-1].slice(6)               
             // }
             
-            if(inputName) changeInput({...inputs,[inputName]:cleanInput})
+            if(inputName) changeInput({...inputs,[inputName]:replaceWords})
             else{
-                changeInput({...inputs,[e.target.name]:cleanInput})
+                changeInput({...inputs,[e.target.name]:replaceWords})
             }
         }
     }

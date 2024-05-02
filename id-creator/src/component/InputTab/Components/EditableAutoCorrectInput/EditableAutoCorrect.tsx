@@ -7,6 +7,7 @@ import "./EditableAutoCorrect.css"
 import getCaretCharacterOffsetWithin from "component/util/getCaretCharacterOffsetWithin";
 import getCaretHTMLCharacterOffSet from "component/util/getCaretHTMLCharacterOffSet";
 import ecapeRegExp from "component/util/ecapeRegExp";
+import setEditableCaretPos from "component/util/setEditableCaretPos";
 
 
 export default function EditableAutoCorrect({inputId,content,matchList,changeHandler}:{inputId:string,content:string,changeHandler:(e:React.ChangeEvent<HTMLInputElement>)=>void,matchList:{[key:string]:string}}):ReactElement{
@@ -16,7 +17,7 @@ export default function EditableAutoCorrect({inputId,content,matchList,changeHan
     const [suggestBoxPos,setSuggestBoxPos] = useState({left:0,top:15})
     const [currentActiveChoice,setCurrentActiveChoice] = useState(0)
     const [itemList,setItemList] = useState<((string|ReactElement)[])[]>([])
-    const [carretPos,setCarretPos] = useState(0)
+    const [caretPos,setCaretPos] = useState(0)
     const enterKeyPress=useKeyPress("Enter",contentEditableRef)
     const arrowUpKeyPress = useKeyPress("ArrowUp",contentEditableRef)
     const arrowDownKeyPress = useKeyPress("ArrowDown",contentEditableRef)
@@ -26,7 +27,8 @@ export default function EditableAutoCorrect({inputId,content,matchList,changeHan
         return function(item) {
             if(contentEditableRef.current){
                 const addInItem =`${item[0]}] ` 
-                const innerHTMLIndex = getCaretHTMLCharacterOffSet(contentEditableRef.current.innerHTML,carretPos)
+                const innerHTMLIndex = getCaretHTMLCharacterOffSet(contentEditableRef.current.innerHTML,caretPos)
+                const foundWord=contentEditableRef.current.innerHTML.substring(0,innerHTMLIndex+1).match(regex)
                 const firstHalf = contentEditableRef.current.innerHTML.substring(0,innerHTMLIndex+1).replace(regex,addInItem)
                 const secondHalf =  contentEditableRef.current.innerHTML.substring(innerHTMLIndex+1)
 
@@ -35,9 +37,10 @@ export default function EditableAutoCorrect({inputId,content,matchList,changeHan
                 contentEditableRef.current.dispatchEvent(event)
                 setActiveSuggestBox(false)
                 setItemList([])
+                setCaretPos(caretPos-foundWord[0].length+addInItem.length-2)
             }
         };
-    }, [contentEditableRef, regex, setActiveSuggestBox, carretPos]);
+    }, [contentEditableRef, regex, setActiveSuggestBox, caretPos]);
 
     const updateSuggestBox = useMemo(() => {
         return function() {
@@ -53,7 +56,7 @@ export default function EditableAutoCorrect({inputId,content,matchList,changeHan
     }, [suggestionBoxRef, contentEditableRef, setSuggestBoxPos]);
 
     const updateItemList = useMemo(()=>()=>{
-        const textNoLine = (contentEditableRef.current.innerText as string).replace(/(\r\n|\n|\r)/gm,"").substring(0,carretPos+1).toLowerCase()
+        const textNoLine = (contentEditableRef.current.innerText as string).replace(/(\r\n|\n|\r)/gm,"").substring(0,caretPos+1).toLowerCase()
         const newItemList = Object.keys(matchList).map(key=>[key,matchList[key]]).filter(value=>{
             const searchIndex=textNoLine.search(regex)
             if(searchIndex<0) return false
@@ -68,16 +71,16 @@ export default function EditableAutoCorrect({inputId,content,matchList,changeHan
         }
         else setActiveSuggestBox(false)
         setItemList(newItemList)
-    },[carretPos,matchList,contentEditableRef])
+    },[caretPos,matchList,contentEditableRef])
 
     const handleKeyUp=useMemo(()=>()=>{
         const position = getCaretCharacterOffsetWithin(contentEditableRef.current);
-        setCarretPos(position)
-    },[setCarretPos])
+        setCaretPos(position)
+    },[])
 
     useEffect(()=>{
         updateItemList()
-    },[carretPos])
+    },[caretPos])
     
     useEffect(()=>{
         if((enterKeyPress)&&itemList.length>0&&activeSuggestBox) selectSuggestion(itemList[currentActiveChoice])
