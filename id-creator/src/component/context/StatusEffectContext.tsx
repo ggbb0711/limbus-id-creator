@@ -16,7 +16,7 @@ const StatusEffectProvider: React.FC<{children:ReactElement}>=({children})=>{
     const {idInfoValue}=useIdInfoContext()
 
     function addNewStatusEffect(customEffect:ICustomEffect):string{
-        return `<span contenteditable='false' style='${customEffect.effectColor?`color:${customEffect.effectColor};`:''}text-decoration:underline;'>${customEffect.customImg?`<img class='status-icon' src='${customEffect.customImg}' alt='custom_icon' />`:''}${customEffect.name}</span>`
+        return `<span class='center-element' contenteditable='false' style='${customEffect.effectColor?`color:${customEffect.effectColor};`:''}text-decoration:underline;'>${customEffect.customImg?`<img class='status-icon' src='${customEffect.customImg}' alt='custom_icon' />`:''}${customEffect.name}</span>`
     }
 
     useEffect(()=>{

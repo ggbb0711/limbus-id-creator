@@ -4,7 +4,8 @@
       "baseUrl": "src",
       "esModuleInterop": true,
       "moduleResolution":"node",
-      "module": "es2015"
+      "module": "es2015",
+      "types": ["node", "react"]
     },
     "include": ["src"],
     "exclude": ["build"],
