@@ -2,6 +2,10 @@
     padding: 12px;
 }
 
+.skill-effect{
+    white-space: break-spaces;
+}
+
 .skill-effect.preview{
     border: none;
 }

@@ -25,7 +25,8 @@ export default function InputOffenseSkillPage({offenseSkill,keyWordList,changeSk
         coinPow,
         skillEffect,
         skillLabel,
-        type
+        type,
+        inputId
     }=offenseSkill
 
 
@@ -98,13 +99,13 @@ export default function InputOffenseSkillPage({offenseSkill,keyWordList,changeSk
         </div>
         <div className="input-group-container">
             <div className="input-container">
-                <label className="input-label" htmlFor="skillEffect">Skill description:</label>
+                <label className="input-label" htmlFor={`skillEffect_${inputId}`}>Skill description:</label>
                 <p className="effect-guide">To enter a status effect/coin effect/attack effect, put them in square bracket with underscore instead of spacebar like [sinking_deluge]/[coin_1]/[heads_hit] -{">"} 
                     <span contentEditable={false} style={{color:"var(--Debuff-color)",textDecoration:"underline"}}><img className='status-icon' src='Images/status-effect/Sinking_Deluge.png' alt='sinking_deluge_icon' />Sinking Deluge</span>/
                     <span contentEditable={false}><img className='status-icon' src='Images/status-effect/Coin_Effect_1.png' alt='coin-effect-1' /></span>/
                     <span contentEditable={false} style={{color:'#c7ff94'}}>[Heads Hit]</span>
                 </p>
-                <EditableAutoCorrect inputId={"skillEffect"} content={skillEffect} changeHandler={onChangeAutoCorrectInput(keyWordList,"skillEffect")} matchList={keyWordList} />            
+                <EditableAutoCorrect inputId={`skillEffect_${inputId}`} content={skillEffect} changeHandler={onChangeAutoCorrectInput(keyWordList,"skillEffect")} matchList={keyWordList} />            
             </div>
         </div>
     </div>

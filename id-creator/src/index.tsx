@@ -3,7 +3,6 @@ import { createRoot } from 'react-dom/client';
 import './styles/reset.css'
 import './styles/style.css'
 import { IdInfoProvider } from './component/context/IdInfoContext';
-import { PreviewProvider } from 'component/context/PreviewContext';
 import { StatusEffectProvider } from 'component/context/StatusEffectContext';
 import {MapInteractionCSS} from "react-map-interaction"
 import InputTabContainer from 'component/InputTab/InputTabContainer/InputTabContainer';
@@ -42,34 +41,29 @@ function App():ReactElement{
     }
 
     return <div>
-    <PreviewProvider>
-            <IdInfoProvider>
-                <EgoInfoProvider>
-                    <StatusEffectProvider>
-                        <>
-                            <div className={`main-container ${isShown?"show":""}`}>
-                                <div className='preview-container'>
-                                    <MapInteractionCSS>
-                                        {(()=>{
-                                            if(mode==="IdInfo") return <IdCard ref={domRef}/>
+        <IdInfoProvider>
+            <EgoInfoProvider>
+                <StatusEffectProvider>
+                    <div className={`main-container ${isShown?"show":""}`}>
+                        <div className='preview-container'>
+                            <MapInteractionCSS>
+                                {(()=>{
+                                    if(mode==="IdInfo") return <IdCard ref={domRef}/>
 
-                                            if(mode==="EgoInfo") return <EgoCard ref={domRef}/>
-                                        })()}
-                                        
-                                    </MapInteractionCSS>
-                                </div>
-                                <InputTabContainer mode={mode}/>
-                                <ShowInputTab isShown={isShown} clickHandler={()=>setIsShown(!isShown)} />
-                                <DownloadBtn clickHandler={download}/>
-                                <ActivateSaveMenuBtn onClickHandler={()=>setActiveSaveMenu(!activeSaveMenu)} />
-                                <ChangeModeBtn mode={mode} setMode={()=>setMode(mode==="IdInfo"?"EgoInfo":"IdInfo")}/>
-                                <SaveMenu isActive={activeSaveMenu} setIsActive={setActiveSaveMenu} />
-                            </div>
-                        </>
-                    </StatusEffectProvider>
-                </EgoInfoProvider>
-            </IdInfoProvider>
-    </PreviewProvider>
+                                    if(mode==="EgoInfo") return <EgoCard ref={domRef}/>
+                                })()}
+                            </MapInteractionCSS>
+                        </div>
+                        <InputTabContainer mode={mode}/>
+                        <ShowInputTab isShown={isShown} clickHandler={()=>setIsShown(!isShown)} />
+                        <DownloadBtn clickHandler={download}/>
+                        <ActivateSaveMenuBtn onClickHandler={()=>setActiveSaveMenu(!activeSaveMenu)} />
+                        <ChangeModeBtn mode={mode} setMode={()=>setMode(mode==="IdInfo"?"EgoInfo":"IdInfo")}/>
+                        <SaveMenu isActive={activeSaveMenu} setIsActive={setActiveSaveMenu} />
+                    </div>
+                </StatusEffectProvider>
+            </EgoInfoProvider>
+        </IdInfoProvider>
     
 </div>
 }

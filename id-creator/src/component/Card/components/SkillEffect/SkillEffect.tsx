@@ -7,10 +7,11 @@ export default function SkillEffect({effect}:{effect:string}):ReactElement{
     
     return(
         <ContentEditable
-            className={`input preview`}
+            className={`input skill-effect preview`}
             innerRef={contentEditableRef}
             disabled={true}
             html={effect}
-            onChange={(e)=>{}}/>
+            onChange={(e)=>{}}
+            />
     )
 }

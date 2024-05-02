@@ -43,14 +43,6 @@ const EgoInfoProvider: React.FC<{children:ReactElement}>=({children})=>{
         }
     )
 
-    // useEffect(()=>{
-    //     if(localStorage.getItem("idInfo")) setEgoInfoValue(JSON.parse(localStorage.getItem("idInfo")))
-    // },[])
-
-    // useEffect(()=>{
-    //     localStorage.setItem("idInfo",JSON.stringify(EgoInfoValue))
-    // },[EgoInfoValue])
-
     return <egoInfo.Provider value={{EgoInfoValue,setEgoInfoValue}}>
             {children}
         </egoInfo.Provider>;

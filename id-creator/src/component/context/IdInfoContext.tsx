@@ -33,14 +33,6 @@ const IdInfoProvider: React.FC<{children:ReactElement}>=({children})=>{
         }
     )
 
-    // useEffect(()=>{
-    //     if(localStorage.getItem("idInfo")) setIdInfoValue(JSON.parse(localStorage.getItem("idInfo")))
-    // },[])
-
-    // useEffect(()=>{
-    //     localStorage.setItem("idInfo",JSON.stringify(idInfoValue))
-    // },[idInfoValue])
-
     return <idInfo.Provider value={{idInfoValue,setIdInfoValue}}>
             {children}
         </idInfo.Provider>;
