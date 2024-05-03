@@ -18,6 +18,10 @@ export default function EditableAutoCorrect({inputId,content,matchList,changeHan
     const [currentActiveChoice,setCurrentActiveChoice] = useState(0)
     const [itemList,setItemList] = useState<((string|ReactElement)[])[]>([])
     const [caretPos,setCaretPos] = useState(0)
+    //The contenteditable div keep reseting to the last character
+    //This is a state to track if a suggestion has been selected
+    //Then set the caret position to the correct position
+    const [hasSelectedSuggestion,setHasSelectedSuggestion] = useState(false)
     const enterKeyPress=useKeyPress("Enter",contentEditableRef)
     const arrowUpKeyPress = useKeyPress("ArrowUp",contentEditableRef)
     const arrowDownKeyPress = useKeyPress("ArrowDown",contentEditableRef)
@@ -38,6 +42,7 @@ export default function EditableAutoCorrect({inputId,content,matchList,changeHan
                 setActiveSuggestBox(false)
                 setItemList([])
                 setCaretPos(caretPos-foundWord[0].length+addInItem.length-2)
+                setHasSelectedSuggestion(true)
             }
         };
     }, [contentEditableRef, regex, setActiveSuggestBox, caretPos]);
@@ -80,6 +85,10 @@ export default function EditableAutoCorrect({inputId,content,matchList,changeHan
 
     useEffect(()=>{
         updateItemList()
+        if(hasSelectedSuggestion){
+            setHasSelectedSuggestion(false)
+            setEditableCaretPos(contentEditableRef.current,caretPos+1)
+        }
     },[caretPos])
     
     useEffect(()=>{
