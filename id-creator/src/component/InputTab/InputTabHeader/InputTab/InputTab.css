@@ -9,10 +9,11 @@
     cursor: pointer;
     font-size: 12px;
     min-width: 100px;
+    transition: all 0.1s;
 }
 
-.input-tab.active{
-    border: 1px solid rgba(253, 241, 18, 0.911);
+.input-tab.active,.input-tab:hover{
+    border: 1px solid var(--hover-border-color);
 }
 
 .delete-tab-icon{
