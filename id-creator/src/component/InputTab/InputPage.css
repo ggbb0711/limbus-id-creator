@@ -46,3 +46,17 @@
 .drop-down-container{
     z-index: 99;
 }
+
+.preview-skill-image{
+    width: 100px;
+    height: 100px;
+}
+
+.delete-txt{
+    font-size: 18px;
+}
+
+.fill-button-component{
+    width: 100%;
+    font-size: 18px;
+}

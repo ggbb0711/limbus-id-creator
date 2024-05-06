@@ -2,21 +2,21 @@ import { IEgoInfo } from "./IEgoInfo";
 import { IIdInfo } from "./IIdInfo";
 
 
-export interface ISaveFile{
+export interface ISaveFile<info>{
     saveName:string;
     saveTime:string;
-    saveInfo:{
-        idInfo:IIdInfo;
-        egoInfo:IEgoInfo;
-    }
+    saveInfo:info;
+    previewImg?:string;//This is optional because some user may not have this property in their local storage
 }
 
-export class SaveFile implements ISaveFile{
+export class SaveFile<info> implements ISaveFile<info>{
     saveName: string="New save file";
     saveTime: string= new Date().toLocaleString();
-    saveInfo: { idInfo: IIdInfo; egoInfo: IEgoInfo; };
-    public constructor(idInfo:IIdInfo,egoInfo:IEgoInfo){
-        this.saveInfo.idInfo=idInfo
-        this.saveInfo.egoInfo=egoInfo
+    saveInfo: info;
+    previewImg: string="";
+    public constructor(saveInfo:info,saveName:string,previewImg:string){
+        this.saveInfo = saveInfo
+        this.saveName = saveName
+        this.previewImg=previewImg
     }
 }

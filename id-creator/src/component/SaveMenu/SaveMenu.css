@@ -61,20 +61,6 @@
     border: 2px solid var(--Normal);
 }
 
-.new-save-btn,.load-save-btn,.delete-save-btn,.overwrite-save-btn{
-    font-family: "Mikodacs" , "Rubik", sans-serif;
-    border: 2px solid #453A32;
-    color: black;
-    background-color: #D3B794;
-    padding: 4px;
-}
-
-.new-save-btn:hover,.load-save-btn:hover,.delete-save-btn:hover,.overwrite-save-btn:hover{
-    background-color: black;
-    border-color: #FBB627;
-    color: #D3B794;
-}
-
 .delete-save-btn,.overwrite-save-btn,.load-save-btn{
     font-size: 12px;
 }
@@ -110,4 +96,9 @@
 .created-time{
     font-size: 12px;
     font-family: "Mikodacs" , "Rubik", sans-serif;
+}
+
+.save-preview-img{
+    width: 100px;
+    height: 100px;
 }
