@@ -32,13 +32,13 @@ function IdCardContent():ReactElement{
         <RefDownloadProvider domRef={domRef}>
             <SaveLocalMenu saveObjInfoValue={idInfoValue} setObjInfoValue={setIdInfoValue} localSaveName={'IdLocalSaves'}>
                 <div className={`main-container ${isShown?"show":""}`}>
+                    <InputTabIdInfoContainer/>
+                    <ShowInputTab isShown={isShown} clickHandler={()=>setIsShown(!isShown)} />
                     <div className='preview-container'>
                         <MapInteractionCSS>
                             <IdCard ref={domRef} />
                         </MapInteractionCSS>
                     </div>
-                    <InputTabIdInfoContainer/>
-                    <ShowInputTab isShown={isShown} clickHandler={()=>setIsShown(!isShown)} />
                 </div>
             </SaveLocalMenu>
         </RefDownloadProvider>

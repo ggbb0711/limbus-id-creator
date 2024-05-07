@@ -59,6 +59,8 @@
     --brown-pale: #453A32;
 
     --hover-border-color: #FBB627;
+
+    --header-height: 20px
 }
 
 *{
@@ -151,13 +153,13 @@ button{
 
 .main-container{
     width: 100vw;
-    height: 100vh;
+    height: 94vh;
     display: flex;
     position: relative;
 }
 
 .preview-container{
-    width: 50%;
+    width: 60%;
     background-color: rgba(6, 140, 236, 0.21);
 }
 
@@ -228,6 +230,7 @@ button{
         opacity: 95%;
         top: 1999px;
         transition: all .2s;
+        z-index: 2;
     }
 
     .main-container.show>.input-tab-container{
