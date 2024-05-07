@@ -15,12 +15,12 @@ import InputPassivePage from "component/InputTab/InputPassivePage/InputPassivePa
 import InputIdInfoStatPage from "component/InputTab/InputStatPage/InputIdInfoStatPage/InputIdInfoStatPage";
 import InputTabHeader from "component/InputTab/InputTabHeader/InputTabHeader";
 
+
 export default function InputTabIdInfoContainer():ReactElement{
     const [activeTab,setActiveTab]=useState(-1)
     const {idInfoValue,setIdInfoValue} = useIdInfoContext()
     const {statusEffect}=useStatusEffectContext()
     
-
     function deleteHandler(i:number){
         let newIndex=i
         if(newIndex<=activeTab){ 

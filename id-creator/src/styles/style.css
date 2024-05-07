@@ -15,14 +15,14 @@
     --Envy-input-page:#170023;
     --Wrath-input-page:#3B0505;
     --Gluttony-input-page:#283B09;
-    --Sloth-input-page:#463510;
+    --Sloth-input-page:#684e16;
     --Gloom-input-page:#04232B;
     --None-input-page:#332317;
 
     /* Color for the title shadow */
     --Wrath-title-shadow: #4a1b14;
     --Lust-title-shadow: #56250E;
-    --Sloth-title-shadow: #0E0A0A;
+    --Sloth-title-shadow: #393702;
     --Gluttony-title-shadow: #2A310F;
     --Gloom-title-shadow: #14343A;
     --Envy-title-shadow: #1E002C;
@@ -55,6 +55,12 @@
     --Neutral-color: #9F6A3A;
 
     --button:rgba(0, 162, 255, 0.773);
+    --white-skin-color: #D3B794;
+    --brown-pale: #453A32;
+
+    --hover-border-color: #FBB627;
+
+    --header-height: 20px
 }
 
 *{
@@ -95,12 +101,17 @@ button{
 .input{
     background: transparent;
     outline: none;
-    border: 2px solid;
+    border: 2px solid white;
     width: auto;
     font-size: inherit;
     font-family: inherit;
+    transition: all 0.1s;
     color: inherit;
-}   
+}
+
+.input:hover{
+    border-color: var(--hover-border-color);
+}
 
 .input.disable{
     background-color: rgba(255, 255, 255, 0.296);
@@ -142,20 +153,28 @@ button{
 
 .main-container{
     width: 100vw;
-    height: 100vh;
+    height: 94vh;
     display: flex;
     position: relative;
 }
 
 .preview-container{
-    width: 50%;
+    width: 60%;
     background-color: rgba(6, 140, 236, 0.21);
 }
 
 .center-element{
     display: inline-flex;
     align-items: center;
-    gap: 2px;
+    gap: 4px;
+}
+
+.center-element-vertically{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
 }
 
 .effect-guide{
@@ -175,6 +194,26 @@ button{
     background-color: var(--button);
 }
 
+.main-button{
+    font-family: "Mikodacs" , "Rubik", sans-serif;
+    border: 2px solid var(--brown-pale);
+    color: black;
+    fill: black;
+    background-color: var(--white-skin-color);
+    padding: 4px;
+    transition: all .1s ;
+    box-shadow: 2px 2px 23px -4px rgba(0,0,0,0.75) inset;
+        -webkit-box-shadow: 2px 2px 23px -4px rgba(0,0,0,0.75) inset;
+        -moz-box-shadow: 2px 2px 23px -4px rgba(0,0,0,0.75) inset;
+}
+
+.main-button:hover,.loading-button{
+    background-color: black;
+    border-color: var(--hover-border-color);
+    color: var(--white-skin-color);
+    fill: var(--white-skin-color);
+}
+
 @media screen and (max-width:800px) {
     .main-container{
         flex-direction: column;
@@ -191,6 +230,7 @@ button{
         opacity: 95%;
         top: 1999px;
         transition: all .2s;
+        z-index: 2;
     }
 
     .main-container.show>.input-tab-container{

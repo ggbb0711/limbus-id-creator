@@ -8,9 +8,17 @@ import SinnerIconInput from "../SinnerIconInput/SinnerIconInput";
 import SinnerSplashArtRepositionInput from "../SinnerSplashArtRepositionInput/SinnerSplashArtRepositionInput";
 import SinnerRarityIconInput from "../SinnerRarityInput/SinnerRarityInput";
 import Delete_icon from "Icons/Delete_icon";
+import MainButton from "utils/MainButton/MainButton";
+import Download_icon from "Icons/Download_icon";
+import { useRefDownloadContext } from "component/context/ImgUrlContext";
+import DownloadImg from "utils/Functions/DownloadImg";
+import { useSetSaveIdInfoActive } from "component/SaveMenu/SaveLocalMenu/SaveLocalMenu";
+import Save_icon from "Icons/Save_icon";
 
 export default function InputIdInfoStatPage():ReactElement{
     const {idInfoValue,setIdInfoValue} = useIdInfoContext()
+    const {setImgUrlState} = useRefDownloadContext()
+    const {isActive,setIsActive} = useSetSaveIdInfoActive()
     
     const {
         minSpeed,
@@ -63,30 +71,46 @@ export default function InputIdInfoStatPage():ReactElement{
         }
     }
 
+    function handleDownload(){
+        setImgUrlState().then((res:string)=>{
+            if(res){
+                DownloadImg(res,"customId")
+            }
+        })
+    }
 
     return <div className="input-page input-stat-page">
+        <div className="input-group-container">
+            <div className="input-container">
+                <MainButton component={<p className="center-element"><Download_icon /> Download</p>} btnClass={"main-button fill-button-component"} clickHandler={handleDownload}/>
+            </div>
+            <div className="input-container">
+                <MainButton component={<p className="center-element"><Save_icon/> Save</p>} btnClass="main-button fill-button-component" clickHandler={()=>setIsActive(!isActive)}/>
+            </div>
+        </div>
         <div className="sinner-icon-input-container">
             <p>Pick the sinner icon: </p>
             <SinnerIconInput/>
-            <p className="center-element">or upload your own icon: <UploadImgBtn onFileInputChange={onFileInputChange("sinnerIcon")}/></p>
+            <UploadImgBtn onFileInputChange={onFileInputChange("sinnerIcon")} btnTxt={"Upload sinner icon"}/>
         </div>
         <div className="sinner-color-input-container">
             <p>Pick a color for your sinner: </p>
             <input className="sinner-color-input" type="color" name="sinnerColor" id="sinnerColor" value={sinnerColor} onChange={onChangeInput}/>
         </div>
-        <div>
-            <div className="center-element">
-                <p>Upload Splash Art:  </p>
-                <UploadImgBtn onFileInputChange={onFileInputChange("splashArt")}/>
-            </div>
-        </div>
-        {splashArt?<div className="input-group-container">
-                <p className="center-element">Delete the splash art? <span className="delete-splash-art-btn" onClick={(e:React.MouseEvent<HTMLElement>)=>{setIdInfoValue({...idInfoValue,splashArt:""})}}>
-                    <Delete_icon/>
-                </span></p>
-                <p style={{textAlign:"center"}}>Control the position of the splash art by dragging and zooming on this circle:</p>
-                <SinnerSplashArtRepositionInput scale={splashArtScale} translation={splashArtTranslation} onChange={(value:{scale:number,translation:{x:number,y:number}})=>{setIdInfoValue({...idInfoValue,splashArtScale:value.scale,splashArtTranslation:value.translation})}}/>
-            </div>:<></>}
+        {splashArt?
+            <>
+                <div className="input-group-container">
+                    <p style={{textAlign:"center"}}>Control the position of the splash art by dragging and zooming on this circle:</p>
+                    <SinnerSplashArtRepositionInput scale={splashArtScale} translation={splashArtTranslation} onChange={(value:{scale:number,translation:{x:number,y:number}})=>{setIdInfoValue({...idInfoValue,splashArtScale:value.scale,splashArtTranslation:value.translation})}}/>
+                </div>
+                <div className="input-group-container">
+                    <MainButton component={<p className="center-element delete-txt"><Delete_icon/> Delete splash art</p>} clickHandler={()=>{setIdInfoValue({...idInfoValue,splashArt:""})}} btnClass="main-button"/>
+                </div>
+            </>
+           :<></>}
+
+        <UploadImgBtn onFileInputChange={onFileInputChange("splashArt")} btnTxt={"Upload splash art"}/>
+        
         <div>
             <p>Pick the sinner rarity: </p>
             <SinnerRarityIconInput/>
@@ -94,61 +118,61 @@ export default function InputIdInfoStatPage():ReactElement{
         <div className="input-group-container">
             <div className="input-container">
                 <label className="input-label" htmlFor="title">Title: </label>
-                <input type="text" className="input block" id="title" name="title" value={title} onChange={onChangeInput}/>
+                <input type="text" className="input stat-page-input-border block" id="title" name="title" value={title} onChange={onChangeInput}/>
             </div>
         </div>
         <div className="input-group-container">
             <div className="input-container">
                 <label className="input-label" htmlFor="name">Name: </label>
-                <input type="text" className="input" id="name" name="name" value={name} onChange={onChangeInput}/>
+                <input type="text" className="input stat-page-input-border" id="name" name="name" value={name} onChange={onChangeInput}/>
             </div>
         </div>
         <div className="sinner-stat-inputs">
             <div className="stat-input-container">
                 <label htmlFor="minSpeed"><img className="stat-icon" src="Images/stat/stat_speed.webp" alt="speed_icon" /></label>
                 <div>
-                    <input className="input input-number" type="number" name="minSpeed" id="minSpeed" value={minSpeed} onChange={onChangeInput}/> - 
-                    <input className="input input-number" type="number" name="maxSpeed" id="maxSpeed" value={maxSpeed} onChange={onChangeInput}/>
+                    <input className="input stat-page-input-border input-number" type="number" name="minSpeed" id="minSpeed" value={minSpeed} onChange={onChangeInput}/> - 
+                    <input className="input stat-page-input-border input-number" type="number" name="maxSpeed" id="maxSpeed" value={maxSpeed} onChange={onChangeInput}/>
                 </div>
             </div>
             <div className="stat-input-container">
                 <label htmlFor="HP"><img className="stat-icon" src="Images/stat/stat_hp.webp" alt="hp_icon" /></label>
-                <input type="number" className="input input-number" name="HP" id="HP" value={HP} onChange={onChangeInput}/>
+                <input type="number" className="input stat-page-input-border input-number" name="HP" id="HP" value={HP} onChange={onChangeInput}/>
             </div>
             <div className="stat-input-container">
                 <label htmlFor="defenseLevel"><img className="stat-icon" src="Images/stat/stat_def.webp" alt="def_icon" /></label>
-                <input type="number" className="input input-number" name="defenseLevel" id="defenseLevel" value={defenseLevel} onChange={onChangeInput}/>
+                <input type="number" className="input stat-page-input-border input-number" name="defenseLevel" id="defenseLevel" value={defenseLevel} onChange={onChangeInput}/>
             </div>
             <div className="stat-input-container">
                 <label htmlFor="staggerResist">Stagger Threshold:</label>
-                <input type="text" className="input" name="staggerResist" id="staggerResist" value={staggerResist} onChange={onChangeInput}/>
+                <input type="text" className="input stat-page-input-border" name="staggerResist" id="staggerResist" value={staggerResist} onChange={onChangeInput}/>
             </div>
         </div>
         <div  className="sinner-stat-inputs">
             <div className="stat-input-container">
                 <label htmlFor="slashResistant"><img className="stat-icon" src="Images/attack/attackt_slash.webp" alt="attackt_slash" /></label>
                 <div className="resistant-content">
-                    <div style={{color:changeResistantColor(slashResistant)}}>
-                        <p>{changeResistantText(slashResistant)}</p>
-                        <input type="number" className="input input-number" value={slashResistant} onChange={onChangeInput} name="slashResistant" id="slashResistant"/>
+                    <div>
+                        <p style={{color:changeResistantColor(slashResistant)}}>{changeResistantText(slashResistant)}</p>
+                        <input style={{color:changeResistantColor(slashResistant)}} type="number" className="input stat-page-input-border input-number" value={slashResistant} onChange={onChangeInput} name="slashResistant" id="slashResistant"/>
                     </div>
                 </div>
             </div>
             <div className="stat-input-container">
                 <label htmlFor="pierceResistant"><img className="stat-icon" src="Images/attack/attackt_pierce.webp" alt="attackt_pierce" /></label>
                 <div className="resistant-content">
-                    <div style={{color:changeResistantColor(pierceResistant)}}>
-                        <p>{changeResistantText(pierceResistant)}</p>
-                        <input type="number" className="input input-number" value={pierceResistant} onChange={onChangeInput} name="pierceResistant" id="pierceResistant"/>
+                    <div>
+                        <p style={{color:changeResistantColor(pierceResistant)}}>{changeResistantText(pierceResistant)}</p>
+                        <input style={{color:changeResistantColor(pierceResistant)}} type="number" className="input stat-page-input-border input-number" value={pierceResistant} onChange={onChangeInput} name="pierceResistant" id="pierceResistant"/>
                     </div>
                 </div>
             </div>
             <div className="stat-input-container">
                 <label htmlFor="bluntResistant"><img className="stat-icon" src="Images/attack/attackt_blunt.webp" alt="attackt_blunt" /></label>
                 <div className="resistant-content">
-                    <div style={{color:changeResistantColor(bluntResistant)}}>
-                        <p>{changeResistantText(bluntResistant)}</p>
-                        <input type="number" className="input input-number" value={bluntResistant} onChange={onChangeInput} name="bluntResistant" id="bluntResistant"/>
+                    <div>
+                        <p style={{color:changeResistantColor(bluntResistant)}}>{changeResistantText(bluntResistant)}</p>
+                        <input style={{color:changeResistantColor(bluntResistant)}} type="number" className="input stat-page-input-border input-number" value={bluntResistant} onChange={onChangeInput} name="bluntResistant" id="bluntResistant"/>
                     </div>
                 </div>
             </div>

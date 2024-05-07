@@ -1,5 +1,5 @@
 .input-tab{
-    padding: 8px;
+    padding: 0 8px;
     text-align: center;
     display: flex;
     align-items: center;
@@ -7,12 +7,14 @@
     gap: 4px;
     color: white;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 10px;
+    transition: all 0.1s;
     min-width: 100px;
+    min-height: 100%;
 }
 
-.input-tab.active{
-    border: 1px solid rgba(253, 241, 18, 0.911);
+.input-tab.active,.input-tab:hover{
+    border: 1px solid var(--hover-border-color);
 }
 
 .delete-tab-icon{
@@ -26,13 +28,13 @@
 }
 
 .tab-content{
-    max-width: 200px;
+    max-width: 100px;
     text-overflow: ellipsis;
     white-space: nowrap; 
     overflow: hidden;
 }
 
 .tab-icon{
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
 }
