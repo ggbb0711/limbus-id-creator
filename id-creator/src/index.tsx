@@ -48,7 +48,7 @@ function App():ReactElement{
             const oldIdSaves:ISaveFile<IIdInfo>[] = []
             const oldEgoSaves:ISaveFile<IEgoInfo>[] = []
 
-            oldSave.array.forEach((save:IOldLocalSaveFile) => {
+            oldSave.forEach((save:IOldLocalSaveFile) => {
                 oldIdSaves.push(new SaveFile(save.saveInfo.idInfo,save.saveName))
                 oldEgoSaves.push(new SaveFile(save.saveInfo.egoInfo,save.saveName))
             })
