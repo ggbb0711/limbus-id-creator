@@ -14,9 +14,9 @@ export class SaveFile<info> implements ISaveFile<info>{
     saveTime: string= new Date().toLocaleString();
     saveInfo: info;
     previewImg: string="";
-    public constructor(saveInfo:info,saveName:string,previewImg:string){
+    public constructor(saveInfo:info,saveName:string,previewImg?:string){
         this.saveInfo = saveInfo
         this.saveName = saveName
-        this.previewImg=previewImg
+        this.previewImg=previewImg||''
     }
 }

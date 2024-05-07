@@ -32,13 +32,13 @@ function EgoCardContent():ReactElement{
         <RefDownloadProvider domRef={domRef}>
             <SaveLocalMenu saveObjInfoValue={EgoInfoValue} setObjInfoValue={setEgoInfoValue} localSaveName={'EgoLocalSaves'}>
                 <div className={`main-container ${isShown?"show":""}`}>
-                    <div className='preview-container'>
-                        <MapInteractionCSS>
-                            <EgoCard/>
-                        </MapInteractionCSS>
-                    </div>
                     <InputTabEgoInfoContainer/>
                     <ShowInputTab isShown={isShown} clickHandler={()=>setIsShown(!isShown)} />
+                    <div className='preview-container'>
+                        <MapInteractionCSS>
+                            <EgoCard ref={domRef}/>
+                        </MapInteractionCSS>
+                    </div>
                 </div>
             </SaveLocalMenu>
         </RefDownloadProvider>
