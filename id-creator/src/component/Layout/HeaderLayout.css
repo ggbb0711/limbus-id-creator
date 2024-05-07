@@ -1,0 +1,25 @@
+.site-layout{
+    display: flex;
+    flex-flow: column;
+}
+
+.site-header{
+    padding: 4px;
+    flex: 1;
+    background-color: #4e0a06;
+    border-bottom: 1px solid #74503D;
+    box-sizing: border-box;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index:1000
+}
+
+.nav-button{
+    min-width: 80px;
+    font-size: 14px;
+}
+
+.site-content{
+    flex: 1;
+}

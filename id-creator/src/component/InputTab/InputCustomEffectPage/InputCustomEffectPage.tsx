@@ -6,6 +6,8 @@ import ChangeInputType from "../Components/ChangeInputType/ChangeInputType";
 import UploadImgBtn from "../Components/UploadImgBtn/UploadImgBtn";
 import "../InputPage.css"
 import EditableAutoCorrect from "../Components/EditableAutoCorrectInput/EditableAutoCorrect";
+import Delete_icon from "Icons/Delete_icon";
+import MainButton from "utils/MainButton/MainButton";
 
 export default function InputCustomEffectPage({customEffect,keyWordList,changeSkill,changeSkillType}:{customEffect:ICustomEffect,keyWordList:{[key:string]:string},changeSkill:(newInput:{[type:string]:string|number})=>void,changeSkillType:(newVal:string)=>void}):ReactElement{
     const {onChangeInput,onChangeFileWithName,onChangeAutoCorrectInput}=useInputs(customEffect as any,changeSkill)
@@ -14,21 +16,31 @@ export default function InputCustomEffectPage({customEffect,keyWordList,changeSk
         name,
         effectColor,
         effect,
+        customImg,
         type
     } = customEffect
     
     return <div className="input-page">
         <ChangeInputType changeSkillType={changeSkillType} type={type}/>
+        {customImg?
+            <div className="input-group-container">
+                <div className="input-container center-element">
+                    <img className="status-icon" src={customImg} alt="custom-status-img" />
+                    <MainButton component={<p className="center-element delete-txt"><Delete_icon/> Delete</p>} clickHandler={()=>changeSkill({...customEffect,customImg:""})} btnClass="main-button"/>
+                </div>
+            </div>     
+        :<></>}
         <div className="input-group-container">
             <div className="input-container center-element">
-                <p>Upload effect img: </p>
-                <UploadImgBtn onFileInputChange={onChangeFileWithName("customImg")}/>
+                <UploadImgBtn onFileInputChange={onChangeFileWithName("customImg")} btnTxt={"Upload custom img"}/>
             </div>
             <div className="input-container center-element">
                 <label htmlFor="effectColor">Choose the effect color: </label>
                 <input type="color" name="effectColor" id="effectColor" value={effectColor} onChange={onChangeInput()}/>
             </div>
         </div>
+        
+        
         <div className="input-group-container">
             <div className="input-container">
                 <label className="input-label" htmlFor="name">Effect name:</label>

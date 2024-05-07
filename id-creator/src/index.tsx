@@ -1,71 +1,64 @@
-import React, { ReactElement, useRef, useState } from 'react';
+import HeaderLayout from 'component/Layout/HeaderLayout';
+import EgoCardPage from 'component/Pages/EgoCardPage';
+import IdCardPage from 'component/Pages/IdCardPage';
+import { IEgoInfo } from 'Interfaces/IEgoInfo';
+import { IIdInfo } from 'Interfaces/IIdInfo';
+import { ISaveFile, SaveFile } from 'Interfaces/ISaveFile';
+import React, { ReactElement, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
-import './styles/reset.css'
-import './styles/style.css'
-import { IdInfoProvider } from './component/context/IdInfoContext';
-import { StatusEffectProvider } from 'component/context/StatusEffectContext';
-import {MapInteractionCSS} from "react-map-interaction"
-import InputTabContainer from 'component/InputTab/InputTabContainer/InputTabContainer';
-import ShowInputTab from 'utils/ShowInputTab/ShowInputTab';
-import * as htmlToImage from 'html-to-image';
-import DownloadBtn from 'utils/DownloadBtn/DownloadBtn';
-import { EgoInfoProvider } from 'component/context/EgoInfoContext';
-import ChangeModeBtn from 'utils/ChangeModeBtn/ChangeModeBtn';
-import { IdCard } from 'component/Card/IdCard';
-import { EgoCard } from 'component/Card/EgoCard';
-import SaveMenu from 'component/SaveMenu/SaveMenu';
-import ActivateSaveMenuBtn from 'utils/ActivateSaveMenuBtn/ActivateSaveMenuBtn';
+import { createBrowserRouter, json, RouterProvider } from 'react-router-dom';
 
 
 const root = createRoot(document.getElementById('root')!);
 
-function App():ReactElement{
-    const [isShown,setIsShown]=useState(false)
-    const [mode,setMode]=useState("IdInfo")
-    const [activeSaveMenu,setActiveSaveMenu] = useState(false)
-    const domRef=useRef(null)
+const router = createBrowserRouter([
+    {
+        path:'/',
+        element:<HeaderLayout/>,
+        children:[
+            {
+                path:"",
+                element:<IdCardPage/>
+            },
+            {
+                path:'EgoCreator',
+                element:<EgoCardPage/>
+            }
+        ]
+    },
+])
 
-    const download=async()=>{
-        try{
-            const dataUrl = await htmlToImage.toPng(domRef.current);
-
-            // download image
-            const link = document.createElement('a');
-            link.download = (mode==="IdInfo")?'customId.png':'customEgo.png';
-            link.href = dataUrl;
-            link.click();
-        }
-        catch(err){
-            console.log(err)
-        }
+interface IOldLocalSaveFile{
+    saveName:string;
+    saveTime:string;
+    saveInfo:{
+        idInfo:IIdInfo;
+        egoInfo:IEgoInfo;
     }
+}
 
-    return <div>
-        <IdInfoProvider>
-            <EgoInfoProvider>
-                <StatusEffectProvider>
-                    <div className={`main-container ${isShown?"show":""}`}>
-                        <div className='preview-container'>
-                            <MapInteractionCSS>
-                                {(()=>{
-                                    if(mode==="IdInfo") return <IdCard ref={domRef}/>
+function App():ReactElement{
+    //This is here to transfer the old local data to the new local save
+    useEffect(()=>{
+        const oldSave = JSON.parse(localStorage.getItem('SaveTabs'))
+        if(oldSave&&JSON.parse(localStorage.getItem('IdLocalSaves'))&&JSON.parse(localStorage.getItem('EgoLocalSaves'))){
+            localStorage.setItem('IdLocalSaves',JSON.stringify([]))
+            localStorage.setItem('EgoLocalSaves',JSON.stringify([]))
 
-                                    if(mode==="EgoInfo") return <EgoCard ref={domRef}/>
-                                })()}
-                            </MapInteractionCSS>
-                        </div>
-                        <InputTabContainer mode={mode}/>
-                        <ShowInputTab isShown={isShown} clickHandler={()=>setIsShown(!isShown)} />
-                        <DownloadBtn clickHandler={download}/>
-                        <ActivateSaveMenuBtn onClickHandler={()=>setActiveSaveMenu(!activeSaveMenu)} />
-                        <ChangeModeBtn mode={mode} setMode={()=>setMode(mode==="IdInfo"?"EgoInfo":"IdInfo")}/>
-                        <SaveMenu isActive={activeSaveMenu} setIsActive={setActiveSaveMenu} />
-                    </div>
-                </StatusEffectProvider>
-            </EgoInfoProvider>
-        </IdInfoProvider>
-    
-</div>
+            const oldIdSaves:ISaveFile<IIdInfo>[] = []
+            const oldEgoSaves:ISaveFile<IEgoInfo>[] = []
+
+            oldSave.array.forEach((save:IOldLocalSaveFile) => {
+                oldIdSaves.push(new SaveFile(save.saveInfo.idInfo,save.saveName))
+                oldEgoSaves.push(new SaveFile(save.saveInfo.egoInfo,save.saveName))
+            })
+
+            localStorage.setItem('IdLocalSaves',JSON.stringify(oldIdSaves))
+            localStorage.setItem('EgoLocalSaves',JSON.stringify(oldEgoSaves))
+            localStorage.removeItem('SaveTabs')
+        }
+    },[])
+    return <RouterProvider router={router}/>
 }
 
 root.render(

@@ -10,6 +10,8 @@ import DamageTypeInput from "../Components/DamageTypeInput/DamageTypeInput";
 import SinAffinityInput from "../Components/SinAffinityInput/SinAffinityInput";
 import DefenseTypeInput from "../Components/DefenseTypeInput/DefenseTypeInput";
 import EditableAutoCorrect from "../Components/EditableAutoCorrectInput/EditableAutoCorrect";
+import Delete_icon from "Icons/Delete_icon";
+import MainButton from "utils/MainButton/MainButton";
 
 export default function InputDefenseSkillPage({defenseSkill,keyWordList,changeSkill,changeSkillType}:{defenseSkill:IDefenseSkill,keyWordList:{[key:string]:string},changeSkill:(newInput:{[type:string]:string|number})=>void,changeSkillType:(newVal:string)=>void}):ReactElement{
     const {onChangeFileWithName,onChangeDropDownMenu,onChangeInput,onChangeAutoCorrectInput}=useInputs(defenseSkill as any,changeSkill)
@@ -17,6 +19,7 @@ export default function InputDefenseSkillPage({defenseSkill,keyWordList,changeSk
     const{
         skillLevel,
         skillAmt,
+        skillImage,
         atkWeight,
         damageType,
         defenseType,
@@ -35,11 +38,16 @@ export default function InputDefenseSkillPage({defenseSkill,keyWordList,changeSk
 
     return <div className="input-page input-defense-skill-page" style={{background:`var(--${skillAffinity}-input-page)`}}>
         <ChangeInputType changeSkillType={changeSkillType} type={type}/>
-        <div className="input-group-container">
-            <div className="center-element">
-                <p>Upload the skill image: </p>
-                <UploadImgBtn onFileInputChange={onChangeFileWithName("skillImage")}/>
+        {skillImage?
+            <div className="input-group-container">
+                <div className="center-element-vertically">
+                    <img className="preview-skill-image" src={skillImage} alt="custom-skill-img" />
+                    <MainButton component={<p className="center-element delete-txt"><Delete_icon/> Delete</p>} clickHandler={()=>changeSkill({...defenseSkill,skillImage:""})} btnClass="main-button"/>
+                </div>
             </div>
+        :<></>}
+        <div className="input-group-container">
+            <UploadImgBtn onFileInputChange={onChangeFileWithName("skillImage")} btnTxt={"Upload skill img"} />
         </div>
         <div className="input-group-container">
             <div className="input-container">
