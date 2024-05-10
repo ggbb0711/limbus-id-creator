@@ -1,6 +1,10 @@
 import HeaderLayout from 'component/Layout/HeaderLayout';
-import EgoCardPage from 'component/Pages/EgoCardPage';
-import IdCardPage from 'component/Pages/IdCardPage';
+import DisplayPage from 'component/Pages/DisplayPage/DisplayPage';
+import EgoCardPage from 'component/Pages/EgoCardPage/EgoCardPage';
+import IdCardPage from 'component/Pages/IdCardPage/IdCardPage';
+import ShowIdEgoPage from 'component/Pages/ShowIdEgoPage/ShowIdEgoPage';
+import UserPage from 'component/Pages/UserPage/UserPage';
+import ShowIdEgo from 'component/ShowIdEgo/ShowIdEgo';
 import { IEgoInfo } from 'Interfaces/IEgoInfo';
 import { IIdInfo } from 'Interfaces/IIdInfo';
 import { ISaveFile, SaveFile } from 'Interfaces/ISaveFile';
@@ -18,7 +22,12 @@ const router = createBrowserRouter([
         children:[
             {
                 path:"",
+                element:<UserPage/>
+            },
+            {
+                path:"IdCreator",
                 element:<IdCardPage/>
+
             },
             {
                 path:'EgoCreator',
@@ -42,20 +51,25 @@ function App():ReactElement{
     useEffect(()=>{
         const oldSave = JSON.parse(localStorage.getItem('SaveTabs'))
         if(oldSave&&JSON.parse(localStorage.getItem('IdLocalSaves'))&&JSON.parse(localStorage.getItem('EgoLocalSaves'))){
-            localStorage.setItem('IdLocalSaves',JSON.stringify([]))
-            localStorage.setItem('EgoLocalSaves',JSON.stringify([]))
-
-            const oldIdSaves:ISaveFile<IIdInfo>[] = []
-            const oldEgoSaves:ISaveFile<IEgoInfo>[] = []
-
-            oldSave.forEach((save:IOldLocalSaveFile) => {
-                oldIdSaves.push(new SaveFile(save.saveInfo.idInfo,save.saveName))
-                oldEgoSaves.push(new SaveFile(save.saveInfo.egoInfo,save.saveName))
-            })
-
-            localStorage.setItem('IdLocalSaves',JSON.stringify(oldIdSaves))
-            localStorage.setItem('EgoLocalSaves',JSON.stringify(oldEgoSaves))
-            localStorage.removeItem('SaveTabs')
+            try{
+                localStorage.setItem('IdLocalSaves',JSON.stringify([]))
+                localStorage.setItem('EgoLocalSaves',JSON.stringify([]))
+    
+                const oldIdSaves:ISaveFile<IIdInfo>[] = []
+                const oldEgoSaves:ISaveFile<IEgoInfo>[] = []
+    
+                oldSave.forEach((save:IOldLocalSaveFile) => {
+                    oldIdSaves.push(new SaveFile(save.saveInfo.idInfo,save.saveName))
+                    oldEgoSaves.push(new SaveFile(save.saveInfo.egoInfo,save.saveName))
+                })
+    
+                localStorage.setItem('IdLocalSaves',JSON.stringify(oldIdSaves))
+                localStorage.setItem('EgoLocalSaves',JSON.stringify(oldEgoSaves))
+                localStorage.removeItem('SaveTabs')
+            }
+            catch(err){
+                console.log(err)
+            }
         }
     },[])
     return <RouterProvider router={router}/>
