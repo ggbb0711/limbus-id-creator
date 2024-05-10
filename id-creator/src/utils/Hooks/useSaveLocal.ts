@@ -6,40 +6,24 @@ export default function useSaveLocal<SaveObj>(LocalSaveDataName:string){
     const [saveData,setSaveData] = useState<ISaveFile<SaveObj>[]>([]) 
 
     const changeSaveName=useCallback((index:number,newName:string)=>{
-        try{
-            const newSaveData = [...saveData]
-            newSaveData[index].saveName=newName
-            setSaveData(newSaveData)
-            localStorage.setItem(LocalSaveDataName,JSON.stringify(newSaveData))
-        }
-        catch(err){
-            console.log(err)
-        }
-        
+        const newSaveData = [...saveData]
+        newSaveData[index].saveName=newName
+        setSaveData(newSaveData)
+        localStorage.setItem(LocalSaveDataName,JSON.stringify(newSaveData))
     },[saveData])
 
     const deleteSave = useCallback((index:number)=>{
-        try {
-            const newSaveData = [...saveData]
-            newSaveData.splice(index,1)
-            setSaveData(newSaveData)
-            localStorage.setItem(LocalSaveDataName,JSON.stringify(newSaveData))    
-        } catch (error) {
-            console.log(error)
-        }
-        
+        const newSaveData = [...saveData]
+        newSaveData.splice(index,1)
+        setSaveData(newSaveData)
+        localStorage.setItem(LocalSaveDataName,JSON.stringify(newSaveData))
     },[saveData])
 
     const createSave = useCallback((saveObj: ISaveFile<SaveObj>)=>{
-        try {
-            const newSaveData = [...saveData]
-            newSaveData.unshift(saveObj)
-            setSaveData(newSaveData)
-            localStorage.setItem(LocalSaveDataName,JSON.stringify(newSaveData))
-        } catch (error) {
-            console.log(error)
-        }
-        
+        const newSaveData = [...saveData]
+        newSaveData.unshift(saveObj)
+        setSaveData(newSaveData)
+        localStorage.setItem(LocalSaveDataName,JSON.stringify(newSaveData))
     },[saveData])
 
     const loadSave = useCallback((index: number)=>{
@@ -47,40 +31,23 @@ export default function useSaveLocal<SaveObj>(LocalSaveDataName:string){
     },[saveData])
 
     const overwriteSave = useCallback((index: number,saveObj:ISaveFile<SaveObj>)=>{
-        try{
-            const newSaveData = [...saveData]
-            newSaveData[index]=saveObj
-            setSaveData(newSaveData)
-            localStorage.setItem(LocalSaveDataName,JSON.stringify(newSaveData))
-        }
-        catch(err){
-            console.log(err)
-        }
-       
+        const newSaveData = [...saveData]
+        newSaveData[index]=saveObj
+        setSaveData(newSaveData)
+        localStorage.setItem(LocalSaveDataName,JSON.stringify(newSaveData))
     },[saveData])
 
     useEffect(()=>{
-        try{
-            if(localStorage.getItem(LocalSaveDataName)){
-                setSaveData(JSON.parse(localStorage.getItem(LocalSaveDataName)))
-            }
-            else{
-                localStorage.setItem(LocalSaveDataName,JSON.stringify([]))
-            }
+        if(localStorage.getItem(LocalSaveDataName)){
+            setSaveData(JSON.parse(localStorage.getItem(LocalSaveDataName)))
         }
-        catch(err){
-            console.log(err)
+        else{
+            localStorage.setItem(LocalSaveDataName,JSON.stringify([]))
         }
-        
     },[])
 
     useEffect(()=>{
-        try{
-            setSaveData(JSON.parse(localStorage.getItem(LocalSaveDataName)))
-        }
-        catch(err){
-            console.log(err)
-        }
+        setSaveData(JSON.parse(localStorage.getItem(LocalSaveDataName)))
     },[JSON.stringify(saveData)])
 
     return {saveData,changeSaveName,deleteSave,createSave,loadSave,overwriteSave}

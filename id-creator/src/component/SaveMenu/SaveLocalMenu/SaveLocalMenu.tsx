@@ -60,12 +60,9 @@ const SaveLocalMenu: React.FC<ISaveLocalMenu>=({children,localSaveName,saveObjIn
                             )}
                         </>:<p style={{fontFamily:"'Mikodacs' , 'Rubik', sans-serif"}}>There is no save on your local machine</p>}
                     </div>
-                    <p>Note: there can only be 3 local save</p>
                     <MainButton component={"Create a new save"} clickHandler={async()=>{
-                            if(saveData.length>3){
-                                const newSave = new SaveFile(saveObjInfoValue,`New save file (${saveData.length+1})`,"")
-                                createSave(newSave)
-                            }
+                            const newSave = new SaveFile(saveObjInfoValue,`New save file (${saveData.length+1})`,"")
+                            createSave(newSave)
                         }
                     } btnClass={"main-button"}/>
                 </div>
