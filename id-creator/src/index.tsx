@@ -1,4 +1,3 @@
-import { GoogleOAuthProvider } from '@react-oauth/google';
 import HeaderLayout from 'component/Layout/HeaderLayout';
 import EgoCardPage from 'component/Pages/EgoCardPage/EgoCardPage';
 import IdCardPage from 'component/Pages/IdCardPage/IdCardPage';
@@ -69,9 +68,10 @@ function App():ReactElement{
     //     }
         
     // },[])
-    return <GoogleOAuthProvider clientId=''>
-        <RouterProvider router={router}/>
-    </GoogleOAuthProvider> 
+    // return <GoogleOAuthProvider clientId=''>
+    //     <RouterProvider router={router}/>
+    // </GoogleOAuthProvider> 
+    return <RouterProvider router={router}/>
 }
 
 root.render(
