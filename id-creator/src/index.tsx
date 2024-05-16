@@ -1,10 +1,6 @@
 import HeaderLayout from 'component/Layout/HeaderLayout';
 import EgoCardPage from 'component/Pages/EgoCardPage/EgoCardPage';
 import IdCardPage from 'component/Pages/IdCardPage/IdCardPage';
-import UserPage from 'component/Pages/UserPage/UserPage';
-import { IEgoInfo } from 'Interfaces/IEgoInfo';
-import { IIdInfo } from 'Interfaces/IIdInfo';
-import { ISaveFile, SaveFile } from 'Interfaces/ISaveFile';
 import React, { ReactElement, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, json, RouterProvider } from 'react-router-dom';
