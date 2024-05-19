@@ -8,6 +8,7 @@ import getCaretCharacterOffsetWithin from "component/util/getCaretCharacterOffse
 import getCaretHTMLCharacterOffSet from "component/util/getCaretHTMLCharacterOffSet";
 import ecapeRegExp from "component/util/ecapeRegExp";
 import setEditableCaretPos from "component/util/setEditableCaretPos";
+import getTextInTag from "component/util/getTextInTag";
 
 
 export default function EditableAutoCorrect({inputId,content,matchList,changeHandler}:{inputId:string,content:string,changeHandler:(e:React.ChangeEvent<HTMLInputElement>)=>void,matchList:{[key:string]:string}}):ReactElement{
@@ -28,10 +29,14 @@ export default function EditableAutoCorrect({inputId,content,matchList,changeHan
     const regex = /(?<=\[)([\-+\w]*)$/g
     
     const selectSuggestion = useMemo(() => {
+        //The item is an array. The first element is the keyword. The second is the html element
         return function(item) {
             if(contentEditableRef.current){
                 const addInItem =`${item[0]}] ` 
+                
+                //The index of the current carret including html tags and attributes
                 const innerHTMLIndex = getCaretHTMLCharacterOffSet(contentEditableRef.current.innerHTML,caretPos)
+                //The word that been detected by auto correct
                 const foundWord=contentEditableRef.current.innerHTML.substring(0,innerHTMLIndex+1).match(regex)
                 const firstHalf = contentEditableRef.current.innerHTML.substring(0,innerHTMLIndex+1).replace(regex,addInItem)
                 const secondHalf =  contentEditableRef.current.innerHTML.substring(innerHTMLIndex+1)
@@ -39,9 +44,10 @@ export default function EditableAutoCorrect({inputId,content,matchList,changeHan
                 contentEditableRef.current.innerHTML = firstHalf + secondHalf
                 const event = new Event("input", { bubbles: true })
                 contentEditableRef.current.dispatchEvent(event)
+
                 setActiveSuggestBox(false)
                 setItemList([])
-                setCaretPos(caretPos-foundWord[0].length+addInItem.length-2)
+                setCaretPos(caretPos-foundWord[0].length+getTextInTag(item[1]).length)
                 setHasSelectedSuggestion(true)
             }
         };
