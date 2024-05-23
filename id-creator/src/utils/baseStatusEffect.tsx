@@ -435,6 +435,9 @@ export const baseStatusEffect={
     "clash_lose":
         "<span class='center-element' contenteditable='false' style='color:#e30000'>[Clash Lose]</span>",
 
+    "clash_tie":
+        "<span class='center-element' contenteditable='false' style='color:#009100'>[Clash Tie]</span>",
+
     "on_evade":
         "<span class='center-element' contenteditable='false' style='color:#94f140'>[On Evade]</span>",
 
