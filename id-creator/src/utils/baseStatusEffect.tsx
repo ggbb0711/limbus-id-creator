@@ -314,6 +314,9 @@ export const baseStatusEffect={
     
     "tremor_-_fracture":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Tremor_-_Fracture.png' alt='tremor_fracture_icon' />Tremor - Fracture</span>",
+    
+    "tremor_-_reverb":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Tremor_-_Reverb.png' alt='tremor_reverb_icon' />Tremor - Reverb</span>",
 
     "poison":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Poison.png' alt='poison_icon' />Poison</span>",
@@ -398,6 +401,9 @@ export const baseStatusEffect={
     
     "makeshift_surgery":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Makeshift_Surgery.png' alt='makeshift_surgery_icon' />Makeshift Surgery</span>",
+    
+    "blubberbubble":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Blubberbubble.png' alt='blubberbubble_icon' />Blubberbubble</span>",
     
     "amplitude_conversion":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Amplitude_Conversion.png' alt='amplitude_conversion_icon' />Amplitude Conversion</span>",
