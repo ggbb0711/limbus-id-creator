@@ -126,7 +126,7 @@ export const baseStatusEffect={
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Poise.png' alt='poise_icon' />Poise</span>",
         
 
-        "charge":
+    "charge":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Charge.png' alt='charge_icon' />Charge</span>",
     
     "ego_resource_amp":
@@ -317,6 +317,9 @@ export const baseStatusEffect={
     
     "tremor_-_reverb":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Tremor_-_Reverb.png' alt='tremor_reverb_icon' />Tremor - Reverb</span>",
+    
+    "tremor_-_everlasting":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Tremor_-_Everlasting.png' alt='tremor_everlasting_icon' />Tremor - Everlasting</span>",
 
     "poison":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Poison.png' alt='poison_icon' />Poison</span>",
@@ -408,6 +411,9 @@ export const baseStatusEffect={
     "amplitude_conversion":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Amplitude_Conversion.png' alt='amplitude_conversion_icon' />Amplitude Conversion</span>",
     
+    "amplitude_entanglement":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Amplitude_Entanglement.png' alt='amplitude_entanglement_icon' />Amplitude Entanglement</span>",
+
     "coin_1":
         "<span class='center-element' contenteditable='false'><img class='status-icon' src='Images/status-effect/Coin_Effect_1.png' alt='coin-effect-1' /></span>",
     
