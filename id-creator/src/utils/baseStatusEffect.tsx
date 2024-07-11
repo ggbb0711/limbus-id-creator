@@ -164,7 +164,19 @@ export const baseStatusEffect={
     
     "remembrance":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Remembrance.png' alt='remembrance_icon' />Remembrance</span>",
-    
+
+    "borrowed_time":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Borrowed_Time.png' alt='borrowed_time_icon' />Borrowed Time</span>",
+
+    "erudition":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Erudition.png' alt='erudition_icon' />Erudition</span>",
+
+    "gaze_of_contempt":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Gaze_of_Contempt.png' alt='gaze_of_contempt_icon' />Gaze of Contempt</span>",
+        
+    "contempt_of_the_gaze":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Contempt_of_the_Gaze.png' alt='contempt_of_the_gaze_icon' />Contempt of the Gaze</span>",
+
     "slash_dmg_down":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Slash_DMG_Down.png' alt='slash_dmg_down_icon' />Slash DMG Down</span>",
     
@@ -321,6 +333,9 @@ export const baseStatusEffect={
     "tremor_-_everlasting":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Tremor_-_Everlasting.png' alt='tremor_everlasting_icon' />Tremor - Everlasting</span>",
 
+    "tremor_-_chain":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Tremor_-_Chain.png' alt='tremor_chain_icon' />Tremor - Chain</span>",
+
     "poison":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Poison.png' alt='poison_icon' />Poison</span>",
     
@@ -375,6 +390,9 @@ export const baseStatusEffect={
     "before_the_king_in_binds":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Before_the_King_in_Binds.png' alt='before_the_king_in_binds_icon' />Before the King in Binds</span>",
     
+    "time_moratorium":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Time_Moratorium.png' alt='time_moratorium_icon' />Time Moratorium</span>",
+
     "aggro":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Aggro.png' alt='aggro_icon' />Aggro</span>",
     
