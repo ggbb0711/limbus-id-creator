@@ -22,6 +22,9 @@ export default function EgoHeader():ReactElement{
             case "ALEPH":{
                 return "Images/ego-level/ALEPH_level.png"
             }
+            case "UNDEFINED":{
+                return "Images/ego-level/undef.png"
+            }
         }
     }
 
