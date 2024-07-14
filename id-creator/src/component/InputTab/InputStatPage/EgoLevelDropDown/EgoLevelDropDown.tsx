@@ -37,6 +37,13 @@ export const EgoLevelDropDown:{[key:string]:dropDownEl}={
             <img className="ego-level-drop-down-icon" src="Images/ego-level/ALEPH_Level.png" alt="ALEPH-level-drop-down" />
         </div>,
         value:"ALEPH"
+    },
+    UNDEFINED:{
+        el:
+        <div>
+            <img className="ego-level-drop-down-icon" src="Images/ego-level/undef.png" alt="UNDEF-level-drop-down" />
+        </div>,
+        value:"UNDEFINED"
     }
 }
 
