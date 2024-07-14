@@ -41,7 +41,7 @@
     --Sinclair-color: #8b9c15;
     --Outis-color: #325339;
     --Gregor-color: #69350b;
-    --Fatal:#601A1F;
+    --Fatal:red;
     --Endure:#9B9899;
     --Normal:#DABD97;
     --title-color:#A16840;
@@ -57,19 +57,34 @@
     --button:rgba(0, 162, 255, 0.773);
     --white-skin-color: #D3B794;
     --brown-pale: #453A32;
+    --background-black:rgb(35,36,31);
+    --red-brown: #4e0a06;
 
     --hover-border-color: #FBB627;
+    --loading-background-color: rgba(255, 255, 255, 0.503);
+    --popup-background-black: rgba(0, 0, 0, 0.303);
 
-    --header-height: 20px
+    --layout-max-width: 1200px;
+    --padding-layout-width: 16px;
+    --id-ego-card: 300px;
+    --id-ego-mobile-card: 150px
 }
 
 *{
-    font-family: "mikioDacs";
+    font-family: "Rubik", sans-serif; 
     word-break: break-word;
+}
+
+body{
+    background: var(--background-black);
 }
 
 label{
     cursor: pointer;
+}
+
+a{
+    text-decoration: none;
 }
 
 @font-face {
@@ -102,7 +117,6 @@ button{
     background: transparent;
     outline: none;
     border: 2px solid white;
-    width: auto;
     font-size: inherit;
     font-family: inherit;
     transition: all 0.1s;
@@ -151,17 +165,7 @@ button{
     color: #9F6A3A;
 }
 
-.main-container{
-    width: 100vw;
-    height: 94vh;
-    display: flex;
-    position: relative;
-}
 
-.preview-container{
-    width: 60%;
-    background-color: rgba(6, 140, 236, 0.21);
-}
 
 .center-element{
     display: inline-flex;
@@ -194,6 +198,7 @@ button{
     background-color: var(--button);
 }
 
+
 .main-button{
     font-family: "Mikodacs" , "Rubik", sans-serif;
     border: 2px solid var(--brown-pale);
@@ -205,35 +210,51 @@ button{
     box-shadow: 2px 2px 23px -4px rgba(0,0,0,0.75) inset;
         -webkit-box-shadow: 2px 2px 23px -4px rgba(0,0,0,0.75) inset;
         -moz-box-shadow: 2px 2px 23px -4px rgba(0,0,0,0.75) inset;
+    min-width: 95px;
+    font-size: 14px;
 }
 
-.main-button:hover,.loading-button{
+.main-button:hover,.main-button.active,.loading-button{
     background-color: black;
     border-color: var(--hover-border-color);
     color: var(--white-skin-color);
     fill: var(--white-skin-color);
 }
 
-@media screen and (max-width:800px) {
-    .main-container{
-        flex-direction: column;
-        overflow: hidden;
-    }
+.main-button.active{
+    cursor: auto;
+}
 
-    .preview-container{
-        width: 100%;
-    }
+.loader {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    position: relative;
+    animation: rotate 1s linear infinite
+}
+.loader::before {
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
+    inset: 0px;
+    border-radius: 50%;
+    border: 5px solid #FFF;
+    animation: prixClipFix 2s linear infinite ;
+}
 
-    .main-container>.input-tab-container{
-        position: absolute;
-        width: 100%;
-        opacity: 95%;
-        top: 1999px;
-        transition: all .2s;
-        z-index: 2;
-    }
+.warning-message{
+    font-size: 10px;
+    color: red;
+}
 
-    .main-container.show>.input-tab-container{
-        top: 0;
-    }
+@keyframes rotate {
+    100%   {transform: rotate(360deg)}
+}
+
+@keyframes prixClipFix {
+    0%   {clip-path:polygon(50% 50%,0 0,0 0,0 0,0 0,0 0)}
+    25%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 0,100% 0,100% 0)}
+    50%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)}
+    75%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 100%)}
+    100% {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 0)}
 }
