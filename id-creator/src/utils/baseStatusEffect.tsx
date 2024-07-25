@@ -125,10 +125,12 @@ export const baseStatusEffect={
     "poise":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Poise.png' alt='poise_icon' />Poise</span>",
         
-
     "charge":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Charge.png' alt='charge_icon' />Charge</span>",
     
+    "load":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Load.png' alt='load_icon' />Load</span>",
+
     "ego_resource_amp":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/E.G.O_Resource_Amp.png' alt='ego_resource_amp_icon' />E.G.O Resource Amp</span>",
     
