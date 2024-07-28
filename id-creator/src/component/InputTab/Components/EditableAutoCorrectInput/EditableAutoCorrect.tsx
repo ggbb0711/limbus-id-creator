@@ -98,7 +98,13 @@ export default function EditableAutoCorrect({inputId,content,matchList,changeHan
     },[caretPos])
     
     useEffect(()=>{
-        if((enterKeyPress)&&itemList.length>0&&activeSuggestBox) selectSuggestion(itemList[currentActiveChoice])
+        //Some user are experience bug when pressing enter here
+        //Using try catch as a temp fix
+        try {
+            if((enterKeyPress)&&itemList.length>0&&activeSuggestBox) selectSuggestion(itemList[currentActiveChoice])
+        } catch (error) {
+            console.log(error)            
+        }
     },[enterKeyPress])
 
     useEffect(()=>{
