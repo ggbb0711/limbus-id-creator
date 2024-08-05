@@ -494,6 +494,9 @@ export const baseStatusEffect={
     "indiscriminate":
         "<span class='center-element' contenteditable='false' style='color:#ff0000'>[Indiscriminate]</span>",
     
+    "unclashable":
+        "<span class='center-element' contenteditable='false' style='color:#ff0000'>[Unclashable]</span>",
+
     "combat_start":
         "<span class='center-element' contenteditable='false' style='color:#94f140'>[Combat start]</span>",
 }
