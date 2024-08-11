@@ -1,10 +1,4 @@
-using System;
-using System.IO;
-using System.Net;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using CloudinaryDotNet.Actions;
-using Microsoft.AspNetCore.Http;
 
 namespace Server.Util
 {
@@ -102,6 +96,24 @@ namespace Server.Util
             {
                 return false;
             }
+        }
+
+        public static async Task<bool> CheckUrlSize(string url,long maxFileSize)
+        {
+            //For url
+            if(Uri.TryCreate(url,UriKind.Absolute, out _))
+            {
+                var urlSize = await FileHelper.GetImageSizeFromUrl(url);
+                return urlSize <= maxFileSize && urlSize>0;
+            }
+
+            //For base 64
+            if(FileHelper.IsBase64String(url.Replace("data:image/png;base64,","")))
+            {
+                var urlSize = Convert.FromBase64String(url).Length; 
+                return urlSize <=maxFileSize && urlSize>0;
+            }
+            return true;
         }
     }
 }

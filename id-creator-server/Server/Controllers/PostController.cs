@@ -139,7 +139,6 @@ namespace Server.Controllers
                     page = page,
                     limit = limit,
                 };
-                Console.WriteLine(JsonConvert.SerializeObject(option));
                 var foundPost = await _postService.FindPosts(option);
                 var postListResponse = new PostListResponseDTO()
                 {

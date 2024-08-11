@@ -1,0 +1,41 @@
+version: "3.4"
+
+services:
+
+  rabbitmq:
+    image: "rabbitmq:management"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "localhost", "5672" ]
+      interval: 5s
+      timeout: 15s
+      retries: 1
+  
+  webapi:
+    image: server/server:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - rabbitmq
+    restart: on-failure
+    environment:
+      - TokenEndpoint=${TOKEN_ENDPOINT}
+      - SessionExpiredDay=${SESSION_EXPIRED_DAY}
+      - DefaultConnection=${DEFAULT_CONNECTION}
+      - FrontendUri=${FRONTEND_URI}
+      - CookieSessionProtectorSecret=${COOKIE_SESSION_PROTECTOR_SECRET}
+      - CLOUDINARY_URL=${CLOUDINARY_URL}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
+      - CLOUDINARY_IMG_URL_START=${CLOUDINARY_IMG_URL_START}
+      - MODE=${MODE}
+      - LISTEN_ON={LISTEN_ON}
+volumes:
+  pgdata:

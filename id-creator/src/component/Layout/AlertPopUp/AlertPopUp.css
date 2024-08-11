@@ -13,7 +13,7 @@
     border: 2px solid var(--brown-pale);
     padding: 8px;    
     min-width: 100px;
-    max-width: 200px;
+    max-width: 250px;
     font-family: "Rubik", sans-serif; 
     display: flex;
     justify-content: space-between;

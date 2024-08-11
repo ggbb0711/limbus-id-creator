@@ -147,7 +147,7 @@ namespace Server.Controllers
 
         [HttpPost("create")]
         [EnableCors("AllowOrigin")]
-        public async Task<IActionResult> CreateNewIDSave([FromForm] string SaveData, [FromForm] List<IFormFile> skillImages, [FromForm] int[] imageIndex,[FromForm] IFormFile? thumbnailImage,[FromForm] IFormFile? splashArtImg,[FromForm] IFormFile? sinnerIcon)
+        public async Task<IActionResult> CreateNewIDSave( [FromForm] List<IFormFile> skillImages, [FromForm] int[] imageIndex,[FromForm] IFormFile? thumbnailImage,[FromForm] IFormFile? splashArtImg,[FromForm] IFormFile? sinnerIcon)
         {
             var response = new ResponseService<SaveInfoResponseDTO<SavedIDRequestDTO>>();
             var session = (Session?) HttpContext.Items["Session"];
@@ -212,7 +212,7 @@ namespace Server.Controllers
 
         [HttpPost("update")]
         [EnableCors("AllowOrigin")]
-        public async Task<IActionResult> UpdateSave([FromForm] string SaveData, [FromForm] List<IFormFile> skillImages, [FromForm] int[] imageIndex,[FromForm] IFormFile? thumbnailImage,[FromForm] IFormFile? splashArtImg,[FromForm] IFormFile? sinnerIcon)
+        public async Task<IActionResult> UpdateSave( [FromForm] List<IFormFile> skillImages, [FromForm] int[] imageIndex,[FromForm] IFormFile? thumbnailImage,[FromForm] IFormFile? splashArtImg,[FromForm] IFormFile? sinnerIcon)
         {
             var response = new ResponseService<SaveInfoResponseDTO<SavedIDRequestDTO>>();
             var session = (Session?) HttpContext.Items["Session"];

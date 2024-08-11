@@ -48,7 +48,8 @@ builder.Services.AddCors(options=>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<ServerDbContext>(options =>options.UseNpgsql(Environment.GetEnvironmentVariable("DefaultConnection")));
+if(Environment.GetEnvironmentVariable("MODE").Equals("Published")) builder.Services.AddDbContext<ServerDbContext>(options =>options.UseNpgsql(Environment.GetEnvironmentVariable("RemoteConnection")));
+else builder.Services.AddDbContext<ServerDbContext>(options =>options.UseNpgsql(Environment.GetEnvironmentVariable("DefaultConnection")));
 builder.Services.AddSingleton<RabbitMQUploadingImagePublisher>();
 builder.Services.AddHostedService<RabbitMQUploadingImageConsumerService>();
 builder.Services.AddSingleton<RabbitMQDeletingImagePublisher>();
@@ -82,29 +83,29 @@ var app = builder.Build();
 
 if(Environment.GetEnvironmentVariable("MODE").Equals("Published"))
 {
-using (var serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
-{
-    var logger = serviceScope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-    var db = serviceScope.ServiceProvider.GetRequiredService<ServerDbContext>().Database;
-
-    logger.LogInformation("Migrating database...");
-
-    while (!db.CanConnect())
+    using (var serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
     {
-        logger.LogInformation("Database not ready yet; waiting...");
-        Thread.Sleep(1000);
-    }
+        var logger = serviceScope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+        var db = serviceScope.ServiceProvider.GetRequiredService<ServerDbContext>().Database;
 
-    try
-    {
-        serviceScope.ServiceProvider.GetRequiredService<ServerDbContext>().Database.Migrate();
-        logger.LogInformation("Database migrated successfully.");
+        logger.LogInformation("Migrating database...");
+
+        while (!db.CanConnect())
+        {
+            logger.LogInformation("Database not ready yet; waiting...");
+            Thread.Sleep(1000);
+        }
+
+        try
+        {
+            serviceScope.ServiceProvider.GetRequiredService<ServerDbContext>().Database.Migrate();
+            logger.LogInformation("Database migrated successfully.");
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "An error occurred while migrating the database.");
+        }
     }
-    catch (Exception ex)
-    {
-        logger.LogError(ex, "An error occurred while migrating the database.");
-    }
-}
 }
 
 
@@ -177,6 +178,11 @@ app.UseWhen(ctx=>ctx.Request.Path.StartsWithSegments("/API/SaveEGOInfo/update"),
 app.UseWhen(ctx=>ctx.Request.Path.StartsWithSegments("/API/Post"), app =>
 {
     app.UseLoginMiddleware();
+});
+
+app.UseWhen(ctx=>ctx.Request.Path.StartsWithSegments("/API/Post/create"), app =>
+{
+    app.UseCheckPostUrlMiddlewareExtension();
 });
 
 app.UseWhen(ctx=>ctx.Request.Path.StartsWithSegments("/API/Comment"), app =>

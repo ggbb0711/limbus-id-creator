@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Net;
 using System.Reflection;
 using System.Text.Json;
 using Server.Interface.Repositories;
@@ -77,6 +78,15 @@ namespace Server.Util
                 }
             } 
             return true;
+        }
+
+        public static async Task GenerateErrorMsg(HttpContext context,string errMsg, HttpStatusCode statusCode)
+        {
+            context.Response.StatusCode = (int)statusCode;
+            await context.Response.WriteAsync(System.Text.Json.JsonSerializer.Serialize(new ResponseService<string?>()
+            {
+                msg = errMsg
+            }));
         }
     }
 }
