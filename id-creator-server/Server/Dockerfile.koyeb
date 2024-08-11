@@ -1,2 +1,2 @@
-FROM ./docker-compose.yml
+FROM koyeb/docker-compose.yml
 COPY . /app
