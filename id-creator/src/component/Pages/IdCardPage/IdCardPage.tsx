@@ -57,7 +57,7 @@ function IdCardContext():ReactElement{
         //Setting the domref for downloading
         setDomRef(domRef)
         //Set height
-        setIsHeight(window.innerHeight-document.querySelector(".site-header").clientHeight-1)
+        setIsHeight(Math.floor(window.innerHeight)-Math.floor(document.querySelector(".site-header").clientHeight)-1)
     },[])
 
     useEffect(()=>{
