@@ -56,6 +56,7 @@ export default function useSaveLocal<SaveObj>(LocalSaveDataName:string){
         
     },[saveData])
 
+
     useEffect(()=>{
         try {
             if(LocalSaveDataName){
@@ -66,14 +67,6 @@ export default function useSaveLocal<SaveObj>(LocalSaveDataName:string){
                     localStorage.setItem(LocalSaveDataName,JSON.stringify([]))
                 }   
             }
-        } catch (error) {
-            console.log(error)
-        }
-    },[LocalSaveDataName])
-
-    useEffect(()=>{
-        try {
-            setSaveData(JSON.parse(localStorage.getItem(LocalSaveDataName)))            
         } catch (error) {
             console.log(error)
         }
