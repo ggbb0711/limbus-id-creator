@@ -37,5 +37,3 @@ services:
       - CLOUDINARY_IMG_URL_START=${CLOUDINARY_IMG_URL_START}
       - MODE=${MODE}
       - LISTEN_ON={LISTEN_ON}
-volumes:
-  pgdata:
