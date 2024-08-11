@@ -1,20 +1,24 @@
+using Server.Interface.UtilInterfaces;
+using Server.Models;
+
 namespace Server.DTOs.Requests.SavedInfo.Skills
 {
-    public class RequestOffenseSkill
+    public class RequestOffenseSkill:IRequestSkillType
     {
-        public int SkillLevel { get; set; } = 0;
-        public int SkillAmt { get; set; } = 1;
-        public int AtkWeight { get; set; } = 1;
-        public Guid InputId { get; set; }
-        public string DamageType { get; set; } = "Slash";
-        public string Name { get; set; } = "";
-        public string SkillAffinity { get; set; } = "Wrath";
-        public int BasePower { get; set; } = 0;
-        public int CoinNo { get; set; } = 1;
-        public int CoinPow { get; set; } = 0;
-        public string SkillImage { get; set; } = "";
-        public string SkillEffect { get; set; } = "";
-        public string SkillLabel { get; set; } = "SKILL";
-        public string Type { get; set; } = "OffenseSkill";
+        public int skillLevel { get; set; } = 0;
+        public int skillAmt { get; set; } = 1;
+        public int atkWeight { get; set; } = 1;
+        public Guid inputId { get; set; }
+        public string damageType { get; set; } = "Slash";
+        public string name { get; set; } = "";
+        public string skillAffinity { get; set; } = "Wrath";
+        public int basePower { get; set; } = 0;
+        public int coinNo { get; set; } = 1;
+        public int coinPow { get; set; } = 0;
+        public string skillImage { get; set; } = "";
+        public string skillEffect { get; set; } = "";
+        public string skillLabel { get; set; } = "SKILL";
+        public string type { get; set; } = "OffenseSkill";
+
     }
 }

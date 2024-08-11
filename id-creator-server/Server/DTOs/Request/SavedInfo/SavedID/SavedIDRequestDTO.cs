@@ -2,29 +2,25 @@ namespace Server.DTOs.Requests.SavedInfo.SavedID
 {
     public class SavedIDRequestDTO
     {
-        public string Title { get; set; }
-        public string Name { get; set; }
-        public string SplashArt { get; set; }
-        public double SplashArtScale { get; set; }
-        public SplashArtTranslationObj SplashArtTranslation { get; set; }
-        public int HP { get; set; }
-        public int MinSpeed { get; set; }
-        public int MaxSpeed { get; set; }
-        public string StaggerResist { get; set; }
-        public int DefenseLevel { get; set; }
-        public string SinnerColor { get; set; }
-        public string SinnerIcon { get; set; }
-        public int SlashResistant { get; set; }
-        public int PierceResistant { get; set; }
-        public int BluntResistant { get; set; }
-        public string Rarity { get; set; }
-        public List<object> SkillDetails { get; set; } 
+        public string title { get; set; }
+        public string name { get; set; }
+        public string splashArt { get; set; }
+        public double splashArtScale { get; set; }
+        public SplashArtTranslationObj splashArtTranslation { get; set; }
+        public double hp { get; set; }
+        public double minSpeed { get; set; }
+        public double maxSpeed { get; set; }
+        public string staggerResist { get; set; }
+        public double defenseLevel { get; set; }
+        public string sinnerColor { get; set; }
+        public string sinnerIcon { get; set; }
+        public double slashResistant { get; set; }
+        public double pierceResistant { get; set; }
+        public double bluntResistant { get; set; }
+        public string rarity { get; set; }
+        public List<object> skillDetails { get; set; } 
 
-        public class SplashArtTranslationObj
-        {
-            public double X { get; set; }
-            public double Y { get; set; }
-        }
+        
     }
 
 }

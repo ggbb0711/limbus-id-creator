@@ -1,0 +1,25 @@
+.paginated-post-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.paginated-post-nav-container{
+    background-color: var(--post-background);
+    border: 1px solid var(--brown-pale);
+    padding: 16px 8px;
+}
+
+.paginated-bullet-point-container{
+    gap: 12px;
+}
+
+.paginated-bullet-point{
+    cursor: pointer;
+}
+
+.paginated-bullet-point.active,.paginated-bullet-point:hover{
+    color: var(--white-skin-color);
+}
+

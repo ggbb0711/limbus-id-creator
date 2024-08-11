@@ -1,0 +1,39 @@
+.post-save-mode-input-container,.post-save-input{
+    width: 100%;
+}
+
+.post-save-found-outer-container{
+    width: 100%;
+    position: relative;
+    bottom: 0;
+}
+
+.post-save-found-container{
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+    overflow-y: auto;
+    max-height: 250px;
+}
+
+.post-save-found-tab{
+    width: 100%;
+    background-color: black;
+    color: white;
+    padding: 4px;
+    cursor: pointer;
+    border: 1px solid white
+}
+
+.post-save-found-tab:not(:first){
+    border-top: none;
+}
+
+.post-save-found-tab:hover,.post-save-found-tab.active{
+    background-color: var(--button);
+}
+
+.search-save-preview-img{
+    width: 100px;
+    height: 75px;
+}

@@ -1,4 +1,4 @@
-import React, { forwardRef, Ref, useEffect, useState } from "react";
+import React, { forwardRef, MutableRefObject, Ref, useEffect, useState } from "react";
 import { ReactElement } from "react";
 import "./SuggestBox.css"
 import useKeyPress from "component/util/useKeyPress";
@@ -33,20 +33,31 @@ interface SuggestBoxProps {
 //     }, []);
 // }
 
+
 const SuggestBox = forwardRef(
-    (
-      { isActive, items, selectFunc, template, position, currentActiveChoice }: SuggestBoxProps,
-      ref: Ref<HTMLDivElement>
-    ): ReactElement => {
-      const {top,left} = position
+  (
+    { isActive, items, selectFunc, template, position, currentActiveChoice }: SuggestBoxProps,
+    ref: React.MutableRefObject<any>
+  ): ReactElement => {
+    const {top,left} = position
+    const scrollToView = ()=>{
+      const selected = ref?.current?.querySelector(".textcomplete-item.active")
+      if(selected){
+          selected?.scrollIntoView({
+              block: 'nearest', 
+              inline: 'start' 
+          });
+      } 
+    }
       
       return (
         <div ref={ref} className={`suggest-box ${isActive ? "" : "hidden"}`} style={{ top,left }}>
-          {items.map((item, i) => (
-            <div className={`textcomplete-item ${currentActiveChoice===i?'active':''}`} onClick={() => selectFunc(item)} key={i}>
+          {items.map((item, i) => {
+            scrollToView()
+            return (<div className={`textcomplete-item ${currentActiveChoice===i?'active':''}`} onClick={() => selectFunc(item)} key={i}>
               {template(item)}
             </div>
-          ))}
+          )})}
         </div>
       );
     }

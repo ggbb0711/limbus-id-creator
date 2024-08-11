@@ -26,7 +26,10 @@ export default function EditableAutoCorrect({inputId,content,matchList,changeHan
     const enterKeyPress=useKeyPress("Enter",contentEditableRef)
     const arrowUpKeyPress = useKeyPress("ArrowUp",contentEditableRef)
     const arrowDownKeyPress = useKeyPress("ArrowDown",contentEditableRef)
+    const tabDownKeyPress = useKeyPress("Tab",contentEditableRef)
     const regex = /(?<=\[)([\-+\w]*)$/g
+
+
     
     const selectSuggestion = useMemo(() => {
         //The item is an array. The first element is the keyword. The second is the html element
@@ -74,7 +77,7 @@ export default function EditableAutoCorrect({inputId,content,matchList,changeHan
             const matchSubString = textNoLine.substring(searchIndex)
             
             return value[0].match(ecapeRegExp(matchSubString))}
-        ).slice(0,4)
+        )
         if(newItemList.length>0){
             setActiveSuggestBox(true)
             updateSuggestBox()
@@ -108,8 +111,8 @@ export default function EditableAutoCorrect({inputId,content,matchList,changeHan
     },[enterKeyPress])
 
     useEffect(()=>{
-        if(arrowDownKeyPress&&itemList.length>0&&activeSuggestBox) setCurrentActiveChoice((currentActiveChoice+1>itemList.length-1)?0:currentActiveChoice+1)
-    },[arrowDownKeyPress])
+        if((arrowDownKeyPress||tabDownKeyPress)&&itemList.length>0&&activeSuggestBox) setCurrentActiveChoice((currentActiveChoice+1>itemList.length-1)?0:currentActiveChoice+1)
+    },[arrowDownKeyPress,tabDownKeyPress])
 
     useEffect(()=>{
         if(arrowUpKeyPress&&itemList.length>0&&activeSuggestBox) setCurrentActiveChoice((currentActiveChoice-1<0)?itemList.length-1:currentActiveChoice-1)
@@ -131,7 +134,7 @@ export default function EditableAutoCorrect({inputId,content,matchList,changeHan
         //For some reason the contenteditable component doesn't change the itemList and activeSuggestBox dependencies
         //when putting it as a prop
         if(contentEditableRef.current) contentEditableRef.current.onkeydown=((e)=>{
-            if(((itemList.length>0||activeSuggestBox)&&(e.key==="Enter"||e.key==="ArrowUp"||e.key==="ArrowDown"))){
+            if(((itemList.length>0||activeSuggestBox)&&(e.key==="Enter"||e.key==="ArrowUp"||e.key==="ArrowDown"||e.key==="Tab"))){
                 e.preventDefault()
             }
         })

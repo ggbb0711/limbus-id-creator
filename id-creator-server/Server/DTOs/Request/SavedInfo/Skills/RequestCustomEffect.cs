@@ -1,13 +1,15 @@
 
+using Server.Interface.UtilInterfaces;
+
 namespace Server.DTOs.Requests.SavedInfo.Skills
 {
-    public class RequestCustomEffect
+    public class RequestCustomEffect:IRequestSkillType
     {
-        public string InputId { get; set; } = Guid.NewGuid().ToString();
-        public string Name { get; set; } = "";
-        public string CustomImg { get; set; } = "";
-        public string EffectColor { get; set; } = "#F1F1F1";
-        public string Effect { get; set; } = "";
-        public string Type { get; set; } = "CustomEffect";
+        public Guid inputId { get; set; } 
+        public string name { get; set; } = "";
+        public string customImg { get; set; } = "";
+        public string effectColor { get; set; } = "#F1F1F1";
+        public string effect { get; set; } = "";
+        public string type { get; set; } = "CustomEffect";
     }
 }

@@ -15,22 +15,22 @@ export interface IEgoInfo{
         y:number,
     },
     sinResistant:{
-        Wrath_resistant:number;
-        Lust_resistant:number;
-        Sloth_resistant:number;
-        Gluttony_resistant:number;
-        Gloom_resistant:number;
-        Pride_resistant:number;
-        Envy_resistant:number;
+        wrath_resistant:number;
+        lust_resistant:number;
+        sloth_resistant:number;
+        gluttony_resistant:number;
+        gloom_resistant:number;
+        pride_resistant:number;
+        envy_resistant:number;
     }
     sinCost:{
-        Wrath_cost:number;
-        Lust_cost:number;
-        Sloth_cost:number;
-        Gluttony_cost:number;
-        Gloom_cost:number;
-        Pride_cost:number;
-        Envy_cost:number;
+        wrath_cost:number;
+        lust_cost:number;
+        sloth_cost:number;
+        gluttony_cost:number;
+        gloom_cost:number;
+        pride_cost:number;
+        envy_cost:number;
     }
     sinnerColor:string,
     sinnerIcon:string,

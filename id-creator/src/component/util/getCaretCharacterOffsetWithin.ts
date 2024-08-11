@@ -1,3 +1,4 @@
+//Get caret position
 export default function getCaretCharacterOffsetWithin(element) {
     let caretOffset = 0;
     const doc = element.ownerDocument || element.document;

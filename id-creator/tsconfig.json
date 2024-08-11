@@ -5,8 +5,10 @@
       "esModuleInterop": true,
       "moduleResolution":"node",
       "module": "es2015",
-      "types": ["node", "react"]
+      "types": ["node", "react"],
+      "target": "ES2015"
     },
     "include": ["src"],
     "exclude": ["build"],
+    
 }

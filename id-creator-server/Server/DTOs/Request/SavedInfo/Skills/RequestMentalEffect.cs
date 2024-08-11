@@ -1,8 +1,10 @@
+using Server.Interface.UtilInterfaces;
+
 namespace Server.DTOs.Requests.SavedInfo.Skills
 {
-    public class RequestMentalEffect
+    public class RequestMentalEffect:IRequestSkillType
     {
-        public string InputId { get; set; } = Guid.NewGuid().ToString();
+        public Guid inputId { get; set; } 
         public string effect { get; set; }="";
         public string type { get; set; } = "MentalEffect";
     }

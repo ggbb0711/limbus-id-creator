@@ -1,0 +1,45 @@
+.tags-container{
+    min-height: 50px;
+    max-width: 100%;
+    border: 2px solid;
+    overflow-y: auto;
+    padding: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.keyword-tag{
+    border: 1px solid var(--brown-pale);
+    background-color: black;
+    border-radius: 8px;
+    padding: 4px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    position: relative;
+    height: fit-content;
+    color: white;
+}
+
+/* .tag-delete-container{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--popup-background-black);
+    border-radius: 8px;
+    left: 0;
+    display: none;
+    fill: white;
+    text-align: center;
+} */
+
+.tag-close-icon{
+    fill: white;
+    cursor: pointer;
+}
+
+.tag-close-icon:hover{
+    fill: red;
+}

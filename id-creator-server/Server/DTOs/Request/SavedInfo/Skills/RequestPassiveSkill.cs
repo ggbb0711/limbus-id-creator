@@ -1,14 +1,16 @@
+using Server.Interface.UtilInterfaces;
+
 namespace Server.DTOs.Requests.SavedInfo
 {
-    public class RequestPassiveSkill
+    public class RequestPassiveSkill:IRequestSkillType
     {
-        public string SkillLabel { get; set; } = "PASSIVE";
-        public Guid InputId { get; set; } 
-        public string Name { get; set; } = "";
-        public string SkillEffect { get; set; } = "";
-        public string Type { get; set; } = "PassiveSkill";
-        public string Affinity { get; set; } = "Wrath";
-        public string Req { get; set; } = "Own"; // Res or own or none
-        public int ReqNo { get; set; } = 1;
+        public string skillLabel { get; set; } = "PASSIVE";
+        public Guid inputId { get; set; } 
+        public string name { get; set; } = "";
+        public string skillEffect { get; set; } = "";
+        public string type { get; set; } = "PassiveSkill";
+        public string affinity { get; set; } = "Wrath";
+        public string req { get; set; } = "Own"; // Res or own or none
+        public int reqNo { get; set; } = 1;
     }
 }

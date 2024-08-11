@@ -32,7 +32,7 @@ export default function InputCustomEffectPage({customEffect,keyWordList,changeSk
         :<></>}
         <div className="input-group-container">
             <div className="input-container center-element">
-                <UploadImgBtn onFileInputChange={onChangeFileWithName("customImg")} btnTxt={"Upload custom img"}/>
+                <UploadImgBtn onFileInputChange={onChangeFileWithName("customImg")} btnTxt={"Upload custom img (<= 80kb)"} maxSize={80000}/>
             </div>
             <div className="input-container center-element">
                 <label htmlFor="effectColor">Choose the effect color: </label>

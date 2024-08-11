@@ -9,17 +9,9 @@ import useInput from "component/util/useInputs";
 import SinnerEgoIconInput from "../SinnerEgoIconInput/SinnerEgoIconInput";
 import DropDown from "component/DropDown/DropDown";
 import { EgoLevelDropDown } from "../EgoLevelDropDown/EgoLevelDropDown";
-import Download_icon from "Icons/Download_icon";
-import Save_icon from "Icons/Save_icon";
-import MainButton from "utils/MainButton/MainButton";
-import DownloadImg from "utils/Functions/DownloadImg";
-import { useRefDownloadContext } from "component/context/ImgUrlContext";
-import { useSetSaveIdInfoActive } from "component/SaveMenu/SaveLocalMenu/SaveLocalMenu";
 
 export default function InputStatPage():ReactElement{
     const {EgoInfoValue,setEgoInfoValue} = useEgoInfoContext()
-    const {setImgUrlState} = useRefDownloadContext()
-    const {isActive,setIsActive} = useSetSaveIdInfoActive()
     const {onChangeInput,onChangeFileWithName,onChangeDropDownMenu}=useInput(EgoInfoValue,(newVal:{[type:string]:string})=>setEgoInfoValue(newVal))
     const changeSinResistant=useInput(EgoInfoValue.sinResistant,(newVal:{[type:string]:string})=>setEgoInfoValue({...EgoInfoValue,sinResistant:newVal}))
     const changeSinCost=useInput(EgoInfoValue.sinCost,(newVal:{[type:string]:string})=>setEgoInfoValue({...EgoInfoValue,sinCost:newVal}))
@@ -68,28 +60,11 @@ export default function InputStatPage():ReactElement{
         return "Normal"
     }
 
-
-    function handleDownload(){
-        setImgUrlState().then((res:string)=>{
-            if(res){
-                DownloadImg(res,"customId")
-            }
-        })
-    }
-    
     return <div className="input-page input-stat-page">
-        <div className="input-group-container">
-            <div className="input-container">
-                <MainButton component={<p className="center-element"><Download_icon /> Download</p>} btnClass={"main-button fill-button-component"} clickHandler={handleDownload}/>
-            </div>
-            <div className="input-container">
-                <MainButton component={<p className="center-element"><Save_icon/> Save</p>} btnClass="main-button fill-button-component" clickHandler={()=>setIsActive(!isActive)}/>
-            </div>
-        </div>
         <div className="sinner-icon-input-container">
             <p>Pick the sinner icon: </p>
             <SinnerEgoIconInput/>
-            <UploadImgBtn onFileInputChange={onChangeFileWithName("sinnerIcon")} btnTxt={"Upload sinner icon"}/>
+            <UploadImgBtn onFileInputChange={onChangeFileWithName("sinnerIcon")} btnTxt={"Upload sinner icon (<= 80kb)"} maxSize={80000}/>
         </div>
         <div className="sinner-color-input-container">
             <p>Pick a color for your sinner: </p>
@@ -102,7 +77,7 @@ export default function InputStatPage():ReactElement{
                 <p style={{textAlign:"center"}}>Control the position of the splash art by dragging and zooming on this circle:</p>
                 <SinnerSplashArtRepositionInput scale={splashArtScale} translation={splashArtTranslation} onChange={(value:{scale,translation:{x,y:number}})=>{setEgoInfoValue({...EgoInfoValue,splashArtScale:value.scale,splashArtTranslation:value.translation})}}/>
             </div>:<></>}
-        <UploadImgBtn onFileInputChange={onChangeFileWithName("splashArt")} btnTxt={"Upload splash art"}/>
+        <UploadImgBtn onFileInputChange={onChangeFileWithName("splashArt")} btnTxt={"Upload splash art (<= 1.2mb)"} maxSize={1200000}/>
         
         <div className="input-group-container">
             <div className="input-container">

@@ -1,0 +1,45 @@
+.post-input-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 4px;
+}
+
+.post-save-mode-container{
+    margin: 4px 0px;
+    display: flex;
+    gap: 16px;
+}
+
+.choosen-save-container{
+    padding: 4px;
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(150px,250px));
+    justify-content: center;
+}
+
+.choosen-save-img-container{
+    position: relative;
+}
+
+.choosen-save-img{
+    width:100%;
+    justify-self: center;
+    border: 1px solid white;
+}
+
+.remove-btn{
+    border-radius: 100%;
+    background-color: black;
+    padding: 2px;
+    position: absolute;
+    right: -5px;
+    top: -5px;
+    fill: white;
+    cursor: pointer;
+}
+
+.remove-btn:hover{
+    fill: red;
+}

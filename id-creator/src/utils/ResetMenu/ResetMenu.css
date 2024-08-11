@@ -1,0 +1,7 @@
+.reset-menu{
+    padding:12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+}

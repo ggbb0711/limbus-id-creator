@@ -59,10 +59,13 @@
     --brown-pale: #453A32;
     --background-black:rgb(35,36,31);
     --red-brown: #4e0a06;
+    --white-neutral-weak: rgba(255, 255, 255, 0.749);
+    --red-meta-txt: #a2130a;
 
     --hover-border-color: #FBB627;
     --loading-background-color: rgba(255, 255, 255, 0.503);
     --popup-background-black: rgba(0, 0, 0, 0.303);
+    --post-background: #1a1111;
 
     --layout-max-width: 1200px;
     --padding-layout-width: 16px;
@@ -165,7 +168,9 @@ button{
     color: #9F6A3A;
 }
 
-
+.header-txt{
+    font-size: 32px;
+}
 
 .center-element{
     display: inline-flex;
@@ -245,6 +250,12 @@ button{
 .warning-message{
     font-size: 10px;
     color: red;
+}
+
+/* Style for the wysiwyg simple editor */
+.rsw-ce{
+    height: 150px;
+    overflow-y: auto;
 }
 
 @keyframes rotate {

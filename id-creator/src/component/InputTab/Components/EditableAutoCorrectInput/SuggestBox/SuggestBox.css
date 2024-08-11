@@ -1,7 +1,7 @@
 .suggest-box{
     position: absolute;
     width: 200px;
-    max-height: 250px;
+    max-height: 130px;
     height: min-content;
     overflow-y: auto;
 }

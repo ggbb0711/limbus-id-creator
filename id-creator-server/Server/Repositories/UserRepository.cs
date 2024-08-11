@@ -1,10 +1,3 @@
-
-
-
-
-
-
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Server.Data;
@@ -28,7 +21,11 @@ namespace Server.Repositories
             if(foundUser != null)
             {
                 if(!userChangeProfile.UserName.IsNullOrEmpty())foundUser.UserName = userChangeProfile.UserName;
-                if(!userChangeProfile.UserIcon.IsNullOrEmpty())foundUser.UserIcon = userChangeProfile.UserIcon;
+                if(!userChangeProfile.UserIcon.IsNullOrEmpty())
+                {
+                    foundUser.UserIcon.Url = userChangeProfile.UserIcon;
+                    foundUser.UserIcon.LastUpdated = DateTime.Now;
+                }
 
                 await _ctx.SaveChangesAsync();
             }

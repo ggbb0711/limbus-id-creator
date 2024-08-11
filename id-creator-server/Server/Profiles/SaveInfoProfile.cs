@@ -1,10 +1,10 @@
 using AutoMapper;
-using Microsoft.Extensions.ObjectPool;
+using Newtonsoft.Json.Linq;
 using Server.DTOs.Requests.SavedInfo;
 using Server.DTOs.Requests.SavedInfo.SavedEgo;
 using Server.DTOs.Requests.SavedInfo.SavedID;
 using Server.DTOs.Requests.SavedInfo.Skills;
-using Server.DTOs.Response.Users;
+using Server.DTOs.Response.SaveInfo;
 using Server.Models;
 
 namespace Server.Profiles
@@ -13,212 +13,429 @@ namespace Server.Profiles
     {
         public SaveInfoProfile()
         {
-            CreateMap<SavedInfoRequestDTO<SavedEgoRequestDTO>, SavedInfo>()
+            CreateMap<SavedInfoRequestDTO<SavedEgoRequestDTO>, SavedEGOInfo>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src=>src.id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.saveName))
                 .ForMember(dest => dest.SaveTime, opt => opt.MapFrom(src => DateTime.Parse(src.saveTime)))
-                .ForMember(dest => dest.ImageAttach, opt => opt.MapFrom(src => src.previewImg))
-                .ForMember(dest => dest.Tags, opt => opt.MapFrom(src=>src.tags.Select(tag=>new Tag(){TagName = tag}))) // Tags need special handling
-                .ForMember(dest => dest.SavedEgo, opt => opt.MapFrom(src => new SavedEgo()
-                {
-                    Title = src.saveInfo.Title,
-                    Name = src.saveInfo.Name,
-                    SanityCost = src.saveInfo.SanityCost,
-                    SplashArt = src.saveInfo.SplashArt,
-                    SplashArtScale = (int)src.saveInfo.SplashArtScale,
-                    SplashArtTranslationX = (int)src.saveInfo.SplashArtTranslation.X,
-                    SplashArtTranslationY = (int)src.saveInfo.SplashArtTranslation.Y,
-                    SinResistantWrath = src.saveInfo.SinResistant.WrathResistant,
-                    SinResistantLust = src.saveInfo.SinResistant.LustResistant,
-                    SinResistantSloth = src.saveInfo.SinResistant.SlothResistant,
-                    SinResistantGluttony = src.saveInfo.SinResistant.GluttonyResistant,
-                    SinResistantGloom = src.saveInfo.SinResistant.GloomResistant,
-                    SinResistantPride = src.saveInfo.SinResistant.PrideResistant,
-                    SinResistantEnvy = src.saveInfo.SinResistant.EnvyResistant,
-                    SinCostWrath = src.saveInfo.SinCost.WrathCost,
-                    SinCostLust = src.saveInfo.SinCost.LustCost,
-                    SinCostSloth = src.saveInfo.SinCost.SlothCost,
-                    SinCostGluttony = src.saveInfo.SinCost.GluttonyCost,
-                    SinCostGloom = src.saveInfo.SinCost.GloomCost,
-                    SinCostPride = src.saveInfo.SinCost.PrideCost,
-                    SinCostEnvy = src.saveInfo.SinCost.EnvyCost,
-                    SinnerColor = src.saveInfo.SinnerColor,
-                    SinnerIcon = src.saveInfo.SinnerIcon,
-                    EgoLevel = src.saveInfo.EgoLevel,
-                    SavedSkillId = src.Id,
-                    Skill = MapNewSkill(src.Id,src.saveInfo.SkillDetails)
-                }));
+                .ForMember(dest => dest.ImageAttachId, opt => opt.MapFrom(src=>src.id))
+                .ForMember(dest => dest.ImageAttach, opt => opt.MapFrom(src => new ImageObj(){
+                    Id = src.id,
+                    Url=src.previewImg,
+                }))
+                .ForMember(dest => dest.SavedEgo, opt => opt.MapFrom(src => MapSavedEgo(src)))
+                .ForMember(dest => dest.SavedEgoKey, opt => opt.MapFrom(src=>src.id));
                 
-            CreateMap<SavedInfoRequestDTO<SavedIDRequestDTO>, SavedInfo>()
+            CreateMap<SavedInfoRequestDTO<SavedIDRequestDTO>, SavedIDInfo>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src=>src.id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.saveName))
                 .ForMember(dest => dest.SaveTime, opt => opt.MapFrom(src => DateTime.Parse(src.saveTime)))
-                .ForMember(dest => dest.ImageAttach, opt => opt.MapFrom(src => src.previewImg))
-                .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.tags.Select(tag => new Tag() { TagName = tag }))) // Tags need special handling
-                .ForMember(dest => dest.SavedId, opt => opt.MapFrom(src => new SavedId()
-                {
-                    Title = src.saveInfo.Title,
-                    Name = src.saveInfo.Name,
-                    SplashArt = src.saveInfo.SplashArt,
-                    SplashArtScale = (int)src.saveInfo.SplashArtScale,
-                    SplashArtTranslationX = (int)src.saveInfo.SplashArtTranslation.X,
-                    SplashArtTranslationY = (int)src.saveInfo.SplashArtTranslation.Y,
-                    HP = src.saveInfo.HP,
-                    MinSpeed = src.saveInfo.MinSpeed,
-                    MaxSpeed = src.saveInfo.MaxSpeed,
-                    StaggerResist = src.saveInfo.StaggerResist,
-                    DefenseLevel = src.saveInfo.DefenseLevel,
-                    SinnerColor = src.saveInfo.SinnerColor,
-                    SinnerIcon = src.saveInfo.SinnerIcon,
-                    SlashResistant = src.saveInfo.SlashResistant,
-                    PierceResistant = src.saveInfo.PierceResistant,
-                    BluntResistant = src.saveInfo.BluntResistant,
-                    Rarity = src.saveInfo.Rarity,
-                    SavedSkillId = src.Id,
-                    Skill = MapNewSkill(src.Id, src.saveInfo.SkillDetails)
-                }));
+                .ForMember(dest => dest.ImageAttachId, opt => opt.MapFrom(src=>src.id))
+                .ForMember(dest => dest.ImageAttach, opt => opt.MapFrom(src => new ImageObj(){
+                    Id = src.id,
+                    Url=src.previewImg,
+                }))
+                .ForMember(dest => dest.SavedId, opt => opt.MapFrom(src => MapSavedId(src)))
+                .ForMember(dest => dest.SavedIdKey, opt => opt.MapFrom(src=>src.id));
+        
+            CreateMap<SavedEGOInfo,SaveInfoResponseDTO<SavedEgoRequestDTO>>()
+                .ForMember(dest => dest.id, opt => opt.MapFrom(src=>src.Id))
+                .ForMember(dest=>dest.saveName,opt=>opt.MapFrom(src => src.Name))
+                .ForMember(dest=>dest.saveTime,opt=>opt.MapFrom(src=>src.SaveTime))
+                .ForMember(dest=>dest.previewImg,opt=>opt.MapFrom(src=>src.ImageAttach.Url))
+                .ForMember(dest=>dest.saveInfo,opt=>opt.MapFrom(src=>MapSavedEgoRequest(src.SavedEgo)));
+        
+            CreateMap<SavedIDInfo,SaveInfoResponseDTO<SavedIDRequestDTO>>()
+                .ForMember(dest => dest.id, opt => opt.MapFrom(src=>src.Id))
+                .ForMember(dest=>dest.saveName,opt=>opt.MapFrom(src => src.Name))
+                .ForMember(dest=>dest.saveTime,opt=>opt.MapFrom(src=>src.SaveTime))
+                .ForMember(dest=>dest.previewImg,opt=>opt.MapFrom(src=>src.ImageAttach.Url))
+                .ForMember(dest=>dest.saveInfo,opt=>opt.MapFrom(src=>MapSavedIDRequest(src.SavedId)));
         }
 
-         private SavedSkill MapNewSkill(Guid SaveSkillId, List<object> skills)
+        private SavedEgo MapSavedEgo(SavedInfoRequestDTO<SavedEgoRequestDTO> src)
+        {
+            var splashArtId = Guid.NewGuid();
+            var SinnerIconId = Guid.NewGuid();
+            return  new SavedEgo()
+            {
+                Id = src.id,
+                Title = src.saveInfo.title,
+                Name = src.saveInfo.name,
+                SanityCost = src.saveInfo.sanityCost,
+                SplashArtId = splashArtId,
+                SplashArt = new ImageObj()
+                {
+                    Id = splashArtId,
+                    Url = src.saveInfo.splashArt
+                } ,
+                SplashArtScale = src.saveInfo.splashArtScale,
+                SplashArtTranslationX = src.saveInfo.splashArtTranslation.x,
+                SplashArtTranslationY = src.saveInfo.splashArtTranslation.y,
+                SinResistantWrath = src.saveInfo.sinResistant.wrath_resistant,
+                SinResistantLust = src.saveInfo.sinResistant.lust_resistant,
+                SinResistantSloth = src.saveInfo.sinResistant.sloth_resistant,
+                SinResistantGluttony = src.saveInfo.sinResistant.gluttony_resistant,
+                SinResistantGloom = src.saveInfo.sinResistant.gloom_resistant,
+                SinResistantPride = src.saveInfo.sinResistant.pride_resistant,
+                SinResistantEnvy = src.saveInfo.sinResistant.envy_resistant,
+                SinCostWrath = src.saveInfo.sinCost.wrath_cost,
+                SinCostLust = src.saveInfo.sinCost.lust_cost,
+                SinCostSloth = src.saveInfo.sinCost.sloth_cost,
+                SinCostGluttony = src.saveInfo.sinCost.gluttony_cost,
+                SinCostGloom = src.saveInfo.sinCost.gloom_cost,
+                SinCostPride = src.saveInfo.sinCost.pride_cost,
+                SinCostEnvy = src.saveInfo.sinCost.envy_cost,
+                SinnerColor = src.saveInfo.sinnerColor,
+                SinnerIconId = SinnerIconId,
+                SinnerIcon = new ImageObj()
+                {
+                    Id = SinnerIconId,
+                    Url = src.saveInfo.sinnerIcon,
+                } ,
+                EgoLevel = src.saveInfo.egoLevel,
+                SavedSkillId = src.id,
+                Skill = MapNewSkill(src.id,src.saveInfo.skillDetails)
+            };
+        }
+
+        private SavedId MapSavedId(SavedInfoRequestDTO<SavedIDRequestDTO> src)
+        {
+            var splashArtId = Guid.NewGuid();
+            var SinnerIconId = Guid.NewGuid();
+            return  new SavedId()
+            {
+                Id = src.id,
+                Title = src.saveInfo.title,
+                Name = src.saveInfo.name,
+                SplashArtId = splashArtId,
+                SplashArt = new ImageObj()
+                {
+                    Id = splashArtId,
+                    Url = src.saveInfo.splashArt
+                },
+                SplashArtScale = src.saveInfo.splashArtScale,
+                SplashArtTranslationX = src.saveInfo.splashArtTranslation.x,
+                SplashArtTranslationY = src.saveInfo.splashArtTranslation.y,
+                HP = src.saveInfo.hp,
+                MinSpeed = src.saveInfo.minSpeed,
+                MaxSpeed = src.saveInfo.maxSpeed,
+                StaggerResist = src.saveInfo.staggerResist,
+                DefenseLevel = src.saveInfo.defenseLevel,
+                SinnerColor = src.saveInfo.sinnerColor,
+                SinnerIconId = SinnerIconId,
+                SinnerIcon = new ImageObj()
+                {
+                    Id = SinnerIconId,
+                    Url = src.saveInfo.sinnerIcon,
+                } ,
+                SlashResistant = src.saveInfo.slashResistant,
+                PierceResistant = src.saveInfo.pierceResistant,
+                BluntResistant = src.saveInfo.bluntResistant,
+                Rarity = src.saveInfo.rarity,
+                SavedSkillId = src.id,
+                Skill = MapNewSkill(src.id, src.saveInfo.skillDetails)
+            };
+        }
+
+        private SavedEgoRequestDTO? MapSavedEgoRequest(SavedEgo src)
+        {
+            if(src==null) return null;
+            return new SavedEgoRequestDTO()
+            {
+                title = src.Title,
+                name = src.Name,
+                sanityCost = src.SanityCost,
+                splashArt = src.SplashArt.Url,
+                splashArtScale = src.SplashArtScale,
+                splashArtTranslation = new SplashArtTranslationObj()
+                {
+                    x = src.SplashArtTranslationX,
+                    y = src.SplashArtTranslationY
+                },
+                sinResistant = new SavedEgoRequestDTO.SinResistantObj()
+                {
+                    wrath_resistant = src.SinResistantWrath,
+                    lust_resistant = src.SinResistantLust,
+                    sloth_resistant = src.SinResistantSloth,
+                    gluttony_resistant = src.SinResistantGluttony,
+                    gloom_resistant = src.SinResistantGloom,
+                    envy_resistant = src.SinResistantEnvy,
+                    pride_resistant = src.SinResistantPride,
+                },
+                sinCost = new SavedEgoRequestDTO.SinCostObj()
+                {
+                    wrath_cost = src.SinCostWrath,
+                    lust_cost = src.SinCostLust,
+                    sloth_cost = src.SinCostSloth,
+                    gluttony_cost = src.SinCostGluttony,
+                    gloom_cost = src.SinCostGloom,
+                    envy_cost = src.SinCostEnvy,
+                    pride_cost = src.SinCostPride,
+                },
+                sinnerColor = src.SinnerColor,
+                sinnerIcon = src.SinnerIcon.Url,
+                egoLevel = src.EgoLevel,
+                skillDetails = MapSkillRequest(src.Skill)
+            };
+        }
+
+        private SavedIDRequestDTO? MapSavedIDRequest(SavedId src)
+        {
+            if(src==null) return null;
+            return new SavedIDRequestDTO()
+            {
+                title = src.Title,
+                name = src.Name,
+                splashArt = src.SplashArt.Url,
+                splashArtScale = src.SplashArtScale,
+                splashArtTranslation = new SplashArtTranslationObj()
+                {
+                    x = src.SplashArtTranslationX,
+                    y = src.SplashArtTranslationY
+                },
+                hp = src.HP,
+                minSpeed = src.MinSpeed,
+                maxSpeed = src.MaxSpeed,
+                staggerResist = src.StaggerResist,
+                defenseLevel = src.DefenseLevel,
+                sinnerColor = src.SinnerColor,
+                sinnerIcon = src.SinnerIcon.Url,
+                slashResistant = src.SlashResistant,
+                pierceResistant = src.PierceResistant,
+                bluntResistant = src.BluntResistant,
+                rarity = src.Rarity,
+                skillDetails = MapSkillRequest(src.Skill)
+            };
+        }
+
+        private SavedSkill MapNewSkill(Guid SaveSkillId, List<object> skills)
         {
             var newSkills = new SavedSkill(){Id=SaveSkillId};
-            var count =0 ;
-            newSkills.OffenseSkills =(ICollection<OffenseSkill>) skills
-            .Where(skill=>
+            ICollection<OffenseSkill> offenseSkills = [];
+            ICollection<DefenseSkill> defenseSkills = [];
+            ICollection<PassiveSkill> passiveSkills = [];
+            ICollection<CustomEffect> customEffects = [];
+            ICollection<MentalEffect> mentalEffects = [];
+            for (int i = 0; i < skills.Count; i++)
+            {
+                var jObject = (JObject) skills[i];
+                var type = jObject["type"]?.ToString();
+                if(type.Equals("OffenseSkill"))
                 {
-                    count++;
-                    return ((RequestOffenseSkill)skill).Type.Equals("OffenseSkill");
-                })
-                .Select(skill=>
-                {
-                    var offenseSkill = (RequestOffenseSkill) skill;
+                    var offenseSkill = jObject.ToObject<RequestOffenseSkill>();
+                    var imageId = Guid.NewGuid();
                     var newOffenseSkill = new OffenseSkill()
                     {
-                        Id = offenseSkill.InputId,
-                        SkillLevel = offenseSkill.SkillLevel,
-                        SkillAmt = offenseSkill.SkillAmt,
-                        AtkWeight = offenseSkill.AtkWeight,
-                        DamageType = offenseSkill.DamageType,
-                        Name = offenseSkill.Name,
-                        SkillAffinity = offenseSkill.SkillAffinity,
-                        BasePower = offenseSkill.BasePower,
-                        CoinNo = offenseSkill.CoinNo,
-                        CoinPow = offenseSkill.CoinPow,
-                        ImageAttach = offenseSkill.SkillImage,
-                        SkillEffect = offenseSkill.SkillEffect,
-                        SkillLabel = offenseSkill.SkillLabel,
-                        Type = offenseSkill.Type,
-                        Index = count,
-                        SaveSkillId = SaveSkillId
+                        Id = offenseSkill.inputId,
+                        SkillLevel = offenseSkill.skillLevel,
+                        SkillAmt = offenseSkill.skillAmt,
+                        AtkWeight = offenseSkill.atkWeight,
+                        DamageType = offenseSkill.damageType,
+                        Name = offenseSkill.name,
+                        SkillAffinity = offenseSkill.skillAffinity,
+                        BasePower = offenseSkill.basePower,
+                        CoinNo = offenseSkill.coinNo,
+                        CoinPow = offenseSkill.coinPow,
+                        ImageAttachId = imageId,
+                        ImageAttach = new ImageObj()
+                        {
+                            Id = imageId,
+                            Url = offenseSkill.skillImage
+                        },
+                        SkillEffect = offenseSkill.skillEffect,
+                        SkillLabel = offenseSkill.skillLabel,
+                        Type = offenseSkill.type,
+                        Index = i,
+                        SavedSkillId = SaveSkillId
                     };
-                    return newOffenseSkill;
+                    offenseSkills.Add(newOffenseSkill);
                 }
-            );
-
-            count = 0;
-            newSkills.DefenseSkills = (ICollection<DefenseSkill>) skills
-            .Where(skill => 
-            {
-                count++;
-                return ((RequestDefenseSkill)skill).Type.Equals("DefenseSkill");
-            })
-            .Select(skill => 
-            {
-                var defenseSkill = (RequestDefenseSkill) skill;
-                var newDefenseSkill = new DefenseSkill()
+                if(type.Equals("DefenseSkill"))
                 {
-                    Id = defenseSkill.InputId,
-                    SkillLevel = defenseSkill.SkillLevel,
-                    SkillAmt = defenseSkill.SkillAmt,
-                    AtkWeight = defenseSkill.AtkWeight,
-                    DefenseType = defenseSkill.DefenseType,
-                    DamageType = defenseSkill.DamageType,
-                    Name = defenseSkill.Name,
-                    SkillAffinity = defenseSkill.SkillAffinity,
-                    BasePower = defenseSkill.BasePower,
-                    CoinNo = defenseSkill.CoinNo,
-                    CoinPow = defenseSkill.CoinPow,
-                    ImageAttach = defenseSkill.SkillImage,
-                    SkillEffect = defenseSkill.SkillEffect,
-                    SkillLabel = defenseSkill.SkillLabel,
-                    Type = defenseSkill.Type,
-                    Index = count,
-                    SavedSkillId = SaveSkillId 
-                };
-                return newDefenseSkill;
-            });
-
-            count = 0;
-            newSkills.PassiveSkills = (ICollection<PassiveSkill>) skills
-            .Where(skill => 
-            {
-                count++;
-                return ((RequestPassiveSkill)skill).Type.Equals("PassiveSkill");
-            })
-            .Select(skill => 
-            {
-                var passiveSkill = (RequestPassiveSkill) skill;
-                var newPassiveSkill = new PassiveSkill()
+                    var defenseSkill = jObject.ToObject<RequestDefenseSkill>();
+                    var imageId = Guid.NewGuid();
+                    var newDefenseSkill = new DefenseSkill()
+                    {
+                        Id = defenseSkill.inputId,
+                        SkillLevel = defenseSkill.skillLevel,
+                        SkillAmt = defenseSkill.skillAmt,
+                        AtkWeight = defenseSkill.atkWeight,
+                        DefenseType = defenseSkill.defenseType,
+                        DamageType = defenseSkill.damageType,
+                        Name = defenseSkill.name,
+                        SkillAffinity = defenseSkill.skillAffinity,
+                        BasePower = defenseSkill.basePower,
+                        CoinNo = defenseSkill.coinNo,
+                        CoinPow = defenseSkill.coinPow,
+                        ImageAttachId = imageId,
+                        ImageAttach = new ImageObj()
+                        {
+                            Id = imageId,
+                            Url = defenseSkill.skillImage
+                        } ,
+                        SkillEffect = defenseSkill.skillEffect,
+                        SkillLabel = defenseSkill.skillLabel,
+                        Type = defenseSkill.type,
+                        Index = i,
+                        SavedSkillId = SaveSkillId 
+                    };
+                    defenseSkills.Add(newDefenseSkill);
+                }
+                if(type.Equals("PassiveSkill"))
                 {
-                    Id = passiveSkill.InputId,
-                    SkillLabel = passiveSkill.SkillLabel,
-                    Name = passiveSkill.Name,
-                    SkillEffect = passiveSkill.SkillEffect,
-                    Type = passiveSkill.Type,
-                    Affinity = passiveSkill.Affinity,
-                    Req = passiveSkill.Req,
-                    ReqNo = passiveSkill.ReqNo,
-                    Index = count,
-                    SaveSkillId = SaveSkillId
-                };
-                return newPassiveSkill;
-            });
-
-            count = 0;
-            newSkills.CustomEffects = (ICollection<CustomEffect>) skills
-            .Where(skill => 
-            {
-                count++;
-                return ((RequestCustomEffect)skill).Type.Equals("CustomEffect");
-            })
-            .Select(skill => 
-            {
-                var customEffect = (RequestCustomEffect) skill;
-                var newCustomEffect = new CustomEffect()
+                    var passiveSkill = jObject.ToObject<RequestPassiveSkill>();
+                    var newPassiveSkill = new PassiveSkill()
+                    {
+                        Id = passiveSkill.inputId,
+                        SkillLabel = passiveSkill.skillLabel,
+                        Name = passiveSkill.name,
+                        SkillEffect = passiveSkill.skillEffect,
+                        Type = passiveSkill.type,
+                        Affinity = passiveSkill.affinity,
+                        Req = passiveSkill.req,
+                        ReqNo = passiveSkill.reqNo,
+                        Index = i,
+                        SavedSkillId = SaveSkillId
+                    };
+                    passiveSkills.Add(newPassiveSkill);
+                }
+                if(type.Equals("CustomEffect"))
                 {
-                    Id = Guid.NewGuid(), 
-                    Name = customEffect.Name,
-                    ImageAttach = customEffect.CustomImg,
-                    EffectColor = customEffect.EffectColor,
-                    Effect = customEffect.Effect,
-                    Type = customEffect.Type,
-                    Index = count,
-                    SavedSkillId = SaveSkillId 
-                };
-                return newCustomEffect;
-            });
-
-            count = 0;
-            newSkills.MentalEffects = (ICollection<MentalEffect>) skills
-            .Where(skill => 
-            {
-                count++;
-                return ((RequestMentalEffect)skill).type.Equals("MentalEffect");
-            })
-            .Select(skill => 
-            {
-                var mentalEffect = (RequestMentalEffect) skill;
-                var newMentalEffect = new MentalEffect()
+                    var customEffect = jObject.ToObject<RequestCustomEffect>();
+                    var imageId = Guid.NewGuid();
+                    var newCustomEffect = new CustomEffect()
+                    {
+                        Id = customEffect.inputId, 
+                        Name = customEffect.name,
+                        ImageAttachId = imageId,
+                        ImageAttach = new ImageObj()
+                        {
+                            Id = Guid.NewGuid(),
+                            Url = customEffect.customImg
+                        } ,
+                        EffectColor = customEffect.effectColor,
+                        Effect = customEffect.effect,
+                        Type = customEffect.type,
+                        Index = i,
+                        SavedSkillId = SaveSkillId 
+                    };
+                    customEffects.Add(newCustomEffect);
+                }
+                if(type.Equals("MentalEffect"))
                 {
-                    Id = Guid.NewGuid(),  // Assuming a new ID is generated
-                    Effect = mentalEffect.effect,
-                    Type = mentalEffect.type,
-                    Index = count,
-                    SavedSkillId = SaveSkillId // Assuming SaveSkillId is available in scope
-                };
-                return newMentalEffect;
-            });
+                    var mentalEffect = jObject.ToObject<RequestMentalEffect>();
+                    var newMentalEffect = new MentalEffect()
+                    {
+                        Id = mentalEffect.inputId,  // Assuming a new ID is generated
+                        Effect = mentalEffect.effect,
+                        Type = mentalEffect.type,
+                        Index = i,
+                        SavedSkillId = SaveSkillId // Assuming SaveSkillId is available in scope
+                    };
+                    mentalEffects.Add(newMentalEffect);
+                }
+            }
+            newSkills.OffenseSkills = offenseSkills;
+            newSkills.DefenseSkills = defenseSkills;
+            newSkills.PassiveSkills = passiveSkills;
+            newSkills.CustomEffects = customEffects;
+            newSkills.MentalEffects = mentalEffects;
             return newSkills;
         }
-    }
+        
+        private List<object> MapSkillRequest(SavedSkill src)
+        {
+            var list = SavedSkill.CompileSkill(src);
+            for(int i = 0; i < list.Count; i++)
+            {
+                if(list[i].GetType().Name.Equals("OffenseSkill")
+                ||list[i].GetType().Name.Equals("OffenseSkillProxy"))
+                {
+                    var offenseSkill = (OffenseSkill) list[i];
+                    list[i] = new RequestOffenseSkill()
+                    {
+                        skillLevel = offenseSkill.SkillLevel,
+                        skillAmt = offenseSkill.SkillAmt,
+                        atkWeight = offenseSkill.AtkWeight,
+                        inputId = offenseSkill.Id,
+                        damageType = offenseSkill.DamageType,
+                        name = offenseSkill.Name,
+                        skillAffinity = offenseSkill.SkillAffinity,
+                        basePower = offenseSkill.BasePower,
+                        coinNo = offenseSkill.CoinNo,
+                        coinPow = offenseSkill.CoinPow,
+                        skillImage = offenseSkill.ImageAttach.Url,
+                        skillEffect = offenseSkill.SkillEffect,
+                        skillLabel = offenseSkill.SkillLabel,
+                    };
+                }
 
-   
+                if(list[i].GetType().Name.Equals("DefenseSkill")
+                ||list[i].GetType().Name.Equals("DefenseSkillProxy"))
+                {
+                    var defenseSkill = (DefenseSkill) list[i];
+                    list[i] = new RequestDefenseSkill()
+                    {
+                        skillLevel = defenseSkill.SkillLevel,
+                        skillAmt = defenseSkill.SkillAmt,
+                        atkWeight = defenseSkill.AtkWeight,
+                        inputId = defenseSkill.Id,
+                        defenseType = defenseSkill.DefenseType,
+                        damageType = defenseSkill.DamageType,
+                        name = defenseSkill.Name,
+                        skillAffinity = defenseSkill.SkillAffinity,
+                        basePower = defenseSkill.BasePower,
+                        coinNo = defenseSkill.CoinNo,
+                        coinPow = defenseSkill.CoinPow,
+                        skillImage = defenseSkill.ImageAttach.Url,
+                        skillEffect = defenseSkill.SkillEffect,
+                        skillLabel = defenseSkill.SkillLabel,
+                    };
+                }
+
+                if(list[i].GetType().Name.Equals("PassiveSkill")
+                ||list[i].GetType().Name.Equals("PassiveSkillProxy"))
+                {
+                    var PassiveSkill = (PassiveSkill) list[i];
+                    list[i] = new RequestPassiveSkill()
+                    {
+                        inputId = PassiveSkill.Id,
+                        name = PassiveSkill.Name,
+                        skillEffect = PassiveSkill.SkillEffect,
+                        skillLabel = PassiveSkill.SkillLabel,
+                        affinity = PassiveSkill.Affinity,
+                        req = PassiveSkill.Req,
+                        reqNo = PassiveSkill.ReqNo
+                    };
+                }
+
+                if(list[i].GetType().Name.Equals("CustomEffect")
+                ||list[i].GetType().Name.Equals("CustomEffectProxy"))
+                {
+                    var customEffect = (CustomEffect) list[i];
+                    list[i] = new RequestCustomEffect()
+                    {
+                        inputId = customEffect.Id,
+                        name = customEffect.Name,
+                        customImg = customEffect.ImageAttach.Url,
+                        effectColor = customEffect.EffectColor,
+                        effect = customEffect.Effect,
+                    };
+                }
+
+                if(list[i].GetType().Name.Equals("MentalEffect")
+                ||list[i].GetType().Name.Equals("MentalEffectProxy"))
+                {
+                    var mentalEffect = (MentalEffect) list[i];
+                    list[i] = new RequestMentalEffect()
+                    {
+                        inputId = mentalEffect.Id,
+                        effect = mentalEffect.Effect,
+                    };
+                }
+            }
+
+            return list;
+        }
+    }
 }

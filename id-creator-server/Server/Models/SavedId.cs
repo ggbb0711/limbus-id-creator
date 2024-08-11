@@ -1,7 +1,9 @@
 
 
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Server.Interface;
 
 namespace Server.Models
@@ -9,31 +11,69 @@ namespace Server.Models
     [PrimaryKey(nameof(Id))]
     public class SavedId
     {
-        [ForeignKey(nameof(SavedSkill))]
+        private ImageObj _splashArt;
+        private ImageObj _sinnerIcon;
+        private SavedSkill _skill;
+        private ILazyLoader LazyLoader { get; set; }
+
+        public SavedId() { }
+
+        private SavedId(ILazyLoader lazyLoader)
+        {
+            LazyLoader = lazyLoader;
+        }
+
+        [ForeignKey(nameof(SavedIDInfo))]
         public Guid Id { get; set; }
         public string Title { get; set; } = "";
-        public string Name { get; set; }="";
+        public string Name { get; set; } = "";
+        
+        [Required]
         [ForeignKey(nameof(ImageObj))]
-        public Guid SplashArtKey { get; set; }
-        public ImageObj? SplashArt { get; set; }
-        public double SplashArtScale{ get; set; }
-        public int SplashArtTranslationX { get; set; } = 0;
-        public int SplashArtTranslationY { get; set; } = 0;
-        public int HP{ get; set; }
-        public int MinSpeed { get; set; }
-        public int MaxSpeed { get; set; }
-        public string StaggerResist{ get; set; }="";
-        public int DefenseLevel { get; set; }
-        public string SinnerColor { get; set; }="";
+        public Guid SplashArtId { get; set; }
+
+        [Required]
+        public virtual ImageObj SplashArt
+        {
+            get => LazyLoader.Load(this, ref _splashArt);
+            set => _splashArt = value;
+        }
+
+        public double SplashArtScale { get; set; }
+        public double SplashArtTranslationX { get; set; } = 0;
+        public double SplashArtTranslationY { get; set; } = 0;
+        public double HP { get; set; }
+        public double MinSpeed { get; set; }
+        public double MaxSpeed { get; set; }
+        public string StaggerResist { get; set; } = "";
+        public double DefenseLevel { get; set; }
+        public string SinnerColor { get; set; } = "";
+
+        [Required]
         [ForeignKey(nameof(ImageObj))]
-        public Guid SinnerIconKey { get; set; }
-        public ImageObj? SinnerIcon { get; set; }
-        public int SlashResistant { get; set; }
-        public int PierceResistant {get; set; }
-        public int BluntResistant { get; set; }
-        public string Rarity {get; set;} ="";
+        public Guid SinnerIconId { get; set; }
+
+        [Required]
+        public virtual ImageObj SinnerIcon
+        {
+            get => LazyLoader.Load(this, ref _sinnerIcon);
+            set => _sinnerIcon = value;
+        }
+
+        public double SlashResistant { get; set; }
+        public double PierceResistant { get; set; }
+        public double BluntResistant { get; set; }
+        public string Rarity { get; set; } = "";
+
+        [Required]
         [ForeignKey(nameof(SavedSkill))]
         public Guid SavedSkillId { get; set; }
-        public SavedSkill? Skill { get; set; } = null;
+
+        [Required]
+        public virtual SavedSkill Skill
+        {
+            get => LazyLoader.Load(this, ref _skill);
+            set => _skill = value;
+        }
     }
 }

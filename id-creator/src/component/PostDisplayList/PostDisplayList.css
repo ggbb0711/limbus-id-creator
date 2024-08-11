@@ -1,0 +1,12 @@
+.post-display-list{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(450px,1fr));
+    gap: 8px;
+}
+
+@media screen and (max-width:500px){
+    .post-display-list{
+        grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    }
+}

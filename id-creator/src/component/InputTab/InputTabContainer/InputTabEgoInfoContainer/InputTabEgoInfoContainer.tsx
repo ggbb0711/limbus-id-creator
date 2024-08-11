@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import "../InputTabContainer.css"
 import { IOffenseSkill, OffenseSkill } from "Interfaces/OffenseSkill/IOffenseSkill";
 import { CustomEffect, ICustomEffect } from "Interfaces/CustomEffect/ICustomEffect";
@@ -40,6 +40,7 @@ export default function InputTabEgoInfoContainer():ReactElement{
 
 
     function showInputPage(skill:IOffenseSkill|IDefenseSkill|IPassiveSkill|ICustomEffect|IMentalEffect|never,index:number){
+        if(!skill) return;
         function changeSkill(newSkill:{[key:string]:string}){
             const newEgoInfoValue={...EgoInfoValue}
             newEgoInfoValue.skillDetails[index]=newSkill
@@ -97,6 +98,7 @@ export default function InputTabEgoInfoContainer():ReactElement{
         }
     }
 
+    useEffect(()=>{if(activeTab>=EgoInfoValue.skillDetails.length)setActiveTab(-1)},[JSON.stringify(EgoInfoValue.skillDetails)])
     return <div className="input-tab-container">
         <InputTabHeader changeTab={setActiveTab} activeTab={activeTab} skillDetails={EgoInfoValue.skillDetails} addTab={addTab} deleteHandler={deleteHandler}/>
         {(activeTab===-1)?<InputEgoInfoStatPage/>:showInputPage(EgoInfoValue.skillDetails[activeTab],activeTab)}

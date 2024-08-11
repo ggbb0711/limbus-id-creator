@@ -1,0 +1,11 @@
+.card-tag{
+    padding: 4px 8px;
+    border-radius: 8px;
+    background: black;
+    border: 1px solid var(--brown-pale);
+}
+
+.card-tag-img{
+    width: 10px;
+    height: 10px;
+}

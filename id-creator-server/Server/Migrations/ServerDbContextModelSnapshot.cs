@@ -17,32 +17,14 @@ namespace Server.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.5")
-                .HasAnnotation("Proxies:ChangeTracking", false)
-                .HasAnnotation("Proxies:CheckEquality", false)
-                .HasAnnotation("Proxies:LazyLoading", true)
+                .HasAnnotation("ProductVersion", "8.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("SavedInfoTag", b =>
-                {
-                    b.Property<Guid>("SavedInfosId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("TagsId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("SavedInfosId", "TagsId");
-
-                    b.HasIndex("TagsId");
-
-                    b.ToTable("SavedInfoTag");
-                });
-
             modelBuilder.Entity("Server.Models.Comment", b =>
                 {
-                    b.Property<Guid>("SaveInfoId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -50,18 +32,18 @@ namespace Server.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp without time zone");
 
-                    b.Property<Guid?>("SavedInfoId")
+                    b.Property<Guid>("PostId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("SaveInfoId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("SavedInfoId");
+                    b.HasIndex("PostId");
 
                     b.HasIndex("UserId");
 
@@ -71,7 +53,9 @@ namespace Server.Migrations
             modelBuilder.Entity("Server.Models.CustomEffect", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("SavedSkillId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Effect")
@@ -82,9 +66,8 @@ namespace Server.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("ImageAttach")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("ImageAttachId")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Index")
                         .HasColumnType("integer");
@@ -93,16 +76,15 @@ namespace Server.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("SavedSkillId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id", "SavedSkillId");
 
                     b.HasIndex("Id");
+
+                    b.HasIndex("ImageAttachId");
 
                     b.HasIndex("SavedSkillId");
 
@@ -112,7 +94,9 @@ namespace Server.Migrations
             modelBuilder.Entity("Server.Models.DefenseSkill", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("SavedSkillId")
                         .HasColumnType("uuid");
 
                     b.Property<int>("AtkWeight")
@@ -135,9 +119,8 @@ namespace Server.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("ImageAttach")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("ImageAttachId")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Index")
                         .HasColumnType("integer");
@@ -145,9 +128,6 @@ namespace Server.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<Guid>("SavedSkillId")
-                        .HasColumnType("uuid");
 
                     b.Property<string>("SkillAffinity")
                         .IsRequired()
@@ -171,19 +151,46 @@ namespace Server.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id", "SavedSkillId");
 
                     b.HasIndex("Id");
+
+                    b.HasIndex("ImageAttachId");
 
                     b.HasIndex("SavedSkillId");
 
                     b.ToTable("DefenseSkill");
                 });
 
-            modelBuilder.Entity("Server.Models.MentalEffect", b =>
+            modelBuilder.Entity("Server.Models.ImageObj", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("LastUpdated")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid?>("PostId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("ImageObjs");
+                });
+
+            modelBuilder.Entity("Server.Models.MentalEffect", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("SavedSkillId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Effect")
@@ -193,14 +200,11 @@ namespace Server.Migrations
                     b.Property<int>("Index")
                         .HasColumnType("integer");
 
-                    b.Property<Guid>("SavedSkillId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id", "SavedSkillId");
 
                     b.HasIndex("Id");
 
@@ -212,7 +216,9 @@ namespace Server.Migrations
             modelBuilder.Entity("Server.Models.OffenseSkill", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("SavedSkillId")
                         .HasColumnType("uuid");
 
                     b.Property<int>("AtkWeight")
@@ -231,9 +237,8 @@ namespace Server.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("ImageAttach")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("ImageAttachId")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Index")
                         .HasColumnType("integer");
@@ -241,12 +246,6 @@ namespace Server.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<Guid>("SaveSkillId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("SavedSkillId")
-                        .HasColumnType("uuid");
 
                     b.Property<string>("SkillAffinity")
                         .IsRequired()
@@ -270,9 +269,11 @@ namespace Server.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id", "SavedSkillId");
 
                     b.HasIndex("Id");
+
+                    b.HasIndex("ImageAttachId");
 
                     b.HasIndex("SavedSkillId");
 
@@ -282,7 +283,9 @@ namespace Server.Migrations
             modelBuilder.Entity("Server.Models.PassiveSkill", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("SavedSkillId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Affinity")
@@ -303,12 +306,6 @@ namespace Server.Migrations
                     b.Property<int>("ReqNo")
                         .HasColumnType("integer");
 
-                    b.Property<Guid>("SaveSkillId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("SavedSkillId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("SkillEffect")
                         .IsRequired()
                         .HasColumnType("text");
@@ -321,7 +318,7 @@ namespace Server.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id", "SavedSkillId");
 
                     b.HasIndex("Id");
 
@@ -330,37 +327,89 @@ namespace Server.Migrations
                     b.ToTable("PassiveSkill");
                 });
 
-            modelBuilder.Entity("Server.Models.Reaction", b =>
+            modelBuilder.Entity("Server.Models.Post", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("SaveInfoId")
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("SavedInfoId")
+                    b.Property<int>("ViewCount")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Post");
+                });
+
+            modelBuilder.Entity("Server.Models.PostView", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PostView");
+                });
+
+            modelBuilder.Entity("Server.Models.SavedEGOInfo", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ImageAttachId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("SaveTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid>("SavedEgoKey")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("Value")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("SavedInfoId");
+                    b.HasIndex("Id");
 
-                    b.HasIndex("UserId", "SaveInfoId");
+                    b.HasIndex("ImageAttachId");
 
-                    b.ToTable("Reaction");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("SavedEGOInfos");
                 });
 
             modelBuilder.Entity("Server.Models.SavedEgo", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("EgoLevel")
@@ -371,111 +420,145 @@ namespace Server.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("SanityCost")
-                        .HasColumnType("integer");
+                    b.Property<double>("SanityCost")
+                        .HasColumnType("double precision");
 
                     b.Property<Guid>("SavedSkillId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("SinCostEnvy")
-                        .HasColumnType("integer");
+                    b.Property<double>("SinCostEnvy")
+                        .HasColumnType("double precision");
 
-                    b.Property<int>("SinCostGloom")
-                        .HasColumnType("integer");
+                    b.Property<double>("SinCostGloom")
+                        .HasColumnType("double precision");
 
-                    b.Property<int>("SinCostGluttony")
-                        .HasColumnType("integer");
+                    b.Property<double>("SinCostGluttony")
+                        .HasColumnType("double precision");
 
-                    b.Property<int>("SinCostLust")
-                        .HasColumnType("integer");
+                    b.Property<double>("SinCostLust")
+                        .HasColumnType("double precision");
 
-                    b.Property<int>("SinCostPride")
-                        .HasColumnType("integer");
+                    b.Property<double>("SinCostPride")
+                        .HasColumnType("double precision");
 
-                    b.Property<int>("SinCostSloth")
-                        .HasColumnType("integer");
+                    b.Property<double>("SinCostSloth")
+                        .HasColumnType("double precision");
 
-                    b.Property<int>("SinCostWrath")
-                        .HasColumnType("integer");
+                    b.Property<double>("SinCostWrath")
+                        .HasColumnType("double precision");
 
-                    b.Property<int>("SinResistantEnvy")
-                        .HasColumnType("integer");
+                    b.Property<double>("SinResistantEnvy")
+                        .HasColumnType("double precision");
 
-                    b.Property<int>("SinResistantGloom")
-                        .HasColumnType("integer");
+                    b.Property<double>("SinResistantGloom")
+                        .HasColumnType("double precision");
 
-                    b.Property<int>("SinResistantGluttony")
-                        .HasColumnType("integer");
+                    b.Property<double>("SinResistantGluttony")
+                        .HasColumnType("double precision");
 
-                    b.Property<int>("SinResistantLust")
-                        .HasColumnType("integer");
+                    b.Property<double>("SinResistantLust")
+                        .HasColumnType("double precision");
 
-                    b.Property<int>("SinResistantPride")
-                        .HasColumnType("integer");
+                    b.Property<double>("SinResistantPride")
+                        .HasColumnType("double precision");
 
-                    b.Property<int>("SinResistantSloth")
-                        .HasColumnType("integer");
+                    b.Property<double>("SinResistantSloth")
+                        .HasColumnType("double precision");
 
-                    b.Property<int>("SinResistantWrath")
-                        .HasColumnType("integer");
+                    b.Property<double>("SinResistantWrath")
+                        .HasColumnType("double precision");
 
-                    b.Property<string>("SinnerIcon")
+                    b.Property<string>("SinnerColor")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("SplashArt")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("SinnerIconId")
+                        .HasColumnType("uuid");
 
-                    b.Property<int>("SplashArtScale")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("SplashArtId")
+                        .HasColumnType("uuid");
 
-                    b.Property<int>("SplashArtTranslationX")
-                        .HasColumnType("integer");
+                    b.Property<double>("SplashArtScale")
+                        .HasColumnType("double precision");
 
-                    b.Property<int>("SplashArtTranslationY")
-                        .HasColumnType("integer");
+                    b.Property<double>("SplashArtTranslationX")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("SplashArtTranslationY")
+                        .HasColumnType("double precision");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("sinnerColor")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("SinnerIconId");
+
+                    b.HasIndex("SplashArtId");
 
                     b.ToTable("SavedEgo");
                 });
 
-            modelBuilder.Entity("Server.Models.SavedId", b =>
+            modelBuilder.Entity("Server.Models.SavedIDInfo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<int>("BluntResistant")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("DefenseLevel")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("HP")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("MaxSpeed")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("MinSpeed")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("ImageAttachId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("PierceResistant")
-                        .HasColumnType("integer");
+                    b.Property<DateTime>("SaveTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid>("SavedIdKey")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id");
+
+                    b.HasIndex("ImageAttachId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("SavedIDInfos");
+                });
+
+            modelBuilder.Entity("Server.Models.SavedId", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<double>("BluntResistant")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("DefenseLevel")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("HP")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("MaxSpeed")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("MinSpeed")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<double>("PierceResistant")
+                        .HasColumnType("double precision");
 
                     b.Property<string>("Rarity")
                         .IsRequired()
@@ -488,68 +571,39 @@ namespace Server.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("SinnerIcon")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("SinnerIconId")
+                        .HasColumnType("uuid");
 
-                    b.Property<int>("SlashResistant")
-                        .HasColumnType("integer");
+                    b.Property<double>("SlashResistant")
+                        .HasColumnType("double precision");
 
-                    b.Property<string>("SplashArt")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("SplashArtId")
+                        .HasColumnType("uuid");
 
                     b.Property<double>("SplashArtScale")
                         .HasColumnType("double precision");
 
-                    b.Property<int>("SplashArtTranslationX")
-                        .HasColumnType("integer");
+                    b.Property<double>("SplashArtTranslationX")
+                        .HasColumnType("double precision");
 
-                    b.Property<int>("SplashArtTranslationY")
-                        .HasColumnType("integer");
+                    b.Property<double>("SplashArtTranslationY")
+                        .HasColumnType("double precision");
 
                     b.Property<string>("StaggerResist")
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("SinnerIconId");
+
+                    b.HasIndex("SplashArtId");
 
                     b.ToTable("SavedId");
-                });
-
-            modelBuilder.Entity("Server.Models.SavedInfo", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("ImageAttach")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid?>("SaveEgoKey")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("SaveIdKey")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("SaveTime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("SavedInfos");
                 });
 
             modelBuilder.Entity("Server.Models.SavedSkill", b =>
@@ -558,7 +612,19 @@ namespace Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("FK_SavedEgo_SavedSkill_key")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("FK_SavedId_SavedSkill_key")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("FK_SavedEgo_SavedSkill_key")
+                        .IsUnique();
+
+                    b.HasIndex("FK_SavedId_SavedSkill_key")
+                        .IsUnique();
 
                     b.ToTable("SavedSkill");
                 });
@@ -591,15 +657,16 @@ namespace Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("TagImg")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("TagName")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PostId");
 
                     b.ToTable("Tag");
                 });
@@ -617,9 +684,8 @@ namespace Server.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("UserIcon")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("UserIconId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -629,53 +695,67 @@ namespace Server.Migrations
 
                     b.HasIndex("Id");
 
+                    b.HasIndex("UserIconId");
+
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("SavedInfoTag", b =>
-                {
-                    b.HasOne("Server.Models.SavedInfo", null)
-                        .WithMany()
-                        .HasForeignKey("SavedInfosId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Server.Models.Tag", null)
-                        .WithMany()
-                        .HasForeignKey("TagsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Server.Models.Comment", b =>
                 {
-                    b.HasOne("Server.Models.SavedInfo", null)
+                    b.HasOne("Server.Models.Post", null)
                         .WithMany("Comments")
-                        .HasForeignKey("SavedInfoId");
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("Server.Models.User", null)
+                    b.HasOne("Server.Models.User", "User")
                         .WithMany("Comments")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Server.Models.CustomEffect", b =>
                 {
+                    b.HasOne("Server.Models.ImageObj", "ImageAttach")
+                        .WithMany()
+                        .HasForeignKey("ImageAttachId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Server.Models.SavedSkill", null)
                         .WithMany("CustomEffects")
                         .HasForeignKey("SavedSkillId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ImageAttach");
                 });
 
             modelBuilder.Entity("Server.Models.DefenseSkill", b =>
                 {
+                    b.HasOne("Server.Models.ImageObj", "ImageAttach")
+                        .WithMany()
+                        .HasForeignKey("ImageAttachId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Server.Models.SavedSkill", null)
                         .WithMany("DefenseSkills")
                         .HasForeignKey("SavedSkillId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ImageAttach");
+                });
+
+            modelBuilder.Entity("Server.Models.ImageObj", b =>
+                {
+                    b.HasOne("Server.Models.Post", null)
+                        .WithMany("ImageAttaches")
+                        .HasForeignKey("PostId");
                 });
 
             modelBuilder.Entity("Server.Models.MentalEffect", b =>
@@ -689,34 +769,140 @@ namespace Server.Migrations
 
             modelBuilder.Entity("Server.Models.OffenseSkill", b =>
                 {
+                    b.HasOne("Server.Models.ImageObj", "ImageAttach")
+                        .WithMany()
+                        .HasForeignKey("ImageAttachId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Server.Models.SavedSkill", null)
                         .WithMany("OffenseSkills")
-                        .HasForeignKey("SavedSkillId");
+                        .HasForeignKey("SavedSkillId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ImageAttach");
                 });
 
             modelBuilder.Entity("Server.Models.PassiveSkill", b =>
                 {
                     b.HasOne("Server.Models.SavedSkill", null)
                         .WithMany("PassiveSkills")
-                        .HasForeignKey("SavedSkillId");
+                        .HasForeignKey("SavedSkillId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("Server.Models.Reaction", b =>
+            modelBuilder.Entity("Server.Models.Post", b =>
                 {
-                    b.HasOne("Server.Models.SavedInfo", null)
-                        .WithMany("Reactions")
-                        .HasForeignKey("SavedInfoId");
+                    b.HasOne("Server.Models.User", "User")
+                        .WithMany("Posts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Server.Models.SavedInfo", b =>
+            modelBuilder.Entity("Server.Models.SavedEGOInfo", b =>
                 {
+                    b.HasOne("Server.Models.ImageObj", "ImageAttach")
+                        .WithMany()
+                        .HasForeignKey("ImageAttachId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Server.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("ImageAttach");
+
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Server.Models.SavedEgo", b =>
+                {
+                    b.HasOne("Server.Models.SavedEGOInfo", null)
+                        .WithOne("SavedEgo")
+                        .HasForeignKey("Server.Models.SavedEgo", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Server.Models.ImageObj", "SinnerIcon")
+                        .WithMany()
+                        .HasForeignKey("SinnerIconId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Server.Models.ImageObj", "SplashArt")
+                        .WithMany()
+                        .HasForeignKey("SplashArtId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SinnerIcon");
+
+                    b.Navigation("SplashArt");
+                });
+
+            modelBuilder.Entity("Server.Models.SavedIDInfo", b =>
+                {
+                    b.HasOne("Server.Models.ImageObj", "ImageAttach")
+                        .WithMany()
+                        .HasForeignKey("ImageAttachId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Server.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ImageAttach");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Server.Models.SavedId", b =>
+                {
+                    b.HasOne("Server.Models.SavedIDInfo", null)
+                        .WithOne("SavedId")
+                        .HasForeignKey("Server.Models.SavedId", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Server.Models.ImageObj", "SinnerIcon")
+                        .WithMany()
+                        .HasForeignKey("SinnerIconId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Server.Models.ImageObj", "SplashArt")
+                        .WithMany()
+                        .HasForeignKey("SplashArtId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SinnerIcon");
+
+                    b.Navigation("SplashArt");
+                });
+
+            modelBuilder.Entity("Server.Models.SavedSkill", b =>
+                {
+                    b.HasOne("Server.Models.SavedEgo", null)
+                        .WithOne("Skill")
+                        .HasForeignKey("Server.Models.SavedSkill", "FK_SavedEgo_SavedSkill_key")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Server.Models.SavedId", null)
+                        .WithOne("Skill")
+                        .HasForeignKey("Server.Models.SavedSkill", "FK_SavedId_SavedSkill_key")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Server.Models.Session", b =>
@@ -730,11 +916,59 @@ namespace Server.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Server.Models.SavedInfo", b =>
+            modelBuilder.Entity("Server.Models.Tag", b =>
+                {
+                    b.HasOne("Server.Models.Post", "Posts")
+                        .WithMany("Tags")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Posts");
+                });
+
+            modelBuilder.Entity("Server.Models.User", b =>
+                {
+                    b.HasOne("Server.Models.ImageObj", "UserIcon")
+                        .WithMany()
+                        .HasForeignKey("UserIconId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserIcon");
+                });
+
+            modelBuilder.Entity("Server.Models.Post", b =>
                 {
                     b.Navigation("Comments");
 
-                    b.Navigation("Reactions");
+                    b.Navigation("ImageAttaches");
+
+                    b.Navigation("Tags");
+                });
+
+            modelBuilder.Entity("Server.Models.SavedEGOInfo", b =>
+                {
+                    b.Navigation("SavedEgo")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Server.Models.SavedEgo", b =>
+                {
+                    b.Navigation("Skill")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Server.Models.SavedIDInfo", b =>
+                {
+                    b.Navigation("SavedId")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Server.Models.SavedId", b =>
+                {
+                    b.Navigation("Skill")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Server.Models.SavedSkill", b =>
@@ -753,6 +987,8 @@ namespace Server.Migrations
             modelBuilder.Entity("Server.Models.User", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("Posts");
                 });
 #pragma warning restore 612, 618
         }

@@ -50,7 +50,6 @@ export default function useInput(propInputs:{[type:string]:string|number},change
         return(e:React.ChangeEvent<HTMLInputElement>)=>{
             let url="";
             const fr = new FileReader()
-            console.log(url)
             if(e.currentTarget.files.length>0){
                 fr.readAsDataURL(e.currentTarget.files[0])
 

@@ -61,8 +61,10 @@ export default function InputTabHeader({skillDetails,changeTab,activeTab,addTab,
             }
             return <InputTab key={skill.inputId} tabName={convertTabName(skill)} tabColor={`var(--${skill.type==="DefenseSkill"||skill.type==="OffenseSkill"?(skill as IOffenseSkill|IDefenseSkill).skillAffinity:"None"}-input-page)`} tabIcon={tabIcon} clickHandler={()=>changeTab(i)} deleteHandler={()=>deleteHandler(i)} isActive={activeTab===i}/>
         })}
-        <span className="add-icon" onClick={addTab}>
-            <Add_icon/>
-        </span>
+        {skillDetails.length>20?<></>:
+            <span className="add-icon" onClick={addTab}>
+                <Add_icon/>
+            </span>
+        }
     </div>
 }

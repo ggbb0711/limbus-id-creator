@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\NGHIA\\Project\\Limbus id creator\\limbus-id-creator\\id-creator-server\\Server\\Server.csproj": {}
+    "C:\\Users\\NGHIA\\Project\\Limbus id creator\\limbus-id-creator\\id-creator-server\\Server\\Server.csproj": {}
   },
   "projects": {
-    "c:\\Users\\NGHIA\\Project\\Limbus id creator\\limbus-id-creator\\id-creator-server\\Server\\Server.csproj": {
+    "C:\\Users\\NGHIA\\Project\\Limbus id creator\\limbus-id-creator\\id-creator-server\\Server\\Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\NGHIA\\Project\\Limbus id creator\\limbus-id-creator\\id-creator-server\\Server\\Server.csproj",
+        "projectUniqueName": "C:\\Users\\NGHIA\\Project\\Limbus id creator\\limbus-id-creator\\id-creator-server\\Server\\Server.csproj",
         "projectName": "Server",
-        "projectPath": "c:\\Users\\NGHIA\\Project\\Limbus id creator\\limbus-id-creator\\id-creator-server\\Server\\Server.csproj",
+        "projectPath": "C:\\Users\\NGHIA\\Project\\Limbus id creator\\limbus-id-creator\\id-creator-server\\Server\\Server.csproj",
         "packagesPath": "C:\\Users\\NGHIA\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\NGHIA\\Project\\Limbus id creator\\limbus-id-creator\\id-creator-server\\Server\\obj\\",
+        "outputPath": "C:\\Users\\NGHIA\\Project\\Limbus id creator\\limbus-id-creator\\id-creator-server\\Server\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\NGHIA\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -66,7 +66,7 @@
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[8.0.5, )"
+              "version": "[8.0.7, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
@@ -80,7 +80,7 @@
             },
             "Microsoft.EntityFrameworkCore.Proxies": {
               "target": "Package",
-              "version": "[8.0.5, )"
+              "version": "[8.0.7, )"
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
@@ -89,6 +89,10 @@
             "Npgsql.EntityFrameworkCore.PostgreSQL.Design": {
               "target": "Package",
               "version": "[1.1.0, )"
+            },
+            "RabbitMQ.client": {
+              "target": "Package",
+              "version": "[6.8.1, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

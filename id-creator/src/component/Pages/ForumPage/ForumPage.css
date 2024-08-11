@@ -1,0 +1,15 @@
+.forum-input-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 4px;
+}
+
+.forum-sorted-by{
+    width: 150px;
+}
+
+.forum-new-post-container{
+    display: flex;
+    justify-content: end;
+}

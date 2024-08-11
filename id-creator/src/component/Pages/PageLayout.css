@@ -1,0 +1,33 @@
+.page-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: "Rubik", sans-serif; 
+    color: white;
+}
+
+.page-container, .page-container *{
+    box-sizing: border-box;
+}
+
+.page-content{
+    width: 100%;
+    max-width: 1200px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    box-sizing: border-box;
+}
+
+
+
+.page-content-center{
+    align-self: center;
+}
+
+.page-content-large-txt{
+    font-size: 30px;
+}

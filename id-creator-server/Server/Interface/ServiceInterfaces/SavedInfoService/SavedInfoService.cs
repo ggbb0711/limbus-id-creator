@@ -3,11 +3,12 @@ using Server.Util.Obj;
 
 namespace Server.Interface.ServiceInterface.SavedInfoService
 {
-    public interface ISavedInfoService
+    public interface ISavedInfoService<SavedInfo>
     {
-        Task<SavedInfo> CreateSavedInfo(SavedInfo newSave);
-        Task<SavedInfo?> FindSavedInfo(Guid Id);
-        Task<SavedInfo?> UpdateSavedInfo(UpdateSaveParams newSave);
+        Task<SavedInfo> CreateSavedInfo(SavedInfo newSave, SaveInfoFiles files);
+        Task<SavedInfo?> FindSavedInfoById(Guid Id,bool includeSkill=false);
+        Task<List<SavedInfo>> FindSavedInfos(SearchSaveParams option);
+        Task<SavedInfo?> UpdateSavedInfo(SavedInfo newSave, SaveInfoFiles files);
         Task<SavedInfo?> DeleteSavedInfo(Guid Id);
     }
 }

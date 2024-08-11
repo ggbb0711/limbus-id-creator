@@ -2,22 +2,30 @@ using AutoMapper;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Server.DTOs.Response.Users;
-using Server.Interface.ServiceInterface.UploadService;
 using Server.Interface.ServiceInterface.UserService;
 using Server.Models;
 using Server.Services;
-using Server.Services.UtilServices;
-using Server.Util;
+using Server.Util.RabbitMQPublisher;
 
 
 namespace Server.Controllers
 {
+    [ApiController]
     [Route("API/[controller]")]
     [EnableCors("AllowOrigin")]
-    public class UserController(IUserService userService, IMapper mapper) : Controller
+    public class UserController : Controller
     {
-        private readonly IUserService _userService = userService;
-        private readonly IMapper _mapper = mapper;
+        private readonly IUserService _userService;
+        private readonly IMapper _mapper;
+        private readonly RabbitMQUploadingImagePublisher _publisher;
+        
+        public UserController(IUserService userService, RabbitMQUploadingImagePublisher publisher, IMapper mapper)
+        {
+            _userService = userService;
+            _mapper = mapper;
+            _publisher = publisher;
+        }
+        
         [HttpGet("{id?}")]
         [EnableCors("AllowOrigin")]
         public async Task<IActionResult> Users(string id)
@@ -57,6 +65,7 @@ namespace Server.Controllers
             }
         }
 
+
         [HttpPost("change/name/{id}")]
         [EnableCors("AllowOrigin")]
         public async Task<IActionResult> UsersPostName(string id,[FromBody] string newName)
@@ -78,10 +87,10 @@ namespace Server.Controllers
                     return BadRequest(response);
                 }
 
-                if(newName.Length>40)
+                if(newName.Length>65)
                 {
                     response.Response = "";
-                    response.msg = "Username cannot be over 40 characters";
+                    response.msg = "Username cannot be over 65 characters";
 
                     return StatusCode(400,response);
                 }
@@ -112,7 +121,7 @@ namespace Server.Controllers
         {
             var response = new ResponseService<string>();
             var session = (Session?) HttpContext.Items["Session"];
-            if(newProfile.Length>=8000)
+            if(newProfile.Length>=80000)
             {
                 response.msg = "Profile must be less or equal to 80kb";
                 return StatusCode(401,response);
@@ -146,6 +155,12 @@ namespace Server.Controllers
                 {
                     response.Response = changeUserProfile;
                     response.msg = "Userprofile changed";
+
+                    var foundUser = await _userService.GetUser(new Guid(id));
+                    if(foundUser!=null)
+                    {
+                        _publisher.PushFormFileToRabbitMQ(foundUser.UserIconId,newProfile,foundUser.UserIcon.LastUpdated);
+                    }
 
                     return Ok(response);
                 }

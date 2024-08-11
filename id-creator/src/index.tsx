@@ -1,6 +1,12 @@
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import HeaderLayout from 'component/Layout/HeaderLayout';
+import DisplayPage from 'component/Pages/DisplayPage/DisplayPage';
 import EgoCardPage from 'component/Pages/EgoCardPage/EgoCardPage';
+import ForumPage from 'component/Pages/ForumPage/ForumPage';
 import IdCardPage from 'component/Pages/IdCardPage/IdCardPage';
+import NewPostPage from 'component/Pages/NewPostPage/NewPostPage';
+import PostPage from 'component/Pages/PostPage/PostPage';
+import UserPage from 'component/Pages/UserPage/UserPage';
 import React, { ReactElement, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, json, RouterProvider } from 'react-router-dom';
@@ -18,12 +24,28 @@ const router = createBrowserRouter([
                 element:<IdCardPage/>
             },
             {
+                path:"User/:userId",
+                element:<UserPage/>
+            },
+            {
                 path:"IdCreator",
                 element:<IdCardPage/>
             },
             {
                 path:'EgoCreator',
                 element:<EgoCardPage/>
+            },
+            {
+                path:'Forum',
+                element:<ForumPage/>
+            },
+            {
+                path:"NewPost",
+                element:<NewPostPage/>
+            },
+            {
+                path:"Post/:postId",
+                element: <PostPage/>
             }
         ]
     },
@@ -67,7 +89,9 @@ function App():ReactElement{
     // return <GoogleOAuthProvider clientId=''>
     //     <RouterProvider router={router}/>
     // </GoogleOAuthProvider> 
-    return <RouterProvider router={router}/>
+    return <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+        <RouterProvider router={router}/>
+    </GoogleOAuthProvider> 
 }
 
 root.render(

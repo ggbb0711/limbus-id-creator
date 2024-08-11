@@ -9,7 +9,7 @@ export default function SinnerStats():ReactElement{
     const {
         minSpeed,
         maxSpeed,
-        HP,
+        hp,
         staggerResist,
         defenseLevel,
         slashResistant,
@@ -44,7 +44,7 @@ export default function SinnerStats():ReactElement{
                 <div className="stat-container-slot">
                     <img className="stat-icon" src="Images/stat/stat_hp.webp" alt="hp_icon" />
                     <div className="stat-content">
-                        <p>{HP}</p>
+                        <p>{hp}</p>
                     </div>
                 </div>
                 <div className="stat-container-slot">

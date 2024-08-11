@@ -1,25 +1,24 @@
 import React, { createContext, ReactElement, useCallback, useContext, useState } from "react";
-import * as htmlToImage from 'html-to-image';
+import TurnRefToImg from "utils/Functions/TurnRefToImg";
 
 
 const refDownload = createContext(null)
 
-const RefDownloadProvider: React.FC<{children:ReactElement,domRef:React.MutableRefObject<any>}>=({children,domRef})=>{
+const RefDownloadProvider: React.FC<{children:ReactElement}>=({children})=>{
     const [imgUrl,setImgUrl] = useState("")
+    const [domRef,setDomRef] = useState<React.MutableRefObject<any>>()
+    
 
     const setImgUrlState=useCallback(async():Promise<string>=>{
-        try{
-            const dataUrl = await htmlToImage.toPng(domRef.current)
+        if(domRef?.current){
+            const dataUrl = await TurnRefToImg(domRef)
             setImgUrl(dataUrl)
             return dataUrl
         }
-        catch(err){
-            console.log(err)
-            return ""
-        }
+            
     },[domRef])
 
-    return <refDownload.Provider value={{imgUrl,setImgUrlState}}>
+    return <refDownload.Provider value={{imgUrl,setImgUrlState,setDomRef}}>
         {children}
     </refDownload.Provider>
 }

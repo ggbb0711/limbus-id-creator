@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import "../InputTabContainer.css"
 import { useIdInfoContext } from "component/context/IdInfoContext";
 import { IOffenseSkill, OffenseSkill } from "Interfaces/OffenseSkill/IOffenseSkill";
@@ -20,7 +20,7 @@ export default function InputTabIdInfoContainer():ReactElement{
     const [activeTab,setActiveTab]=useState(-1)
     const {idInfoValue,setIdInfoValue} = useIdInfoContext()
     const {statusEffect}=useStatusEffectContext()
-    
+
     function deleteHandler(i:number){
         let newIndex=i
         if(newIndex<=activeTab){ 
@@ -40,6 +40,7 @@ export default function InputTabIdInfoContainer():ReactElement{
     }
 
     function showInputPage(skill:IOffenseSkill|IDefenseSkill|IPassiveSkill|ICustomEffect|IMentalEffect|never,index:number){
+        if(!skill) return;
         function changeSkill(newSkill:{[key:string]:string}){
             const newIdInfoValue={...idInfoValue}
             newIdInfoValue.skillDetails[index]=newSkill
@@ -97,6 +98,7 @@ export default function InputTabIdInfoContainer():ReactElement{
         }
     }
 
+    useEffect(()=>{if(activeTab>=idInfoValue.skillDetails.length)setActiveTab(-1)},[JSON.stringify(idInfoValue.skillDetails)])
     return <div className="input-tab-container">
         <InputTabHeader changeTab={setActiveTab} activeTab={activeTab} skillDetails={idInfoValue.skillDetails} addTab={addTab} deleteHandler={deleteHandler}/>
         {(activeTab===-1)?<InputIdInfoStatPage/>:showInputPage(idInfoValue.skillDetails[activeTab],activeTab)}

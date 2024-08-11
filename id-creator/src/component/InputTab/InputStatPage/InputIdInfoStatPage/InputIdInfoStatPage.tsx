@@ -9,16 +9,10 @@ import SinnerSplashArtRepositionInput from "../SinnerSplashArtRepositionInput/Si
 import SinnerRarityIconInput from "../SinnerRarityInput/SinnerRarityInput";
 import Delete_icon from "Icons/Delete_icon";
 import MainButton from "utils/MainButton/MainButton";
-import Download_icon from "Icons/Download_icon";
-import { useRefDownloadContext } from "component/context/ImgUrlContext";
-import DownloadImg from "utils/Functions/DownloadImg";
-import { useSetSaveIdInfoActive } from "component/SaveMenu/SaveLocalMenu/SaveLocalMenu";
-import Save_icon from "Icons/Save_icon";
+
 
 export default function InputIdInfoStatPage():ReactElement{
     const {idInfoValue,setIdInfoValue} = useIdInfoContext()
-    const {setImgUrlState} = useRefDownloadContext()
-    const {isActive,setIsActive} = useSetSaveIdInfoActive()
     
     const {
         minSpeed,
@@ -71,27 +65,11 @@ export default function InputIdInfoStatPage():ReactElement{
         }
     }
 
-    function handleDownload(){
-        setImgUrlState().then((res:string)=>{
-            if(res){
-                DownloadImg(res,"customId")
-            }
-        })
-    }
-
     return <div className="input-page input-stat-page">
-        <div className="input-group-container">
-            <div className="input-container">
-                <MainButton component={<p className="center-element"><Download_icon /> Download</p>} btnClass={"main-button fill-button-component"} clickHandler={handleDownload}/>
-            </div>
-            <div className="input-container">
-                <MainButton component={<p className="center-element"><Save_icon/> Save</p>} btnClass="main-button fill-button-component" clickHandler={()=>setIsActive(!isActive)}/>
-            </div>
-        </div>
         <div className="sinner-icon-input-container">
             <p>Pick the sinner icon: </p>
             <SinnerIconInput/>
-            <UploadImgBtn onFileInputChange={onFileInputChange("sinnerIcon")} btnTxt={"Upload sinner icon"}/>
+            <UploadImgBtn onFileInputChange={onFileInputChange("sinnerIcon")} btnTxt={"Upload sinner icon (<= 80kb)"} maxSize={80000}/>
         </div>
         <div className="sinner-color-input-container">
             <p>Pick a color for your sinner: </p>
@@ -109,7 +87,7 @@ export default function InputIdInfoStatPage():ReactElement{
             </>
            :<></>}
 
-        <UploadImgBtn onFileInputChange={onFileInputChange("splashArt")} btnTxt={"Upload splash art"}/>
+        <UploadImgBtn onFileInputChange={onFileInputChange("splashArt")} btnTxt={"Upload splash art (<= 1.2mb)"} maxSize={1200000}/>
         
         <div>
             <p>Pick the sinner rarity: </p>

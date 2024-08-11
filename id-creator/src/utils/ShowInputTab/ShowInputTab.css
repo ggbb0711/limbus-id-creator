@@ -3,8 +3,8 @@
     position: fixed;
     border-radius: 100%;
     cursor: pointer;
-    padding: 6px;
-    z-index: 999;
+    padding: 3px;
+    z-index: 10;
     bottom: 35px;
     right: 15px;
     border: 2px solid white;

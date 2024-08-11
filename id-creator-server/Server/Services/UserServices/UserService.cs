@@ -1,9 +1,8 @@
 using Server.DTOs.Response.Users;
 using Server.Interface.Repositories;
-using Server.Interface.ServiceInterface.UploadService;
+using Server.Interface.ServiceInterface.StaticStorageService;
 using Server.Interface.ServiceInterface.UserService;
 using Server.Models;
-using Server.Services.UtilServices;
 using Server.Util;
 
 namespace Server.Services
@@ -11,16 +10,12 @@ namespace Server.Services
     public class UserService:IUserService
     {
         private readonly IUserRepository _userRepository;
-        private readonly IUploadService _cloudinaryUploadService;
-        private readonly JobQueue _jobQueue;
-        private readonly IServiceScopeFactory _serviceProvider;
+        private readonly ISessionRepository _sessionRepository;
 
-        public UserService(IUserRepository userRepository,IUploadService cloudinaryUploadService,JobQueue jobQueue, IServiceScopeFactory serviceScopeFactory)
+        public UserService(IUserRepository userRepository, ISessionRepository sessionRepository)
         {
             _userRepository = userRepository;
-            _cloudinaryUploadService = cloudinaryUploadService;
-            JobQueue _jobQueue = jobQueue;
-            IServiceScopeFactory _serviceScopeFactory = serviceScopeFactory;
+            _sessionRepository = sessionRepository;
         }
 
         public async Task<User?> GetUser(Guid userId)
@@ -34,12 +29,17 @@ namespace Server.Services
 
             if(user ==null)
             {
+                var imageId = new Guid();
                 var newUser = new User()
                 {
                     Id = Guid.NewGuid(),
                     UserEmail = loginUser.email,
                     UserName = loginUser.name,
-                    UserIcon = loginUser.picture,
+                    UserIconId = imageId,
+                    UserIcon = new ImageObj(){
+                        Id = imageId,
+                        Url = loginUser.picture,
+                    },
                     CreatedAt = DateTime.Now,
                 };
                 
@@ -48,6 +48,7 @@ namespace Server.Services
 
             return user;
         }
+
 
         public async Task<string?> ChangeUserName(Guid userId,string newName)
         {
@@ -63,26 +64,12 @@ namespace Server.Services
         {
             var newProfileUrl = await FileHelper.ConvertToBase64Async(newProfile);
 
-            // Schedule the file upload in the background
-            _jobQueue.Enqueue(async Task() =>
-            {
-                var uploadUrl = await _cloudinaryUploadService.Upload(newProfile, userId + "_user_icon.jpg");
-                using(var scope = _serviceProvider.CreateScope())
-                {
-                    var userService = scope.ServiceProvider.GetRequiredService<IUserService>();
-                    await _userRepository.ChangeUser(userId,new UserChangeProfileDTO()
-                    {
-                        UserIcon = uploadUrl,
-                        UserName=""
-                    });
-                }
-            });
             var userChangeProfile = new UserChangeProfileDTO()
             {
                 UserIcon=newProfileUrl,
                 UserName="",
             };
-            return (await _userRepository.ChangeUser(userId, userChangeProfile))?.UserIcon;
+            return (await _userRepository.ChangeUser(userId, userChangeProfile))?.UserIcon?.Url;
         }
     }
 }

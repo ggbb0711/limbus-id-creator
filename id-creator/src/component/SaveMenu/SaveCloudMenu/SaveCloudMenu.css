@@ -1,0 +1,147 @@
+.save-cloud-container{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.save-cloud-header{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.save-cloud-header-info-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 4px;
+}
+
+.save-cloud-header-content{
+    width: 100%;
+}
+
+.save-cloud-header-input-container{
+    flex: 1;
+    font-size: 12px;
+}
+
+.save-cloud-header-input-container>*:not(:last-child){
+    margin-bottom: 4px;
+}
+
+.save-cloud-name-popup{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 300px;
+}
+
+.save-cloud-name-input{
+    width: 100%;
+    border-color: var(--red-brown);
+}
+
+.search-cloud-save-file{
+    width: 100%;
+    border-color: var(--red-brown);
+    margin-top: auto;
+}
+
+.save-menu-list-container{
+    position: relative;
+    flex: 1 1;
+}
+
+.preview-img,.loading-img,.img-not-found{
+    width: 100px;
+    height: 75px;
+}
+
+.img-not-found{
+    background-color: black;
+    color: white;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-img{
+    background-color: var(--loading-background-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.save-cloud-tab{
+    width: 100%;
+    background-color: #ECCAA5;
+    padding: 4px;
+}
+
+.save-cloud-tab-button-container{
+    width: 100%;
+}
+
+.save-cloud-tab-button-container .main-button{
+    flex: 1;
+    min-width: 0px;
+}
+
+.save-cloud-tab-content{
+    width: 100%;
+}
+
+.loading-cloud-tab{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    background-color: var(--loading-background-color);
+    opacity: 0.5;
+    z-index: 2;
+}
+
+.tag-container{
+    height: 45px;
+    border: 2px solid var(--red-brown);
+    overflow-y: auto;
+    height: 70px;
+}
+
+.save-cloud-desc-input-container{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.save-cloud-desc-input{
+    width: 100%;
+    flex: 1;
+    border-color: var(--red-brown);
+}
+
+.save-cloud-login-remainder{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.public-status{
+    font-size: 12px;
+    font-family: "Mikodacs" , "Rubik", sans-serif;
+}
+
+.pulib-status *{
+
+}

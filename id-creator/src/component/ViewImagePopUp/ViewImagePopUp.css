@@ -1,0 +1,43 @@
+.image-pop-up-container{
+    z-index: 99;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100vw;
+    height: 100vh;
+    top: 0px;
+}
+
+.image-pop-up{
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.image-pop-up-arrow,.image-pop-up-close{
+    border-radius: 100%;
+    background-color: black;
+    fill: white;
+    cursor: pointer;
+    padding: 4px;
+    rotate: 90deg;
+    position: absolute;
+    top: 45%;
+    transform: scale(1.2);
+}
+
+.image-pop-up-arrow.left{
+    left: 15px;
+}
+
+.image-pop-up-arrow.right{
+    right: 15px;
+}
+
+.image-pop-up-close{
+    top: 25px;
+    right: 25px;
+    rotate: 0deg;
+}
+
+.image-pop-up-close:hover{
+    fill: red;
+}

@@ -2,24 +2,24 @@ import React, { ReactElement } from "react";
 import "./SinCost.css"
 
 interface sinCost{
-    Wrath_cost:number,
-    Lust_cost:number,
-    Sloth_cost:number,
-    Gluttony_cost:number,
-    Gloom_cost:number,
-    Pride_cost:number,
-    Envy_cost:number,
+    wrath_cost:number,
+    lust_cost:number,
+    sloth_cost:number,
+    gluttony_cost:number,
+    gloom_cost:number,
+    pride_cost:number,
+    envy_cost:number,
 }
 
 export default function SinCost({sinCost}:{sinCost:sinCost}):ReactElement{
     const {
-        Wrath_cost,
-        Lust_cost,
-        Sloth_cost,
-        Gluttony_cost,
-        Gloom_cost,
-        Pride_cost,
-        Envy_cost,
+        wrath_cost,
+        lust_cost,
+        sloth_cost,
+        gluttony_cost,
+        gloom_cost,
+        pride_cost,
+        envy_cost,
     }=sinCost
 
     function textColor(cost:number){
@@ -28,33 +28,33 @@ export default function SinCost({sinCost}:{sinCost:sinCost}):ReactElement{
 
     return <div className="sin-cost-container">
         <p className="cost-txt">COST</p>
-        <div className="center-element sin-cost" style={{color:textColor(Wrath_cost)}}>
+        <div className="center-element sin-cost" style={{color:textColor(wrath_cost)}}>
             <img src="Images/sin-affinity/affinity_Wrath_big.webp" alt="Wrath-cost-icon" />
-            <p>{Wrath_cost}</p>
+            <p>{wrath_cost}</p>
         </div>
-        <div className="center-element sin-cost" style={{color:textColor(Lust_cost)}}>
+        <div className="center-element sin-cost" style={{color:textColor(lust_cost)}}>
             <img src="Images/sin-affinity/affinity_Lust_big.webp" alt="Lust-cost-icon" />
-            <p>{Lust_cost}</p>
+            <p>{lust_cost}</p>
         </div>
-        <div className="center-element sin-cost" style={{color:textColor(Sloth_cost)}}>
+        <div className="center-element sin-cost" style={{color:textColor(sloth_cost)}}>
             <img src="Images/sin-affinity/affinity_Sloth_big.webp" alt="Sloth-cost-icon" />
-            <p>{Sloth_cost}</p>
+            <p>{sloth_cost}</p>
         </div>
-        <div className="center-element sin-cost" style={{color:textColor(Gluttony_cost)}}>
+        <div className="center-element sin-cost" style={{color:textColor(gluttony_cost)}}>
             <img src="Images/sin-affinity/affinity_Gluttony_big.webp" alt="Gluttony-cost-icon" />
-            <p>{Gluttony_cost}</p>
+            <p>{gluttony_cost}</p>
         </div>
-        <div className="center-element sin-cost" style={{color:textColor(Gloom_cost)}}>
+        <div className="center-element sin-cost" style={{color:textColor(gloom_cost)}}>
             <img src="Images/sin-affinity/affinity_Gloom_big.webp" alt="Gloom-cost-icon" />
-            <p>{Gloom_cost}</p>
+            <p>{gloom_cost}</p>
         </div>
-        <div className="center-element sin-cost" style={{color:textColor(Pride_cost)}}>
+        <div className="center-element sin-cost" style={{color:textColor(pride_cost)}}>
             <img src="Images/sin-affinity/affinity_Pride_big.webp" alt="Pride-cost-icon" />
-            <p>{Pride_cost}</p>
+            <p>{pride_cost}</p>
         </div>
-        <div className="center-element sin-cost" style={{color:textColor(Envy_cost)}}>
+        <div className="center-element sin-cost" style={{color:textColor(envy_cost)}}>
             <img src="Images/sin-affinity/affinity_Envy_big.webp" alt="Envy-cost-icon" />
-            <p>{Envy_cost}</p>
+            <p>{envy_cost}</p>
         </div>
     </div>
 }

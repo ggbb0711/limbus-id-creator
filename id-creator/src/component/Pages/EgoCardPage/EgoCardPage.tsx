@@ -5,58 +5,43 @@ import '../EditorPage.css'
 import { StatusEffectProvider } from 'component/context/StatusEffectContext';
 import {MapInteractionCSS} from "react-map-interaction"
 import ShowInputTab from 'utils/ShowInputTab/ShowInputTab';
-import { RefDownloadProvider } from 'component/context/ImgUrlContext';
-import { SaveLocalMenu } from 'component/SaveMenu/SaveLocalMenu/SaveLocalMenu';
+import { useRefDownloadContext } from 'component/context/ImgUrlContext';
 import { EgoInfoProvider, useEgoInfoContext } from 'component/context/EgoInfoContext';
 import { EgoCard } from 'component/Card/EgoCard';
 import InputTabEgoInfoContainer from 'component/InputTab/InputTabContainer/InputTabEgoInfoContainer/InputTabEgoInfoContainer';
-import { IEgoInfo } from 'Interfaces/IEgoInfo';
-import { OffenseSkill } from 'Interfaces/OffenseSkill/IOffenseSkill';
-import { PassiveSkill } from 'Interfaces/PassiveSkill/IPassiveSkill';
 import { useSearchParams } from 'react-router-dom';
+import { useSaveMenuContext } from 'component/SaveMenu/SaveMenu';
+import ResetBtn from 'utils/ResetBtn/ResetBtn';
+import ResetMenu from 'utils/ResetMenu/ResetMenu';
 
 
 
 export default function EgoCardPage():ReactElement{
-    const [EgoInfoValue,setEgoInfoValue]=useState<IEgoInfo>(
-        {
-            title:"",
-            name:"",
-            sanityCost:0,
-            splashArt:"",
-            splashArtScale:1,
-            splashArtTranslation:{
-                x:0,
-                y:0,
-            },
-            sinResistant:{
-                Wrath_resistant:1,
-                Lust_resistant:1,
-                Sloth_resistant:1,
-                Gluttony_resistant:1,
-                Gloom_resistant:1,
-                Pride_resistant:1,
-                Envy_resistant:1,
-            },
-            sinCost:{
-                Wrath_cost:0,
-                Lust_cost:0,
-                Sloth_cost:0,
-                Gluttony_cost:0,
-                Gloom_cost:0,
-                Pride_cost:0,
-                Envy_cost:0,  
-            },
-            sinnerColor:"var(--Yi-Sang-color)",
-            sinnerIcon:"Images/sinner-icon/Yi_Sang_Icon.png",
-            egoLevel:"ZAYIN",
-            skillDetails:[new OffenseSkill("Awakening","Wrath",1,"AWAKENING"),new OffenseSkill("Corrision","Wrath",1,"CORRISION"),new PassiveSkill("Passive","PASSIVE")]
-        }
-    )
 
-    const [query,setQuery] = useSearchParams()
+    return <EgoInfoProvider>
+            <EgoCardContent/>
+        </EgoInfoProvider>
+    
+}
+
+function EgoCardContent():ReactElement{
+    const [isShown,setIsShown]=useState(false)
+    const [isResetMenuActive,setResetMenuActive] = useState(false)
+    const [height,setIsHeight] = useState(0)
+    const {EgoInfoValue,setEgoInfoValue,reset} = useEgoInfoContext()
+    const {setLocalSaveName,changeSaveInfo,setLoadObjInfoValueCb} = useSaveMenuContext() 
+    const domRef=useRef(null)
+    const [query] = useSearchParams()
+    const {setDomRef} = useRefDownloadContext()
 
     useEffect(()=>{
+        //Get the last save id
+        const lastSave = JSON.parse(localStorage.getItem("currEgoSave"))
+        if(lastSave){
+            setEgoInfoValue
+            (lastSave)
+        }
+        //Get local save id based on the url
         const id = parseInt(query.get('id'))
         if(query.get('saveMode')==="local"){
             const save = JSON.parse(localStorage.getItem("EgoLocalSaves"))
@@ -64,39 +49,33 @@ export default function EgoCardPage():ReactElement{
                 setEgoInfoValue(save[id].saveInfo)
             }
         }
-    },[])
-
-    return <div>
-        <EgoInfoProvider EgoInfoValue={EgoInfoValue} setEgoInfoValue={setEgoInfoValue}>
-            <EgoCardContent/>
-        </EgoInfoProvider>
-    </div>
-}
-
-function EgoCardContent():ReactElement{
-    const [isShown,setIsShown]=useState(false)
-    const [height,setIsHeight] = useState(0)
-    const {EgoInfoValue,setEgoInfoValue} = useEgoInfoContext()
-    const domRef=useRef(null)
-
-    useEffect(()=>{
+        //Setting the save menu
+        setLocalSaveName("EgoLocalSaves")
+        changeSaveInfo(EgoInfoValue)
+        setLoadObjInfoValueCb(()=>{return setEgoInfoValue})
+        //Setting the domref for downloading
+        setDomRef(domRef)
+        //Set height
         setIsHeight(window.innerHeight-document.querySelector(".site-header").clientHeight-1)
     },[])
 
+    useEffect(()=>{
+        changeSaveInfo(EgoInfoValue)
+        //Save the last change
+        localStorage.setItem("currEgoSave",JSON.stringify(EgoInfoValue))
+    },[JSON.stringify(EgoInfoValue)])
+
     return <StatusEffectProvider skillDetails={EgoInfoValue.skillDetails}>
-        <RefDownloadProvider domRef={domRef}>
-            <SaveLocalMenu saveObjInfoValue={EgoInfoValue} setObjInfoValue={setEgoInfoValue} localSaveName={'EgoLocalSaves'}>
-                <div className={`editor-container ${isShown?"show":""}`} style={{height:height}}>
-                    <InputTabEgoInfoContainer/>
-                    <ShowInputTab isShown={isShown} clickHandler={()=>setIsShown(!isShown)} />
-                    <div className='preview-container'>
-                        <MapInteractionCSS>
-                            <EgoCard ref={domRef}/>
-                        </MapInteractionCSS>
-                    </div>
+            <div className={`editor-container ${isShown?"show":""}`} style={{height:height}}>
+                <InputTabEgoInfoContainer/>
+                <ShowInputTab isShown={isShown} clickHandler={()=>setIsShown(!isShown)} />
+                <ResetBtn clickHandler={()=>setResetMenuActive(!isResetMenuActive)}/>
+                <ResetMenu isActive={isResetMenuActive} setIsActive={setResetMenuActive} confirmFn={reset} />
+                <div className='preview-container'>
+                    <MapInteractionCSS>
+                        <EgoCard ref={domRef}/>
+                    </MapInteractionCSS>
                 </div>
-            </SaveLocalMenu>
-        </RefDownloadProvider>
-        
-</StatusEffectProvider>
+            </div>
+    </StatusEffectProvider>
 }
