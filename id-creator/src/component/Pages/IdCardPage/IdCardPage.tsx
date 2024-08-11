@@ -10,7 +10,7 @@ import { IdInfoProvider, useIdInfoContext } from 'component/context/IdInfoContex
 import InputTabIdInfoContainer from 'component/InputTab/InputTabContainer/InputTabIdInfoContainer/InputTabIdInfoContainer';
 import {  useRefDownloadContext } from 'component/context/ImgUrlContext';
 import {  useSearchParams } from 'react-router-dom';
-import { SaveMenu, useSaveMenuContext } from 'component/SaveMenu/SaveMenu';
+import { useSaveMenuContext } from 'component/SaveMenu/SaveMenu';
 import ResetBtn from 'utils/ResetBtn/ResetBtn';
 import ResetMenu from 'utils/ResetMenu/ResetMenu';
 
@@ -28,7 +28,7 @@ export default function IdCardPage():ReactElement{
 function IdCardContext():ReactElement{
     const [isShown,setIsShown]=useState(false)
     const [isResetMenuActive,setResetMenuActive] = useState(false)
-    const [height,setIsHeight] = useState(0)
+    const [height,setHeight] = useState(0)
     const {idInfoValue,setIdInfoValue,reset} = useIdInfoContext()
     const {setLocalSaveName,changeSaveInfo,setLoadObjInfoValueCb} = useSaveMenuContext() 
     const domRef=useRef(null)
@@ -56,9 +56,11 @@ function IdCardContext():ReactElement{
         setLoadObjInfoValueCb(()=>{return setIdInfoValue})
         //Setting the domref for downloading
         setDomRef(domRef)
-        //Set height
-        setIsHeight(Math.floor(window.innerHeight)-Math.floor(document.querySelector(".site-header").clientHeight)-1)
     },[])
+
+    useEffect(()=>{
+        setHeight(Math.floor(window.innerHeight)-Math.floor(document.querySelector(".site-header").clientHeight)-2)
+    },[window.innerHeight])
 
     useEffect(()=>{
         changeSaveInfo(idInfoValue)
