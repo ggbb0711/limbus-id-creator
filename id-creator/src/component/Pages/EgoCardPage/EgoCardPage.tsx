@@ -27,7 +27,7 @@ export default function EgoCardPage():ReactElement{
 function EgoCardContent():ReactElement{
     const [isShown,setIsShown]=useState(false)
     const [isResetMenuActive,setResetMenuActive] = useState(false)
-    const [height,setIsHeight] = useState(0)
+    const [height,setHeight] = useState(0)
     const {EgoInfoValue,setEgoInfoValue,reset} = useEgoInfoContext()
     const {setLocalSaveName,changeSaveInfo,setLoadObjInfoValueCb} = useSaveMenuContext() 
     const domRef=useRef(null)
@@ -55,9 +55,11 @@ function EgoCardContent():ReactElement{
         setLoadObjInfoValueCb(()=>{return setEgoInfoValue})
         //Setting the domref for downloading
         setDomRef(domRef)
-        //Set height
-        setIsHeight(window.innerHeight-document.querySelector(".site-header").clientHeight-1)
     },[])
+
+    useEffect(()=>{
+        setHeight(Math.floor(window.innerHeight)-Math.floor(document.querySelector(".site-header").clientHeight)-2)
+    },[window.innerHeight])
 
     useEffect(()=>{
         changeSaveInfo(EgoInfoValue)
