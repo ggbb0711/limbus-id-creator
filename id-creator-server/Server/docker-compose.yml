@@ -27,13 +27,14 @@ services:
       - rabbitmq
     restart: on-failure
     environment:
-      - TokenEndpoint=${TOKEN_ENDPOINT}
-      - SessionExpiredDay=${SESSION_EXPIRED_DAY}
-      - DefaultConnection=${DEFAULT_CONNECTION}
-      - FrontendUri=${FRONTEND_URI}
-      - CookieSessionProtectorSecret=${COOKIE_SESSION_PROTECTOR_SECRET}
+      - TokenEndpoint=${TokenEndpoint}
+      - SessionExpiredDay=${SessionExpiredDay}
+      - DefaultConnection=${DefaultConnection}
+      - RemoteConnection=${RemoteConnection}
+      - FrontendUri=${FrontendUri}
+      - CookieSessionProtectorSecret=${CookieSessionProtectorSecret}
       - CLOUDINARY_URL=${CLOUDINARY_URL}
       - RABBITMQ_HOST=${RABBITMQ_HOST}
       - CLOUDINARY_IMG_URL_START=${CLOUDINARY_IMG_URL_START}
       - MODE=${MODE}
-      - LISTEN_ON={LISTEN_ON}
+      - LISTEN_ON=${LISTEN_ON}
