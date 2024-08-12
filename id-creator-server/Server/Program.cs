@@ -81,32 +81,32 @@ builder.Services.AddLogging();
 
 var app = builder.Build();
 
-if(Environment.GetEnvironmentVariable("MODE").Equals("Published"))
-{
-    using (var serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
-    {
-        var logger = serviceScope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-        var db = serviceScope.ServiceProvider.GetRequiredService<ServerDbContext>().Database;
+// if(Environment.GetEnvironmentVariable("MODE").Equals("Published"))
+// {
+//     using (var serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
+//     {
+//         var logger = serviceScope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+//         var db = serviceScope.ServiceProvider.GetRequiredService<ServerDbContext>().Database;
 
-        logger.LogInformation("Migrating database...");
+//         logger.LogInformation("Migrating database...");
 
-        while (!db.CanConnect())
-        {
-            logger.LogInformation("Database not ready yet; waiting...");
-            Thread.Sleep(1000);
-        }
+//         while (!db.CanConnect())
+//         {
+//             logger.LogInformation("Database not ready yet; waiting...");
+//             Thread.Sleep(1000);
+//         }
 
-        try
-        {
-            serviceScope.ServiceProvider.GetRequiredService<ServerDbContext>().Database.Migrate();
-            logger.LogInformation("Database migrated successfully.");
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "An error occurred while migrating the database.");
-        }
-    }
-}
+//         try
+//         {
+//             serviceScope.ServiceProvider.GetRequiredService<ServerDbContext>().Database.Migrate();
+//             logger.LogInformation("Database migrated successfully.");
+//         }
+//         catch (Exception ex)
+//         {
+//             logger.LogError(ex, "An error occurred while migrating the database.");
+//         }
+//     }
+// }
 
 
 if (app.Environment.IsDevelopment())
