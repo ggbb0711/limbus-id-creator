@@ -1,20 +1,15 @@
 version: "3.4"
 
 services:
-
-  rabbitmq:
-    image: "rabbitmq:management"
-    ports:
-      - "5672:5672"
-      - "15672:15672"
+  #Currently not using dokcer-compose to deploy
+  postgres:
+    image: postgres:14
     environment:
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest
-    healthcheck:
-      test: [ "CMD", "nc", "-z", "localhost", "5672" ]
-      interval: 5s
-      timeout: 15s
-      retries: 1
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: asdkfjhaksjdhfgkahe
+      POSTGRES_DB: LimbusCompanyIDMaker
+    volumes:
+      - pgdata:/var/lib/postgresql/data
   
   webapi:
     image: server/server:latest
@@ -24,7 +19,7 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - rabbitmq
+      - postgres
     restart: on-failure
     environment:
       - TokenEndpoint=${TokenEndpoint}
@@ -35,6 +30,11 @@ services:
       - CookieSessionProtectorSecret=${CookieSessionProtectorSecret}
       - CLOUDINARY_URL=${CLOUDINARY_URL}
       - RABBITMQ_HOST=${RABBITMQ_HOST}
+      - RABBITMQ_HOST_USER_NAME=${RABBITMQ_HOST_USER_NAME}
+      - RABBITMQ_PASSWORD=${g8gLlNCy-c6dJL52IRhPWdJ2Md2oviOy}
+      - RABBITMQ_VH=${RABBITMQ_VH}
       - CLOUDINARY_IMG_URL_START=${CLOUDINARY_IMG_URL_START}
       - MODE=${MODE}
       - LISTEN_ON=${LISTEN_ON}
+volumes:
+  pgdata:
