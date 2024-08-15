@@ -30,6 +30,7 @@ services:
     environment:
       - TokenEndpoint=${TokenEndpoint}
       - SessionExpiredDay=${SessionExpiredDay}
+      - COOKIESESSION_DOMAIN=${COOKIESESSION_DOMAIN}
       - DefaultConnection=${DefaultConnection}
       - RemoteConnection=${RemoteConnection}
       - FrontendUri=${FrontendUri}
