@@ -53,6 +53,7 @@
 .save-menu-list-container{
     position: relative;
     flex: 1 1;
+    overflow-y: auto;
 }
 
 .preview-img,.loading-img,.img-not-found{
