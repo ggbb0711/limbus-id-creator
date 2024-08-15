@@ -25,22 +25,22 @@ export default function InputStatPage():ReactElement{
         splashArtScale,
         splashArtTranslation,
         sinResistant:{
-            Wrath_resistant,
-            Lust_resistant,
-            Sloth_resistant,
-            Gluttony_resistant,
-            Gloom_resistant,
-            Pride_resistant,
-            Envy_resistant,
+            wrath_resistant,
+            lust_resistant,
+            sloth_resistant,
+            gluttony_resistant,
+            gloom_resistant,
+            pride_resistant,
+            envy_resistant,
         },
         sinCost:{
-            Wrath_cost,
-            Lust_cost,
-            Sloth_cost,
-            Gluttony_cost,
-            Gloom_cost,
-            Pride_cost,
-            Envy_cost,
+            wrath_cost,
+            lust_cost,
+            sloth_cost,
+            gluttony_cost,
+            gloom_cost,
+            pride_cost,
+            envy_cost,
         },
         sinnerColor,
         egoLevel,
@@ -106,58 +106,58 @@ export default function InputStatPage():ReactElement{
         <p>Sin cost:</p>
         <div className="sinner-stat-inputs">
             <div className="stat-input-container">
-                <label htmlFor="Wrath_cost"><img className="stat-icon" src="Images/sin-affinity/affinity_Wrath_big.webp" alt="wrath-input-resistant-icon" /></label>
+                <label htmlFor="wrath_cost"><img className="stat-icon" src="Images/sin-affinity/affinity_Wrath_big.webp" alt="wrath-input-resistant-icon" /></label>
                 <div className="resistant-content">
                     <div>
-                        <input type="number" className="input stat-page-input-border input-number" value={Wrath_cost} onChange={changeSinCost.onChangeInput()} name="Wrath_cost" id="Wrath_cost"/>
+                        <input type="number" className="input stat-page-input-border input-number" value={wrath_cost} onChange={changeSinCost.onChangeInput()} name="wrath_cost" id="wrath_cost"/>
                     </div>
                 </div>
             </div>
             <div className="stat-input-container">
-                <label htmlFor="Lust_cost"><img className="stat-icon" src="Images/sin-affinity/affinity_Lust_big.webp" alt="Lust-input-resistant-icon" /></label>
+                <label htmlFor="lust_cost"><img className="stat-icon" src="Images/sin-affinity/affinity_Lust_big.webp" alt="Lust-input-resistant-icon" /></label>
                 <div className="resistant-content">
                     <div>
-                        <input type="number" className="input stat-page-input-border input-number" value={Lust_cost} onChange={changeSinCost.onChangeInput()} name="Lust_cost" id="Lust_cost"/>
+                        <input type="number" className="input stat-page-input-border input-number" value={lust_cost} onChange={changeSinCost.onChangeInput()} name="lust_cost" id="lust_cost"/>
                     </div>
                 </div>
             </div>
             <div className="stat-input-container">
-                <label htmlFor="Sloth_cost"><img className="stat-icon" src="Images/sin-affinity/affinity_Sloth_big.webp" alt="Sloth-input-resistant-icon" /></label>
+                <label htmlFor="sloth_cost"><img className="stat-icon" src="Images/sin-affinity/affinity_Sloth_big.webp" alt="Sloth-input-resistant-icon" /></label>
                 <div className="resistant-content">
                     <div>
-                        <input type="number" className="input stat-page-input-border input-number" value={Sloth_cost} onChange={changeSinCost.onChangeInput()} name="Sloth_cost" id="Sloth_cost"/>
+                        <input type="number" className="input stat-page-input-border input-number" value={sloth_cost} onChange={changeSinCost.onChangeInput()} name="sloth_cost" id="sloth_cost"/>
                     </div>
                 </div>
             </div>
             <div className="stat-input-container">
-                <label htmlFor="Gluttony_cost"><img className="stat-icon" src="Images/sin-affinity/affinity_Gluttony_big.webp" alt="Gluttony-input-resistant-icon" /></label>
+                <label htmlFor="gluttony_cost"><img className="stat-icon" src="Images/sin-affinity/affinity_Gluttony_big.webp" alt="Gluttony-input-resistant-icon" /></label>
                 <div className="resistant-content">
                     <div>
-                        <input type="number" className="input stat-page-input-border input-number" value={Gluttony_cost} onChange={changeSinCost.onChangeInput()} name="Gluttony_cost" id="Gluttony_cost"/>
+                        <input type="number" className="input stat-page-input-border input-number" value={gluttony_cost} onChange={changeSinCost.onChangeInput()} name="gluttony_cost" id="gluttony_cost"/>
                     </div>
                 </div>
             </div>
             <div className="stat-input-container">
-                <label htmlFor="Gloom_cost"><img className="stat-icon" src="Images/sin-affinity/affinity_Gloom_big.webp" alt="Gloom-input-resistant-icon" /></label>
+                <label htmlFor="gloom_cost"><img className="stat-icon" src="Images/sin-affinity/affinity_Gloom_big.webp" alt="Gloom-input-resistant-icon" /></label>
                 <div className="resistant-content">
                     <div>
-                        <input type="number" className="input stat-page-input-border input-number" value={Gloom_cost} onChange={changeSinCost.onChangeInput()} name="Gloom_cost" id="Gloom_cost"/>
+                        <input type="number" className="input stat-page-input-border input-number" value={gloom_cost} onChange={changeSinCost.onChangeInput()} name="gloom_cost" id="gloom_cost"/>
                     </div>
                 </div>
             </div>
             <div className="stat-input-container">
-                <label htmlFor="Pride_cost"><img className="stat-icon" src="Images/sin-affinity/affinity_Pride_big.webp" alt="Pride-input-resistant-icon" /></label>
+                <label htmlFor="pride_cost"><img className="stat-icon" src="Images/sin-affinity/affinity_Pride_big.webp" alt="Pride-input-resistant-icon" /></label>
                 <div className="resistant-content">
                     <div>
-                        <input type="number" className="input stat-page-input-border input-number" value={Pride_cost} onChange={changeSinCost.onChangeInput()} name="Pride_cost" id="Pride_cost"/>
+                        <input type="number" className="input stat-page-input-border input-number" value={pride_cost} onChange={changeSinCost.onChangeInput()} name="pride_cost" id="pride_cost"/>
                     </div>
                 </div>
             </div>
             <div className="stat-input-container">
-                <label htmlFor="Envy_cost"><img className="stat-icon" src="Images/sin-affinity/affinity_Envy_big.webp" alt="Envy-input-resistant-icon" /></label>
+                <label htmlFor="envy_cost"><img className="stat-icon" src="Images/sin-affinity/affinity_Envy_big.webp" alt="Envy-input-resistant-icon" /></label>
                 <div className="resistant-content">
                     <div>
-                        <input type="number" className="input stat-page-input-border input-number" value={Envy_cost} onChange={changeSinCost.onChangeInput()} name="Envy_cost" id="Envy_cost"/>
+                        <input type="number" className="input stat-page-input-border input-number" value={envy_cost} onChange={changeSinCost.onChangeInput()} name="envy_cost" id="envy_cost"/>
                     </div>
                 </div>
             </div>
@@ -165,65 +165,65 @@ export default function InputStatPage():ReactElement{
         <p>Sin resistant:</p>
         <div className="sinner-stat-inputs">
             <div className="stat-input-container">
-                <label htmlFor="Wrath_resistant"><img className="stat-icon" src="Images/sin-affinity/affinity_Wrath_big.webp" alt="wrath-input-resistant-icon" /></label>
+                <label htmlFor="wrath_resistant"><img className="stat-icon" src="Images/sin-affinity/affinity_Wrath_big.webp" alt="wrath-input-resistant-icon" /></label>
                 <div className="resistant-content">
                     <div>
-                        <p  style={{color:changeResistantColor(Wrath_resistant)}}>{changeResistantText(Wrath_resistant)}</p>
-                        <input style={{color:changeResistantColor(Wrath_resistant)}} type="number" className="input stat-page-input-border input-number" value={Wrath_resistant} onChange={changeSinResistant.onChangeInput()} name="Wrath_resistant" id="Wrath_resistant"/>
+                        <p  style={{color:changeResistantColor(wrath_resistant)}}>{changeResistantText(wrath_resistant)}</p>
+                        <input style={{color:changeResistantColor(wrath_resistant)}} type="number" className="input stat-page-input-border input-number" value={wrath_resistant} onChange={changeSinResistant.onChangeInput()} name="wrath_resistant" id="wrath_resistant"/>
                     </div>
                 </div>
             </div>
             <div className="stat-input-container">
-                <label htmlFor="Lust_resistant"><img className="stat-icon" src="Images/sin-affinity/affinity_Lust_big.webp" alt="Lust-input-resistant-icon" /></label>
+                <label htmlFor="lust_resistant"><img className="stat-icon" src="Images/sin-affinity/affinity_Lust_big.webp" alt="Lust-input-resistant-icon" /></label>
                 <div className="resistant-content">
                     <div>
-                        <p style={{color:changeResistantColor(Lust_resistant)}}>{changeResistantText(Lust_resistant)}</p>
-                        <input style={{color:changeResistantColor(Lust_resistant)}} type="number" className="input stat-page-input-border input-number" value={Lust_resistant} onChange={changeSinResistant.onChangeInput()} name="Lust_resistant" id="Lust_resistant"/>
+                        <p style={{color:changeResistantColor(lust_resistant)}}>{changeResistantText(lust_resistant)}</p>
+                        <input style={{color:changeResistantColor(lust_resistant)}} type="number" className="input stat-page-input-border input-number" value={lust_resistant} onChange={changeSinResistant.onChangeInput()} name="lust_resistant" id="lust_resistant"/>
                     </div>
                 </div>
             </div>
             <div className="stat-input-container">
-                <label htmlFor="Sloth_resistant"><img className="stat-icon" src="Images/sin-affinity/affinity_Sloth_big.webp" alt="Sloth-input-resistant-icon" /></label>
+                <label htmlFor="sloth_resistant"><img className="stat-icon" src="Images/sin-affinity/affinity_Sloth_big.webp" alt="Sloth-input-resistant-icon" /></label>
                 <div className="resistant-content">
                     <div>
-                        <p style={{color:changeResistantColor(Sloth_resistant)}}>{changeResistantText(Sloth_resistant)}</p>
-                        <input style={{color:changeResistantColor(Sloth_resistant)}} type="number" className="input stat-page-input-border input-number" value={Sloth_resistant} onChange={changeSinResistant.onChangeInput()} name="Sloth_resistant" id="Sloth_resistant"/>
+                        <p style={{color:changeResistantColor(sloth_resistant)}}>{changeResistantText(sloth_resistant)}</p>
+                        <input style={{color:changeResistantColor(sloth_resistant)}} type="number" className="input stat-page-input-border input-number" value={sloth_resistant} onChange={changeSinResistant.onChangeInput()} name="sloth_resistant" id="sloth_resistant"/>
                     </div>
                 </div>
             </div>
             <div className="stat-input-container">
-                <label htmlFor="Gluttony_resistant"><img className="stat-icon" src="Images/sin-affinity/affinity_Gluttony_big.webp" alt="Gluttony-input-resistant-icon" /></label>
+                <label htmlFor="gluttony_resistant"><img className="stat-icon" src="Images/sin-affinity/affinity_Gluttony_big.webp" alt="Gluttony-input-resistant-icon" /></label>
                 <div className="resistant-content">
                     <div>
-                        <p style={{color:changeResistantColor(Gluttony_resistant)}}>{changeResistantText(Gluttony_resistant)}</p>
-                        <input style={{color:changeResistantColor(Gluttony_resistant)}} type="number" className="input stat-page-input-border input-number" value={Gluttony_resistant} onChange={changeSinResistant.onChangeInput()} name="Gluttony_resistant" id="Gluttony_resistant"/>
+                        <p style={{color:changeResistantColor(gluttony_resistant)}}>{changeResistantText(gluttony_resistant)}</p>
+                        <input style={{color:changeResistantColor(gluttony_resistant)}} type="number" className="input stat-page-input-border input-number" value={gluttony_resistant} onChange={changeSinResistant.onChangeInput()} name="gluttony_resistant" id="gluttony_resistant"/>
                     </div>
                 </div>
             </div>
             <div className="stat-input-container">
-                <label htmlFor="Gloom_resistant"><img className="stat-icon" src="Images/sin-affinity/affinity_Gloom_big.webp" alt="Gloom-input-resistant-icon" /></label>
+                <label htmlFor="gloom_resistant"><img className="stat-icon" src="Images/sin-affinity/affinity_Gloom_big.webp" alt="Gloom-input-resistant-icon" /></label>
                 <div className="resistant-content">
                     <div>
-                        <p style={{color:changeResistantColor(Gloom_resistant)}}>{changeResistantText(Gloom_resistant)}</p>
-                        <input style={{color:changeResistantColor(Gloom_resistant)}} type="number" className="input stat-page-input-border input-number" value={Gloom_resistant} onChange={changeSinResistant.onChangeInput()} name="Gloom_resistant" id="Gloom_resistant"/>
+                        <p style={{color:changeResistantColor(gloom_resistant)}}>{changeResistantText(gloom_resistant)}</p>
+                        <input style={{color:changeResistantColor(gloom_resistant)}} type="number" className="input stat-page-input-border input-number" value={gloom_resistant} onChange={changeSinResistant.onChangeInput()} name="gloom_resistant" id="gloom_resistant"/>
                     </div>
                 </div>
             </div>
             <div className="stat-input-container">
-                <label htmlFor="Pride_resistant"><img className="stat-icon" src="Images/sin-affinity/affinity_Pride_big.webp" alt="Pride-input-resistant-icon" /></label>
+                <label htmlFor="pride_resistant"><img className="stat-icon" src="Images/sin-affinity/affinity_Pride_big.webp" alt="Pride-input-resistant-icon" /></label>
                 <div className="resistant-content">
                     <div>
-                        <p style={{color:changeResistantColor(Pride_resistant)}}>{changeResistantText(Pride_resistant)}</p>
-                        <input style={{color:changeResistantColor(Pride_resistant)}} type="number" className="input stat-page-input-border input-number" value={Pride_resistant} onChange={changeSinResistant.onChangeInput()} name="Pride_resistant" id="Pride_resistant"/>
+                        <p style={{color:changeResistantColor(pride_resistant)}}>{changeResistantText(pride_resistant)}</p>
+                        <input style={{color:changeResistantColor(pride_resistant)}} type="number" className="input stat-page-input-border input-number" value={pride_resistant} onChange={changeSinResistant.onChangeInput()} name="pride_resistant" id="pride_resistant"/>
                     </div>
                 </div>
             </div>
             <div className="stat-input-container">
-                <label htmlFor="Envy_resistant"><img className="stat-icon" src="Images/sin-affinity/affinity_Envy_big.webp" alt="Envy-input-resistant-icon" /></label>
+                <label htmlFor="envy_resistant"><img className="stat-icon" src="Images/sin-affinity/affinity_Envy_big.webp" alt="Envy-input-resistant-icon" /></label>
                 <div className="resistant-content">
                     <div>
-                        <p style={{color:changeResistantColor(Envy_resistant)}}>{changeResistantText(Envy_resistant)}</p>
-                        <input style={{color:changeResistantColor(Envy_resistant)}} type="number" className="input stat-page-input-border input-number" value={Envy_resistant} onChange={changeSinResistant.onChangeInput()} name="Envy_resistant" id="Envy_resistant"/>
+                        <p style={{color:changeResistantColor(envy_resistant)}}>{changeResistantText(envy_resistant)}</p>
+                        <input style={{color:changeResistantColor(envy_resistant)}} type="number" className="input stat-page-input-border input-number" value={envy_resistant} onChange={changeSinResistant.onChangeInput()} name="envy_resistant" id="envy_resistant"/>
                     </div>
                 </div>
             </div>

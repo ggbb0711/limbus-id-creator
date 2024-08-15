@@ -44,7 +44,6 @@ export default function PostPage():ReactElement{
                 setPost(null)
             }
             else setPost(result.response)
-            console.log(result)
         } catch (error) {
             console.log(error)
             addAlert("Failure","Something went wrong with the server")
