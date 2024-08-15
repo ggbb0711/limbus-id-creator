@@ -21,7 +21,7 @@ namespace Server.Services.UtilServices
             var factory = new ConnectionFactory() { HostName = Environment.GetEnvironmentVariable("RABBITMQ_HOST")??"localhost",
                 UserName = Environment.GetEnvironmentVariable("RABBITMQ_HOST_USER_NAME")??"guest",
                 Password = Environment.GetEnvironmentVariable("RABBITMQ_PASSWORD")??"guest",
-                VirtualHost = Environment.GetEnvironmentVariable("RABBITMQ_VH")??"guest"};
+                VirtualHost = Environment.GetEnvironmentVariable("RABBITMQ_VH")??"/"};
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
             _channel.QueueDeclare(queue: "UploadingImage", durable: false, exclusive: false, autoDelete: false, arguments: null);

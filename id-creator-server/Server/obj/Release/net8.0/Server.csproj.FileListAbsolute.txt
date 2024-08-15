@@ -128,8 +128,3 @@ C:\Users\NGHIA\Project\Limbus id creator\limbus-id-creator\id-creator-server\Ser
 C:\Users\NGHIA\Project\Limbus id creator\limbus-id-creator\id-creator-server\Server\obj\Release\net8.0\Server.pdb
 C:\Users\NGHIA\Project\Limbus id creator\limbus-id-creator\id-creator-server\Server\obj\Release\net8.0\Server.genruntimeconfig.cache
 C:\Users\NGHIA\Project\Limbus id creator\limbus-id-creator\id-creator-server\Server\obj\Release\net8.0\ref\Server.dll
-C:\Users\NGHIA\Project\Limbus id creator\limbus-id-creator\id-creator-server\Server\bin\Release\net8.0\publish\appsettings.Development.json
-C:\Users\NGHIA\Project\Limbus id creator\limbus-id-creator\id-creator-server\Server\bin\Release\net8.0\publish\appsettings.json
-C:\Users\NGHIA\Project\Limbus id creator\limbus-id-creator\id-creator-server\Server\bin\Release\net8.0\publish\Server.deps.json
-C:\Users\NGHIA\Project\Limbus id creator\limbus-id-creator\id-creator-server\Server\bin\Release\net8.0\publish\Server.runtimeconfig.json
-C:\Users\NGHIA\Project\Limbus id creator\limbus-id-creator\id-creator-server\Server\bin\Release\net8.0\publish\web.config

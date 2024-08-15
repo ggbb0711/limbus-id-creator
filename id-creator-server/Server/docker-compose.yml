@@ -1,23 +1,30 @@
 version: "3.4"
 
 services:
-  # postgres:
-  #   image: postgres:14
-  #   environment:
-  #     POSTGRES_USER: postgres
-  #     POSTGRES_PASSWORD: asdkfjhaksjdhfgkahe
-  #     POSTGRES_DB: LimbusCompanyIDMaker
-  #   volumes:
-  #     - pgdata:/var/lib/postgresql/data
   
+  rabbitmq:
+    image: "rabbitmq"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "localhost", "5672" ]
+      interval: 5s
+      timeout: 15s
+      retries: 1
+
   webapi:
     image: server/server:latest
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: dockerfile
     ports:
-      - "8080:8080"
-    # depends_on:
+      - "8000:8080"
+    depends_on:
+      - rabbitmq
     #   - postgres
     restart: on-failure
     environment:
@@ -35,5 +42,3 @@ services:
       - CLOUDINARY_IMG_URL_START=${CLOUDINARY_IMG_URL_START}
       - MODE=${MODE}
       - LISTEN_ON=${LISTEN_ON}
-volumes:
-  pgdata:

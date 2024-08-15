@@ -1,5 +1,6 @@
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Server.Data;
 using Server.Interface.Repositories;
 using Server.Interface.ServiceInterface.CommentService;
@@ -23,6 +24,7 @@ using Server.Services.SavedEGOInfoService;
 using Server.Services.SavedInfoService;
 using Server.Services.UtilServices;
 using Server.Util.RabbitMQPublisher;
+
 
 Env.Load();
 
@@ -78,6 +80,8 @@ builder.Services.AddHostedService<BackgroundHostedService>();
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddAutoMapper(typeof(SaveInfoProfile));
 builder.Services.AddLogging();
+
+if(!Environment.GetEnvironmentVariable("LISTEN_ON").IsNullOrEmpty())builder.WebHost.UseUrls(Environment.GetEnvironmentVariable("LISTEN_ON"));
 
 var app = builder.Build();
 
@@ -191,4 +195,4 @@ app.UseWhen(ctx=>ctx.Request.Path.StartsWithSegments("/API/Comment"), app =>
 });
 
 
-app.Run(Environment.GetEnvironmentVariable("LISTEN_ON"));
+app.Run();
