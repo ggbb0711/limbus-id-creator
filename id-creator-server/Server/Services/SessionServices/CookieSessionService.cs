@@ -28,7 +28,6 @@ namespace Server.Services
                 HttpOnly = true,
                 Expires = expireDate,
                 SameSite = Microsoft.AspNetCore.Http.SameSiteMode.None,
-                Domain = Environment.GetEnvironmentVariable("COOKIESESSION_DOMAIN")
             };
             
             res.Cookies.Append("Session-Cookie",cookie.ToString(),cookieOptions);
