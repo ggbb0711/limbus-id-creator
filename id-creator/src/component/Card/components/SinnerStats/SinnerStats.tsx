@@ -6,6 +6,7 @@ import { useIdInfoContext } from "component/context/IdInfoContext";
 export default function SinnerStats():ReactElement{
     const {idInfoValue} = useIdInfoContext()
     
+    //The hp can be lower and upercase
     const {
         minSpeed,
         maxSpeed,
@@ -16,6 +17,8 @@ export default function SinnerStats():ReactElement{
         pierceResistant,
         bluntResistant,
     }=idInfoValue
+
+    console.log(idInfoValue)
     
     function changeResistantColor(value:number):string{
         if(value<=0.75) return "var(--Endure)"

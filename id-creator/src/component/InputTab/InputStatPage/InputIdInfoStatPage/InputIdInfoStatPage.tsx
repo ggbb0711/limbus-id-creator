@@ -17,7 +17,7 @@ export default function InputIdInfoStatPage():ReactElement{
     const {
         minSpeed,
         maxSpeed,
-        HP,
+        hp,
         staggerResist,
         defenseLevel,
         slashResistant,
@@ -114,8 +114,8 @@ export default function InputIdInfoStatPage():ReactElement{
                 </div>
             </div>
             <div className="stat-input-container">
-                <label htmlFor="HP"><img className="stat-icon" src="Images/stat/stat_hp.webp" alt="hp_icon" /></label>
-                <input type="number" className="input stat-page-input-border input-number" name="HP" id="HP" value={HP} onChange={onChangeInput}/>
+                <label htmlFor="hp"><img className="stat-icon" src="Images/stat/stat_hp.webp" alt="hp_icon" /></label>
+                <input type="number" className="input stat-page-input-border input-number" name="hp" id="hp" value={hp} onChange={onChangeInput}/>
             </div>
             <div className="stat-input-container">
                 <label htmlFor="defenseLevel"><img className="stat-icon" src="Images/stat/stat_def.webp" alt="def_icon" /></label>

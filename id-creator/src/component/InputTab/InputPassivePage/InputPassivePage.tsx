@@ -24,7 +24,7 @@ export default function InputPassivePage({passiveSkill,keyWordList,changeSkill,c
     } = passiveSkill
 
     return <div className="input-page input-passive-page">
-        <div className="input-group-container" style={{zIndex:"100"}}>
+        <div className="input-group-container">
             <ChangeInputType changeSkillType={changeSkillType} type={type}/>
         </div>
         <div className="input-group-container">

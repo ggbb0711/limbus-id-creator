@@ -13,7 +13,7 @@ export interface IIdInfo{
         x:number,
         y:number,
     },
-    HP:number,
+    hp:number,
     minSpeed:number,
     maxSpeed:number,
     staggerResist:string,
