@@ -18,7 +18,6 @@ export default function SinnerStats():ReactElement{
         bluntResistant,
     }=idInfoValue
 
-    console.log(idInfoValue)
     
     function changeResistantColor(value:number):string{
         if(value<=0.75) return "var(--Endure)"
