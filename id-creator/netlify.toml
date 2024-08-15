@@ -1,5 +1,0 @@
-[[redirects]]
-  from = "/API/*"
-  to = "https://relative-alexandrina-limbus-2a826726.koyeb.app/:splat"
-  status = 200
-  force = true
