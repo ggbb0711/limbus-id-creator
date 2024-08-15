@@ -83,6 +83,7 @@ export default function UserProfile({userProfile,setUserProfile}:{userProfile:IU
     },[userId])
 
     return <div className="user-personal-container center-element">
+        
         <div className="user-profile-img-container">
             <img className="user-personal-icon" src={userIcon} alt="user-icon" />
             {userProfile.owned?

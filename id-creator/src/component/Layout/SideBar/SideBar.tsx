@@ -20,7 +20,7 @@ export default function SideBar({isActive,setActiveSideBar}:{isActive:boolean,se
                 <div className="side-bar-nav">
                     <Link to={"/IdCreator"}><MainButton component={'Create Id'} btnClass={"main-button nav-button"} clickHandler={()=>setActiveSideBar(!isActive)}/></Link>
                     <Link to={"/EgoCreator"}><MainButton component={'Create Ego'} btnClass={"main-button nav-button"} clickHandler={()=>setActiveSideBar(!isActive)}/></Link>            
-                    <Link to={"/Browse"}><MainButton component={'Browse'} btnClass={"main-button nav-button"} clickHandler={()=>setActiveSideBar(!isActive)}/></Link>
+                    <Link to={"/Forum"}><MainButton component={'Forum'} btnClass={"main-button nav-button"} /></Link>
                     {loginUser?<Link to={"/User/"+loginUser.id}><MainButton component={"My account"} btnClass="main-button"></MainButton></Link>:
                     <MainButton component={'Login'} btnClass={"main-button nav-button"} clickHandler={()=>setIsLoginMenuActive(!isLoginMenuActive)}/>}
                     {loginUser&&<Link to={"/NewPost"}><MainButton component={"Post"} btnClass="main-button"></MainButton></Link>}
