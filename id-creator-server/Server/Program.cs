@@ -50,7 +50,10 @@ builder.Services.AddCors(options=>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
-if(Environment.GetEnvironmentVariable("MODE").Equals("Published")) builder.Services.AddDbContext<ServerDbContext>(options =>options.UseNpgsql(Environment.GetEnvironmentVariable("RemoteConnection")));
+if(Environment.GetEnvironmentVariable("MODE").Equals("Published")) builder.Services.AddDbContext<ServerDbContext>(options =>options.UseNpgsql(Environment.GetEnvironmentVariable("RemoteConnection"), builder =>
+        {
+            builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+        }));
 else builder.Services.AddDbContext<ServerDbContext>(options =>options.UseNpgsql(Environment.GetEnvironmentVariable("DefaultConnection")));
 builder.Services.AddSingleton<RabbitMQUploadingImagePublisher>();
 builder.Services.AddHostedService<RabbitMQUploadingImageConsumerService>();
