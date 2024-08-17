@@ -121,9 +121,9 @@ namespace Server.Controllers
         {
             var response = new ResponseService<string>();
             var session = (Session?) HttpContext.Items["Session"];
-            if(newProfile.Length>=80000)
+            if(newProfile.Length>100000)
             {
-                response.msg = "Profile must be less or equal to 80kb";
+                response.msg = "Profile must be <= 100kb";
                 return StatusCode(401,response);
             }
 

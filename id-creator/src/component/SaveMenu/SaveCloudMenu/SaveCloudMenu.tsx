@@ -132,7 +132,7 @@ export default function SaveCloudMenu({isActive,setIsActive,saveMode,saveObjInfo
             if(!req.ok) addAlert("Failure",res.msg)
             else{ 
                 loadSaveList()
-                addAlert("Success",res.msg)
+                addAlert("Success","Deleted")
             }
         } catch (error) {
             console.log(error)

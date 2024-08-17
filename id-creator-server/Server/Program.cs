@@ -1,5 +1,6 @@
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Server.Data;
 using Server.Interface.Repositories;
 using Server.Interface.ServiceInterface.CommentService;
@@ -23,6 +24,7 @@ using Server.Services.SavedEGOInfoService;
 using Server.Services.SavedInfoService;
 using Server.Services.UtilServices;
 using Server.Util.RabbitMQPublisher;
+
 
 Env.Load();
 
@@ -48,7 +50,10 @@ builder.Services.AddCors(options=>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
-if(Environment.GetEnvironmentVariable("MODE").Equals("Published")) builder.Services.AddDbContext<ServerDbContext>(options =>options.UseNpgsql(Environment.GetEnvironmentVariable("RemoteConnection")));
+if(Environment.GetEnvironmentVariable("MODE").Equals("Published")) builder.Services.AddDbContext<ServerDbContext>(options =>options.UseNpgsql(Environment.GetEnvironmentVariable("RemoteConnection"), builder =>
+        {
+            builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+        }));
 else builder.Services.AddDbContext<ServerDbContext>(options =>options.UseNpgsql(Environment.GetEnvironmentVariable("DefaultConnection")));
 builder.Services.AddSingleton<RabbitMQUploadingImagePublisher>();
 builder.Services.AddHostedService<RabbitMQUploadingImageConsumerService>();
@@ -79,34 +84,36 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddAutoMapper(typeof(SaveInfoProfile));
 builder.Services.AddLogging();
 
+if(!Environment.GetEnvironmentVariable("LISTEN_ON").IsNullOrEmpty())builder.WebHost.UseUrls(Environment.GetEnvironmentVariable("LISTEN_ON"));
+
 var app = builder.Build();
 
-if(Environment.GetEnvironmentVariable("MODE").Equals("Published"))
-{
-    using (var serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
-    {
-        var logger = serviceScope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-        var db = serviceScope.ServiceProvider.GetRequiredService<ServerDbContext>().Database;
+// if(Environment.GetEnvironmentVariable("MODE").Equals("Published"))
+// {
+//     using (var serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
+//     {
+//         var logger = serviceScope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+//         var db = serviceScope.ServiceProvider.GetRequiredService<ServerDbContext>().Database;
 
-        logger.LogInformation("Migrating database...");
+//         logger.LogInformation("Migrating database...");
 
-        while (!db.CanConnect())
-        {
-            logger.LogInformation("Database not ready yet; waiting...");
-            Thread.Sleep(1000);
-        }
+//         while (!db.CanConnect())
+//         {
+//             logger.LogInformation("Database not ready yet; waiting...");
+//             Thread.Sleep(1000);
+//         }
 
-        try
-        {
-            serviceScope.ServiceProvider.GetRequiredService<ServerDbContext>().Database.Migrate();
-            logger.LogInformation("Database migrated successfully.");
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "An error occurred while migrating the database.");
-        }
-    }
-}
+//         try
+//         {
+//             serviceScope.ServiceProvider.GetRequiredService<ServerDbContext>().Database.Migrate();
+//             logger.LogInformation("Database migrated successfully.");
+//         }
+//         catch (Exception ex)
+//         {
+//             logger.LogError(ex, "An error occurred while migrating the database.");
+//         }
+//     }
+// }
 
 
 if (app.Environment.IsDevelopment())
@@ -191,4 +198,4 @@ app.UseWhen(ctx=>ctx.Request.Path.StartsWithSegments("/API/Comment"), app =>
 });
 
 
-app.Run(Environment.GetEnvironmentVariable("LISTEN_ON"));
+app.Run();

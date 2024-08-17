@@ -54,7 +54,7 @@ export default function SearchSaveInput({saveList,chooseSave,searchSave}:{saveLi
             onKeyDown={handleKeyDown}/>
         <div className="post-save-found-outer-container">
             <div className="post-save-found-container">
-                {saveList.map((save,i)=>{
+                {searchName&&<>{saveList.map((save,i)=>{
                     scrollToView()
                     return <div key={save.id} className={`center-element post-save-found-tab ${currChoice===i?"active":""}`} onClick={()=>{
                         chooseSave(save.previewImg)
@@ -66,7 +66,8 @@ export default function SearchSaveInput({saveList,chooseSave,searchSave}:{saveLi
                             <p>{save.saveName}</p>
                         </div>
                     </div>
-                })}
+                })}</>}
+                
             </div>
         </div>
     </div>

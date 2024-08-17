@@ -1,9 +1,9 @@
 version: "3.4"
 
 services:
-
+  
   rabbitmq:
-    image: "rabbitmq:management"
+    image: "rabbitmq"
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -15,25 +15,31 @@ services:
       interval: 5s
       timeout: 15s
       retries: 1
-  
+
   webapi:
     image: server/server:latest
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: dockerfile
     ports:
-      - "8080:8080"
+      - "8000:8080"
     depends_on:
       - rabbitmq
+    #   - postgres
     restart: on-failure
     environment:
-      - TokenEndpoint=${TOKEN_ENDPOINT}
-      - SessionExpiredDay=${SESSION_EXPIRED_DAY}
-      - DefaultConnection=${DEFAULT_CONNECTION}
-      - FrontendUri=${FRONTEND_URI}
-      - CookieSessionProtectorSecret=${COOKIE_SESSION_PROTECTOR_SECRET}
+      - TokenEndpoint=${TokenEndpoint}
+      - SessionExpiredDay=${SessionExpiredDay}
+      - COOKIESESSION_DOMAIN=${COOKIESESSION_DOMAIN}
+      - DefaultConnection=${DefaultConnection}
+      - RemoteConnection=${RemoteConnection}
+      - FrontendUri=${FrontendUri}
+      - CookieSessionProtectorSecret=${CookieSessionProtectorSecret}
       - CLOUDINARY_URL=${CLOUDINARY_URL}
       - RABBITMQ_HOST=${RABBITMQ_HOST}
+      - RABBITMQ_HOST_USER_NAME=${RABBITMQ_HOST_USER_NAME}
+      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
+      - RABBITMQ_VH=${RABBITMQ_VH}
       - CLOUDINARY_IMG_URL_START=${CLOUDINARY_IMG_URL_START}
       - MODE=${MODE}
-      - LISTEN_ON={LISTEN_ON}
+      - LISTEN_ON=${LISTEN_ON}

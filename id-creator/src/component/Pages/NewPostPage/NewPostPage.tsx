@@ -124,7 +124,7 @@ export default function NewPostPage():ReactElement{
             
             <div className="post-input-container">
                 <div>
-                    <label htmlFor="search-save">Enter ID/EGO you want to add to the post (Required) {saveList.length}/8:</label>
+                    <label htmlFor="search-save">Enter ID/EGO you want to add to the post (Required) {choosenSave.length}/8:</label>
                     <div className="post-save-mode-container">
                         <div className="center-element">
                             <label htmlFor="Identity">Identity</label>

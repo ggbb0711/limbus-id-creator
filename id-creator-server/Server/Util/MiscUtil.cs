@@ -18,8 +18,18 @@ namespace Server.Util
                 throw new ArgumentNullException("Source or/and Target is null");
             }
 
+            // Dictionary to keep track of already visited objects
+            var visited = new Dictionary<object, object>();
+            CopyProperties(source, target, visited);
+        }
+
+        private static void CopyProperties<T>(T source, T target, Dictionary<object, object> visited)
+        {
             Type type = typeof(T);
             PropertyInfo[] properties = type.GetProperties();
+
+            // Mark the source and target as visited
+            visited[source] = target;
 
             foreach (PropertyInfo property in properties)
             {
@@ -43,8 +53,17 @@ namespace Server.Util
                         foreach (var item in (IEnumerable)sourceValue)
                         {
                             object itemCopy = Activator.CreateInstance(itemType);
-                            CopyProperties(item, itemCopy);
-                            list.Add(itemCopy);
+
+                            // Check if item is already visited
+                            if (visited.TryGetValue(item, out var existingItemCopy))
+                            {
+                                list.Add(existingItemCopy);
+                            }
+                            else
+                            {
+                                CopyProperties(item, itemCopy, visited);
+                                list.Add(itemCopy);
+                            }
                         }
                         property.SetValue(target, list, null);
                     }
@@ -52,8 +71,18 @@ namespace Server.Util
                     {
                         // Handle nested objects
                         object targetValue = Activator.CreateInstance(property.PropertyType);
-                        CopyProperties(sourceValue, targetValue);
-                        property.SetValue(target, targetValue, null);
+
+                        // Check if target value is already visited
+                        if (visited.TryGetValue(sourceValue, out var existingTargetValue))
+                        {
+                            property.SetValue(target, existingTargetValue, null);
+                        }
+                        else
+                        {
+                            CopyProperties(sourceValue, targetValue, visited);
+                            property.SetValue(target, targetValue, null);
+                            visited[sourceValue] = targetValue;
+                        }
                     }
                 }
             }
