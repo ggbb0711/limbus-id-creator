@@ -17,7 +17,7 @@ const SaveLocalMenu=({localSaveName,saveObjInfoValue,loadObjInfoValueCb,isActive
     //of the save with same id
     useEffect(()=>{
         saveData.map(save=>{
-            if(saveData.some(s=>s.id===save.id)) save.id = uuid()
+            if(saveData.some(s=>s.id===save.id)||!save.id) save.id = uuid()
             return save
         })
     },[localSaveName])
