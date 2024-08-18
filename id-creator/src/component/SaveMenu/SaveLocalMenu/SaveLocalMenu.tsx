@@ -44,9 +44,9 @@ const SaveLocalMenu=({localSaveName,saveObjInfoValue,loadObjInfoValueCb,isActive
                     )}
                 </>:<p style={{fontFamily:"'Mikodacs' , 'Rubik', sans-serif"}}></p>}
             </div>
-            <p>Current local save: {saveData.length}/{process.env.LOCAL_SAVE_MAX_LEN??10}</p>
+            <p>Current local save: {saveData.length}/{process.env.REACT_APP_LOCAL_SAVE_MAX_LEN??10}</p>
             <MainButton component={"Create a new save"} clickHandler={()=>{
-                    const maxLenStr = process.env.LOCAL_SAVE_MAX_LEN
+                    const maxLenStr = process.env.REACT_APP_LOCAL_SAVE_MAX_LEN
                     const maxLen = Number(maxLenStr)??10
                     if(saveData.length<maxLen){
                         saveObjInfoValue.saveTime = new Date().toLocaleString()
