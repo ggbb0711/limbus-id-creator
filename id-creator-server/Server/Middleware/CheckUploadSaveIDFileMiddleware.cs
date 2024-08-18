@@ -26,19 +26,19 @@ namespace Server.Middleware
 
             if(! await MiscUtil.CheckFormUploadSaveFile(context,new List<IFormContextValidation>()
                 {
-                    new FormFileSizeValidation("splashArtImg","Splash art must be <= 1.2mb",HttpStatusCode.BadRequest,1200000)
+                    new FormFileSizeValidation("splashArtImg","Splash art must be <= 4mb",HttpStatusCode.BadRequest,4000000)
                 }))
             return;
 
             if(! await MiscUtil.CheckFormUploadSaveFile(context,new List<IFormContextValidation>()
                 {
-                   new FormFileSizeValidation("sinnerIcon","Sinner icon must be <= 80kb",HttpStatusCode.BadRequest,80000) 
+                   new FormFileSizeValidation("sinnerIcon","Sinner icon must be <= 100kb",HttpStatusCode.BadRequest,100000) 
                 }))
             return;
 
             if(! await MiscUtil.CheckFormUploadSaveFile(context,new List<IFormContextValidation>()
                 {
-                    new FormFileSizeValidation("skillImages","Skill icon and custom effect icon must be <= 80kb",HttpStatusCode.BadRequest,80000),
+                    new FormFileSizeValidation("skillImages","Skill icon and custom effect icon must be <= 100kb",HttpStatusCode.BadRequest,100000),
                     new FormFileAmountValidation("skillImages","Can only upload less or equal than 20 skill images and custom effect icon",HttpStatusCode.BadRequest,0,20)
                 }))
             return;

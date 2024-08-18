@@ -50,41 +50,41 @@ namespace Server.Middleware
                 var splashArtUrl = saveIDInfo.SavedId.SplashArt.Url;
                 var sinnerIconUrl = saveIDInfo.SavedId.SinnerIcon.Url;
 
-                if(!await FileHelper.CheckUrlSize(splashArtUrl,1200000))
+                if(!await FileHelper.CheckUrlSize(splashArtUrl,4000000))
                 {
-                    await MiscUtil.GenerateErrorMsg(context,"Splash art url size must be <= 1.2mb",HttpStatusCode.BadRequest);
+                    await MiscUtil.GenerateErrorMsg(context,"Splash art url size must be <= 4mb",HttpStatusCode.BadRequest);
                     return;
                 }
 
-                if(!await FileHelper.CheckUrlSize(sinnerIconUrl,80000))
+                if(!await FileHelper.CheckUrlSize(sinnerIconUrl,100000))
                 {
-                    await MiscUtil.GenerateErrorMsg(context,"Sinner icon url size <= 80kb",HttpStatusCode.BadRequest);
+                    await MiscUtil.GenerateErrorMsg(context,"Sinner icon url size <= 100kb",HttpStatusCode.BadRequest);
                     return;
                 }
 
                 foreach(var offenseSkill in saveIDInfo.SavedId.Skill.OffenseSkills)
                 {
-                    if(!await FileHelper.CheckUrlSize(offenseSkill.ImageAttach.Url,80000))
+                    if(!await FileHelper.CheckUrlSize(offenseSkill.ImageAttach.Url,100000))
                     {
-                        await MiscUtil.GenerateErrorMsg(context,"Skill icon and custom effect icon size must be <= 80kb",HttpStatusCode.BadRequest);
+                        await MiscUtil.GenerateErrorMsg(context,"Skill icon and custom effect icon size must be <= 100kb",HttpStatusCode.BadRequest);
                         return;
                     }
                 }
 
                 foreach(var defenseSkill in saveIDInfo.SavedId.Skill.DefenseSkills)
                 {
-                    if(!await FileHelper.CheckUrlSize(defenseSkill.ImageAttach.Url,80000))
+                    if(!await FileHelper.CheckUrlSize(defenseSkill.ImageAttach.Url,100000))
                     {
-                        await MiscUtil.GenerateErrorMsg(context,"Skill icon and custom effect icon size must be <= 80kb",HttpStatusCode.BadRequest);
+                        await MiscUtil.GenerateErrorMsg(context,"Skill icon and custom effect icon size must be <= 100kb",HttpStatusCode.BadRequest);
                         return;
                     }
                 }
 
                 foreach(var customEffect in saveIDInfo.SavedId.Skill.CustomEffects)
                 {
-                    if(!await FileHelper.CheckUrlSize(customEffect.ImageAttach.Url,80000))
+                    if(!await FileHelper.CheckUrlSize(customEffect.ImageAttach.Url,100000))
                     {
-                        await MiscUtil.GenerateErrorMsg(context,"Skill icon and custom effect icon size must be <= 80kb",HttpStatusCode.BadRequest);
+                        await MiscUtil.GenerateErrorMsg(context,"Skill icon and custom effect icon size must be <= 100kb",HttpStatusCode.BadRequest);
                         return;
                     }
                 }

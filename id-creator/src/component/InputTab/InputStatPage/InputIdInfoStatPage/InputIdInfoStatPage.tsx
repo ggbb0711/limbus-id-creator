@@ -69,7 +69,7 @@ export default function InputIdInfoStatPage():ReactElement{
         <div className="sinner-icon-input-container">
             <p>Pick the sinner icon: </p>
             <SinnerIconInput/>
-            <UploadImgBtn onFileInputChange={onFileInputChange("sinnerIcon")} btnTxt={"Upload sinner icon (<= 80kb)"} maxSize={80000}/>
+            <UploadImgBtn onFileInputChange={onFileInputChange("sinnerIcon")} btnTxt={"Upload sinner icon (<= 100kb)"} maxSize={100000}/>
         </div>
         <div className="sinner-color-input-container">
             <p>Pick a color for your sinner: </p>
@@ -87,7 +87,7 @@ export default function InputIdInfoStatPage():ReactElement{
             </>
            :<></>}
 
-        <UploadImgBtn onFileInputChange={onFileInputChange("splashArt")} btnTxt={"Upload splash art (<= 1.2mb)"} maxSize={1200000}/>
+        <UploadImgBtn onFileInputChange={onFileInputChange("splashArt")} btnTxt={"Upload splash art (<= 4mb)"} maxSize={4000000}/>
         
         <div>
             <p>Pick the sinner rarity: </p>

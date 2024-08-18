@@ -43,7 +43,7 @@ export default function InputOffenseSkillPage({offenseSkill,keyWordList,changeSk
             </div>
         :<></>}
         <div className="input-group-container">
-            <UploadImgBtn onFileInputChange={onChangeFileWithName("skillImage")} btnTxt={"Upload skill img (<= 80kb)"} maxSize={80000}/>
+            <UploadImgBtn onFileInputChange={onChangeFileWithName("skillImage")} btnTxt={"Upload skill img (<= 100kb)"} maxSize={100000}/>
         </div>
         <div className="input-group-container">
             <div className="input-container">
