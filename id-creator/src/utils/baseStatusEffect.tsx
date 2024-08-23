@@ -499,4 +499,7 @@ export const baseStatusEffect={
 
     "combat_start":
         "<span class='center-element' contenteditable='false' style='color:#94f140'>[Combat start]</span>",
+    
+    "clashable_counter":
+        "<span class='center-element' contenteditable='false' style='color:#ff7e00'>[Clashable Counter]</span>",
 }
