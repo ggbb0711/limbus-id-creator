@@ -16,6 +16,7 @@ export default function SearchSaveInput({saveList,chooseSave,searchSave}:{saveLi
     const arrowDownKeyPress = useKeyPress("ArrowDown",searchSaveInputRef)
     const tabDownKeyPress = useKeyPress("Tab",searchSaveInputRef)
     const selectRef = useRef(null)
+    const containerRef = useRef(null)
 
     const handleKeyDown=(e:React.KeyboardEvent<HTMLInputElement>)=>{
         if((isActive&&(e.key==="Enter"||e.key==="ArrowUp"||e.key==="ArrowDown"||e.key==="Tab"))){
@@ -48,17 +49,17 @@ export default function SearchSaveInput({saveList,chooseSave,searchSave}:{saveLi
     },[enterKeyPress])
 
     useEffect(()=>{
-        if((arrowDownKeyPress||tabDownKeyPress)&&searchName) setCurrChoice((currChoice+1>saveList.length-1)?0:currChoice+1)
+        if((arrowDownKeyPress||tabDownKeyPress)&&isActive) setCurrChoice((currChoice+1>saveList.length-1)?0:currChoice+1)
     },[arrowDownKeyPress,tabDownKeyPress])
 
     useEffect(()=>{
-        if(arrowUpKeyPress&&searchName) setCurrChoice((currChoice-1<0)?saveList.length-1:currChoice-1)
+        if(arrowUpKeyPress&&isActive) setCurrChoice((currChoice-1<0)?saveList.length-1:currChoice-1)
     },[arrowUpKeyPress])
 
     useEffect(()=>{
 
         function handleClickOutside(event) {
-            if (searchSaveInputRef.current && !searchSaveInputRef.current.contains(event.target)) {
+            if (containerRef.current && !containerRef.current.contains(event.target)) {
                 setIsActive(false)
             }
         }
@@ -68,9 +69,9 @@ export default function SearchSaveInput({saveList,chooseSave,searchSave}:{saveLi
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    },[searchSaveInputRef])
+    },[containerRef])
 
-    return <div className="post-save-mode-input-container">
+    return <div className="post-save-mode-input-container" ref={containerRef}>
         <input ref={searchSaveInputRef} type="text" className="input post-save-input" placeholder="ID/EGO name" value={searchName} 
             onChange={(e)=>{
                 setSearchName(e.target.value)
