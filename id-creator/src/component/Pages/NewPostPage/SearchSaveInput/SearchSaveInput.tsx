@@ -78,7 +78,7 @@ export default function SearchSaveInput({saveList,chooseSave,searchSave}:{saveLi
 
     return <div className="post-save-mode-input-container" ref={containerRef}>
         <input ref={searchSaveInputRef} type="text" className="input post-save-input" placeholder="ID/EGO name" value={searchName} 
-            onChange={(e)=>{
+            onFocus={(e)=>{
                 setSearchName(e.target.value)
                 setIsActive(true)
             }}

@@ -48,7 +48,6 @@ export default function TagInput({completeFn,customClass="",id}:{completeFn:(key
         }
         setTagList(foundTag)
         setCurrChoice(0)
-        setIsActive(true)
     },[text])
 
 
@@ -80,7 +79,16 @@ export default function TagInput({completeFn,customClass="",id}:{completeFn:(key
     },[containerRef])
     
     return <div ref={containerRef} className="tag-input-container">
-        <input ref={tagInputRef} type="text" id={id} className={`tag-input ${customClass}`} placeholder="Add tag" value={text} onClick={()=>setIsActive(true)} onKeyDown={handleKeyDown} onChange={(e)=>setText(e.target.value)} autoComplete={"off"}/>
+        <input ref={tagInputRef} type="text" id={id} className={`tag-input ${customClass}`} placeholder="Add tag" value={text} 
+            onFocus={()=>{
+                setIsActive(true)
+            }} 
+            onKeyDown={handleKeyDown} 
+            onChange={(e)=>{
+                setText(e.target.value)
+                setIsActive(true)
+            }} 
+            autoComplete={"off"}/>
             <div className="found-tag-outer-container">
                 <div className="found-tag-container" ref={selectRef}>
                     {isActive&&tagList.map((tag:ITag,i)=>{
