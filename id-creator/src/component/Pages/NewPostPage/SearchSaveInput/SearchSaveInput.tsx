@@ -9,6 +9,7 @@ import useKeyPress from "component/util/useKeyPress";
 export default function SearchSaveInput({saveList,chooseSave,searchSave}:{saveList:ISaveFile<IIdInfo|IEgoInfo>[],chooseSave:(saveUrl:string)=>void,searchSave:(name:string)=>void}):ReactElement{
     const [searchName,setSearchName] = useState("")
     const [currChoice,setCurrChoice] = useState(0)
+    const [isActive,setIsActive] = useState(false)
     const searchSaveInputRef = useRef(null)
     const enterKeyPress=useKeyPress("Enter",searchSaveInputRef)
     const arrowUpKeyPress = useKeyPress("ArrowUp",searchSaveInputRef)
@@ -31,11 +32,18 @@ export default function SearchSaveInput({saveList,chooseSave,searchSave}:{saveLi
             });
         } 
     }
-    useEffect(()=>{searchSave(searchName)},[searchName])
+    
+    useEffect(()=>{
+        searchSave(searchName)
+        setIsActive(true)
+    },[searchName])
 
     useEffect(()=>{
-        if((enterKeyPress)&&searchName) {
-            chooseSave(saveList[currChoice].previewImg)
+        if((enterKeyPress)&&isActive) {
+            if(saveList[currChoice]){
+                chooseSave(saveList[currChoice].previewImg)
+            }
+            setIsActive(false)
             setSearchName("")
         }
     },[enterKeyPress])
@@ -48,13 +56,32 @@ export default function SearchSaveInput({saveList,chooseSave,searchSave}:{saveLi
         if(arrowUpKeyPress&&searchName) setCurrChoice((currChoice-1<0)?saveList.length-1:currChoice-1)
     },[arrowUpKeyPress])
 
+    useEffect(()=>{
+
+        function handleClickOutside(event) {
+            if (searchSaveInputRef.current && !searchSaveInputRef.current.contains(event.target)) {
+                setIsActive(false)
+            }
+        }
+    
+        document.addEventListener('mousedown', handleClickOutside);
+    
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    },[searchSaveInputRef])
+
     return <div className="post-save-mode-input-container">
         <input ref={searchSaveInputRef} type="text" className="input post-save-input" placeholder="ID/EGO name" value={searchName} 
             onChange={(e)=>setSearchName(e.target.value)}
-            onKeyDown={handleKeyDown}/>
+            onKeyDown={handleKeyDown}
+            onClick={()=>{
+                searchSave(searchName)
+                setIsActive(true)
+            }}/>
         <div className="post-save-found-outer-container">
             <div className="post-save-found-container">
-                {searchName&&<>{saveList.map((save,i)=>{
+                {isActive&&<>{saveList.map((save,i)=>{
                     scrollToView()
                     return <div key={save.id} className={`center-element post-save-found-tab ${currChoice===i?"active":""}`} onClick={()=>{
                         chooseSave(save.previewImg)
