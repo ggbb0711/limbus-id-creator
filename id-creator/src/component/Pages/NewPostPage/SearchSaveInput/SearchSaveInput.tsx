@@ -36,6 +36,7 @@ export default function SearchSaveInput({saveList,chooseSave,searchSave}:{saveLi
     
     useEffect(()=>{
         searchSave(searchName)
+        setCurrChoice(0)
     },[searchName])
 
     useEffect(()=>{
