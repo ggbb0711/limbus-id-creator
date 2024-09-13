@@ -51,14 +51,12 @@ export default function SearchSaveInput({saveList,chooseSave,searchSave}:{saveLi
     useEffect(()=>{
         if((arrowDownKeyPress||tabDownKeyPress)&&isActive){ 
             setCurrChoice((currChoice+1>saveList.length-1)?0:currChoice+1)
-            scrollToView()
         }
     },[arrowDownKeyPress,tabDownKeyPress])
 
     useEffect(()=>{
         if(arrowUpKeyPress&&isActive) {
             setCurrChoice((currChoice-1<0)?saveList.length-1:currChoice-1)
-            scrollToView()
         }
     },[arrowUpKeyPress])
 
@@ -91,6 +89,7 @@ export default function SearchSaveInput({saveList,chooseSave,searchSave}:{saveLi
         <div className="post-save-found-outer-container">
             <div ref={selectRef} className="post-save-found-container">
                 {isActive&&<>{saveList.map((save,i)=>{
+                    scrollToView()
                     return <div key={save.id} className={`center-element post-save-found-tab ${currChoice===i?"active":""}`} onClick={()=>{
                         chooseSave(save.previewImg)
                         setSearchName("")
