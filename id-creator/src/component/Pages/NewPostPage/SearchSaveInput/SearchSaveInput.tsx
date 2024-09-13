@@ -89,7 +89,7 @@ export default function SearchSaveInput({saveList,chooseSave,searchSave}:{saveLi
                 setIsActive(true)
             }}/>
         <div className="post-save-found-outer-container">
-            <div className="post-save-found-container">
+            <div ref={selectRef} className="post-save-found-container">
                 {isActive&&<>{saveList.map((save,i)=>{
                     return <div key={save.id} className={`center-element post-save-found-tab ${currChoice===i?"active":""}`} onClick={()=>{
                         chooseSave(save.previewImg)
