@@ -18,7 +18,7 @@ export default function SearchSaveInput({saveList,chooseSave,searchSave}:{saveLi
     const selectRef = useRef(null)
 
     const handleKeyDown=(e:React.KeyboardEvent<HTMLInputElement>)=>{
-        if(((searchName)&&(e.key==="Enter"||e.key==="ArrowUp"||e.key==="ArrowDown"||e.key==="Tab"))){
+        if((isActive&&(e.key==="Enter"||e.key==="ArrowUp"||e.key==="ArrowDown"||e.key==="Tab"))){
             e.preventDefault()
         }
     }
@@ -35,7 +35,6 @@ export default function SearchSaveInput({saveList,chooseSave,searchSave}:{saveLi
     
     useEffect(()=>{
         searchSave(searchName)
-        setIsActive(true)
     },[searchName])
 
     useEffect(()=>{
@@ -73,7 +72,10 @@ export default function SearchSaveInput({saveList,chooseSave,searchSave}:{saveLi
 
     return <div className="post-save-mode-input-container">
         <input ref={searchSaveInputRef} type="text" className="input post-save-input" placeholder="ID/EGO name" value={searchName} 
-            onChange={(e)=>setSearchName(e.target.value)}
+            onChange={(e)=>{
+                setSearchName(e.target.value)
+                setIsActive(true)
+            }}
             onKeyDown={handleKeyDown}
             onClick={()=>{
                 searchSave(searchName)
