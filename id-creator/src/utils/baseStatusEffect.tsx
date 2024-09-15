@@ -505,4 +505,7 @@ export const baseStatusEffect={
 
     "clashable_defense":
         "<span class='center-element' contenteditable='false' style='color:#ff7e00'>[Clashable Defense]</span>",
-}
+
+    "before_use":
+        "<span class='center-element' contenteditable='false' style='color:#26cfff'>[Before Use]</span>",
+    }
