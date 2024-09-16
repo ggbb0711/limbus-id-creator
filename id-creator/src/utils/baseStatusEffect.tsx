@@ -131,6 +131,12 @@ export const baseStatusEffect={
     "load":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Load.png' alt='load_icon' />Load</span>",
 
+    "red_eyes":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Red_Eyes.png' alt='red_eyes_icon' />Red Eyes</span>",
+
+    "penitence":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Penitence.png' alt='penitence_icon' />Penitence</span>",
+
     "ego_resource_amp":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/E.G.O_Resource_Amp.png' alt='ego_resource_amp_icon' />E.G.O Resource Amp</span>",
     
@@ -317,6 +323,9 @@ export const baseStatusEffect={
     "sinking_deluge":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Sinking_Deluge.png' alt='sinking_deluge_icon' />Sinking Deluge</span>",
     
+    "butterfly":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Butterfly.png' alt='butterfly_icon' />Butterfly</span>",
+
     "tremor":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Tremor.png' alt='tremor_icon' />Tremor</span>",
     
@@ -419,6 +428,12 @@ export const baseStatusEffect={
     "magic_bullet":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Magic_Bullet.png' alt='magic_bullet_icon' />Magic Bullet</span>",
     
+    "reload":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Reload.png' alt='reload_icon' />Reload</span>",
+
+    "the_living_&_the_departed":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/The_Living_&_The_Departed.png' alt='the_living_&_the_departed_icon' />The Living & The Departed</span>",
+
     "final_augment":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Final_Augment.png' alt='final_augment_icon' />Final Augment</span>",
     
