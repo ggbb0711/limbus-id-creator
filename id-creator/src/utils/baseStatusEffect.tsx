@@ -4,6 +4,9 @@ import React from "react";
 export const baseStatusEffect={
     "attack_power_up":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Attack_Power_Up.png' alt='attack_power_up_icon' />Attack Power Up</span>",
+    
+    "clash_power_up":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Clash_Power_Up.png' alt='clash_power_up_icon' />Clash Power Up</span>",
 
     "slash_dmg_up":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Slash_DMG_Up.png' alt='slash_dmg_up_icon' />Slash DMG Up</span>",
@@ -289,6 +292,9 @@ export const baseStatusEffect={
     
     "damage_down":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Damage_Down.png' alt='damage_down_icon' />Damage Down</span>",
+
+    "clash_power_down":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Clash_Power_Down.png' alt='clash_power_down_icon' />Clash Power Down</span>",
     
     "fragile":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Fragile.png' alt='fragile_icon' />Fragile</span>",
