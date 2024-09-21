@@ -78,15 +78,15 @@ export default function SearchSaveInput({saveList,chooseSave,searchSave}:{saveLi
 
     return <div className="post-save-mode-input-container" ref={containerRef}>
         <input ref={searchSaveInputRef} type="text" className="input post-save-input" placeholder="ID/EGO name" value={searchName} 
-            onFocus={(e)=>{
-                setSearchName(e.target.value)
+            onFocus={()=>{
                 setIsActive(true)
             }}
             onKeyDown={handleKeyDown}
-            onClick={()=>{
-                searchSave(searchName)
+            onChange={(e)=>{
+                setSearchName(e.target.value)
                 setIsActive(true)
-            }}/>
+            }}
+            autoComplete="off"/>
         <div className="post-save-found-outer-container">
             <div ref={selectRef} className="post-save-found-container">
                 {isActive&&<>{saveList.map((save,i)=>{
