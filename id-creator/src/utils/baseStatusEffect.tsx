@@ -442,6 +442,12 @@ export const baseStatusEffect={
 
     "final_augment":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Final_Augment.png' alt='final_augment_icon' />Final Augment</span>",
+
+    "courier_trunk":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Courier_Trunk.png' alt='courier_trunk_icon' />Courier Trunk</span>",
+    
+    "strategic_r&r_mode":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Strategic_R&R_Mode.png' alt='strategic_r&r_mode_icon' />Strategic R&R Mode</span>",
     
     "makeshift_surgery":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Makeshift_Surgery.png' alt='makeshift_surgery_icon' />Makeshift Surgery</span>",
