@@ -425,6 +425,9 @@ export const baseStatusEffect={
     "sp_loss_efficiency":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/SP_Loss_Efficiency.png' alt='sp_loss_efficiency_icon' />SP Loss Efficiency</span>",
     
+    "single_combat":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Single_Combat.png' alt='single_combat_icon' />Single Combat</span>",
+    
     "insight":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Insight.png' alt='insight_icon' />Insight</span>",
     
@@ -488,6 +491,9 @@ export const baseStatusEffect={
     "on_hit":
         "<span class='center-element' contenteditable='false' style='color:#94f140'>[On Hit]</span>",
     
+    "hit_after_clash_win":
+        "<span class='center-element' contenteditable='false' style='color:#94f140'>[Hit after Clash Win]</span>",
+
     "clash_win":
         "<span class='center-element' contenteditable='false' style='color:#ff7e00'>[Clash Win]</span>",
     
@@ -535,4 +541,6 @@ export const baseStatusEffect={
 
     "before_use":
         "<span class='center-element' contenteditable='false' style='color:#26cfff'>[Before Use]</span>",
-    }
+
+
+}
