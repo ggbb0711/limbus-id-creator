@@ -47,6 +47,7 @@ namespace Server.Services.UtilServices
                             var cloudinaryService = scope.ServiceProvider.GetRequiredService<IUploadService>();
                             var uploadUrl =(uploadingImage.ImageFile!=null)? await cloudinaryService.Upload(uploadingImage.ImageFile,uploadingImage.Id.ToString())
                             :await cloudinaryService.Upload(uploadingImage.Url,uploadingImage.Id.ToString());
+                            uploadUrl = AddCloudinaryParams(uploadUrl, Environment.GetEnvironmentVariable("UPLOAD_FOLDER")??"/upload/");
                             var imageObjService = scope.ServiceProvider.GetRequiredService<IImageObjService>();
                             await imageObjService.UpdateImage(uploadingImage.Id,uploadUrl,uploadingImage.lastUpdated);
                         }
@@ -63,6 +64,20 @@ namespace Server.Services.UtilServices
 
             _channel.BasicConsume(queue: "UploadingImage", autoAck: true, consumer: consumer);
             return Task.CompletedTask;
+        }
+
+        private string AddCloudinaryParams(string imageUrl,string uploadFolder)
+        {
+            string uploadSegment = uploadFolder;
+            int uploadIndex = imageUrl.IndexOf(uploadSegment);
+
+            if (uploadIndex != -1)
+            {
+                string modifiedUrl = imageUrl.Insert(uploadIndex + uploadSegment.Length, "fl_lossy,q_auto/");
+                return modifiedUrl;
+            }
+
+            return imageUrl;
         }
 
         public override void Dispose()
