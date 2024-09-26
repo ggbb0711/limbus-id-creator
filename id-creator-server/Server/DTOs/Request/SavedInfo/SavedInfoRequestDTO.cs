@@ -8,7 +8,6 @@ namespace Server.DTOs.Requests.SavedInfo
     {
         public Guid id { get; set; }
         public string saveName { get; set; }
-        public string saveTime { get; set; }
         public SaveType saveInfo { get; set; }
         public string previewImg { get; set; }
     }

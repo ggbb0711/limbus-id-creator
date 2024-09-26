@@ -25,7 +25,7 @@ namespace Server.Models
 
         public Guid Id { get; set; }
         public string Name { get; set; } = "";
-        public DateTime SaveTime { get; set; }
+        public DateTime SaveTime { get; set; }  = DateTime.Now;
 
         [ForeignKey(nameof(ImageObj))]
         public Guid ImageAttachId { get; set; }
