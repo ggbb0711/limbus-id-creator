@@ -10,7 +10,6 @@ import SkillDetailContainer from "./components/SkillDetailContainer/SkillDetailC
 
 export  const IdCard=forwardRef<HTMLDivElement>((props,ref):ReactElement=>{
     const {idInfoValue}=useIdInfoContext()
-
     return(
         <div className="Card" ref={ref}>
             <div className="sinner-icon-background" style={{"backgroundImage":`url(${idInfoValue.sinnerIcon})`}}></div>

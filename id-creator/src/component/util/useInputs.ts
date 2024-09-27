@@ -1,14 +1,32 @@
 import React, { useEffect, useState } from "react";
 import replaceKeyWord from "./replaceKeyWord";
 import sanitizeHtml from "sanitize-html";
+import isObject from "utils/Functions/isObject";
 
+interface INewInput{
+    [type:string]:string|number|INewInput
+}
 
-export default function useInput(propInputs:{[type:string]:string|number},changeInput:(newInput:{[type:string]:string|number})=>void){
+export default function useInput(propInputs:INewInput,changeInput:(newInput:INewInput)=>void){
     const [inputs,setInputs]=useState(propInputs)
 
     function onChangeInput(inputName?:string){
         return(e:React.ChangeEvent<HTMLInputElement>|React.ChangeEvent<HTMLTextAreaElement>)=>{
-            if(inputName) changeInput({...inputs,[inputName]:e.target.value})
+            if(inputName){
+                const newInputs = {...inputs}
+                let changedField = newInputs
+                const fieldPathWay = inputName.split(".")
+
+                for (let i = 0; i < fieldPathWay.length - 1; i++) {
+                    let path = changedField[fieldPathWay[i]]
+                    if(!isObject(path)) throw new Error("The path proived is not an object");
+                    else changedField = path as INewInput
+                }
+
+                changedField[fieldPathWay[fieldPathWay.length-1]] = e.target.value
+
+                changeInput(newInputs)
+            } 
             else{
                 changeInput({...inputs,[e.target.name]:e.target.value})
             }

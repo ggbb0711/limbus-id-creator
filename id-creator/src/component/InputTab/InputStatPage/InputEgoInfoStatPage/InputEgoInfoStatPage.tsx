@@ -43,7 +43,6 @@ export default function InputStatPage():ReactElement{
             envy_cost,
         },
         sinnerColor,
-        egoLevel,
     } = EgoInfoValue
 
     function changeResistantColor(value:number):string{

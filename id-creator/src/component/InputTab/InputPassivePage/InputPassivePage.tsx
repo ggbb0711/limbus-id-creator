@@ -17,10 +17,26 @@ export default function InputPassivePage({passiveSkill,keyWordList,changeSkill,c
         name,
         skillLabel,
         skillEffect,
-        affinity,
+        ownCost:{
+            wrath_cost:wrath_own_cost,
+            lust_cost:lust_own_cost,
+            sloth_cost:sloth_own_cost,
+            gluttony_cost:gluttony_own_cost,
+            gloom_cost:gloom_own_cost,
+            pride_cost:pride_own_cost,
+            envy_cost:envy_own_cost,
+        },
+        resCost:{
+            wrath_cost:wrath_res_cost,
+            lust_cost:lust_res_cost,
+            sloth_cost:sloth_res_cost,
+            gluttony_cost:gluttony_res_cost,
+            gloom_cost:gloom_res_cost,
+            pride_cost:pride_res_cost,
+            envy_cost:envy_res_cost,
+        },
         req,
-        reqNo,
-        type
+        type,
     } = passiveSkill
 
     return <div className="input-page input-passive-page">
@@ -47,17 +63,123 @@ export default function InputPassivePage({passiveSkill,keyWordList,changeSkill,c
             </div>
             
         </div>
+        
+        <p>Sin Own</p>
         <div className="input-group-container">
-            <div className="input-container">
-                <p className="input-label">Sin affinity:</p>
-                <SinAffinityInput onChangeSinAffinity={onChangeDropDownMenu("affinity")} activeSin={affinity} disabled={req==="None"}/>
+            <div className="input-container center-element-vertically">
+                <label htmlFor="wrath_own_cost"><img className="stat-icon" src="Images/sin-affinity/affinity_Wrath_big.webp" alt="wrath-input-resistant-icon" /></label>
+                <div className="resistant-content">
+                    <div>
+                        <input type="number" className="input stat-page-input-border input-number" value={wrath_own_cost} onChange={onChangeInput("ownCost.wrath_cost")} name="wrath_own_cost" id="wrath_own_cost"/>
+                    </div>
+                </div>
+            </div>
+            <div className="input-container center-element-vertically">
+                <label htmlFor="lust_own_cost"><img className="stat-icon" src="Images/sin-affinity/affinity_Lust_big.webp" alt="lust-input-resistant-icon" /></label>
+                <div className="resistant-content">
+                    <div>
+                        <input type="number" className="input stat-page-input-border input-number" value={lust_own_cost} onChange={onChangeInput("ownCost.lust_cost")} name="lust_own_cost" id="lust_own_cost"/>
+                    </div>
+                </div>
+            </div>
+            <div className="input-container center-element-vertically">
+                <label htmlFor="sloth_own_cost"><img className="stat-icon" src="Images/sin-affinity/affinity_Sloth_big.webp" alt="sloth-input-resistant-icon" /></label>
+                <div className="resistant-content">
+                    <div>
+                        <input type="number" className="input stat-page-input-border input-number" value={sloth_own_cost} onChange={onChangeInput("ownCost.sloth_cost")} name="sloth_own_cost" id="sloth_own_cost"/>
+                    </div>
+                </div>
+            </div>
+            <div className="input-container center-element-vertically">
+                <label htmlFor="gluttony_own_cost"><img className="stat-icon" src="Images/sin-affinity/affinity_Gluttony_big.webp" alt="gluttony-input-resistant-icon" /></label>
+                <div className="resistant-content">
+                    <div>
+                        <input type="number" className="input stat-page-input-border input-number" value={gluttony_own_cost} onChange={onChangeInput("ownCost.gluttony_cost")} name="gluttony_own_cost" id="gluttony_own_cost"/>
+                    </div>
+                </div>
+            </div>
+            <div className="input-container center-element-vertically">
+                <label htmlFor="gloom_own_cost"><img className="stat-icon" src="Images/sin-affinity/affinity_Gloom_big.webp" alt="gloom-input-resistant-icon" /></label>
+                <div className="resistant-content">
+                    <div>
+                        <input type="number" className="input stat-page-input-border input-number" value={gloom_own_cost} onChange={onChangeInput("ownCost.gloom_cost")} name="gloom_own_cost" id="gloom_own_cost"/>
+                    </div>
+                </div>
+            </div>
+            <div className="input-container center-element-vertically">
+                <label htmlFor="pride_own_cost"><img className="stat-icon" src="Images/sin-affinity/affinity_Pride_big.webp" alt="pride-input-resistant-icon" /></label>
+                <div className="resistant-content">
+                    <div>
+                        <input type="number" className="input stat-page-input-border input-number" value={pride_own_cost} onChange={onChangeInput("ownCost.pride_cost")} name="pride_own_cost" id="pride_own_cost"/>
+                    </div>
+                </div>
+            </div>
+            <div className="input-container center-element-vertically">
+                <label htmlFor="envy_own_cost"><img className="stat-icon" src="Images/sin-affinity/affinity_Envy_big.webp" alt="envy-input-resistant-icon" /></label>
+                <div className="resistant-content">
+                    <div>
+                        <input type="number" className="input stat-page-input-border input-number" value={envy_own_cost} onChange={onChangeInput("ownCost.envy_cost")} name="envy_own_cost" id="envy_own_cost"/>
+                    </div>
+                </div>
             </div>
         </div>
-        
+        <p>Sin Res</p>
         <div className="input-group-container">
-            <div className="input-container">
-                <label className="input-label" htmlFor="reqNo">Cost:</label>
-                <input className={`input ${req==="None"?"disable":""}`} disabled={req==="None"} type="number" id="reqNo" name="reqNo" value={reqNo} onChange={onChangeInput()}/>
+            <div className="input-container center-element-vertically">
+                <label htmlFor="wrath_res_cost"><img className="stat-icon" src="Images/sin-affinity/affinity_Wrath_big.webp" alt="wrath-input-resistant-icon" /></label>
+                <div className="resistant-content">
+                    <div>
+                        <input type="number" className="input stat-page-input-border input-number" value={wrath_res_cost} onChange={onChangeInput("resCost.wrath_cost")} name="wrath_res_cost" id="wrath_res_cost"/>
+                    </div>
+                </div>
+            </div>
+            <div className="input-container center-element-vertically">
+                <label htmlFor="lust_res_cost"><img className="stat-icon" src="Images/sin-affinity/affinity_Lust_big.webp" alt="lust-input-resistant-icon" /></label>
+                <div className="resistant-content">
+                    <div>
+                        <input type="number" className="input stat-page-input-border input-number" value={lust_res_cost} onChange={onChangeInput("resCost.lust_cost")} name="lust_res_cost" id="lust_res_cost"/>
+                    </div>
+                </div>
+            </div>
+            <div className="input-container center-element-vertically">
+                <label htmlFor="sloth_res_cost"><img className="stat-icon" src="Images/sin-affinity/affinity_Sloth_big.webp" alt="sloth-input-resistant-icon" /></label>
+                <div className="resistant-content">
+                    <div>
+                        <input type="number" className="input stat-page-input-border input-number" value={sloth_res_cost} onChange={onChangeInput("resCost.sloth_cost")} name="sloth_res_cost" id="sloth_res_cost"/>
+                    </div>
+                </div>
+            </div>
+            <div className="input-container center-element-vertically">
+                <label htmlFor="gluttony_res_cost"><img className="stat-icon" src="Images/sin-affinity/affinity_Gluttony_big.webp" alt="gluttony-input-resistant-icon" /></label>
+                <div className="resistant-content">
+                    <div>
+                        <input type="number" className="input stat-page-input-border input-number" value={gluttony_res_cost} onChange={onChangeInput("resCost.gluttony_cost")} name="gluttony_res_cost" id="gluttony_res_cost"/>
+                    </div>
+                </div>
+            </div>
+            <div className="input-container center-element-vertically">
+                <label htmlFor="gloom_res_cost"><img className="stat-icon" src="Images/sin-affinity/affinity_Gloom_big.webp" alt="gloom-input-resistant-icon" /></label>
+                <div className="resistant-content">
+                    <div>
+                        <input type="number" className="input stat-page-input-border input-number" value={gloom_res_cost} onChange={onChangeInput("resCost.gloom_cost")} name="gloom_res_cost" id="gloom_res_cost"/>
+                    </div>
+                </div>
+            </div>
+            <div className="input-container center-element-vertically">
+                <label htmlFor="pride_res_cost"><img className="stat-icon" src="Images/sin-affinity/affinity_Pride_big.webp" alt="pride-input-resistant-icon" /></label>
+                <div className="resistant-content">
+                    <div>
+                        <input type="number" className="input stat-page-input-border input-number" value={pride_res_cost} onChange={onChangeInput("resCost.pride_cost")} name="pride_res_cost" id="pride_res_cost"/>
+                    </div>
+                </div>
+            </div>
+            <div className="input-container center-element-vertically">
+                <label htmlFor="envy_res_cost"><img className="stat-icon" src="Images/sin-affinity/affinity_Envy_big.webp" alt="envy-input-resistant-icon" /></label>
+                <div className="resistant-content">
+                    <div>
+                        <input type="number" className="input stat-page-input-border input-number" value={envy_res_cost} onChange={onChangeInput("resCost.envy_cost")} name="envy_res_cost" id="envy_res_cost"/>
+                    </div>
+                </div>
             </div>
         </div>
         <div className="input-group-container">

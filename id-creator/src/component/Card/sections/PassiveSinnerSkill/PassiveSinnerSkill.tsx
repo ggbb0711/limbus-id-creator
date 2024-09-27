@@ -10,25 +10,47 @@ const PassiveSinnerSkill = forwardRef<HTMLDivElement, { passiveSkill: IPassiveSk
         skillLabel,
         name,
         skillEffect,
-        affinity,
-        req,
-        reqNo,
+        ownCost,
+        resCost
     } = passiveSkill;
-
     return (
         <div ref={ref} className="skill-section-container">
             <p className="skill-label">{skillLabel}</p>
             <div className="skill-section">
                 <div>
                     <div className="skill-title-req">
-                        <div className="active-skill-title">
+                        <div className="active-skill-title passive-skill-title">
                             <SkillTitle skillAffinity={"None"} skillTitle={name} />
                         </div>
 
-                        <div className="req-container">
-                            {req==="None"||affinity==="None"?<></>:<><p>{req}: {reqNo}</p><img className={`req-sin-icon`} src={`Images/sin-affinity/affinity_${affinity}_big.webp`} /></>}
-                            
+                        <div>
+                            {Object.values(ownCost).some(v=>v>0)&&
+                            <div className="req-container">
+                                <p>Own: </p>
+                                <div className="passive-cost-container">
+                                    {Object.keys(ownCost).map(k=>{
+                                    if(ownCost[k]<1) return <></>
+                                    const affinity_name = k.replace("_cost","")[0]+k.replace("_cost","").substring(1)
+                                    return <span className="center-element">
+                                        {ownCost[k]} <img className="req-sin-icon" src={`Images/sin-affinity/affinity_${affinity_name.replace("_cost","")}_big.webp`} alt={`${k}_icon`} />
+                                    </span>})}
+                                </div>
+                            </div>}
+
+                            {Object.values(resCost).some(v=>v>0)&&
+                            <div className="req-container">
+                                <p>Res: </p>
+                                <div className="passive-cost-container">
+                                    {Object.keys(resCost).map(k=>{
+                                    if(resCost[k]<1) return <></>
+                                    const affinity_name = k.replace("_cost","")[0]+k.replace("_cost","").substring(1)
+                                    return <span className="center-element">
+                                        {resCost[k]} <img className="req-sin-icon" src={`Images/sin-affinity/affinity_${affinity_name.replace("_cost","")}_big.webp`} alt={`${k}_icon`} />
+                                    </span>})}
+                                </div>
+                            </div>}
                         </div>
+                        
                     </div>
                     <div className="skill-description">
                         <SkillEffect effect={skillEffect} />
