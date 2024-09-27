@@ -13,6 +13,7 @@ import {  useSearchParams } from 'react-router-dom';
 import { useSaveMenuContext } from 'component/SaveMenu/SaveMenu';
 import ResetBtn from 'utils/ResetBtn/ResetBtn';
 import ResetMenu from 'utils/ResetMenu/ResetMenu';
+import { IdInfo } from 'Interfaces/IIdInfo';
 
 
 
@@ -63,9 +64,9 @@ function IdCardContext():ReactElement{
     },[window.innerHeight])
 
     useEffect(()=>{
-        changeSaveInfo(idInfoValue)
+        changeSaveInfo(new IdInfo(idInfoValue))
         //Save the last change
-        localStorage.setItem("currIdSave",JSON.stringify(idInfoValue))
+        localStorage.setItem("currIdSave",JSON.stringify(new IdInfo(idInfoValue)))
     },[JSON.stringify(idInfoValue)])
 
     return <StatusEffectProvider skillDetails={idInfoValue.skillDetails}>

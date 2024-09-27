@@ -293,7 +293,21 @@ namespace Server.Profiles
                         Req = passiveSkill.req,
                         ReqNo = passiveSkill.reqNo,
                         Index = i,
-                        SavedSkillId = SaveSkillId
+                        SavedSkillId = SaveSkillId,
+                        ReqOwnWrath = passiveSkill.ownCost.wrath_cost,
+                        ReqOwnLust = passiveSkill.ownCost.lust_cost,
+                        ReqOwnGloom = passiveSkill.ownCost.gloom_cost,
+                        ReqOwnEnvy = passiveSkill.ownCost.envy_cost,
+                        ReqOwnGluttony = passiveSkill.ownCost.gluttony_cost,
+                        ReqOwnPride = passiveSkill.ownCost.pride_cost,
+                        ReqOwnSloth = passiveSkill.ownCost.sloth_cost,
+                        ReqResWrath = passiveSkill.resCost.wrath_cost,
+                        ReqResLust = passiveSkill.resCost.lust_cost,
+                        ReqResGloom = passiveSkill.resCost.gloom_cost,
+                        ReqResEnvy = passiveSkill.resCost.envy_cost,
+                        ReqResGluttony = passiveSkill.resCost.gluttony_cost,
+                        ReqResPride = passiveSkill.resCost.pride_cost,
+                        ReqResSloth = passiveSkill.resCost.sloth_cost,
                     };
                     passiveSkills.Add(newPassiveSkill);
                 }
@@ -403,7 +417,25 @@ namespace Server.Profiles
                         skillLabel = PassiveSkill.SkillLabel,
                         affinity = PassiveSkill.Affinity,
                         req = PassiveSkill.Req,
-                        reqNo = PassiveSkill.ReqNo
+                        reqNo = PassiveSkill.ReqNo,
+                        ownCost = new PassiveSinCost(){
+                            wrath_cost = PassiveSkill.ReqOwnWrath,
+                            lust_cost = PassiveSkill.ReqOwnLust,
+                            gluttony_cost = PassiveSkill.ReqOwnGluttony,
+                            gloom_cost = PassiveSkill.ReqOwnGloom,
+                            sloth_cost = PassiveSkill.ReqOwnSloth,
+                            envy_cost = PassiveSkill.ReqOwnEnvy,
+                            pride_cost = PassiveSkill.ReqOwnPride
+                        },
+                        resCost = new PassiveSinCost(){
+                            wrath_cost = PassiveSkill.ReqResWrath,
+                            lust_cost = PassiveSkill.ReqResLust,
+                            gluttony_cost = PassiveSkill.ReqResGluttony,
+                            gloom_cost = PassiveSkill.ReqResGloom,
+                            sloth_cost = PassiveSkill.ReqResSloth,
+                            envy_cost = PassiveSkill.ReqResEnvy,
+                            pride_cost = PassiveSkill.ReqResPride
+                        }
                     };
                 }
 

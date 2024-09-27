@@ -9,15 +9,17 @@ import useKeyPress from "component/util/useKeyPress";
 export default function SearchSaveInput({saveList,chooseSave,searchSave}:{saveList:ISaveFile<IIdInfo|IEgoInfo>[],chooseSave:(saveUrl:string)=>void,searchSave:(name:string)=>void}):ReactElement{
     const [searchName,setSearchName] = useState("")
     const [currChoice,setCurrChoice] = useState(0)
+    const [isActive,setIsActive] = useState(false)
     const searchSaveInputRef = useRef(null)
     const enterKeyPress=useKeyPress("Enter",searchSaveInputRef)
     const arrowUpKeyPress = useKeyPress("ArrowUp",searchSaveInputRef)
     const arrowDownKeyPress = useKeyPress("ArrowDown",searchSaveInputRef)
     const tabDownKeyPress = useKeyPress("Tab",searchSaveInputRef)
     const selectRef = useRef(null)
+    const containerRef = useRef(null)
 
     const handleKeyDown=(e:React.KeyboardEvent<HTMLInputElement>)=>{
-        if(((searchName)&&(e.key==="Enter"||e.key==="ArrowUp"||e.key==="ArrowDown"||e.key==="Tab"))){
+        if((isActive&&(e.key==="Enter"||e.key==="ArrowUp"||e.key==="ArrowDown"||e.key==="Tab"))){
             e.preventDefault()
         }
     }
@@ -31,34 +33,68 @@ export default function SearchSaveInput({saveList,chooseSave,searchSave}:{saveLi
             });
         } 
     }
-    useEffect(()=>{searchSave(searchName)},[searchName])
+    
+    useEffect(()=>{
+        searchSave(searchName)
+        setCurrChoice(0)
+    },[searchName])
 
     useEffect(()=>{
-        if((enterKeyPress)&&searchName) {
-            chooseSave(saveList[currChoice].previewImg)
+        if((enterKeyPress)&&isActive) {
+            if(saveList[currChoice]){
+                chooseSave(saveList[currChoice].previewImg)
+            }
+            setIsActive(false)
             setSearchName("")
         }
     },[enterKeyPress])
 
     useEffect(()=>{
-        if((arrowDownKeyPress||tabDownKeyPress)&&searchName) setCurrChoice((currChoice+1>saveList.length-1)?0:currChoice+1)
+        if((arrowDownKeyPress||tabDownKeyPress)&&isActive){ 
+            setCurrChoice((currChoice+1>saveList.length-1)?0:currChoice+1)
+        }
     },[arrowDownKeyPress,tabDownKeyPress])
 
     useEffect(()=>{
-        if(arrowUpKeyPress&&searchName) setCurrChoice((currChoice-1<0)?saveList.length-1:currChoice-1)
+        if(arrowUpKeyPress&&isActive) {
+            setCurrChoice((currChoice-1<0)?saveList.length-1:currChoice-1)
+        }
     },[arrowUpKeyPress])
 
-    return <div className="post-save-mode-input-container">
+    useEffect(()=>{
+
+        function handleClickOutside(event) {
+            if (containerRef.current && !containerRef.current.contains(event.target)) {
+                setIsActive(false)
+            }
+        }
+    
+        document.addEventListener('mousedown', handleClickOutside);
+    
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    },[containerRef])
+
+    return <div className="post-save-mode-input-container" ref={containerRef}>
         <input ref={searchSaveInputRef} type="text" className="input post-save-input" placeholder="ID/EGO name" value={searchName} 
-            onChange={(e)=>setSearchName(e.target.value)}
-            onKeyDown={handleKeyDown}/>
+            onFocus={()=>{
+                setIsActive(true)
+            }}
+            onKeyDown={handleKeyDown}
+            onChange={(e)=>{
+                setSearchName(e.target.value)
+                setIsActive(true)
+            }}
+            autoComplete="off"/>
         <div className="post-save-found-outer-container">
-            <div className="post-save-found-container">
-                {searchName&&<>{saveList.map((save,i)=>{
+            <div ref={selectRef} className="post-save-found-container">
+                {isActive&&<>{saveList.map((save,i)=>{
                     scrollToView()
                     return <div key={save.id} className={`center-element post-save-found-tab ${currChoice===i?"active":""}`} onClick={()=>{
                         chooseSave(save.previewImg)
                         setSearchName("")
+                        setIsActive(false)
                     }}>
                         <img src={save.previewImg} className="search-save-preview-img" alt="preview-img" />
                         <div>

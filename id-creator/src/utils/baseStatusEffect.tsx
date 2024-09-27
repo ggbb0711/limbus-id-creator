@@ -4,6 +4,9 @@ import React from "react";
 export const baseStatusEffect={
     "attack_power_up":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Attack_Power_Up.png' alt='attack_power_up_icon' />Attack Power Up</span>",
+    
+    "clash_power_up":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Clash_Power_Up.png' alt='clash_power_up_icon' />Clash Power Up</span>",
 
     "slash_dmg_up":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Slash_DMG_Up.png' alt='slash_dmg_up_icon' />Slash DMG Up</span>",
@@ -130,6 +133,12 @@ export const baseStatusEffect={
     
     "load":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Load.png' alt='load_icon' />Load</span>",
+
+    "red_eyes":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Red_Eyes.png' alt='red_eyes_icon' />Red Eyes</span>",
+
+    "penitence":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Penitence.png' alt='penitence_icon' />Penitence</span>",
 
     "ego_resource_amp":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/E.G.O_Resource_Amp.png' alt='ego_resource_amp_icon' />E.G.O Resource Amp</span>",
@@ -283,6 +292,9 @@ export const baseStatusEffect={
     
     "damage_down":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Damage_Down.png' alt='damage_down_icon' />Damage Down</span>",
+
+    "clash_power_down":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Clash_Power_Down.png' alt='clash_power_down_icon' />Clash Power Down</span>",
     
     "fragile":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Fragile.png' alt='fragile_icon' />Fragile</span>",
@@ -317,6 +329,9 @@ export const baseStatusEffect={
     "sinking_deluge":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Sinking_Deluge.png' alt='sinking_deluge_icon' />Sinking Deluge</span>",
     
+    "butterfly":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Butterfly.png' alt='butterfly_icon' />Butterfly</span>",
+
     "tremor":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Tremor.png' alt='tremor_icon' />Tremor</span>",
     
@@ -410,6 +425,9 @@ export const baseStatusEffect={
     "sp_loss_efficiency":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/SP_Loss_Efficiency.png' alt='sp_loss_efficiency_icon' />SP Loss Efficiency</span>",
     
+    "single_combat":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Single_Combat.png' alt='single_combat_icon' />Single Combat</span>",
+    
     "insight":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Insight.png' alt='insight_icon' />Insight</span>",
     
@@ -419,8 +437,20 @@ export const baseStatusEffect={
     "magic_bullet":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Magic_Bullet.png' alt='magic_bullet_icon' />Magic Bullet</span>",
     
+    "reload":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Reload.png' alt='reload_icon' />Reload</span>",
+
+    "the_living_&_the_departed":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/The_Living_&_The_Departed.png' alt='the_living_&_the_departed_icon' />The Living & The Departed</span>",
+
     "final_augment":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Final_Augment.png' alt='final_augment_icon' />Final Augment</span>",
+
+    "courier_trunk":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Courier_Trunk.png' alt='courier_trunk_icon' />Courier Trunk</span>",
+    
+    "strategic_r&r_mode":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Strategic_R&R_Mode.png' alt='strategic_r&r_mode_icon' />Strategic R&R Mode</span>",
     
     "makeshift_surgery":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Makeshift_Surgery.png' alt='makeshift_surgery_icon' />Makeshift Surgery</span>",
@@ -461,6 +491,9 @@ export const baseStatusEffect={
     "on_hit":
         "<span class='center-element' contenteditable='false' style='color:#94f140'>[On Hit]</span>",
     
+    "hit_after_clash_win":
+        "<span class='center-element' contenteditable='false' style='color:#94f140'>[Hit after Clash Win]</span>",
+
     "clash_win":
         "<span class='center-element' contenteditable='false' style='color:#ff7e00'>[Clash Win]</span>",
     
@@ -499,4 +532,15 @@ export const baseStatusEffect={
 
     "combat_start":
         "<span class='center-element' contenteditable='false' style='color:#94f140'>[Combat start]</span>",
+    
+    "clashable_counter":
+        "<span class='center-element' contenteditable='false' style='color:#ff7e00'>[Clashable Counter]</span>",
+
+    "clashable_defense":
+        "<span class='center-element' contenteditable='false' style='color:#ff7e00'>[Clashable Defense]</span>",
+
+    "before_use":
+        "<span class='center-element' contenteditable='false' style='color:#26cfff'>[Before Use]</span>",
+
+
 }

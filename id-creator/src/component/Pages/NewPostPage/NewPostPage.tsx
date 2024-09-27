@@ -73,19 +73,17 @@ export default function NewPostPage():ReactElement{
         setIsPosting(false)
     }
 
-    async function searchSave(searchName:string) {
-        if(searchName){
-            try {
-                const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/API/${saveMode==="Identity"?"SaveIDInfo":"SaveEGOInfo"}?userId=${loginUser.id}&searchName=${searchName}`,{
-                    credentials: "include"
-                })
-                const result = await response.json()
-                if(response.ok) setSaveList(result.response)
-            } catch (error) {
-                console.log(error)
-            }
+    async function searchSave(searchName:string="") {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/API/${saveMode==="Identity"?"SaveIDInfo":"SaveEGOInfo"}?userId=${loginUser.id}&searchName=${searchName}`,{
+                credentials: "include"
+            })
+            const result = await response.json()
+            if(response.ok) setSaveList(result.response)
+        } catch (error) {
+            console.log(error)
+            setSaveList([])
         }
-        else setSaveList([])
     }
 
     function chooseSave(saveUrl:string){
