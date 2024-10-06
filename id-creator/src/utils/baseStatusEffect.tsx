@@ -149,6 +149,9 @@ export const baseStatusEffect={
     "appetite":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Appetite.png' alt='appetite_icon' />Appetite</span>",
     
+    "defensive_stance":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Defensive_Stance.png' alt='defensive_stance_icon' />Defensive Stance</span>",
+    
     "charge_barrier":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Charge_Barrier.png' alt='charge_barrier_icon' />Charge Barrier</span>",
     
@@ -248,7 +251,7 @@ export const baseStatusEffect={
     "envy_power_down":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Envy_Power_Down.png' alt='envy_power_down_icon' />Envy Power Down</span>",
 
-        "slash_fragility":
+    "slash_fragility":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Slash_Fragility.png' alt='slash_fragility_icon' />Slash Fragility</span>",
     
     "pierce_fragility":
@@ -464,6 +467,12 @@ export const baseStatusEffect={
     "amplitude_entanglement":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Amplitude_Entanglement.png' alt='amplitude_entanglement_icon' />Amplitude Entanglement</span>",
 
+    "clashable_guard":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Clashable_Guard.png' alt='clashable_guard_icon' />Clashable Guard</span>",
+
+    "unbreakable_coin":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Unbreakable_Coin.png' alt='unbreakable_coin_icon' />Unbreakable Coin</span>",
+
     "coin_1":
         "<span class='center-element' contenteditable='false'><img class='status-icon' src='Images/status-effect/Coin_Effect_1.png' alt='coin-effect-1' /></span>",
     
@@ -535,9 +544,6 @@ export const baseStatusEffect={
     
     "clashable_counter":
         "<span class='center-element' contenteditable='false' style='color:#ff7e00'>[Clashable Counter]</span>",
-
-    "clashable_defense":
-        "<span class='center-element' contenteditable='false' style='color:#ff7e00'>[Clashable Defense]</span>",
 
     "before_use":
         "<span class='center-element' contenteditable='false' style='color:#26cfff'>[Before Use]</span>",

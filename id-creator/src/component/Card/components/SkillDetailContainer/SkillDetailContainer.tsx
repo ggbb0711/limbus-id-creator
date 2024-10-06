@@ -47,7 +47,7 @@ export default function SkillDetailContainer({skillDetails}:{skillDetails:(IOffe
                     currentColHeight+=25
                 }
             })
-            setCurrentWidth(colNo*450+(colNo-1)*25)
+            setCurrentWidth(colNo*500+(colNo-1)*25)
         }
     },[JSON.stringify(skillDetails)])
 

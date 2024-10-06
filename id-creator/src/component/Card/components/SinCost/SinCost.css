@@ -1,7 +1,7 @@
 .sin-cost-container{
     font-weight: 500;
     height: 100%;
-    width: min-content;
+    min-width: 100px;
 }
 
 .sin-cost{
