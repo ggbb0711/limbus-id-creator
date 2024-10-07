@@ -6,6 +6,11 @@
     box-sizing: border-box;
 }
 
+.skill-section-container:hover{
+    border: 1px yellow solid;
+    cursor: pointer;
+}
+
 .active-skill-container{
     min-height: 25%;
 }

@@ -1,0 +1,106 @@
+:root{
+    --tab-size:40px
+}
+
+.input-tab-side-container{
+    background-color: var(--red-brown);
+    border-right: 1px solid var(--brown-pale);
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 4px;
+}
+
+.input-tab-side-mini-container{
+    flex: 1;
+    overflow-y: auto;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none; 
+}
+
+.input-tab-side-mini-container:-webkit-scrollbar {
+    display: none;
+  }
+
+.input-tab-side{
+    width: var(--tab-size);
+    height: var(--tab-size);
+    padding: 4px;
+    cursor: pointer;
+    position: relative;
+}
+
+.input-tab-side:hover,.input-tab-side.active{
+    border: 1px solid var(--hover-border-color);
+}
+
+.input-tab-delete-icon{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    fill: white;
+    top: 0;
+    left: 0;
+}
+
+.input-tab-side>img{
+    width: 100%;
+    height: 100%;
+}
+
+.icon-side{
+    fill: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.input-tab-side-add-option-container{
+    position: absolute;
+    top: 0px;
+    left: var(--tab-size);
+    background-color: black;
+    width: 190px;
+    z-index: 3;
+    color: white;
+    cursor: pointer;
+}
+
+.input-tab-side-add-option{
+    padding: 6px 2px;
+    border-bottom: 1px solid var(--brown-pale);
+    border-right:  1px solid var(--brown-pale);
+    display: flex;
+    text-align: center;
+    gap: 4px;
+}
+
+.input-tab-side-add-option>img{
+    width: 20px;
+    height: 20px;
+}
+
+.input-tab-side-add-option:hover{
+    background-color: rgba(255, 255, 255, 0.519);
+}
+
+.icon-side:hover{
+    background-color: rgba(255, 255, 255, 0.519);
+    cursor: pointer;
+}
+
+.reset-icon-side{
+    justify-self: end;
+}
+
+@media screen and (max-width:500px) {
+    :root{
+        --tab-size:35px
+    }
+}

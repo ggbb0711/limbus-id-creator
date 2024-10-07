@@ -13,13 +13,19 @@ import InputMentalEffect from "component/InputTab/InputMentalEffect/InputMentalE
 import InputOffenseSkillPage from "component/InputTab/InputOffenseSkillPage/InputOffenseSkillPage";
 import InputPassivePage from "component/InputTab/InputPassivePage/InputPassivePage";
 import InputIdInfoStatPage from "component/InputTab/InputStatPage/InputIdInfoStatPage/InputIdInfoStatPage";
-import InputTabHeader from "component/InputTab/InputTabHeader/InputTabHeader";
+import InputTabSide from "component/InputTab/InputTabSide/InputTabSide";
 
 
-export default function InputTabIdInfoContainer():ReactElement{
+export default function InputTabIdInfoContainer({resetBtnHandler}:{resetBtnHandler:()=>void}):ReactElement{
     const [activeTab,setActiveTab]=useState(-1)
     const {idInfoValue,setIdInfoValue} = useIdInfoContext()
     const {statusEffect}=useStatusEffectContext()
+
+    function changeActiveTab(i:number){
+        if(activeTab===i) setActiveTab(-2)
+        else setActiveTab(i)
+    }
+    
 
     function deleteHandler(i:number){
         let newIndex=i
@@ -34,9 +40,9 @@ export default function InputTabIdInfoContainer():ReactElement{
         setIdInfoValue({...newIdInfoValue})
     }
 
-    function addTab(){
-        const newTab=new OffenseSkill()
-        setIdInfoValue({...idInfoValue,skillDetails:[...idInfoValue.skillDetails,newTab]})
+    function addTab(skill:IOffenseSkill|IDefenseSkill|IPassiveSkill|ICustomEffect|IMentalEffect){
+        setIdInfoValue({...idInfoValue,skillDetails:[...idInfoValue.skillDetails,skill]})
+        
     }
 
     function showInputPage(skill:IOffenseSkill|IDefenseSkill|IPassiveSkill|ICustomEffect|IMentalEffect|never,index:number){
@@ -100,7 +106,9 @@ export default function InputTabIdInfoContainer():ReactElement{
 
     useEffect(()=>{if(activeTab>=idInfoValue.skillDetails.length)setActiveTab(-1)},[JSON.stringify(idInfoValue.skillDetails)])
     return <div className="input-tab-container">
-        <InputTabHeader changeTab={setActiveTab} activeTab={activeTab} skillDetails={idInfoValue.skillDetails} addTab={addTab} deleteHandler={deleteHandler}/>
-        {(activeTab===-1)?<InputIdInfoStatPage/>:showInputPage(idInfoValue.skillDetails[activeTab],activeTab)}
+        {/* <InputTabHeader changeTab={setActiveTab} activeTab={activeTab} skillDetails={idInfoValue.skillDetails} addTab={addTab} deleteHandler={deleteHandler}/> */}
+        <InputTabSide sinnerIcon={idInfoValue.sinnerIcon} skillDetails={idInfoValue.skillDetails} changeTab={changeActiveTab} 
+        activeTab={activeTab} addTab={addTab} resetBtnHandler={resetBtnHandler}></InputTabSide>
+        {(activeTab!==-2)?(activeTab===-1)?<InputIdInfoStatPage/>:showInputPage(idInfoValue.skillDetails[activeTab],activeTab):<></>}
     </div>
 }

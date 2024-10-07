@@ -2,32 +2,16 @@
     width: 100vw;
     display: flex;
     position: relative;
+    overflow: hidden;
 }
 
 .preview-container{
-    width: 60%;
+    position: absolute;
 }
 
 @media screen and (max-width:800px) {
-    .editor-container{
-        flex-direction: column;
-        overflow: hidden;
-    }
-
-    .preview-container{
-        width: 100%;
-    }
-
     .editor-container>.input-tab-container{
-        position: absolute;
-        width: 100%;
+        max-width: 100%;
         opacity: 95%;
-        top: 1999px;
-        transition: all .2s;
-        z-index: 2;
-    }
-
-    .editor-container.show>.input-tab-container{
-        top: 0;
     }
 }

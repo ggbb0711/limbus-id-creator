@@ -71,13 +71,13 @@ function IdCardContext():ReactElement{
 
     return <StatusEffectProvider skillDetails={idInfoValue.skillDetails}>
         <div className={`editor-container ${isShown?"show":""}`} style={{height:height}}>
-            <InputTabIdInfoContainer/>
-            <ShowInputTab isShown={isShown} clickHandler={()=>setIsShown(!isShown)} />
-            <ResetBtn clickHandler={()=>setResetMenuActive(!isResetMenuActive)}/>
+            <InputTabIdInfoContainer resetBtnHandler={()=>setResetMenuActive(!isResetMenuActive)} />
+            {/* <ShowInputTab isShown={isShown} clickHandler={()=>setIsShown(!isShown)} /> */}
+            {/* <ResetBtn clickHandler={()=>setResetMenuActive(!isResetMenuActive)}/> */}
             <ResetMenu isActive={isResetMenuActive} setIsActive={setResetMenuActive} confirmFn={reset} />
             <div className='preview-container'>
                 <MapInteractionCSS>
-                    <IdCard ref={domRef} />
+                        <IdCard ref={domRef} />
                 </MapInteractionCSS>
             </div>
         </div>
