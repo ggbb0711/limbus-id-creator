@@ -14,35 +14,40 @@ import InputOffenseSkillPage from "component/InputTab/InputOffenseSkillPage/Inpu
 import InputPassivePage from "component/InputTab/InputPassivePage/InputPassivePage";
 import InputIdInfoStatPage from "component/InputTab/InputStatPage/InputIdInfoStatPage/InputIdInfoStatPage";
 import InputTabSide from "component/InputTab/InputTabSide/InputTabSide";
+import { useAlertContext } from "component/context/AlertContext";
 
 
-export default function InputTabIdInfoContainer({resetBtnHandler}:{resetBtnHandler:()=>void}):ReactElement{
-    const [activeTab,setActiveTab]=useState(-1)
+export default function InputTabIdInfoContainer({
+        resetBtnHandler,
+        activeTab,
+        changeActiveTab,
+    }:{
+        resetBtnHandler:()=>void,
+        activeTab:number,
+        changeActiveTab:(i:number)=>void}):ReactElement{
     const {idInfoValue,setIdInfoValue} = useIdInfoContext()
     const {statusEffect}=useStatusEffectContext()
+    const {addAlert} = useAlertContext()
 
-    function changeActiveTab(i:number){
-        if(activeTab===i) setActiveTab(-2)
-        else setActiveTab(i)
-    }
+
     
 
-    function deleteHandler(i:number){
-        let newIndex=i
-        if(newIndex<=activeTab){ 
-            setActiveTab(newIndex-1)
+    function deleteHandler(id:string){
+        for(let i = 0;i<idInfoValue.skillDetails.length;i++){
+            if(idInfoValue.skillDetails[i].inputId===id){
+                const newIdInfoValue={...idInfoValue}
+
+                newIdInfoValue.skillDetails.splice(i,1)
+                
+                setIdInfoValue({...newIdInfoValue})
+                if(i===activeTab&&i===idInfoValue.skillDetails.length) changeActiveTab(activeTab-1)
+            }
         }
-
-        const newIdInfoValue={...idInfoValue}
-
-        newIdInfoValue.skillDetails.splice(newIndex,1)
-        
-        setIdInfoValue({...newIdInfoValue})
     }
 
     function addTab(skill:IOffenseSkill|IDefenseSkill|IPassiveSkill|ICustomEffect|IMentalEffect){
-        setIdInfoValue({...idInfoValue,skillDetails:[...idInfoValue.skillDetails,skill]})
-        
+        if(idInfoValue.skillDetails.length>=20)addAlert("Failure","There can only be 20 or less skill/effects in an ID")
+        else setIdInfoValue({...idInfoValue,skillDetails:[...idInfoValue.skillDetails,skill]})
     }
 
     function showInputPage(skill:IOffenseSkill|IDefenseSkill|IPassiveSkill|ICustomEffect|IMentalEffect|never,index:number){
@@ -87,28 +92,27 @@ export default function InputTabIdInfoContainer({resetBtnHandler}:{resetBtnHandl
         
         switch(skill.type){
             case "OffenseSkill":{
-                return <InputOffenseSkillPage offenseSkill={skill as IOffenseSkill} keyWordList={statusEffect} changeSkill={changeSkill} changeSkillType={changeSkillType} />
+                return <InputOffenseSkillPage offenseSkill={skill as IOffenseSkill} keyWordList={statusEffect} changeSkill={changeSkill} changeSkillType={changeSkillType} deleteSkill={deleteHandler} collaspPage={()=>changeActiveTab(-2)}/>
             }
             case "DefenseSkill":{
-                return <InputDefenseSkillPage defenseSkill={skill as IDefenseSkill} keyWordList={statusEffect} changeSkill={changeSkill} changeSkillType={changeSkillType} />
+                return <InputDefenseSkillPage defenseSkill={skill as IDefenseSkill} keyWordList={statusEffect} changeSkill={changeSkill} changeSkillType={changeSkillType} deleteSkill={deleteHandler} collaspPage={()=>changeActiveTab(-2)}/>
             }
             case "PassiveSkill":{
-                return <InputPassivePage passiveSkill={skill as IPassiveSkill} keyWordList={statusEffect} changeSkill={changeSkill} changeSkillType={changeSkillType}/>
+                return <InputPassivePage passiveSkill={skill as IPassiveSkill} keyWordList={statusEffect} changeSkill={changeSkill} changeSkillType={changeSkillType} deleteSkill={deleteHandler} collaspPage={()=>changeActiveTab(-2)}/>
             }
             case "CustomEffect":{
-                return <InputCustomEffectPage customEffect={skill as ICustomEffect} keyWordList={statusEffect} changeSkill={changeSkill} changeSkillType={changeSkillType} />
+                return <InputCustomEffectPage customEffect={skill as ICustomEffect} keyWordList={statusEffect} changeSkill={changeSkill} changeSkillType={changeSkillType} deleteSkill={deleteHandler} collaspPage={()=>changeActiveTab(-2)}/>
             }
             case "MentalEffect":{
-                return <InputMentalEffect mentalEffect={skill as IMentalEffect} keyWordList={statusEffect} changeSkill={changeSkill} changeSkillType={changeSkillType} />
+                return <InputMentalEffect mentalEffect={skill as IMentalEffect} keyWordList={statusEffect} changeSkill={changeSkill} changeSkillType={changeSkillType} deleteSkill={deleteHandler} collaspPage={()=>changeActiveTab(-2)}/>
             }
         }
     }
 
-    useEffect(()=>{if(activeTab>=idInfoValue.skillDetails.length)setActiveTab(-1)},[JSON.stringify(idInfoValue.skillDetails)])
     return <div className="input-tab-container">
         {/* <InputTabHeader changeTab={setActiveTab} activeTab={activeTab} skillDetails={idInfoValue.skillDetails} addTab={addTab} deleteHandler={deleteHandler}/> */}
         <InputTabSide sinnerIcon={idInfoValue.sinnerIcon} skillDetails={idInfoValue.skillDetails} changeTab={changeActiveTab} 
         activeTab={activeTab} addTab={addTab} resetBtnHandler={resetBtnHandler}></InputTabSide>
-        {(activeTab!==-2)?(activeTab===-1)?<InputIdInfoStatPage/>:showInputPage(idInfoValue.skillDetails[activeTab],activeTab):<></>}
+        {(activeTab!==-2)?(activeTab===-1)?<InputIdInfoStatPage  collaspPage={()=>changeActiveTab(-2)}/>:showInputPage(idInfoValue.skillDetails[activeTab],activeTab):<></>}
     </div>
 }

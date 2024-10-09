@@ -1,0 +1,7 @@
+.hover-border-top{
+    border-top:1px solid var(--hover-border-color)
+}
+
+.hover-border-bottom{
+    border-bottom: 1px solid var(--hover-border-color);
+}

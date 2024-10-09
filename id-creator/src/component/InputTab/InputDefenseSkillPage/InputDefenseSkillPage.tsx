@@ -12,8 +12,21 @@ import DefenseTypeInput from "../Components/DefenseTypeInput/DefenseTypeInput";
 import EditableAutoCorrect from "../Components/EditableAutoCorrectInput/EditableAutoCorrect";
 import Delete_icon from "Icons/Delete_icon";
 import MainButton from "utils/MainButton/MainButton";
+import Arrow_down_icon from "Icons/Arrow_down_icon";
 
-export default function InputDefenseSkillPage({defenseSkill,keyWordList,changeSkill,changeSkillType}:{defenseSkill:IDefenseSkill,keyWordList:{[key:string]:string},changeSkill:(newInput:{[type:string]:string|number})=>void,changeSkillType:(newVal:string)=>void}):ReactElement{
+export default function InputDefenseSkillPage({
+    defenseSkill,
+    keyWordList,
+    changeSkill,
+    changeSkillType,
+    deleteSkill,
+    collaspPage}:{
+        defenseSkill:IDefenseSkill,
+        keyWordList:{[key:string]:string},
+        changeSkill:(newInput:{[type:string]:string|number})=>void,
+        changeSkillType:(newVal:string)=>void,
+        deleteSkill:(inputID:string)=>void,
+        collaspPage:()=>void}):ReactElement{
     const {onChangeFileWithName,onChangeDropDownMenu,onChangeInput,onChangeAutoCorrectInput}=useInputs(defenseSkill as any,changeSkill)
 
     const{
@@ -30,6 +43,7 @@ export default function InputDefenseSkillPage({defenseSkill,keyWordList,changeSk
         coinPow,
         skillEffect,
         skillLabel,
+        inputId,
         type
     }=defenseSkill
 
@@ -37,6 +51,14 @@ export default function InputDefenseSkillPage({defenseSkill,keyWordList,changeSk
     
 
     return <div className="input-page input-defense-skill-page" style={{background:`var(--${skillAffinity}-input-page)`}}>
+        <div className="input-page-icon-container">
+            <div className="collasp-icon" onClick={collaspPage}>
+                <Arrow_down_icon></Arrow_down_icon>
+            </div>
+            <div className="delete-icon" onClick={()=>deleteSkill(inputId)}>
+                <Delete_icon></Delete_icon>
+            </div>
+        </div>
         <ChangeInputType changeSkillType={changeSkillType} type={type}/>
         {skillImage?
             <div className="input-group-container">

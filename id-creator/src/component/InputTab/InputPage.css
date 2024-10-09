@@ -10,9 +10,37 @@
     align-items: center;
     overflow-y: auto;
     color: white;
-    gap: 12px
+    gap: 12px;
+    position: relative;
 }
 
+.input-page-icon-container{
+    fill: white;
+    position: absolute;
+    top: 7px;
+    right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+}
+
+.delete-icon,.collasp-icon{
+    cursor: pointer;
+}
+
+.delete-icon:hover{
+    fill:red
+}
+
+.collasp-icon{
+    transform: rotate(90deg);
+    scale: 1.2;
+}
+
+.collasp-icon:hover{
+    fill:green
+}
 
 .input-group-container{
     width: 100%;

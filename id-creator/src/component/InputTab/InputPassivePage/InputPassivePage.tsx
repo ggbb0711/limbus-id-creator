@@ -7,10 +7,24 @@ import DropDown from "component/DropDown/DropDown";
 import "../InputPage.css"
 import SinAffinityInput from "../Components/SinAffinityInput/SinAffinityInput";
 import EditableAutoCorrect from "../Components/EditableAutoCorrectInput/EditableAutoCorrect";
+import Delete_icon from "Icons/Delete_icon";
+import Arrow_down_icon from "Icons/Arrow_down_icon";
 
 
 
-export default function InputPassivePage({passiveSkill,keyWordList,changeSkill,changeSkillType}:{passiveSkill:IPassiveSkill,keyWordList:{[key:string]:string},changeSkill:(newInput:{[type:string]:string|number})=>void,changeSkillType:(newVal:string)=>void}):ReactElement{
+export default function InputPassivePage({
+    passiveSkill,
+    keyWordList,
+    changeSkill,
+    changeSkillType,
+    deleteSkill,
+    collaspPage}:{
+        passiveSkill:IPassiveSkill,
+        keyWordList:{[key:string]:string},
+        changeSkill:(newInput:{[type:string]:string|number})=>void,
+        changeSkillType:(newVal:string)=>void,
+        deleteSkill:(inputID:string)=>void,
+        collaspPage:()=>void}):ReactElement{
     const {onChangeDropDownMenu,onChangeInput,onChangeAutoCorrectInput}=useInputs(passiveSkill as any,changeSkill)
 
     const {
@@ -37,9 +51,18 @@ export default function InputPassivePage({passiveSkill,keyWordList,changeSkill,c
         },
         req,
         type,
+        inputId
     } = passiveSkill
 
     return <div className="input-page input-passive-page">
+        <div className="input-page-icon-container">
+            <div className="collasp-icon" onClick={collaspPage}>
+                <Arrow_down_icon></Arrow_down_icon>
+            </div>
+            <div className="delete-icon" onClick={()=>deleteSkill(inputId)}>
+                <Delete_icon></Delete_icon>
+            </div>
+        </div>
         <div className="input-group-container">
             <ChangeInputType changeSkillType={changeSkillType} type={type}/>
         </div>

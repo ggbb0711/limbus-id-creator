@@ -10,8 +10,21 @@ import DamageTypeInput from "../Components/DamageTypeInput/DamageTypeInput";
 import EditableAutoCorrect from "../Components/EditableAutoCorrectInput/EditableAutoCorrect";
 import MainButton from "utils/MainButton/MainButton";
 import Delete_icon from "Icons/Delete_icon";
+import Arrow_down_icon from "Icons/Arrow_down_icon";
 
-export default function InputOffenseSkillPage({offenseSkill,keyWordList,changeSkill,changeSkillType}:{offenseSkill:IOffenseSkill,keyWordList:{[key:string]:string},changeSkill:(newInput:{[type:string]:string|number})=>void,changeSkillType:(newVal:string)=>void}):ReactElement{
+export default function InputOffenseSkillPage({
+        offenseSkill,
+        keyWordList,
+        changeSkill,
+        changeSkillType,
+        deleteSkill,
+        collaspPage}:{
+            offenseSkill:IOffenseSkill,
+            keyWordList:{[key:string]:string},
+            changeSkill:(newInput:{[type:string]:string|number})=>void,
+            changeSkillType:(newVal:string)=>void,
+            deleteSkill:(skillID:string)=>void,
+            collaspPage:()=>void}):ReactElement{
     const {onChangeFileWithName,onChangeDropDownMenu,onChangeInput,onChangeAutoCorrectInput}=useInputs(offenseSkill as any,changeSkill)
 
     const{
@@ -33,6 +46,14 @@ export default function InputOffenseSkillPage({offenseSkill,keyWordList,changeSk
     
 
     return <div className="input-page input-offense-skill-page" style={{background:`var(--${skillAffinity}-input-page)`}}>
+        <div className="input-page-icon-container">
+            <div className="collasp-icon" onClick={collaspPage}>
+                <Arrow_down_icon></Arrow_down_icon>
+            </div>
+            <div className="delete-icon" onClick={()=>deleteSkill(inputId)}>
+                <Delete_icon></Delete_icon>
+            </div>
+        </div>
         <ChangeInputType changeSkillType={changeSkillType} type={type}/>
         {skillImage?
             <div className="input-group-container">

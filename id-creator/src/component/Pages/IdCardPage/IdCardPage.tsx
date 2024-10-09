@@ -14,6 +14,7 @@ import { useSaveMenuContext } from 'component/SaveMenu/SaveMenu';
 import ResetBtn from 'utils/ResetBtn/ResetBtn';
 import ResetMenu from 'utils/ResetMenu/ResetMenu';
 import { IdInfo } from 'Interfaces/IIdInfo';
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch"; 
 
 
 
@@ -35,8 +36,13 @@ function IdCardContext():ReactElement{
     const domRef=useRef(null)
     const [query] = useSearchParams()
     const {setDomRef} = useRefDownloadContext()
+    const [activeTab,setActiveTab]=useState(-1)
 
-    
+    function changeActiveTab(i:number){
+        if(activeTab===i) setActiveTab(-2)
+        else setActiveTab(i)
+    }
+
     useEffect(()=>{
         //Get the last save id
         const lastSave = JSON.parse(localStorage.getItem("currIdSave"))
@@ -71,14 +77,15 @@ function IdCardContext():ReactElement{
 
     return <StatusEffectProvider skillDetails={idInfoValue.skillDetails}>
         <div className={`editor-container ${isShown?"show":""}`} style={{height:height}}>
-            <InputTabIdInfoContainer resetBtnHandler={()=>setResetMenuActive(!isResetMenuActive)} />
+            <InputTabIdInfoContainer 
+                resetBtnHandler={()=>setResetMenuActive(!isResetMenuActive)}
+                activeTab={activeTab}
+                changeActiveTab={changeActiveTab} />
             {/* <ShowInputTab isShown={isShown} clickHandler={()=>setIsShown(!isShown)} /> */}
             {/* <ResetBtn clickHandler={()=>setResetMenuActive(!isResetMenuActive)}/> */}
             <ResetMenu isActive={isResetMenuActive} setIsActive={setResetMenuActive} confirmFn={reset} />
             <div className='preview-container'>
-                <MapInteractionCSS>
-                        <IdCard ref={domRef} />
-                </MapInteractionCSS>
+                <IdCard ref={domRef} changeActiveTab={changeActiveTab}/>
             </div>
         </div>
     </StatusEffectProvider>

@@ -81,19 +81,19 @@ export default function InputTabEgoInfoContainer():ReactElement{
 
         switch(skill.type){
             case "OffenseSkill":{
-                return <InputOffenseSkillPage offenseSkill={skill as IOffenseSkill} keyWordList={statusEffect} changeSkill={changeSkill} changeSkillType={changeSkillType} />
+                // return <InputOffenseSkillPage offenseSkill={skill as IOffenseSkill} keyWordList={statusEffect} changeSkill={changeSkill} changeSkillType={changeSkillType} />
             }
             case "DefenseSkill":{
-                return <InputDefenseSkillPage defenseSkill={skill as IDefenseSkill} keyWordList={statusEffect} changeSkill={changeSkill} changeSkillType={changeSkillType} />
+                // return <InputDefenseSkillPage defenseSkill={skill as IDefenseSkill} keyWordList={statusEffect} changeSkill={changeSkill} changeSkillType={changeSkillType} />
             }
             case "PassiveSkill":{
-                return <InputPassivePage passiveSkill={skill as IPassiveSkill} keyWordList={statusEffect} changeSkill={changeSkill} changeSkillType={changeSkillType}/>
+                // return <InputPassivePage passiveSkill={skill as IPassiveSkill} keyWordList={statusEffect} changeSkill={changeSkill} changeSkillType={changeSkillType}/>
             }
             case "CustomEffect":{
-                return <InputCustomEffectPage customEffect={skill as ICustomEffect} keyWordList={statusEffect} changeSkill={changeSkill} changeSkillType={changeSkillType} />
+                // return <InputCustomEffectPage customEffect={skill as ICustomEffect} keyWordList={statusEffect} changeSkill={changeSkill} changeSkillType={changeSkillType} />
             }
             case "MentalEffect":{
-                return <InputMentalEffect mentalEffect={skill as IMentalEffect} keyWordList={statusEffect} changeSkill={changeSkill} changeSkillType={changeSkillType} />
+                // return <InputMentalEffect mentalEffect={skill as IMentalEffect} keyWordList={statusEffect} changeSkill={changeSkill} changeSkillType={changeSkillType} />
             }
         }
     }
@@ -101,6 +101,6 @@ export default function InputTabEgoInfoContainer():ReactElement{
     useEffect(()=>{if(activeTab>=EgoInfoValue.skillDetails.length)setActiveTab(-1)},[JSON.stringify(EgoInfoValue.skillDetails)])
     return <div className="input-tab-container">
         <InputTabHeader changeTab={setActiveTab} activeTab={activeTab} skillDetails={EgoInfoValue.skillDetails} addTab={addTab} deleteHandler={deleteHandler}/>
-        {(activeTab===-1)?<InputEgoInfoStatPage/>:showInputPage(EgoInfoValue.skillDetails[activeTab],activeTab)}
+        {/* {(activeTab===-1)?<InputEgoInfoStatPage/>:showInputPage(EgoInfoValue.skillDetails[activeTab],activeTab)} */}
     </div>
 }

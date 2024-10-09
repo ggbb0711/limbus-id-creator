@@ -10,9 +10,14 @@ import DefenseSinnerSkill from "component/Card/sections/DefenseSinnerSkill/Defen
 import MentalSinnerEffect from "component/Card/sections/MentalSinnerEffect/MentalSinnerEffect";
 import OffenseSinnerSkill from "component/Card/sections/OffenseSinnerSkill/OffenseSinnerSkill";
 import PassiveSinnerSkill from "component/Card/sections/PassiveSinnerSkill/PassiveSinnerSkill";
+import DragAndDroppableSkill from "../DragAndDroppableSkill/DragAndDroppableSkill";
 
 
-export default function SkillDetailContainer({skillDetails}:{skillDetails:(IOffenseSkill|IDefenseSkill|IPassiveSkill|ICustomEffect|IMentalEffect|never)[]}):ReactElement{
+export default function SkillDetailContainer({skillDetails,draggingHandler,changeActiveTab}:{
+        skillDetails:(IOffenseSkill|IDefenseSkill|IPassiveSkill|ICustomEffect|IMentalEffect|never)[],
+        draggingHandler:(isDragging:boolean)=>void,
+        changeActiveTab:(i:number)=>void
+    }):ReactElement{
     const containerRef=useRef<HTMLDivElement>(null)    
     const [currentWidth,setCurrentWidth]=useState(700)
     
@@ -20,13 +25,19 @@ export default function SkillDetailContainer({skillDetails}:{skillDetails:(IOffe
     function printSinnerSkill(skill:((IOffenseSkill|IDefenseSkill|IPassiveSkill|ICustomEffect|IMentalEffect|never))):ReactElement{
         
         const skillType={
-            OffenseSkill:<OffenseSinnerSkill key={skill.inputId} offenseSkill={skill as IOffenseSkill}/>,
-            DefenseSkill:<DefenseSinnerSkill key={skill.inputId} defenseSkill={skill as IDefenseSkill}/>,
-            PassiveSkill:<PassiveSinnerSkill key={skill.inputId} passiveSkill={skill as IPassiveSkill} />,
-            CustomEffect:<CustomSinnerEffect key={skill.inputId} customEffect={skill as ICustomEffect} />,
-            MentalEffect:<MentalSinnerEffect key={skill.inputId} mentalEffect={skill as ICustomEffect} />
+            OffenseSkill:<OffenseSinnerSkill offenseSkill={skill as IOffenseSkill}/>,
+            DefenseSkill:<DefenseSinnerSkill defenseSkill={skill as IDefenseSkill}/>,
+            PassiveSkill:<PassiveSinnerSkill passiveSkill={skill as IPassiveSkill} />,
+            CustomEffect:<CustomSinnerEffect customEffect={skill as ICustomEffect} />,
+            MentalEffect:<MentalSinnerEffect mentalEffect={skill as ICustomEffect} />
         }
-        return skillType[skill.type]
+        return <DragAndDroppableSkill
+            skillId={skill.inputId}
+            dropHandler={(item) => console.log(item)}
+            isDraggingHandler={draggingHandler}
+        >
+            {skillType[skill.type]}
+        </DragAndDroppableSkill>
     }
 
     //For some reason the div doesn't expan when the children wrap
@@ -54,7 +65,7 @@ export default function SkillDetailContainer({skillDetails}:{skillDetails:(IOffe
     return(
         <div className="skill-detail-container" ref={containerRef} style={{minWidth:Math.max(currentWidth,700)}}>
             {skillDetails.map((skill:((IOffenseSkill|IDefenseSkill|IPassiveSkill|IMentalEffect|ICustomEffect|never)),i:number)=>
-                printSinnerSkill(skill)
+                <div key={skill.inputId} onClick={()=>changeActiveTab(i)}>{printSinnerSkill(skill)}</div>
             )}
         </div>
     )

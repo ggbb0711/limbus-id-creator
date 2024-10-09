@@ -10,7 +10,8 @@ import UserPage from 'component/Pages/UserPage/UserPage';
 import React, { ReactElement, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, json, RouterProvider } from 'react-router-dom';
-
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 const root = createRoot(document.getElementById('root')!);
 
@@ -62,7 +63,9 @@ function App():ReactElement{
         }
     },[])
     return <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
-        <RouterProvider router={router}/>
+        <DndProvider backend={HTML5Backend}>
+            <RouterProvider router={router}/>
+        </DndProvider>
     </GoogleOAuthProvider> 
 }
 

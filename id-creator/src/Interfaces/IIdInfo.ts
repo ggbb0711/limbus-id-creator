@@ -59,7 +59,6 @@ export class IdInfo implements IIdInfo{
     ];
 
     public constructor(init?: Partial<IIdInfo>){
-        console.log(this)
         Object.assign(this,init)
     }
 }

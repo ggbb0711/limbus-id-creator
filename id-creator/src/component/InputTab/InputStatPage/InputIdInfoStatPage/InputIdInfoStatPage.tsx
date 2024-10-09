@@ -9,9 +9,10 @@ import SinnerSplashArtRepositionInput from "../SinnerSplashArtRepositionInput/Si
 import SinnerRarityIconInput from "../SinnerRarityInput/SinnerRarityInput";
 import Delete_icon from "Icons/Delete_icon";
 import MainButton from "utils/MainButton/MainButton";
+import Arrow_down_icon from "Icons/Arrow_down_icon";
 
 
-export default function InputIdInfoStatPage():ReactElement{
+export default function InputIdInfoStatPage({collaspPage}:{collaspPage:()=>void}):ReactElement{
     const {idInfoValue,setIdInfoValue} = useIdInfoContext()
     
     const {
@@ -66,6 +67,11 @@ export default function InputIdInfoStatPage():ReactElement{
     }
 
     return <div className="input-page input-stat-page">
+        <div className="input-page-icon-container">
+            <div className="collasp-icon" onClick={collaspPage}>
+                <Arrow_down_icon></Arrow_down_icon>
+            </div>
+        </div>
         <div className="sinner-icon-input-container">
             <p>Pick the sinner icon: </p>
             <SinnerIconInput/>

@@ -8,8 +8,21 @@ import "../InputPage.css"
 import EditableAutoCorrect from "../Components/EditableAutoCorrectInput/EditableAutoCorrect";
 import Delete_icon from "Icons/Delete_icon";
 import MainButton from "utils/MainButton/MainButton";
+import Arrow_down_icon from "Icons/Arrow_down_icon";
 
-export default function InputCustomEffectPage({customEffect,keyWordList,changeSkill,changeSkillType}:{customEffect:ICustomEffect,keyWordList:{[key:string]:string},changeSkill:(newInput:{[type:string]:string|number})=>void,changeSkillType:(newVal:string)=>void}):ReactElement{
+export default function InputCustomEffectPage({
+    customEffect,
+    keyWordList,
+    changeSkill,
+    changeSkillType,
+    deleteSkill,
+    collaspPage}:{
+        customEffect:ICustomEffect,
+        keyWordList:{[key:string]:string},
+        changeSkill:(newInput:{[type:string]:string|number})=>void,
+        changeSkillType:(newVal:string)=>void,
+        deleteSkill:(inputID:string)=>void,
+        collaspPage:()=>void}):ReactElement{
     const {onChangeInput,onChangeFileWithName,onChangeAutoCorrectInput}=useInputs(customEffect as any,changeSkill)
 
     const{
@@ -17,10 +30,19 @@ export default function InputCustomEffectPage({customEffect,keyWordList,changeSk
         effectColor,
         effect,
         customImg,
-        type
+        type,
+        inputId
     } = customEffect
     
     return <div className="input-page">
+        <div className="input-page-icon-container">
+            <div className="collasp-icon" onClick={collaspPage}>
+                <Arrow_down_icon></Arrow_down_icon>
+            </div>
+            <div className="delete-icon" onClick={()=>deleteSkill(inputId)}>
+                <Delete_icon></Delete_icon>
+            </div>
+        </div>
         <ChangeInputType changeSkillType={changeSkillType} type={type}/>
         {customImg?
             <div className="input-group-container">

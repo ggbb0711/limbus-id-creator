@@ -4,14 +4,36 @@ import React from "react";
 import { ReactElement } from "react";
 import ChangeInputType from "../Components/ChangeInputType/ChangeInputType";
 import EditableAutoCorrect from "../Components/EditableAutoCorrectInput/EditableAutoCorrect";
+import Delete_icon from "Icons/Delete_icon";
+import Arrow_down_icon from "Icons/Arrow_down_icon";
 
 
-export default function InputMentalEffect({mentalEffect,keyWordList,changeSkill,changeSkillType}:{mentalEffect:IMentalEffect,keyWordList:{[key:string]:string},changeSkill:(newInput:{[type:string]:string|number})=>void,changeSkillType:(newVal:string)=>void}):ReactElement{
+export default function InputMentalEffect({
+    mentalEffect,
+    keyWordList,
+    changeSkill,
+    changeSkillType,
+    deleteSkill,
+    collaspPage}:{
+        mentalEffect:IMentalEffect,
+        keyWordList:{[key:string]:string},
+        changeSkill:(newInput:{[type:string]:string|number})=>void,
+        changeSkillType:(newVal:string)=>void,
+        deleteSkill:(inputID:string)=>void,
+        collaspPage:()=>void}):ReactElement{
     const {onChangeAutoCorrectInput} = useInputs(mentalEffect as any,changeSkill)
     
-    const {effect,type} = mentalEffect
+    const {effect,type,inputId} = mentalEffect
 
     return <div className="input-page">
+        <div className="input-page-icon-container">
+            <div className="collasp-icon" onClick={collaspPage}>
+                <Arrow_down_icon></Arrow_down_icon>
+            </div>
+            <div className="delete-icon" onClick={()=>deleteSkill(inputId)}>
+                <Delete_icon></Delete_icon>
+            </div>
+        </div>
         <ChangeInputType changeSkillType={changeSkillType} type={type}/>
         <div className="input-group-container">
             <div className="input-container">

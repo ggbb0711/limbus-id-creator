@@ -26,7 +26,7 @@ export  const EgoCard=forwardRef<HTMLDivElement>((props,ref):ReactElement=>{
                         <EgoHeader/>
                     </div> 
                     <div className="center-element">
-                        <SkillDetailContainer skillDetails={EgoInfoValue.skillDetails}/>
+                        {/* <SkillDetailContainer skillDetails={EgoInfoValue.skillDetails}/> */}
                         <SinCost sinCost={EgoInfoValue.sinCost}/>
                     </div>
                     <SinResistant sinResistant={EgoInfoValue.sinResistant}/>
