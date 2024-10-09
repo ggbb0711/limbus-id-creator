@@ -13,7 +13,7 @@ const CustomSinnerEffect = forwardRef<HTMLDivElement, { customEffect: ICustomEff
     } = customEffect;
 
     return (
-        <div ref={ref} className="skill-section-container custom-effect-container">
+        <div ref={ref} className="custom-effect-container">
             <div className="skill-section">
                 <div>
                     <div style={{ color: effectColor }} className="cutom-effect-header">

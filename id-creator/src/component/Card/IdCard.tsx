@@ -1,5 +1,5 @@
 import { useIdInfoContext } from "component/context/IdInfoContext";
-import React, { forwardRef, useState } from "react";
+import React, { forwardRef, useCallback, useEffect, useMemo, useState } from "react";
 import { ReactElement } from "react";
 import './styles/Card.css'
 import SinnerStats from "./components/SinnerStats/SinnerStats";
@@ -7,12 +7,40 @@ import SinnerSplashArt from "./components/SinnerSplashArt/SinnerSplashArt";
 import IdHeader from "./components/CardHeader/IdHeader";
 import SkillDetailContainer from "./components/SkillDetailContainer/SkillDetailContainer";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch"; 
-import { isDisabled } from "@testing-library/user-event/dist/utils";
+import { ICustomEffect } from "Interfaces/CustomEffect/ICustomEffect";
+import { IDefenseSkill } from "Interfaces/DefenseSkill/IDefenseSkill";
+import { IMentalEffect } from "Interfaces/MentalEffect/IMentalEffect";
+import { IOffenseSkill } from "Interfaces/OffenseSkill/IOffenseSkill";
+import { IPassiveSkill } from "Interfaces/PassiveSkill/IPassiveSkill";
 
 
 export  const IdCard=forwardRef<HTMLDivElement,{changeActiveTab:(i:number)=>void}>(({changeActiveTab},ref):ReactElement=>{
     const [isDragging,setIsDragging] = useState(false)
-    const {idInfoValue}=useIdInfoContext()
+    const {idInfoValue,setIdInfoValue}=useIdInfoContext()
+
+
+    function moveSkill(fromSkillID:string,toSkillID:string){
+        //Do nothing if they are the same id
+        if(fromSkillID!=toSkillID){
+            const newSkillDetails = [...idInfoValue.skillDetails]
+            let skill;
+            // //Find and delete the fromSkill
+            for(let i=0;i<newSkillDetails.length;i++){
+                if(newSkillDetails[i].inputId===fromSkillID){
+                    skill=newSkillDetails[i]
+                    newSkillDetails.splice(i,1)
+                    break;
+                }
+            }
+            for(let k=0;k<newSkillDetails.length;k++){
+                if(newSkillDetails[k].inputId===toSkillID){
+                    newSkillDetails.splice(k,0,skill)
+                    break;
+                }
+            }
+            setIdInfoValue((oldIdInfoValue)=> ({...oldIdInfoValue,skillDetails:newSkillDetails}))
+        }
+    }
 
 
     return(
@@ -36,7 +64,7 @@ export  const IdCard=forwardRef<HTMLDivElement,{changeActiveTab:(i:number)=>void
                                 <IdHeader/>
                             </div>
                             <div className="center-element" style={{height:"100%"}}>
-                                <SkillDetailContainer skillDetails={idInfoValue.skillDetails} draggingHandler={(isDragging)=>setIsDragging(isDragging)} changeActiveTab={changeActiveTab}/>
+                                <SkillDetailContainer moveSkill={moveSkill} skillDetails={idInfoValue.skillDetails} draggingHandler={(isDragging)=>setIsDragging(isDragging)} changeActiveTab={changeActiveTab}/>
                             </div> 
                         </div>
                     </div>
