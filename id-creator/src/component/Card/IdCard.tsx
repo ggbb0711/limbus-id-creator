@@ -24,18 +24,23 @@ export  const IdCard=forwardRef<HTMLDivElement,{changeActiveTab:(i:number)=>void
         if(fromSkillID!=toSkillID){
             const newSkillDetails = [...idInfoValue.skillDetails]
             let skill;
+            let skillIndex=-1
             // //Find and delete the fromSkill
             for(let i=0;i<newSkillDetails.length;i++){
                 if(newSkillDetails[i].inputId===fromSkillID){
                     skill=newSkillDetails[i]
+                    skillIndex=i
                     newSkillDetails.splice(i,1)
                     break;
                 }
             }
-            for(let k=0;k<newSkillDetails.length;k++){
-                if(newSkillDetails[k].inputId===toSkillID){
-                    newSkillDetails.splice(k,0,skill)
-                    break;
+            if(skill){
+                for(let k=0;k<newSkillDetails.length;k++){
+                    if(newSkillDetails[k].inputId===toSkillID){
+                        if(skillIndex<=k)newSkillDetails.splice(k+1,0,skill)
+                        else newSkillDetails.splice(k,0,skill)
+                        break;
+                    }
                 }
             }
             setIdInfoValue((oldIdInfoValue)=> ({...oldIdInfoValue,skillDetails:newSkillDetails}))
