@@ -11,6 +11,7 @@ import MentalSinnerEffect from "component/Card/sections/MentalSinnerEffect/Menta
 import OffenseSinnerSkill from "component/Card/sections/OffenseSinnerSkill/OffenseSinnerSkill";
 import PassiveSinnerSkill from "component/Card/sections/PassiveSinnerSkill/PassiveSinnerSkill";
 import DragAndDroppableSkill from "../DragAndDroppableSkill/DragAndDroppableSkill";
+import DragAndDroppableSkillPreviewLayer from "../DragAndDroppableSkill/DragAndDroppableSkillPreviewLayer";
 
 
 export default function SkillDetailContainer({skillDetails,draggingHandler,changeActiveTab,moveSkill}:{
@@ -34,8 +35,8 @@ export default function SkillDetailContainer({skillDetails,draggingHandler,chang
         };
         return (
             <DragAndDroppableSkill
-                skillId={skill.inputId}
-                dropHandler={(item) => moveSkill(item.id, skill.inputId)}
+                skill={skill}
+                dropHandler={(item) => moveSkill(item.skill.inputId, skill.inputId)}
                 isDraggingHandler={draggingHandler}
             >
                 {skillType[skill.type]}
@@ -43,7 +44,6 @@ export default function SkillDetailContainer({skillDetails,draggingHandler,chang
         );
     }, [moveSkill, skillDetails, draggingHandler])
 
-    useEffect(()=>{console.log("change print skill")},[printSinnerSkill])
     //For some reason the div doesn't expan when the children wrap
     //So i have to manually expand it
     useEffect(()=>{
@@ -69,7 +69,7 @@ export default function SkillDetailContainer({skillDetails,draggingHandler,chang
     return(
         <div className="skill-detail-container" ref={containerRef} style={{minWidth:Math.max(currentWidth,700)}}>
             {skillDetails.map((skill:((IOffenseSkill|IDefenseSkill|IPassiveSkill|IMentalEffect|ICustomEffect|never)),i:number)=>
-                <div className="skill-section-container" key={skill.inputId} onClick={()=>changeActiveTab(i)}>
+                <div key={skill.inputId} onClick={()=>changeActiveTab(i)}>
                     {(printSinnerSkill(skill))}
                 </div>
             )}

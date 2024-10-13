@@ -20,6 +20,7 @@
     "react-contenteditable": "^3.3.7",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
+    "react-dnd-touch-backend": "^16.0.1",
     "react-dom": "^18.2.0",
     "react-input-color": "^4.0.1",
     "react-map-interaction": "^2.1.0",

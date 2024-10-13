@@ -36,7 +36,7 @@ const OffenseSinnerSkill = forwardRef<HTMLDivElement, { offenseSkill: IOffenseSk
     }, []);
 
     return (
-        <div className="active-skill-container" >
+        <div className="skill-section-container active-skill-container" >
             <p className="skill-label">{skillLabel}</p>
             <div className="skill-section">
                 <div>

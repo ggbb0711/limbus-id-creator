@@ -14,7 +14,7 @@ const PassiveSinnerSkill = forwardRef<HTMLDivElement, { passiveSkill: IPassiveSk
         resCost
     } = passiveSkill;
     return (
-        <div ref={ref}>
+        <div className="skill-section-container" ref={ref}>
             <p className="skill-label">{skillLabel}</p>
             <div className="skill-section">
                 <div>

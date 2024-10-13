@@ -1,10 +1,15 @@
 import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { DropTargetMonitor, useDrag, useDrop } from "react-dnd";
 import "./DragAndDroppableSkill.css"
+import { ICustomEffect } from "Interfaces/CustomEffect/ICustomEffect";
+import { IDefenseSkill } from "Interfaces/DefenseSkill/IDefenseSkill";
+import { IMentalEffect } from "Interfaces/MentalEffect/IMentalEffect";
+import { IOffenseSkill } from "Interfaces/OffenseSkill/IOffenseSkill";
+import { IPassiveSkill } from "Interfaces/PassiveSkill/IPassiveSkill";
 
 
-export default function DragAndDroppableSkill({skillId,isDraggingHandler,dropHandler,children}:{
-        skillId:string,
+export default function DragAndDroppableSkill({skill,isDraggingHandler,dropHandler,children}:{
+        skill:IOffenseSkill | IDefenseSkill | IPassiveSkill | ICustomEffect | IMentalEffect,
         isDraggingHandler:(isDragging:boolean)=>void,
         dropHandler:(item:any)=>void,
         children:ReactNode
@@ -14,12 +19,17 @@ export default function DragAndDroppableSkill({skillId,isDraggingHandler,dropHan
     const [_,drag] = useDrag(()=>({
         type:"SinnerSkill",
         item:{
-            id:skillId
+            skill
         }
-    }),[])
-    const [{},drop] = useDrop(()=>({
+    }),[skill]) 
+    const [{isOver},drop] = useDrop(()=>({
         accept:"SinnerSkill",
         drop:dropHandler,
+        collect(monitor) {
+            return {
+                isOver:monitor.isOver()
+            }
+        },
     }),[dropHandler])
 
     // useEffect(()=>{
@@ -33,11 +43,15 @@ export default function DragAndDroppableSkill({skillId,isDraggingHandler,dropHan
 
 
     
-    return <div ref={ref}
-        onMouseDown={()=>isDraggingHandler(true)}
-        onDragEnd={()=>isDraggingHandler(false)}
-        onMouseUp={()=>isDraggingHandler(false)}
+    return (
+        <div ref={ref}
+            onMouseDown={()=>isDraggingHandler(true)}
+            onDragEnd={()=>isDraggingHandler(false)}
+            onMouseUp={()=>isDraggingHandler(false)}
+            className={isOver?"hover-border":""}
+            
         >
-        {children}
-    </div>
+            {children}
+        </div>
+    )
 }

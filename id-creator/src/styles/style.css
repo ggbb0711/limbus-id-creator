@@ -248,6 +248,10 @@ button{
     animation: prixClipFix 2s linear infinite ;
 }
 
+.contents-container{
+    display: contents;
+}
+
 .warning-message{
     font-size: 10px;
     color: red;

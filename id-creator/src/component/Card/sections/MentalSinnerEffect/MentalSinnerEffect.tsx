@@ -9,7 +9,7 @@ const MentalSinnerEffect = forwardRef<HTMLDivElement, { mentalEffect: IMentalEff
     const { effect } = mentalEffect;
 
     return (
-        <div ref={ref}>
+        <div className="skill-section-container" ref={ref}>
             <p className="skill-label">SANITY</p>
             <div className="skill-section">
                 <div>

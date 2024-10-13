@@ -11,7 +11,8 @@ import React, { ReactElement, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, json, RouterProvider } from 'react-router-dom';
 import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
+import { TouchBackend } from 'react-dnd-touch-backend'
+import DragAndDroppableSkillPreviewLayer from 'component/Card/components/DragAndDroppableSkill/DragAndDroppableSkillPreviewLayer';
 
 const root = createRoot(document.getElementById('root')!);
 
@@ -63,7 +64,9 @@ function App():ReactElement{
         }
     },[])
     return <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
-        <DndProvider backend={HTML5Backend}>
+        <DndProvider backend={TouchBackend}
+            options={{ enableMouseEvents: true }}>
+            <DragAndDroppableSkillPreviewLayer/>
             <RouterProvider router={router}/>
         </DndProvider>
     </GoogleOAuthProvider> 
