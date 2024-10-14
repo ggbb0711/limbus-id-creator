@@ -7,11 +7,6 @@ import SinnerSplashArt from "./components/SinnerSplashArt/SinnerSplashArt";
 import IdHeader from "./components/CardHeader/IdHeader";
 import SkillDetailContainer from "./components/SkillDetailContainer/SkillDetailContainer";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch"; 
-import { ICustomEffect } from "Interfaces/CustomEffect/ICustomEffect";
-import { IDefenseSkill } from "Interfaces/DefenseSkill/IDefenseSkill";
-import { IMentalEffect } from "Interfaces/MentalEffect/IMentalEffect";
-import { IOffenseSkill } from "Interfaces/OffenseSkill/IOffenseSkill";
-import { IPassiveSkill } from "Interfaces/PassiveSkill/IPassiveSkill";
 
 
 export  const IdCard=forwardRef<HTMLDivElement,{changeActiveTab:(i:number)=>void}>(({changeActiveTab},ref):ReactElement=>{
@@ -37,8 +32,14 @@ export  const IdCard=forwardRef<HTMLDivElement,{changeActiveTab:(i:number)=>void
             if(skill){
                 for(let k=0;k<newSkillDetails.length;k++){
                     if(newSkillDetails[k].inputId===toSkillID){
-                        if(skillIndex<=k)newSkillDetails.splice(k+1,0,skill)
-                        else newSkillDetails.splice(k,0,skill)
+                        if(skillIndex<=k){
+                            newSkillDetails.splice(k+1,0,skill)
+                            changeActiveTab(k+1)
+                        }
+                        else {
+                            newSkillDetails.splice(k,0,skill)
+                            changeActiveTab(k)
+                        }
                         break;
                     }
                 }

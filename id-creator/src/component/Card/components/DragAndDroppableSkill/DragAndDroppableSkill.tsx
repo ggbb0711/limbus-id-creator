@@ -14,14 +14,18 @@ export default function DragAndDroppableSkill({skill,isDraggingHandler,dropHandl
         dropHandler:(item:any)=>void,
         children:ReactNode
     }){
-    const ref = useRef()
+    const ref = useRef<HTMLDivElement>()
+
+    const [dimensions,setDimensions] = useState({ width: 0, height: 0 })
 
     const [_,drag] = useDrag(()=>({
         type:"SinnerSkill",
         item:{
-            skill
+            skill,
+            skillWidth: dimensions.width,
+            skillHeight: dimensions.height
         }
-    }),[skill]) 
+    }),[skill,dimensions]) 
     const [{isOver},drop] = useDrop(()=>({
         accept:"SinnerSkill",
         drop:dropHandler,
@@ -37,10 +41,23 @@ export default function DragAndDroppableSkill({skill,isDraggingHandler,dropHandl
     // },[isDragging])
 
 
-    useEffect(()=>{
-        if(ref.current)drag(drop(ref))
-    },[ref])
+    useEffect(() => {
+        if (ref.current) {
+            const width = ref.current.clientWidth
+            const height = ref.current.clientHeight
+            console.log(width)
+            setDimensions({ width, height })
+            drag(drop(ref))
+        }
+    }, [ref, drag, drop])
 
+    useEffect(()=>{
+        if (ref.current) {
+            const width = ref.current.clientWidth
+            const height = ref.current.clientHeight
+            setDimensions({ width, height })
+        }
+    },[ ref?.current?.clientWidth, ref?.current?.clientHeight])
 
     
     return (
@@ -49,7 +66,9 @@ export default function DragAndDroppableSkill({skill,isDraggingHandler,dropHandl
             onDragEnd={()=>isDraggingHandler(false)}
             onMouseUp={()=>isDraggingHandler(false)}
             className={isOver?"hover-border":""}
-            
+            onClick={(e)=>{
+                if(isOver) e.stopPropagation() 
+            }}
         >
             {children}
         </div>

@@ -85,7 +85,7 @@ function IdCardContext():ReactElement{
             {/* <ResetBtn clickHandler={()=>setResetMenuActive(!isResetMenuActive)}/> */}
             <ResetMenu isActive={isResetMenuActive} setIsActive={setResetMenuActive} confirmFn={reset} />
             <div className='preview-container'>
-                <IdCard ref={domRef} changeActiveTab={changeActiveTab}/>
+                <IdCard ref={domRef} changeActiveTab={setActiveTab}/>
             </div>
         </div>
     </StatusEffectProvider>
