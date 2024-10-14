@@ -9,8 +9,9 @@ import useInput from "component/util/useInputs";
 import SinnerEgoIconInput from "../SinnerEgoIconInput/SinnerEgoIconInput";
 import DropDown from "component/DropDown/DropDown";
 import { EgoLevelDropDown } from "../EgoLevelDropDown/EgoLevelDropDown";
+import Arrow_down_icon from "Icons/Arrow_down_icon";
 
-export default function InputStatPage():ReactElement{
+export default function InputStatPage({collaspPage}:{collaspPage:()=>void}):ReactElement{
     const {EgoInfoValue,setEgoInfoValue} = useEgoInfoContext()
     const {onChangeInput,onChangeFileWithName,onChangeDropDownMenu}=useInput(EgoInfoValue,(newVal:{[type:string]:string})=>setEgoInfoValue(newVal))
     const changeSinResistant=useInput(EgoInfoValue.sinResistant,(newVal:{[type:string]:string})=>setEgoInfoValue({...EgoInfoValue,sinResistant:newVal}))
@@ -60,6 +61,11 @@ export default function InputStatPage():ReactElement{
     }
 
     return <div className="input-page input-stat-page">
+        <div className="input-page-icon-container">
+            <div className="collasp-icon" onClick={collaspPage}>
+                <Arrow_down_icon></Arrow_down_icon>
+            </div>
+        </div>
         <div className="sinner-icon-input-container">
             <p>Pick the sinner icon: </p>
             <SinnerEgoIconInput/>

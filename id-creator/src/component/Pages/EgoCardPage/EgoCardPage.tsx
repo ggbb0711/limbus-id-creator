@@ -3,15 +3,12 @@ import 'styles/reset.css'
 import 'styles/style.css'
 import '../EditorPage.css'
 import { StatusEffectProvider } from 'component/context/StatusEffectContext';
-import {MapInteractionCSS} from "react-map-interaction"
-import ShowInputTab from 'utils/ShowInputTab/ShowInputTab';
 import { useRefDownloadContext } from 'component/context/ImgUrlContext';
 import { EgoInfoProvider, useEgoInfoContext } from 'component/context/EgoInfoContext';
 import { EgoCard } from 'component/Card/EgoCard';
 import InputTabEgoInfoContainer from 'component/InputTab/InputTabContainer/InputTabEgoInfoContainer/InputTabEgoInfoContainer';
 import { useSearchParams } from 'react-router-dom';
 import { useSaveMenuContext } from 'component/SaveMenu/SaveMenu';
-import ResetBtn from 'utils/ResetBtn/ResetBtn';
 import ResetMenu from 'utils/ResetMenu/ResetMenu';
 
 
@@ -33,6 +30,12 @@ function EgoCardContent():ReactElement{
     const domRef=useRef(null)
     const [query] = useSearchParams()
     const {setDomRef} = useRefDownloadContext()
+    const [activeTab,setActiveTab]=useState(-1)
+    function changeActiveTab(i:number){
+        if(activeTab===i) setActiveTab(-2)
+        else setActiveTab(i)
+    }
+
 
     useEffect(()=>{
         //Get the last save id
@@ -69,14 +72,13 @@ function EgoCardContent():ReactElement{
 
     return <StatusEffectProvider skillDetails={EgoInfoValue.skillDetails}>
             <div className={`editor-container ${isShown?"show":""}`} style={{height:height}}>
-                <InputTabEgoInfoContainer/>
-                <ShowInputTab isShown={isShown} clickHandler={()=>setIsShown(!isShown)} />
-                <ResetBtn clickHandler={()=>setResetMenuActive(!isResetMenuActive)}/>
+                <InputTabEgoInfoContainer
+                    resetBtnHandler={()=>setResetMenuActive(!isResetMenuActive)}
+                    activeTab={activeTab}
+                    changeActiveTab={changeActiveTab} />
                 <ResetMenu isActive={isResetMenuActive} setIsActive={setResetMenuActive} confirmFn={reset} />
                 <div className='preview-container'>
-                    <MapInteractionCSS>
-                        <EgoCard ref={domRef}/>
-                    </MapInteractionCSS>
+                    <EgoCard ref={domRef} changeActiveTab={setActiveTab}/>
                 </div>
             </div>
     </StatusEffectProvider>

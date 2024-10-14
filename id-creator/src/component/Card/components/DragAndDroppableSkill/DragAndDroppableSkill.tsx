@@ -69,9 +69,6 @@ export default function DragAndDroppableSkill({skill,isDraggingHandler,dropHandl
         <div ref={ref}
             onMouseDown={()=>isDraggingHandler(true)}
             className={isOver?"hover-border":""}
-            onClick={(e)=>{
-                if(isOver) e.stopPropagation() 
-            }}
         >
             {children}
         </div>

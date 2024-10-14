@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement } from "react";
 import "../InputTabContainer.css"
 import { useIdInfoContext } from "component/context/IdInfoContext";
 import { IOffenseSkill, OffenseSkill } from "Interfaces/OffenseSkill/IOffenseSkill";
@@ -110,7 +110,6 @@ export default function InputTabIdInfoContainer({
     }
 
     return <div className="input-tab-container">
-        {/* <InputTabHeader changeTab={setActiveTab} activeTab={activeTab} skillDetails={idInfoValue.skillDetails} addTab={addTab} deleteHandler={deleteHandler}/> */}
         <InputTabSide sinnerIcon={idInfoValue.sinnerIcon} skillDetails={idInfoValue.skillDetails} changeTab={changeActiveTab} 
         activeTab={activeTab} addTab={addTab} resetBtnHandler={resetBtnHandler}></InputTabSide>
         {(activeTab!==-2)?(activeTab===-1)?<InputIdInfoStatPage  collaspPage={()=>changeActiveTab(-2)}/>:showInputPage(idInfoValue.skillDetails[activeTab],activeTab):<></>}

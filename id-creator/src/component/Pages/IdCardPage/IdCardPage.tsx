@@ -4,14 +4,12 @@ import 'styles/style.css'
 import '../EditorPage.css'
 import { StatusEffectProvider } from 'component/context/StatusEffectContext';
 import {MapInteractionCSS} from "react-map-interaction"
-import ShowInputTab from 'utils/ShowInputTab/ShowInputTab';
 import { IdCard } from 'component/Card/IdCard';
 import { IdInfoProvider, useIdInfoContext } from 'component/context/IdInfoContext';
 import InputTabIdInfoContainer from 'component/InputTab/InputTabContainer/InputTabIdInfoContainer/InputTabIdInfoContainer';
 import {  useRefDownloadContext } from 'component/context/ImgUrlContext';
 import {  useSearchParams } from 'react-router-dom';
 import { useSaveMenuContext } from 'component/SaveMenu/SaveMenu';
-import ResetBtn from 'utils/ResetBtn/ResetBtn';
 import ResetMenu from 'utils/ResetMenu/ResetMenu';
 import { IdInfo } from 'Interfaces/IIdInfo';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch"; 
@@ -81,8 +79,6 @@ function IdCardContext():ReactElement{
                 resetBtnHandler={()=>setResetMenuActive(!isResetMenuActive)}
                 activeTab={activeTab}
                 changeActiveTab={changeActiveTab} />
-            {/* <ShowInputTab isShown={isShown} clickHandler={()=>setIsShown(!isShown)} /> */}
-            {/* <ResetBtn clickHandler={()=>setResetMenuActive(!isResetMenuActive)}/> */}
             <ResetMenu isActive={isResetMenuActive} setIsActive={setResetMenuActive} confirmFn={reset} />
             <div className='preview-container'>
                 <IdCard ref={domRef} changeActiveTab={setActiveTab}/>

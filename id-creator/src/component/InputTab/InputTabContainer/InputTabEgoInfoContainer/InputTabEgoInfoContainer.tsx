@@ -11,31 +11,40 @@ import InputDefenseSkillPage from "component/InputTab/InputDefenseSkillPage/Inpu
 import InputMentalEffect from "component/InputTab/InputMentalEffect/InputMentalEffect";
 import InputOffenseSkillPage from "component/InputTab/InputOffenseSkillPage/InputOffenseSkillPage";
 import InputPassivePage from "component/InputTab/InputPassivePage/InputPassivePage";
-import InputTabHeader from "component/InputTab/InputTabHeader/InputTabHeader";
 import { useEgoInfoContext } from "component/context/EgoInfoContext";
 import InputEgoInfoStatPage from "component/InputTab/InputStatPage/InputEgoInfoStatPage/InputEgoInfoStatPage";
+import { useAlertContext } from "component/context/AlertContext";
+import InputTabSide from "component/InputTab/InputTabSide/InputTabSide";
 
-export default function InputTabEgoInfoContainer():ReactElement{
-    const [activeTab,setActiveTab]=useState(-1)
+export default function InputTabEgoInfoContainer({
+        resetBtnHandler,
+        activeTab,
+        changeActiveTab,
+    }:{
+        resetBtnHandler:()=>void,
+        activeTab:number,
+        changeActiveTab:(i:number)=>void}):ReactElement{
     const {EgoInfoValue,setEgoInfoValue} = useEgoInfoContext()
     const {statusEffect}=useStatusEffectContext()
+    const {addAlert} = useAlertContext()
 
-    function deleteHandler(i:number){
-        let newIndex=i
-        if(newIndex<=activeTab){ 
-            setActiveTab(newIndex-1)
+
+    function deleteHandler(id:string){
+        for(let i = 0;i<EgoInfoValue.skillDetails.length;i++){
+            if(EgoInfoValue.skillDetails[i].inputId===id){
+                const newIdInfoValue={...EgoInfoValue}
+
+                newIdInfoValue.skillDetails.splice(i,1)
+                
+                setEgoInfoValue({...newIdInfoValue})
+                if(i===activeTab&&i===EgoInfoValue.skillDetails.length) changeActiveTab(activeTab-1)
+            }
         }
-
-        const newEgoInfoValue={...EgoInfoValue}
-
-        newEgoInfoValue.skillDetails.splice(newIndex,1)
-        
-        setEgoInfoValue({...newEgoInfoValue})
     }
 
-    function addTab(){
-        const newTab=new OffenseSkill()
-        setEgoInfoValue({...EgoInfoValue,skillDetails:[...EgoInfoValue.skillDetails,newTab]})
+    function addTab(skill:IOffenseSkill|IDefenseSkill|IPassiveSkill|ICustomEffect|IMentalEffect){
+        if(EgoInfoValue.skillDetails.length>=20)addAlert("Failure","There can only be 20 or less skill/effects in an ID")
+        else setEgoInfoValue({...EgoInfoValue,skillDetails:[...EgoInfoValue.skillDetails,skill]})
     }
 
 
@@ -81,26 +90,26 @@ export default function InputTabEgoInfoContainer():ReactElement{
 
         switch(skill.type){
             case "OffenseSkill":{
-                // return <InputOffenseSkillPage offenseSkill={skill as IOffenseSkill} keyWordList={statusEffect} changeSkill={changeSkill} changeSkillType={changeSkillType} />
+                return <InputOffenseSkillPage offenseSkill={skill as IOffenseSkill} keyWordList={statusEffect} changeSkill={changeSkill} changeSkillType={changeSkillType} deleteSkill={deleteHandler} collaspPage={()=>changeActiveTab(-2)}/>
             }
             case "DefenseSkill":{
-                // return <InputDefenseSkillPage defenseSkill={skill as IDefenseSkill} keyWordList={statusEffect} changeSkill={changeSkill} changeSkillType={changeSkillType} />
+                return <InputDefenseSkillPage defenseSkill={skill as IDefenseSkill} keyWordList={statusEffect} changeSkill={changeSkill} changeSkillType={changeSkillType} deleteSkill={deleteHandler} collaspPage={()=>changeActiveTab(-2)}/>
             }
             case "PassiveSkill":{
-                // return <InputPassivePage passiveSkill={skill as IPassiveSkill} keyWordList={statusEffect} changeSkill={changeSkill} changeSkillType={changeSkillType}/>
+                return <InputPassivePage passiveSkill={skill as IPassiveSkill} keyWordList={statusEffect} changeSkill={changeSkill} changeSkillType={changeSkillType} deleteSkill={deleteHandler} collaspPage={()=>changeActiveTab(-2)}/>
             }
             case "CustomEffect":{
-                // return <InputCustomEffectPage customEffect={skill as ICustomEffect} keyWordList={statusEffect} changeSkill={changeSkill} changeSkillType={changeSkillType} />
+                return <InputCustomEffectPage customEffect={skill as ICustomEffect} keyWordList={statusEffect} changeSkill={changeSkill} changeSkillType={changeSkillType} deleteSkill={deleteHandler} collaspPage={()=>changeActiveTab(-2)}/>
             }
             case "MentalEffect":{
-                // return <InputMentalEffect mentalEffect={skill as IMentalEffect} keyWordList={statusEffect} changeSkill={changeSkill} changeSkillType={changeSkillType} />
+                return <InputMentalEffect mentalEffect={skill as IMentalEffect} keyWordList={statusEffect} changeSkill={changeSkill} changeSkillType={changeSkillType} deleteSkill={deleteHandler} collaspPage={()=>changeActiveTab(-2)}/>
             }
         }
     }
 
-    useEffect(()=>{if(activeTab>=EgoInfoValue.skillDetails.length)setActiveTab(-1)},[JSON.stringify(EgoInfoValue.skillDetails)])
     return <div className="input-tab-container">
-        <InputTabHeader changeTab={setActiveTab} activeTab={activeTab} skillDetails={EgoInfoValue.skillDetails} addTab={addTab} deleteHandler={deleteHandler}/>
-        {/* {(activeTab===-1)?<InputEgoInfoStatPage/>:showInputPage(EgoInfoValue.skillDetails[activeTab],activeTab)} */}
-    </div>
+            <InputTabSide sinnerIcon={EgoInfoValue.sinnerIcon} skillDetails={EgoInfoValue.skillDetails} changeTab={changeActiveTab} 
+            activeTab={activeTab} addTab={addTab} resetBtnHandler={resetBtnHandler}></InputTabSide>
+            {(activeTab!==-2)?(activeTab===-1)?<InputEgoInfoStatPage  collaspPage={()=>changeActiveTab(-2)}/>:showInputPage(EgoInfoValue.skillDetails[activeTab],activeTab):<></>}
+        </div>
 }

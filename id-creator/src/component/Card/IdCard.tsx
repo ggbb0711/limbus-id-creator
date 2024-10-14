@@ -9,7 +9,7 @@ import SkillDetailContainer from "./components/SkillDetailContainer/SkillDetailC
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch"; 
 
 
-export  const IdCard=forwardRef<HTMLDivElement,{changeActiveTab:(i:number)=>void}>(({changeActiveTab},ref):ReactElement=>{
+export  const IdCard=forwardRef<HTMLDivElement,{changeActiveTab:React.Dispatch<React.SetStateAction<number>>}>(({changeActiveTab},ref):ReactElement=>{
     const [isDragging,setIsDragging] = useState(false)
     const {idInfoValue,setIdInfoValue}=useIdInfoContext()
 
@@ -32,14 +32,12 @@ export  const IdCard=forwardRef<HTMLDivElement,{changeActiveTab:(i:number)=>void
             if(skill){
                 for(let k=0;k<newSkillDetails.length;k++){
                     if(newSkillDetails[k].inputId===toSkillID){
-                        if(skillIndex<=k){
-                            newSkillDetails.splice(k+1,0,skill)
-                            changeActiveTab(k+1)
-                        }
-                        else {
-                            newSkillDetails.splice(k,0,skill)
-                            changeActiveTab(k)
-                        }
+                        const replacingIndex = (skillIndex<=k)?k+1:k
+                        newSkillDetails.splice(replacingIndex,0,skill)
+                        changeActiveTab((i)=>{
+                            if(i>-2) return replacingIndex
+                            return i
+                        })
                         break;
                     }
                 }
@@ -56,7 +54,12 @@ export  const IdCard=forwardRef<HTMLDivElement,{changeActiveTab:(i:number)=>void
         maxScale={3}
         limitToBounds={false}
         pinch={{step:10}}
-        disabled={isDragging}>
+        disabled={isDragging}
+        initialPositionX={400}
+        initialPositionY={60}
+        doubleClick={{
+            disabled:true
+        }}>
             <TransformComponent>
                 <div className="Card" ref={ref}>
                     <div className="sinner-icon-background" style={{"backgroundImage":`url(${idInfoValue.sinnerIcon})`}}></div>
