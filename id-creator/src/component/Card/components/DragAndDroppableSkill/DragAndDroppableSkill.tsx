@@ -18,12 +18,17 @@ export default function DragAndDroppableSkill({skill,isDraggingHandler,dropHandl
 
     const [dimensions,setDimensions] = useState({ width: 0, height: 0 })
 
-    const [_,drag] = useDrag(()=>({
+    const [{isDragging},drag] = useDrag(()=>({
         type:"SinnerSkill",
         item:{
             skill,
             skillWidth: dimensions.width,
             skillHeight: dimensions.height
+        },
+        collect(monitor){
+            return {
+                isDragging:monitor.isDragging()
+            }
         }
     }),[skill,dimensions]) 
     const [{isOver},drop] = useDrop(()=>({
@@ -36,9 +41,9 @@ export default function DragAndDroppableSkill({skill,isDraggingHandler,dropHandl
         },
     }),[dropHandler])
 
-    // useEffect(()=>{
-    //     isDraggingHandler(isDragging)
-    // },[isDragging])
+    useEffect(()=>{
+        isDraggingHandler(isDragging)
+    },[isDragging])
 
 
     useEffect(() => {
@@ -63,8 +68,6 @@ export default function DragAndDroppableSkill({skill,isDraggingHandler,dropHandl
     return (
         <div ref={ref}
             onMouseDown={()=>isDraggingHandler(true)}
-            onDragEnd={()=>isDraggingHandler(false)}
-            onMouseUp={()=>isDraggingHandler(false)}
             className={isOver?"hover-border":""}
             onClick={(e)=>{
                 if(isOver) e.stopPropagation() 
