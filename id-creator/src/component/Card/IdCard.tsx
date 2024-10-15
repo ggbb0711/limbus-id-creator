@@ -60,7 +60,7 @@ export  const IdCard=forwardRef<HTMLDivElement,{changeActiveTab:React.Dispatch<R
         doubleClick={{
             disabled:true
         }}>
-            <TransformComponent>
+            <TransformComponent wrapperStyle={{width:"100vw"}}>
                 <div className="Card" ref={ref}>
                     <div className="sinner-icon-background" style={{"backgroundImage":`url(${idInfoValue.sinnerIcon})`}}></div>
                     <div className="Card-container">
