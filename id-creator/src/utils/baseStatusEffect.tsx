@@ -185,6 +185,9 @@ export const baseStatusEffect={
     "erudition":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Erudition.png' alt='erudition_icon' />Erudition</span>",
 
+    "Blood-tinged_Scissorblades":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Blood-tinged_Scissorblades.png' alt='Blood-tinged_Scissorblades_icon' />Blood-tinged Scissorblades</span>",
+
     "gaze_of_contempt":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Gaze_of_Contempt.png' alt='gaze_of_contempt_icon' />Gaze of Contempt</span>",
         
@@ -320,6 +323,18 @@ export const baseStatusEffect={
     "bleed":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Bleed.png' alt='bleed_icon' />Bleed</span>",
     
+    "sewing_target":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Sewing_Target.png' alt='sewing_target_icon' />Sewing Target</span>",
+
+    "polydipsic_rose":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Polydipsic_Rose.png' alt='polydipsic_rose_icon' />Polydipsic Rose</span>",
+
+    "lasso":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Lasso.png' alt='lasso_icon' />Lasso</span>",
+
+    "focused_attack":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Focused_Attack.png' alt='focused_attack_icon' />Focused Attack</span>",
+
     "rupture":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Rupture.png' alt='rupture_icon' />Rupture</span>",
     
@@ -472,6 +487,12 @@ export const baseStatusEffect={
 
     "unbreakable_coin":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Unbreakable_Coin.png' alt='unbreakable_coin_icon' />Unbreakable Coin</span>",
+
+    "bloodfeast":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/bloodfeast.png' alt='Bloodfeast_icon' />Bloodfeast</span>",
+
+    "bloodfeast_consumed":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/bloodfeast_consumed.png' alt='bloodfeast_consumed_icon' />Bloodfeast Consumed</span>",
 
     "coin_1":
         "<span class='center-element' contenteditable='false'><img class='status-icon' src='Images/status-effect/Coin_Effect_1.png' alt='coin-effect-1' /></span>",
