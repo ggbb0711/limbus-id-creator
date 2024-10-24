@@ -332,6 +332,9 @@ export const baseStatusEffect={
     "lasso":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Lasso.png' alt='lasso_icon' />Lasso</span>",
 
+    "rose_wedge":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Rose_Wedge.png' alt='rose_wedge_icon' />Rose Wedge</span>",
+
     "focused_attack":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Focused_Attack.png' alt='focused_attack_icon' />Focused Attack</span>",
 
@@ -493,6 +496,9 @@ export const baseStatusEffect={
 
     "bloodfeast_consumed":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/bloodfeast_consumed.png' alt='bloodfeast_consumed_icon' />Bloodfeast Consumed</span>",
+    
+    "bloodfeast_consumed_(shared)":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/bloodfeast_consumed.png' alt='bloodfeast_consumed_(shared)_icon' />Bloodfeast Consumed (shared)</span>",
 
     "coin_1":
         "<span class='center-element' contenteditable='false'><img class='status-icon' src='Images/status-effect/Coin_Effect_1.png' alt='coin-effect-1' /></span>",
