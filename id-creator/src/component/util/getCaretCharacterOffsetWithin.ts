@@ -5,8 +5,8 @@ export default function getCaretCharacterOffsetWithin(element) {
     const win = doc.defaultView || doc.parentWindow;
     let sel;
     if (typeof win.getSelection != "undefined") {
-        sel = win.getSelection();
-        if (sel.rangeCount > 0) {
+        sel =  window.getSelection && window.getSelection();
+        if (sel && sel.rangeCount > 0) {
             const range = win.getSelection().getRangeAt(0);
             const preCaretRange = range.cloneRange();
             preCaretRange.selectNodeContents(element);
