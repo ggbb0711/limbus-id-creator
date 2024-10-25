@@ -58,7 +58,8 @@ export default function EditableAutoCorrect({inputId,content,matchList,changeHan
 
     const updateSuggestBox = useMemo(() => {
         return function() {
-            if(suggestionBoxRef.current){
+            const sel = window.getSelection && window.getSelection();
+            if(suggestionBoxRef.current && sel && sel.rangeCount > 0){
                 const rect = window.getSelection().getRangeAt(0).getBoundingClientRect();
                 const parentRect = contentEditableRef.current.getBoundingClientRect();
                 let left = rect.left - parentRect.left + window.scrollX;
