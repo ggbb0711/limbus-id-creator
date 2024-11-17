@@ -6,9 +6,9 @@ import "./ForumPage.css"
 import TagsContainer from "utils/TagsContainer/TagsContainer";
 import MainButton from "utils/MainButton/MainButton";
 import { useLoginUserContext } from "component/context/LoginUserContext";
-import { useLoginMenuContext } from "component/LoginMenu/LoginMenu";
+import { useLoginMenuContext } from "component/util/LoginMenu/LoginMenu";
 import { Link, useSearchParams } from "react-router-dom";
-import DropDown from "component/DropDown/DropDown";
+import DropDown from "component/util/DropDown/DropDown";
 import { useAlertContext } from "component/context/AlertContext";
 import { IPostDisplayCard } from "Interfaces/IPostDisplayCard/IPostDisplayCard";
 import PaginatedPost from "../PaginatedPost/PaginatedPost";

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ReactElement } from "react";
 import "../PageLayout.css"
-import IdAndEgoDisplayList from "component/PostDisplayList/PostDisplayList";
+import IdAndEgoDisplayList from "component/util/PostDisplayList/PostDisplayList";
 import IdAndEgoLocalDisplayList from "./User/IdAndEgoLocalDisplayList/IdAndEgoLocalDisplayList";
 import UserProfile from "./User/UserProfile";
 import "./User.css"

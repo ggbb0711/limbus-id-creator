@@ -5,10 +5,10 @@ import '../EditorPage.css'
 import { StatusEffectProvider } from 'component/context/StatusEffectContext';
 import { useRefDownloadContext } from 'component/context/ImgUrlContext';
 import { EgoInfoProvider, useEgoInfoContext } from 'component/context/EgoInfoContext';
-import { EgoCard } from 'component/Card/EgoCard';
-import InputTabEgoInfoContainer from 'component/InputTab/InputTabContainer/InputTabEgoInfoContainer/InputTabEgoInfoContainer';
+import { EgoCard } from 'component/CardMakerComponents/Card/EgoCard';
+import InputTabEgoInfoContainer from 'component/CardMakerComponents/InputTab/InputTabContainer/InputTabEgoInfoContainer/InputTabEgoInfoContainer';
 import { useSearchParams } from 'react-router-dom';
-import { useSaveMenuContext } from 'component/SaveMenu/SaveMenu';
+import { useSaveMenuContext } from 'component/util/SaveMenu/SaveMenu';
 import ResetMenu from 'utils/ResetMenu/ResetMenu';
 
 

@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 import { IPost } from "Interfaces/IPost/IPost";
 import PostCommentInput from "./PostCommentInput/PostCommentInput";
 import { useLoginUserContext } from "component/context/LoginUserContext";
-import { useLoginMenuContext } from "component/LoginMenu/LoginMenu";
+import { useLoginMenuContext } from "component/util/LoginMenu/LoginMenu";
 import MainButton from "utils/MainButton/MainButton";
 import { IComment } from "Interfaces/IPost/IComment";
 

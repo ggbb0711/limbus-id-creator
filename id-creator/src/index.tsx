@@ -1,5 +1,5 @@
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import HeaderLayout from 'component/Layout/HeaderLayout';
+import HeaderLayout from 'component/util/Layout/HeaderLayout';
 import DisplayPage from 'component/Pages/DisplayPage/DisplayPage';
 import EgoCardPage from 'component/Pages/EgoCardPage/EgoCardPage';
 import ForumPage from 'component/Pages/ForumPage/ForumPage';
@@ -12,7 +12,7 @@ import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, json, RouterProvider } from 'react-router-dom';
 import { DndProvider } from 'react-dnd'
 import { TouchBackend } from 'react-dnd-touch-backend'
-import DragAndDroppableSkillPreviewLayer from 'component/Card/components/DragAndDroppableSkill/DragAndDroppableSkillPreviewLayer';
+import DragAndDroppableSkillPreviewLayer from 'component/CardMakerComponents/Card/components/DragAndDroppableSkill/DragAndDroppableSkillPreviewLayer';
 
 const root = createRoot(document.getElementById('root')!);
 

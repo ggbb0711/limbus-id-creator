@@ -1,5 +1,5 @@
 import { useLoginUserContext } from "component/context/LoginUserContext";
-import { useLoginMenuContext } from "component/LoginMenu/LoginMenu";
+import { useLoginMenuContext } from "component/util/LoginMenu/LoginMenu";
 import React, { useEffect, useState } from "react";
 import { ReactElement } from "react";
 import MainButton from "utils/MainButton/MainButton";

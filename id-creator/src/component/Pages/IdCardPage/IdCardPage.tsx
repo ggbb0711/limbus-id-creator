@@ -4,12 +4,12 @@ import 'styles/style.css'
 import '../EditorPage.css'
 import { StatusEffectProvider } from 'component/context/StatusEffectContext';
 import {MapInteractionCSS} from "react-map-interaction"
-import { IdCard } from 'component/Card/IdCard';
+import { IdCard } from 'component/CardMakerComponents/Card/IdCard';
 import { IdInfoProvider, useIdInfoContext } from 'component/context/IdInfoContext';
-import InputTabIdInfoContainer from 'component/InputTab/InputTabContainer/InputTabIdInfoContainer/InputTabIdInfoContainer';
+import InputTabIdInfoContainer from 'component/CardMakerComponents/InputTab/InputTabContainer/InputTabIdInfoContainer/InputTabIdInfoContainer';
 import {  useRefDownloadContext } from 'component/context/ImgUrlContext';
 import {  useSearchParams } from 'react-router-dom';
-import { useSaveMenuContext } from 'component/SaveMenu/SaveMenu';
+import { useSaveMenuContext } from 'component/util/SaveMenu/SaveMenu';
 import ResetMenu from 'utils/ResetMenu/ResetMenu';
 import { IdInfo } from 'Interfaces/IIdInfo';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch"; 

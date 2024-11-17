@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./PostCarousel.css"
-import ViewImagePopUp from "component/ViewImagePopUp/ViewImagePopUp";
 import Arrow_up_icon from "Icons/Arrow_up_icon";
 import Arrow_down_icon from "Icons/Arrow_down_icon";
+import ViewImagePopUp from "component/util/ViewImagePopUp/ViewImagePopUp";
 
 export default function PostCarousel({postImages}:{postImages:string[]}){
     const [currImg,setCurrImg] = useState(0)

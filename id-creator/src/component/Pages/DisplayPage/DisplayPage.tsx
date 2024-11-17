@@ -4,7 +4,7 @@ import "../PageLayout.css"
 import "./DisplayPage.css"
 import { Link } from "react-router-dom";
 import MainButton from "utils/MainButton/MainButton";
-import IdAndEgoDisplayList from "component/PostDisplayList/PostDisplayList";
+import IdAndEgoDisplayList from "component/util/PostDisplayList/PostDisplayList";
 
 
 export default function DisplayPage():ReactElement{
