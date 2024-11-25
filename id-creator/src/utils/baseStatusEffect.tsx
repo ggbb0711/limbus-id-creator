@@ -190,7 +190,28 @@ export const baseStatusEffect={
 
     "gaze_of_contempt":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Gaze_of_Contempt.png' alt='gaze_of_contempt_icon' />Gaze of Contempt</span>",
+    
+    "coffin":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Coffin.png' alt='Coffin_icon' />Coffin</span>",
         
+    "wild_hunt":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Wild_Hunt.png' alt='Wild_Hunt_icon' />Wild Hunt</span>",
+
+    "dullahan":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Dullahan.png' alt='Dullahan_icon' />Dullahan</span>",
+    
+    "blooming_thorn":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Blooming_Thorn.png' alt='Blooming_Thorn_icon' />Blooming Thorn</span>",
+
+    "festive_fever":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Festive_Fever.png' alt='Festive_Fever_icon' />Festive Fever</span>",
+
+    "bloodied_hand":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Bloodied_Hand.png' alt='Bloodied_Hand_icon' />Bloodied Hand</span>",
+    
+    "ailing_heart":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Ailing_Heart.png' alt='Ailing_Heart_icon' />Ailing Heart</span>",
+
     "contempt_of_the_gaze":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Contempt_of_the_Gaze.png' alt='contempt_of_the_gaze_icon' />Contempt of the Gaze</span>",
 
