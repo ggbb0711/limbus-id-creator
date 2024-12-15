@@ -60,5 +60,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "image-webpack-loader": "^8.1.0"
   }
 }

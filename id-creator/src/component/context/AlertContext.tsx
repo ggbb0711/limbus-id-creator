@@ -3,8 +3,13 @@ import { Alert, IAlert } from "Interfaces/Utils/IAlert";
 import { ReactElement, useContext, useEffect, useState } from "react";
 
 
+interface AlertContextProps {
+    alertArr: IAlert[]
+    addAlert: (status:string,msg:string)=>void
+}
 
-const alertContext = createContext(null)
+
+const alertContext = createContext<AlertContextProps>(null)
 
 const AlertContextProvider: React.FC<{children:ReactElement}>=({children})=>{
     const [alertArr,setAlertArr] = useState<IAlert[]>([])

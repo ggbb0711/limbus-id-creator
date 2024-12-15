@@ -184,8 +184,11 @@ export const baseStatusEffect={
 
     "erudition":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Erudition.png' alt='erudition_icon' />Erudition</span>",
+    
+    "tremor_-_clockwinding":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Tremor_-_Clockwinding.png' alt='Tremor_-_Clockwinding_icon' />Tremor - Clockwinding</span>",
 
-    "Blood-tinged_Scissorblades":
+    "blood-tinged_scissorblades":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Blood-tinged_Scissorblades.png' alt='Blood-tinged_Scissorblades_icon' />Blood-tinged Scissorblades</span>",
 
     "gaze_of_contempt":
@@ -199,6 +202,12 @@ export const baseStatusEffect={
 
     "dullahan":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Dullahan.png' alt='Dullahan_icon' />Dullahan</span>",
+    
+    "hardblood":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Hardblood.png' alt='Hardblood_icon' />Hardblood</span>",
+    
+    "shimmering_bloodfiend":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Shmimering_BloodFiend.png' alt='Shmimering_BloodFiend_icon' />Shmimering [BloodFiend]</span>",
     
     "blooming_thorn":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Blooming_Thorn.png' alt='Blooming_Thorn_icon' />Blooming Thorn</span>",
@@ -460,6 +469,9 @@ export const baseStatusEffect={
 
     "discard":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration: underline;'><img class='status-icon' src='Images/status-effect/Discard.png' alt='discard_icon' />Discard</span>",
+    
+    "responsibility":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration: underline;'><img class='status-icon' src='Images/status-effect/Responsibility.png' alt='responsibility_icon' />Responsibility</span>",
 
     "sp_heal_efficiency":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/SP_Heal_Efficiency.png' alt='sp_heal_efficiency_icon' />SP Heal Efficiency</span>",
