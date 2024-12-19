@@ -44,3 +44,10 @@
     position: absolute;
     cursor: pointer;
 }
+
+.sinner-splash-art-container{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+}

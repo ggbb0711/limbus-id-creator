@@ -1,21 +1,32 @@
 .sinner-stats{
     position: absolute;
     bottom: 5%;
-    left: 0px;
-    width: 100%;
+    left: -35px;
+    width: 120%;
     height: 200px;
     background-color: black;
     background-repeat: no-repeat;
     background-size: 100% 100%;
     z-index: 3;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
     font-weight: bold;
     -webkit-text-stroke: .5px black;
     font-family: "Rubik", sans-serif;
     color: var(--Normal);
+    transform: rotate(15deg);
+}
 
+.sinner-stats-border{
+    padding: 8px;
+    width: 100%;
+    background-color: rgb(32,22,14);
+    overflow: hidden;
+}
+
+.sinner-stats-container{
+    width: 80%;
+    height: 100%;
+    margin-left: 17px;
+    padding: 8px;
 }
 
 .stat-container{

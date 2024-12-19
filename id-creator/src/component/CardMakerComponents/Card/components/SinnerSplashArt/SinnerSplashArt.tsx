@@ -8,8 +8,10 @@ export default function SinnerSplashArt():ReactElement{
 
     const {splashArt,splashArtScale,splashArtTranslation}=idInfoValue
     return(
-        <MapInteractionCSS disableZoom={true} disablePan={true} value={{scale:splashArtScale,translation:splashArtTranslation}}>
-            {splashArt?<img className="splashArtImg" src={splashArt} alt="splashArt" />:<></>}
-        </MapInteractionCSS>
+        <div className="sinner-splash-art-container">
+            <MapInteractionCSS disableZoom={true} disablePan={true} value={{scale:splashArtScale,translation:splashArtTranslation}}>
+                {splashArt?<img className="splashArtImg" src={splashArt} alt="splashArt" />:<></>}
+            </MapInteractionCSS>
+        </div>
     )
 }
