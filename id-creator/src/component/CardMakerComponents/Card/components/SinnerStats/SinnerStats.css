@@ -3,7 +3,7 @@
     bottom: 5%;
     left: -35px;
     width: 120%;
-    height: 200px;
+    min-height: 165px;
     background-color: black;
     background-repeat: no-repeat;
     background-size: 100% 100%;
