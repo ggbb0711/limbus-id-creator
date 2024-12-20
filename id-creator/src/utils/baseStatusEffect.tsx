@@ -574,6 +574,9 @@ export const baseStatusEffect={
 
     "on_evade":
         "<span class='center-element' contenteditable='false' style='color:#94f140'>[On Evade]</span>",
+    
+    "failed_evade":
+        "<span class='center-element' contenteditable='false' style='color:#94f140'>[Failed Evade]</span>",
 
     "heads_hit":
         "<span class='center-element' contenteditable='false' style='color:#c7ff94'>[Heads Hit]</span>",
