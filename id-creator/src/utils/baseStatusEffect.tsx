@@ -600,7 +600,7 @@ export const baseStatusEffect={
         "<span class='center-element' contenteditable='false' style='color:#ff0000'>[Unclashable]</span>",
 
     "combat_start":
-        "<span class='center-element' contenteditable='false' style='color:#94f140'>[Combat start]</span>",
+        "<span class='center-element' contenteditable='false' style='color:#94f140'>[Combat Start]</span>",
     
     "clashable_counter":
         "<span class='center-element' contenteditable='false' style='color:#ff7e00'>[Clashable Counter]</span>",
@@ -608,5 +608,10 @@ export const baseStatusEffect={
     "before_use":
         "<span class='center-element' contenteditable='false' style='color:#26cfff'>[Before Use]</span>",
 
-
+    "skill_end":
+        "<span class='center-element' contenteditable='false' style='color:#94f140'>[Skill End]</span>",
+    
+    "turn_end":
+        "<span class='center-element' contenteditable='false' style='color:#94f140'>[Turn End]</span>",
+    
 }
