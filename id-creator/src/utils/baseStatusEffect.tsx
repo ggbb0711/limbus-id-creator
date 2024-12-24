@@ -617,4 +617,7 @@ export const baseStatusEffect={
     "turn_end":
         "<span class='center-element' contenteditable='false' style='color:#94f140'>[Turn End]</span>",
     
+    "target_fixed":
+        "<span class='center-element' contenteditable='false' style='color:#94f140'>[Target Fixed]</span>",
+    
 }
