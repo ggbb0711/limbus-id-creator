@@ -12,6 +12,7 @@ export default function SinnerSplashArt():ReactElement{
             <MapInteractionCSS disableZoom={true} disablePan={true} value={{scale:splashArtScale,translation:splashArtTranslation}}>
                 {splashArt?<img className="splashArtImg" src={splashArt} alt="splashArt" />:<></>}
             </MapInteractionCSS>
+            <div className="splashArt-container-blur-edges"></div>
         </div>
     )
 }

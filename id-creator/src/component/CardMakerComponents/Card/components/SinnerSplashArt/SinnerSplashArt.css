@@ -4,6 +4,15 @@
     min-width: 500px;
 }
 
+.splashArt-container-blur-edges{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    box-shadow: 0 0 12px 10px inset #000000;
+}
+
 .splashArtImg{
     position: absolute;
     top: 0;
