@@ -53,7 +53,7 @@ export default function SkillDetailContainer({skillDetails,draggingHandler,chang
             containerRef.current.childNodes.forEach((child:HTMLDivElement)=>{
                 currentColHeight+=child.clientHeight
                 //Move on to the next col
-                if(currentColHeight>containerRef.current.clientHeight-25){
+                if(currentColHeight>containerRef.current.clientHeight){
                     colNo++
                     currentColHeight=child.clientHeight
                 }

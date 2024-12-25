@@ -13,12 +13,6 @@
     box-sizing: border-box;
 }
 
-.splashArt-container{
-    min-width: 370px;
-    overflow: hidden;
-    position: relative;
-    justify-content: center;
-}
 
 
 .ego-splash-art-container{

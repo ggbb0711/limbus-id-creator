@@ -36,7 +36,7 @@ export default function SinnerStats():ReactElement{
     
     function generateSinnerStatsBorder(){
         const borderText = []
-        for(let i=0;i<4;i++){
+        for(let i=0;i<9;i++){
             borderText.push(<span key={i}>WARNING ////</span>)
         }
         return borderText
