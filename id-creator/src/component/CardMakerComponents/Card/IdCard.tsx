@@ -50,8 +50,7 @@ export  const IdCard=forwardRef<HTMLDivElement,{changeActiveTab:React.Dispatch<R
     return(
         <TransformWrapper 
         initialScale={0.5}
-        minScale={.5}
-        maxScale={3}
+        minScale={.1}
         limitToBounds={false}
         pinch={{step:10}}
         disabled={isDragging}
