@@ -4,15 +4,13 @@
     position: relative;
     padding-top: 10px;
     box-sizing: border-box;
-    
+    border: 1px solid transparent;
 }
 
 .skill-section-container:hover{
-    border: 1px yellow solid;
+    border-color: yellow;
     cursor: pointer;
 }
-
-
 
 .skill-label{
     top: 0px;
