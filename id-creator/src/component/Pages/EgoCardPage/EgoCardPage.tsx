@@ -65,7 +65,9 @@ function EgoCardContent():ReactElement{
         -Math.floor(document.querySelector(".site-header").clientHeight)
         -Math.floor(document.querySelector(".card-maker-footer").clientHeight)
         -4)    
-    },[window.innerHeight])
+    },[window.innerHeight,
+        document.querySelector(".site-header")?.clientHeight,
+        document.querySelector(".card-maker-footer")?.clientHeight])
 
     useEffect(()=>{
         changeSaveInfo(EgoInfoValue)
