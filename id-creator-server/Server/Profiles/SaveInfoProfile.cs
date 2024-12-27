@@ -16,7 +16,7 @@ namespace Server.Profiles
             CreateMap<SavedInfoRequestDTO<SavedEgoRequestDTO>, SavedEGOInfo>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src=>src.id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.saveName))
-                .ForMember(dest => dest.SaveTime, opt => opt.MapFrom(src => DateTime.ParseExact(src.saveTime,"dd/MM/yyyy, HH:mm:ss tt",null)))
+                .ForMember(dest => dest.SaveTime, opt => opt.MapFrom(src => DateTime.ParseExact(src.saveTime,"dd/MM/yyyy, HH:mm:ss",null)))
                 .ForMember(dest => dest.ImageAttachId, opt => opt.MapFrom(src=>src.id))
                 .ForMember(dest => dest.ImageAttach, opt => opt.MapFrom(src => new ImageObj(){
                     Id = src.id,
@@ -28,7 +28,7 @@ namespace Server.Profiles
             CreateMap<SavedInfoRequestDTO<SavedIDRequestDTO>, SavedIDInfo>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src=>src.id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.saveName))
-                .ForMember(dest => dest.SaveTime, opt => opt.MapFrom(src => DateTime.ParseExact(src.saveTime,"dd/MM/yyyy, HH:mm:ss tt",null)))
+                .ForMember(dest => dest.SaveTime, opt => opt.MapFrom(src => DateTime.ParseExact(src.saveTime,"dd/MM/yyyy, HH:mm:ss",null)))
                 .ForMember(dest => dest.ImageAttachId, opt => opt.MapFrom(src=>src.id))
                 .ForMember(dest => dest.ImageAttach, opt => opt.MapFrom(src => new ImageObj(){
                     Id = src.id,
