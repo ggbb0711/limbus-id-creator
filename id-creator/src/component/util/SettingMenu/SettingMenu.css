@@ -1,4 +1,4 @@
-.save-menu-container{
+.setting-menu-container{
     width: 100vw;
     height: 100vh;
     top: 0px;
@@ -10,7 +10,7 @@
     box-sizing: border-box;
 }
 
-.save-menu-background{
+.setting-menu-background{
     background-color: var(--popup-background-black);
     cursor: pointer;
     position: absolute;
@@ -18,7 +18,7 @@
     height: 100%;
 }
 
-.save-menu-outline{
+.setting-menu-outline{
     padding-right: 8px;
     background-color: var(--red-brown);
     border-right: 2px solid var(--brown-pale);
@@ -28,10 +28,10 @@
     left: -999px;
 }
 
-.save-menu-outline.active{
+.setting-menu-outline.active{
     left: 0;
 }
-.save-menu-slide-in{
+.setting-menu-slide-in{
     height: 100vh;
     background-color: var(--white-skin-color);
     text-align: center;
@@ -44,29 +44,29 @@
 }
 
 
-.close-save-menu{
+.close-setting-menu{
     position: absolute;
     cursor: pointer;
     top: 5px;
     right: 10px; 
 }
 
-.close-save-menu:hover{
+.close-setting-menu:hover{
     fill:red;
 }
 
-.save-menu-content{
+.setting-menu-content{
     height: 550px;
     padding: 12px 4px;
     min-width: 100%;
     box-sizing: border-box;
 }
 
-.save-menu-content *{
+.setting-menu-content *{
     box-sizing: border-box;
 }
 
-.save-menu-content .input{
+.setting-menu-content .input{
     border-color: var(--red-brown);
 }
 
@@ -121,4 +121,9 @@
 
 .create-new-save-btn{
     width: 100%;
+}
+
+.setting-header{
+    font-size: 28px;
+    font-weight: bold;
 }

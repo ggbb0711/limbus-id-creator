@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import { ReactElement } from "react";
-import {Link, Outlet, useLocation} from "react-router-dom";
+import {Link, Outlet} from "react-router-dom";
 import "./HeaderLayout.css"
 import MainButton from "utils/MainButton/MainButton";
 import { RefDownloadProvider } from "component/context/ImgUrlContext";
-import { SaveMenu, useSaveMenuContext } from "component/util/SaveMenu/SaveMenu";
 import SideBar from "./SideBar/SideBar";
 import { AlertContextProvider } from "component/context/AlertContext";
 import AlertPopUp from "./AlertPopUp/AlertPopUp";
-import SideBarDownloadBtn from "./SideBarDownloadBtn/SideBarDownloadBtn";
 import { LoginMenu, useLoginMenuContext } from "component/util/LoginMenu/LoginMenu";
 import { LoginUserContextProvider, useLoginUserContext } from "component/context/LoginUserContext";
-import Save_icon from "Icons/Save_icon";
+import { SettingMenu } from "../SettingMenu/SettingMenu";
 
 export default function HeaderLayout():ReactElement{
 
@@ -19,9 +17,9 @@ export default function HeaderLayout():ReactElement{
         <AlertContextProvider>
             <RefDownloadProvider>
                 <LoginMenu>
-                    <SaveMenu>
+                    <SettingMenu>
                         <HeaderLayoutContent/>
-                    </SaveMenu>
+                    </SettingMenu>
                 </LoginMenu>
             </RefDownloadProvider>
         </AlertContextProvider>
@@ -30,9 +28,7 @@ export default function HeaderLayout():ReactElement{
 
 
 function HeaderLayoutContent():ReactElement{
-    const location = useLocation()
     const [isSideBarActive,setActiveSideBar] = useState(false)
-    const {isActive,setIsActive} = useSaveMenuContext()
     const {isLoginMenuActive,setIsLoginMenuActive} = useLoginMenuContext()
     const {loginUser} = useLoginUserContext()
 
@@ -52,17 +48,6 @@ function HeaderLayoutContent():ReactElement{
                     {loginUser?<Link to={"/User/"+loginUser.id}><MainButton component={"My account"} btnClass="main-button"></MainButton></Link>:
                     <MainButton component={'Login'} btnClass={"main-button nav-button"} clickHandler={()=>setIsLoginMenuActive(!isLoginMenuActive)}/>}
                     {loginUser&&<Link to={"/NewPost"}><MainButton component={"Post"} btnClass="main-button"></MainButton></Link>}
-                </div>
-                <div className="center-element">
-                    {(location.pathname.match("/IdCreator")||location.pathname.match("/EgoCreator")||location.pathname==="/")?
-                        <>
-                            <SideBarDownloadBtn/>
-                            <MainButton component={<>
-                                <Save_icon/>
-                                <p>Save</p>
-                            </>} btnClass={"main-button center-element"} clickHandler={()=>setIsActive(!isActive)}/>
-                        </>:<></>
-                    }
                 </div>
             </nav>
             <SideBar isActive={isSideBarActive} setActiveSideBar={setActiveSideBar}/>

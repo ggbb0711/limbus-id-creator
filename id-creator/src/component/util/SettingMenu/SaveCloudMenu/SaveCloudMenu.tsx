@@ -2,7 +2,7 @@ import { useRefDownloadContext } from "component/context/ImgUrlContext";
 import React, { useEffect, useState } from "react";
 import { ReactElement } from "react";
 import "./SaveCloudMenu.css"
-import "../SaveMenu.css"
+import "../SettingMenu.css"
 import MainButton from "utils/MainButton/MainButton";
 import { useLoginUserContext } from "component/context/LoginUserContext";
 import { useLoginMenuContext } from "component/util/LoginMenu/LoginMenu";
@@ -231,7 +231,7 @@ export default function SaveCloudMenu({isActive,setIsActive,saveMode,saveObjInfo
         </div>
         <div >
             <label htmlFor="saveName">Search: </label>
-            <input className="input save-cloud-name-input" name="search-save-name" id="search-save-name" type="text" placeholder="Save name" value={searchSaveName} onChange={(e)=>setSearchSaveName(e.target.value)}/>
+            <input className="input save-cloud-name-input" name="saveName" id="saveName" type="text" placeholder="Save name" value={searchSaveName} onChange={(e)=>setSearchSaveName(e.target.value)}/>
         </div>
         <div className="save-menu-list-container">
             {isLoadingSaveData?<div className="loading-cloud-tab"><div className="loader"></div></div>:<></>}

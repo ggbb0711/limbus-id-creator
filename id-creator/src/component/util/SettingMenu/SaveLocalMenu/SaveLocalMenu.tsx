@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import "../SaveMenu.css"
+import "../SettingMenu.css"
 import { ISaveFile, SaveFile } from "Interfaces/ISaveFile";
 import MainButton from "utils/MainButton/MainButton";
 import { IIdInfo } from "Interfaces/IIdInfo";

@@ -56,7 +56,7 @@ const router = createBrowserRouter([
 
 function App():ReactElement{
     useEffect(()=>{
-        const keyStorageName = ["currEgoSave","EgoLocalSaves","currIdSave","IdLocalSaves"]
+        const keyStorageName = ["currEgoSave","EgoLocalSaves","currIdSave","IdLocalSaves","customKeywords"]
         for (let i = 0; i < localStorage.length; i++) {
             if(!keyStorageName.includes(localStorage.key(i))){
                 localStorage.removeItem(localStorage.key(i))

@@ -8,8 +8,9 @@ import { EgoInfoProvider, useEgoInfoContext } from 'component/context/EgoInfoCon
 import { EgoCard } from 'component/CardMakerComponents/Card/EgoCard';
 import InputTabEgoInfoContainer from 'component/CardMakerComponents/InputTab/InputTabContainer/InputTabEgoInfoContainer/InputTabEgoInfoContainer';
 import { useSearchParams } from 'react-router-dom';
-import { useSaveMenuContext } from 'component/util/SaveMenu/SaveMenu';
 import ResetMenu from 'utils/ResetMenu/ResetMenu';
+import CardMakerFooter from 'component/CardMakerComponents/CardMakerFooter/CardMakerFooter';
+import { useSettingMenuContext } from 'component/util/SettingMenu/SettingMenu';
 
 
 
@@ -22,11 +23,10 @@ export default function EgoCardPage():ReactElement{
 }
 
 function EgoCardContent():ReactElement{
-    const [isShown,setIsShown]=useState(false)
     const [isResetMenuActive,setResetMenuActive] = useState(false)
     const [height,setHeight] = useState(0)
     const {EgoInfoValue,setEgoInfoValue,reset} = useEgoInfoContext()
-    const {setLocalSaveName,changeSaveInfo,setLoadObjInfoValueCb} = useSaveMenuContext() 
+    const {setLocalSaveName,changeSaveInfo,setLoadObjInfoValueCb} = useSettingMenuContext() 
     const domRef=useRef(null)
     const [query] = useSearchParams()
     const {setDomRef} = useRefDownloadContext()
@@ -61,7 +61,10 @@ function EgoCardContent():ReactElement{
     },[])
 
     useEffect(()=>{
-        setHeight(Math.floor(window.innerHeight)-Math.floor(document.querySelector(".site-header").clientHeight)-2)
+        setHeight(Math.floor(window.innerHeight)
+        -Math.floor(document.querySelector(".site-header").clientHeight)
+        -Math.floor(document.querySelector(".card-maker-footer").clientHeight)
+        -2)    
     },[window.innerHeight])
 
     useEffect(()=>{
@@ -71,15 +74,18 @@ function EgoCardContent():ReactElement{
     },[JSON.stringify(EgoInfoValue)])
 
     return <StatusEffectProvider skillDetails={EgoInfoValue.skillDetails}>
-            <div className={`editor-container ${isShown?"show":""}`} style={{height:height}}>
-                <InputTabEgoInfoContainer
-                    resetBtnHandler={()=>setResetMenuActive(!isResetMenuActive)}
-                    activeTab={activeTab}
-                    changeActiveTab={changeActiveTab} />
-                <ResetMenu isActive={isResetMenuActive} setIsActive={setResetMenuActive} confirmFn={reset} />
-                <div className='preview-container'>
-                    <EgoCard ref={domRef} changeActiveTab={setActiveTab}/>
+            <>
+                <div className={`editor-container`} style={{height:height}}>
+                    <InputTabEgoInfoContainer
+                        resetBtnHandler={()=>setResetMenuActive(!isResetMenuActive)}
+                        activeTab={activeTab}
+                        changeActiveTab={changeActiveTab} />
+                    <ResetMenu isActive={isResetMenuActive} setIsActive={setResetMenuActive} confirmFn={reset} />
+                    <div className='preview-container'>
+                        <EgoCard ref={domRef} changeActiveTab={setActiveTab}/>
+                    </div>
                 </div>
-            </div>
+                <CardMakerFooter/>
+            </>
     </StatusEffectProvider>
 }

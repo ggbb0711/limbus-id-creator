@@ -1,0 +1,62 @@
+.custom-keyword-menu{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.custom-keyword-container{
+    flex: 1;
+    border: 2px solid var(--red-brown);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.custom-keyword-tab{
+    background-color: #ECCAA5;
+    padding: 4px;
+}
+
+.input.editting-custom-keyword-input{
+    text-align: center;
+    border-color: transparent;
+    padding: 0px
+}
+
+.input.editting-custom-keyword-input:hover{
+    border-color: transparent
+}
+
+.input.editting-custom-keyword-input.active{
+    border-color: var(--red-brown);
+}
+
+.input.editting-custom-keyword-input.active:hover{
+    border-color: var(--hover-border-color)
+}
+
+.custom-keyword-tab-icons{
+    text-align: end;
+}
+
+.custom-keyword-tab-icons>span{
+    cursor: pointer;
+}
+
+.custom-keyword-tab-setting-icon:hover{
+    fill: green;
+}
+
+.custom-keyword-tab-delete-icon:hover{
+    fill:red;
+}
+
+.custom-keyword-input-container{
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
