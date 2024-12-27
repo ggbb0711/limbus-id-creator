@@ -39,6 +39,7 @@ export default function SaveCloudMenu({isActive,setIsActive,saveMode,saveObjInfo
 
     async function createForm (saveObjInfoValue:ISaveFile<IIdInfo|IEgoInfo>):Promise<FormData>{
         const form = new FormData()
+        saveObjInfoValue.saveTime = (new Date()).toLocaleString('en-GB')
         //Deep copy
         const saveData = JSON.parse(JSON.stringify(saveObjInfoValue))
         const saveInfo = {...saveData.saveInfo}
