@@ -4,6 +4,7 @@ import "./SideBar.css"
 import MainButton from "utils/MainButton/MainButton";
 import { useLoginMenuContext } from "component/util/LoginMenu/LoginMenu";
 import { useLoginUserContext } from "component/context/LoginUserContext";
+import Kofi_icon from "Icons/Kofi_icon";
 
 
 export default function SideBar({isActive,setActiveSideBar}:{isActive:boolean,setActiveSideBar:(a:boolean)=>void}){
@@ -24,6 +25,12 @@ export default function SideBar({isActive,setActiveSideBar}:{isActive:boolean,se
                     {loginUser?<Link to={"/User/"+loginUser.id}><MainButton component={"My account"} btnClass="main-button" clickHandler={()=>setActiveSideBar(!isActive)}></MainButton></Link>:
                     <MainButton component={'Login'} btnClass={"main-button nav-button"} clickHandler={()=>setIsLoginMenuActive(!isLoginMenuActive)}/>}
                     {loginUser&&<Link to={"/NewPost"}><MainButton component={"Post"} btnClass="main-button" clickHandler={()=>setActiveSideBar(!isActive)}></MainButton></Link>}
+                    <Link to="https://ko-fi.com/johnlimbusidmaker" target="_blank">
+                        <button style={{justifyContent:"center"}} className="main-button center-element">
+                            <Kofi_icon width="16px" height="16px"/>
+                            <p>Support me</p>
+                        </button>
+                    </Link>
                 </div>
             </div>
         </div>

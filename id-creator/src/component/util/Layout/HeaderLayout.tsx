@@ -10,6 +10,7 @@ import AlertPopUp from "./AlertPopUp/AlertPopUp";
 import { LoginMenu, useLoginMenuContext } from "component/util/LoginMenu/LoginMenu";
 import { LoginUserContextProvider, useLoginUserContext } from "component/context/LoginUserContext";
 import { SettingMenu } from "../SettingMenu/SettingMenu";
+import Kofi_icon from "Icons/Kofi_icon";
 
 export default function HeaderLayout():ReactElement{
 
@@ -48,6 +49,12 @@ function HeaderLayoutContent():ReactElement{
                     {loginUser?<Link to={"/User/"+loginUser.id}><MainButton component={"My account"} btnClass="main-button"></MainButton></Link>:
                     <MainButton component={'Login'} btnClass={"main-button nav-button"} clickHandler={()=>setIsLoginMenuActive(!isLoginMenuActive)}/>}
                     {loginUser&&<Link to={"/NewPost"}><MainButton component={"Post"} btnClass="main-button"></MainButton></Link>}
+                    <a href="https://ko-fi.com/johnlimbusidmaker" target="_blank">
+                        <button className="main-button center-element">
+                            <Kofi_icon width="16px" height="16px"/>
+                            <p>Support me</p>
+                        </button>
+                    </a>
                 </div>
             </nav>
             <SideBar isActive={isSideBarActive} setActiveSideBar={setActiveSideBar}/>
