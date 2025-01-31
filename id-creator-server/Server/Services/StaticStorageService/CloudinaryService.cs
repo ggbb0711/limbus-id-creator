@@ -34,6 +34,7 @@ namespace Server.Services
                 UseFilename = true,
                 UniqueFilename = false,
                 Overwrite = true,
+                Transformation = new Transformation().Quality(35).Chain().FetchFormat("auto")
             };
 
             var uploadResult = await _cloudinary.UploadAsync(uploadParams);
@@ -49,6 +50,7 @@ namespace Server.Services
                 PublicId = fileName,
                 UniqueFilename = false,
                 Overwrite = true,
+                Transformation = new Transformation().Quality(35).Chain().FetchFormat("auto")
             };
 
             var uploadResult = await _cloudinary.UploadAsync(uploadParams);
