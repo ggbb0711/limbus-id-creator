@@ -39,7 +39,7 @@ namespace Server.Services
 
             var uploadResult = await _cloudinary.UploadAsync(uploadParams);
             
-            return uploadResult.SecureUrl.ToString();
+            return transformUrl(uploadResult.SecureUrl.ToString());
         }
 
         public async Task<string> Upload(string url, string fileName)
@@ -55,7 +55,16 @@ namespace Server.Services
 
             var uploadResult = await _cloudinary.UploadAsync(uploadParams);
             if(uploadResult.Error != null) return await Upload(await FileHelper.ConvertToByteArray(url),fileName);
-            return uploadResult.SecureUrl.ToString();
+            return transformUrl(uploadResult.SecureUrl.ToString());
+        }
+
+        private string transformUrl(string url)
+        {
+            var marker = "/upload/";
+            var markerIndex = url.IndexOf(marker, StringComparison.OrdinalIgnoreCase);
+
+            var modifiedUrl = url.Insert(markerIndex + marker.Length, "q_35/f_auto/");
+            return modifiedUrl;
         }
     }
 }
