@@ -58,8 +58,7 @@ namespace Server.Services.SavedInfoService
             if(oldSave==null||!oldSave.UserId.Equals(newSave.UserId)) return null;
             //Change the id of the newSave to fit with the old save
             newSave.ImageAttach.Id = oldSave.ImageAttach.Id; 
-            if(!oldSave.ImageAttach.Url.Equals(newSave.ImageAttach.Url)
-                ||FileHelper.IsBase64String(newSave.ImageAttach.Url))
+            if(!oldSave.ImageAttach.Url.Equals(newSave.ImageAttach.Url))
             {
                 uploadingImages.Add(newSave.ImageAttach);
             }
@@ -88,11 +87,11 @@ namespace Server.Services.SavedInfoService
             newSave.SavedId.SplashArtId = oldSplashArt.Id;
             sinnerIcon.Id = oldSinnerIcon.Id;
             newSave.SavedId.SinnerIconId = oldSinnerIcon.Id;
-            if(!oldSplashArt.Url.Equals(splashArt.Url)||FileHelper.IsBase64String(splashArt.Url))
+            if(!oldSplashArt.Url.Equals(splashArt.Url))
             {
                 uploadingImages.Add(splashArt);
             }
-            if(!oldSinnerIcon.Url.Equals(sinnerIcon.Url)||FileHelper.IsBase64String(sinnerIcon.Url))
+            if(!oldSinnerIcon.Url.Equals(sinnerIcon.Url))
             {
                 uploadingImages.Add(sinnerIcon);
             }
@@ -105,7 +104,7 @@ namespace Server.Services.SavedInfoService
                 {
                     skill.ImageAttach.Id = oldSkill.ImageAttach.Id;
                     skill.ImageAttachId = oldSkill.ImageAttachId;
-                    if(!skill.ImageAttach.Url.Equals(oldSkill.ImageAttach.Url)||FileHelper.IsBase64String(skill.ImageAttach.Url))
+                    if(!skill.ImageAttach.Url.Equals(oldSkill.ImageAttach.Url))
                     {
                         uploadingImages.Add(skill.ImageAttach);
                     }
@@ -120,7 +119,7 @@ namespace Server.Services.SavedInfoService
                 {
                     skill.ImageAttach.Id = oldSkill.ImageAttach.Id;
                     skill.ImageAttachId = oldSkill.ImageAttachId;
-                    if(!skill.ImageAttach.Url.Equals(oldSkill.ImageAttach.Url)||FileHelper.IsBase64String(skill.ImageAttach.Url))
+                    if(!skill.ImageAttach.Url.Equals(oldSkill.ImageAttach.Url))
                     {
                         uploadingImages.Add(skill.ImageAttach);
                     }
@@ -135,7 +134,7 @@ namespace Server.Services.SavedInfoService
                 {
                     skill.ImageAttach.Id = oldSkill.ImageAttach.Id;
                     skill.ImageAttachId = oldSkill.ImageAttachId;
-                    if(!skill.ImageAttach.Url.Equals(oldSkill.ImageAttach.Url)||FileHelper.IsBase64String(skill.ImageAttach.Url))
+                    if(!skill.ImageAttach.Url.Equals(oldSkill.ImageAttach.Url))
                     {
                         uploadingImages.Add(skill.ImageAttach);
                     }

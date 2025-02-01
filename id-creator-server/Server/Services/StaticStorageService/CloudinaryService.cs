@@ -58,7 +58,6 @@ namespace Server.Services
             return TransformUrl(uploadResult.SecureUrl.ToString());
         }
 
-
         private string TransformUrl(string url)
         {
             var marker = "/upload/";
