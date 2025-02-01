@@ -62,7 +62,7 @@ export default function SaveCloudMenu({isActive,setIsActive,saveMode,saveObjInfo
         form.append("thumbnailImage",await imageCompression(thumbnailImageFile,{
             maxSizeMB: 1,
             useWebWorker: true,                    
-            maxWidthOrHeight: Math.max(1650,Math.floor(width*(2/3)))
+            maxWidthOrHeight: Math.max(1650,Math.floor(width/2))
         }))
 
         saveInfo.skillDetails.forEach((skill,i)=>{
