@@ -223,6 +223,15 @@ export const baseStatusEffect={
 
     "contempt_of_the_gaze":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Contempt_of_the_Gaze.png' alt='contempt_of_the_gaze_icon' />Contempt of the Gaze</span>",
+    
+    "concentration_-_sniper":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Concentration-Sniper.png' alt='concentration_sniper_icon' />Concentration - Sniper</span>",
+    
+    "nebulizer_β":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Nebulizer_β.png' alt='nebulizer_β_icon' />Nebulizer β</span>",
+    
+    "deep_breath":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Deep_Breath.png' alt='deep_breath_icon' />Deep Breath</span>",
 
     "slash_dmg_down":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Slash_DMG_Down.png' alt='slash_dmg_down_icon' />Slash DMG Down</span>",
@@ -335,6 +344,9 @@ export const baseStatusEffect={
     "fragile":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Fragile.png' alt='fragile_icon' />Fragile</span>",
     
+    "smoke":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Smoke.png' alt='smoke_icon' />Smoke</span>",
+
     "plus_coin_drop":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Plus_Coin_Drop.png' alt='plus_coin_drop_icon' />Plus Coin Drop</span>",
     
@@ -461,11 +473,17 @@ export const baseStatusEffect={
     "time_moratorium":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Time_Moratorium.png' alt='time_moratorium_icon' />Time Moratorium</span>",
 
+    "fairy_lure":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Fairy_Lure.png' alt='fairy_lure_icon' />Fairy Lure</span>",
+
     "aggro":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Aggro.png' alt='aggro_icon' />Aggro</span>",
     
     "ammo":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Ammo.png' alt='ammo_icon' />Ammo</span>",
+    
+    "ammo_-_atelier_logic":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Ammo_-_Atelier_Logic.png' alt='ammo_-_atelier_logic_icon' />Ammo - Atelier Logic</span>",
 
     "discard":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration: underline;'><img class='status-icon' src='Images/status-effect/Discard.png' alt='discard_icon' />Discard</span>",
@@ -506,6 +524,9 @@ export const baseStatusEffect={
     "strategic_r&r_mode":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Strategic_R&R_Mode.png' alt='strategic_r&r_mode_icon' />Strategic R&R Mode</span>",
     
+    "overwatch_assignment":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Overwatch_Assignment.png' alt='overwatch_assignment_icon' />Overwatch Assignment</span>",
+
     "makeshift_surgery":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Makeshift_Surgery.png' alt='makeshift_surgery_icon' />Makeshift Surgery</span>",
     
