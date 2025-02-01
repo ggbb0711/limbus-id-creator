@@ -11,6 +11,7 @@ import Delete_icon from "Icons/Delete_icon";
 import MainButton from "utils/MainButton/MainButton";
 import Arrow_down_icon from "Icons/Arrow_down_icon";
 import imageCompression from 'browser-image-compression'
+import getImageDimensions from "utils/Functions/getImageDimensions";
 
 export default function InputIdInfoStatPage({collaspPage}:{collaspPage:()=>void}):ReactElement{
     const {idInfoValue,setIdInfoValue} = useIdInfoContext()
@@ -55,9 +56,13 @@ export default function InputIdInfoStatPage({collaspPage}:{collaspPage:()=>void}
             let url="";
             const fr = new FileReader()
             if(e.currentTarget.files.length>0){
-                const compressedFile = await imageCompression(e.currentTarget.files[0],{
+                const file = e.currentTarget.files[0]
+                const {width} = await getImageDimensions(file)
+                
+                const compressedFile = await imageCompression(file,{
                     maxSizeMB: 1,
-                    useWebWorker: true
+                    useWebWorker: true,
+                    maxWidthOrHeight: Math.max(1650,Math.floor(width*(2/3)))
                 })
                 fr.readAsDataURL(compressedFile)
 

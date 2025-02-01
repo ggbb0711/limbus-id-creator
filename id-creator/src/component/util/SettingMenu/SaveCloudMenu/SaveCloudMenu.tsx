@@ -20,6 +20,7 @@ import { useAlertContext } from "component/context/AlertContext";
 import SaveCloudTab from "./SaveCloudTab";
 import PopUpMenu from "utils/PopUpMenu/PopUpMenu";
 import imageCompression from 'browser-image-compression';
+import getImageDimensions from "utils/Functions/getImageDimensions";
 
 export default function SaveCloudMenu({isActive,setIsActive,saveMode,saveObjInfoValue,loadObjInfoValueCb,setSaveObjInfoValue}:{
     isActive:boolean,
@@ -56,9 +57,12 @@ export default function SaveCloudMenu({isActive,setIsActive,saveMode,saveObjInfo
             saveInfo.splashArt = ""
         }
 
-        form.append("thumbnailImage",await imageCompression(base64ToFile(await setImgUrlState(),"new file"),{
+        const thumbnailImageFile = base64ToFile(await setImgUrlState(),"new file")
+        const {width} = await getImageDimensions(thumbnailImageFile)
+        form.append("thumbnailImage",await imageCompression(thumbnailImageFile,{
             maxSizeMB: 1,
-            useWebWorker: true
+            useWebWorker: true,                    
+            maxWidthOrHeight: Math.max(1650,Math.floor(width*(2/3)))
         }))
 
         saveInfo.skillDetails.forEach((skill,i)=>{

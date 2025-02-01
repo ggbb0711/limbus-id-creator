@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import replaceKeyWord from "./replaceKeyWord";
 import isObject from "utils/Functions/isObject";
 import imageCompression from 'browser-image-compression';
+import getImageDimensions from "utils/Functions/getImageDimensions";
 
 interface INewInput{
     [type:string]:string|number|INewInput
@@ -55,9 +56,13 @@ export default function useInput(propInputs:INewInput,changeInput:(newInput:INew
         let url="";
         const fr = new FileReader()
         if(e.currentTarget.files.length>0){
-            const compressedFile = await imageCompression(e.currentTarget.files[0],{
+            const file = e.currentTarget.files[0]
+            const {width} = await getImageDimensions(file)
+            
+            const compressedFile = await imageCompression(file,{
                 maxSizeMB: 1,
-                useWebWorker: true
+                useWebWorker: true,
+                maxWidthOrHeight: Math.max(1650,Math.floor(width*(2/3)))
             })
             fr.readAsDataURL(compressedFile)
 
@@ -73,9 +78,13 @@ export default function useInput(propInputs:INewInput,changeInput:(newInput:INew
             let url="";
             const fr = new FileReader()
             if(e.currentTarget.files.length>0){
-                const compressedFile = await imageCompression(e.currentTarget.files[0],{
+                const file = e.currentTarget.files[0]
+                const {width} = await getImageDimensions(file)
+                
+                const compressedFile = await imageCompression(file,{
                     maxSizeMB: 1,
-                    useWebWorker: true
+                    useWebWorker: true,
+                    maxWidthOrHeight: Math.max(1650,Math.floor(width*(2/3)))
                 })
                 fr.readAsDataURL(compressedFile)
 
