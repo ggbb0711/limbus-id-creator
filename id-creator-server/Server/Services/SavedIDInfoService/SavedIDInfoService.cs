@@ -53,7 +53,7 @@ namespace Server.Services.SavedInfoService
 
         public async Task<SavedIDInfo?> UpdateSavedInfo(SavedIDInfo newSave,SaveInfoFiles files)
         {
-            var uploadingImages = await populateImageField(newSave,files);
+            var uploadingImages = new List<ImageObj>();
             var oldSave = await _saveRepository.GetSaved(newSave.Id,true);
             if(oldSave==null||!oldSave.UserId.Equals(newSave.UserId)) return null;
             //Change the id of the newSave to fit with the old save
