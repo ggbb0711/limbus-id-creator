@@ -19,6 +19,7 @@ import uuid from "react-uuid";
 import { useAlertContext } from "component/context/AlertContext";
 import SaveCloudTab from "./SaveCloudTab";
 import PopUpMenu from "utils/PopUpMenu/PopUpMenu";
+import imageCompression from 'browser-image-compression';
 
 export default function SaveCloudMenu({isActive,setIsActive,saveMode,saveObjInfoValue,loadObjInfoValueCb,setSaveObjInfoValue}:{
     isActive:boolean,
@@ -55,7 +56,10 @@ export default function SaveCloudMenu({isActive,setIsActive,saveMode,saveObjInfo
             saveInfo.splashArt = ""
         }
 
-        form.append("thumbnailImage",base64ToFile(await setImgUrlState(),"new file"))
+        form.append("thumbnailImage",await imageCompression(base64ToFile(await setImgUrlState(),"new file"),{
+            maxSizeMB: 1,
+            useWebWorker: true
+        }))
 
         saveInfo.skillDetails.forEach((skill,i)=>{
             if(skill.type==="OffenseSkill"){

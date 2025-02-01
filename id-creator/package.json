@@ -13,6 +13,7 @@
     "@types/react": "^18.2.57",
     "@types/react-dom": "^18.2.19",
     "@types/sanitize-html": "^2.11.0",
+    "browser-image-compression": "^2.0.2",
     "gh-pages": "^6.1.1",
     "html-to-image": "^1.11.11",
     "id-creator": "file:",

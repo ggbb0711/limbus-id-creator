@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import replaceKeyWord from "./replaceKeyWord";
-import sanitizeHtml from "sanitize-html";
 import isObject from "utils/Functions/isObject";
+import imageCompression from 'browser-image-compression';
 
 interface INewInput{
     [type:string]:string|number|INewInput
@@ -51,11 +51,15 @@ export default function useInput(propInputs:INewInput,changeInput:(newInput:INew
     }
 
 
-    function onChangeFile(e:React.ChangeEvent<HTMLInputElement>){
+    async function onChangeFile(e:React.ChangeEvent<HTMLInputElement>){
         let url="";
         const fr = new FileReader()
         if(e.currentTarget.files.length>0){
-            fr.readAsDataURL(e.currentTarget.files[0])
+            const compressedFile = await imageCompression(e.currentTarget.files[0],{
+                maxSizeMB: 1,
+                useWebWorker: true
+            })
+            fr.readAsDataURL(compressedFile)
 
             fr.addEventListener("load",()=>{
                 url=fr.result as any
@@ -65,11 +69,15 @@ export default function useInput(propInputs:INewInput,changeInput:(newInput:INew
     }
 
     function onChangeFileWithName(inputName:string){
-        return(e:React.ChangeEvent<HTMLInputElement>)=>{
+        return async (e:React.ChangeEvent<HTMLInputElement>)=>{
             let url="";
             const fr = new FileReader()
             if(e.currentTarget.files.length>0){
-                fr.readAsDataURL(e.currentTarget.files[0])
+                const compressedFile = await imageCompression(e.currentTarget.files[0],{
+                    maxSizeMB: 1,
+                    useWebWorker: true
+                })
+                fr.readAsDataURL(compressedFile)
 
                 fr.addEventListener("load",()=>{
                     url=fr.result as any

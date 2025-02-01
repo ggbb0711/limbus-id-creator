@@ -50,7 +50,6 @@ export default function DragAndDroppableSkill({skill,isDraggingHandler,dropHandl
         if (ref.current) {
             const width = ref.current.clientWidth
             const height = ref.current.clientHeight
-            console.log(width)
             setDimensions({ width, height })
             drag(drop(ref))
         }

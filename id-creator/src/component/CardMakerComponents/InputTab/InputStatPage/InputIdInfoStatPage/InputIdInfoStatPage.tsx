@@ -10,7 +10,7 @@ import SinnerRarityIconInput from "../SinnerRarityInput/SinnerRarityInput";
 import Delete_icon from "Icons/Delete_icon";
 import MainButton from "utils/MainButton/MainButton";
 import Arrow_down_icon from "Icons/Arrow_down_icon";
-
+import imageCompression from 'browser-image-compression'
 
 export default function InputIdInfoStatPage({collaspPage}:{collaspPage:()=>void}):ReactElement{
     const {idInfoValue,setIdInfoValue} = useIdInfoContext()
@@ -51,12 +51,15 @@ export default function InputIdInfoStatPage({collaspPage}:{collaspPage:()=>void}
     }
 
     function onFileInputChange(name:string){
-        return(e:React.ChangeEvent<HTMLInputElement>)=>{
+        return async(e:React.ChangeEvent<HTMLInputElement>)=>{
             let url="";
             const fr = new FileReader()
-            console.log(url)
             if(e.currentTarget.files.length>0){
-                fr.readAsDataURL(e.currentTarget.files[0])
+                const compressedFile = await imageCompression(e.currentTarget.files[0],{
+                    maxSizeMB: 1,
+                    useWebWorker: true
+                })
+                fr.readAsDataURL(compressedFile)
 
                 fr.addEventListener("load",()=>{
                     url=fr.result as any
