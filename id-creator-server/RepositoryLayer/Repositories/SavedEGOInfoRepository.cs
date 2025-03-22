@@ -45,11 +45,6 @@ namespace RepositoryLayer.Repositories
             return await query.FirstOrDefaultAsync();
         }
 
-        public Task<List<SavedEGOInfo>> GetMultiSaved(SearchSaveParams option)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<SavedEGOInfo?> UpdateSaved( UpdateSaveParams<SavedEgo> newSave)
         {
             var foundSave = await _ctx.SavedEGOInfos.Where(e=>e.Id == newSave.UpdateId).Include(s=>s.SavedEgo).FirstOrDefaultAsync();

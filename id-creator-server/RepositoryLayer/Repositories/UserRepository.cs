@@ -12,22 +12,22 @@ namespace RepositoryLayer.Repositories
             _ctx = ctx;
         }
 
-        public async Task<User?> ChangeUser(Guid id, UserChangeProfileDTO userChangeProfile)
-        {
-            var foundUser = await _ctx.Users.FirstOrDefaultAsync(user => user.Id == id);
-            if(foundUser != null)
-            {
-                if(!userChangeProfile.UserName.IsNullOrEmpty())foundUser.UserName = userChangeProfile.UserName;
-                if(!userChangeProfile.UserIcon.IsNullOrEmpty())
-                {
-                    foundUser.UserIcon.Url = userChangeProfile.UserIcon;
-                    foundUser.UserIcon.LastUpdated = DateTime.Now;
-                }
-
-                await _ctx.SaveChangesAsync();
-            }
-            return foundUser;
-        }
+        // public async Task<User?> ChangeUser(Guid id, UserChangeProfileDTO userChangeProfile)
+        // {
+        //     var foundUser = await _ctx.Users.FirstOrDefaultAsync(user => user.Id == id);
+        //     if(foundUser != null)
+        //     {
+        //         if(!userChangeProfile.UserName.IsNullOrEmpty())foundUser.UserName = userChangeProfile.UserName;
+        //         if(!userChangeProfile.UserIcon.IsNullOrEmpty())
+        //         {
+        //             foundUser.UserIcon.Url = userChangeProfile.UserIcon;
+        //             foundUser.UserIcon.LastUpdated = DateTime.Now;
+        //         }
+        //
+        //         await _ctx.SaveChangesAsync();
+        //     }
+        //     return foundUser;
+        // }
 
         public async Task<User?> CreateUser(User newUser)
         {

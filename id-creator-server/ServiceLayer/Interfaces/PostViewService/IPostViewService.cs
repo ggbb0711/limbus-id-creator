@@ -1,3 +1,5 @@
+using RepositoryLayer.Models;
+
 namespace ServiceLayer.Interfaces.PostViewService
 {
     public interface IPostViewService

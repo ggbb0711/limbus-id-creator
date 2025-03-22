@@ -7,6 +7,6 @@ namespace RepositoryLayer.Repositories.Interface
         Task<User?> CreateUser(User newUser);
         Task<User?> GetUserByEmail(string email);
         Task<User?> GetUserById(Guid id);
-        Task<User?> ChangeUser(Guid id,UserChangeProfileDTO userChangeProfile);
+        // Task<User?> ChangeUser(Guid id, UserChangeProfileDTO userChangeProfile);
     }
 }

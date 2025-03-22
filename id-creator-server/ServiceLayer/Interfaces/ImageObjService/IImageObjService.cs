@@ -1,5 +1,7 @@
 
 
+using RepositoryLayer.Models;
+
 namespace ServiceLayer.Interfaces.ImageObjService
 {
     public interface IImageObjService

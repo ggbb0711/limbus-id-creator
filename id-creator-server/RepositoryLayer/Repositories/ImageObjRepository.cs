@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using RepositoryLayer.Models;
 using RepositoryLayer.Repositories.Interface;
 
@@ -16,12 +17,10 @@ namespace RepositoryLayer.Repositories
         {
             var image = await _ctx.ImageObjs.Where(x => x.Id == imgId).FirstOrDefaultAsync();
 
-            if (image != null)
-            {
-                image.Url = newUrl;
-                image.LastUpdated = DateTime.Now;
-                await _ctx.SaveChangesAsync();
-            }
+            if (image == null) return image;
+            image.Url = newUrl;
+            image.LastUpdated = DateTime.Now;
+            await _ctx.SaveChangesAsync();
             return image;
         }
     }

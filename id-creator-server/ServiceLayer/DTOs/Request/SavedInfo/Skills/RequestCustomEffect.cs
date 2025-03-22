@@ -1,4 +1,6 @@
 
+using RepositoryLayer.Utils.UtilInterfaces;
+
 namespace ServiceLayer.DTOs.Request.SavedInfo.Skills
 {
     public class RequestCustomEffect:IRequestSkillType

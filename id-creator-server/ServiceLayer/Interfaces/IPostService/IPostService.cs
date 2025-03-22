@@ -1,3 +1,6 @@
+using RepositoryLayer.Models;
+using RepositoryLayer.Utils.Obj;
+
 namespace ServiceLayer.Interfaces.IPostService
 {
     public interface IPostService

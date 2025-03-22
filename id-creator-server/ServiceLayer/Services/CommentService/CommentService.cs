@@ -1,5 +1,6 @@
 using RepositoryLayer.Models;
 using RepositoryLayer.Repositories.Interface;
+using RepositoryLayer.Utils.Obj;
 using ServiceLayer.Interfaces.CommentService;
 
 namespace ServiceLayer.Services.CommentService

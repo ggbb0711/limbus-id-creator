@@ -25,7 +25,7 @@ namespace RepositoryLayer.Repositories
         {
             IQueryable<Post> query;
             query = _ctx.Post.Where(p=>p.Title.Contains(option.Title)
-            &&(option.UserId.IsNullOrEmpty()||option.UserId==p.UserId.ToString())
+            &&(option.UserId==p.UserId.ToString())
             &&(option.Tag.Count<1||option.Tag.All(t=>p.Tags.Select(t=>t.TagName).Contains(t))));
 
             switch(option.SortedBy)
@@ -54,7 +54,7 @@ namespace RepositoryLayer.Repositories
         {
             IQueryable<Post> query;
             query = _ctx.Post.Where(p=>p.Title.ToLower().Contains(option.Title.ToLower())
-            &&(option.UserId.IsNullOrEmpty()||option.UserId==p.UserId.ToString())
+            &&(option.UserId==p.UserId.ToString())
             &&(option.Tag.Count<1||option.Tag.All(t=>p.Tags.Select(t=>t.TagName).Contains(t))));
 
             switch(option.SortedBy)

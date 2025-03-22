@@ -1,6 +1,8 @@
 
 
 
+using RepositoryLayer.Models;
+
 namespace ServiceLayer.Interfaces.SessionService
 {
     public interface ISessionService

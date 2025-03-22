@@ -1,3 +1,6 @@
+using RepositoryLayer.Models;
+using RepositoryLayer.Utils.Obj;
+
 namespace ServiceLayer.Interfaces.CommentService
 {
     public interface ICommentService

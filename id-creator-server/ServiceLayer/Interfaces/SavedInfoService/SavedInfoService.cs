@@ -1,3 +1,5 @@
+using RepositoryLayer.Utils.Obj;
+
 namespace ServiceLayer.Interfaces.SavedInfoService
 {
     public interface ISavedInfoService<SavedInfo>

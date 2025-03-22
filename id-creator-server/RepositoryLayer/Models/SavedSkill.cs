@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using RepositoryLayer.Utils.UtilInterfaces;
 
 namespace RepositoryLayer.Models
 {

@@ -1,3 +1,7 @@
+using Microsoft.AspNetCore.Http;
+using RepositoryLayer.Models;
+using RepositoryLayer.Utils.Obj;
+
 namespace ServiceLayer.Interfaces.UserService
 {
     public interface IUserService

@@ -9,7 +9,7 @@ using RepositoryLayer;
 
 #nullable disable
 
-namespace Server.Migrations
+namespace RepositoryLayer.Migrations
 {
     [DbContext(typeof(ServerDbContext))]
     [Migration("20240811102207_CreateInitial")]

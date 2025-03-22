@@ -1,6 +1,8 @@
 
 
 
+using Microsoft.AspNetCore.Http;
+
 namespace ServiceLayer.Interfaces.SessionService
 {
     public interface ICookieSessionService

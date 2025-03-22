@@ -1,5 +1,7 @@
 using RepositoryLayer.Models;
 using RepositoryLayer.Repositories.Interface;
+using RepositoryLayer.Utils.Obj;
+using RepositoryLayer.Utils.RabbitMQPublisher;
 using ServiceLayer.Interfaces.IPostService;
 
 namespace ServiceLayer.Services.PostService
