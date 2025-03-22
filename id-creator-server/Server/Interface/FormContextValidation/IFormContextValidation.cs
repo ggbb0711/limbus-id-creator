@@ -1,7 +1,6 @@
 
 
 using System.Net;
-using Server.Models;
 
 namespace Server.Interface.Repositories
 {

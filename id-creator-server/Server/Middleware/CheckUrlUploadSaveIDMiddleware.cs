@@ -2,11 +2,11 @@ using System.Net;
 using System.Text.Json;
 using AutoMapper;
 using Newtonsoft.Json;
-using Server.DTOs.Requests.SavedInfo;
-using Server.DTOs.Requests.SavedInfo.SavedID;
-using Server.Models;
-using Server.Services;
+using RepositoryLayer.Models;
 using Server.Util;
+using ServiceLayer.DTOs.Request.SavedInfo;
+using ServiceLayer.DTOs.Request.SavedInfo.SavedID;
+using ServiceLayer.Services.UtilServices;
 
 namespace Server.Middleware
 {

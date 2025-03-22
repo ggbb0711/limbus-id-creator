@@ -1,11 +1,11 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Server.DTOs.Response.Users;
-using Server.Interface.ServiceInterface.UserService;
-using Server.Models;
-using Server.Services;
-using Server.Util.RabbitMQPublisher;
+using RepositoryLayer.Models;
+using RepositoryLayer.Utils.RabbitMQPublisher;
+using ServiceLayer.DTOs.Response.Users;
+using ServiceLayer.Interfaces.UserService;
+using ServiceLayer.Services.UtilServices;
 
 
 namespace Server.Controllers

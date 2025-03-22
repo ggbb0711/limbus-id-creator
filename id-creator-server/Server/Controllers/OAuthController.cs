@@ -1,12 +1,12 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Server.DTOs.Response.Users;
-using Server.Interface.ServiceInterface.SessionInterface;
-using Server.Interface.ServiceInterface.UserService;
-using Server.Interface.ServiceInterface.UtilService;
-using Server.Models;
-using Server.Services;
+using RepositoryLayer.Models;
+using ServiceLayer.DTOs.Response.Session;
+using ServiceLayer.Interfaces.SessionService;
+using ServiceLayer.Interfaces.UserService;
+using ServiceLayer.Interfaces.UtilService;
+using ServiceLayer.Services.UtilServices;
 
 namespace Server.Controllers
 {

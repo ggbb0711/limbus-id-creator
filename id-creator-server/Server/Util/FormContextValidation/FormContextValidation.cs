@@ -5,8 +5,8 @@ namespace Server.Util.FormContextValidation
 {
     public abstract class FormContextValidation:IFormContextValidation
     {
-        public string FieldName {get;set;} = "";
-        public string ErrMess {get;set;} = "";
+        public string FieldName {get;set;} = String.Empty;
+        public string ErrMess {get;set;} = String.Empty;
         public HttpStatusCode StatusCode {get;set;}
         public FormContextValidation(string fieldName, string errMess, HttpStatusCode statusCode)
         {

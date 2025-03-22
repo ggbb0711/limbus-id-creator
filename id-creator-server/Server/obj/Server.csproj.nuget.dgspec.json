@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\NGHIA\\Project\\Limbus id creator\\limbus-id-creator\\id-creator-server\\Server\\Server.csproj": {}
+    "/home/anataarisa/Documents/OutSources/limbus-id-creator/id-creator-server/Server/Server.csproj": {}
   },
   "projects": {
-    "C:\\Users\\NGHIA\\Project\\Limbus id creator\\limbus-id-creator\\id-creator-server\\Server\\Server.csproj": {
+    "/home/anataarisa/Documents/OutSources/limbus-id-creator/id-creator-server/RepositoryLayer/RepositoryLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\NGHIA\\Project\\Limbus id creator\\limbus-id-creator\\id-creator-server\\Server\\Server.csproj",
-        "projectName": "Server",
-        "projectPath": "C:\\Users\\NGHIA\\Project\\Limbus id creator\\limbus-id-creator\\id-creator-server\\Server\\Server.csproj",
-        "packagesPath": "C:\\Users\\NGHIA\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\NGHIA\\Project\\Limbus id creator\\limbus-id-creator\\id-creator-server\\Server\\obj\\",
+        "projectUniqueName": "/home/anataarisa/Documents/OutSources/limbus-id-creator/id-creator-server/RepositoryLayer/RepositoryLayer.csproj",
+        "projectName": "RepositoryLayer",
+        "projectPath": "/home/anataarisa/Documents/OutSources/limbus-id-creator/id-creator-server/RepositoryLayer/RepositoryLayer.csproj",
+        "packagesPath": "/home/anataarisa/.nuget/packages/",
+        "outputPath": "/home/anataarisa/Documents/OutSources/limbus-id-creator/id-creator-server/RepositoryLayer/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\NGHIA\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/anataarisa/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -34,7 +32,122 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Http": {
+              "target": "Package",
+              "version": "[2.3.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[8.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.Proxies": {
+              "target": "Package",
+              "version": "[8.0.7, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[8.0.4, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL.Design": {
+              "target": "Package",
+              "version": "[1.1.0, )"
+            },
+            "RabbitMQ.client": {
+              "target": "Package",
+              "version": "[6.8.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.14, 8.0.14]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.104/PortableRuntimeIdentifierGraph.json"
         }
+      }
+    },
+    "/home/anataarisa/Documents/OutSources/limbus-id-creator/id-creator-server/Server/Server.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/anataarisa/Documents/OutSources/limbus-id-creator/id-creator-server/Server/Server.csproj",
+        "projectName": "Server",
+        "projectPath": "/home/anataarisa/Documents/OutSources/limbus-id-creator/id-creator-server/Server/Server.csproj",
+        "packagesPath": "/home/anataarisa/.nuget/packages/",
+        "outputPath": "/home/anataarisa/Documents/OutSources/limbus-id-creator/id-creator-server/Server/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/anataarisa/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/home/anataarisa/Documents/OutSources/limbus-id-creator/id-creator-server/ServiceLayer/ServiceLayer.csproj": {
+                "projectPath": "/home/anataarisa/Documents/OutSources/limbus-id-creator/id-creator-server/ServiceLayer/ServiceLayer.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net8.0": {
@@ -110,6 +223,16 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.14, 8.0.14]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.linux-x64",
+              "version": "[8.0.14, 8.0.14]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -118,7 +241,102 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.104/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/anataarisa/Documents/OutSources/limbus-id-creator/id-creator-server/ServiceLayer/ServiceLayer.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/anataarisa/Documents/OutSources/limbus-id-creator/id-creator-server/ServiceLayer/ServiceLayer.csproj",
+        "projectName": "ServiceLayer",
+        "projectPath": "/home/anataarisa/Documents/OutSources/limbus-id-creator/id-creator-server/ServiceLayer/ServiceLayer.csproj",
+        "packagesPath": "/home/anataarisa/.nuget/packages/",
+        "outputPath": "/home/anataarisa/Documents/OutSources/limbus-id-creator/id-creator-server/ServiceLayer/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/anataarisa/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/home/anataarisa/Documents/OutSources/limbus-id-creator/id-creator-server/RepositoryLayer/RepositoryLayer.csproj": {
+                "projectPath": "/home/anataarisa/Documents/OutSources/limbus-id-creator/id-creator-server/RepositoryLayer/RepositoryLayer.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
+            "CloudinaryDotNet": {
+              "target": "Package",
+              "version": "[1.26.2, )"
+            },
+            "DotNetEnv": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "Google.Apis.Auth": {
+              "target": "Package",
+              "version": "[1.68.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[8.0.5, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.14, 8.0.14]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.104/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

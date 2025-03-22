@@ -1,7 +1,7 @@
 using AutoMapper;
-using Server.DTOs.Requests.Comment;
-using Server.Models;
-using Server.Response.Comment;
+using RepositoryLayer.Models;
+using ServiceLayer.DTOs.Request.Comment;
+using ServiceLayer.DTOs.Response.Comment;
 
 namespace Server.Profiles
 {

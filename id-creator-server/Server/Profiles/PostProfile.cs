@@ -1,9 +1,9 @@
 
 
 using AutoMapper;
-using Server.DTOs.Requests.Post;
-using Server.DTOs.Response.Post;
-using Server.Models;
+using RepositoryLayer.Models;
+using ServiceLayer.DTOs.Request.Post;
+using ServiceLayer.DTOs.Response.Post;
 
 namespace Server.Profiles
 {
