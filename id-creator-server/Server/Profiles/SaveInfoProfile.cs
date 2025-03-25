@@ -1,11 +1,11 @@
 using AutoMapper;
 using Newtonsoft.Json.Linq;
-using Server.DTOs.Requests.SavedInfo;
-using Server.DTOs.Requests.SavedInfo.SavedEgo;
-using Server.DTOs.Requests.SavedInfo.SavedID;
-using Server.DTOs.Requests.SavedInfo.Skills;
-using Server.DTOs.Response.SaveInfo;
-using Server.Models;
+using RepositoryLayer.Models;
+using ServiceLayer.DTOs.Request.SavedInfo;
+using ServiceLayer.DTOs.Request.SavedInfo.SavedEgo;
+using ServiceLayer.DTOs.Request.SavedInfo.SavedID;
+using ServiceLayer.DTOs.Request.SavedInfo.Skills;
+using ServiceLayer.DTOs.Response.SaveInfo;
 
 namespace Server.Profiles
 {

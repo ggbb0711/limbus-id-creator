@@ -2,9 +2,9 @@ using System.Net;
 using System.Text;
 using AutoMapper;
 using Newtonsoft.Json;
-using Server.DTOs.Requests.Post;
-using Server.Services;
-using Server.Util;
+using ServiceLayer.DTOs.Request.Post;
+using ServiceLayer.Services.UtilServices;
+using ServiceLayer.Util;
 
 namespace Server.Middleware
 {

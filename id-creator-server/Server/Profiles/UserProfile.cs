@@ -1,8 +1,8 @@
 
 
 using AutoMapper;
-using Server.DTOs.Response.Users;
-using Server.Models;
+using RepositoryLayer.Models;
+using ServiceLayer.DTOs.Response.Users;
 
 namespace Server.Profiles
 {

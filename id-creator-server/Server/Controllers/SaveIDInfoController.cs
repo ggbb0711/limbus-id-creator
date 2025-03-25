@@ -1,12 +1,12 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Server.DTOs.Requests.SavedInfo.SavedID;
-using Server.DTOs.Response.SaveInfo;
-using Server.Interface.ServiceInterface.SavedInfoService;
-using Server.Models;
-using Server.Services;
-using Server.Util.Obj;
+using RepositoryLayer.Models;
+using RepositoryLayer.Utils.Obj;
+using ServiceLayer.DTOs.Request.SavedInfo.SavedID;
+using ServiceLayer.DTOs.Response.SaveInfo;
+using ServiceLayer.Interfaces.SavedInfoService;
+using ServiceLayer.Services.UtilServices;
 
 namespace Server.Controllers
 {

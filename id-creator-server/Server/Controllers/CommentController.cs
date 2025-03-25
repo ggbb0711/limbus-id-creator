@@ -4,14 +4,13 @@ using AutoMapper;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Server.DTOs.Requests.Comment;
-using Server.DTOs.Requests.Post;
-using Server.Interface.ServiceInterface.CommentService;
-using Server.Interface.ServiceInterface.IPostService;
-using Server.Models;
-using Server.Obj;
-using Server.Response.Comment;
-using Server.Services;
+using RepositoryLayer.Models;
+using RepositoryLayer.Utils.Obj;
+using ServiceLayer.DTOs.Request.Comment;
+using ServiceLayer.DTOs.Response.Comment;
+using ServiceLayer.Interfaces.CommentService;
+using ServiceLayer.Interfaces.IPostService;
+using ServiceLayer.Services.UtilServices;
 
 namespace Server.Controllers
 {

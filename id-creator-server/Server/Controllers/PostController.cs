@@ -3,14 +3,14 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
-using Server.DTOs.Requests.Post;
-using Server.DTOs.Response.Post;
-using Server.Interface.ServiceInterface.CommentService;
-using Server.Interface.ServiceInterface.IPostService;
-using Server.Models;
-using Server.PostViewService;
-using Server.Services;
-using Server.Util.Obj;
+using RepositoryLayer.Models;
+using RepositoryLayer.Utils.Obj;
+using ServiceLayer.DTOs.Request.Post;
+using ServiceLayer.DTOs.Response.Post;
+using ServiceLayer.Interfaces.CommentService;
+using ServiceLayer.Interfaces.IPostService;
+using ServiceLayer.Interfaces.PostViewService;
+using ServiceLayer.Services.UtilServices;
 using Sprache;
 
 namespace Server.Controllers

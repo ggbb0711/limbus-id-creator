@@ -1,0 +1,11 @@
+services:
+  limbus-id-creator-client:
+    image: ${REGISTRY}/limbus-id-creator-client:latest
+    build:
+      context: ../id-creator
+      dockerfile: Dockerfile
+  limbus-id-creator-server:
+    image: ${REGISTRY}/limbus-id-creator-server:latest
+    build:
+      context: ../id-creator-server
+      dockerfile: Dockerfile

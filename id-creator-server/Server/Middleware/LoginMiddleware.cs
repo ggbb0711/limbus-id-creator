@@ -1,4 +1,4 @@
-using Server.Interface.ServiceInterface.SessionInterface;
+using ServiceLayer.Interfaces.SessionService;
 
 namespace Server.Middleware
 {
