@@ -3,6 +3,7 @@ using RepositoryLayer.Repositories.Interface;
 using RepositoryLayer.Utils.Obj;
 using RepositoryLayer.Utils.RabbitMQPublisher;
 using ServiceLayer.Interfaces.IPostService;
+using ServiceLayer.Util;
 
 namespace ServiceLayer.Services.PostService
 {
@@ -14,7 +15,7 @@ namespace ServiceLayer.Services.PostService
         {
             List<ImageObj> images = [.. newPost.ImageAttaches];
             var res = await _postRepository.CreatePost(newPost);
-            uploadImageToRabbitMQ(images);
+            UploadImageToRabbitMQ(images);
             return res;
         }
 
@@ -33,7 +34,7 @@ namespace ServiceLayer.Services.PostService
             return _postRepository.GetPostCount(option);
         }
 
-        private void uploadImageToRabbitMQ(List<ImageObj> imageObjs)
+        private void UploadImageToRabbitMQ(List<ImageObj> imageObjs)
         {
             imageObjs.ForEach(image =>
             { 

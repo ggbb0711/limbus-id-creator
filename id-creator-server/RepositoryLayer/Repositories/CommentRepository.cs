@@ -5,25 +5,23 @@ using RepositoryLayer.Utils.Obj;
 
 namespace RepositoryLayer.Repositories
 {
-    public class CommentRepository(ServerDbContext ctx):ICommentRepository
+    public class CommentRepository(ServerDbContext ctx): ICommentRepository
     {
-        private readonly ServerDbContext _ctx = ctx;
-
         public async Task<Comment?> CreateComment(Comment comment)
         {
-            await _ctx.AddAsync(comment);
-            await _ctx.SaveChangesAsync();
+            await ctx.AddAsync(comment);
+            await ctx.SaveChangesAsync();
             return await GetCommentById(comment.Id);
         }
 
         public async Task<Comment?> GetCommentById(Guid commentId)
         {
-            return await _ctx.Comment.FindAsync(commentId);
+            return await ctx.Comment.FindAsync(commentId);
         }
 
         public async Task<List<Comment>> GetComments(SearchCommentOption option)
         {
-            return await _ctx.Comment
+            return await ctx.Comment
                 .Where(c=>c.PostId.ToString().Equals(option.PostId))
                 .OrderBy(c=>c.Created)
                 .Skip(option.page*option.limit)
@@ -33,7 +31,7 @@ namespace RepositoryLayer.Repositories
 
         public int GetCommentCount(Guid postId)
         {
-            return _ctx.Comment.Where(c=>c.PostId==postId).Count();
+            return ctx.Comment.Count(c => c.PostId==postId);
         }
     }
 }

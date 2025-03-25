@@ -3,10 +3,10 @@ using System.Text.Json;
 using AutoMapper;
 using Newtonsoft.Json;
 using RepositoryLayer.Models;
-using Server.Util;
 using ServiceLayer.DTOs.Request.SavedInfo;
 using ServiceLayer.DTOs.Request.SavedInfo.SavedEgo;
 using ServiceLayer.Services.UtilServices;
+using ServiceLayer.Util;
 
 namespace Server.Middleware
 {

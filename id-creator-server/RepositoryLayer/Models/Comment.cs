@@ -8,14 +8,7 @@ namespace RepositoryLayer.Models
     public class Comment
     {
         private User _user;
-        private ILazyLoader LazyLoader { get; set; }
-
-        public Comment() { }
-
-        private Comment(ILazyLoader lazyLoader)
-        {
-            LazyLoader = lazyLoader;
-        }
+        
         public Guid Id { get; set; }
         public string Content { get; set; } = String.Empty;
         public DateTime Created { get; set; } = DateTime.Now;
@@ -23,6 +16,15 @@ namespace RepositoryLayer.Models
         public Guid PostId { get; set; }
         [ForeignKey(nameof(User))]
         public Guid UserId { get; set; }
+        
+        private ILazyLoader LazyLoader { get; set; }
+        
+        private Comment() { }
+
+        private Comment(ILazyLoader lazyLoader)
+        {
+            LazyLoader = lazyLoader;
+        }
         public virtual User User
         {
             get => LazyLoader.Load(this, ref _user);

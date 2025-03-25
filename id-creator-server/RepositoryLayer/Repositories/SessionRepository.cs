@@ -4,67 +4,48 @@ using RepositoryLayer.Repositories.Interface;
 
 namespace RepositoryLayer.Repositories
 {
-    public class SessionRepository:ISessionRepository
+    public class SessionRepository(ServerDbContext ctx) : ISessionRepository
     {
-        private readonly ServerDbContext _ctx;
-        public SessionRepository(ServerDbContext ctx)
-        {
-            this._ctx = ctx;
-        }
-
-         public async Task<Session?> DeleteSessionByUserId(Guid UserId)
+        public async Task<Session?> DeleteSessionByUserId(Guid UserId)
         {
             
-            var deleteSession = await _ctx.Session.Where(Session=>Session.UserId == UserId).FirstOrDefaultAsync();
-            if(deleteSession != null)
-            {
-                _ctx.Session.Remove(deleteSession);
-                await _ctx.SaveChangesAsync();
-            }
-            
-
+            var deleteSession = await ctx.Session.Where(session =>session.UserId == UserId).FirstOrDefaultAsync();
+            if (deleteSession == null) return deleteSession;
+            ctx.Session.Remove(deleteSession);
+            await ctx.SaveChangesAsync();
             return deleteSession;    
-
         }
 
         public async Task<Session?> DeleteSessionBySessionId(Guid SessionId)
         {
             
-            var deleteSession = await _ctx.Session.Where(Session=>Session.Id == SessionId).FirstOrDefaultAsync();
-            if(deleteSession != null)
-            {
-                _ctx.Session.Remove(deleteSession);
-                await _ctx.SaveChangesAsync();
-            }
-            
-
-            return deleteSession;    
-
+            var deleteSession = await ctx.Session.Where(Session=>Session.Id == SessionId).FirstOrDefaultAsync();
+            if (deleteSession == null) return deleteSession;
+            ctx.Session.Remove(deleteSession);
+            await ctx.SaveChangesAsync();
+            return deleteSession;
         }
 
         public async Task<Session?> CreateSession(Session newSession)
         {
-            await _ctx.Session.AddAsync(newSession);
+            await ctx.Session.AddAsync(newSession);
 
-            await _ctx.SaveChangesAsync();
+            await ctx.SaveChangesAsync();
             return newSession;
             
         }
 
         public async Task<Session?> FindSession(Guid SessionId)
         {
-            return await _ctx.Session.Where(Session => Session.Id == SessionId).FirstOrDefaultAsync();
+            return await ctx.Session.Where(Session => Session.Id == SessionId).FirstOrDefaultAsync();
         }
 
         public async Task<List<Session>> DeleteExpiredSessions()
         {
-            var expiredSession = _ctx.Session.Where(session=>session.Expired<=DateTime.Now);
+            var expiredSession = ctx.Session.Where(session=>session.Expired<=DateTime.Now);
 
-            if(expiredSession != null)
-            {
-                _ctx.Session.RemoveRange(expiredSession);
-                await _ctx.SaveChangesAsync();
-            }
+            ctx.Session.RemoveRange(expiredSession);
+            await ctx.SaveChangesAsync();
 
             return await expiredSession.ToListAsync();
         }

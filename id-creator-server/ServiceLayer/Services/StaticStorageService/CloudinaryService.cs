@@ -1,6 +1,7 @@
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using ServiceLayer.Interfaces.StaticStorageService;
+using ServiceLayer.Util;
 
 namespace ServiceLayer.Services.StaticStorageService
 {

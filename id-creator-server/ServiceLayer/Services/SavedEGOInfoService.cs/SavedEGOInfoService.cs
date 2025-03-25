@@ -3,6 +3,7 @@ using RepositoryLayer.Repositories.Interface;
 using RepositoryLayer.Utils.Obj;
 using RepositoryLayer.Utils.RabbitMQPublisher;
 using ServiceLayer.Interfaces.SavedInfoService;
+using ServiceLayer.Util;
 
 namespace ServiceLayer.Services.SavedEGOInfoService.cs
 {
@@ -31,7 +32,7 @@ namespace ServiceLayer.Services.SavedEGOInfoService.cs
 
             await _saveRepository.CreateNewSave(newSave);
             var newCreatedSaved = await _saveRepository.GetSaved(newSave.Id);
-            uploadImageToRabbitMQ(uploadingImages);
+            UploadImageToRabbitMQ(uploadingImages);
             return newCreatedSaved;
         }
 
@@ -95,33 +96,29 @@ namespace ServiceLayer.Services.SavedEGOInfoService.cs
                 uploadingImages.Add(sinnerIcon);
             }
             //Transfering all the old imageId of the skills to the new ones
-            for (int i = 0 ;i<savedSkill.OffenseSkills.Count;i++)
+            for (var i = 0 ;i<savedSkill.OffenseSkills.Count;i++)
             {
                 var skill = savedSkill.OffenseSkills.ElementAt(i);
                 var oldSkill = oldSavedSkill.OffenseSkills.Where(oldSkill =>oldSkill.Id.Equals(skill.Id)).FirstOrDefault();
-                if(oldSkill != null)
+                if (oldSkill == null) continue;
+                skill.ImageAttach.Id = oldSkill.ImageAttach.Id;
+                skill.ImageAttachId = oldSkill.ImageAttachId;
+                if(!skill.ImageAttach.Url.Equals(oldSkill.ImageAttach.Url))
                 {
-                    skill.ImageAttach.Id = oldSkill.ImageAttach.Id;
-                    skill.ImageAttachId = oldSkill.ImageAttachId;
-                    if(!skill.ImageAttach.Url.Equals(oldSkill.ImageAttach.Url))
-                    {
-                        uploadingImages.Add(skill.ImageAttach);
-                    }
+                    uploadingImages.Add(skill.ImageAttach);
                 }
             }
 
-           for (int i = 0 ;i<savedSkill.DefenseSkills.Count;i++)
+           for (var i = 0 ;i<savedSkill.DefenseSkills.Count;i++)
             {
                 var skill = savedSkill.DefenseSkills.ElementAt(i);
                 var oldSkill = oldSavedSkill.DefenseSkills.Where(oldSkill =>oldSkill.Id.Equals(skill.Id)).FirstOrDefault();
-                if(oldSkill != null)
+                if (oldSkill == null) continue;
+                skill.ImageAttach.Id = oldSkill.ImageAttach.Id;
+                skill.ImageAttachId = oldSkill.ImageAttachId;
+                if(!skill.ImageAttach.Url.Equals(oldSkill.ImageAttach.Url))
                 {
-                    skill.ImageAttach.Id = oldSkill.ImageAttach.Id;
-                    skill.ImageAttachId = oldSkill.ImageAttachId;
-                    if(!skill.ImageAttach.Url.Equals(oldSkill.ImageAttach.Url))
-                    {
-                        uploadingImages.Add(skill.ImageAttach);
-                    }
+                    uploadingImages.Add(skill.ImageAttach);
                 }
             }
 
@@ -164,7 +161,7 @@ namespace ServiceLayer.Services.SavedEGOInfoService.cs
                 ImageAttach = newSave.ImageAttach.Url,
                 Saved = newSave.SavedEgo,
             });
-            uploadImageToRabbitMQ(uploadingImages);
+            UploadImageToRabbitMQ(uploadingImages);
 
             return await _saveRepository.GetSaved(newSave.Id);
         }
@@ -193,43 +190,37 @@ namespace ServiceLayer.Services.SavedEGOInfoService.cs
             {
                 tasks.Add(FileHelper.ConvertToBase64Async(files.sinnerIcon,url=>{sinnerIconImgObj.Url=url;imageObjs.Add(sinnerIconImgObj);}));
             }
-            for(int i = 0; i < files.imageIndex.Length; i++)
+
+            tasks.AddRange(files.imageIndex.Select((searchIndex, i) => FileHelper.ConvertToBase64Async(files.skillImages[i], url =>
             {
-                var searchIndex = files.imageIndex[i];
-                tasks.Add(FileHelper.ConvertToBase64Async(files.skillImages[i],url=>
+                if (savedSkill == null) return;
                 {
-                    for(int j = 0 ;j<savedSkill.OffenseSkills.Count;j++)
+                    for (var j = 0; j < savedSkill.OffenseSkills.Count; j++)
                     {
-                        if(savedSkill.OffenseSkills.ElementAt(j).Index==searchIndex)
-                        {
-                            savedSkill.OffenseSkills.ElementAt(j).ImageAttach.Url = url;
-                            imageObjs.Add(savedSkill.OffenseSkills.ElementAt(j).ImageAttach);
-                        }
+                        if (savedSkill.OffenseSkills.ElementAt(j).Index != searchIndex) continue;
+                        savedSkill.OffenseSkills.ElementAt(j).ImageAttach.Url = url;
+                        imageObjs.Add(savedSkill.OffenseSkills.ElementAt(j).ImageAttach);
                     }
-                    for(int j = 0 ;j<savedSkill.DefenseSkills.Count;j++)
+                    for (var j = 0; j < savedSkill.DefenseSkills.Count; j++)
                     {
-                        if(savedSkill.DefenseSkills.ElementAt(j).Index==searchIndex)
-                        { 
-                            savedSkill.DefenseSkills.ElementAt(j).ImageAttach.Url = url;
-                            imageObjs.Add(savedSkill.DefenseSkills.ElementAt(j).ImageAttach);
-                        }
+                        if (savedSkill.DefenseSkills.ElementAt(j).Index != searchIndex) continue;
+                        savedSkill.DefenseSkills.ElementAt(j).ImageAttach.Url = url;
+                        imageObjs.Add(savedSkill.DefenseSkills.ElementAt(j).ImageAttach);
                     }
-                    for(int j = 0 ;j<savedSkill.CustomEffects.Count;j++)
+                    for (var j = 0; j < savedSkill.CustomEffects.Count; j++)
                     {
-                        if(savedSkill.CustomEffects.ElementAt(j).Index==searchIndex)
-                        {
-                            savedSkill.CustomEffects.ElementAt(j).ImageAttach.Url = url;
-                            imageObjs.Add(savedSkill.CustomEffects.ElementAt(j).ImageAttach);
-                        }
+                        if (savedSkill.CustomEffects.ElementAt(j).Index != searchIndex) continue;
+                        savedSkill.CustomEffects.ElementAt(j).ImageAttach.Url = url;
+                        imageObjs.Add(savedSkill.CustomEffects.ElementAt(j).ImageAttach);
                     }
-                }));
-            }
+                }
+            })));
 
             await Task.WhenAll(tasks.ToArray());
             return imageObjs;
         }
 
-        private void uploadImageToRabbitMQ(List<ImageObj> imageObjs)
+        private void UploadImageToRabbitMQ(List<ImageObj> imageObjs)
         {
             imageObjs.ForEach(image =>
             { 

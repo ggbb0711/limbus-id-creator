@@ -31,4 +31,8 @@
     <ProjectReference Include="..\ServiceLayer\ServiceLayer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Interface\FormContextValidation\" />
+  </ItemGroup>
+
 </Project>

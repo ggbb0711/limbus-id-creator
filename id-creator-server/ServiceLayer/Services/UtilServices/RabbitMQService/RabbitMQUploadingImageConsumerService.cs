@@ -1,5 +1,10 @@
 using System.Text;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using RepositoryLayer.Utils.RabbitMQPublisher;
 using ServiceLayer.Interfaces.ImageObjService;
 using ServiceLayer.Interfaces.StaticStorageService;
 
@@ -52,8 +57,6 @@ namespace ServiceLayer.Services.UtilServices.RabbitMQService
                     }
                     
                 }
-
-                
             };
 
             _channel.BasicConsume(queue: "UploadingImage", autoAck: true, consumer: consumer);

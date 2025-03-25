@@ -1,4 +1,8 @@
 using System.Text;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 using ServiceLayer.Interfaces.StaticStorageService;
 
 namespace ServiceLayer.Services.UtilServices.RabbitMQService

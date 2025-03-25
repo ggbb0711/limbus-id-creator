@@ -1,4 +1,6 @@
 
+using RepositoryLayer.Utils.UtilInterfaces;
+
 namespace ServiceLayer.Services.UtilServices
 {
     public class ResponseService<ResponseType> : IResponse<ResponseType>

@@ -3,6 +3,7 @@ using RepositoryLayer.Repositories.Interface;
 using RepositoryLayer.Utils.Obj;
 using RepositoryLayer.Utils.RabbitMQPublisher;
 using ServiceLayer.Interfaces.SavedInfoService;
+using ServiceLayer.Util;
 
 namespace ServiceLayer.Services.SavedIDInfoService
 {
@@ -12,26 +13,17 @@ namespace ServiceLayer.Services.SavedIDInfoService
         private readonly RabbitMQUploadingImagePublisher _publisher = publisher;
         public async Task<SavedIDInfo> CreateSavedInfo(SavedIDInfo newSave, SaveInfoFiles files)
         {
-            var uploadingImages= await populateImageField(newSave, files);
+            var uploadingImages= await PopulateImageField(newSave, files);
             if(Uri.TryCreate(newSave.ImageAttach.Url,UriKind.Absolute, out _)) uploadingImages.Add(newSave.ImageAttach);
             if(Uri.TryCreate(newSave.SavedId.SplashArt.Url,UriKind.Absolute, out _)) uploadingImages.Add(newSave.SavedId.SplashArt);
             if(Uri.TryCreate(newSave.SavedId.SinnerIcon.Url,UriKind.Absolute, out _)) uploadingImages.Add(newSave.SavedId.SinnerIcon);
-            foreach (var offenseSkill in newSave.SavedId.Skill.OffenseSkills)
-            {
-                if(Uri.TryCreate(offenseSkill.ImageAttach.Url,UriKind.Absolute, out _)) uploadingImages.Add(offenseSkill.ImageAttach);
-            }
-            foreach (var defenseSkill in newSave.SavedId.Skill.DefenseSkills)
-            {
-                if(Uri.TryCreate(defenseSkill.ImageAttach.Url,UriKind.Absolute, out _)) uploadingImages.Add(defenseSkill.ImageAttach);
-            }
-            foreach (var customEffect in newSave.SavedId.Skill.CustomEffects)
-            {
-                if(Uri.TryCreate(customEffect.ImageAttach.Url,UriKind.Absolute, out _)) uploadingImages.Add(customEffect.ImageAttach);
-            }
+            uploadingImages.AddRange(from offenseSkill in newSave.SavedId.Skill.OffenseSkills where Uri.TryCreate(offenseSkill.ImageAttach.Url, UriKind.Absolute, out _) select offenseSkill.ImageAttach);
+            uploadingImages.AddRange(from defenseSkill in newSave.SavedId.Skill.DefenseSkills where Uri.TryCreate(defenseSkill.ImageAttach.Url, UriKind.Absolute, out _) select defenseSkill.ImageAttach);
+            uploadingImages.AddRange(from customEffect in newSave.SavedId.Skill.CustomEffects where Uri.TryCreate(customEffect.ImageAttach.Url, UriKind.Absolute, out _) select customEffect.ImageAttach);
 
             await _saveRepository.CreateNewSave(newSave);
             var newCreatedSaved = await _saveRepository.GetSaved(newSave.Id);
-            uploadImageToRabbitMQ(uploadingImages);
+            UploadImageToRabbitMQ(uploadingImages);
             return newCreatedSaved;
         }
 
@@ -52,7 +44,7 @@ namespace ServiceLayer.Services.SavedIDInfoService
 
         public async Task<SavedIDInfo?> UpdateSavedInfo(SavedIDInfo newSave,SaveInfoFiles files)
         {
-            var uploadingImages = await populateImageField(newSave,files);
+            var uploadingImages = await PopulateImageField(newSave,files);
             var oldSave = await _saveRepository.GetSaved(newSave.Id,true);
             if(oldSave==null||!oldSave.UserId.Equals(newSave.UserId)) return null;
             //Change the id of the newSave to fit with the old save
@@ -70,7 +62,6 @@ namespace ServiceLayer.Services.SavedIDInfoService
             ImageObj oldSinnerIcon;
             SavedSkill savedSkill;
             SavedSkill oldSavedSkill;
-            if(oldSave.SavedId==null) return null;
             splashArt = newSave.SavedId.SplashArt;
             oldSplashArt = oldSave.SavedId.SplashArt;
 
@@ -164,14 +155,14 @@ namespace ServiceLayer.Services.SavedIDInfoService
                 ImageAttach = newSave.ImageAttach.Url,
                 Saved = newSave.SavedId,
             });
-            uploadImageToRabbitMQ(uploadingImages);
+            UploadImageToRabbitMQ(uploadingImages);
 
             return await _saveRepository.GetSaved(newSave.Id);
         }
 
 
         //Add in placheholder base64 string for the images
-        private async Task<List<ImageObj>> populateImageField(SavedIDInfo savedInfo, SaveInfoFiles files)
+        private async Task<List<ImageObj>> PopulateImageField(SavedIDInfo savedInfo, SaveInfoFiles files)
         {
             List<Task> tasks = [];
             List<ImageObj> imageObjs = [];
@@ -193,43 +184,35 @@ namespace ServiceLayer.Services.SavedIDInfoService
             {
                 tasks.Add(FileHelper.ConvertToBase64Async(files.sinnerIcon,url=>{sinnerIconImgObj.Url=url;imageObjs.Add(sinnerIconImgObj);}));
             }
-            for(int i = 0; i < files.imageIndex.Length; i++)
+
+            tasks.AddRange(files.imageIndex.Select((searchIndex, i) => FileHelper.ConvertToBase64Async(files.skillImages[i], url =>
             {
-                var searchIndex = files.imageIndex[i];
-                tasks.Add(FileHelper.ConvertToBase64Async(files.skillImages[i],url=>
+                if (savedSkill == null) return;
+                for (var j = 0; j < savedSkill.OffenseSkills.Count; j++)
                 {
-                    for(int j = 0 ;j<savedSkill.OffenseSkills.Count;j++)
-                    {
-                        if(savedSkill.OffenseSkills.ElementAt(j).Index==searchIndex)
-                        {
-                            savedSkill.OffenseSkills.ElementAt(j).ImageAttach.Url = url;
-                            imageObjs.Add(savedSkill.OffenseSkills.ElementAt(j).ImageAttach);
-                        }
-                    }
-                    for(int j = 0 ;j<savedSkill.DefenseSkills.Count;j++)
-                    {
-                        if(savedSkill.DefenseSkills.ElementAt(j).Index==searchIndex)
-                        { 
-                            savedSkill.DefenseSkills.ElementAt(j).ImageAttach.Url = url;
-                            imageObjs.Add(savedSkill.DefenseSkills.ElementAt(j).ImageAttach);
-                        }
-                    }
-                    for(int j = 0 ;j<savedSkill.CustomEffects.Count;j++)
-                    {
-                        if(savedSkill.CustomEffects.ElementAt(j).Index==searchIndex)
-                        {
-                            savedSkill.CustomEffects.ElementAt(j).ImageAttach.Url = url;
-                            imageObjs.Add(savedSkill.CustomEffects.ElementAt(j).ImageAttach);
-                        }
-                    }
-                }));
-            }
+                    if (savedSkill.OffenseSkills.ElementAt(j).Index != searchIndex) continue;
+                    savedSkill.OffenseSkills.ElementAt(j).ImageAttach.Url = url;
+                    imageObjs.Add(savedSkill.OffenseSkills.ElementAt(j).ImageAttach);
+                }
+                for (var j = 0; j < savedSkill.CustomEffects.Count; j++)
+                {
+                    if (savedSkill.CustomEffects.ElementAt(j).Index != searchIndex) continue;
+                    savedSkill.CustomEffects.ElementAt(j).ImageAttach.Url = url;
+                    imageObjs.Add(savedSkill.CustomEffects.ElementAt(j).ImageAttach);
+                }
+                for (var j = 0; j < savedSkill.DefenseSkills.Count; j++)
+                {
+                    if (savedSkill.DefenseSkills.ElementAt(j).Index != searchIndex) continue;
+                    savedSkill.DefenseSkills.ElementAt(j).ImageAttach.Url = url;
+                    imageObjs.Add(savedSkill.DefenseSkills.ElementAt(j).ImageAttach);
+                }
+            })));
 
             await Task.WhenAll(tasks.ToArray());
             return imageObjs;
         }
 
-        private void uploadImageToRabbitMQ(List<ImageObj> imageObjs)
+        private void UploadImageToRabbitMQ(List<ImageObj> imageObjs)
         {
             imageObjs.ForEach(image =>
             { 

@@ -9,7 +9,7 @@ namespace RepositoryLayer.Repositories
 
         public int GetViewCount(Guid postId)
         {
-            return _ctx.PostView.Where(p=>p.PostId == postId).Count();
+            return _ctx.PostView.Count(p => p.PostId == postId);
         }
 
         public async Task<int> LogView(PostView view)
