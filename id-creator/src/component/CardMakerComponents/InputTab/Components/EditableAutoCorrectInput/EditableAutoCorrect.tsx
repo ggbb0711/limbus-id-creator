@@ -23,14 +23,16 @@ export default function EditableAutoCorrect({inputId,content,matchList,changeHan
     //This is a state to track if a suggestion has been selected
     //Then set the caret position to the correct position
     const [hasSelectedSuggestion,setHasSelectedSuggestion] = useState(false)
+
     const enterKeyPress=useKeyPress("Enter",contentEditableRef)
     const arrowUpKeyPress = useKeyPress("ArrowUp",contentEditableRef)
     const arrowDownKeyPress = useKeyPress("ArrowDown",contentEditableRef)
     const tabDownKeyPress = useKeyPress("Tab",contentEditableRef)
+    
     const regex = /(?<=\[)([\-+\w]*)$/g
 
 
-    
+    //Run when user click on one of the suggestion or if they press enter/tab
     const selectSuggestion = useMemo(() => {
         //The item is an array. The first element is the keyword. The second is the html element
         return function(item) {
@@ -41,7 +43,12 @@ export default function EditableAutoCorrect({inputId,content,matchList,changeHan
                 const innerHTMLIndex = getCaretHTMLCharacterOffSet(contentEditableRef.current.innerHTML,caretPos)
                 //The word that been detected by auto correct
                 const foundWord=contentEditableRef.current.innerHTML.substring(0,innerHTMLIndex+1).match(regex)
+
+                //This include all word from the begining of the bracket to the end of the bracket
+                //Ex: if the text is [si then when the user press Sinking then the firstHalf = [Sinking]
                 const firstHalf = contentEditableRef.current.innerHTML.substring(0,innerHTMLIndex+1).replace(regex,addInItem)
+
+                //This is the rest of the contenteditable text from the end of the bracket
                 const secondHalf =  contentEditableRef.current.innerHTML.substring(innerHTMLIndex+1)
 
                 contentEditableRef.current.innerHTML = firstHalf + secondHalf
@@ -56,7 +63,8 @@ export default function EditableAutoCorrect({inputId,content,matchList,changeHan
         };
     }, [contentEditableRef, regex, setActiveSuggestBox, caretPos]);
 
-    const updateSuggestBox = useMemo(() => {
+    //Update the position of the box based on the carret
+    const updateSuggestBoxPos = useMemo(() => {
         return function() {
             const sel = window.getSelection && window.getSelection();
             if(suggestionBoxRef.current && sel && sel.rangeCount > 0){
@@ -70,7 +78,9 @@ export default function EditableAutoCorrect({inputId,content,matchList,changeHan
         };
     }, [suggestionBoxRef, contentEditableRef, setSuggestBoxPos]);
 
+    //Check if the editableTav has a carret at the end and update the suggestions based on the text enter
     const updateItemList = useMemo(()=>()=>{
+        
         const textNoLine = (contentEditableRef.current.innerText as string).replace(/(\r\n|\n|\r)/gm,"").substring(0,caretPos+1).toLowerCase()
         const newItemList = Object.keys(matchList).map(key=>[key,matchList[key]]).filter(value=>{
             const searchIndex=textNoLine.search(regex)
@@ -81,7 +91,7 @@ export default function EditableAutoCorrect({inputId,content,matchList,changeHan
         )
         if(newItemList.length>0){
             setActiveSuggestBox(true)
-            updateSuggestBox()
+            updateSuggestBoxPos()
             setCurrentActiveChoice(0)
         }
         else setActiveSuggestBox(false)
