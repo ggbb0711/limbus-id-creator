@@ -229,9 +229,24 @@ export const baseStatusEffect={
     
     "nebulizer_β":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Nebulizer_β.png' alt='nebulizer_β_icon' />Nebulizer β</span>",
+
+    "nebulizer_α":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Nebulizer_α.png' alt='nebulizer_α_icon' />Nebulizer α</span>",
     
     "deep_breath":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Deep_Breath.png' alt='deep_breath_icon' />Deep Breath</span>",
+
+    "strider_-mao":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Strider_-Mao-.png' alt='strider_-mao-_icon' />Strider -Mao-</span>",
+
+    "cumulus_wall":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Cumulus_Wall.png' alt='cumulus_wall_icon' />Cumulus Wall</span>",
+
+    "battle_ready":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Battle_Ready.png' alt='battle_ready_icon' />Battle Ready</span>",
+
+    "dark_cloud_blade":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Dark_Cloud_Blade.png' alt='dark_cloud_blade_icon' />Dark Cloud Blade</span>",
 
     "slash_dmg_down":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Slash_DMG_Down.png' alt='slash_dmg_down_icon' />Slash DMG Down</span>",
@@ -476,6 +491,9 @@ export const baseStatusEffect={
     "fairy_lure":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Fairy_Lure.png' alt='fairy_lure_icon' />Fairy Lure</span>",
 
+    "deathrite_-haste-":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Deathrite_-Haste-.png' alt='deathrite_-haste-_icon' />Deathrite -Haste-</span>",
+
     "aggro":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Aggro.png' alt='aggro_icon' />Aggro</span>",
     
@@ -553,6 +571,18 @@ export const baseStatusEffect={
     
     "bloodfeast_consumed_(shared)":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/bloodfeast_consumed.png' alt='bloodfeast_consumed_(shared)_icon' />Bloodfeast Consumed (shared)</span>",
+
+    "overheated_fuel":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Overheated_Fuel.png' alt='overheated_fuel_icon' />Overheated Fuel</span>",
+
+    "district_12_fuel":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/District_12_Fuel.png' alt='district_12_fuel_icon' />District 12 Fuel</span>",
+
+    "shallow_exhale":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Shallow_Exhale.png' alt='shallow_exhale_icon' />Shallow Exhale</span>",
+
+    "dark_cloud":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Dark_Cloud.png' alt='dark_cloud_icon' />Dark Cloud</span>",
 
     "coin_1":
         "<span class='center-element' contenteditable='false'><img class='status-icon' src='Images/status-effect/Coin_Effect_1.png' alt='coin-effect-1' /></span>",
