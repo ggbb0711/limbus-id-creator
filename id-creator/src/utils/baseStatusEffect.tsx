@@ -247,6 +247,9 @@ export const baseStatusEffect={
 
     "dark_cloud_blade":
         "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Dark_Cloud_Blade.png' alt='dark_cloud_blade_icon' />Dark Cloud Blade</span>",
+    
+    "serpent_arm":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Serpent_Arm.png' alt='serpent_arm_icon' />Serpent Arm</span>",
 
     "slash_dmg_down":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Slash_DMG_Down.png' alt='slash_dmg_down_icon' />Slash DMG Down</span>",
@@ -434,6 +437,9 @@ export const baseStatusEffect={
     "poison":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Poison.png' alt='poison_icon' />Poison</span>",
     
+    "centipede_venom":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Centipede_Venom.png' alt='centipede_venom_icon' />Centipede Venom</span>",
+    
     "hp_healing_down":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/HP_Healing_Down.png' alt='hp_healing_down_icon' />HP Healing Down</span>",
     
@@ -451,6 +457,9 @@ export const baseStatusEffect={
     
     "talisman":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Talisman.png' alt='talisman_icon' />Talisman</span>",
+    
+    "twisted_curse_talisman":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Twisted_Curse_Talisman.png' alt='twisted_curse_talisman_icon' />Twisted Curse Talisman</span>",
     
     "vengeance_mark":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Vengeance_Mark.png' alt='vengeance_mark_icon' />Vengeance Mark</span>",
@@ -493,9 +502,27 @@ export const baseStatusEffect={
 
     "deathrite_-haste-":
         "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Deathrite_-Haste-.png' alt='deathrite_-haste-_icon' />Deathrite -Haste-</span>",
+    
+    "deathrite_-fissure-":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Deathrite_-Fissure-.png' alt='deathrite_-fissure-_icon' />Deathrite -Fissure-</span>",
+    
+    "deathrite_-venom-":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Deathrite_-Venom-.png' alt='deathrite_-venom-_icon' />Deathrite -Venom-</span>",
+    
+    "vendetta_mark":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Vendetta_Mark.png' alt='vendetta_mark_icon' />Vendetta Mark</span>",
+    
+    "searing_birdcage":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Searing_Birdcage.png' alt='searing_birdcage_icon' />Searing Birdcage</span>",
+    
+    "mark_of_decay":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Mark_of_Decay.png' alt='mark_of_decay_icon' />Mark of Decay</span>",
 
     "aggro":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Aggro.png' alt='aggro_icon' />Aggro</span>",
+
+    "unfocused_volley":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Unfocused_Volley.png' alt='unfocused_volley_icon' />Unfocused Volley</span>",
     
     "ammo":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Ammo.png' alt='ammo_icon' />Ammo</span>",
@@ -583,6 +610,12 @@ export const baseStatusEffect={
 
     "dark_cloud":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Dark_Cloud.png' alt='dark_cloud_icon' />Dark Cloud</span>",
+    
+    "assist_defense":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Assist_Defense.png' alt='assist_defense_icon' />Assist Defense</span>",
+
+    "tianjiu_star's_blade":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='Images/status-effect/Tianjiu_Star's_Blade.png' alt='tianjiu_star's_blade_icon' />Tianjiu Star's Blade</span>",
 
     "coin_1":
         "<span class='center-element' contenteditable='false'><img class='status-icon' src='Images/status-effect/Coin_Effect_1.png' alt='coin-effect-1' /></span>",
@@ -598,6 +631,9 @@ export const baseStatusEffect={
     
     "coin_5":
         "<span class='center-element' contenteditable='false'><img class='status-icon' src='Images/status-effect/Coin_Effect_5.png' alt='coin-effect-5' /></span>",
+    
+    "coin_6":
+        "<span class='center-element' contenteditable='false'><img class='status-icon' src='Images/status-effect/Coin_Effect_6.png' alt='coin-effect-6' /></span>",
     
     "on_use":
         "<span class='center-element' contenteditable='false' style='color:#26cfff'>[On Use]</span>",
