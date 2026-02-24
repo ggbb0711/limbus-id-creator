@@ -937,7 +937,11 @@ export const baseStatusEffect={
     
     "prescript:_[device]_IV":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Prescript_[Device].webp' alt='prescript_[device]_IV_icon' />Prescript [Device] IV</span>",
+
+    "melee_support":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Melee_Support.webp' alt='melee_support_icon' />Melee Support</span>",
     
+
     "lamp":
         "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Lamp.webp' alt='lamp_icon' />Lamp</span>",
 
