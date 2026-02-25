@@ -11,6 +11,7 @@ import TipTapEditor from "../Components/TipTapEditor/TipTapEditor";
 import UploadImgBtn from "../Components/UploadImgBtn/UploadImgBtn";
 import { compressAndReadImage } from "Features/CardCreator/Utils/CompressAndReadImage";
 import { useSkillForm } from "Features/CardCreator/Hooks/useSkillForm";
+import DisplayAd from "Components/DisplayAd/DisplayAd";
 
 export default function InputCustomEffectPage({
     index,
@@ -32,6 +33,7 @@ export default function InputCustomEffectPage({
                 <ArrowDownIcon></ArrowDownIcon>
             </div>
         </div>
+        <DisplayAd />
         <div className="input-group-container">
             <label className="input-label">Change skill:</label>
             <ChangeInputType changeSkillType={changeSkillType} type={type}/>
@@ -95,5 +97,6 @@ export default function InputCustomEffectPage({
             onConfirm={()=>{setShowConfirm(false); deleteSkill()}}
             onCancel={()=>setShowConfirm(false)}
         />}
+        <DisplayAd />
     </div>
 }

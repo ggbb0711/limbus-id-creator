@@ -11,6 +11,7 @@ import TagsContainer from "Components/TagsContainer/TagsContainer";
 import useAlert from "Hooks/useAlert";
 import { useCheckAuthQuery } from "Api/AuthApi";
 import { useGetPostsQuery } from "Api/PostAPI";
+import DisplayAd from "Components/DisplayAd/DisplayAd";
 
 export default function ForumPage():ReactElement{
     const [searchPostName,setSearchPostName] = useState("")
@@ -45,6 +46,7 @@ export default function ForumPage():ReactElement{
 
     return <div className="page-container">
         <div className="page-content">
+            <DisplayAd />
             <div className="forum-input-container">
                 <label htmlFor="name">Post name:</label>
                 <input type="text" name="searchPostName" id="searchPostName" className="input" placeholder="Search" value={searchPostName} onChange={(e)=>setSearchPostName(e.target.value)}/>
@@ -103,6 +105,7 @@ export default function ForumPage():ReactElement{
                 postList={postList}
                 fetchPost={setCurrPage}
                 isLoading={isLoading}/>
+            <DisplayAd />
         </div>
     </div>
 }

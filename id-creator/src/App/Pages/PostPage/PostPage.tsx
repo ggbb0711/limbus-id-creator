@@ -9,6 +9,7 @@ import useAlert from "Hooks/useAlert";
 import { useCheckAuthQuery } from "Api/AuthApi";
 import { useGetPostQuery } from "Api/PostAPI";
 import { useGetCommentsQuery, useCreateCommentMutation } from "Api/CommentApi";
+import DisplayAd from "Components/DisplayAd/DisplayAd";
 
 export default function PostPage():ReactElement{
     const {postId} = useParams()
@@ -64,6 +65,7 @@ export default function PostPage():ReactElement{
 
     return <div className="page-container">
         <div className="page-content">
+            <DisplayAd />
             <Post post={post ?? null} isLoading={isLoadingPost}/>
         </div>
         <div className="page-content">
@@ -75,6 +77,7 @@ export default function PostPage():ReactElement{
                 if(post) return <button className="main-button" onClick={()=>setIsLoginMenuActive(true)}>Login to comment</button>
                 return <></>
             })()}
+            <DisplayAd />
         </div>
     </div>
 }
