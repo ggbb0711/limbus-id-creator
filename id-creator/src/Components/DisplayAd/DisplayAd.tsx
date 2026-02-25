@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react"
-import "./DisplayAd.css"
 
 declare global {
     interface Window {
@@ -19,10 +18,10 @@ export default function DisplayAd() {
     }, [])
 
     return (
-        <div className="display-ad">
+        <div style={{position: "relative", width: "100%", maxWidth: "100%"}}>
             <ins
                 className="adsbygoogle"
-                style={{ display: "block" }}
+                style={{display: "block", position: "absolute", width: "inherit", maxWidth: "inherit"}}
                 data-ad-client="ca-pub-2161757435040376"
                 data-ad-slot="7945609324"
                 data-ad-format="auto"
