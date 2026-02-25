@@ -128,10 +128,9 @@ export default function InputTabContainer({
         }
     }
 
-    const containerClass = ["input-tab-container", isPanelOpen && isMobile ? "input-tab-mobile-open" : ""].filter(Boolean).join(" ")
     const containerStyle = isPanelOpen && !isMobile ? { width: panelWidth + "px" } : undefined
 
-    return <div className={containerClass} ref={containerRef} style={containerStyle}>
+    return <div className={"input-tab-container"} ref={containerRef} style={containerStyle}>
         <InputTabSide sinnerIcon={sinnerIcon} skillDetails={skillDetails} changeTab={changeActiveTab}
         activeTab={activeTab} addTab={addTab} resetBtnHandler={resetBtnHandler}></InputTabSide>
         {isPanelOpen && <>
