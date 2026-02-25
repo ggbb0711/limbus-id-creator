@@ -68,9 +68,6 @@ export default function InputTabSide({sinnerIcon,
                         background:`var(--${skill.type==="DefenseSkill"||skill.type==="OffenseSkill"?(skill as IOffenseSkill|IDefenseSkill).skillAffinity:"None"}-input-page)`
                     }}>
                     <img src={tabIcon} alt="" />
-                    {/* <span className="input-tab-delete-icon" >
-                        <DeleteIcon/>
-                    </span> */}
                 </li>
             })}
         </ul>
