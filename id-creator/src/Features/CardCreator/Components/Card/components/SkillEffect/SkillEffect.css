@@ -14,3 +14,7 @@
   content: '';
   display: inline-block;
 }
+
+.skill-effect span[contenteditable='false'] {
+  white-space: nowrap;
+}
