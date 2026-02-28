@@ -16,6 +16,7 @@ import UploadImgBtn from "../Components/UploadImgBtn/UploadImgBtn";
 import { compressAndReadImage } from "Features/CardCreator/Utils/CompressAndReadImage";
 import { useSkillForm } from "Features/CardCreator/Hooks/useSkillForm";
 import DisplayAd from "Components/DisplayAd/DisplayAd";
+import InFeedAd from "Components/InFeedAd/InFeedAd";
 
 export default function InputDefenseSkillPage({
     index,
@@ -72,7 +73,7 @@ export default function InputDefenseSkillPage({
                 </div>
             }
         </AccordionSection>
-
+        <InFeedAd />
         <AccordionSection title="Skill Stats">
             <div className="input-group-container">
                 <div className="input-container">
@@ -111,7 +112,7 @@ export default function InputDefenseSkillPage({
                 </div>
             </div>
         </AccordionSection>
-
+        <InFeedAd />
         <AccordionSection title="Skill Info">
             <div className="input-group-container">
                 <div className="input-container">
@@ -168,6 +169,5 @@ export default function InputDefenseSkillPage({
             onConfirm={()=>{setShowConfirm(false); deleteSkill()}}
             onCancel={()=>setShowConfirm(false)}
         />}
-        <DisplayAd />
     </div>
 }

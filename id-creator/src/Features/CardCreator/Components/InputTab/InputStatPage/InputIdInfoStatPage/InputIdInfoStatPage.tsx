@@ -19,6 +19,7 @@ import { compressAndReadImage } from "Features/CardCreator/Utils/CompressAndRead
 import { useForm } from "react-hook-form";
 import { IIdInfo } from "Features/CardCreator/Types/IIdInfo";
 import DisplayAd from "Components/DisplayAd/DisplayAd";
+import InFeedAd from "Components/InFeedAd/InFeedAd";
 
 export default function InputIdInfoStatPage({collaspPage}:{collaspPage:()=>void}):ReactElement{
     const idInfoValue = useAppSelector(state => state.idInfo.value)
@@ -169,7 +170,7 @@ export default function InputIdInfoStatPage({collaspPage}:{collaspPage:()=>void}
                 </div>
             </div>
         </AccordionSection>
-
+        <InFeedAd />
         <AccordionSection title="Sinner Stats">
             <div className="input-group-container">
                 <div className="input-container">
@@ -244,6 +245,5 @@ export default function InputIdInfoStatPage({collaspPage}:{collaspPage:()=>void}
                 </div>
             </div>
         </AccordionSection>
-        <DisplayAd />
     </div>
 }

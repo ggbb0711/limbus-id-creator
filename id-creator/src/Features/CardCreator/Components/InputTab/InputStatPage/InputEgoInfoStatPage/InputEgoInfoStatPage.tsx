@@ -15,6 +15,7 @@ import { compressAndReadImage } from "Features/CardCreator/Utils/CompressAndRead
 import { useForm } from "react-hook-form";
 import { IEgoInfo } from "Features/CardCreator/Types/IEgoInfo";
 import DisplayAd from "Components/DisplayAd/DisplayAd";
+import InFeedAd from "Components/InFeedAd/InFeedAd";
 
 export default function InputStatPage({collaspPage}:{collaspPage:()=>void}):ReactElement{
     const EgoInfoValue = useAppSelector(state => state.egoInfo.value)
@@ -105,7 +106,7 @@ export default function InputStatPage({collaspPage}:{collaspPage:()=>void}):Reac
                 </div>
             </div>
         </AccordionSection>
-
+        <InFeedAd />
         <AccordionSection title="Ego Stats">
             <div className="input-group-container">
                 <div className="input-container">
@@ -224,6 +225,5 @@ export default function InputStatPage({collaspPage}:{collaspPage:()=>void}):Reac
                 </div>
             </div>
         </AccordionSection>
-        <DisplayAd />
     </div>
 }

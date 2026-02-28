@@ -56,6 +56,5 @@ export default function InputMentalEffect({
             onConfirm={()=>{setShowConfirm(false); deleteSkill()}}
             onCancel={()=>setShowConfirm(false)}
         />}
-        <DisplayAd />
     </div>
 }

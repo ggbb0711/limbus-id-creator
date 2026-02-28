@@ -11,6 +11,7 @@ import ChangeInputType from "../Components/ChangeInputType/ChangeInputType";
 import TipTapEditor from "../Components/TipTapEditor/TipTapEditor";
 import { useSkillForm } from "Features/CardCreator/Hooks/useSkillForm";
 import DisplayAd from "Components/DisplayAd/DisplayAd";
+import InFeedAd from "Components/InFeedAd/InFeedAd";
 
 export default function InputPassivePage({
     index,
@@ -156,7 +157,7 @@ export default function InputPassivePage({
                     </div>
                 </div>
         </AccordionSection>
-
+        <InFeedAd />
         <AccordionSection title="Skill Info">
             <div className="input-group-container">
                 <div className="input-container">
@@ -191,6 +192,5 @@ export default function InputPassivePage({
             onConfirm={()=>{setShowConfirm(false); deleteSkill()}}
             onCancel={()=>setShowConfirm(false)}
         />}
-        <DisplayAd />
     </div>
 }

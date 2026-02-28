@@ -12,6 +12,7 @@ import UploadImgBtn from "../Components/UploadImgBtn/UploadImgBtn";
 import { compressAndReadImage } from "Features/CardCreator/Utils/CompressAndReadImage";
 import { useSkillForm } from "Features/CardCreator/Hooks/useSkillForm";
 import DisplayAd from "Components/DisplayAd/DisplayAd";
+import InFeedAd from "Components/InFeedAd/InFeedAd";
 
 export default function InputCustomEffectPage({
     index,
@@ -68,7 +69,7 @@ export default function InputCustomEffectPage({
                 </div>
             </div>
         </AccordionSection>
-
+        <InFeedAd />
         <AccordionSection title="Effect Info">
             <div className="input-group-container">
                 <div className="input-container">
@@ -97,6 +98,5 @@ export default function InputCustomEffectPage({
             onConfirm={()=>{setShowConfirm(false); deleteSkill()}}
             onCancel={()=>setShowConfirm(false)}
         />}
-        <DisplayAd />
     </div>
 }
