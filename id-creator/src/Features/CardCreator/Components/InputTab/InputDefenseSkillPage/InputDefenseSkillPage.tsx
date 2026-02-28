@@ -112,7 +112,6 @@ export default function InputDefenseSkillPage({
                 </div>
             </div>
         </AccordionSection>
-        <InFeedAd />
         <AccordionSection title="Skill Info">
             <div className="input-group-container">
                 <div className="input-container">

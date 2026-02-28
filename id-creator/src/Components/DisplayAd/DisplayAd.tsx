@@ -12,16 +12,17 @@ export default function DisplayAd() {
     const [insHeight, setInsHeight] = useState(0)
 
     useEffect(() => {
-        if (!initialized.current) {
-            initialized.current = true
-            try {
-                (window.adsbygoogle = window.adsbygoogle || []).push({})
-            } catch (err) { console.log(err) }
-        }
         if (!insRef.current) return
         const observer = new ResizeObserver(entries => {
             for (const entry of entries) {
-                setInsHeight(entry.contentRect.height)
+                const { width, height } = entry.contentRect
+                if (!initialized.current && width > 0) {
+                    initialized.current = true
+                    try {
+                        (window.adsbygoogle = window.adsbygoogle || []).push({})
+                    } catch (err) { console.log(err) }
+                }
+                setInsHeight(height)
             }
         })
         observer.observe(insRef.current)
