@@ -23,7 +23,7 @@ export default function InFeedAd() {
         <ins
             ref={insRef}
             className="adsbygoogle"
-            style={{ display: "block", textAlign: "center" }}
+            style={{ display: "block", textAlign: "center", width: "100%" }}
             data-ad-layout="in-article"
             data-ad-format="fluid"
             data-ad-client="ca-pub-2161757435040376"
