@@ -18,8 +18,8 @@ import { setIdInfo } from "Features/CardCreator/Stores/IdInfoSlice";
 import { compressAndReadImage } from "Features/CardCreator/Utils/CompressAndReadImage";
 import { useForm } from "react-hook-form";
 import { IIdInfo } from "Features/CardCreator/Types/IIdInfo";
-import DisplayAd from "Components/DisplayAd/DisplayAd";
-import InFeedAd from "Components/InFeedAd/InFeedAd";
+import DisplayAd from "Components/Ads/DisplayAd/DisplayAd";
+import InFeedAd from "Components/Ads/InFeedAd/InFeedAd";
 
 export default function InputIdInfoStatPage({collaspPage}:{collaspPage:()=>void}):ReactElement{
     const idInfoValue = useAppSelector(state => state.idInfo.value)

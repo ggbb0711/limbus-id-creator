@@ -9,7 +9,7 @@ import useAlert from "Hooks/useAlert";
 import { useCheckAuthQuery } from "Api/AuthApi";
 import { useGetPostQuery } from "Api/PostAPI";
 import { useGetCommentsQuery, useCreateCommentMutation } from "Api/CommentApi";
-import DisplayAd from "Components/DisplayAd/DisplayAd";
+import DisplayAd from "Components/Ads/DisplayAd/DisplayAd";
 
 export default function PostPage():ReactElement{
     const {postId} = useParams()

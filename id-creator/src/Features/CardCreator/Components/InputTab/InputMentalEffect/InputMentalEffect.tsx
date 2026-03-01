@@ -8,7 +8,7 @@ import ArrowDownIcon from "Assets/Icons/ArrowDownIcon";
 import AccordionSection from "Components/AccordionSection/AccordionSection";
 import ConfirmDialog from "Components/ConfirmDialog/ConfirmDialog";
 import { useSkillForm } from "Features/CardCreator/Hooks/useSkillForm";
-import DisplayAd from "Components/DisplayAd/DisplayAd";
+import DisplayAd from "Components/Ads/DisplayAd/DisplayAd";
 
 export default function InputMentalEffect({
     index,

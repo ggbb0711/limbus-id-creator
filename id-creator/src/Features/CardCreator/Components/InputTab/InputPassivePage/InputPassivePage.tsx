@@ -10,8 +10,8 @@ import ConfirmDialog from "Components/ConfirmDialog/ConfirmDialog";
 import ChangeInputType from "../Components/ChangeInputType/ChangeInputType";
 import TipTapEditor from "../Components/TipTapEditor/TipTapEditor";
 import { useSkillForm } from "Features/CardCreator/Hooks/useSkillForm";
-import DisplayAd from "Components/DisplayAd/DisplayAd";
-import InFeedAd from "Components/InFeedAd/InFeedAd";
+import DisplayAd from "Components/Ads/DisplayAd/DisplayAd";
+import InFeedAd from "Components/Ads/InFeedAd/InFeedAd";
 
 export default function InputPassivePage({
     index,

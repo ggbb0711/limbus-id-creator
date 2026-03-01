@@ -14,8 +14,8 @@ import { setEgoInfo } from "Features/CardCreator/Stores/EgoInfoSlice";
 import { compressAndReadImage } from "Features/CardCreator/Utils/CompressAndReadImage";
 import { useForm } from "react-hook-form";
 import { IEgoInfo } from "Features/CardCreator/Types/IEgoInfo";
-import DisplayAd from "Components/DisplayAd/DisplayAd";
-import InFeedAd from "Components/InFeedAd/InFeedAd";
+import DisplayAd from "Components/Ads/DisplayAd/DisplayAd";
+import InFeedAd from "Components/Ads/InFeedAd/InFeedAd";
 
 export default function InputStatPage({collaspPage}:{collaspPage:()=>void}):ReactElement{
     const EgoInfoValue = useAppSelector(state => state.egoInfo.value)

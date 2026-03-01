@@ -11,7 +11,7 @@ import TagsContainer from "Components/TagsContainer/TagsContainer";
 import useAlert from "Hooks/useAlert";
 import { useCheckAuthQuery } from "Api/AuthApi";
 import { useGetPostsQuery } from "Api/PostAPI";
-import DisplayAd from "Components/DisplayAd/DisplayAd";
+import DisplayAd from "Components/Ads/DisplayAd/DisplayAd";
 
 export default function ForumPage():ReactElement{
     const [searchPostName,setSearchPostName] = useState("")

@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import useAlert from "Hooks/useAlert";
 import { useCheckAuthQuery } from "Api/AuthApi";
 import { useCreatePostMutation } from "Api/PostAPI";
-import DisplayAd from "Components/DisplayAd/DisplayAd";
+import DisplayAd from "Components/Ads/DisplayAd/DisplayAd";
 
 interface IChoosenSave{
     PreviewUrl:string,
