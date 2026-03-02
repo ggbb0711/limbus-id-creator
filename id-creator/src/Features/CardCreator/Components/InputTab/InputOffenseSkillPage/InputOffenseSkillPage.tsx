@@ -14,8 +14,6 @@ import SkillFrameInput from "../Components/SkillFrameInput/SkillFrameInput";
 import UploadImgBtn from "../Components/UploadImgBtn/UploadImgBtn";
 import { compressAndReadImage } from "Features/CardCreator/Utils/CompressAndReadImage";
 import { useSkillForm } from "Features/CardCreator/Hooks/useSkillForm";
-import DisplayAd from "Components/Ads/DisplayAd/DisplayAd";
-import InFeedAd from "Components/Ads/InFeedAd/InFeedAd";
 
 export default function InputOffenseSkillPage({
         index,
@@ -40,7 +38,6 @@ export default function InputOffenseSkillPage({
                 <ArrowDownIcon></ArrowDownIcon>
             </div>
         </div>
-        <DisplayAd />
         <div className="input-group-container">
             <label className="input-label">Change skill:</label>
             <ChangeInputType changeSkillType={changeSkillType} type={type}/>
@@ -68,7 +65,6 @@ export default function InputOffenseSkillPage({
                 </div>
             }
         </AccordionSection>
-        <InFeedAd />
         <AccordionSection title="Skill Stats">
             <div className="input-group-container">
                 <div className="input-container">

@@ -11,8 +11,6 @@ import TipTapEditor from "../Components/TipTapEditor/TipTapEditor";
 import UploadImgBtn from "../Components/UploadImgBtn/UploadImgBtn";
 import { compressAndReadImage } from "Features/CardCreator/Utils/CompressAndReadImage";
 import { useSkillForm } from "Features/CardCreator/Hooks/useSkillForm";
-import DisplayAd from "Components/Ads/DisplayAd/DisplayAd";
-import InFeedAd from "Components/Ads/InFeedAd/InFeedAd";
 
 export default function InputCustomEffectPage({
     index,
@@ -34,7 +32,6 @@ export default function InputCustomEffectPage({
                 <ArrowDownIcon></ArrowDownIcon>
             </div>
         </div>
-        <DisplayAd />
         <div className="input-group-container">
             <label className="input-label">Change skill:</label>
             <ChangeInputType changeSkillType={changeSkillType} type={type}/>
@@ -69,7 +66,6 @@ export default function InputCustomEffectPage({
                 </div>
             </div>
         </AccordionSection>
-        <InFeedAd />
         <AccordionSection title="Effect Info">
             <div className="input-group-container">
                 <div className="input-container">

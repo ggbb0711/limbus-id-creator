@@ -14,8 +14,6 @@ import { setEgoInfo } from "Features/CardCreator/Stores/EgoInfoSlice";
 import { compressAndReadImage } from "Features/CardCreator/Utils/CompressAndReadImage";
 import { useForm } from "react-hook-form";
 import { IEgoInfo } from "Features/CardCreator/Types/IEgoInfo";
-import DisplayAd from "Components/Ads/DisplayAd/DisplayAd";
-import InFeedAd from "Components/Ads/InFeedAd/InFeedAd";
 
 export default function InputStatPage({collaspPage}:{collaspPage:()=>void}):ReactElement{
     const EgoInfoValue = useAppSelector(state => state.egoInfo.value)
@@ -61,7 +59,6 @@ export default function InputStatPage({collaspPage}:{collaspPage:()=>void}):Reac
                 <ArrowDownIcon></ArrowDownIcon>
             </div>
         </div>
-        <DisplayAd />
         <AccordionSection title="Ego General Info">
             <div className="sinner-icon-input-container">
                 <p>Pick the sinner icon: </p>
@@ -106,7 +103,6 @@ export default function InputStatPage({collaspPage}:{collaspPage:()=>void}):Reac
                 </div>
             </div>
         </AccordionSection>
-        <InFeedAd />
         <AccordionSection title="Ego Stats">
             <div className="input-group-container">
                 <div className="input-container">

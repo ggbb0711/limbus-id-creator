@@ -8,7 +8,6 @@ import ArrowDownIcon from "Assets/Icons/ArrowDownIcon";
 import AccordionSection from "Components/AccordionSection/AccordionSection";
 import ConfirmDialog from "Components/ConfirmDialog/ConfirmDialog";
 import { useSkillForm } from "Features/CardCreator/Hooks/useSkillForm";
-import DisplayAd from "Components/Ads/DisplayAd/DisplayAd";
 
 export default function InputMentalEffect({
     index,
@@ -28,7 +27,6 @@ export default function InputMentalEffect({
                 <ArrowDownIcon></ArrowDownIcon>
             </div>
         </div>
-        <DisplayAd />
         <div className="input-group-container">
             <label className="input-label">Change skill:</label>
             <ChangeInputType changeSkillType={changeSkillType} type={type}/>

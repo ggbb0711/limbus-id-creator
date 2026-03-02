@@ -10,8 +10,6 @@ import ConfirmDialog from "Components/ConfirmDialog/ConfirmDialog";
 import ChangeInputType from "../Components/ChangeInputType/ChangeInputType";
 import TipTapEditor from "../Components/TipTapEditor/TipTapEditor";
 import { useSkillForm } from "Features/CardCreator/Hooks/useSkillForm";
-import DisplayAd from "Components/Ads/DisplayAd/DisplayAd";
-import InFeedAd from "Components/Ads/InFeedAd/InFeedAd";
 
 export default function InputPassivePage({
     index,
@@ -31,7 +29,6 @@ export default function InputPassivePage({
                 <ArrowDownIcon></ArrowDownIcon>
             </div>
         </div>
-        <DisplayAd />
         <div className="input-group-container">
             <label className="input-label">Change skill:</label>
             <ChangeInputType changeSkillType={changeSkillType} type={type}/>
@@ -157,7 +154,6 @@ export default function InputPassivePage({
                     </div>
                 </div>
         </AccordionSection>
-        <InFeedAd />
         <AccordionSection title="Skill Info">
             <div className="input-group-container">
                 <div className="input-container">

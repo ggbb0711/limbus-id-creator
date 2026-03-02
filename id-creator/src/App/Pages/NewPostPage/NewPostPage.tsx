@@ -13,7 +13,6 @@ import { useNavigate } from "react-router-dom";
 import useAlert from "Hooks/useAlert";
 import { useCheckAuthQuery } from "Api/AuthApi";
 import { useCreatePostMutation } from "Api/PostAPI";
-import DisplayAd from "Components/Ads/DisplayAd/DisplayAd";
 
 interface IChoosenSave{
     PreviewUrl:string,
@@ -71,7 +70,6 @@ export default function NewPostPage():ReactElement{
 
     return <div className="page-container post-page">
         {loginUser?<div className="page-content">
-            <DisplayAd />
             <h1 className="header-txt">Create new post</h1>
             <div className="post-input-container">
                 <label htmlFor="post-name">Post Name (Required) {postName.length}/200: </label>
@@ -120,7 +118,6 @@ export default function NewPostPage():ReactElement{
                 <Editor className="input post-description-input" name="description" id="description" value={description} onChange={(e)=>setDescription(e.target.value)}/>
             </div>
             <button className={`main-button ${isPosting??"active"}`} onClick={handleCreatePost}>{isPosting?"Posting...":"Post"}</button>
-            <DisplayAd />
         </div>:
             <div className="page-content">
                 Please login to post

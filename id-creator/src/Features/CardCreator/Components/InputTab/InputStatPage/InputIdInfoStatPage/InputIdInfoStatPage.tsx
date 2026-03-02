@@ -18,8 +18,6 @@ import { setIdInfo } from "Features/CardCreator/Stores/IdInfoSlice";
 import { compressAndReadImage } from "Features/CardCreator/Utils/CompressAndReadImage";
 import { useForm } from "react-hook-form";
 import { IIdInfo } from "Features/CardCreator/Types/IIdInfo";
-import DisplayAd from "Components/Ads/DisplayAd/DisplayAd";
-import InFeedAd from "Components/Ads/InFeedAd/InFeedAd";
 
 export default function InputIdInfoStatPage({collaspPage}:{collaspPage:()=>void}):ReactElement{
     const idInfoValue = useAppSelector(state => state.idInfo.value)
@@ -86,7 +84,6 @@ export default function InputIdInfoStatPage({collaspPage}:{collaspPage:()=>void}
                 <ArrowDownIcon></ArrowDownIcon>
             </div>
         </div>
-        <DisplayAd />
         <AccordionSection title="Sinner General Info">
             <div className="sinner-icon-input-container">
                 <p>Pick the sinner icon: </p>
@@ -170,7 +167,6 @@ export default function InputIdInfoStatPage({collaspPage}:{collaspPage:()=>void}
                 </div>
             </div>
         </AccordionSection>
-        <InFeedAd />
         <AccordionSection title="Sinner Stats">
             <div className="input-group-container">
                 <div className="input-container">
