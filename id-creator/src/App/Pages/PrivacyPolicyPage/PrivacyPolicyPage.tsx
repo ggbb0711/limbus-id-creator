@@ -73,6 +73,14 @@ export default function PrivacyPolicyPage() {
                 </div>
 
                 <div className="legal-section">
+                    <h2 className="legal-section-title">Monumetric advertisement</h2>
+                    <p className="legal-text">
+                        *This Site is affiliated with Monumetric (dba for The Blogger Network, LLC) for the purposes of placing advertising on the Site, and Monumetric will collect and use certain data for advertising purposes. To learn more about Monumetric’s data usage, click here: 
+                        <a target="_blank" rel="noreferrer" href="http://www.monumetric.com/publisher-advertising-privacy">Publisher Advertising Privacy</a>*
+                    </p>
+                </div>
+
+                <div className="legal-section">
                     <h2 className="legal-section-title">Contact</h2>
                     <p className="legal-text">
                         If you have questions about this Privacy Policy, please contact us at{" "}

@@ -84,7 +84,6 @@ export default function InputIdInfoStatPage({collaspPage}:{collaspPage:()=>void}
                 <ArrowDownIcon></ArrowDownIcon>
             </div>
         </div>
-
         <AccordionSection title="Sinner General Info">
             <div className="sinner-icon-input-container">
                 <p>Pick the sinner icon: </p>
@@ -168,7 +167,6 @@ export default function InputIdInfoStatPage({collaspPage}:{collaspPage:()=>void}
                 </div>
             </div>
         </AccordionSection>
-
         <AccordionSection title="Sinner Stats">
             <div className="input-group-container">
                 <div className="input-container">

@@ -1,6 +1,9 @@
 import React, { useEffect, useRef } from "react"
 import { useEditor, EditorContent, ReactRenderer } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
+import Paragraph from "@tiptap/extension-paragraph"
+
+const PreserveParagraph = Paragraph.extend({ whitespace: "pre" as const })
 import { Underline } from "@tiptap/extension-underline"
 import { TextStyle, FontSize } from "@tiptap/extension-text-style"
 import { Color } from "@tiptap/extension-color"
@@ -51,7 +54,9 @@ export default function TipTapEditor({ inputId, content, changeHandler, matchLis
                 bulletList: false,
                 orderedList: false,
                 listItem: false,
+                paragraph: false,
             }),
+            PreserveParagraph,
             Underline,
             TextStyle,
             Color,

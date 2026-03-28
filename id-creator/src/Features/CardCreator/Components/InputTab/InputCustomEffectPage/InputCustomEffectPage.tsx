@@ -66,7 +66,6 @@ export default function InputCustomEffectPage({
                 </div>
             </div>
         </AccordionSection>
-
         <AccordionSection title="Effect Info">
             <div className="input-group-container">
                 <div className="input-container">

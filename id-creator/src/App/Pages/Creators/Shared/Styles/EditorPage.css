@@ -13,6 +13,5 @@
 @media screen and (max-width:800px) {
     .editor-container>.input-tab-container{
         max-width: 100%;
-        opacity: 95%;
     }
 }

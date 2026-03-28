@@ -70,7 +70,6 @@ export default function InputDefenseSkillPage({
                 </div>
             }
         </AccordionSection>
-
         <AccordionSection title="Skill Stats">
             <div className="input-group-container">
                 <div className="input-container">
@@ -109,7 +108,6 @@ export default function InputDefenseSkillPage({
                 </div>
             </div>
         </AccordionSection>
-
         <AccordionSection title="Skill Info">
             <div className="input-group-container">
                 <div className="input-container">

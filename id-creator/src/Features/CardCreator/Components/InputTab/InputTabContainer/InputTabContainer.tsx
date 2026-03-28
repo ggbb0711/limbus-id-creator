@@ -53,8 +53,16 @@ export default function InputTabContainer({
     const {addAlert} = useAlert()
 
     const [panelWidth, setPanelWidth] = useState(getSavedWidth)
+    const [isMobile, setIsMobile] = useState(() => window.matchMedia("(max-width: 768px)").matches)
     const isDragging = useRef(false)
     const containerRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        const mq = window.matchMedia("(max-width: 768px)")
+        const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
+        mq.addEventListener("change", handler)
+        return () => mq.removeEventListener("change", handler)
+    }, [])
 
     const isPanelOpen = activeTab !== -2
 
@@ -120,14 +128,16 @@ export default function InputTabContainer({
         }
     }
 
-    return <div className="input-tab-container" ref={containerRef} style={isPanelOpen ? { width: panelWidth + "px" } : undefined}>
+    const containerStyle = isPanelOpen && !isMobile ? { width: panelWidth + "px" } : undefined
+
+    return <div className={"input-tab-container"} ref={containerRef} style={containerStyle}>
         <InputTabSide sinnerIcon={sinnerIcon} skillDetails={skillDetails} changeTab={changeActiveTab}
         activeTab={activeTab} addTab={addTab} resetBtnHandler={resetBtnHandler}></InputTabSide>
         {isPanelOpen && <>
             {activeTab === -1
                 ? (mode === "id" ? <InputIdInfoStatPage collaspPage={()=>changeActiveTab(-2)}/> : <InputEgoInfoStatPage collaspPage={()=>changeActiveTab(-2)}/>)
                 : renderSkillPage(skillDetails[activeTab], activeTab)}
-            <div className="input-tab-resize-handle" onMouseDown={handleMouseDown}></div>
+            {!isMobile && <div className="input-tab-resize-handle" onMouseDown={handleMouseDown}></div>}
         </>}
     </div>
 }

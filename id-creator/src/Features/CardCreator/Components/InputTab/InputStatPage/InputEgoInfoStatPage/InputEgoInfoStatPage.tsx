@@ -53,20 +53,12 @@ export default function InputStatPage({collaspPage}:{collaspPage:()=>void}):Reac
         return"var(--Normal)"
     }
 
-    function changeResistantText(value:number):string{
-        if(value<=0.5) return "Ineff"
-        if(value<1) return "Endure"
-        if(value>=2.0) return "Fatal"
-        return "Normal"
-    }
-
     return <div className="input-page input-stat-page">
         <div className="input-page-icon-container">
             <div className="collasp-icon" onClick={collaspPage}>
                 <ArrowDownIcon></ArrowDownIcon>
             </div>
         </div>
-
         <AccordionSection title="Ego General Info">
             <div className="sinner-icon-input-container">
                 <p>Pick the sinner icon: </p>
@@ -111,7 +103,6 @@ export default function InputStatPage({collaspPage}:{collaspPage:()=>void}):Reac
                 </div>
             </div>
         </AccordionSection>
-
         <AccordionSection title="Ego Stats">
             <div className="input-group-container">
                 <div className="input-container">

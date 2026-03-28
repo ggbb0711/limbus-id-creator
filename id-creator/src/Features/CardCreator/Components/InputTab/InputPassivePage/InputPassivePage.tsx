@@ -154,7 +154,6 @@ export default function InputPassivePage({
                     </div>
                 </div>
         </AccordionSection>
-
         <AccordionSection title="Skill Info">
             <div className="input-group-container">
                 <div className="input-container">
