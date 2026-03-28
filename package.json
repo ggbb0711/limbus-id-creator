@@ -1,0 +1,22 @@
+{
+  "name": "limbus-id-creator",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "frontend:install": "npm install --prefix id-creator",
+    "frontend:start": "npm start --prefix id-creator",
+
+    "backend:install": "dotnet restore id-creator-server/Server.csproj",
+    "backend:start": "dotnet run --project id-creator-server/Server.csproj",
+
+    "db:start": "docker-compose -f id-creator-server/docker-compose.postgres.yml up -d",
+    "db:stop": "docker-compose -f id-creator-server/docker-compose.postgres.yml down",
+    "db:migrate": "dotnet ef database update --project id-creator-server/Server.csproj",
+
+    "infra:start": "docker-compose -f id-creator-server/docker-compose.yml up -d rabbitmq",
+
+    "install": "npm run frontend:install && npm run backend:install",
+    "setup": "npm run db:start && npm run infra:start && npm run db:migrate",
+    "start": "npm run frontend:start & npm run backend:start"
+  }
+}
