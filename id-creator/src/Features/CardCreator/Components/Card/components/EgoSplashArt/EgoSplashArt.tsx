@@ -12,7 +12,7 @@ export default function EgoSplashArt({splashArt, splashArtScale, splashArtTransl
     return(
         <div className="ego-splash-art">
             <MapInteractionCSS disableZoom={true} disablePan={true} value={{scale:splashArtScale,translation:splashArtTranslation}}>
-                {splashArt?<img className="egoSplashArtImg" src={splashArt} alt="egoSplashArtImg" />:<></>}
+                {splashArt?<img className="egoSplashArtImg" src={splashArt} alt="egoSplashArtImg" crossOrigin="anonymous" />:<></>}
             </MapInteractionCSS>
         </div>
     )

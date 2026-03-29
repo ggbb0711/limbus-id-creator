@@ -12,7 +12,7 @@ export default function SinnerSplashArt({splashArt, splashArtScale, splashArtTra
     return(
         <div className="sinner-splash-art-container">
             <MapInteractionCSS disableZoom={true} disablePan={true} value={{scale:splashArtScale,translation:splashArtTranslation}}>
-                {splashArt?<img className="splashArtImg" src={splashArt} alt="splashArt" />:<></>}
+                {splashArt?<img className="splashArtImg" src={splashArt} alt="splashArt" crossOrigin="anonymous" />:<></>}
             </MapInteractionCSS>
             <div className="splashArt-container-blur-edges"></div>
         </div>

@@ -13,7 +13,7 @@ const OffenseSkillSplash = ({skillAffinity,skillImage,skillFrame}:{skillAffinity
             <div className="splash-container" style={{'backgroundColor':`var(--${skillAffinity})`}}>
                 {
                 (skillImage)?
-                    <img className="skill-image" src={skillImage} alt="skill image" />:
+                    <img className="skill-image" src={skillImage} alt="skill image" crossOrigin="anonymous" />:
                     (skillAffinity!=="None")?<img className={`placeholder-skill`} src={`/Images/sin-affinity/affinity_${skillAffinity}_big.webp`} alt="skill affinity" />:<></>
                 }
             </div>

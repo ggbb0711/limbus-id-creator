@@ -15,7 +15,7 @@ const DefenseSkillSplash = ({skillAffinity,skillImage,defenseType,skillFrame}:{s
                 <div className="defense-icon-container">
                     <img src={`/Images/defense/defense_${defenseType}.webp`} alt={`defense_${defenseType}`} />
                 </div>
-                { skillImage && <img className="skill-image" src={skillImage} alt="skill image" />}
+                { skillImage && <img className="skill-image" src={skillImage} alt="skill image" crossOrigin="anonymous" />}
             </div>
         </div>
     )
