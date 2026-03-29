@@ -44,9 +44,9 @@ namespace Server.Services.UtilServices
                     {
                         using(var scope = _services.CreateScope())
                         {
-                            var cloudinaryService = scope.ServiceProvider.GetRequiredService<IUploadService>();
-                            var uploadUrl =(uploadingImage.ImageFile!=null)? await cloudinaryService.Upload(uploadingImage.ImageFile,uploadingImage.Id.ToString())
-                            :await cloudinaryService.Upload(uploadingImage.Url,uploadingImage.Id.ToString());
+                            var uploadService = scope.ServiceProvider.GetRequiredService<IUploadService>();
+                            var uploadUrl =(uploadingImage.ImageFile!=null)? await uploadService.Upload(uploadingImage.ImageFile,uploadingImage.Id.ToString())
+                            :await uploadService.Upload(uploadingImage.Url,uploadingImage.Id.ToString());
                             var imageObjService = scope.ServiceProvider.GetRequiredService<IImageObjService>();
                             await imageObjService.UpdateImage(uploadingImage.Id,uploadUrl,uploadingImage.lastUpdated);
                         }

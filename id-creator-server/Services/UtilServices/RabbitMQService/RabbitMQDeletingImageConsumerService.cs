@@ -38,8 +38,8 @@ namespace Server.Services.UtilServices
                 {
                     using(var scope = _services.CreateScope())
                     {
-                        var cloudinaryService = scope.ServiceProvider.GetRequiredService<IDeleteService>();
-                        await cloudinaryService.Delete(publicId);
+                        var deleteService = scope.ServiceProvider.GetRequiredService<IDeleteService>();
+                        await deleteService.Delete(publicId);
                     }
                 }
                 catch (Exception ex)

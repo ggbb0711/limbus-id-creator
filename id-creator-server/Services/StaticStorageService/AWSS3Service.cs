@@ -6,7 +6,7 @@ using Server.Interface.ServiceInterface.StaticStorageService;
 
 namespace Server.Services
 {
-    public class AWSS3Service : IUploadService
+    public class AWSS3Service : IUploadService, IDeleteService
     {
         private readonly AmazonS3Client _amazonS3Client;
         private readonly TransferUtility _transferUtility;
@@ -14,7 +14,7 @@ namespace Server.Services
         public AWSS3Service(){
             var AWS_ACCESS_KEY = Environment.GetEnvironmentVariable("AWS_ACCESS_KEY");
             var AWS_SECRET_KEY = Environment.GetEnvironmentVariable("AWS_SECRET_KEY");
-            var credentials = new BasicAWSCredentials(AWS_ACCESS_KEY, AWS_ACCESS_KEY);
+            var credentials = new BasicAWSCredentials(AWS_ACCESS_KEY, AWS_SECRET_KEY);
             var config = new AmazonS3Config()
             {
                 RegionEndpoint = RegionEndpoint.USEast1
@@ -23,6 +23,12 @@ namespace Server.Services
             _amazonS3Client = new AmazonS3Client(credentials);
             _transferUtility = new TransferUtility(_amazonS3Client);
         }
+
+        public async Task Delete(string publicId)
+        {
+            await _amazonS3Client.DeleteObjectAsync(AWS_S3_BUCKET_NAME, publicId);
+        }
+
         public async Task<string> Upload(byte[] file, string fileName)
         {
             using(var stream = new MemoryStream(file))
@@ -36,7 +42,7 @@ namespace Server.Services
                 };
 
                 await _transferUtility.UploadAsync(uploadRequest);
-                return $"https://{AWS_S3_BUCKET_NAME}.s3.{_amazonS3Client.Config.RegionEndpoint.SystemName}.amazonaws.com/{AWS_S3_BUCKET_NAME}";
+                return $"https://{AWS_S3_BUCKET_NAME}.s3.{_amazonS3Client.Config.RegionEndpoint.SystemName}.amazonaws.com/{fileName}";
             }
         }
 
