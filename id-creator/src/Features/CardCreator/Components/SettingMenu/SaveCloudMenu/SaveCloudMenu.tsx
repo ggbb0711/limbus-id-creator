@@ -88,13 +88,20 @@ export default function SaveCloudMenu({saveMode}:{saveMode:"ID"|"EGO"}):ReactEle
         const saveData = JSON.parse(JSON.stringify(saveFileData)) as ISaveFile<IIdInfo|IEgoInfo>
         const saveInfo = {...saveData.saveInfo}
 
+        const compressToWebP = (file: File) => imageCompression(file, {
+            maxSizeMB: 1,
+            useWebWorker: true,
+            fileType: "image/webp",
+            initialQuality: 0.7,
+        })
+
         if(checkBase64Image(saveInfo.sinnerIcon)){
-            form.append("sinnerIcon",base64ToFile(saveInfo.sinnerIcon,"new file"))
+            form.append("sinnerIcon", await compressToWebP(base64ToFile(saveInfo.sinnerIcon,"new file")))
             saveInfo.sinnerIcon = ""
         }
 
         if(checkBase64Image(saveInfo.splashArt)){
-            form.append("splashArtImg",base64ToFile(saveInfo.splashArt,"new file"))
+            form.append("splashArtImg", await compressToWebP(base64ToFile(saveInfo.splashArt,"new file")))
             saveInfo.splashArt = ""
         }
 
@@ -104,32 +111,35 @@ export default function SaveCloudMenu({saveMode}:{saveMode:"ID"|"EGO"}):ReactEle
         form.append("thumbnailImage",await imageCompression(thumbnailImageFile,{
             maxSizeMB: 1,
             useWebWorker: true,
+            fileType: "image/webp",
+            initialQuality: 0.7,
             maxWidthOrHeight: Math.max(1650,Math.floor(width*(2/3)))
         }))
 
-        saveInfo.skillDetails.forEach((skill,i)=>{
+        const skillImageTasks = saveInfo.skillDetails.map(async (skill,i)=>{
             if(skill.type==="OffenseSkill"){
                 if(checkBase64Image((skill as IOffenseSkill).skillImage)){
-                    form.append("skillImages",base64ToFile((skill as IOffenseSkill).skillImage,"new file"))
+                    form.append("skillImages", await compressToWebP(base64ToFile((skill as IOffenseSkill).skillImage,"new file")))
                     form.append("imageIndex",i.toString());
                     (saveInfo.skillDetails[i] as IOffenseSkill).skillImage=""
                 }
             }
             if(skill.type==="DefenseSkill"){
                 if(checkBase64Image((skill as IDefenseSkill).skillImage)){
-                    form.append("skillImages",base64ToFile((skill as IDefenseSkill).skillImage,"new file"))
+                    form.append("skillImages", await compressToWebP(base64ToFile((skill as IDefenseSkill).skillImage,"new file")))
                     form.append("imageIndex",i.toString());
                     (saveInfo.skillDetails[i] as IDefenseSkill).skillImage=""
                 }
             }
             if(skill.type==="CustomEffect"){
                 if(checkBase64Image((skill as ICustomEffect).customImg)){
-                    form.append("skillImages",base64ToFile((skill as ICustomEffect).customImg,"new file"))
+                    form.append("skillImages", await compressToWebP(base64ToFile((skill as ICustomEffect).customImg,"new file")))
                     form.append("imageIndex",i.toString());
                     (saveInfo.skillDetails[i] as ICustomEffect).customImg=""
                 }
             }
         })
+        await Promise.all(skillImageTasks)
         saveData.saveInfo=saveInfo
         form.append("SaveData",JSON.stringify(saveData))
         return form

@@ -63,7 +63,7 @@ const EgoCard=forwardRef<HTMLDivElement,{changeActiveTab:React.Dispatch<React.Se
             {/* I don't understand why but the width for ego doesn't expand to the whole screen */}
             <TransformComponent wrapperStyle={{width:"100vw"}}>
                 <div className="Card" ref={ref}>
-                    <div className="sinner-icon-background" style={{"backgroundImage":`url(${EgoInfoValue.sinnerIcon})`}}></div>
+                    {EgoInfoValue.sinnerIcon && <img className="sinner-icon-background" src={EgoInfoValue.sinnerIcon} alt="sinner-icon" crossOrigin="anonymous" />}
                     <div className="Card-container">
                         {EgoInfoValue.splashArt?
                         <div className="ego-splash-art-container">

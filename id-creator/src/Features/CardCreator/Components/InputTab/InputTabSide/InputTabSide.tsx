@@ -54,7 +54,7 @@ export default function InputTabSide({sinnerIcon,
                 style={{
                     background:'var(--None-input-page)'
                 }}>
-                <img src={sinnerIcon} alt="" />
+                <img src={sinnerIcon} alt="" crossOrigin="anonymous" />
             </li>
             {skillDetails.map((skill:IOffenseSkill|IDefenseSkill|IPassiveSkill|ICustomEffect|IMentalEffect|never,i:number)=>{
                 let tabIcon = convertTabIcon(skill.type)

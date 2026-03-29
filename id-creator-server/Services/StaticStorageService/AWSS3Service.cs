@@ -3,6 +3,8 @@ using Amazon.Runtime;
 using Amazon.S3;
 using Amazon.S3.Transfer;
 using Server.Interface.ServiceInterface.StaticStorageService;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Webp;
 
 namespace Server.Services
 {
@@ -31,19 +33,21 @@ namespace Server.Services
 
         public async Task<string> Upload(byte[] file, string fileName)
         {
-            using(var stream = new MemoryStream(file))
-            {
-                var uploadRequest = new TransferUtilityUploadRequest
-                {
-                    InputStream = stream,
-                    BucketName = AWS_S3_BUCKET_NAME,
-                    ContentType = "image/webp",
-                    Key = fileName
-                };
+            using var image = Image.Load(file);
+            using var webpStream = new MemoryStream();
+            await image.SaveAsync(webpStream, new WebpEncoder { Quality = 70 });
+            webpStream.Position = 0;
 
-                await _transferUtility.UploadAsync(uploadRequest);
-                return $"https://{AWS_S3_BUCKET_NAME}.s3.{_amazonS3Client.Config.RegionEndpoint.SystemName}.amazonaws.com/{fileName}";
-            }
+            var uploadRequest = new TransferUtilityUploadRequest
+            {
+                InputStream = webpStream,
+                BucketName = AWS_S3_BUCKET_NAME,
+                ContentType = "image/webp",
+                Key = fileName
+            };
+
+            await _transferUtility.UploadAsync(uploadRequest);
+            return $"https://{AWS_S3_BUCKET_NAME}.s3.{_amazonS3Client.Config.RegionEndpoint.SystemName}.amazonaws.com/{fileName}";
         }
 
         public async Task<string> Upload(string url, string fileName)

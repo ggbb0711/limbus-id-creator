@@ -63,7 +63,7 @@ const IdCard=forwardRef<HTMLDivElement,{changeActiveTab:React.Dispatch<React.Set
         }}>
             <TransformComponent wrapperStyle={{width:"100vw"}}>
                 <div className="Card" ref={ref}>
-                    <div className="sinner-icon-background" style={{"backgroundImage":`url(${idInfoValue.sinnerIcon})`}}></div>
+                    {idInfoValue.sinnerIcon && <img className="sinner-icon-background" src={idInfoValue.sinnerIcon} alt="sinner-icon" crossOrigin="anonymous" />}
                     <div className="Card-container">
                         <div className="splashArt-container">
                             <SinnerSplashArt splashArt={idInfoValue.splashArt} splashArtScale={idInfoValue.splashArtScale} splashArtTranslation={idInfoValue.splashArtTranslation}/>
