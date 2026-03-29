@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="AWSSDK.S3" Version="4.0.19.4" />
     <PackageReference Include="CloudinaryDotNet" Version="1.26.2" />
     <PackageReference Include="DotNetEnv" Version="3.0.0" />
     <PackageReference Include="Google.Apis.Auth" Version="1.68.0" />
