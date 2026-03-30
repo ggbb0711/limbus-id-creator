@@ -95,51 +95,42 @@ export default function SaveCloudMenu({saveMode}:{saveMode:"ID"|"EGO"}):ReactEle
             initialQuality: 0.7,
         })
 
-        if(checkBase64Image(saveInfo.sinnerIcon)){
-            form.append("sinnerIcon", await compressToWebP(base64ToFile(saveInfo.sinnerIcon,"new file")))
-            saveInfo.sinnerIcon = ""
-        }
+        const skillImageTasks = saveInfo.skillDetails.map(async (skill, i) => {
+            if(skill.type==="OffenseSkill" && checkBase64Image((skill as IOffenseSkill).skillImage)){
+                return { file: await compressToWebP(base64ToFile((skill as IOffenseSkill).skillImage, "new file")), index: i, clear: () => { (saveInfo.skillDetails[i] as IOffenseSkill).skillImage = "" } }
+            }
+            if(skill.type==="DefenseSkill" && checkBase64Image((skill as IDefenseSkill).skillImage)){
+                return { file: await compressToWebP(base64ToFile((skill as IDefenseSkill).skillImage, "new file")), index: i, clear: () => { (saveInfo.skillDetails[i] as IDefenseSkill).skillImage = "" } }
+            }
+            if(skill.type==="CustomEffect" && checkBase64Image((skill as ICustomEffect).customImg)){
+                return { file: await compressToWebP(base64ToFile((skill as ICustomEffect).customImg, "new file")), index: i, clear: () => { (saveInfo.skillDetails[i] as ICustomEffect).customImg = "" } }
+            }
+            return null
+        })
 
-        if(checkBase64Image(saveInfo.splashArt)){
-            form.append("splashArtImg", await compressToWebP(base64ToFile(saveInfo.splashArt,"new file")))
-            saveInfo.splashArt = ""
-        }
+        const [sinnerIconFile, splashArtFile, imgUrl, ...skillResults] = await Promise.all([
+            checkBase64Image(saveInfo.sinnerIcon) ? compressToWebP(base64ToFile(saveInfo.sinnerIcon, "new file")) : Promise.resolve(null),
+            checkBase64Image(saveInfo.splashArt)  ? compressToWebP(base64ToFile(saveInfo.splashArt, "new file"))  : Promise.resolve(null),
+            TurnRefToImg(domRef),
+            ...skillImageTasks
+        ])
 
-        const imgUrl = await TurnRefToImg(domRef);
-        const thumbnailImageFile = base64ToFile(imgUrl,"new file")
+        if(sinnerIconFile){ form.append("sinnerIcon", sinnerIconFile); saveInfo.sinnerIcon = "" }
+        if(splashArtFile){ form.append("splashArtImg", splashArtFile); saveInfo.splashArt = "" }
+
+        const thumbnailImageFile = base64ToFile(imgUrl as string, "new file")
         const {width} = await getImageDimensions(thumbnailImageFile)
-        form.append("thumbnailImage",await imageCompression(thumbnailImageFile,{
+        form.append("thumbnailImage", await imageCompression(thumbnailImageFile, {
             maxSizeMB: 1,
             useWebWorker: true,
             fileType: "image/webp",
             initialQuality: 0.7,
-            maxWidthOrHeight: Math.max(1650,Math.floor(width*(2/3)))
+            maxWidthOrHeight: Math.max(1650, Math.floor(width * (2/3)))
         }))
 
-        const skillImageTasks = saveInfo.skillDetails.map(async (skill,i)=>{
-            if(skill.type==="OffenseSkill"){
-                if(checkBase64Image((skill as IOffenseSkill).skillImage)){
-                    form.append("skillImages", await compressToWebP(base64ToFile((skill as IOffenseSkill).skillImage,"new file")))
-                    form.append("imageIndex",i.toString());
-                    (saveInfo.skillDetails[i] as IOffenseSkill).skillImage=""
-                }
-            }
-            if(skill.type==="DefenseSkill"){
-                if(checkBase64Image((skill as IDefenseSkill).skillImage)){
-                    form.append("skillImages", await compressToWebP(base64ToFile((skill as IDefenseSkill).skillImage,"new file")))
-                    form.append("imageIndex",i.toString());
-                    (saveInfo.skillDetails[i] as IDefenseSkill).skillImage=""
-                }
-            }
-            if(skill.type==="CustomEffect"){
-                if(checkBase64Image((skill as ICustomEffect).customImg)){
-                    form.append("skillImages", await compressToWebP(base64ToFile((skill as ICustomEffect).customImg,"new file")))
-                    form.append("imageIndex",i.toString());
-                    (saveInfo.skillDetails[i] as ICustomEffect).customImg=""
-                }
-            }
+        skillResults.forEach(result => {
+            if(result){ form.append("skillImages", result.file); form.append("imageIndex", result.index.toString()); result.clear() }
         })
-        await Promise.all(skillImageTasks)
         saveData.saveInfo=saveInfo
         form.append("SaveData",JSON.stringify(saveData))
         return form

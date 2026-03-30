@@ -22,7 +22,7 @@ namespace Server.Services
                 RegionEndpoint = RegionEndpoint.USEast1
             };
 
-            _amazonS3Client = new AmazonS3Client(credentials);
+            _amazonS3Client = new AmazonS3Client(credentials, config);
             _transferUtility = new TransferUtility(_amazonS3Client);
         }
 
@@ -33,26 +33,24 @@ namespace Server.Services
 
         public async Task<string> Upload(byte[] file, string fileName)
         {
-            using var image = Image.Load(file);
-            using var webpStream = new MemoryStream();
-            await image.SaveAsync(webpStream, new WebpEncoder { Quality = 70 });
-            webpStream.Position = 0;
-
-            var uploadRequest = new TransferUtilityUploadRequest
+            using (var stream = new MemoryStream(file))
             {
-                InputStream = webpStream,
-                BucketName = AWS_S3_BUCKET_NAME,
-                ContentType = "image/webp",
-                Key = fileName
-            };
+                var uploadRequest = new TransferUtilityUploadRequest
+                {
+                    InputStream = stream,
+                    BucketName = AWS_S3_BUCKET_NAME,
+                    ContentType = "image/webp",
+                    Key = fileName
+                };
 
-            await _transferUtility.UploadAsync(uploadRequest);
-            return $"https://{AWS_S3_BUCKET_NAME}.s3.{_amazonS3Client.Config.RegionEndpoint.SystemName}.amazonaws.com/{fileName}";
+                await _transferUtility.UploadAsync(uploadRequest);
+                return $"https://{AWS_S3_BUCKET_NAME}.s3.{_amazonS3Client.Config.RegionEndpoint.SystemName}.amazonaws.com/{fileName}";
+            }
         }
 
         public async Task<string> Upload(string url, string fileName)
         {
-            var byteData = await (new HttpClient()).GetByteArrayAsync(url);
+            var byteData = await new HttpClient().GetByteArrayAsync(url);
             return await Upload(byteData, fileName);
         }
     }

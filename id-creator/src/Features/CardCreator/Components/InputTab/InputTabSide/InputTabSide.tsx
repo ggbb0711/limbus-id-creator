@@ -67,7 +67,7 @@ export default function InputTabSide({sinnerIcon,
                 onClick={()=>changeTab(i)} style={{
                         background:`var(--${skill.type==="DefenseSkill"||skill.type==="OffenseSkill"?(skill as IOffenseSkill|IDefenseSkill).skillAffinity:"None"}-input-page)`
                     }}>
-                    <img src={tabIcon} alt="" />
+                    <img src={tabIcon} alt="" crossOrigin="anonymous"/>
                 </li>
             })}
         </ul>
