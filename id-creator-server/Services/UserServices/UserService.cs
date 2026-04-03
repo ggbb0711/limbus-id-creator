@@ -27,6 +27,8 @@ namespace Server.Services
         {
             var user = await _userRepository.GetUserByEmail(loginUser.email);
 
+            if(user != null && (!user.IsActive || user.IsRemoved)) return null;
+
             if(user ==null)
             {
                 var imageId = new Guid();

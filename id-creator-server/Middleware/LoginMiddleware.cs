@@ -19,7 +19,7 @@ namespace Server.Middleware
                 try
                 {
                     var session = await sessionService.GetSession(Guid.Parse(sessionId));
-                    if(session != null && DateTime.Now< session.Expired)
+                    if(session != null && DateTime.Now< session.Expired && session.User?.IsActive == true)
                     {
                         context.Items["Session"] = session;
                     }

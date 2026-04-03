@@ -20,6 +20,7 @@ namespace Server.Repositories
             var foundUser = await _ctx.Users.FirstOrDefaultAsync(user => user.Id == id);
             if(foundUser != null)
             {
+                if(!foundUser.IsActive) return null;
                 if(!userChangeProfile.UserName.IsNullOrEmpty())foundUser.UserName = userChangeProfile.UserName;
                 if(!userChangeProfile.UserIcon.IsNullOrEmpty())
                 {
@@ -46,7 +47,7 @@ namespace Server.Repositories
 
         public async Task<User?> GetUserById(Guid id)
         {
-            return await _ctx.Users.FirstOrDefaultAsync(user=> user.Id == id);    
+            return await _ctx.Users.FirstOrDefaultAsync(user=> user.Id == id && !user.IsRemoved);
         }
     }
 }

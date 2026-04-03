@@ -29,6 +29,8 @@ namespace Server.Models
         [Required]
         public ImageObj UserIcon {get=>LazyLoader.Load(this,ref _userIcon); set=>_userIcon = value;}
         public DateTime CreatedAt{get; set;} = DateTime.Now;
+        public bool IsActive { get; set; } = true;
+        public bool IsRemoved { get; set; } = false;
         public ICollection<Comment>? Comments { get; set;} = [];
         public ICollection<Post> Posts {get; set;} = [];
     }

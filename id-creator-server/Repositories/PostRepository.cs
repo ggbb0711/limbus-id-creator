@@ -22,7 +22,7 @@ namespace Server.Repositories
 
         public async Task<Post?> GetPostById(Guid postId)
         {
-            return await _ctx.Post.Where(p=>p.Id == postId).FirstOrDefaultAsync();
+            return await _ctx.Post.Where(p=>p.Id == postId && !p.IsRemoved && p.IsActive).FirstOrDefaultAsync();
         }
 
         public int GetPostCount(SearchPostOption option)
@@ -30,7 +30,8 @@ namespace Server.Repositories
             IQueryable<Post> query;
             query = _ctx.Post.Where(p=>p.Title.Contains(option.Title)
             &&(option.UserId.IsNullOrEmpty()||option.UserId==p.UserId.ToString())
-            &&(option.Tag.Count<1||option.Tag.All(t=>p.Tags.Select(t=>t.TagName).Contains(t))));
+            &&(option.Tag.Count<1||option.Tag.All(t=>p.Tags.Select(t=>t.TagName).Contains(t)))
+            && !p.IsRemoved && p.IsActive);
 
             switch(option.SortedBy)
             {
@@ -59,7 +60,8 @@ namespace Server.Repositories
             IQueryable<Post> query;
             query = _ctx.Post.Where(p=>p.Title.ToLower().Contains(option.Title.ToLower())
             &&(option.UserId.IsNullOrEmpty()||option.UserId==p.UserId.ToString())
-            &&(option.Tag.Count<1||option.Tag.All(t=>p.Tags.Select(t=>t.TagName).Contains(t))));
+            &&(option.Tag.Count<1||option.Tag.All(t=>p.Tags.Select(t=>t.TagName).Contains(t)))
+            && !p.IsRemoved && p.IsActive);
 
             switch(option.SortedBy)
             {
