@@ -1,5 +1,6 @@
 .env
 Migrations
 obj
+!Util/Obj/
 bin
 publish
