@@ -1169,5 +1169,116 @@ export const baseStatusEffect={
     
     "target_fixed":
         "<span class='center-element' contenteditable='false' style='color:#94f140'>[Target Fixed]</span>",
-    
+
+    "procuration_[hermes]":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Procuration_-Hermes-.webp' alt='procuration_[hermes]_icon' />Procuration [Hermes]</span>",
+
+    "indulgence_in_prescripts":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Indulgence_in_Prescripts.webp' alt='indulgence_in_prescripts_icon' />Indulgence in Prescripts</span>",
+
+    "sizzling_wound":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Sizzling_Wound.webp' alt='sizzling_wound_icon' />Sizzling Wound</span>",
+
+    "wound-casing_mask":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Wound-casing_Mask.webp' alt='wound-casing_mask_icon' />Wound-casing Mask</span>",
+
+    "desire_for_acknowledgement_sated":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Desire_for_Acknowledgement_Sated.webp' alt='desire_for_acknowledgement_sated_icon' />Desire for Acknowledgement Sated</span>",
+
+    "shin_(心)_-_fate":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Shin_(心)_-_Fate.webp' alt='shin_(心)_-_fate_icon' />Shin (心) - Fate</span>",
+
+    "rhythm":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Rhythm.webp' alt='rhythm_icon' />Rhythm</span>",
+
+    "bullet_-_solitude":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Bullet_-_Solitude.webp' alt='bullet_-_solitude_icon' />Bullet - Solitude</span>",
+
+    "faint_aroma":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Faint_Aroma.webp' alt='faint_aroma_icon' />Faint Aroma</span>",
+
+    "petals":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Petals.webp' alt='petals_icon' />Petals</span>",
+
+    "solitude":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Solitude.webp' alt='solitude_icon' />Solitude</span>",
+
+    "spore":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Spore.webp' alt='spore_icon' />Spore</span>",
+
+    "spore_round_[base]":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Spore_Round_-Base-.webp' alt='spore_round_[base]_icon' />Spore Round [Base]</span>",
+
+    "spore_round_[buckshot]":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Spore_Round_-Buckshot-.webp' alt='spore_round_[buckshot]_icon' />Spore Round [BuckShot]</span>",
+
+    "loyalty_pheromone":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Loyalty_Pheromone.webp' alt='loyalty_pheromone_icon' />Loyalty Pheromone</span>",
+
+    "reload_[germination]":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Reload_-Germination-.webp' alt='reload_[germination]_icon' />Reload [Germination]</span>",
+
+    "embers":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Embers.webp' alt='embers_icon' />Embers</span>",
+
+    "high-voltage_exoskeleton":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/High-voltage_Exoskeleton.webp' alt='high-voltage_exoskeleton_icon' />High-voltage Exoskeleton</span>",
+
+    "charged_sting":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Charged_Sting.webp' alt='charged_sting_icon' />Charged Sting</span>",
+
+    "self-charge":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Self-charge.webp' alt='self-charge_icon' />Self-charge</span>",
+
+    "when_boring_a_20-inch_hole_with_a_lance...":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/When_boring_a_20-inch_hole_with_a_lance....webp' alt='when_boring_a_20-inch_hole_with_a_lance..._icon' />When boring a 20-inch hole with a lance...</span>",
+
+    "when_caving_in_the_back_of_the_skull_with_a_hammer...":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/When_caving_in_the_back_of_the_skull_with_a_hammer....webp' alt='when_caving_in_the_back_of_the_skull_with_a_hammer..._icon' />When caving in the back of the skull with a hammer...</span>",
+
+    "when_cleaving_through_the_shoulder_and_the_skull_with_a_bastard_sword...":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/When_cleaving_through_the_shoulder_and_the_skull_with_a_bastard_sword....webp' alt='when_cleaving_through_the_shoulder_and_the_skull_with_a_bastard_sword..._icon' />When cleaving through the shoulder and the skull with a bastard sword...</span>",
+
+    "when_hacking_through_the_ribs_with_a_hatchet...":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/When_hacking_through_the_ribs_with_a_hatchet....webp' alt='when_hacking_through_the_ribs_with_a_hatchet..._icon' />When hacking through the ribs with a hatchet...</span>",
+
+    "when_lacerating_through_space_itself_with_a_scythe,_like_a_certain_someone...":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/When_lacerating_through_space_itself_with_a_scythe,_like_a_certain_someone....webp' alt='when_lacerating_through_space_itself_with_a_scythe,_like_a_certain_someone..._icon' />When lacerating through space itself with a scythe, like a certain someone...</span>",
+
+    "when_penetrating_the_lungs_with_a_stiletto...":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/When_penetrating_the_lungs_with_a_stiletto....webp' alt='when_penetrating_the_lungs_with_a_stiletto..._icon' />When penetrating the lungs with a stiletto...</span>",
+
+    "when_punching_10_or_more_holes_in_the_torso_with_a_rapier...":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/When_punching_10_or_more_holes_in_the_torso_with_a_rapier....webp' alt='when_punching_10_or_more_holes_in_the_torso_with_a_rapier..._icon' />When punching 10 or more holes in the torso with a rapier...</span>",
+
+    "when_rending_the_body_with_a_greatsword...":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/When_rending_the_body_with_a_greatsword....webp' alt='when_rending_the_body_with_a_greatsword..._icon' />When rending the body with a greatsword...</span>",
+
+    "when_ripping_the_flesh_to_ten_thousand_strips_with_a_whip...":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/When_ripping_the_flesh_to_ten_thousand_strips_with_a_whip....webp' alt='when_ripping_the_flesh_to_ten_thousand_strips_with_a_whip..._icon' />When ripping the flesh to ten thousand strips with a whip...</span>",
+
+    "artwork:_fascia":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Artwork_-_Fascia.webp' alt='artwork:_fascia_icon' />Artwork: Fascia</span>",
+
+    "artwork:_tibia":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Artwork_-_Tibia.webp' alt='artwork:_tibia_icon' />Artwork: Tibia</span>",
+
+    "corpus_ingredient":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Corpus_Ingredient.webp' alt='corpus_ingredient_icon' />Corpus Ingredient</span>",
+
+    "corpus_theater":
+        "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Corpus_Theater.webp' alt='corpus_theater_icon' />Corpus Theater</span>",
+
+    "iron_maiden":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Iron_Maiden.webp' alt='iron_maiden_icon' />Iron Maiden</span>",
+
+    "somatic_frisson-inspiring_melody":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Somatic_Frisson-inspiring_Melody.webp' alt='somatic_frisson-inspiring_melody_icon' />Somatic Frisson-inspiring Melody</span>",
+
+    "the_self_unbound_-_flow_state":
+        "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/The_Self_Unbound_-_Flow_State.webp' alt='the_self_unbound_-_flow_state_icon' />The Self Unbound - Flow State</span>",
+
+    "viewing_the_tableau":
+        "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Viewing_the_Tableau.webp' alt='viewing_the_tableau_icon' />Viewing the Tableau</span>",
+
 }
