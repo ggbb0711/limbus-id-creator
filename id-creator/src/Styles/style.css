@@ -1,5 +1,70 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
 
+/* --- Universal Base Styles --- */
+* {
+    box-sizing: border-box;
+    word-break: break-word;
+}
+
+/* --- Custom Fonts --- */
+@font-face {
+    font-family: "Mikodacs";
+    src: url("../Font/english/mikodacs.regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    unicode-range: U+0000-007F, U+0080-00FF, U+0100-024F; /* Basic + extended Latin */
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "KOTRA_BOLDS";
+    src: url("../Font/korean/KOTRA_BOLD.ttf") format("truetype");
+    font-weight: bold;
+    font-style: normal;
+    unicode-range: U+AC00-D7AF; /* Hangul syllables */
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "HigashiOme-Gothic";
+    src: url("../Font/japanese/HigashiOme-Gothic-C-1.3.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    unicode-range: 
+        U+3040-309F, /* Hiragana */
+        U+30A0-30FF, /* Katakana */
+        U+4E00-9FFF; /* Kanji */
+    font-display: swap;
+}
+
+.font-block {
+    padding: 1rem;
+    border: 1px solid #555;
+    border-radius: 6px;
+}
+
+.english {
+    font-family: "Mikodacs", sans-serif;
+    font-size: 1em;
+}
+
+.korean {
+    font-family: "KOTRA_BOLDS", sans-serif;
+    font-size: 0.8em;
+}
+
+.japanese {
+    font-family: "HigashiOme-Gothic", sans-serif;
+    font-size: 0.8em;
+}
+
+.others {
+    font-family: "Rubik", sans-serif;
+    font-size: 0.8em;
+}
+
+
+/* --- Root Variables --- */
 :root{
     --Wrath:rgb(141,66,46);
     --Lust: rgb(174,93,47);
@@ -19,7 +84,6 @@
     --Gloom-input-page:#04232B;
     --None-input-page:#332317;
 
-    /* Color for the title shadow */
     --Wrath-title-shadow: #4a1b14;
     --Lust-title-shadow: #56250E;
     --Sloth-title-shadow: #393702;
@@ -78,11 +142,6 @@
     --editor-container-height: calc(100vh - var(--header-height) - var(--editor-page-footer));
 }
 
-*{
-    font-family: "Rubik", sans-serif; 
-    word-break: break-word;
-    box-sizing: border-box;
-}
 
 body{
     background: var(--background-black);
@@ -94,12 +153,6 @@ label{
 
 a{
     text-decoration: none;
-}
-
-@font-face {
-    font-family: "Mikodacs";
-    src: local("Mikodacs"),url("../Assets/Fonts/Mikodacs/mikodacs.regular.ttf");
-    font-weight: normal;
 }
 
 .hidden{
@@ -201,7 +254,7 @@ button{
     border: 1px solid white;
     background-color: black;
     padding: 4px;
-    font-family: "Rubik", sans-serif; 
+    font-family: "Mikodacs", sans-serif; 
     cursor: pointer;  
 }
 
@@ -209,9 +262,9 @@ button{
     background-color: var(--button);
 }
 
-
+/* --- Buttons --- */
 .main-button{
-    font-family: "Mikodacs" , "Rubik", sans-serif;
+    font-family: "Mikodacs", "KOTRA_BOLD", "HigashiOme-Gothic", sans-serif;
     border: 2px solid var(--brown-pale);
     color: black;
     fill: black;

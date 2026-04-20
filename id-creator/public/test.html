@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Font Test</title>
+    <link rel="stylesheet" href="../src/styles/style.css">
+    <style>
+        body {
+            background: #111;
+            color: white;
+            font-size: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        h2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .english {
+            font-family: "Mikodacs", sans-serif;
+        }
+
+        .korean {
+            font-family: "KOTRA_BOLDS", sans-serif;
+        }
+
+        .japanese {
+            font-family: "HigashiOme-Gothic", sans-serif;
+        }
+
+        .others {
+            font-family: "Rubik", sans-serif;
+        }
+
+        .font-block {
+            padding: 1rem;
+            border: 1px solid #555;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="font-block english">
+        <h2>English (Mikodacs)</h2>
+        The quick brown fox jumps over the lazy dog.
+    </div>
+
+    <div class="font-block korean">
+        <h2>Korean (KOTRA_BOLDS)</h2>
+        다람쥐 헌 쳇바퀴에 타고파.
+    </div>
+
+    <div class="font-block japanese">
+        <h2>Japanese (HigashiOme-Gothic)</h2>
+        いろはにほへと ちりぬるを わかよたれそ つねならむ
+        うゐのおくやま けふこえて あさきゆめみし ゑひもせす
+    </div>
+
+    <div class="font-block others">
+        <h2>Everything else (Rubik)</h2>
+        Τη γλώσσα μου έδωσαν ελληνική, και αυτό μου αρέσει.<br>
+        Հայերեն տառերը գեղեցիկ են, չէ՞:<br>
+        В чащах юга жил бы цитрус? Да, но фальшивый экземпляр!
+</div>
+</body>
+</html>
