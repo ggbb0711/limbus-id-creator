@@ -157,9 +157,9 @@ namespace Server.Controllers
                 return StatusCode(401,response);
             }
 
-            if(skillImages.Count>20)
+            if(skillImages.Count>40)
             {
-                response.msg = "Can only upload less or equal than 20 skill images and custom effect icon";
+                response.msg = "Can only upload less or equal than 40 skill images and custom effect icon";
                 return BadRequest(response);
             }
 
@@ -221,9 +221,9 @@ namespace Server.Controllers
                 return StatusCode(401,response);
             }
 
-            if(skillImages.Count>20)
+            if(skillImages.Count>40)
             {
-                response.msg = "Can only upload less or equal than 20 skill images and custom effect icon";
+                response.msg = "Can only upload less or equal than 40 skill images and custom effect icon";
                 return BadRequest(response);
             }
 

@@ -45,7 +45,7 @@ export default function InputTabSide({sinnerIcon,
 
     return <ul className="input-tab-side-container">
         <li className="input-tab-side icon-side" onClick={()=>{
-            if(skillDetails.length<20) setIsAdding(!isAdding)
+            if(skillDetails.length<40) setIsAdding(!isAdding)
         }}>
             <AddIcon/>
         </li>

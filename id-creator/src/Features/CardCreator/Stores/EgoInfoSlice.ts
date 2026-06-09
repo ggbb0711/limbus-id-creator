@@ -65,7 +65,7 @@ const EgoInfoSlice = createSlice({
             state.value.skillDetails = action.payload
         },
         addEgoInfoSkill(state, action: PayloadAction<SkillDetail>) {
-            if (state.value.skillDetails.length < 20)
+            if (state.value.skillDetails.length < 40)
                 state.value.skillDetails.push(action.payload)
         },
         deleteEgoInfoSkill(state, action: PayloadAction<string>) {

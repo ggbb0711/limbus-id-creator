@@ -39,7 +39,7 @@ namespace Server.Middleware
             if(! await MiscUtil.CheckFormUploadSaveFile(context,new List<IFormContextValidation>()
                 {
                     new FormFileSizeValidation("skillImages","Skill icon and custom effect icon must be <= 100kb",HttpStatusCode.BadRequest,100000),
-                    new FormFileAmountValidation("skillImages","Can only upload less or equal than 20 skill images and custom effect icon",HttpStatusCode.BadRequest,0,20)
+                    new FormFileAmountValidation("skillImages","Can only upload less or equal than 40 skill images and custom effect icon",HttpStatusCode.BadRequest,0,40)
                 }))
             return;
 
