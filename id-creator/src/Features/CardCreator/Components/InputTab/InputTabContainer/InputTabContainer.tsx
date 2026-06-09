@@ -107,7 +107,7 @@ export default function InputTabContainer({
     }, [changeActiveTab])
 
     function addTab(skill: IOffenseSkill|IDefenseSkill|IPassiveSkill|ICustomEffect|IMentalEffect){
-        if(skillDetails.length>40) addAlert("Failure","There can only be 40 or less skill/effects")
+        if(skillDetails.length>=40) addAlert("Failure","There can only be 40 or less skill/effects")
         else dispatch(mode === "id" ? addIdInfoSkill(skill as SkillDetail) : addEgoInfoSkill(skill as SkillDetail))
     }
 
