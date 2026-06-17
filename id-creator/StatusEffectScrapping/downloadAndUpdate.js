@@ -25,12 +25,13 @@ async function downloadImages(newStatuses){
             await new Promise(resolve => setTimeout(resolve, 5000)); 
             const response = await axios.get(status.downloadUrl, { responseType: 'arraybuffer' });
             const imageBuffer = Buffer.from(response.data, 'binary');
-            
-            console.log(`Downloading: ${status.img}...`)
+            const decodedImageName = decodeURIComponent(status.img)
+
+            console.log(`Downloading: ${decodedImageName}...`)
             await sharp(imageBuffer)
                 .webp()
-                .toFile(`${baseDownloadUrlFolder}/${status.img}.webp`);
-            console.log(`Downloading: ${status.img}, completed`)
+                .toFile(`${baseDownloadUrlFolder}/${decodedImageName}.webp`);
+            console.log(`Downloading: ${decodedImageName}, completed`)
         }
         catch(err){
             console.log(err)
