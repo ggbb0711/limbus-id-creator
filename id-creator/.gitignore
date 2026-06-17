@@ -2,7 +2,8 @@
 
 # dependencies
 .claude
-/node_modules
+node_modules
+temp.json
 /.pnp
 .pnp.js
 
