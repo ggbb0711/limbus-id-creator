@@ -69,6 +69,9 @@ export default function InputCustomEffectPage({
                 <div className="input-container">
                     <label htmlFor="isCoinType" className="input-label">Use as custom coin type: </label>
                     <input type="checkbox" id="isCoinType" {...register("isCoinType")}/>
+                    <p className="effect-guide">
+                        When enable, you can use custom coin with the syntax [coin_1_effect_name] through [coin_9_effect_name] and it will render the coin with the custom images.
+                    </p>
                 </div>
             </div>
         </AccordionSection>
