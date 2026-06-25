@@ -73,5 +73,7 @@
     "skill_end": "<span class='center-element' contenteditable='false' style='color:#94f140'>[Skill End]</span>",
     "turn_end": "<span class='center-element' contenteditable='false' style='color:#94f140'>[Turn End]</span>",
     "turn_start": "<span class='center-element' contenteditable='false' style='color:#94f140'>[Turn Start]</span>",
-    "target_fixed": "<span class='center-element' contenteditable='false' style='color:#94f140'>[Target Fixed]</span>"
+    "target_fixed": "<span class='center-element' contenteditable='false' style='color:#94f140'>[Target Fixed]</span>",
+    "attack_start": "<span class='center-element' contenteditable='false' style='color:#94f140'>[Attack Start]</span>",
+    "attack_end": "<span class='center-element' contenteditable='false' style='color:#94f140'>[Attack End]</span>"
 }
