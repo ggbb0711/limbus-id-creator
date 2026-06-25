@@ -64,6 +64,28 @@
     min-height: 25px;
 }
 
+.custom-coin-icon,
+.custom-coin-fallback{
+    width: 25px;
+    height: 25px;
+    flex: 0 0 25px;
+}
+
+.custom-coin-icon{
+    object-fit: contain;
+}
+
+.custom-coin-fallback{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+}
+
 .coinNo-input{
     margin-left: auto;
 }

@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IIdInfo, IdInfo } from 'Features/CardCreator/Types/IIdInfo'
 import { PassiveSkill } from 'Features/CardCreator/Types/Skills/PassiveSkill/IPassiveSkill'
 import { SkillDetail } from 'Features/CardCreator/Types/SkillDetail'
+import { CustomEffect } from 'Features/CardCreator/Types/Skills/CustomEffect/ICustomEffect'
 
 interface IdInfoState {
     value: IIdInfo
@@ -12,6 +13,17 @@ function hydratePassiveSkills(info: IIdInfo): IIdInfo {
     hydrated.skillDetails = hydrated.skillDetails.map(skill => {
         if (skill.type === "PassiveSkill") {
             return { ...new PassiveSkill(), ...skill }
+        }
+        return skill
+    })
+    return hydrated
+}
+
+function hydrateCustomEffects(info: IIdInfo): IIdInfo {
+    const hydrated = { ...info }
+    hydrated.skillDetails = hydrated.skillDetails.map(skill => {
+        if (skill.type === "CustomEffect") {
+            return { ...new CustomEffect(), ...skill }
         }
         return skill
     })
@@ -64,7 +76,7 @@ const IdInfoSlice = createSlice({
     initialState,
     reducers: {
         setIdInfo(state, action: PayloadAction<IIdInfo>) {
-            state.value = fixBackwardCompatPaths(hydrateTraits(hydrateSkillFrames(hydratePassiveSkills(action.payload))))
+            state.value = fixBackwardCompatPaths(hydrateTraits(hydrateSkillFrames(hydrateCustomEffects(hydratePassiveSkills(action.payload)))))
         },
         updateIdInfoField(state, action: PayloadAction<{ field: string, value: any }>) {
             (state.value as any)[action.payload.field] = action.payload.value

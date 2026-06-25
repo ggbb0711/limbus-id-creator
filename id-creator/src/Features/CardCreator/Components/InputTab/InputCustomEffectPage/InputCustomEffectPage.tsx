@@ -65,6 +65,12 @@ export default function InputCustomEffectPage({
                     <input type="color" id="effectColor" {...register("effectColor")}/>
                 </div>
             </div>
+            <div className="input-group-container">
+                <div className="input-container">
+                    <label htmlFor="isCoinType" className="input-label">Use as custom coin type: </label>
+                    <input type="checkbox" id="isCoinType" {...register("isCoinType")}/>
+                </div>
+            </div>
         </AccordionSection>
         <AccordionSection title="Effect Info">
             <div className="input-group-container">

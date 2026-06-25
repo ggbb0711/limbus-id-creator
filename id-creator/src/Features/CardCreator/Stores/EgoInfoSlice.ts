@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IEgoInfo, EgoInfo } from 'Features/CardCreator/Types/IEgoInfo'
 import { PassiveSkill } from 'Features/CardCreator/Types/Skills/PassiveSkill/IPassiveSkill'
 import { SkillDetail } from 'Features/CardCreator/Types/SkillDetail'
+import { CustomEffect } from 'Features/CardCreator/Types/Skills/CustomEffect/ICustomEffect'
 
 interface EgoInfoState {
     value: IEgoInfo
@@ -12,6 +13,17 @@ function hydratePassiveSkills(info: IEgoInfo): IEgoInfo {
     hydrated.skillDetails = hydrated.skillDetails.map(skill => {
         if (skill.type === "PassiveSkill") {
             return { ...new PassiveSkill(), ...skill }
+        }
+        return skill
+    })
+    return hydrated
+}
+
+function hydrateCustomEffects(info: IEgoInfo): IEgoInfo {
+    const hydrated = { ...info }
+    hydrated.skillDetails = hydrated.skillDetails.map(skill => {
+        if (skill.type === "CustomEffect") {
+            return { ...new CustomEffect(), ...skill }
         }
         return skill
     })
@@ -53,7 +65,7 @@ const EgoInfoSlice = createSlice({
     initialState,
     reducers: {
         setEgoInfo(state, action: PayloadAction<IEgoInfo>) {
-            state.value = fixBackwardCompatPaths(hydrateSkillFrames(hydratePassiveSkills(action.payload)))
+            state.value = fixBackwardCompatPaths(hydrateSkillFrames(hydrateCustomEffects(hydratePassiveSkills(action.payload))))
         },
         updateEgoInfoField(state, action: PayloadAction<{ field: string, value: any }>) {
             (state.value as any)[action.payload.field] = action.payload.value

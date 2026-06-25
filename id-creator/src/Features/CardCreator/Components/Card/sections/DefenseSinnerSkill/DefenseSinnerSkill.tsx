@@ -5,6 +5,7 @@ import "./DefenseSinnerSkill.css";
 import { IDefenseSkill } from "Features/CardCreator/Types/Skills/DefenseSkill/IDefenseSkill";
 import SkillTitle from "../../components/SkillTitle/SkillTitle";
 import SkillEffect from "../../components/SkillEffect/SkillEffect";
+import { CoinEffect, getCoinEffect } from "Features/CardCreator/Utils/getCoinEffect";
 
 const DefenseSkillSplash = ({skillAffinity,skillImage,defenseType,skillFrame}:{skillAffinity:string,skillImage?:string,defenseType:string,skillFrame:string}):ReactElement => {
     const frameSrc = skillAffinity === "None" ? `/Images/skill-frame/NoneFrame.webp` : `/Images/skill-frame/${skillAffinity}${skillFrame}.webp`
@@ -39,19 +40,28 @@ const DefenseSinnerSkill = forwardRef<HTMLDivElement, { defenseSkill: IDefenseSk
         skillFrame,
     } = defenseSkill;
 
+    const renderCoin = (coinEffect: CoinEffect, key: number): ReactElement => {
+        switch (coinEffect.type) {
+            case "unbreakable":
+                return <img key={key} src={"/Images/Unbreakable_Coin.webp"} alt="unbreakable_coin_icon" />;
+            case "excision":
+                return <img key={key} src={"/Images/Excision_Coin.webp"} alt="excision_coin_icon" />;
+            case "custom":
+                return coinEffect.imageSrc
+                    ? <img key={key} className="custom-coin-icon" src={coinEffect.imageSrc} alt={`${coinEffect.name}_coin_icon`} crossOrigin="anonymous" />
+                    : <span key={key} className="custom-coin-fallback" style={{ color: coinEffect.color }} title={coinEffect.name}>{coinEffect.name[0] ?? "?"}</span>;
+            default:
+                return <img key={key} src={"/Images/Coin.webp"} alt="coin_icon" />;
+        }
+    }
+
     const printCoins = function (coinNo: number,skillEffect:string): (ReactElement | never)[] {
         if (coinNo > 10) return [<img key={0} src={"/Images/Coin.webp"} alt="coin_icon" />];
 
         const arr = [];
 
         for (let i = 0; i < coinNo; i++) {
-            if(skillEffect.includes(`alt="coin-effect-${i+1}-unbreakable"`)){
-                arr.push(<img key={i} src={"/Images/Unbreakable_Coin.webp"} alt="unbreakable_coin_icon" />);
-            }
-            else if(skillEffect.includes(`alt="coin-effect-${i+1}-excision"`)){
-                arr.push(<img key={i} src={"/Images/Excision_Coin.webp"} alt="excision_coin_icon" />);
-            }
-            else arr.push(<img key={i} src={"/Images/Coin.webp"} alt="coin_icon" />);
+            arr.push(renderCoin(getCoinEffect(skillEffect, i + 1), i));
         }
         return arr;
     };

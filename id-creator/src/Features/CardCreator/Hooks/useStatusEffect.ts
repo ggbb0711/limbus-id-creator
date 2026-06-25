@@ -17,7 +17,13 @@ export function useStatusEffect(): { [key: string]: string } {
             if (skill.type === "CustomEffect") {
                 const customEffect = skill as ICustomEffect
                 if (customEffect.name) {
-                    statusObj[customEffect.name.replace(/\s/g, "_").toLowerCase()] = addNewStatusEffect(customEffect)
+                    const statusKey = customEffect.name.replace(/\s/g, "_").toLowerCase()
+                    statusObj[statusKey] = addNewStatusEffect(customEffect)
+                    if (customEffect.isCoinType) {
+                        for (let i = 1; i <= 9; i++) {
+                            statusObj[`coin_${i}_${statusKey}`] = addNewCustomCoinEffect(customEffect, statusKey, i)
+                        }
+                    }
                 }
             }
         })
@@ -47,4 +53,8 @@ export function useStatusEffect(): { [key: string]: string } {
 
 function addNewStatusEffect(customEffect: ICustomEffect): string {
     return `<span class='center-element' contenteditable='false' style='${customEffect.effectColor ? `color:${customEffect.effectColor};` : ''}text-decoration:underline;'>${customEffect.customImg ? `<img class='status-icon' src='${customEffect.customImg}' alt='custom_icon' />` : ''}${customEffect.name}</span>`
+}
+
+function addNewCustomCoinEffect(customEffect: ICustomEffect, statusKey: string, coinNo: number): string {
+    return `<span class='center-element' contenteditable='false'><img class='status-icon' src='/Images/status-effect/Coin_Effect_${coinNo}.webp' alt='coin-effect-${coinNo}' /> <span class='center-element' contenteditable='false' data-custom-coin-effect='coin-effect-${coinNo}-custom-${statusKey}' style='${customEffect.effectColor ? `color:${customEffect.effectColor};` : ''}text-decoration:underline;'>${customEffect.customImg ? `<img class='status-icon' src='${customEffect.customImg}' alt='custom_icon' />` : ''}${customEffect.name}</span></span>`
 }

@@ -8,6 +8,7 @@ export interface ICustomEffect extends IType,IUID{
     customImg:string,
     effectColor:string,
     effect:string,
+    isCoinType: boolean,
 }
 
 export class CustomEffect implements ICustomEffect,IUID{
@@ -17,4 +18,5 @@ export class CustomEffect implements ICustomEffect,IUID{
     effectColor:string="#F1F1F1";
     effect:string="";
     type = SkillTypes.CustomEffect;
+    isCoinType: boolean = false;
 }

@@ -333,6 +333,7 @@ namespace Server.Profiles
                         } ,
                         EffectColor = customEffect.effectColor,
                         Effect = customEffect.effect,
+                        IsCoinType = customEffect.isCoinType,
                         Type = customEffect.type,
                         Index = i,
                         SavedSkillId = SaveSkillId 
@@ -458,6 +459,7 @@ namespace Server.Profiles
                         customImg = customEffect.ImageAttach.Url,
                         effectColor = customEffect.EffectColor,
                         effect = customEffect.Effect,
+                        isCoinType = customEffect.IsCoinType,
                     };
                 }
 
