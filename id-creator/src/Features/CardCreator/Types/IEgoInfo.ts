@@ -78,7 +78,7 @@ export class EgoInfo implements IEgoInfo{
     localSaveId:number = 1;
     skillDetails: (IOffenseSkill | IDefenseSkill | IPassiveSkill | ICustomEffect | IMentalEffect | never)[] = [
         new OffenseSkill("Awakening", "Wrath", 1, "AWAKENING"),
-        new OffenseSkill("Corrision", "Wrath", 1, "CORRISION"),
+        new OffenseSkill("Corrosion", "Wrath", 1, "CORROSION"),
         new PassiveSkill("Passive", "PASSIVE"),
     ];
 
