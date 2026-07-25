@@ -20,11 +20,12 @@ namespace Server.Repositories
         public async Task<ImageObj?> UpdateImage(Guid imgId, string newUrl)
         {
             var image = await _ctx.ImageObjs.Where(x => x.Id == imgId).FirstOrDefaultAsync();
-            
+
             if(image != null)
             {
-                image.Url = newUrl;
                 image.LastUpdated = DateTime.Now;
+                var separator = newUrl.Contains('?') ? "&" : "?";
+                image.Url = $"{newUrl}{separator}v={image.LastUpdated.Ticks}";
                 await _ctx.SaveChangesAsync();
             }
             return image;

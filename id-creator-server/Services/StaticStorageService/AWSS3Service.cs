@@ -3,8 +3,6 @@ using Amazon.Runtime;
 using Amazon.S3;
 using Amazon.S3.Transfer;
 using Server.Interface.ServiceInterface.StaticStorageService;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats.Webp;
 
 namespace Server.Services
 {
