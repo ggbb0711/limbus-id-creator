@@ -56,9 +56,8 @@ namespace Server.Services.SavedEGOInfoService
             var uploadingImages = await populateImageField(newSave,files);
             var oldSave = await _saveRepository.GetSaved(newSave.Id,true);
             if(oldSave==null||!oldSave.UserId.Equals(newSave.UserId)) return null;
-            //Change the id of the newSave to fit with the old save
-            newSave.ImageAttach.Id = oldSave.ImageAttach.Id; 
-            if(!oldSave.ImageAttach.Url.Equals(newSave.ImageAttach.Url))
+            newSave.ImageAttach.Id = oldSave.ImageAttach.Id;
+            if(!oldSave.ImageAttach.Url.Equals(newSave.ImageAttach.Url) && !uploadingImages.Contains(newSave.ImageAttach))
             {
                 uploadingImages.Add(newSave.ImageAttach);
             }
@@ -157,7 +156,7 @@ namespace Server.Services.SavedEGOInfoService
             // return null;
 
             //Update the save
-            await _saveRepository.UpdateSaved(new UpdateSaveParams<SavedEgo>()
+            var updatedSave = await _saveRepository.UpdateSaved(new UpdateSaveParams<SavedEgo>()
             {
                 UpdateId = newSave.Id,
                 Name = newSave.Name,
@@ -165,6 +164,7 @@ namespace Server.Services.SavedEGOInfoService
                 ImageAttach = newSave.ImageAttach.Url,
                 Saved = newSave.SavedEgo,
             });
+            if(updatedSave!=null) newSave.ImageAttach.LastUpdated = updatedSave.ImageAttach.LastUpdated;
             uploadImageToRabbitMQ(uploadingImages);
 
             return await _saveRepository.GetSaved(newSave.Id);

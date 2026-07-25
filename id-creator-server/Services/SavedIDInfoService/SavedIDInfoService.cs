@@ -57,8 +57,8 @@ namespace Server.Services.SavedInfoService
             var oldSave = await _saveRepository.GetSaved(newSave.Id,true);
             if(oldSave==null||!oldSave.UserId.Equals(newSave.UserId)) return null;
             //Change the id of the newSave to fit with the old save
-            newSave.ImageAttach.Id = oldSave.ImageAttach.Id; 
-            if(!oldSave.ImageAttach.Url.Equals(newSave.ImageAttach.Url))
+            newSave.ImageAttach.Id = oldSave.ImageAttach.Id;
+            if(!oldSave.ImageAttach.Url.Equals(newSave.ImageAttach.Url) && !uploadingImages.Contains(newSave.ImageAttach))
             {
                 uploadingImages.Add(newSave.ImageAttach);
             }
@@ -157,7 +157,7 @@ namespace Server.Services.SavedInfoService
             // return null;
 
             //Update the save
-            await _saveRepository.UpdateSaved(new UpdateSaveParams<SavedId>()
+            var updatedSave = await _saveRepository.UpdateSaved(new UpdateSaveParams<SavedId>()
             {
                 UpdateId = newSave.Id,
                 Name = newSave.Name,
@@ -165,6 +165,7 @@ namespace Server.Services.SavedInfoService
                 ImageAttach = newSave.ImageAttach.Url,
                 Saved = newSave.SavedId,
             });
+            if(updatedSave!=null) newSave.ImageAttach.LastUpdated = updatedSave.ImageAttach.LastUpdated;
             uploadImageToRabbitMQ(uploadingImages);
 
             return await _saveRepository.GetSaved(newSave.Id);
