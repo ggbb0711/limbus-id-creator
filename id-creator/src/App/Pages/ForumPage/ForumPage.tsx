@@ -21,7 +21,7 @@ export default function ForumPage():ReactElement{
     const {setIsLoginMenuActive} = useLoginMenu()
     const {addAlert} = useAlert()
 
-    const { data, isLoading, error } = useGetPostsQuery({
+    const { data, isFetching, error } = useGetPostsQuery({
         title: searchPostName,
         tag: tags.map(t => t.tagName),
         sortedBy,
@@ -102,7 +102,7 @@ export default function ForumPage():ReactElement{
                 pageLimit={10}
                 postList={postList}
                 fetchPost={setCurrPage}
-                isLoading={isLoading}/>
+                isLoading={isFetching}/>
         </div>
     </div>
 }
