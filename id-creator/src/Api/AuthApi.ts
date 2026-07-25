@@ -27,7 +27,7 @@ export const AuthApi = BaseApi.injectEndpoints({
             transformResponse: (response: IResponse<ILoginUser>) => response.response,
             async onQueryStarted(_, { dispatch, queryFulfilled }){
                 const { data } = await queryFulfilled;
-                dispatch(AuthApi.util.updateQueryData('checkAuth', undefined, ()=>data));
+                dispatch(AuthApi.util.upsertQueryData('checkAuth', undefined, data));
             }
         }),
         logOut: builder.mutation<void,void>({
@@ -38,7 +38,7 @@ export const AuthApi = BaseApi.injectEndpoints({
             }),
             async onQueryStarted(_, { dispatch, queryFulfilled }){
                 await queryFulfilled;
-                dispatch(AuthApi.util.updateQueryData('checkAuth', undefined, () => null));
+                dispatch(AuthApi.util.upsertQueryData('checkAuth', undefined, null));
             }
         })
     })
