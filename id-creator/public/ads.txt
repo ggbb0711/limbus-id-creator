@@ -1,5 +1,5 @@
 # Ads.txt last updated on: 2026/03/04 18:09:45.102582 by MONUMETRIC
-
+google.com, pub-1601477034266482, RESELLER, f08c47fec0942fa0
 MANAGERDOMAIN=monumetric.com
 CONTACT=support@monumetric.com
 
