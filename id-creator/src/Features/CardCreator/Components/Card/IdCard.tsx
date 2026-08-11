@@ -68,10 +68,11 @@ const IdCard=forwardRef<HTMLDivElement,{changeActiveTab:React.Dispatch<React.Set
                     <WarningStrip color={idInfoValue.sinnerColor} className="warning-strip up"/>
                     <WarningStrip color={idInfoValue.sinnerColor} className="warning-strip down"/>
                     <div className="Card-container">
+                        {idInfoValue.splashArt?
                         <div className="splashArt-container">
                             <SinnerSplashArt splashArt={idInfoValue.splashArt} splashArtScale={idInfoValue.splashArtScale} splashArtTranslation={idInfoValue.splashArtTranslation}/>
-                            {/* <SinnerStats minSpeed={idInfoValue.minSpeed} maxSpeed={idInfoValue.maxSpeed} hp={idInfoValue.hp} staggerResist={idInfoValue.staggerResist} defenseLevel={idInfoValue.defenseLevel} slashResistant={idInfoValue.slashResistant} pierceResistant={idInfoValue.pierceResistant} bluntResistant={idInfoValue.bluntResistant} sinnerColor={idInfoValue.sinnerColor}/> */}
                         </div>
+                        :<></>}
                         <div className="content-container">
                             <div>
                                 <IdHeader title={idInfoValue.title} name={idInfoValue.name} sinnerColor={idInfoValue.sinnerColor} rarity={idInfoValue.rarity} traits={idInfoValue.traits ?? []}/>
@@ -79,6 +80,7 @@ const IdCard=forwardRef<HTMLDivElement,{changeActiveTab:React.Dispatch<React.Set
                             <div className="center-element" style={{height:"100%"}}>
                                 <SkillDetailContainer moveSkill={moveSkill} skillDetails={idInfoValue.skillDetails} draggingHandler={(isDragging)=>setIsDragging(isDragging)} changeActiveTab={changeActiveTab}/>
                             </div>
+                            <SinnerStats minSpeed={idInfoValue.minSpeed} maxSpeed={idInfoValue.maxSpeed} hp={idInfoValue.hp} staggerResist={idInfoValue.staggerResist} defenseLevel={idInfoValue.defenseLevel} slashResistant={idInfoValue.slashResistant} pierceResistant={idInfoValue.pierceResistant} bluntResistant={idInfoValue.bluntResistant} sinnerColor={idInfoValue.sinnerColor}/>
                         </div>
                     </div>
                 </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import { ReactElement } from "react";
 import "./SinnerStats.css"
+import WarningStrip from "../WarningStrip/WarningStrip";
 
 interface SinnerStatsProps {
     minSpeed: number
@@ -31,19 +32,9 @@ export default function SinnerStats({minSpeed, maxSpeed, hp, staggerResist, defe
         return "Normal"
     }
 
-    function generateSinnerStatsBorder(){
-        const borderText = []
-        for(let i=0;i<9;i++){
-            borderText.push(<span key={i}>WARNING ////</span>)
-        }
-        return borderText
-    }
-
     return(
         <div className="sinner-stats">
-            <div className="sinner-stats-border" style={{color:sinnerColor}}>
-                {generateSinnerStatsBorder()}
-            </div>
+            <WarningStrip color={sinnerColor}/>
             <div className="sinner-stats-container">
                 <div className="stat-container">
                     <div className="stat-container-slot">
@@ -70,8 +61,6 @@ export default function SinnerStats({minSpeed, maxSpeed, hp, staggerResist, defe
                             <p>{staggerResist}</p>
                         </div>
                     </div>
-                </div>
-                <div className="stat-container">
                     <div className="stat-container-slot">
                         <img className="stat-icon" src="/Images/attack/attackt_slash.webp" alt="attackt_slash" />
                         <div className="stat-content">
@@ -100,9 +89,6 @@ export default function SinnerStats({minSpeed, maxSpeed, hp, staggerResist, defe
                         </div>
                     </div>
                 </div>
-            </div>
-            <div className="sinner-stats-border" style={{color:sinnerColor}}>
-                {generateSinnerStatsBorder()}
             </div>
         </div>
     )
