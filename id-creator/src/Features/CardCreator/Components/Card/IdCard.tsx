@@ -8,6 +8,7 @@ import SinnerStats from "./components/SinnerStats/SinnerStats";
 import SkillDetailContainer from "./components/SkillDetailContainer/SkillDetailContainer";
 import { useAppSelector, useAppDispatch } from "Stores/AppStore";
 import { setIdInfo } from "Features/CardCreator/Stores/IdInfoSlice";
+import WarningStrip from "./components/WarningStrip/WarningStrip";
 
 
 const IdCard=forwardRef<HTMLDivElement,{changeActiveTab:React.Dispatch<React.SetStateAction<number>>}>(({changeActiveTab},ref):ReactElement=>{
@@ -64,10 +65,12 @@ const IdCard=forwardRef<HTMLDivElement,{changeActiveTab:React.Dispatch<React.Set
             <TransformComponent wrapperStyle={{width:"100vw"}}>
                 <div className="Card" ref={ref}>
                     {idInfoValue.sinnerIcon && <img className="sinner-icon-background" src={idInfoValue.sinnerIcon} alt="sinner-icon" crossOrigin="anonymous" />}
+                    <WarningStrip color={idInfoValue.sinnerColor} className="warning-strip up"/>
+                    <WarningStrip color={idInfoValue.sinnerColor} className="warning-strip down"/>
                     <div className="Card-container">
                         <div className="splashArt-container">
                             <SinnerSplashArt splashArt={idInfoValue.splashArt} splashArtScale={idInfoValue.splashArtScale} splashArtTranslation={idInfoValue.splashArtTranslation}/>
-                            <SinnerStats minSpeed={idInfoValue.minSpeed} maxSpeed={idInfoValue.maxSpeed} hp={idInfoValue.hp} staggerResist={idInfoValue.staggerResist} defenseLevel={idInfoValue.defenseLevel} slashResistant={idInfoValue.slashResistant} pierceResistant={idInfoValue.pierceResistant} bluntResistant={idInfoValue.bluntResistant} sinnerColor={idInfoValue.sinnerColor}/>
+                            {/* <SinnerStats minSpeed={idInfoValue.minSpeed} maxSpeed={idInfoValue.maxSpeed} hp={idInfoValue.hp} staggerResist={idInfoValue.staggerResist} defenseLevel={idInfoValue.defenseLevel} slashResistant={idInfoValue.slashResistant} pierceResistant={idInfoValue.pierceResistant} bluntResistant={idInfoValue.bluntResistant} sinnerColor={idInfoValue.sinnerColor}/> */}
                         </div>
                         <div className="content-container">
                             <div>

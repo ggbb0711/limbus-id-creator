@@ -2,6 +2,8 @@
     overflow: hidden;
     position: relative;
     min-width: 500px;
+    display: flex;
+    align-items: center;
 }
 
 .splashArt-container-blur-edges{
@@ -52,9 +54,10 @@
     cursor: pointer;
 }
 
+/* The width 99% is because it can make the box shadow not clip with the image */
 .sinner-splash-art-container{
     position: absolute;
-    width: 100%;
-    height: 100%;
+    width: 99%;
+    height: 94%;
     left: 0;
 }

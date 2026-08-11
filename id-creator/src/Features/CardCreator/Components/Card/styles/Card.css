@@ -33,7 +33,7 @@
 .content-container{
     height: 100%;
     position: relative;
-    padding: 15px 25px;
+    padding: 25px;
     overflow-y: clip;
     width: auto;
     box-sizing: border-box;
@@ -49,4 +49,16 @@
     top: calc(25% - 43.75px);
     opacity: 0.3;
     object-fit: contain;
+}
+
+.warning-strip{
+    position: absolute;
+}
+
+.warning-strip.up{
+    top: 0px;
+}
+
+.warning-strip.down{
+    top: 100%;
 }
