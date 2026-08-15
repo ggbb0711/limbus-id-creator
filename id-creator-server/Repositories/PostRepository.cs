@@ -33,25 +33,6 @@ namespace Server.Repositories
             &&(option.Tag.Count<1||option.Tag.All(t=>p.Tags.Select(t=>t.TagName).Contains(t)))
             && !p.IsRemoved && p.IsActive);
 
-            switch(option.SortedBy)
-            {
-                case "Title":
-                    query=query.OrderBy(p=>p.Title);
-                    break;
-                case "Most_Viewed":
-                    query = query.OrderBy(p=> _ctx.PostView.Where(p=>p.PostId == p.Id).Count());
-                    break;
-                case "Most_Commented":
-                    query = query.OrderBy(p=>_ctx.Comment.Where(c=>c.PostId==p.Id).Count());
-                    break;
-                case "Earliest":
-                    query = query.OrderBy(p=>p.Created);
-                    break;
-                default:
-                    query = query.OrderByDescending(p=>p.Created);
-                    break;
-            }
-
             return query.Count();
         }
 
@@ -63,25 +44,14 @@ namespace Server.Repositories
             &&(option.Tag.Count<1||option.Tag.All(t=>p.Tags.Select(t=>t.TagName).Contains(t)))
             && !p.IsRemoved && p.IsActive);
 
-            switch(option.SortedBy)
+            query = option.SortedBy switch
             {
-                case "Title":
-                    query=query.OrderBy(p=>p.Title);
-                    break;
-                case "Most_Viewed":
-                    query = query.OrderByDescending(p=> _ctx.PostView.Where(p=>p.PostId == p.Id).Count());
-                    break;
-                case "Most_Commented":
-                    query = query.OrderByDescending(p=>_ctx.Comment.Where(c=>c.PostId==p.Id).Count());
-                    break;
-                case "Earliest":
-                    query = query.OrderBy(p=>p.Created);
-                    break;
-                default:
-                    query = query.OrderByDescending(p=>p.Created);
-                    break;
-            }
-
+                "Title" => query.OrderBy(p => p.Title),
+                "Most_Viewed" => query.OrderByDescending(post=> _ctx.PostView.Where(pv => pv.PostId == post.Id).Count()),
+                "Most_Commented" => query.OrderByDescending(p => _ctx.Comment.Where(c => c.PostId == p.Id).Count()),
+                "Earliest" => query.OrderBy(p => p.Created),
+                _ => query.OrderByDescending(p => p.Created),
+            };
             return await query
                 .Skip(option.limit*option.page)
                 .Take(option.limit)

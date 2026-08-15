@@ -62,15 +62,17 @@ namespace Server.Repositories
 
         public async Task<List<Session>> DeleteExpiredSessions()
         {
-            var expiredSession = _ctx.Session.Where(session=>session.Expired<=DateTime.Now);
+            var expiredSessions = await _ctx.Session
+                .Where(session=>session.Expired<=DateTime.Now)
+                .ToListAsync();
 
-            if(expiredSession != null)
+            if(expiredSessions.Count>0)
             {
-                _ctx.Session.RemoveRange(expiredSession);
+                _ctx.Session.RemoveRange(expiredSessions);
                 await _ctx.SaveChangesAsync();
             }
 
-            return await expiredSession.ToListAsync();
+            return expiredSessions;
         }
     }
 }
