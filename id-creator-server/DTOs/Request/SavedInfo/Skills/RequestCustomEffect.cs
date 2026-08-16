@@ -1,16 +1,13 @@
-
 using Server.Interface.UtilInterfaces;
 
-namespace Server.DTOs.Requests.SavedInfo.Skills
+namespace Server.DTOs.Request.SavedInfo.Skills
 {
-    public class RequestCustomEffect:IRequestSkillType
+    public class RequestCustomEffect:SkillRequestBase
     {
-        public Guid inputId { get; set; } 
         public string name { get; set; } = "";
         public string customImg { get; set; } = "";
         public string effectColor { get; set; } = "#F1F1F1";
         public string effect { get; set; } = "";
         public bool isCoinType { get; set; } = false;
-        public string type { get; set; } = "CustomEffect";
     }
 }

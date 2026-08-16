@@ -1,5 +1,7 @@
 
 
+using Server.DTOs.Request.SavedInfo.Skills;
+
 namespace Server.DTOs.Requests.SavedInfo.SavedEgo
 {
     public class SavedEgoRequestDTO
@@ -15,7 +17,7 @@ namespace Server.DTOs.Requests.SavedInfo.SavedEgo
         public string sinnerColor { get; set; }
         public string sinnerIcon { get; set; }
         public string egoLevel { get; set; }
-        public List<object> skillDetails { get; set; }
+        public List<SkillRequestBase> skillDetails { get; set; }
 
         public class SinResistantObj
         {

@@ -1,7 +1,3 @@
-
-
-using Server.DTOs.Requests.SavedInfo.Skills;
-
 namespace Server.DTOs.Requests.SavedInfo
 {
     public class SavedInfoRequestDTO<SaveType>
