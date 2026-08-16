@@ -62,14 +62,14 @@ namespace Server.Controllers
 
         [HttpGet("")]
         [EnableCors("AllowOrigin")]
-        public async Task<IActionResult> GetSavedInfos([FromQuery] string userId,
+        public async Task<IActionResult> GetSavedInfos([FromQuery] Guid userId,
             [FromQuery] string searchName = "",
             [FromQuery] int page = 0,
             [FromQuery] int limit = 10)
         {
             var response = new ResponseService<List<SaveInfoResponseDTO<SavedIDRequestDTO>>>();
             var session = (Session?) HttpContext.Items["Session"];
-            if(session == null||!session.UserId.ToString().Equals(userId))
+            if(session == null||session.UserId != userId)
             {
                 response.msg= "Unauthorized access to private data";
                 return StatusCode(401,response);
@@ -135,7 +135,7 @@ namespace Server.Controllers
                 }
                 response.msg = "Deletion sucesssfull";
                 response.Response = _mapper.Map<SaveInfoResponseDTO<SavedIDRequestDTO>>(deletedSave);
-                return Ok(deletedSave);
+                return Ok(response);
             }
             catch (Exception ex)
             {

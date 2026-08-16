@@ -29,7 +29,7 @@ namespace Server.Repositories
         {
             IQueryable<Post> query;
             query = _ctx.Post.Where(p=>p.Title.Contains(option.Title)
-            &&(option.UserId.IsNullOrEmpty()||option.UserId==p.UserId.ToString())
+            &&(option.UserId == null||option.UserId==p.UserId)
             &&(option.Tag.Count<1||option.Tag.All(t=>p.Tags.Select(t=>t.TagName).Contains(t)))
             && !p.IsRemoved && p.IsActive);
 
@@ -40,16 +40,16 @@ namespace Server.Repositories
         {
             IQueryable<Post> query;
             query = _ctx.Post.Where(p=>p.Title.ToLower().Contains(option.Title.ToLower())
-            &&(option.UserId.IsNullOrEmpty()||option.UserId==p.UserId.ToString())
+            &&(option.UserId == null||option.UserId == p.UserId)
             &&(option.Tag.Count<1||option.Tag.All(t=>p.Tags.Select(t=>t.TagName).Contains(t)))
             && !p.IsRemoved && p.IsActive);
 
             query = option.SortedBy switch
             {
-                "Title" => query.OrderBy(p => p.Title),
-                "Most_Viewed" => query.OrderByDescending(post=> _ctx.PostView.Where(pv => pv.PostId == post.Id).Count()),
-                "Most_Commented" => query.OrderByDescending(p => _ctx.Comment.Where(c => c.PostId == p.Id).Count()),
-                "Earliest" => query.OrderBy(p => p.Created),
+                PostSortOption.Title => query.OrderBy(p => p.Title),
+                PostSortOption.MostViewed => query.OrderByDescending(post=> _ctx.PostView.Where(pv => pv.PostId == post.Id).Count()),
+                PostSortOption.MostCommented => query.OrderByDescending(p => _ctx.Comment.Where(c => c.PostId == p.Id).Count()),
+                PostSortOption.Earliest => query.OrderBy(p => p.Created),
                 _ => query.OrderByDescending(p => p.Created),
             };
             return await query

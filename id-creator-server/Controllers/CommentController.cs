@@ -1,11 +1,9 @@
 
 
 using AutoMapper;
-using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Server.DTOs.Requests.Comment;
-using Server.DTOs.Requests.Post;
 using Server.Interface.ServiceInterface.CommentService;
 using Server.Interface.ServiceInterface.IPostService;
 using Server.Models;
@@ -69,7 +67,7 @@ namespace Server.Controllers
         }
 
         [HttpGet("")]
-        public async Task<IActionResult> GetComments([FromQuery]string PostId,[FromQuery] int page=0, [FromQuery] int limit=10)
+        public async Task<IActionResult> GetComments([FromQuery]Guid PostId,[FromQuery] int page=0, [FromQuery] int limit=10)
         {
             var response = new ResponseService<List<CommentResponseDTO>>();
 

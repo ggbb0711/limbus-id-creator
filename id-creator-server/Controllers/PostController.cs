@@ -2,7 +2,6 @@ using AutoMapper;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
 using Server.DTOs.Requests.Post;
 using Server.DTOs.Response.Post;
 using Server.Interface.ServiceInterface.CommentService;
@@ -117,11 +116,11 @@ namespace Server.Controllers
         }
 
         [HttpGet("")]
-        public async Task<IActionResult> GetPosts([FromQuery] string Title = "",
+        public async Task<IActionResult> GetPosts([FromQuery] Guid UserId,
+        [FromQuery] string Title = "",
         [FromQuery] string Tag="",
-        [FromQuery] string UserId = "",
         [FromQuery] bool IncludeComment = false,
-        [FromQuery] string SortedBy = "",
+        [FromQuery] PostSortOption SortedBy = PostSortOption.Latest,
         [FromQuery] int page = 0,
         [FromQuery] int limit = 10)
         {
@@ -132,7 +131,7 @@ namespace Server.Controllers
                 var option = new SearchPostOption()
                 {
                     Title = Title,
-                    Tag = (Tag.IsNullOrEmpty())?[]:Tag.Split(",").ToList(),
+                    Tag = Tag.IsNullOrEmpty()?[]: [.. Tag.Split(",")],
                     UserId = UserId,
                     IncludeComment = IncludeComment,
                     SortedBy = SortedBy,
