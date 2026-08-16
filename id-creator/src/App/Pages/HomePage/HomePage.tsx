@@ -5,9 +5,10 @@ import "Components/PaginatedPost/PaginatedPost.css";
 import { Link } from "react-router-dom";
 import { PostDisplayCard, PostDisplayCardLoading } from "Components/PaginatedPost/PaginatedPost";
 import { useGetPostsQuery } from "Api/PostAPI";
+import { PostSortOptions } from "Types/Enums/PostSortOptions";
 
 export default function HomePage(){
-    const { data, isLoading } = useGetPostsQuery({ sortedBy: 'Latest', page: 0, limit: 4 })
+    const { data, isLoading } = useGetPostsQuery({ sortedBy: PostSortOptions.Latest, page: 0, limit: 4 })
 
     const latestPosts = data?.list.map((p) => ({
         ...p,

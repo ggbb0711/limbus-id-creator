@@ -11,11 +11,12 @@ import TagsContainer from "Components/TagsContainer/TagsContainer";
 import useAlert from "Hooks/useAlert";
 import { useCheckAuthQuery } from "Api/AuthApi";
 import { useGetPostsQuery } from "Api/PostAPI";
+import { PostSortOptions } from "Types/Enums/PostSortOptions";
 
 export default function ForumPage():ReactElement{
     const [searchPostName,setSearchPostName] = useState("")
     const [tags,setTags] = useState<ITag[]>([])
-    const [sortedBy,setSortedBy] = useState("Latest")
+    const [sortedBy,setSortedBy] = useState(PostSortOptions.Latest)
     const [currPage,setCurrPage] = useState(0)
     const {data: user} = useCheckAuthQuery()
     const {setIsLoginMenuActive} = useLoginMenu()
@@ -61,29 +62,29 @@ export default function ForumPage():ReactElement{
             <div className="center-element">
                 <p>Sorted by: </p>
                 <div className="forum-sorted-by">
-                    <DropDown dropDownEl={{
+                    <DropDown<PostSortOptions> dropDownEl={{
                         Latest:{
                             el: <div>Latest</div>,
-                            value:"Latest"
+                            value: PostSortOptions.Latest
                         },
                         Earliest:{
                             el: <div>Earliest</div>,
-                            value:"Earliest"
+                            value: PostSortOptions.Earliest
                         },
                         Most_Viewed:{
                             el: <div>Most Viewed</div>,
-                            value:"Most_Viewed"
+                            value: PostSortOptions.MostViewed
                         },
                         Most_Commented:{
                             el: <div>Most Commented</div>,
-                            value:"Most_Commented"
+                            value: PostSortOptions.MostCommented
                         },
                         Title:{
                             el: <div>Title</div>,
-                            value:"Title"
+                            value: PostSortOptions.Title
                         },
                     }}
-                    propVal={sortedBy}
+                    propVal={sortedBy.toString()}
                     cb={(s)=>setSortedBy(s)}/>
                 </div>
             </div>

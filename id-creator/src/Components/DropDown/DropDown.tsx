@@ -3,14 +3,14 @@ import { ReactElement } from "react";
 import "./DropDown.css"
 import ArrowDownIcon from "Assets/Icons/ArrowDownIcon";
 
-export interface dropDownEl{
+export interface DropDownEl<T>{
     el:ReactElement,
     style?:{[key:string]:string},
-    value:string,
-    cb?:(newVal:string)=>void
+    value: T,
+    cb?:(newVal:T)=>void
 }
 
-export default function DropDown({dropDownEl,propVal,disabled,cb}:{dropDownEl:{[key:string]:dropDownEl},propVal?:string,disabled?:boolean,cb:(newVal:string)=>void}):ReactElement{
+export default function DropDown<T=string>({dropDownEl,propVal,disabled,cb}:{dropDownEl:{[key:string]:DropDownEl<T>},propVal?:string,disabled?:boolean,cb:(newVal:T)=>void}):ReactElement{
     const [currVal,setCurrVal]=useState((propVal)?dropDownEl[propVal]:Object.values(dropDownEl)[0])
     const [isActive,setIsActive]=useState(false)
 

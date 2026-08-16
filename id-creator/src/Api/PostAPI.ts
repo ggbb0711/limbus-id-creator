@@ -1,11 +1,12 @@
 import { BaseApi } from "./BaseApi";
 import IResponse from "Types/IResponse";
 import { IPost } from "Types/IPost/IPost";
+import { PostSortOptions } from "Types/Enums/PostSortOptions";
 
 interface IGetPostsParams {
     title?: string
     tag?: string[]
-    sortedBy?: string
+    sortedBy?: PostSortOptions
     page: number
     limit: number
     userId?: string
