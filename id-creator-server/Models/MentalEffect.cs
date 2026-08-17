@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Server.Interface.UtilInterfaces;
+using Server.Util.Enums;
 
 namespace Server.Models
 {
@@ -28,7 +29,7 @@ namespace Server.Models
         public Guid SavedSkillId { get; set; }
 
         public string Effect { get; set; } = "";
-        public string Type { get; set; } = "MentalEffect";
+        public SkillType Type { get; set; } = SkillType.MentalEffect;
 
     }
 }

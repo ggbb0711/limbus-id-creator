@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Server.Interface.UtilInterfaces;
+using Server.Util.Enums;
 
 namespace Server.Models
 {
@@ -50,6 +51,6 @@ namespace Server.Models
         public string SkillEffect { get; set; } = "";
         public string SkillLabel { get; set; } = "SKILL";
         public string SkillFrame { get; set; } = "1";
-        public string Type { get; set; } = "OffenseSkill";
+        public SkillType Type { get; set; } = SkillType.OffenseSkill;
     }
 }

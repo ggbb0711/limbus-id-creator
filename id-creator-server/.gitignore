@@ -4,3 +4,4 @@ obj
 !Util/Obj/
 bin
 publish
+*.md

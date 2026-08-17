@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Server.Interface.UtilInterfaces;
+using Server.Util.Enums;
 
 namespace Server.Models
 {
@@ -41,6 +42,6 @@ namespace Server.Models
         public string EffectColor { get; set; } = "#F1F1F1";
         public string Effect { get; set; } = "";
         public bool IsCoinType { get; set; } = false;
-        public string Type { get; set; } = "CustomEffect";
+        public SkillType Type { get; set; } = SkillType.CustomEffect;
     }
 }

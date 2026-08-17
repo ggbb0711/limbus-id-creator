@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Server.Interface.UtilInterfaces;
+using Server.Util.Enums;
 
 namespace Server.Models
 {
@@ -66,19 +67,19 @@ namespace Server.Models
                 var skillType =((ISkillType) skill).Type;
                 switch(skillType)
                 {
-                    case "OffenseSkill":
+                    case SkillType.OffenseSkill:
                         decompileSkill.OffenseSkills.Add((OffenseSkill)skill);
                         break;
-                    case "DefenseSkill":
+                    case SkillType.DefenseSkill:
                         decompileSkill.DefenseSkills.Add((DefenseSkill)skill);
                         break;
-                    case "PassiveSkill":
+                    case SkillType.PassiveSkill:
                         decompileSkill.PassiveSkills.Add((PassiveSkill)skill);
                         break;
-                    case "CustomEffect":
+                    case SkillType.CustomEffect:
                         decompileSkill.CustomEffects.Add((CustomEffect)skill);
                         break;
-                    case "MentalEffect":
+                    case SkillType.MentalEffect:
                         decompileSkill.MentalEffects.Add((MentalEffect)skill);
                         break;
                 }
@@ -86,9 +87,9 @@ namespace Server.Models
             return decompileSkill;
         }
 
-        public static List<object> CompileSkill(SavedSkill skills)
+        public static List<ISkillType> CompileSkill(SavedSkill skills)
         {
-            List<object> combinedCollection =  new List<object>();
+            List<ISkillType> combinedCollection =  [];
 
             if (skills.OffenseSkills != null)
             {

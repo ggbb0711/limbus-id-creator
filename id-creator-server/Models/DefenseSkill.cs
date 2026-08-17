@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Server.Interface.UtilInterfaces;
+using Server.Util.Enums;
 
 namespace Server.Models
 {
@@ -30,7 +31,7 @@ namespace Server.Models
         public int SkillAmt { get; set; } = 1;
         public int AtkWeight { get; set; } = 1;
         public string DefenseType { get; set; } = "Block";
-        public string DamageType { get; set; } = "Slash"; // For counter skill
+        public string DamageType { get; set; } = "Slash"; 
         public string Name { get; set; } = "";
         public string SkillAffinity { get; set; } = "Wrath";
         public int BasePower { get; set; } = 0;
@@ -50,6 +51,6 @@ namespace Server.Models
         public string SkillEffect { get; set; } = "";
         public string SkillLabel { get; set; } = "Defense";
         public string SkillFrame { get; set; } = "1";
-        public string Type { get; set; } = "DefenseSkill";
+        public SkillType Type { get; set; } = SkillType.DefenseSkill;
     }
 }

@@ -1,8 +1,10 @@
 
+using Server.Util.Enums;
+
 namespace Server.Interface.UtilInterfaces
 {
     public interface ISkillType
     {
-        public string Type { get; set; }
+        public SkillType Type { get; set; }
     }
 }

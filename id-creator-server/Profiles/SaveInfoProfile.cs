@@ -1,11 +1,11 @@
 using AutoMapper;
-using Newtonsoft.Json.Linq;
+using Server.DTOs.Request.SavedInfo.Skills;
 using Server.DTOs.Requests.SavedInfo;
 using Server.DTOs.Requests.SavedInfo.SavedEgo;
 using Server.DTOs.Requests.SavedInfo.SavedID;
-using Server.DTOs.Requests.SavedInfo.Skills;
 using Server.DTOs.Response.SaveInfo;
 using Server.Models;
+using Server.Util.Enums;
 
 namespace Server.Profiles
 {
@@ -52,7 +52,7 @@ namespace Server.Profiles
                 .ForMember(dest=>dest.saveInfo,opt=>opt.MapFrom(src=>MapSavedIDRequest(src.SavedId)));
         }
 
-        private SavedEgo MapSavedEgo(SavedInfoRequestDTO<SavedEgoRequestDTO> src)
+        private static SavedEgo MapSavedEgo(SavedInfoRequestDTO<SavedEgoRequestDTO> src)
         {
             var splashArtId = Guid.NewGuid();
             var SinnerIconId = Guid.NewGuid();
@@ -98,7 +98,7 @@ namespace Server.Profiles
             };
         }
 
-        private SavedId MapSavedId(SavedInfoRequestDTO<SavedIDRequestDTO> src)
+        private static SavedId MapSavedId(SavedInfoRequestDTO<SavedIDRequestDTO> src)
         {
             var splashArtId = Guid.NewGuid();
             var SinnerIconId = Guid.NewGuid();
@@ -138,7 +138,7 @@ namespace Server.Profiles
             };
         }
 
-        private SavedEgoRequestDTO? MapSavedEgoRequest(SavedEgo src)
+        private static SavedEgoRequestDTO? MapSavedEgoRequest(SavedEgo src)
         {
             if(src==null) return null;
             return new SavedEgoRequestDTO()
@@ -180,7 +180,7 @@ namespace Server.Profiles
             };
         }
 
-        private SavedIDRequestDTO? MapSavedIDRequest(SavedId src)
+        private static SavedIDRequestDTO? MapSavedIDRequest(SavedId src)
         {
             if(src==null) return null;
             return new SavedIDRequestDTO()
@@ -210,7 +210,7 @@ namespace Server.Profiles
             };
         }
 
-        private SavedSkill MapNewSkill(Guid SaveSkillId, List<object> skills)
+        private static SavedSkill MapNewSkill(Guid SaveSkillId, List<SkillRequestBase> skills)
         {
             var newSkills = new SavedSkill(){Id=SaveSkillId};
             ICollection<OffenseSkill> offenseSkills = [];
@@ -220,138 +220,145 @@ namespace Server.Profiles
             ICollection<MentalEffect> mentalEffects = [];
             for (int i = 0; i < skills.Count; i++)
             {
-                var jObject = (JObject) skills[i];
-                var type = jObject["type"]?.ToString();
-                if(type.Equals("OffenseSkill"))
+                var skill = skills[i];
+                switch (skill.type)
                 {
-                    var offenseSkill = jObject.ToObject<RequestOffenseSkill>();
-                    var imageId = Guid.NewGuid();
-                    var newOffenseSkill = new OffenseSkill()
+                    case SkillType.OffenseSkill:
                     {
-                        Id = offenseSkill.inputId,
-                        SkillLevel = offenseSkill.skillLevel,
-                        SkillAmt = offenseSkill.skillAmt,
-                        AtkWeight = offenseSkill.atkWeight,
-                        DamageType = offenseSkill.damageType,
-                        Name = offenseSkill.name,
-                        SkillAffinity = offenseSkill.skillAffinity,
-                        BasePower = offenseSkill.basePower,
-                        CoinNo = offenseSkill.coinNo,
-                        CoinPow = offenseSkill.coinPow,
-                        ImageAttachId = imageId,
-                        ImageAttach = new ImageObj()
+                        var offenseSkill = (RequestOffenseSkill) skill;
+                        var imageId = Guid.NewGuid();
+                        var newOffenseSkill = new OffenseSkill()
                         {
-                            Id = imageId,
-                            Url = offenseSkill.skillImage
-                        },
-                        SkillEffect = offenseSkill.skillEffect,
-                        SkillLabel = offenseSkill.skillLabel,
-                        SkillFrame = offenseSkill.skillFrame,
-                        Type = offenseSkill.type,
-                        Index = i,
-                        SavedSkillId = SaveSkillId
-                    };
-                    offenseSkills.Add(newOffenseSkill);
-                }
-                if(type.Equals("DefenseSkill"))
-                {
-                    var defenseSkill = jObject.ToObject<RequestDefenseSkill>();
-                    var imageId = Guid.NewGuid();
-                    var newDefenseSkill = new DefenseSkill()
+                            Id = offenseSkill.inputId,
+                            SkillLevel = offenseSkill.skillLevel,
+                            SkillAmt = offenseSkill.skillAmt,
+                            AtkWeight = offenseSkill.atkWeight,
+                            DamageType = offenseSkill.damageType,
+                            Name = offenseSkill.name,
+                            SkillAffinity = offenseSkill.skillAffinity,
+                            BasePower = offenseSkill.basePower,
+                            CoinNo = offenseSkill.coinNo,
+                            CoinPow = offenseSkill.coinPow,
+                            ImageAttachId = imageId,
+                            ImageAttach = new ImageObj()
+                            {
+                                Id = imageId,
+                                Url = offenseSkill.skillImage
+                            },
+                            SkillEffect = offenseSkill.skillEffect,
+                            SkillLabel = offenseSkill.skillLabel,
+                            SkillFrame = offenseSkill.skillFrame,
+                            Type = SkillType.OffenseSkill,
+                            Index = i,
+                            SavedSkillId = SaveSkillId
+                        };
+                        offenseSkills.Add(newOffenseSkill);
+                        break;
+                    }
+                    case SkillType.DefenseSkill:
                     {
-                        Id = defenseSkill.inputId,
-                        SkillLevel = defenseSkill.skillLevel,
-                        SkillAmt = defenseSkill.skillAmt,
-                        AtkWeight = defenseSkill.atkWeight,
-                        DefenseType = defenseSkill.defenseType,
-                        DamageType = defenseSkill.damageType,
-                        Name = defenseSkill.name,
-                        SkillAffinity = defenseSkill.skillAffinity,
-                        BasePower = defenseSkill.basePower,
-                        CoinNo = defenseSkill.coinNo,
-                        CoinPow = defenseSkill.coinPow,
-                        ImageAttachId = imageId,
-                        ImageAttach = new ImageObj()
+                        var defenseSkill = (RequestDefenseSkill) skill;
+                        var imageId = Guid.NewGuid();
+                        var newDefenseSkill = new DefenseSkill()
                         {
-                            Id = imageId,
-                            Url = defenseSkill.skillImage
-                        } ,
-                        SkillEffect = defenseSkill.skillEffect,
-                        SkillLabel = defenseSkill.skillLabel,
-                        SkillFrame = defenseSkill.skillFrame,
-                        Type = defenseSkill.type,
-                        Index = i,
-                        SavedSkillId = SaveSkillId 
-                    };
-                    defenseSkills.Add(newDefenseSkill);
-                }
-                if(type.Equals("PassiveSkill"))
-                {
-                    var passiveSkill = jObject.ToObject<RequestPassiveSkill>();
-                    var newPassiveSkill = new PassiveSkill()
+                            Id = defenseSkill.inputId,
+                            SkillLevel = defenseSkill.skillLevel,
+                            SkillAmt = defenseSkill.skillAmt,
+                            AtkWeight = defenseSkill.atkWeight,
+                            DefenseType = defenseSkill.defenseType,
+                            DamageType = defenseSkill.damageType,
+                            Name = defenseSkill.name,
+                            SkillAffinity = defenseSkill.skillAffinity,
+                            BasePower = defenseSkill.basePower,
+                            CoinNo = defenseSkill.coinNo,
+                            CoinPow = defenseSkill.coinPow,
+                            ImageAttachId = imageId,
+                            ImageAttach = new ImageObj()
+                            {
+                                Id = imageId,
+                                Url = defenseSkill.skillImage
+                            } ,
+                            SkillEffect = defenseSkill.skillEffect,
+                            SkillLabel = defenseSkill.skillLabel,
+                            SkillFrame = defenseSkill.skillFrame,
+                            Type = SkillType.DefenseSkill,
+                            Index = i,
+                            SavedSkillId = SaveSkillId 
+                        };
+                        defenseSkills.Add(newDefenseSkill);
+                        break;
+                    }
+                    case SkillType.PassiveSkill:
                     {
-                        Id = passiveSkill.inputId,
-                        SkillLabel = passiveSkill.skillLabel,
-                        Name = passiveSkill.name,
-                        SkillEffect = passiveSkill.skillEffect,
-                        Type = passiveSkill.type,
-                        Affinity = passiveSkill.affinity,
-                        Req = passiveSkill.req,
-                        ReqNo = passiveSkill.reqNo,
-                        Index = i,
-                        SavedSkillId = SaveSkillId,
-                        ReqOwnWrath = passiveSkill.ownCost.wrath_cost,
-                        ReqOwnLust = passiveSkill.ownCost.lust_cost,
-                        ReqOwnGloom = passiveSkill.ownCost.gloom_cost,
-                        ReqOwnEnvy = passiveSkill.ownCost.envy_cost,
-                        ReqOwnGluttony = passiveSkill.ownCost.gluttony_cost,
-                        ReqOwnPride = passiveSkill.ownCost.pride_cost,
-                        ReqOwnSloth = passiveSkill.ownCost.sloth_cost,
-                        ReqResWrath = passiveSkill.resCost.wrath_cost,
-                        ReqResLust = passiveSkill.resCost.lust_cost,
-                        ReqResGloom = passiveSkill.resCost.gloom_cost,
-                        ReqResEnvy = passiveSkill.resCost.envy_cost,
-                        ReqResGluttony = passiveSkill.resCost.gluttony_cost,
-                        ReqResPride = passiveSkill.resCost.pride_cost,
-                        ReqResSloth = passiveSkill.resCost.sloth_cost,
-                    };
-                    passiveSkills.Add(newPassiveSkill);
-                }
-                if(type.Equals("CustomEffect"))
-                {
-                    var customEffect = jObject.ToObject<RequestCustomEffect>();
-                    var imageId = Guid.NewGuid();
-                    var newCustomEffect = new CustomEffect()
-                    {
-                        Id = customEffect.inputId, 
-                        Name = customEffect.name,
-                        ImageAttachId = imageId,
-                        ImageAttach = new ImageObj()
+                        var passiveSkill = (RequestPassiveSkill) skill;
+                        var newPassiveSkill = new PassiveSkill()
                         {
-                            Id = Guid.NewGuid(),
-                            Url = customEffect.customImg
-                        } ,
-                        EffectColor = customEffect.effectColor,
-                        Effect = customEffect.effect,
-                        IsCoinType = customEffect.isCoinType,
-                        Type = customEffect.type,
-                        Index = i,
-                        SavedSkillId = SaveSkillId 
-                    };
-                    customEffects.Add(newCustomEffect);
-                }
-                if(type.Equals("MentalEffect"))
-                {
-                    var mentalEffect = jObject.ToObject<RequestMentalEffect>();
-                    var newMentalEffect = new MentalEffect()
+                            Id = passiveSkill.inputId,
+                            SkillLabel = passiveSkill.skillLabel,
+                            Name = passiveSkill.name,
+                            SkillEffect = passiveSkill.skillEffect,
+                            Type = SkillType.PassiveSkill,
+                            Affinity = passiveSkill.affinity,
+                            Req = passiveSkill.req,
+                            ReqNo = passiveSkill.reqNo,
+                            Index = i,
+                            SavedSkillId = SaveSkillId,
+                            ReqOwnWrath = passiveSkill.ownCost.wrath_cost,
+                            ReqOwnLust = passiveSkill.ownCost.lust_cost,
+                            ReqOwnGloom = passiveSkill.ownCost.gloom_cost,
+                            ReqOwnEnvy = passiveSkill.ownCost.envy_cost,
+                            ReqOwnGluttony = passiveSkill.ownCost.gluttony_cost,
+                            ReqOwnPride = passiveSkill.ownCost.pride_cost,
+                            ReqOwnSloth = passiveSkill.ownCost.sloth_cost,
+                            ReqResWrath = passiveSkill.resCost.wrath_cost,
+                            ReqResLust = passiveSkill.resCost.lust_cost,
+                            ReqResGloom = passiveSkill.resCost.gloom_cost,
+                            ReqResEnvy = passiveSkill.resCost.envy_cost,
+                            ReqResGluttony = passiveSkill.resCost.gluttony_cost,
+                            ReqResPride = passiveSkill.resCost.pride_cost,
+                            ReqResSloth = passiveSkill.resCost.sloth_cost,
+                        };
+                        passiveSkills.Add(newPassiveSkill);
+                        break;
+                    }
+                    case SkillType.CustomEffect:
                     {
-                        Id = mentalEffect.inputId,  // Assuming a new ID is generated
-                        Effect = mentalEffect.effect,
-                        Type = mentalEffect.type,
-                        Index = i,
-                        SavedSkillId = SaveSkillId // Assuming SaveSkillId is available in scope
-                    };
-                    mentalEffects.Add(newMentalEffect);
+                        var customEffect = (RequestCustomEffect) skill;
+                        var imageId = Guid.NewGuid();
+                        var newCustomEffect = new CustomEffect()
+                        {
+                            Id = customEffect.inputId, 
+                            Name = customEffect.name,
+                            ImageAttachId = imageId,
+                            ImageAttach = new ImageObj()
+                            {
+                                Id = Guid.NewGuid(),
+                                Url = customEffect.customImg
+                            } ,
+                            EffectColor = customEffect.effectColor,
+                            Effect = customEffect.effect,
+                            IsCoinType = customEffect.isCoinType,
+                            Type = SkillType.CustomEffect,
+                            Index = i,
+                            SavedSkillId = SaveSkillId 
+                        };
+                        customEffects.Add(newCustomEffect);
+                        break;
+                    }
+                    case SkillType.MentalEffect:
+                    {
+                        var mentalEffect = (RequestMentalEffect) skill;
+                        var newMentalEffect = new MentalEffect()
+                        {
+                            Id = mentalEffect.inputId,  // Assuming a new ID is generated
+                            Effect = mentalEffect.effect,
+                            Type = mentalEffect.type,
+                            Index = i,
+                            SavedSkillId = SaveSkillId // Assuming SaveSkillId is available in scope
+                        };
+                        mentalEffects.Add(newMentalEffect);
+                        break;
+                    }
                 }
             }
             newSkills.OffenseSkills = offenseSkills;
@@ -362,120 +369,121 @@ namespace Server.Profiles
             return newSkills;
         }
         
-        private List<object> MapSkillRequest(SavedSkill src)
+        private static List<SkillRequestBase> MapSkillRequest(SavedSkill src)
         {
             var list = SavedSkill.CompileSkill(src);
+            var newSkillList = new List<SkillRequestBase>();
             for(int i = 0; i < list.Count; i++)
             {
-                if(list[i].GetType().Name.Equals("OffenseSkill")
-                ||list[i].GetType().Name.Equals("OffenseSkillProxy"))
+                var skill = list[i];
+                switch(skill.Type)
                 {
-                    var offenseSkill = (OffenseSkill) list[i];
-                    list[i] = new RequestOffenseSkill()
+                    case SkillType.OffenseSkill:
                     {
-                        skillLevel = offenseSkill.SkillLevel,
-                        skillAmt = offenseSkill.SkillAmt,
-                        atkWeight = offenseSkill.AtkWeight,
-                        inputId = offenseSkill.Id,
-                        damageType = offenseSkill.DamageType,
-                        name = offenseSkill.Name,
-                        skillAffinity = offenseSkill.SkillAffinity,
-                        basePower = offenseSkill.BasePower,
-                        coinNo = offenseSkill.CoinNo,
-                        coinPow = offenseSkill.CoinPow,
-                        skillImage = offenseSkill.ImageAttach.Url,
-                        skillEffect = offenseSkill.SkillEffect,
-                        skillLabel = offenseSkill.SkillLabel,
-                        skillFrame = offenseSkill.SkillFrame,
-                    };
-                }
-
-                if(list[i].GetType().Name.Equals("DefenseSkill")
-                ||list[i].GetType().Name.Equals("DefenseSkillProxy"))
-                {
-                    var defenseSkill = (DefenseSkill) list[i];
-                    list[i] = new RequestDefenseSkill()
+                        var offenseSkill = (OffenseSkill) skill;
+                        newSkillList.Add(new RequestOffenseSkill()
+                        {
+                            skillLevel = offenseSkill.SkillLevel,
+                            skillAmt = offenseSkill.SkillAmt,
+                            atkWeight = offenseSkill.AtkWeight,
+                            inputId = offenseSkill.Id,
+                            damageType = offenseSkill.DamageType,
+                            name = offenseSkill.Name,
+                            skillAffinity = offenseSkill.SkillAffinity,
+                            basePower = offenseSkill.BasePower,
+                            coinNo = offenseSkill.CoinNo,
+                            coinPow = offenseSkill.CoinPow,
+                            skillImage = offenseSkill.ImageAttach.Url,
+                            skillEffect = offenseSkill.SkillEffect,
+                            skillLabel = offenseSkill.SkillLabel,
+                            skillFrame = offenseSkill.SkillFrame,
+                        });
+                        break;
+                    }
+                    case SkillType.DefenseSkill:
                     {
-                        skillLevel = defenseSkill.SkillLevel,
-                        skillAmt = defenseSkill.SkillAmt,
-                        atkWeight = defenseSkill.AtkWeight,
-                        inputId = defenseSkill.Id,
-                        defenseType = defenseSkill.DefenseType,
-                        damageType = defenseSkill.DamageType,
-                        name = defenseSkill.Name,
-                        skillAffinity = defenseSkill.SkillAffinity,
-                        basePower = defenseSkill.BasePower,
-                        coinNo = defenseSkill.CoinNo,
-                        coinPow = defenseSkill.CoinPow,
-                        skillImage = defenseSkill.ImageAttach.Url,
-                        skillEffect = defenseSkill.SkillEffect,
-                        skillLabel = defenseSkill.SkillLabel,
-                        skillFrame = defenseSkill.SkillFrame,
-                    };
-                }
-
-                if(list[i].GetType().Name.Equals("PassiveSkill")
-                ||list[i].GetType().Name.Equals("PassiveSkillProxy"))
-                {
-                    var PassiveSkill = (PassiveSkill) list[i];
-                    list[i] = new RequestPassiveSkill()
+                        var defenseSkill = (DefenseSkill) skill;
+                        newSkillList.Add(new RequestDefenseSkill()
+                        {
+                            skillLevel = defenseSkill.SkillLevel,
+                            skillAmt = defenseSkill.SkillAmt,
+                            atkWeight = defenseSkill.AtkWeight,
+                            inputId = defenseSkill.Id,
+                            defenseType = defenseSkill.DefenseType,
+                            damageType = defenseSkill.DamageType,
+                            name = defenseSkill.Name,
+                            skillAffinity = defenseSkill.SkillAffinity,
+                            basePower = defenseSkill.BasePower,
+                            coinNo = defenseSkill.CoinNo,
+                            coinPow = defenseSkill.CoinPow,
+                            skillImage = defenseSkill.ImageAttach.Url,
+                            skillEffect = defenseSkill.SkillEffect,
+                            skillLabel = defenseSkill.SkillLabel,
+                            skillFrame = defenseSkill.SkillFrame,
+                        });
+                        break;
+                    }
+                    case SkillType.PassiveSkill:
                     {
-                        inputId = PassiveSkill.Id,
-                        name = PassiveSkill.Name,
-                        skillEffect = PassiveSkill.SkillEffect,
-                        skillLabel = PassiveSkill.SkillLabel,
-                        affinity = PassiveSkill.Affinity,
-                        req = PassiveSkill.Req,
-                        reqNo = PassiveSkill.ReqNo,
-                        ownCost = new PassiveSinCost(){
-                            wrath_cost = PassiveSkill.ReqOwnWrath,
-                            lust_cost = PassiveSkill.ReqOwnLust,
-                            gluttony_cost = PassiveSkill.ReqOwnGluttony,
-                            gloom_cost = PassiveSkill.ReqOwnGloom,
-                            sloth_cost = PassiveSkill.ReqOwnSloth,
-                            envy_cost = PassiveSkill.ReqOwnEnvy,
-                            pride_cost = PassiveSkill.ReqOwnPride
-                        },
-                        resCost = new PassiveSinCost(){
-                            wrath_cost = PassiveSkill.ReqResWrath,
-                            lust_cost = PassiveSkill.ReqResLust,
-                            gluttony_cost = PassiveSkill.ReqResGluttony,
-                            gloom_cost = PassiveSkill.ReqResGloom,
-                            sloth_cost = PassiveSkill.ReqResSloth,
-                            envy_cost = PassiveSkill.ReqResEnvy,
-                            pride_cost = PassiveSkill.ReqResPride
-                        }
-                    };
-                }
-
-                if(list[i].GetType().Name.Equals("CustomEffect")
-                ||list[i].GetType().Name.Equals("CustomEffectProxy"))
-                {
-                    var customEffect = (CustomEffect) list[i];
-                    list[i] = new RequestCustomEffect()
+                        var PassiveSkill = (PassiveSkill) skill;
+                        newSkillList.Add(new RequestPassiveSkill()
+                        {
+                            inputId = PassiveSkill.Id,
+                            name = PassiveSkill.Name,
+                            skillEffect = PassiveSkill.SkillEffect,
+                            skillLabel = PassiveSkill.SkillLabel,
+                            affinity = PassiveSkill.Affinity,
+                            req = PassiveSkill.Req,
+                            reqNo = PassiveSkill.ReqNo,
+                            ownCost = new PassiveSinCost(){
+                                wrath_cost = PassiveSkill.ReqOwnWrath,
+                                lust_cost = PassiveSkill.ReqOwnLust,
+                                gluttony_cost = PassiveSkill.ReqOwnGluttony,
+                                gloom_cost = PassiveSkill.ReqOwnGloom,
+                                sloth_cost = PassiveSkill.ReqOwnSloth,
+                                envy_cost = PassiveSkill.ReqOwnEnvy,
+                                pride_cost = PassiveSkill.ReqOwnPride
+                            },
+                            resCost = new PassiveSinCost(){
+                                wrath_cost = PassiveSkill.ReqResWrath,
+                                lust_cost = PassiveSkill.ReqResLust,
+                                gluttony_cost = PassiveSkill.ReqResGluttony,
+                                gloom_cost = PassiveSkill.ReqResGloom,
+                                sloth_cost = PassiveSkill.ReqResSloth,
+                                envy_cost = PassiveSkill.ReqResEnvy,
+                                pride_cost = PassiveSkill.ReqResPride
+                            }
+                        });
+                        break;
+                    }
+                    case SkillType.CustomEffect:
                     {
-                        inputId = customEffect.Id,
-                        name = customEffect.Name,
-                        customImg = customEffect.ImageAttach.Url,
-                        effectColor = customEffect.EffectColor,
-                        effect = customEffect.Effect,
-                        isCoinType = customEffect.IsCoinType,
-                    };
-                }
-
-                if(list[i].GetType().Name.Equals("MentalEffect")
-                ||list[i].GetType().Name.Equals("MentalEffectProxy"))
-                {
-                    var mentalEffect = (MentalEffect) list[i];
-                    list[i] = new RequestMentalEffect()
+                        var customEffect = (CustomEffect) skill;
+                        newSkillList.Add(new RequestCustomEffect()
+                        {
+                            inputId = customEffect.Id,
+                            name = customEffect.Name,
+                            customImg = customEffect.ImageAttach.Url,
+                            effectColor = customEffect.EffectColor,
+                            effect = customEffect.Effect,
+                            isCoinType = customEffect.IsCoinType,
+                        });
+                        break;
+                    }
+                    case SkillType.MentalEffect:
                     {
-                        inputId = mentalEffect.Id,
-                        effect = mentalEffect.Effect,
-                    };
-                }
+                        var mentalEffect = (MentalEffect) skill;
+                        newSkillList.Add(new RequestMentalEffect()
+                        {
+                            inputId = mentalEffect.Id,
+                            effect = mentalEffect.Effect,
+                        });
+                        break;
+                    }
+                };
             }
 
-            return list;
+            return newSkillList;
         }
     }
 }

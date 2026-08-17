@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Server.Interface.UtilInterfaces;
+using Server.Util.Enums;
 
 namespace Server.Models
 {
@@ -30,7 +31,7 @@ namespace Server.Models
         public string SkillLabel { get; set; } = "PASSIVE";
         public string Name { get; set; } = "";
         public string SkillEffect { get; set; } = "";
-        public string Type { get; set; } = "PassiveSkill";
+        public SkillType Type { get; set; } = SkillType.PassiveSkill;
         public string Affinity { get; set; } = "Wrath";
         public string Req { get; set; } = "Own"; // Res or own or none
         public int ReqNo { get; set; } = 1;

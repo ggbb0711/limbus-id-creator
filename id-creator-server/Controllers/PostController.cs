@@ -9,6 +9,7 @@ using Server.Interface.ServiceInterface.IPostService;
 using Server.Models;
 using Server.PostViewService;
 using Server.Services;
+using Server.Util.Enums;
 using Server.Util.Obj;
 using Sprache;
 
