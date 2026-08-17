@@ -1,9 +1,9 @@
 using System.Text;
 using System.Text.Json.Serialization;
+using Amazon.Util;
 using DotNetEnv;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Server.Data;
 using Server.Interface.Repositories;
@@ -31,7 +31,7 @@ using Server.Util.RabbitMQPublisher;
 
 
 Env.Load();
-
+var env = Server.Util.Config.EnvironmentVariables.LoadFromEnvironment();
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpClient();
@@ -66,6 +66,7 @@ if(Environment.GetEnvironmentVariable("MODE").Equals("Published")) builder.Servi
 else builder.Services.AddDbContext<ServerDbContext>(options =>options.UseNpgsql(Environment.GetEnvironmentVariable("DefaultConnection")));
 builder.Services.AddSingleton<RabbitMQUploadingImagePublisher>();
 builder.Services.AddHostedService<RabbitMQUploadingImageConsumerService>();
+builder.Services.AddSingleton(env);
 builder.Services.AddSingleton<RabbitMQDeletingImagePublisher>();
 builder.Services.AddHostedService<RabbitMQDeletingImageConsumerService>();
 builder.Services.AddScoped<IUserRepository,UserRepository>();
@@ -101,7 +102,7 @@ builder.Services.AddAuthentication()
         config.TokenValidationParameters = new TokenValidationParameters()
         {
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWTSecret"))),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(env.JWTSecret)),
             ValidateIssuer = false,
             ValidateAudience = false
         };
@@ -109,37 +110,9 @@ builder.Services.AddAuthentication()
 builder.Services.AddAuthorizationBuilder()
     .AddPolicy("SameUser", policy =>policy.Requirements.Add(new SameUserRequirement()));
 
-if(!Environment.GetEnvironmentVariable("LISTEN_ON").IsNullOrEmpty())builder.WebHost.UseUrls(Environment.GetEnvironmentVariable("LISTEN_ON"));
+if(!env.ListenOn.IsNullOrEmpty())builder.WebHost.UseUrls(env.ListenOn);
 
 var app = builder.Build();
-
-// if(Environment.GetEnvironmentVariable("MODE").Equals("Published"))
-// {
-//     using (var serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
-//     {
-//         var logger = serviceScope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-//         var db = serviceScope.ServiceProvider.GetRequiredService<ServerDbContext>().Database;
-
-//         logger.LogInformation("Migrating database...");
-
-//         while (!db.CanConnect())
-//         {
-//             logger.LogInformation("Database not ready yet; waiting...");
-//             Thread.Sleep(1000);
-//         }
-
-//         try
-//         {
-//             serviceScope.ServiceProvider.GetRequiredService<ServerDbContext>().Database.Migrate();
-//             logger.LogInformation("Database migrated successfully.");
-//         }
-//         catch (Exception ex)
-//         {
-//             logger.LogError(ex, "An error occurred while migrating the database.");
-//         }
-//     }
-// }
-
 
 if (app.Environment.IsDevelopment())
 {

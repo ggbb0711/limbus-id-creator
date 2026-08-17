@@ -6,6 +6,7 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Server.Interface.ServiceInterface.ImageObjService;
 using Server.Interface.ServiceInterface.StaticStorageService;
+using Server.Util.Config;
 using Server.Util.RabbitMQPublisher;
 
 namespace Server.Services.UtilServices
@@ -16,13 +17,13 @@ namespace Server.Services.UtilServices
         private readonly IModel _channel;
         private readonly IServiceProvider _services;
 
-        public RabbitMQUploadingImageConsumerService(IServiceProvider services)
+        public RabbitMQUploadingImageConsumerService(IServiceProvider services, EnvironmentVariables env)
         {
-            var factory = new ConnectionFactory() { HostName = Environment.GetEnvironmentVariable("RABBITMQ_HOST")??"localhost",
-                UserName = Environment.GetEnvironmentVariable("RABBITMQ_HOST_USER_NAME")??"guest",
-                Password = Environment.GetEnvironmentVariable("RABBITMQ_PASSWORD")??"guest",
-                VirtualHost = Environment.GetEnvironmentVariable("RABBITMQ_VH")??"/",
-                RequestedHeartbeat = TimeSpan.FromSeconds(Int32.Parse(Environment.GetEnvironmentVariable("RABBITMQ_REQUESTED_HEARTBEAT")??"150"))};
+            var factory = new ConnectionFactory() { HostName = env.RabbitMq.Host??"localhost",
+                UserName = env.RabbitMq.UserName??"guest",
+                Password = env.RabbitMq.Password??"guest",
+                VirtualHost = env.RabbitMq.VirtualHost??"/",
+                RequestedHeartbeat = TimeSpan.FromSeconds(env.RabbitMq.RequestedHeartbeatSeconds)};
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
             _channel.QueueDeclare(queue: "UploadingImage", durable: false, exclusive: false, autoDelete: false, arguments: null);

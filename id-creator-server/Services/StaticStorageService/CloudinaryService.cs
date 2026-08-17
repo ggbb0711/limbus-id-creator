@@ -7,15 +7,16 @@ using CloudinaryDotNet.Actions;
 using Newtonsoft.Json;
 using Server.Interface.ServiceInterface.StaticStorageService;
 using Server.Util;
+using Server.Util.Config;
 
 namespace Server.Services
 {
     public class CloudinaryService:IUploadService,IDeleteService
     {
         Cloudinary _cloudinary;
-        public CloudinaryService()
+        public CloudinaryService(EnvironmentVariables env)
         {
-            _cloudinary = new(Environment.GetEnvironmentVariable("CLOUDINARY_URL"));
+            _cloudinary = new(env.CloudinaryUrl);
             _cloudinary.Api.Secure = true;
         }
 

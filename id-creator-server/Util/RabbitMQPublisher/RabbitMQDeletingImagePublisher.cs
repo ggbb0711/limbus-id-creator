@@ -1,5 +1,6 @@
 using System.Text;
 using RabbitMQ.Client;
+using Server.Util.Config;
 
 namespace Server.Util.RabbitMQPublisher
 {
@@ -8,13 +9,13 @@ namespace Server.Util.RabbitMQPublisher
         private readonly IConnection _connection;
         private readonly IModel _channel;
 
-        public RabbitMQDeletingImagePublisher()
+        public RabbitMQDeletingImagePublisher(EnvironmentVariables env)
         {
-            var factory = new ConnectionFactory() { HostName = Environment.GetEnvironmentVariable("RABBITMQ_HOST")??"localhost",
-                UserName = Environment.GetEnvironmentVariable("RABBITMQ_HOST_USER_NAME")??"guest",
-                Password = Environment.GetEnvironmentVariable("RABBITMQ_PASSWORD")??"guest",
-                VirtualHost = Environment.GetEnvironmentVariable("RABBITMQ_VH")??"/", 
-                RequestedHeartbeat = TimeSpan.FromSeconds(Int32.Parse(Environment.GetEnvironmentVariable("RABBITMQ_REQUESTED_HEARTBEAT")??"150"))};
+            var factory = new ConnectionFactory() { HostName = env.RabbitMq.Host??"localhost",
+                UserName = env.RabbitMq.UserName??"guest",
+                Password = env.RabbitMq.Password??"guest",
+                VirtualHost = env.RabbitMq.VirtualHost??"/",
+                RequestedHeartbeat = TimeSpan.FromSeconds(env.RabbitMq.RequestedHeartbeatSeconds)};
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
             _channel.QueueDeclare(queue: "DeletingImage", durable: false, exclusive: false, autoDelete: false, arguments: null);

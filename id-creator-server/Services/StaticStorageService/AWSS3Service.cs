@@ -3,6 +3,7 @@ using Amazon.Runtime;
 using Amazon.S3;
 using Amazon.S3.Transfer;
 using Server.Interface.ServiceInterface.StaticStorageService;
+using Server.Util.Config;
 
 namespace Server.Services
 {
@@ -10,10 +11,10 @@ namespace Server.Services
     {
         private readonly AmazonS3Client _amazonS3Client;
         private readonly TransferUtility _transferUtility;
-        private readonly string AWS_S3_BUCKET_NAME = Environment.GetEnvironmentVariable("AWS_S3_BUCKET_NAME");
-        public AWSS3Service(){
-            var AWS_ACCESS_KEY = Environment.GetEnvironmentVariable("AWS_ACCESS_KEY");
-            var AWS_SECRET_KEY = Environment.GetEnvironmentVariable("AWS_SECRET_KEY");
+        private readonly string AWS_S3_BUCKET_NAME;
+        public AWSS3Service(EnvironmentVariables env){
+            var AWS_ACCESS_KEY = env.AwsAccessKey;
+            var AWS_SECRET_KEY = env.AwsSecretKey;
             var credentials = new BasicAWSCredentials(AWS_ACCESS_KEY, AWS_SECRET_KEY);
             var config = new AmazonS3Config()
             {
@@ -22,6 +23,7 @@ namespace Server.Services
 
             _amazonS3Client = new AmazonS3Client(credentials, config);
             _transferUtility = new TransferUtility(_amazonS3Client);
+            AWS_S3_BUCKET_NAME = env.AwsS3BucketName;
         }
 
         public async Task Delete(string publicId)

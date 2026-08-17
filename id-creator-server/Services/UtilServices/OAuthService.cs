@@ -4,26 +4,19 @@ using Microsoft.AspNetCore.Authentication.OAuth;
 using Newtonsoft.Json;
 using Server.Interface.ServiceInterface.UtilService;
 using Server.Models;
+using Server.Util.Config;
 
 namespace Server.Services
 {
-    public class OAuthService :IOAuthService
+    public class OAuthService(HttpClient client, EnvironmentVariables env) : IOAuthService
     {
-        private readonly HttpClient _client;
-
-
-        public OAuthService(HttpClient client)
-        {
-            _client = client;
-        }
-
         public async Task<UserOAuthReponse?> ExchangeTokenInfoAsync(string code)
         {
             try
             {
-                var endpoint = Environment.GetEnvironmentVariable("TokenEndpoint");
+                var endpoint = env.TokenEndpoint;
 
-                var request = await _client.GetStringAsync(endpoint+code);
+                var request = await client.GetStringAsync(endpoint+code);
                 return JsonConvert.DeserializeObject<UserOAuthReponse>(request);
             }
             catch (Exception ex)

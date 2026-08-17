@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 using Server.Interface.ServiceInterface.SessionInterface;
+using Server.Util.Config;
 
 namespace Server.Services
 {
@@ -12,9 +13,9 @@ namespace Server.Services
     {
         private readonly IDataProtector _dataProtector;
 
-        public CookieSessionService(IDataProtectionProvider dataProtector)
+        public CookieSessionService(IDataProtectionProvider dataProtector, EnvironmentVariables env)
         {
-            _dataProtector = dataProtector.CreateProtector(Environment.GetEnvironmentVariable("CookieSessionProtectorSecret"));
+            _dataProtector = dataProtector.CreateProtector(env.CookieSessionProtectorSecret);
         }
 
         public void AddSessionCookie(HttpResponse res,Guid sessionId,DateTime expireDate)
@@ -41,7 +42,7 @@ namespace Server.Services
             string sessionId = "";
             try
             {
-                if(!sessionCookie.IsNullOrEmpty()) sessionId = _dataProtector.Unprotect(sessionCookie.Split('=')[1]);
+                if(!sessionCookie.IsNullOrEmpty()) sessionId = _dataProtector.Unprotect(sessionCookie!.Split('=')[1]);
             }
             catch (Exception ex)
             {
