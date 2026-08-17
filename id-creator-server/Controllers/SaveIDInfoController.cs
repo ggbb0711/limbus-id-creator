@@ -1,4 +1,6 @@
 using AutoMapper;
+using CloudinaryDotNet.Actions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Server.DTOs.Requests.SavedInfo.SavedID;
@@ -13,51 +15,27 @@ namespace Server.Controllers
     [ApiController]
     [Route("API/[controller]")]
     [EnableCors("AllowOrigin")]
-    public class SaveIDInfoController(ISavedInfoService<SavedIDInfo> savedInfoService, IMapper map): Controller
+    public class SaveIDInfoController(ISavedInfoService<SavedIDInfo> savedInfoService, IAuthorizationService authorizationService, IMapper map): Controller
     {
         private readonly ISavedInfoService<SavedIDInfo> _savedInfoService = savedInfoService;
+        private readonly IAuthorizationService _authorizationService = authorizationService;
         private readonly IMapper _mapper = map;
 
         [HttpGet("{SaveId}")]
         [EnableCors("AllowOrigin")]
-        public async Task<IActionResult> GetSavedInfo(string SaveId,
+        [Authorize]
+        public async Task<IActionResult> GetSavedInfo(Guid SaveId,
             [FromQuery] bool includeSkill=false)
         {
             var response = new ResponseService<SaveInfoResponseDTO<SavedIDRequestDTO>>();
-            var session = (Session?) HttpContext.Items["Session"];
-            if(session == null)
-            {
-                response.msg= "Unauthorized access to private data";
-                return StatusCode(401,response);
-            }
-            try
-            {
-                var isGuid = Guid.TryParse(SaveId, out _);
-                if(!isGuid)
-                {
-                    response.msg = "Incorrect id format";
-                    return BadRequest(response);
-                }
-                var searchResult = await _savedInfoService.FindSavedInfoById(new Guid(SaveId),includeSkill);
-                if(searchResult==null)
-                {
-                    return Ok(response);
-                }
-                else if(!searchResult.UserId.ToString().Equals(session.UserId.ToString()))
-                {
-                    response.msg= "User id does not match";
-                    return StatusCode(401,response);
-                }
-                Console.WriteLine(searchResult.SavedId);
-                response.Response = _mapper.Map<SaveInfoResponseDTO<SavedIDRequestDTO>>(searchResult);
-                return Ok(response);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                response.msg = "Something went wrong";
-                return StatusCode(500,response);
-            }
+            var searchID = await _savedInfoService.FindSavedInfoById(SaveId, includeSkill)
+                ?? throw new DllNotFoundException("Save does not exist");
+            var authResult = await _authorizationService.AuthorizeAsync(User, searchID, "SameUser"); 
+            if(!authResult.Succeeded) Forbid();
+
+            response.msg = "Found save";
+            response.Response = _mapper.Map<SaveInfoResponseDTO<SavedIDRequestDTO>>(searchID);
+            return Ok(response);
         }
 
         [HttpGet("")]

@@ -1,5 +1,7 @@
+using System.Text;
 using System.Text.Json.Serialization;
 using DotNetEnv;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -40,13 +42,13 @@ builder.Services.AddDataProtection();
 builder.Services.AddCors(options=>
 {
     options.AddPolicy("AllowOrigin",
-                    policy=>
-                    {
-                        policy.WithOrigins(Environment.GetEnvironmentVariable("FrontendUri"))
-                                            .AllowAnyHeader()
-                                            .AllowAnyMethod()
-                                            .AllowCredentials();
-                    });
+    policy=>
+    {
+        policy.WithOrigins(Environment.GetEnvironmentVariable("FrontendUri"))
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
 });
 
 
@@ -58,9 +60,9 @@ builder.Services.AddControllers()
     });
 builder.Services.AddSwaggerGen();
 if(Environment.GetEnvironmentVariable("MODE").Equals("Published")) builder.Services.AddDbContext<ServerDbContext>(options =>options.UseNpgsql(Environment.GetEnvironmentVariable("RemoteConnection"), builder =>
-        {
-            builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
-        }));
+    {
+        builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+    }));
 else builder.Services.AddDbContext<ServerDbContext>(options =>options.UseNpgsql(Environment.GetEnvironmentVariable("DefaultConnection")));
 builder.Services.AddSingleton<RabbitMQUploadingImagePublisher>();
 builder.Services.AddHostedService<RabbitMQUploadingImageConsumerService>();
@@ -80,6 +82,7 @@ builder.Services.AddTransient<ISessionService,SessionService>();
 builder.Services.AddTransient<ICookieSessionService,CookieSessionService>();
 builder.Services.AddSingleton<IUploadService,AWSS3Service>();
 builder.Services.AddSingleton<IDeleteService,AWSS3Service>();
+builder.Services.AddSingleton<IAuthorizationHandler,SameUserAuthorizationHandler>();
 builder.Services.AddTransient<IImageObjService,ImageObjService>();
 builder.Services.AddTransient<ISavedInfoService<SavedIDInfo>,SavedIDInfoService>();
 builder.Services.AddTransient<ISavedInfoService<SavedEGOInfo>,SavedEGOInfoService>();
@@ -90,6 +93,21 @@ builder.Services.AddHostedService<BackgroundHostedService>();
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddAutoMapper(typeof(SaveInfoProfile));
 builder.Services.AddLogging();
+builder.Services.AddAuthentication()
+    .AddJwtBearer(config=>
+    {
+        config.SaveToken = true;
+
+        config.TokenValidationParameters = new TokenValidationParameters()
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWTSecret"))),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("SameUser", policy =>policy.Requirements.Add(new SameUserRequirement()));
 
 if(!Environment.GetEnvironmentVariable("LISTEN_ON").IsNullOrEmpty())builder.WebHost.UseUrls(Environment.GetEnvironmentVariable("LISTEN_ON"));
 
