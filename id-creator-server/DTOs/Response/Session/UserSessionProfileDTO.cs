@@ -1,7 +1,4 @@
-
-
-
-namespace Server.DTOs.Response.Users
+namespace Server.DTOs.Response.Session
 {
     public class UserSessionProfileDTO
     {

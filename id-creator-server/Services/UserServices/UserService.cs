@@ -1,31 +1,22 @@
+using Google.Apis.Auth;
 using Server.DTOs.Response.Users;
 using Server.Interface.Repositories;
-using Server.Interface.ServiceInterface.StaticStorageService;
 using Server.Interface.ServiceInterface.UserService;
 using Server.Models;
 using Server.Util;
 
 namespace Server.Services
 {
-    public class UserService:IUserService
+    public class UserService(IUserRepository userRepository) : IUserService
     {
-        private readonly IUserRepository _userRepository;
-        private readonly ISessionRepository _sessionRepository;
-
-        public UserService(IUserRepository userRepository, ISessionRepository sessionRepository)
-        {
-            _userRepository = userRepository;
-            _sessionRepository = sessionRepository;
-        }
-
         public async Task<User?> GetUser(Guid userId)
         {
-            return await _userRepository.GetUserById(userId);
+            return await userRepository.GetUserById(userId);
         }
 
-        public async Task<User> Login(UserOAuthReponse loginUser)
+        public async Task<User?> GoogleLogin(GoogleJsonWebSignature.Payload googlePayload)
         {
-            var user = await _userRepository.GetUserByEmail(loginUser.email);
+            var user = await userRepository.GetUserByEmail(googlePayload.Email);
 
             if(user != null && (!user.IsActive || user.IsRemoved)) return null;
 
@@ -35,17 +26,17 @@ namespace Server.Services
                 var newUser = new User()
                 {
                     Id = Guid.NewGuid(),
-                    UserEmail = loginUser.email,
-                    UserName = loginUser.name,
+                    UserEmail = googlePayload.Email,
+                    UserName = googlePayload.Name,
                     UserIconId = imageId,
                     UserIcon = new ImageObj(){
                         Id = imageId,
-                        Url = loginUser.picture,
+                        Url = googlePayload.Picture,
                     },
                     CreatedAt = DateTime.Now,
                 };
                 
-                user = await _userRepository.CreateUser(newUser);
+                user = await userRepository.CreateUser(newUser);
             }
 
             return user;
@@ -59,7 +50,7 @@ namespace Server.Services
                 UserIcon="",
                 UserName=newName,
             };
-            return (await _userRepository.ChangeUser(userId, userChangeProfile))?.UserName;
+            return (await userRepository.ChangeUser(userId, userChangeProfile))?.UserName;
         }
 
         public async Task<string?> ChangeUserProfile(Guid userId,IFormFile newProfile)
@@ -71,7 +62,7 @@ namespace Server.Services
                 UserIcon=newProfileUrl,
                 UserName="",
             };
-            return (await _userRepository.ChangeUser(userId, userChangeProfile))?.UserIcon?.Url;
+            return (await userRepository.ChangeUser(userId, userChangeProfile))?.UserIcon?.Url;
         }
     }
 }

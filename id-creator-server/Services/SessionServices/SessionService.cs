@@ -14,7 +14,7 @@ namespace Server.Services
             return await sessionRepository.FindSession(sessionId);
         }
 
-        public async Task<Session?> AddSession(Guid userId)
+        public async Task<Session> AddSession(Guid userId)
         {
 
             var newSession = new Session()

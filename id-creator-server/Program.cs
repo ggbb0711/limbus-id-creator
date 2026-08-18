@@ -1,13 +1,14 @@
 using System.Text;
 using System.Text.Json.Serialization;
-using Amazon.Util;
 using DotNetEnv;
+using Google.Apis.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Server.Data;
 using Server.Interface.Repositories;
 using Server.Interface.ServiceInterface.CommentService;
+using Server.Interface.ServiceInterface.IJwtTokenService;
 using Server.Interface.ServiceInterface.ImageObjService;
 using Server.Interface.ServiceInterface.IPostService;
 using Server.Interface.ServiceInterface.SavedInfoService;
@@ -23,10 +24,12 @@ using Server.Repositories;
 using Server.Services;
 using Server.Services.CommentService;
 using Server.Services.ImageObjService;
+using Server.Services.JwtTokenService;
 using Server.Services.PostService;
 using Server.Services.SavedEGOInfoService;
 using Server.Services.SavedInfoService;
 using Server.Services.UtilServices;
+using Server.Util.Authorization;
 using Server.Util.RabbitMQPublisher;
 
 
@@ -44,7 +47,7 @@ builder.Services.AddCors(options=>
     options.AddPolicy("AllowOrigin",
     policy=>
     {
-        policy.WithOrigins(Environment.GetEnvironmentVariable("FrontendUri"))
+        policy.WithOrigins(env.FrontendUri)
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials();
@@ -59,7 +62,7 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 builder.Services.AddSwaggerGen();
-if(Environment.GetEnvironmentVariable("MODE").Equals("Published")) builder.Services.AddDbContext<ServerDbContext>(options =>options.UseNpgsql(Environment.GetEnvironmentVariable("RemoteConnection"), builder =>
+if(env.Mode.Equals("Published")) builder.Services.AddDbContext<ServerDbContext>(options =>options.UseNpgsql(Environment.GetEnvironmentVariable("RemoteConnection"), builder =>
     {
         builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
     }));
@@ -77,8 +80,9 @@ builder.Services.AddScoped<ISavedInfoRepository<SavedEGOInfo,SavedEgo>,SavedEGOI
 builder.Services.AddScoped<IPostRepository,PostRepository>();
 builder.Services.AddScoped<ICommentRepository,CommentRepository>();
 builder.Services.AddScoped<IPostViewRepository,PostViewRepository>();
+builder.Services.AddTransient<IJwtTokenService, JwtTokenService>();
 builder.Services.AddTransient<IUserService,UserService>();
-builder.Services.AddTransient<IOAuthService,OAuthService>();
+builder.Services.AddTransient<IOAuthService<GoogleJsonWebSignature.Payload>,GoogleOAuthService>();
 builder.Services.AddTransient<ISessionService,SessionService>();
 builder.Services.AddTransient<ICookieSessionService,CookieSessionService>();
 builder.Services.AddSingleton<IUploadService,AWSS3Service>();
@@ -98,19 +102,21 @@ builder.Services.AddAuthentication()
     .AddJwtBearer(config=>
     {
         config.SaveToken = true;
-
         config.TokenValidationParameters = new TokenValidationParameters()
         {
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(env.JWTSecret)),
-            ValidateIssuer = false,
-            ValidateAudience = false
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWTSecret")!)),
+            ValidateIssuer = true,
+            ValidIssuer = "id-creator-api",
+            ValidateAudience = true,
+            ValidAudience = "id-creator-client",
+            ClockSkew = TimeSpan.FromSeconds(30),
         };
     });
 builder.Services.AddAuthorizationBuilder()
     .AddPolicy("SameUser", policy =>policy.Requirements.Add(new SameUserRequirement()));
 
-if(!env.ListenOn.IsNullOrEmpty())builder.WebHost.UseUrls(env.ListenOn);
+if(!env.ListenOn.IsNullOrEmpty())builder.WebHost.UseUrls(env.ListenOn??"");
 
 var app = builder.Build();
 

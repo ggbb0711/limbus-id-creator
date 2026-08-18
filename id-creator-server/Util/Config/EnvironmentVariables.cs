@@ -17,6 +17,9 @@ namespace Server.Util.Config
         public required string AwsSecretKey { get; init; }
         public required int SessionExpiredDay { get; init; }
         public required RabbitMqOptions RabbitMq { get; init; }
+        public required string GoogleClientSecret { get; init; }
+        public required string GoogleRedirectUri { get; init; }
+        public required string GoogleClientId { get; init; }
 
         public static EnvironmentVariables LoadFromEnvironment() => new()
         {
@@ -33,6 +36,9 @@ namespace Server.Util.Config
             AwsAccessKey = Require("AWS_ACCESS_KEY"),
             AwsSecretKey = Require("AWS_SECRET_KEY"),
             SessionExpiredDay = int.Parse(Require("SessionExpiredDay")),
+            GoogleClientId = Require("GOOGLE_CLIENT_ID"),
+            GoogleRedirectUri = Require("GOOGLE_REDIRECT_URI"),
+            GoogleClientSecret = Require("GOOGLE_CLIENT_SECRET"),
             RabbitMq = new RabbitMqOptions
             {
                 Host = Environment.GetEnvironmentVariable("RABBITMQ_HOST") ?? "localhost",

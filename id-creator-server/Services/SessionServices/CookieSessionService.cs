@@ -29,6 +29,7 @@ namespace Server.Services
                 HttpOnly = true,
                 Expires = expireDate,
                 SameSite = Microsoft.AspNetCore.Http.SameSiteMode.None,
+                Path = "/API/OAuth/refresh"
             };
             
             res.Cookies.Append("Session-Cookie",cookie.ToString(),cookieOptions);
@@ -61,5 +62,6 @@ namespace Server.Services
             }
             return;
         }
+
     }
 }

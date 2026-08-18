@@ -5,8 +5,8 @@ using Server.Models;
 
 namespace Server.Interface.ServiceInterface.UtilService
 {
-    public interface IOAuthService
+    public interface IOAuthService<T>
     {
-        Task<UserOAuthReponse?> ExchangeTokenInfoAsync(string code);
+        Task<T?> ExchangeTokenInfoAsync(string code);
     }
 }

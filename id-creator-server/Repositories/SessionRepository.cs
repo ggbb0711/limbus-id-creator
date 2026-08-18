@@ -46,7 +46,7 @@ namespace Server.Repositories
 
         }
 
-        public async Task<Session?> CreateSession(Session newSession)
+        public async Task<Session> CreateSession(Session newSession)
         {
             await _ctx.Session.AddAsync(newSession);
 
