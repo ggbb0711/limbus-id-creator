@@ -1,10 +1,13 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using AutoMapper;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Server.DTOs.Response.Users;
 using Server.Interface.ServiceInterface.UserService;
+using Server.Interface.UtilInterfaces;
 using Server.Models;
-using Server.Services;
+using Server.Util.ApiException;
 using Server.Util.RabbitMQPublisher;
 
 
@@ -13,60 +16,28 @@ namespace Server.Controllers
     [ApiController]
     [Route("API/[controller]")]
     [EnableCors("AllowOrigin")]
-    public class UserController : Controller
+    public class UserController(IUserService userService, RabbitMQUploadingImagePublisher publisher, IMapper mapper) : Controller
     {
-        private readonly IUserService _userService;
-        private readonly IMapper _mapper;
-        private readonly RabbitMQUploadingImagePublisher _publisher;
-        
-        public UserController(IUserService userService, RabbitMQUploadingImagePublisher publisher, IMapper mapper)
-        {
-            _userService = userService;
-            _mapper = mapper;
-            _publisher = publisher;
-        }
-        
-        [HttpGet("{id?}")]
+        [HttpGet("{id}")]
         [EnableCors("AllowOrigin")]
-        public async Task<IActionResult> Users(string id)
+        public async Task<ActionResult<ApiResponse<UserProfileDTO>>> FindUser(Guid id)
         {
-            var response = new ResponseService<UserProfileDTO>();
-            var session = (Session?) HttpContext.Items["Session"];
-
-            try
+            var foundUser = await userService.GetUser(id)
+                ?? throw new NotFoundException("Cannot find user.");
+            
+            var profile = mapper.Map<UserProfileDTO>(foundUser);
+            if(User.Identity?.IsAuthenticated == true)
             {
-                var isGuid = Guid.TryParse(id, out _);
-                if(!isGuid)
-                {
-                    response.msg = "Incorrect id format";
-                    return BadRequest(response);
-                }
-                var foundUser = await _userService.GetUser(new Guid(id));
-                if(foundUser != null)
-                {
-                    response.Response = _mapper.Map<UserProfileDTO>(foundUser);
-                    response.msg = "User found";
-
-                    //Owned is true if the user is login
-                    if(session != null && session?.UserId == response.Response.Id) response.Response.owned = true;
-
-                    return Ok(response);
-                }
-                else
-                {
-                    response.msg = "User not found";
-                    return StatusCode(204,response);
-                }
+                var sub = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
+                if(Guid.TryParse(sub, out var callerId) && callerId == profile.Id)
+                    profile.owned = true;
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return StatusCode(500,response);
-            }
+
+            return Ok(ApiResponse<UserProfileDTO>.Ok(profile));
         }
 
 
-        [HttpPost("change/name/{id}")]
+        [HttpPost("name/{id}")]
         [EnableCors("AllowOrigin")]
         public async Task<IActionResult> UsersPostName(string id,[FromBody] string newName)
         {
@@ -94,7 +65,7 @@ namespace Server.Controllers
 
                     return StatusCode(400,response);
                 }
-                var changeUserName = await _userService.ChangeUserName(new Guid(id),newName);
+                var changeUserName = await userService.ChangeUserName(new Guid(id),newName);
                 if(changeUserName != null)
                 {
                     response.Response = changeUserName;
@@ -150,16 +121,16 @@ namespace Server.Controllers
                     return StatusCode(400,response);
                 }
                 
-                var changeUserProfile = await _userService.ChangeUserProfile(new Guid(id),newProfile);
+                var changeUserProfile = await userService.ChangeUserProfile(new Guid(id),newProfile);
                 if(changeUserProfile != null)
                 {
                     response.Response = changeUserProfile;
                     response.msg = "Userprofile changed";
 
-                    var foundUser = await _userService.GetUser(new Guid(id));
+                    var foundUser = await userService.GetUser(new Guid(id));
                     if(foundUser!=null)
                     {
-                        _publisher.PushFormFileToRabbitMQ(foundUser.UserIconId,newProfile,foundUser.UserIcon.LastUpdated);
+                        publisher.PushFormFileToRabbitMQ(foundUser.UserIconId,newProfile,foundUser.UserIcon.LastUpdated);
                     }
 
                     return Ok(response);

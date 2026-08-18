@@ -1,0 +1,42 @@
+using System.Net;
+using Microsoft.AspNetCore.Diagnostics;
+using Server.Interface.UtilInterfaces;
+using Server.Util.ApiException;
+
+namespace Server.Middleware
+{
+    // Handles the app's own typed ApiException hierarchy — tried first (registration order below).
+    public class ApiExceptionHandler(ILogger<ApiExceptionHandler> logger) : IExceptionHandler
+    {
+        public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
+        {
+            if (exception is not ApiException apiException) return false;
+
+            logger.LogWarning(exception, "Handled API exception: {Message}", exception.Message);
+
+            httpContext.Response.ContentType = "application/json";
+            httpContext.Response.StatusCode = (int)apiException.StatusCode;
+            await httpContext.Response.WriteAsJsonAsync(
+                ApiResponse<object>.Fail(apiException.Message, apiException.ErrorCode), cancellationToken);
+
+            return true;
+        }
+    }
+
+    // Catch-all for anything not already handled above — registered second so it only
+    // runs when ApiExceptionHandler returns false.
+    public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger) : IExceptionHandler
+    {
+        public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
+        {
+            logger.LogError(exception, "Unhandled exception");
+
+            httpContext.Response.ContentType = "application/json";
+            httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            await httpContext.Response.WriteAsJsonAsync(
+                ApiResponse<object>.Fail("Something went wrong with the server"), cancellationToken);
+
+            return true;
+        }
+    }
+}

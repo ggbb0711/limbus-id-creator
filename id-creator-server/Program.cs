@@ -102,6 +102,7 @@ builder.Services.AddAuthentication()
     .AddJwtBearer(config=>
     {
         config.SaveToken = true;
+        config.MapInboundClaims = false;
         config.TokenValidationParameters = new TokenValidationParameters()
         {
             ValidateIssuerSigningKey = true,
@@ -116,6 +117,10 @@ builder.Services.AddAuthentication()
 builder.Services.AddAuthorizationBuilder()
     .AddPolicy("SameUser", policy =>policy.Requirements.Add(new SameUserRequirement()));
 
+builder.Services.AddExceptionHandler<ApiExceptionHandler>();
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
+
 if(!env.ListenOn.IsNullOrEmpty())builder.WebHost.UseUrls(env.ListenOn??"");
 
 var app = builder.Build();
@@ -126,7 +131,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseExceptionHandling();
+app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
 

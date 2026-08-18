@@ -8,6 +8,7 @@ using Server.DTOs.Response.SaveInfo;
 using Server.Interface.ServiceInterface.SavedInfoService;
 using Server.Models;
 using Server.Services;
+using Server.Util.ApiException;
 using Server.Util.Obj;
 
 namespace Server.Controllers
@@ -29,9 +30,9 @@ namespace Server.Controllers
         {
             var response = new ResponseService<SaveInfoResponseDTO<SavedIDRequestDTO>>();
             var searchID = await _savedInfoService.FindSavedInfoById(SaveId, includeSkill)
-                ?? throw new DllNotFoundException("Save does not exist");
+                ?? throw new NotFoundException("Save does not exist");
             var authResult = await _authorizationService.AuthorizeAsync(User, searchID, "SameUser"); 
-            if(!authResult.Succeeded) Forbid();
+            if(!authResult.Succeeded) throw new ForbiddenException("You do not owned this resource.");
 
             response.msg = "Found save";
             response.Response = _mapper.Map<SaveInfoResponseDTO<SavedIDRequestDTO>>(searchID);
