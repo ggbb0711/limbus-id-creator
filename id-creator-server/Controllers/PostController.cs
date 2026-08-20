@@ -60,24 +60,8 @@ namespace Server.Controllers
         }
 
         [HttpGet("")]
-        public async Task<ActionResult<PostListResponseDTO>> GetPosts([FromQuery] Guid UserId,
-        [FromQuery] string Title = "",
-        [FromQuery] string Tag="",
-        [FromQuery] bool IncludeComment = false,
-        [FromQuery] PostSortOption SortedBy = PostSortOption.Latest,
-        [FromQuery] int page = 0,
-        [FromQuery] int limit = 10)
+        public async Task<ActionResult<PostListResponseDTO>> GetPosts([FromQuery] SearchPostOption option)
         {
-            var option = new SearchPostOption()
-            {
-                Title = Title,
-                Tag = Tag.IsNullOrEmpty()?[]: [.. Tag.Split(",")],
-                UserId = UserId,
-                IncludeComment = IncludeComment,
-                SortedBy = SortedBy,
-                page = page,
-                limit = limit,
-            };
             var foundPost = await postService.FindPosts(option);
             var postListResponse = new PostListResponseDTO()
             {
