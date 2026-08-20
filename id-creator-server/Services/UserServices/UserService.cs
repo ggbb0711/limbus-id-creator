@@ -1,22 +1,28 @@
 using Google.Apis.Auth;
-using Server.DTOs.Response.Users;
+using Microsoft.IdentityModel.Tokens;
+using Server.DTOs.Request.User;
 using Server.Interface.Repositories;
 using Server.Interface.ServiceInterface.UserService;
 using Server.Models;
 using Server.Util;
+using Server.Util.Obj;
+using Server.Util.RabbitMQPublisher;
 
 namespace Server.Services
 {
-    public class UserService(IUserRepository userRepository) : IUserService
+    public class UserService(IUserRepository userRepository, RabbitMQUploadingImagePublisher publisher) : IUserService
     {
         public async Task<User?> GetUser(Guid userId)
         {
-            return await userRepository.GetUserById(userId);
+            return await userRepository.GetByIdAsync(userId);
         }
 
-        public async Task<User?> GoogleLogin(GoogleJsonWebSignature.Payload googlePayload)
+        public async Task<User?> Login(GoogleJsonWebSignature.Payload googlePayload)
         {
-            var user = await userRepository.GetUserByEmail(googlePayload.Email);
+            var user = (await userRepository.FindAsync(new RepositoryGetParams<User>()
+            {
+                Filter = u => u.UserEmail == googlePayload.Email
+            })).FirstOrDefault();
 
             if(user != null && (!user.IsActive || user.IsRemoved)) return null;
 
@@ -36,33 +42,31 @@ namespace Server.Services
                     CreatedAt = DateTime.Now,
                 };
                 
-                user = await userRepository.CreateUser(newUser);
+                user = await userRepository.AddAsync(newUser);
+                await userRepository.SaveChangeAsync();
             }
 
             return user;
         }
 
-
-        public async Task<string?> ChangeUserName(Guid userId,string newName)
+        public async Task<User?> UpdateUser(Guid userId, UpdateUserProfileDTO updateUserProfileDTO)
         {
-            var userChangeProfile = new UserChangeProfileDTO()
+            var updatedUser = await userRepository.GetByIdAsync(userId);
+            if(updatedUser == null) return null;
+
+            if(!updateUserProfileDTO.UserName.IsNullOrEmpty()) updatedUser.UserName = updateUserProfileDTO.UserName;
+            if(updateUserProfileDTO.UserIconFile != null)
             {
-                UserIcon="",
-                UserName=newName,
-            };
-            return (await userRepository.ChangeUser(userId, userChangeProfile))?.UserName;
+                publisher.PushFormFileToRabbitMQ(updatedUser.UserIcon.Id, updateUserProfileDTO.UserIconFile, updatedUser.UserIcon.LastUpdated);
+                var iconUrl = await FileHelper.ConvertToBase64Async(updateUserProfileDTO.UserIconFile);
+                updatedUser.UserIcon.Url = iconUrl;
+                updatedUser.UserIcon.LastUpdated = DateTime.Now;
+            }
+            
+            var newUser = await userRepository.UpdateAsync(updatedUser);
+            await userRepository.SaveChangeAsync();
+            return newUser;
         }
 
-        public async Task<string?> ChangeUserProfile(Guid userId,IFormFile newProfile)
-        {
-            var newProfileUrl = await FileHelper.ConvertToBase64Async(newProfile);
-
-            var userChangeProfile = new UserChangeProfileDTO()
-            {
-                UserIcon=newProfileUrl,
-                UserName="",
-            };
-            return (await userRepository.ChangeUser(userId, userChangeProfile))?.UserIcon?.Url;
-        }
     }
 }

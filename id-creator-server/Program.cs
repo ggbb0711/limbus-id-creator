@@ -1,8 +1,10 @@
 using System.Text;
 using System.Text.Json.Serialization;
 using DotNetEnv;
+using FluentValidation;
 using Google.Apis.Auth;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Server.Data;
@@ -19,7 +21,6 @@ using Server.Interface.ServiceInterface.UtilService;
 using Server.Middleware;
 using Server.Models;
 using Server.PostViewService;
-using Server.Profiles;
 using Server.Repositories;
 using Server.Services;
 using Server.Services.CommentService;
@@ -29,6 +30,7 @@ using Server.Services.PostService;
 using Server.Services.SavedEGOInfoService;
 using Server.Services.SavedInfoService;
 using Server.Services.UtilServices;
+using Server.Util.ApiException;
 using Server.Util.Authorization;
 using Server.Util.RabbitMQPublisher;
 
@@ -56,7 +58,12 @@ builder.Services.AddCors(options=>
 
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddControllers();
+builder.Services.AddScoped<Server.Filters.ValidationActionFilter>();
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.AddService<Server.Filters.ValidationActionFilter>();
+});
 builder.Services.AddControllers()
     .AddJsonOptions(options=>{
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
@@ -67,6 +74,15 @@ if(env.Mode.Equals("Published")) builder.Services.AddDbContext<ServerDbContext>(
         builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
     }));
 else builder.Services.AddDbContext<ServerDbContext>(options =>options.UseNpgsql(Environment.GetEnvironmentVariable("DefaultConnection")));
+builder.Services.Configure<ApiBehaviorOptions>(options=>
+{
+    options.InvalidModelStateResponseFactory = context =>
+    {
+        var kvp = context.ModelState
+            .First(kvp => kvp.Value?.Errors.Count>0);
+        throw new Server.Util.ApiException.ValidationException("Validation failed: "+kvp.Value?.Errors.Select(e=>e.ErrorMessage).ToArray().ToString());
+    };
+});
 builder.Services.AddSingleton<RabbitMQUploadingImagePublisher>();
 builder.Services.AddHostedService<RabbitMQUploadingImageConsumerService>();
 builder.Services.AddSingleton(env);
@@ -95,8 +111,7 @@ builder.Services.AddTransient<IPostService,PostService>();
 builder.Services.AddTransient<ICommentService,CommentService>();
 builder.Services.AddTransient<IPostViewService,PostViewService>();
 builder.Services.AddHostedService<BackgroundHostedService>();
-builder.Services.AddAutoMapper(typeof(Program));
-builder.Services.AddAutoMapper(typeof(SaveInfoProfile));
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddLogging();
 builder.Services.AddAuthentication()
     .AddJwtBearer(config=>

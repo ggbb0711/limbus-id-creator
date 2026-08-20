@@ -31,7 +31,7 @@ namespace Server.Repositories
             }
 
             foreach (var includeProperty in param.IncludeProperties.Split
-                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                ([','], StringSplitOptions.RemoveEmptyEntries))
             {
                 query = query.Include(includeProperty);
             }

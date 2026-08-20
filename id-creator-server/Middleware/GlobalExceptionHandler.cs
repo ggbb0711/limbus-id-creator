@@ -5,7 +5,6 @@ using Server.Util.ApiException;
 
 namespace Server.Middleware
 {
-    // Handles the app's own typed ApiException hierarchy — tried first (registration order below).
     public class ApiExceptionHandler(ILogger<ApiExceptionHandler> logger) : IExceptionHandler
     {
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
@@ -23,8 +22,6 @@ namespace Server.Middleware
         }
     }
 
-    // Catch-all for anything not already handled above — registered second so it only
-    // runs when ApiExceptionHandler returns false.
     public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger) : IExceptionHandler
     {
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)

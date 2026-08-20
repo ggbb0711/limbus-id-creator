@@ -140,21 +140,6 @@ namespace Server.Services.SavedInfoService
                     }
                 }
             }
-            // Console.WriteLine("Frist offense new skill");
-            // Console.WriteLine(newSave.SavedId.Skill.OffenseSkills.ElementAt(0).Id);
-            // Console.WriteLine("First new offense skill image attach id");
-            // Console.WriteLine(newSave.SavedId.Skill.OffenseSkills.ElementAt(0).ImageAttach.Id);
-
-            // var oldSkill1 = oldSave.SavedId.Skill.OffenseSkills.Where(oldSkill1=>oldSkill1.Id==newSave.SavedId.Skill.OffenseSkills.ElementAt(0).Id).FirstOrDefault();
-            //  Console.WriteLine("Frist offense old skill");
-            // Console.WriteLine(oldSkill1.Id);
-            // Console.WriteLine("First old offense skill image attach id");
-            // Console.WriteLine(oldSkill1.ImageAttach.Id);
-            // Console.WriteLine("New save:");
-            // Console.WriteLine(JsonConvert.SerializeObject(newSave.SavedId));
-            // Console.WriteLine("Old save:");
-            // Console.WriteLine(JsonConvert.SerializeObject(oldSave));
-            // return null;
 
             //Update the save
             var updatedSave = await _saveRepository.UpdateSaved(new UpdateSaveParams<SavedId>()
@@ -195,10 +180,10 @@ namespace Server.Services.SavedInfoService
             {
                 tasks.Add(FileHelper.ConvertToBase64Async(files.sinnerIcon,url=>{sinnerIconImgObj.Url=url;imageObjs.Add(sinnerIconImgObj);}));
             }
-            for(int i = 0; i < files.imageIndex.Length; i++)
+            foreach(var entry in files.skillImages)
             {
-                var searchIndex = files.imageIndex[i];
-                tasks.Add(FileHelper.ConvertToBase64Async(files.skillImages[i],url=>
+                var searchIndex = entry.Index;
+                tasks.Add(FileHelper.ConvertToBase64Async(entry.Image,url=>
                 {
                     for(int j = 0 ;j<savedSkill.OffenseSkills.Count;j++)
                     {

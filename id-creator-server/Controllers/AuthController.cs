@@ -65,7 +65,7 @@ namespace Server.Controllers
         public async Task<ActionResult<ApiResponse<AuthResponseDTO>>> Google([FromBody]string code)
         {   
             var tokenResponse = await oauthService.ExchangeTokenInfoAsync(code) ?? throw new BadRequestException("Cannot get token from google.");
-            var registerUser = await userService.GoogleLogin(tokenResponse) ?? throw new UnauthorizedAccessException("This account has been banned or removed, please contact the admin.");
+            var registerUser = await userService.Login(tokenResponse) ?? throw new UnauthorizedAccessException("This account has been banned or removed, please contact the admin.");
             var session = await  sessionService.AddSession(registerUser.Id);
 ;
             cookieSessionService.AddSessionCookie(Response,session.Id, session.Expired);

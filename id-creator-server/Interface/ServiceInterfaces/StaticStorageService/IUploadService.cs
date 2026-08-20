@@ -6,5 +6,6 @@ namespace Server.Interface.ServiceInterface.StaticStorageService
     {
         Task<string> Upload(byte[] file,string fileName);
         Task<string> Upload(string url, string fileName);
+        Task<string> Upload(IFormFile file, string fileName);
     }
 }

@@ -194,10 +194,10 @@ namespace Server.Services.SavedEGOInfoService
             {
                 tasks.Add(FileHelper.ConvertToBase64Async(files.sinnerIcon,url=>{sinnerIconImgObj.Url=url;imageObjs.Add(sinnerIconImgObj);}));
             }
-            for(int i = 0; i < files.imageIndex.Length; i++)
+            foreach(var entry in files.skillImages)
             {
-                var searchIndex = files.imageIndex[i];
-                tasks.Add(FileHelper.ConvertToBase64Async(files.skillImages[i],url=>
+                var searchIndex = entry.Index;
+                tasks.Add(FileHelper.ConvertToBase64Async(entry.Image,url=>
                 {
                     for(int j = 0 ;j<savedSkill.OffenseSkills.Count;j++)
                     {

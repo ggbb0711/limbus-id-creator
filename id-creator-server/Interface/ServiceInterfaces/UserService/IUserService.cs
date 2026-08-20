@@ -1,13 +1,13 @@
 using Google.Apis.Auth;
+using Server.DTOs.Request.User;
 using Server.Models;
 
 namespace Server.Interface.ServiceInterface.UserService
 {
     public interface IUserService
     {
-        Task<User?> GoogleLogin(GoogleJsonWebSignature.Payload loginUser);
+        Task<User?> Login(GoogleJsonWebSignature.Payload loginUser);
         Task<User?> GetUser(Guid userId);
-        Task<string?> ChangeUserName(Guid userId,string newName);
-        Task<string?> ChangeUserProfile(Guid userId, IFormFile newProfile);
+        Task<User?> UpdateUser(Guid userId,UpdateUserProfileDTO updateUserProfileDTO);
     }
 }
