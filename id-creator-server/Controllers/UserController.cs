@@ -32,7 +32,7 @@ namespace Server.Controllers
             {
                 var sub = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
                 if(Guid.TryParse(sub, out var callerId) && callerId == profile.Id)
-                    profile.owned = true;
+                    profile.Owned = true;
             }
 
             return Ok(ApiResponse<UserProfileResponseDTO>.Ok(profile));
