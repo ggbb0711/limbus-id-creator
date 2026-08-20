@@ -4,9 +4,7 @@ using Server.Models;
 
 namespace Server.Interface.Repositories
 {
-    public interface IImageObjRepository
+    public interface IImageObjRepository : IRepository<ImageObj>
     {
-        Task<ImageObj?> GetImageObj(Guid imgId);
-        Task<ImageObj?> UpdateImage(Guid imgId,string newUrl);
     }
 }
