@@ -1,6 +1,12 @@
 
 
 
+using Server.DTOs.Response.Users;
+
+using Server.DTOs.Response.Users;
+
+using Server.DTOs.Response.Users;
+
 namespace Server.Interface.UtilInterfaces
 {
     public class ApiResponse<ResponseType>
@@ -13,8 +19,7 @@ namespace Server.Interface.UtilInterfaces
         public static ApiResponse<ResponseType> Ok(ResponseType data, string message = "")
         =>
             new () { Success = true, Data = data, Message = message};
-        
-        public static ApiResponse<ResponseType> Fail(string message, string? errorCode = null)
+        public static ApiResponse<ResponseType> Fail(string message, string? errrCode = null)
         =>
             new () { Success = false, Message = message, ErrorCode = errorCode};
     }

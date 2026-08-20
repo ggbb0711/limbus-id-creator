@@ -4,7 +4,6 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using Server.DTOs.Requests.Post;
 using Server.DTOs.Response.Post;
 using Server.Interface.ServiceInterface.CommentService;
@@ -13,7 +12,6 @@ using Server.Interface.UtilInterfaces;
 using Server.Models;
 using Server.PostViewService;
 using Server.Util.ApiException;
-using Server.Util.Enums;
 using Server.Util.Obj;
 using Sprache;
 
@@ -51,7 +49,6 @@ namespace Server.Controllers
             var postResponse = mapper.Map<PostResponseDTO>(foundPost);
             postResponse.ViewCount = await postViewService.LogView(new PostView()
             {
-                Id = Guid.NewGuid(),
                 PostId = postResponse.Id,
                 UserId = userId
             });

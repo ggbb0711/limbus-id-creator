@@ -54,7 +54,7 @@ namespace Server.Controllers
 
             return updatedUser == null
                 ? throw new NotFoundException("User does not exist")
-                : (ActionResult<ApiResponse<UserProfileResponseDTO>>)Ok(ApiResponse<User>.Ok(mapper.Map<UserProfileResponseDTO>(updatedUser)));
+                : (ActionResult<ApiResponse<UserProfileResponseDTO>>)Ok(ApiResponse<UserProfileResponseDTO>.Ok(mapper.Map<UserProfileResponseDTO>(updatedUser)));
         }
     }
 }

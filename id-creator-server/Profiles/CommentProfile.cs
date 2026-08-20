@@ -12,11 +12,9 @@ namespace Server.Profiles
             CreateMap<CommentRequestDTO,Comment>();
             
             CreateMap<Comment,CommentResponseDTO>()
-                .ForMember(c=>c.userIcon, opt=>opt.MapFrom(c=>c.User.UserIcon.Url))
-                .ForMember(c=>c.userName, opt=>opt.MapFrom(c=>c.User.UserName))
-                .ForMember(c=>c.userId, opt=>opt.MapFrom(c=>c.UserId))
-                .ForMember(c=>c.comment, opt=>opt.MapFrom(c=>c.Content))
-                .ForMember(c=>c.date, opt=>opt.MapFrom(c=>c.Created));
+                .ForMember(c=>c.UserIcon, opt=>opt.MapFrom(c=>c.User.UserIcon.Url))
+                .ForMember(c=>c.UserName, opt=>opt.MapFrom(c=>c.User.UserName))
+                .ForMember(c=>c.Date, opt=>opt.MapFrom(c=>c.Created));
         }
     }
 }

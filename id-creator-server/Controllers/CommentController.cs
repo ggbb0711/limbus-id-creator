@@ -45,7 +45,7 @@ namespace Server.Controllers
                 limit = limit,
                 page = page,
             });
-            return Ok(ApiResponse<List<CommentResponseDTO>>.Ok(comments.Select(c=>mapper.Map<CommentResponseDTO>(c)).ToList()));
+            return Ok(ApiResponse<List<CommentResponseDTO>>.Ok([.. comments.Select(c=>mapper.Map<CommentResponseDTO>(c))]));
         }
     }
 }

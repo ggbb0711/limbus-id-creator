@@ -2,11 +2,11 @@ namespace Server.Response.Comment
 {
     public class CommentResponseDTO
     {
-        public string userIcon { get; set; }
-        public string userName { get; set; }
-        public Guid userId { get; set; }
-        public Guid postId { get; set; }
-        public string comment { get; set; }
-        public string date { get; set; }
+        public string UserIcon { get; set; } = "";
+        public string UserName { get; set; } = "";
+        public Guid UserId { get; set; }
+        public Guid PostId { get; set; }
+        public string Content { get; set; } = "";
+        public string Date { get; set; } = "";
     }
 }
