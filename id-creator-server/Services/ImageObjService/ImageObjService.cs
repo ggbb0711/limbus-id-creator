@@ -10,9 +10,16 @@ namespace Server.Services.ImageObjService
 
         public async Task<ImageObj?> UpdateImage(Guid Id, string newUrl, DateTime lastUpdated)
         {
-            var foundImage = await _imageObjRepository.GetImageObj(Id);
-            if (foundImage != null && !lastUpdated.ToString().Equals(foundImage.LastUpdated.ToString())) return null;
-            return await _imageObjRepository.UpdateImage(Id, newUrl);
+            var foundImage = await _imageObjRepository.GetByIdAsync(Id);
+            if ((foundImage != null && !lastUpdated.ToString().Equals(foundImage.LastUpdated.ToString()))
+                || foundImage == null) return null;
+            var separator = newUrl.Contains('?') ? "&" : "?";
+            foundImage.Url = $"{newUrl}{separator}v={foundImage.LastUpdated.Ticks}";
+            foundImage.LastUpdated = lastUpdated;
+
+            var updatedImage = await _imageObjRepository.UpdateAsync(foundImage);
+            await _imageObjRepository.SaveChangeAsync();
+            return updatedImage;
         }
     }
 }
