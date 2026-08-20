@@ -53,7 +53,7 @@ namespace Server.Controllers
             if (!Guid.TryParse(sub, out var userId))
                 throw new UnauthorizedException("Invalid access token");
 
-            var user = await userService.GetUser(userId)
+            var user = await userService.GetUserById(userId)
                 ?? throw new UnauthorizedException("Account no longer exists or is inactive");
 
             return Ok(ApiResponse<UserSessionProfileDTO>.Ok(

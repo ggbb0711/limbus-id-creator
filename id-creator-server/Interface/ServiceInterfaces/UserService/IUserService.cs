@@ -7,7 +7,7 @@ namespace Server.Interface.ServiceInterface.UserService
     public interface IUserService
     {
         Task<User?> Login(GoogleJsonWebSignature.Payload loginUser);
-        Task<User?> GetUser(Guid userId);
+        Task<User?> GetUserById(Guid userId);
         Task<User?> UpdateUser(Guid userId,UpdateUserProfileDTO updateUserProfileDTO);
     }
 }

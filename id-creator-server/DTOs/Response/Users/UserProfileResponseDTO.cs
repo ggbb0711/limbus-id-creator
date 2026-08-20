@@ -3,7 +3,7 @@
 
 namespace Server.DTOs.Response.Users
 {
-    public class UserProfileDTO
+    public class UserProfileResponseDTO
     {
         public Guid Id{get; set;}
         public string UserEmail { get; set; } = "";

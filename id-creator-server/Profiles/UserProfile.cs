@@ -10,9 +10,8 @@ namespace Server.Profiles
     {
         public UserProfile()
         {
-            CreateMap<User,UserProfileDTO>()
+            CreateMap<User,UserProfileResponseDTO>()
                 .ForMember(dest=>dest.UserIcon, opt=>opt.MapFrom(src=>src.UserIcon.Url));
-            CreateMap<User,UserChangeProfileDTO>();
         }
     }
 }

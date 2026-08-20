@@ -9,9 +9,7 @@ namespace Server.Profiles
     {
         public CommentProfile()
         {
-            CreateMap<CommentRequestDTO,Comment>()
-                .ForMember(c=>c.UserId, opt => opt.MapFrom(c=>c.userId))
-                .ForMember(c=>c.Content, opt => opt.MapFrom(c=>c.comment));
+            CreateMap<CommentRequestDTO,Comment>();
             
             CreateMap<Comment,CommentResponseDTO>()
                 .ForMember(c=>c.userIcon, opt=>opt.MapFrom(c=>c.User.UserIcon.Url))

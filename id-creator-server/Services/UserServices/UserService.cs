@@ -12,7 +12,7 @@ namespace Server.Services
 {
     public class UserService(IUserRepository userRepository, RabbitMQUploadingImagePublisher publisher) : IUserService
     {
-        public async Task<User?> GetUser(Guid userId)
+        public async Task<User?> GetUserById(Guid userId)
         {
             return await userRepository.GetByIdAsync(userId);
         }

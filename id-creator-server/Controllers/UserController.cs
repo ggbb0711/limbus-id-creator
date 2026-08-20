@@ -22,12 +22,12 @@ namespace Server.Controllers
     {
         [HttpGet("{id}")]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult<ApiResponse<UserProfileDTO>>> FindUser(Guid id)
+        public async Task<ActionResult<ApiResponse<UserProfileResponseDTO>>> FindUser(Guid id)
         {
-            var foundUser = await userService.GetUser(id)
+            var foundUser = await userService.GetUserById(id)
                 ?? throw new NotFoundException("Cannot find user.");
             
-            var profile = mapper.Map<UserProfileDTO>(foundUser);
+            var profile = mapper.Map<UserProfileResponseDTO>(foundUser);
             if(User.Identity?.IsAuthenticated == true)
             {
                 var sub = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
@@ -35,14 +35,14 @@ namespace Server.Controllers
                     profile.owned = true;
             }
 
-            return Ok(ApiResponse<UserProfileDTO>.Ok(profile));
+            return Ok(ApiResponse<UserProfileResponseDTO>.Ok(profile));
         }
 
 
         [HttpPut("{id}")]
         [EnableCors("AllowOrigin")]
         [Authorize]
-        public async Task<ActionResult<ApiResponse<User>>> UpdateUser(Guid id,
+        public async Task<ActionResult<ApiResponse<UserProfileResponseDTO>>> UpdateUser(Guid id,
         UpdateUserProfileDTO updateUserProfileDTO)
         {
             //TO DO: Please add in custom made validators for the UpdateUserProfileDTO so we can validate the icon file (<=100kb)
@@ -51,7 +51,7 @@ namespace Server.Controllers
 
             if(updatedUser == null) throw new NotFoundException("User does not exist");
 
-            return Ok(ApiResponse<User>.Ok(updatedUser));
+            return Ok(ApiResponse<User>.Ok(mapper.Map<UserProfileResponseDTO>(updatedUser)));
         }
     }
 }
