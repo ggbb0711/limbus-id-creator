@@ -5,15 +5,16 @@ namespace Server.PostViewService
 {
     public class PostViewService(IPostViewRepository postViewRepository) : IPostViewService
     {
-        private readonly IPostViewRepository _postViewRepository = postViewRepository;
         public int GetViewCount(Guid postId)
         {
-            return _postViewRepository.GetViewCount(postId);
+            return postViewRepository.GetViewCount(postId);
         }
 
-        public Task<int> LogView(PostView view)
+        public async Task<int> LogView(PostView view)
         {
-            return _postViewRepository.LogView(view);
+            await postViewRepository.AddAsync(view);
+            await postViewRepository.SaveChangeAsync();
+            return postViewRepository.GetViewCount(view.PostId);
         }
     }
 }

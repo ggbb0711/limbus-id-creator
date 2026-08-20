@@ -7,7 +7,12 @@ namespace Server.Util.Authorization
 
     public interface IOwnedResource
     {
-        Guid UserId { get; }
+        Guid UserId { get; init; }
+    }
+
+    public class OwnedResource(Guid userId) : IOwnedResource
+    {
+        public Guid UserId { get; init; } = userId;
     }
 
     public class SameUserAuthorizationHandler : AuthorizationHandler<SameUserRequirement,IOwnedResource>

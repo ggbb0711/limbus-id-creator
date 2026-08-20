@@ -7,6 +7,7 @@ namespace Server.Repositories
 {
     public class Repository<T>(ServerDbContext ctx) : IRepository<T> where  T: class
     {
+        protected readonly ServerDbContext _ctx = ctx;
         protected readonly DbSet<T> Set = ctx.Set<T>();
 
         public async Task<T> AddAsync(T entity)
@@ -48,13 +49,13 @@ namespace Server.Repositories
 
         public async Task<T?> GetByIdAsync(Guid id)
         {
-            return await ctx.FindAsync<T>(id);
+            return await _ctx.FindAsync<T>(id);
         }
 
         public Task<T> UpdateAsync(T entity)
         {
             Set.Attach(entity);
-            ctx.Entry(entity).State = EntityState.Modified;
+            _ctx.Entry(entity).State = EntityState.Modified;
             return Task.FromResult(entity);
         }
 
@@ -63,7 +64,7 @@ namespace Server.Repositories
             Set.AttachRange(entities);
             foreach(var entity in entities)
             {
-                ctx.Entry(entity).State = EntityState.Modified;
+                _ctx.Entry(entity).State = EntityState.Modified;
             }
             return Task.FromResult(entities);
         }
@@ -76,7 +77,7 @@ namespace Server.Repositories
 
         public Task SaveChangeAsync()
         {
-            return ctx.SaveChangesAsync();
+            return _ctx.SaveChangesAsync();
         }
     }
 }

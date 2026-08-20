@@ -31,12 +31,10 @@ namespace Server.Services
                 var imageId = new Guid();
                 var newUser = new User()
                 {
-                    Id = Guid.NewGuid(),
                     UserEmail = googlePayload.Email,
                     UserName = googlePayload.Name,
                     UserIconId = imageId,
                     UserIcon = new ImageObj(){
-                        Id = imageId,
                         Url = googlePayload.Picture,
                     },
                     CreatedAt = DateTime.Now,

@@ -8,7 +8,7 @@ namespace Server.DTOs.Requests.SavedInfo
         public string SaveName { get; set; } = "";
         public string SaveTime { get; set; } = "";
         [Required(ErrorMessage = "SaveInfo is required.")]
-        public SaveType SaveInfo { get; set; }
+        public required SaveType SaveInfo { get; set; }
         public string PreviewImg { get; set; } = "";
     }
 

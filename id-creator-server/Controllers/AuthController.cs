@@ -36,7 +36,7 @@ namespace Server.Controllers
             if(string.IsNullOrEmpty(refreshTokenId) || !Guid.TryParse(refreshTokenId, out var sessionId))
                 throw new UnauthorizedException("Missing or invalid refresh token");
             
-            var session = await sessionService.GetSession(sessionId);
+            var session = await sessionService.GetSessionById(sessionId);
             if(session==null || session.Expired<=DateTime.Now || session.User?.IsActive != true)
                 throw new UnauthorizedException("Session expired or revoked");
             await sessionService.DeleteSessionById(session.Id);
@@ -84,7 +84,7 @@ namespace Server.Controllers
             if(string.IsNullOrEmpty(refreshTokenId) || !Guid.TryParse(refreshTokenId, out var sessionId))
                 throw new UnauthorizedException("Missing or invalid refresh token");
             
-            var session = await sessionService.GetSession(sessionId);
+            var session = await sessionService.GetSessionById(sessionId);
             if(session==null || session.Expired<=DateTime.Now || session.User?.IsActive != true)
                 throw new UnauthorizedException("Session expired or revoked");
 

@@ -1,4 +1,7 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -6,9 +9,10 @@ using Server.DTOs.Requests.Post;
 using Server.DTOs.Response.Post;
 using Server.Interface.ServiceInterface.CommentService;
 using Server.Interface.ServiceInterface.IPostService;
+using Server.Interface.UtilInterfaces;
 using Server.Models;
 using Server.PostViewService;
-using Server.Services;
+using Server.Util.ApiException;
 using Server.Util.Enums;
 using Server.Util.Obj;
 using Sprache;
@@ -19,105 +23,44 @@ namespace Server.Controllers
     [EnableCors("AllowOrigin")]
     public class PostController(IPostService postService,IPostViewService postViewService, ICommentService commentService, IMapper mapper):Controller
     {
-        private readonly IPostService _postService = postService;
-        private readonly IPostViewService _postViewService = postViewService;
-        private readonly ICommentService _commentService = commentService;
-        private readonly IMapper _mapper =mapper; 
 
-        [HttpPost("create")]
+        [HttpPost("")]
         [EnableCors("AllowOrigin")]
-        public async Task<IActionResult> CreateNewPost([FromBody] PostRequestDTO newPost)
+        [Authorize]
+        public async Task<ActionResult<PostResponseDTO>> CreateNewPost([FromBody] PostRequestDTO newPost)
         {
-            var response = new ResponseService<PostResponseDTO>();
-            var session = (Session?) HttpContext.Items["Session"];
-
-            if(session == null)
-            {
-                response.msg= "Unauthorized";
-                return StatusCode(401,response);
-            }
-
-            if(newPost.title.IsNullOrEmpty()||newPost.title.Length>200)
-            {
-                response.msg = "Title is required and must be less than 200";
-                return BadRequest(response);
-            }
-
-            if(newPost.imagesAttach.Count()<1||newPost.imagesAttach.Count()>8)
-            {
-                response.msg = "Post must contain between 1 and 8 images";
-                return BadRequest(response);
-            }
-
-            if(newPost.tags.Count()>22)
-            {
-                response.msg = "Post must have less than 22 tags";
-                return BadRequest(response);
-            }
-
-            try
-            {
-                var existedPost = await _postService.FindPostById(newPost.id);
-                if(existedPost!=null)
-                {
-                    response.msg = "Post id has already existed";
-                    return BadRequest(response);
-                }
-                var createdPost = await _postService.CreatePost(_mapper.Map<PostRequestDTO,Post>(newPost));
-                if(createdPost == null)
-                {
-                    response.msg = "Cannot create post";
-                    return BadRequest(response);
-                }
-                response.Response = _mapper.Map<Post,PostResponseDTO>(createdPost);
-                response.msg = "Post created successfully";
-                return Ok(response);
-            }
-            catch (System.Exception ex)
-            {
-                response.msg="Something went wrong with the server";
-                Console.WriteLine(ex);
-                return StatusCode(500,response);
-            }
+            //TODO: Add validator to check for title must be <200 characters
+            // Images must be between 1 and 8 images
+            // Post must hav less than 22 tags
+            var sub = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
+            if (!Guid.TryParse(sub, out var userId))
+                throw new UnauthorizedException("Invalid access token");
+            var post = mapper.Map<Post>(newPost);
+            post.UserId = userId;
+            var addedPost = await postService.CreatePost(post);
+            return Ok(ApiResponse<PostResponseDTO>.Ok(mapper.Map<PostResponseDTO>(addedPost),"Post created successfully"));
         }
 
         [HttpGet("{PostId}")]
-        public async Task<IActionResult> GetPost(Guid PostId)
+        public async Task<ActionResult<PostResponseDTO>> GetPost(Guid postId)
         {
-            var response = new ResponseService<PostResponseDTO>();
-            var session = (Session?) HttpContext.Items["Session"];
-
+            var sub = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
+            _ = Guid.TryParse(sub, out var userId);
             
-            try
+            var foundPost = await postService.GetPostById(postId);
+            var postResponse = mapper.Map<PostResponseDTO>(foundPost);
+            postResponse.ViewCount = await postViewService.LogView(new PostView()
             {
-                var foundPost = await _postService.FindPostById(PostId);
-                if(foundPost==null)
-                {
-                    response.msg = "There is no post with that id";
-                    return Ok(response);
-                }
-                var postResponse = _mapper.Map<Post, PostResponseDTO>(foundPost);
-                postResponse.viewCount = await _postViewService.LogView(new PostView()
-                {
-                    Id = Guid.NewGuid(),
-                    PostId = postResponse.id,
-                    UserId = (session==null)? null:session.UserId
-                });
-                postResponse.commentCount = _commentService.GetCommentCount(postResponse.id);
-                response.msg="Found post";
-                response.Response = postResponse;
-                return Ok(response);
-            }
-            catch (System.Exception ex)
-            {
-                response.msg="Something went wrong with the server";
-                Console.WriteLine(ex);
-                return StatusCode(500,response);
-            }
+                Id = Guid.NewGuid(),
+                PostId = postResponse.Id,
+                UserId = userId
+            });
+            postResponse.CommentCount = commentService.GetCommentCount(postResponse.Id);
+            return Ok(ApiResponse<PostResponseDTO>.Ok(postResponse));
         }
 
         [HttpGet("")]
-        public async Task<IActionResult> GetPosts([FromQuery] Guid UserId,
+        public async Task<ActionResult<PostListResponseDTO>> GetPosts([FromQuery] Guid UserId,
         [FromQuery] string Title = "",
         [FromQuery] string Tag="",
         [FromQuery] bool IncludeComment = false,
@@ -125,41 +68,29 @@ namespace Server.Controllers
         [FromQuery] int page = 0,
         [FromQuery] int limit = 10)
         {
-            var response = new ResponseService<PostListResponseDTO>();
-
-            try
+            var option = new SearchPostOption()
             {
-                var option = new SearchPostOption()
-                {
-                    Title = Title,
-                    Tag = Tag.IsNullOrEmpty()?[]: [.. Tag.Split(",")],
-                    UserId = UserId,
-                    IncludeComment = IncludeComment,
-                    SortedBy = SortedBy,
-                    page = page,
-                    limit = limit,
-                };
-                var foundPost = await _postService.FindPosts(option);
-                var postListResponse = new PostListResponseDTO()
-                {
-                    list = foundPost.Select(p=>
-                    {
-                        var postResponse = _mapper.Map<Post,PostResponseDTO>(p);
-                        postResponse.viewCount = _postViewService.GetViewCount(postResponse.id);
-                        postResponse.commentCount = _commentService.GetCommentCount(postResponse.id);
-                        return postResponse;
-                    }).ToList(),
-                    total = _postService.GetPostCount(option)
-                };
-                response.Response = postListResponse;
-                return Ok(response);
-            }
-            catch (System.Exception ex)
+                Title = Title,
+                Tag = Tag.IsNullOrEmpty()?[]: [.. Tag.Split(",")],
+                UserId = UserId,
+                IncludeComment = IncludeComment,
+                SortedBy = SortedBy,
+                page = page,
+                limit = limit,
+            };
+            var foundPost = await postService.FindPosts(option);
+            var postListResponse = new PostListResponseDTO()
             {
-                response.msg="Something went wrong with the server";
-                Console.WriteLine(ex);
-                return StatusCode(500,response);
-            }
+                List = [.. foundPost.Select(p=>
+                {
+                    var postResponse = mapper.Map<PostResponseDTO>(p);
+                    postResponse.ViewCount = postViewService.GetViewCount(postResponse.Id);
+                    postResponse.CommentCount = commentService.GetCommentCount(postResponse.Id);
+                    return postResponse;
+                })],
+                Total = postService.GetPostCount(option)
+            };
+            return Ok(ApiResponse<PostListResponseDTO>.Ok(postListResponse));
         }
     }   
 }

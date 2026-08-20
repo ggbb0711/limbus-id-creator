@@ -9,7 +9,7 @@ namespace Server.Repositories
 
         public int GetCommentCount(Guid postId)
         {
-            return ctx.Comment.Where(c=>c.PostId==postId).Count();
+            return _ctx.Comment.Where(c=>c.PostId==postId).Count();
         }
     }
 }

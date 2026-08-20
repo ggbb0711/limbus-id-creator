@@ -3,16 +3,16 @@ namespace Server.DTOs.Response.Post
 {
     public class PostResponseDTO
     {
-        public Guid id { get; set; }
-        public string title { get; set; } = "";
-        public string description { get; set; } = "";
-        public List<string> imagesAttach { get; set; } = [];
-        public string userIcon { get; set; }
-        public string userName { get; set; }
-        public Guid userId { get; set; }
-        public string created { get; set; }
-        public List<string> tags { get; set; } = [];
-        public int viewCount { get; set; } = 0;
-        public int commentCount { get; set; } = 0;
+        public Guid Id { get; set; }
+        public string Title { get; set; } = "";
+        public string Description { get; set; } = "";
+        public List<string> ImagesAttach { get; set; } = [];
+        public string UserIcon { get; set; } = "";
+        public string UserName { get; set; } = "";
+        public Guid UserId { get; set; }
+        public string Created { get; set; } = "";
+        public List<string> Tags { get; set; } = [];
+        public int ViewCount { get; set; } = 0;
+        public int CommentCount { get; set; } = 0;
     }
 }

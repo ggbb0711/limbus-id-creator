@@ -20,7 +20,7 @@ namespace Server.Services.CommentService
             return addedComment;
         }
 
-        public async Task<Comment?> FindCommentById(Guid commentId)
+        public async Task<Comment?> GetCommentById(Guid commentId)
         {
             return await _commentRepository.GetByIdAsync(commentId);
         }

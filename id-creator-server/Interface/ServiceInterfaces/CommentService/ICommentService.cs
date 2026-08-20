@@ -9,7 +9,7 @@ namespace Server.Interface.ServiceInterface.CommentService
     {
         Task<Comment?> CreateComment(Comment comment);
         Task<List<Comment>> FindComments(SearchCommentOption option);
-        Task<Comment?> FindCommentById(Guid commentId);
+        Task<Comment?> GetCommentById(Guid commentId);
         int GetCommentCount(Guid postId);
     }
 }

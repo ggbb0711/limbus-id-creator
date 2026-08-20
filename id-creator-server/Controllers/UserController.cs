@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using AutoMapper;
@@ -11,6 +10,7 @@ using Server.Interface.ServiceInterface.UserService;
 using Server.Interface.UtilInterfaces;
 using Server.Models;
 using Server.Util.ApiException;
+using Server.Util.Authorization;
 
 
 namespace Server.Controllers
@@ -18,7 +18,7 @@ namespace Server.Controllers
     [ApiController]
     [Route("API/[controller]")]
     [EnableCors("AllowOrigin")]
-    public class UserController(IUserService userService, IMapper mapper) : Controller
+    public class UserController(IUserService userService, IAuthorizationService authorizationService, IMapper mapper) : Controller
     {
         [HttpGet("{id}")]
         [EnableCors("AllowOrigin")]
@@ -47,11 +47,14 @@ namespace Server.Controllers
         {
             //TO DO: Please add in custom made validators for the UpdateUserProfileDTO so we can validate the icon file (<=100kb)
             // Also validate the name property which is between 1 and 65 characters
+            var authResult = await authorizationService.AuthorizeAsync(User, new OwnedResource(id), "SameUser");
+            if (!authResult.Succeeded) throw new ForbiddenException("You are not logged in as this user");
+
             var updatedUser = await userService.UpdateUser(id, updateUserProfileDTO);
 
-            if(updatedUser == null) throw new NotFoundException("User does not exist");
-
-            return Ok(ApiResponse<User>.Ok(mapper.Map<UserProfileResponseDTO>(updatedUser)));
+            return updatedUser == null
+                ? throw new NotFoundException("User does not exist")
+                : (ActionResult<ApiResponse<UserProfileResponseDTO>>)Ok(ApiResponse<User>.Ok(mapper.Map<UserProfileResponseDTO>(updatedUser)));
         }
     }
 }

@@ -1,7 +1,7 @@
 
 
 using AutoMapper;
-using Server.DTOs.Response.Users;
+using Server.DTOs.Response.Session;
 using Server.Models;
 
 namespace Server.Profiles

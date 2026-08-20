@@ -35,7 +35,7 @@ namespace Server.Controllers
             if(!authResult.Succeeded) throw new ForbiddenException("You do not owned this resource.");
 
             response.msg = "Found save";
-            response.Response = _mapper.Map<SaveInfoResponseDTO<SavedIDRequestDTO>>(searchID);
+            response.Response = _mapper.Map<SaveInfoResponseDTO<SavedIDequestDTO>>(searchID);
             return Ok(response);
         }
 
