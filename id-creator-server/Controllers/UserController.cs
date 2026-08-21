@@ -8,7 +8,6 @@ using Server.DTOs.Request.User;
 using Server.DTOs.Response.Users;
 using Server.Interface.ServiceInterface.UserService;
 using Server.Interface.UtilInterfaces;
-using Server.Models;
 using Server.Util.ApiException;
 using Server.Util.Authorization;
 

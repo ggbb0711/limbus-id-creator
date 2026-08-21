@@ -30,8 +30,8 @@ namespace Server.Services.CommentService
             {
                 Filter = c => c.PostId == option.PostId,
                 OrderBy = q=>q.OrderBy(c=>c.Created),
-                Skip = option.page*option.limit,
-                Take = option.limit
+                Skip = option.Page*option.Limit,
+                Take = option.Limit
             })).ToListAsync();
         }
 

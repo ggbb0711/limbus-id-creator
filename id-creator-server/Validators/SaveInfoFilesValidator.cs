@@ -11,11 +11,7 @@ namespace Server.Validators
                 .Must(s => s.Count <= 40)
                 .WithMessage("Can only upload up to 40 skill images and custom effect icons");
 
-            RuleFor(f => f)
-                .Must(f => f.imageIndex.Length == f.skillImages.Count)
-                .WithMessage("Image index and skill images must have the same length");
-
-            RuleForEach(f => f.skillImages).IsValidImage();
+            RuleForEach(f => f.skillImages)..IsValidImage();
             RuleFor(f => f.thumbnailImage).IsValidImage();
             RuleFor(f => f.splashArtImg).IsValidImage();
             RuleFor(f => f.sinnerIcon).IsValidImage();

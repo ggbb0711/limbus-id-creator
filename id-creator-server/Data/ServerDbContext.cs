@@ -1,6 +1,4 @@
-using System.Collections.ObjectModel;
 using Microsoft.EntityFrameworkCore;
-using Server.DTOs.Requests.SavedInfo;
 using Server.Models;
 using Server.Util.RabbitMQPublisher;
 
@@ -113,32 +111,30 @@ namespace Server.Data
 
             foreach(var image in deletedImages)
             {
-                using(var scope = _services.CreateScope())
-                {
-                    var rabbitMQDeletingImagePublisher = scope.ServiceProvider.GetRequiredService<RabbitMQDeletingImagePublisher>();
-                    rabbitMQDeletingImagePublisher.PublishDeleteImage(image.Id.ToString());
-                }
+                using var scope = _services.CreateScope();
+                var rabbitMQDeletingImagePublisher = scope.ServiceProvider.GetRequiredService<RabbitMQDeletingImagePublisher>();
+                rabbitMQDeletingImagePublisher.PublishDeleteImage(image.Id.ToString());
             }
 
             return await base.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
         }
-        public DbSet<User> Users { get; set; }
-        public DbSet<SavedSkill> SavedSkill { get; set; }
-        public DbSet<SavedIDInfo> SavedIDInfos { get; set; }
-        public DbSet<SavedEGOInfo> SavedEGOInfos { get; set; }
-        public DbSet<SavedId> SavedId { get; set; }
-        public DbSet<SavedEgo> SavedEgo { get; set; }
-        public DbSet<PassiveSkill> PassiveSkill { get; set; }
-        public DbSet<OffenseSkill> OffenseSkill { get; set; }
-        public DbSet<MentalEffect> MentalEffect { get; set; }
-        public DbSet<DefenseSkill> DefenseSkill { get; set; }
-        public DbSet<CustomEffect> CustomEffect { get; set; }
-        public DbSet<Comment> Comment { get; set; }
-        public DbSet<Tag> Tag { get; set; }
-        public DbSet<Post> Post { get; set; }
-        public DbSet<PostView> PostView { get; set; }
-        public DbSet<Session> Session { get; set; }
-        public DbSet<ImageObj> ImageObjs { get; set; }
+        public required DbSet<User> Users { get; set; }
+        public required DbSet<SavedSkill> SavedSkill { get; set; }
+        public required DbSet<SavedIDInfo> SavedIDInfos { get; set; }
+        public required DbSet<SavedEGOInfo> SavedEGOInfos { get; set; }
+        public required DbSet<SavedId> SavedId { get; set; }
+        public required DbSet<SavedEgo> SavedEgo { get; set; }
+        public required DbSet<PassiveSkill> PassiveSkill { get; set; }
+        public required DbSet<OffenseSkill> OffenseSkill { get; set; }
+        public required DbSet<MentalEffect> MentalEffect { get; set; }
+        public required DbSet<DefenseSkill> DefenseSkill { get; set; }
+        public required DbSet<CustomEffect> CustomEffect { get; set; }
+        public required DbSet<Comment> Comment { get; set; }
+        public required DbSet<Tag> Tag { get; set; }
+        public required DbSet<Post> Post { get; set; }
+        public required DbSet<PostView> PostView { get; set; }
+        public required DbSet<Session> Session { get; set; }
+        public required DbSet<ImageObj> ImageObjs { get; set; }
     }
 
 }

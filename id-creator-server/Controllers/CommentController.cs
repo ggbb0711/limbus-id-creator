@@ -42,8 +42,8 @@ namespace Server.Controllers
             var comments = await commentService.FindComments(new SearchCommentOption()
             {
                 PostId = postId,
-                limit = limit,
-                page = page,
+                Limit = limit,
+                Page = page,
             });
             return Ok(ApiResponse<List<CommentResponseDTO>>.Ok([.. comments.Select(c=>mapper.Map<CommentResponseDTO>(c))]));
         }

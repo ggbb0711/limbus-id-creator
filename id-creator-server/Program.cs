@@ -30,7 +30,6 @@ using Server.Services.PostService;
 using Server.Services.SavedEGOInfoService;
 using Server.Services.SavedInfoService;
 using Server.Services.UtilServices;
-using Server.Util.ApiException;
 using Server.Util.Authorization;
 using Server.Util.RabbitMQPublisher;
 
@@ -159,26 +158,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseWhen(ctx=>ctx.Request.Path.StartsWithSegments("/API/OAuth/oauth2/login"), app =>
-{
-    app.UseLoginMiddleware();
-});
-
-app.UseWhen(ctx=>ctx.Request.Path.StartsWithSegments("/API/OAuth/oauth2/logout"), app =>
-{
-    app.UseLoginMiddleware();
-});
-
-app.UseWhen(ctx=>ctx.Request.Path.StartsWithSegments("/API/User"), app =>
-{
-    app.UseLoginMiddleware();
-});
-
-app.UseWhen(ctx=>ctx.Request.Path.StartsWithSegments("/API/SaveIDInfo"), app =>
-{
-    app.UseLoginMiddleware();
-});
-
 app.UseWhen(ctx=>ctx.Request.Path.StartsWithSegments("/API/SaveIDInfo/create"), app =>
 {
     app.UseCheckUploadSaveIDFileMiddlewareExtension();
@@ -189,11 +168,6 @@ app.UseWhen(ctx=>ctx.Request.Path.StartsWithSegments("/API/SaveIDInfo/update"), 
 {
     app.UseCheckUploadSaveIDFileMiddlewareExtension();
     app.UseCheckUrlUploadSaveIDMiddlewareExtension();
-});
-
-app.UseWhen(ctx=>ctx.Request.Path.StartsWithSegments("/API/SaveEGOInfo"), app =>
-{
-    app.UseLoginMiddleware();
 });
 
 app.UseWhen(ctx=>ctx.Request.Path.StartsWithSegments("/API/SaveEGOInfo/create"), app =>
@@ -208,20 +182,9 @@ app.UseWhen(ctx=>ctx.Request.Path.StartsWithSegments("/API/SaveEGOInfo/update"),
     app.UseCheckUrlUploadSaveEGOMiddlewareExtension();
 });
 
-app.UseWhen(ctx=>ctx.Request.Path.StartsWithSegments("/API/Post"), app =>
-{
-    app.UseLoginMiddleware();
-});
-
 app.UseWhen(ctx=>ctx.Request.Path.StartsWithSegments("/API/Post/create"), app =>
 {
     app.UseCheckPostUrlMiddlewareExtension();
 });
-
-app.UseWhen(ctx=>ctx.Request.Path.StartsWithSegments("/API/Comment"), app =>
-{
-    app.UseLoginMiddleware();
-});
-
 
 app.Run();

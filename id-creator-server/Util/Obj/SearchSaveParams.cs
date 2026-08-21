@@ -4,9 +4,9 @@ namespace Server.Util.Obj
 {
     public class SearchSaveParams
     {
-        public string searchName { get; init; }
-        public Guid userId { get; init; }
-        public int page { get; init; } = 0;
-        public int limit { get; init; } = 10;
+        public string Name { get; init; }
+        public Guid UserId { get; init; }
+        public int Page { get; init; } = 0;
+        public int Limit { get; init; } = 10;
     }
 }

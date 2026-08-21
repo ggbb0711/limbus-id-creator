@@ -13,7 +13,7 @@ namespace Server.Services.SavedInfoService
         private readonly RabbitMQUploadingImagePublisher _publisher = publisher;
         public async Task<SavedIDInfo> CreateSavedInfo(SavedIDInfo newSave, SaveInfoFiles files)
         {
-            var uploadingImages= await populateImageField(newSave, files);
+            var uploadingImages= await PopulateImageField(newSave, files);
             if(Uri.TryCreate(newSave.ImageAttach.Url,UriKind.Absolute, out _)) uploadingImages.Add(newSave.ImageAttach);
             if(Uri.TryCreate(newSave.SavedId.SplashArt.Url,UriKind.Absolute, out _)) uploadingImages.Add(newSave.SavedId.SplashArt);
             if(Uri.TryCreate(newSave.SavedId.SinnerIcon.Url,UriKind.Absolute, out _)) uploadingImages.Add(newSave.SavedId.SinnerIcon);
@@ -32,7 +32,7 @@ namespace Server.Services.SavedInfoService
 
             await _saveRepository.CreateNewSave(newSave);
             var newCreatedSaved = await _saveRepository.GetSaved(newSave.Id);
-            uploadImageToRabbitMQ(uploadingImages);
+            UploadImageToRabbitMQ(uploadingImages);
             return newCreatedSaved;
         }
 
@@ -53,7 +53,7 @@ namespace Server.Services.SavedInfoService
 
         public async Task<SavedIDInfo?> UpdateSavedInfo(SavedIDInfo newSave,SaveInfoFiles files)
         {
-            var uploadingImages = await populateImageField(newSave,files);
+            var uploadingImages = await PopulateImageField(newSave,files);
             var oldSave = await _saveRepository.GetSaved(newSave.Id,true);
             if(oldSave==null||!oldSave.UserId.Equals(newSave.UserId)) return null;
             //Change the id of the newSave to fit with the old save
@@ -151,14 +151,14 @@ namespace Server.Services.SavedInfoService
                 Saved = newSave.SavedId,
             });
             if(updatedSave!=null) newSave.ImageAttach.LastUpdated = updatedSave.ImageAttach.LastUpdated;
-            uploadImageToRabbitMQ(uploadingImages);
+            UploadImageToRabbitMQ(uploadingImages);
 
             return await _saveRepository.GetSaved(newSave.Id);
         }
 
 
         //Add in placheholder base64 string for the images
-        private async Task<List<ImageObj>> populateImageField(SavedIDInfo savedInfo, SaveInfoFiles files)
+        private static async Task<List<ImageObj>> PopulateImageField(SavedIDInfo savedInfo, SaveInfoFiles files)
         {
             List<Task> tasks = [];
             List<ImageObj> imageObjs = [];
@@ -216,7 +216,7 @@ namespace Server.Services.SavedInfoService
             return imageObjs;
         }
 
-        private void uploadImageToRabbitMQ(List<ImageObj> imageObjs)
+        private void UploadImageToRabbitMQ(List<ImageObj> imageObjs)
         {
             imageObjs.ForEach(image =>
             { 
