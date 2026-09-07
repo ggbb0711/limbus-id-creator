@@ -10,7 +10,7 @@ namespace Server.DTOs.Response.Post
         public string UserIcon { get; set; } = "";
         public string UserName { get; set; } = "";
         public Guid UserId { get; set; }
-        public string Created { get; set; } = "";
+        public DateTime Created { get; set; }
         public List<string> Tags { get; set; } = [];
         public int ViewCount { get; set; } = 0;
         public int CommentCount { get; set; } = 0;

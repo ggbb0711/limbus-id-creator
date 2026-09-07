@@ -13,8 +13,7 @@ namespace Server.Profiles
             
             CreateMap<Comment,CommentResponseDTO>()
                 .ForMember(c=>c.UserIcon, opt=>opt.MapFrom(c=>c.User.UserIcon.Url))
-                .ForMember(c=>c.UserName, opt=>opt.MapFrom(c=>c.User.UserName))
-                .ForMember(c=>c.Date, opt=>opt.MapFrom(c=>c.Created));
+                .ForMember(c=>c.UserName, opt=>opt.MapFrom(c=>c.User.UserName));
         }
     }
 }

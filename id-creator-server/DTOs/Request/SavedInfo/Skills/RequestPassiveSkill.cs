@@ -4,23 +4,23 @@ namespace Server.DTOs.Request.SavedInfo.Skills
 {
     public class RequestPassiveSkill:SkillRequestBase
     {
-        public string skillLabel { get; set; } = "PASSIVE";
-        public string name { get; set; } = "";
-        public string skillEffect { get; set; } = "";
-        public string affinity { get; set; } = "Wrath";
-        public string req { get; set; } = "Own"; // Res or own or none
-        public int reqNo { get; set; } = 1;
-        public PassiveSinCost ownCost { get; set; } = new PassiveSinCost();
-        public PassiveSinCost resCost { get; set; } = new PassiveSinCost();
+        public string SkillLabel { get; set; } = "PASSIVE";
+        public string Name { get; set; } = "";
+        public string SkillEffect { get; set; } = "";
+        public string Affinity { get; set; } = "Wrath";
+        public string Req { get; set; } = "Own"; // Res or own or none
+        public int ReqNo { get; set; } = 1;
+        public PassiveSinCost ReqOwn { get; set; } = new PassiveSinCost();
+        public PassiveSinCost ReqRes { get; set; } = new PassiveSinCost();
     }
 
     public class PassiveSinCost{
-        public int wrath_cost { get; set; } = 0;
-        public int lust_cost { get; set; } = 0;
-        public int sloth_cost { get; set; } = 0;
-        public int gluttony_cost { get; set; } = 0;
-        public int gloom_cost { get; set; } = 0;
-        public int pride_cost { get; set; } = 0;
-        public int envy_cost { get; set; } = 0;
+        public int Wrath { get; set; } = 0;
+        public int Lust { get; set; } = 0;
+        public int Sloth { get; set; } = 0;
+        public int Gluttony { get; set; } = 0;
+        public int Gloom { get; set; } = 0;
+        public int Pride { get; set; } = 0;
+        public int Envy { get; set; } = 0;
     }
 }

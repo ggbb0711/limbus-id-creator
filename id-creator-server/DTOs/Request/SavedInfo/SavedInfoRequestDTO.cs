@@ -5,8 +5,8 @@ namespace Server.DTOs.Requests.SavedInfo
     public class SavedInfoRequestDTO<SaveType>
     {
         public Guid Id { get; set; }
-        public string SaveName { get; set; } = "";
-        public string SaveTime { get; set; } = "";
+        public string Name { get; set; } = "";
+        public DateTime SaveTime { get; set; }
         [Required(ErrorMessage = "SaveInfo is required.")]
         public required SaveType SaveInfo { get; set; }
         public string PreviewImg { get; set; } = "";

@@ -6,39 +6,39 @@ namespace Server.DTOs.Requests.SavedInfo.SavedEgo
 {
     public class SavedEgoRequestDTO
     {
-        public string title { get; set; }
-        public string name { get; set; }
-        public double sanityCost { get; set; }
-        public string splashArt { get; set; }
-        public double splashArtScale { get; set; }
-        public SplashArtTranslationObj splashArtTranslation { get; set; }
-        public SinResistantObj sinResistant { get; set; }
-        public SinCostObj sinCost { get; set; }
-        public string sinnerColor { get; set; }
-        public string sinnerIcon { get; set; }
-        public string egoLevel { get; set; }
-        public List<SkillRequestBase> skillDetails { get; set; }
+        public string Title { get; set; } ="";
+        public string Name { get; set; } = "";
+        public double SanityCost { get; set; }
+        public string SplashArt { get; set; } = "";
+        public double SplashArtScale { get; set; }
+        public required SplashArtTranslationObj SplashArtTranslation { get; set; }
+        public required SinResistantObj SinResistant { get; set; }
+        public required SinCostObj SinCost { get; set; }
+        public string SinnerColor { get; set; } = "";
+        public string SinnerIcon { get; set; } = "";
+        public string EgoLevel { get; set; } = "";
+        public required List<SkillRequestBase> SkillDetails { get; set; }
 
         public class SinResistantObj
         {
-            public double wrath_resistant { get; set; }
-            public double lust_resistant { get; set; }
-            public double sloth_resistant { get; set; }
-            public double gluttony_resistant { get; set; }
-            public double gloom_resistant { get; set; }
-            public double pride_resistant { get; set; }
-            public double envy_resistant { get; set; }
+            public double Wrath { get; set; }
+            public double Lust { get; set; }
+            public double Sloth { get; set; }
+            public double Gluttony { get; set; }
+            public double Gloom { get; set; }
+            public double Pride { get; set; }
+            public double Envy { get; set; }
         }
 
         public class SinCostObj
         {
-            public double wrath_cost { get; set; }
-            public double lust_cost { get; set; }
-            public double sloth_cost { get; set; }
-            public double gluttony_cost { get; set; }
-            public double gloom_cost { get; set; }
-            public double pride_cost { get; set; }
-            public double envy_cost { get; set; }
+            public double Wrath { get; set; }
+            public double Lust { get; set; }
+            public double Sloth { get; set; }
+            public double Gluttony { get; set; }
+            public double Gloom { get; set; }
+            public double Pride { get; set; }
+            public double Envy { get; set; }
         }
     }
 }

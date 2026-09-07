@@ -7,7 +7,8 @@ namespace Server.DTOs.Request.SavedInfo.Skills
     [JsonConverter(typeof(SkillRequestBaseConverter))]
     public abstract class SkillRequestBase
     {
-        public Guid inputId { get; set; }
-        public SkillType type { get; set; }
+        public Guid InputId { get; set; }
+        public SkillType Type { get; set; }
+        public int Index { get; set; }
     }
 }
