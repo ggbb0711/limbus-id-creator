@@ -19,8 +19,10 @@ namespace Server.Profiles
                     Id = src.Id,
                     Url=src.PreviewImg,
                 }))
-                .ForMember(dest => dest.SavedEgo, opt => opt.MapFrom(src => src))
+                .ForMember(dest => dest.SavedEgo, opt => opt.MapFrom(src => src.SaveInfo))
                 .ForMember(dest => dest.SavedEgoKey, opt => opt.MapFrom(src=>src.Id))
+                .ForMember(dest => dest.UserId, opt => opt.Ignore())
+                .ForMember(dest => dest.User, opt => opt.Ignore())
                 .AfterMap((s,d,ctx)=>
                 {
                     d.SavedEgo.Id = s.Id;
@@ -34,8 +36,10 @@ namespace Server.Profiles
                     Id = src.Id,
                     Url=src.PreviewImg,
                 }))
-                .ForMember(dest => dest.SavedId, opt => opt.MapFrom(src => src))
+                .ForMember(dest => dest.SavedId, opt => opt.MapFrom(src => src.SaveInfo))
                 .ForMember(dest => dest.SavedIdKey, opt => opt.MapFrom(src=>src.Id))
+                .ForMember(dest => dest.UserId, opt => opt.Ignore())
+                .ForMember(dest => dest.User, opt => opt.Ignore())
                 .AfterMap((s,d,ctx)=>
                 {
                     d.SavedId.Id = s.Id;
@@ -49,11 +53,17 @@ namespace Server.Profiles
                 .ForMember(d => d.Id, opt => opt.Ignore())
                 .ForMember(d => d.SavedSkillId, opt => opt.Ignore())
                 .ForMember(d => d.Skill, opt => opt.Ignore())
+                .ForMember(d => d.SplashArtId, opt => opt.Ignore())
+                .ForMember(d => d.SinnerIconId, opt => opt.Ignore())
                 .AfterMap((s, d) =>
                 {
                     d.SplashArtId = d.SplashArt.Id;
                     d.SinnerIconId = d.SinnerIcon.Id;
-                });
+                })
+                .ReverseMap()
+                    .ForMember(d => d.SplashArt, opt => opt.MapFrom(s => s.SplashArt.Url))
+                    .ForMember(d => d.SinnerIcon, opt => opt.MapFrom(s => s.SinnerIcon.Url))
+                    .ForMember(d => d.SkillDetails, opt => opt.MapFrom((s,_,_,ctx) => MapSkillRequest(s.Skill, ctx.Mapper)));
 
             CreateMap<SavedIDRequestDTO, SavedId>()
                 .ForMember(d => d.SplashArt, opt => opt.MapFrom(s => new ImageObj { Id = Guid.NewGuid(), Url = s.SplashArt }))
@@ -61,67 +71,59 @@ namespace Server.Profiles
                 .ForMember(d => d.Id, opt => opt.Ignore())
                 .ForMember(d => d.SavedSkillId, opt => opt.Ignore())
                 .ForMember(d => d.Skill, opt => opt.Ignore())
+                .ForMember(d => d.SplashArtId, opt => opt.Ignore())
+                .ForMember(d => d.SinnerIconId, opt => opt.Ignore())
                 .AfterMap((s, d) =>
                 {
                     d.SplashArtId = d.SplashArt.Id;
                     d.SinnerIconId = d.SinnerIcon.Id;
-                });
-            
-            CreateMap<SavedEgo, SavedEgoRequestDTO>()
-                .ForMember(dest=>dest.SplashArt,opt=>opt.MapFrom(src=>src.SplashArt.Url))
-                .ForMember(dest=>dest.SinnerIcon,opt=>opt.MapFrom(src=>src.SinnerIcon.Url))
-                .ForMember(dest=>dest.SkillDetails,opt=>opt.MapFrom((src,_,_,ctx)=>MapSkillRequest(src.Skill,ctx.Mapper)));
+                })
+                .ReverseMap()
+                    .ForMember(d => d.SplashArt, opt => opt.MapFrom(s => s.SplashArt.Url))
+                    .ForMember(d => d.SinnerIcon, opt => opt.MapFrom(s => s.SinnerIcon.Url))
+                    .ForMember(d => d.SkillDetails, opt => opt.MapFrom((s,_,_,ctx) => MapSkillRequest(s.Skill, ctx.Mapper)));
 
             CreateMap<SavedEGOInfo,SaveInfoResponseDTO<SavedEgoRequestDTO>>()
                 .ForMember(dest=>dest.PreviewImg,opt=>opt.MapFrom(src=>src.ImageAttach.Url))
                 .ForMember(dest=>dest.SaveInfo,opt=>opt.MapFrom(src=>src.SavedEgo));
 
-            CreateMap<SavedId, SavedIDRequestDTO>()
-                .ForMember(dest=>dest.SplashArt,opt=>opt.MapFrom(src=>src.SplashArt.Url))
-                .ForMember(dest=>dest.SinnerIcon,opt=>opt.MapFrom(src=>src.SinnerIcon.Url))
-                .ForMember(dest=>dest.SkillDetails,opt=>opt.MapFrom((src,_,_,ctx)=>MapSkillRequest(src.Skill,ctx.Mapper)));
-
             CreateMap<SavedIDInfo,SaveInfoResponseDTO<SavedIDRequestDTO>>()
                 .ForMember(dest=>dest.PreviewImg,opt=>opt.MapFrom(src=>src.ImageAttach.Url))
                 .ForMember(dest=>dest.SaveInfo,opt=>opt.MapFrom(src=>src.SavedId));
-            
+
             CreateMap<RequestOffenseSkill,OffenseSkill>()
                 .ForMember(dest=>dest.Id, opt=>opt.MapFrom(src=>src.InputId))
-                .ForMember(dest=>dest.Type, opt=>opt.MapFrom(src=>SkillType.OffenseSkill));
-            
-            CreateMap<OffenseSkill,RequestOffenseSkill>()
-                .ForMember(dest=>dest.InputId, opt=>opt.MapFrom(src=>src.Id))
-                .ForMember(dest=>dest.SkillImage, opt=>opt.MapFrom(src=>src.ImageAttach.Url));
-        
+                .ForMember(dest=>dest.SavedSkillId, opt=>opt.Ignore())
+                .ForMember(dest=>dest.ImageAttachId, opt=>opt.Ignore())
+                .ForMember(dest=>dest.ImageAttach, opt=>opt.Ignore())
+                .ReverseMap()
+                    .ForMember(dest=>dest.SkillImage, opt=>opt.MapFrom(src=>src.ImageAttach.Url));
+
             CreateMap<RequestDefenseSkill,DefenseSkill>()
                 .ForMember(dest=>dest.Id, opt=>opt.MapFrom(src=>src.InputId))
-                .ForMember(dest=>dest.Type, opt=>opt.MapFrom(src=>SkillType.DefenseSkill));
-            
-            CreateMap<DefenseSkill,RequestDefenseSkill>()
-                .ForMember(dest=>dest.InputId, opt=>opt.MapFrom(src=>src.Id))
-                .ForMember(dest=>dest.SkillImage, opt=>opt.MapFrom(src=>src.ImageAttach.Url));
-                
+                .ForMember(dest=>dest.SavedSkillId, opt=>opt.Ignore())
+                .ForMember(dest=>dest.ImageAttachId, opt=>opt.Ignore())
+                .ForMember(dest=>dest.ImageAttach, opt=>opt.Ignore())
+                .ReverseMap()
+                    .ForMember(dest=>dest.SkillImage, opt=>opt.MapFrom(src=>src.ImageAttach.Url));
+
             CreateMap<RequestPassiveSkill,PassiveSkill>()
                 .ForMember(dest=>dest.Id, opt=>opt.MapFrom(src=>src.InputId))
-                .ForMember(dest=>dest.Type, opt=>opt.MapFrom(src=>SkillType.PassiveSkill));
-            
-            CreateMap<PassiveSkill,RequestPassiveSkill>()
-                .ForMember(dest=>dest.InputId, opt=>opt.MapFrom(src=>src.Id));
-            
+                .ForMember(dest=>dest.SavedSkillId, opt=>opt.Ignore())
+                .ReverseMap();
+
             CreateMap<RequestCustomEffect,CustomEffect>()
                 .ForMember(dest=>dest.Id, opt=>opt.MapFrom(src=>src.InputId))
-                .ForMember(dest=>dest.Type, opt=>opt.MapFrom(src=>SkillType.CustomEffect));
-            
-            CreateMap<CustomEffect,RequestCustomEffect>()
-                .ForMember(dest=>dest.InputId, opt=>opt.MapFrom(src=>src.Id))
-                .ForMember(dest=>dest.CustomImg, opt=>opt.MapFrom(src=>src.ImageAttach.Url));
+                .ForMember(dest=>dest.SavedSkillId, opt=>opt.Ignore())
+                .ForMember(dest=>dest.ImageAttachId, opt=>opt.Ignore())
+                .ForMember(dest=>dest.ImageAttach, opt=>opt.Ignore())
+                .ReverseMap()
+                    .ForMember(dest=>dest.CustomImg, opt=>opt.MapFrom(src=>src.ImageAttach.Url));
 
             CreateMap<RequestMentalEffect,MentalEffect>()
                 .ForMember(dest=>dest.Id, opt=>opt.MapFrom(src=>src.InputId))
-                .ForMember(dest=>dest.Type, opt=>opt.MapFrom(src=>SkillType.MentalEffect));
-            
-            CreateMap<MentalEffect,RequestMentalEffect>()
-                .ForMember(dest=>dest.InputId, opt=>opt.MapFrom(src=>src.Id));
+                .ForMember(dest=>dest.SavedSkillId, opt=>opt.Ignore())
+                .ReverseMap();
         }
 
         private static SavedSkill MapNewSkill(Guid SaveSkillId, List<SkillRequestBase> skills, IRuntimeMapper mapper)

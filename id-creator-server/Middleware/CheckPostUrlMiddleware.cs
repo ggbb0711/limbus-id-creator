@@ -28,15 +28,11 @@ namespace Server.Middleware
                 var newPost = JsonConvert.DeserializeObject<PostRequestDTO>(body);
                 if(newPost == null)
                 {
-                    context.Response.StatusCode = 400;
-                    await context.Response.WriteAsync(System.Text.Json.JsonSerializer.Serialize(new ResponseService<string?>()
-                    {
-                        msg="Post data is not formatted correctly",
-                    }));    
+                    await MiscUtil.GenerateErrorMsg(context,"Post data is not formatted correctly",HttpStatusCode.BadRequest);
                     return;
                 }
 
-                foreach(var image in newPost.imagesAttach)
+                foreach(var image in newPost.ImagesAttach)
                 {
                     if(!await FileHelper.CheckUrlSize(image, 7000000))
                     {

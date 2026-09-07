@@ -26,13 +26,13 @@ namespace Server.Services.CommentService
         }
         public async Task<List<Comment>> FindComments(SearchCommentOption option)
         {
-            return (await _commentRepository.FindAsync(new RepositoryGetParams<Comment>()
+            return [.. await _commentRepository.FindAsync(new RepositoryGetParams<Comment>()
             {
                 Filter = c => c.PostId == option.PostId,
                 OrderBy = q=>q.OrderBy(c=>c.Created),
                 Skip = option.Page*option.Limit,
                 Take = option.Limit
-            })).ToListAsync();
+            })];
         }
 
         public int GetCommentCount(Guid postId)

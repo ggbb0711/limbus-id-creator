@@ -26,9 +26,9 @@ namespace Server.Services.PostService
 
         public async Task<List<Post>> FindPosts(SearchPostOption option)
         {
-            return await postRepository.FindAsync(new RepositoryGetParams<Post>()
+            return [.. await postRepository.FindAsync(new RepositoryGetParams<Post>()
             {
-                Filter = p=>p.Title.ToLower().Contains(option.Title.ToLower())
+                Filter = p=>p.Title.Contains(option.Title, StringComparison.CurrentCultureIgnoreCase)
                     &&(option.UserId == null||option.UserId == p.UserId)
                     &&(option.Tag.Count<1||option.Tag.All(t=>p.Tags.Select(t=>t.TagName).Contains(t)))
                     && !p.IsRemoved && p.IsActive,
@@ -42,7 +42,7 @@ namespace Server.Services.PostService
                     },
                 Skip = option.limit * option.page,
                 Take = option.limit
-            });
+            })];
         }
 
         public int GetPostCount(SearchPostOption option)

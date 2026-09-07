@@ -19,7 +19,7 @@ namespace Server.Interface.UtilInterfaces
         public static ApiResponse<ResponseType> Ok(ResponseType data, string message = "")
         =>
             new () { Success = true, Data = data, Message = message};
-        public static ApiResponse<ResponseType> Fail(string message, string? errrCode = null)
+        public static ApiResponse<ResponseType> Fail(string message, string? errorCode = null)
         =>
             new () { Success = false, Message = message, ErrorCode = errorCode};
     }

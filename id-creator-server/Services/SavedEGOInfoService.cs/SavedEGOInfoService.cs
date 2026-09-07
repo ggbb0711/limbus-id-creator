@@ -1,3 +1,4 @@
+using Server.DTOs.Requests.SavedInfo;
 using Server.Interface.Repositories;
 using Server.Interface.ServiceInterface.SavedInfoService;
 using Server.Models;
@@ -11,7 +12,7 @@ namespace Server.Services.SavedEGOInfoService
     {
         private readonly ISavedInfoRepository<SavedEGOInfo,SavedEgo> _saveRepository = saveRepository;
         private readonly RabbitMQUploadingImagePublisher _publisher = publisher;
-        public async Task<SavedEGOInfo> CreateSavedInfo(SavedEGOInfo newSave, SaveInfoFiles files)
+        public async Task<SavedEGOInfo> CreateSavedInfo(SavedEGOInfo newSave, SaveInfoFilesRequestDTO files)
         {
             var uploadingImages= await populateImageField(newSave, files);
             if(Uri.TryCreate(newSave.ImageAttach.Url,UriKind.Absolute, out _)) uploadingImages.Add(newSave.ImageAttach);
@@ -51,7 +52,7 @@ namespace Server.Services.SavedEGOInfoService
             return await _saveRepository.GetMultiSaved(option);
         }
 
-        public async Task<SavedEGOInfo?> UpdateSavedInfo(SavedEGOInfo newSave,SaveInfoFiles files)
+        public async Task<SavedEGOInfo?> UpdateSavedInfo(SavedEGOInfo newSave,SaveInfoFilesRequestDTO files)
         {
             var uploadingImages = await populateImageField(newSave,files);
             var oldSave = await _saveRepository.GetSaved(newSave.Id,true);
@@ -172,29 +173,29 @@ namespace Server.Services.SavedEGOInfoService
 
 
         //Add in placheholder base64 string for the images
-        private async Task<List<ImageObj>> populateImageField(SavedEGOInfo savedInfo, SaveInfoFiles files)
+        private async Task<List<ImageObj>> populateImageField(SavedEGOInfo savedInfo, SaveInfoFilesRequestDTO files)
         {
             List<Task> tasks = [];
             List<ImageObj> imageObjs = [];
             var splashArt = savedInfo.SavedEgo?.SplashArt;
             var sinnerIconImgObj = savedInfo.SavedEgo?.SinnerIcon;
             var savedSkill = savedInfo.SavedEgo?.Skill;
-           
-            if(files.thumbnailImage!=null)
+
+            if(files.ThumbnailImage!=null)
             {
-                tasks.Add(FileHelper.ConvertToBase64Async(files.thumbnailImage,url=>{savedInfo.ImageAttach.Url=url;imageObjs.Add(savedInfo.ImageAttach);}));
+                tasks.Add(FileHelper.ConvertToBase64Async(files.ThumbnailImage,url=>{savedInfo.ImageAttach.Url=url;imageObjs.Add(savedInfo.ImageAttach);}));
             }
 
-            if(files.splashArtImg!=null)
+            if(files.SplashArtImg!=null)
             {
-                tasks.Add(FileHelper.ConvertToBase64Async(files.splashArtImg,url=>{splashArt.Url=url;imageObjs.Add(splashArt);}));
+                tasks.Add(FileHelper.ConvertToBase64Async(files.SplashArtImg,url=>{splashArt.Url=url;imageObjs.Add(splashArt);}));
             }
 
-            if(files.sinnerIcon!=null)
+            if(files.SinnerIcon!=null)
             {
-                tasks.Add(FileHelper.ConvertToBase64Async(files.sinnerIcon,url=>{sinnerIconImgObj.Url=url;imageObjs.Add(sinnerIconImgObj);}));
+                tasks.Add(FileHelper.ConvertToBase64Async(files.SinnerIcon,url=>{sinnerIconImgObj.Url=url;imageObjs.Add(sinnerIconImgObj);}));
             }
-            foreach(var entry in files.skillImages)
+            foreach(var entry in files.SkillImages)
             {
                 var searchIndex = entry.Index;
                 tasks.Add(FileHelper.ConvertToBase64Async(entry.Image,url=>

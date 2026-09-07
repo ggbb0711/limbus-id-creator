@@ -41,12 +41,13 @@ namespace Server.Services
 
         public async Task<Session?> DeleteSessionByUserId(Guid userId)
         {
-            var deleteSession = await sessionRepository.FindAsync(new RepositoryGetParams<Session>()
+            var deleteSession = (await sessionRepository.FindAsync(new RepositoryGetParams<Session>()
             {
                 Filter = s=>s.UserId == userId,
-            }).First();
+            })).First();
             if(deleteSession == null) return null;
-            return await sessionRepository.RemoveAsync(deleteSession);
+            await sessionRepository.RemoveAsync(deleteSession);
+            return deleteSession;
         }
         
 

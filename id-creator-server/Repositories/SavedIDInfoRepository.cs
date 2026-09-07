@@ -20,16 +20,16 @@ namespace Server.Repositories
 
         public async Task<List<SavedIDInfo>> GetMultiSaved(SearchSaveParams option)
         {
-            var name = option.searchName;
-            var userId = option.userId;
+            var name = option.Name;
+            var userId = option.UserId;
             IQueryable<SavedIDInfo> query;
 
             
-            query = _ctx.SavedIDInfos.Where(e=>e.Name.ToLower().Contains(option.searchName.ToLower())
-            && e.UserId.ToString().Equals(option.userId))
+            query = _ctx.SavedIDInfos.Where(e=>e.Name.Contains(option.Name, StringComparison.CurrentCultureIgnoreCase)
+            && e.UserId.ToString().Equals(option.UserId))
             .OrderByDescending(s=>s.SaveTime)
-            .Skip(option.page*option.limit)
-            .Take(option.limit);
+            .Skip(option.Page*option.Limit)
+            .Take(option.Limit);
 
             return await query.ToListAsync();
         }

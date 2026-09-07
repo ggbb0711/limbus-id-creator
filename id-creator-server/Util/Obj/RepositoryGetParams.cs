@@ -1,3 +1,5 @@
+using System.Linq.Expressions;
+
 namespace Server.Util.Obj
 {
     public class RepositoryGetParams<T>

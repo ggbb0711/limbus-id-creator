@@ -27,22 +27,13 @@ namespace Server.Middleware
                 string? SaveData = form["SaveData"];
                 if( SaveData == null)
                 {
-                    context.Response.StatusCode = 400;
-                    await context.Response.WriteAsync(System.Text.Json.JsonSerializer.Serialize(new ResponseService<string?>()
-                    {
-                        msg="Save data missing",
-                    }));
-                    
+                    await MiscUtil.GenerateErrorMsg(context,"Save data missing",HttpStatusCode.BadRequest);
                     return;
                 }
                 var saveIDInfoRequestDTO = JsonConvert.DeserializeObject<SavedInfoRequestDTO<SavedEgoRequestDTO>>(SaveData);
                 if(saveIDInfoRequestDTO==null)
                 {
-                    context.Response.StatusCode = 400;
-                    await context.Response.WriteAsync(System.Text.Json.JsonSerializer.Serialize(new ResponseService<string?>()
-                    {
-                        msg="Save data is not formatted correctly",
-                    }));    
+                    await MiscUtil.GenerateErrorMsg(context,"Save data is not formatted correctly",HttpStatusCode.BadRequest);
                     return;
                 }
 

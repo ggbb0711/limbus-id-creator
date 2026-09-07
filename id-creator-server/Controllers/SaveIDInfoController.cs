@@ -1,14 +1,17 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using AutoMapper;
-using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Server.DTOs.Requests.SavedInfo;
 using Server.DTOs.Requests.SavedInfo.SavedID;
 using Server.DTOs.Response.SaveInfo;
 using Server.Interface.ServiceInterface.SavedInfoService;
+using Server.Interface.UtilInterfaces;
 using Server.Models;
-using Server.Services;
 using Server.Util.ApiException;
+using Server.Util.Authorization;
 using Server.Util.Obj;
 
 namespace Server.Controllers
@@ -25,242 +28,125 @@ namespace Server.Controllers
         [HttpGet("{SaveId}")]
         [EnableCors("AllowOrigin")]
         [Authorize]
-        public async Task<IActionResult> GetSavedInfo(Guid SaveId,
+        public async Task<ActionResult<ApiResponse<SaveInfoResponseDTO<SavedIDRequestDTO>>>> GetSavedInfo(Guid SaveId,
             [FromQuery] bool includeSkill=false)
         {
-            var response = new ResponseService<SaveInfoResponseDTO<SavedIDRequestDTO>>();
-            var searchID = await _savedInfoService.FindSavedInfoById(SaveId, includeSkill)
+            var searchResult = await _savedInfoService.FindSavedInfoById(SaveId, includeSkill)
                 ?? throw new NotFoundException("Save does not exist");
-            var authResult = await _authorizationService.AuthorizeAsync(User, searchID, "SameUser"); 
-            if(!authResult.Succeeded) throw new ForbiddenException("You do not owned this resource.");
 
-            response.msg = "Found save";
-            response.Response = _mapper.Map<SaveInfoResponseDTO<SavedIDequestDTO>>(searchID);
-            return Ok(response);
+            var authResult = await _authorizationService.AuthorizeAsync(User, new OwnedResource(searchResult.UserId), "SameUser");
+            if (!authResult.Succeeded) throw new ForbiddenException("You do not own this resource.");
+
+            return Ok(ApiResponse<SaveInfoResponseDTO<SavedIDRequestDTO>>.Ok(
+                _mapper.Map<SaveInfoResponseDTO<SavedIDRequestDTO>>(searchResult)));
         }
 
         [HttpGet("")]
         [EnableCors("AllowOrigin")]
-        public async Task<IActionResult> GetSavedInfos([FromQuery] Guid userId,
+        [Authorize]
+        public async Task<ActionResult<ApiResponse<List<SaveInfoResponseDTO<SavedIDRequestDTO>>>>> GetSavedInfos([FromQuery] Guid userId,
             [FromQuery] string searchName = "",
             [FromQuery] int page = 0,
             [FromQuery] int limit = 10)
         {
-            var response = new ResponseService<List<SaveInfoResponseDTO<SavedIDRequestDTO>>>();
-            var session = (Session?) HttpContext.Items["Session"];
-            if(session == null||session.UserId != userId)
-            {
-                response.msg= "Unauthorized access to private data";
-                return StatusCode(401,response);
-            }
+            var authResult = await _authorizationService.AuthorizeAsync(User, new OwnedResource(userId), "SameUser");
+            if (!authResult.Succeeded) throw new ForbiddenException("You do not own this resource.");
 
             var option = new SearchSaveParams()
             {
-                searchName = searchName,
-                userId = userId,
-                limit = limit,
-                page = page
+                Name = searchName,
+                UserId = userId,
+                Limit = limit,
+                Page = page
             };
-            try
-            {
-                var searchResult = await _savedInfoService.FindSavedInfos(option);
-                response.msg = "Found Save";
-                response.Response = searchResult.Select(_mapper.Map<SaveInfoResponseDTO<SavedIDRequestDTO>>).ToList();
-                
-                return Ok(response);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                response.msg = "Something went wrong";
-                return StatusCode(500,response);
-            }
+            var searchResult = await _savedInfoService.FindSavedInfos(option);
+            var response = searchResult.Select(_mapper.Map<SaveInfoResponseDTO<SavedIDRequestDTO>>).ToList();
+
+            return Ok(ApiResponse<List<SaveInfoResponseDTO<SavedIDRequestDTO>>>.Ok(response));
         }
 
         [HttpPost("delete")]
         [EnableCors("AllowOrigin")]
-        public async Task<IActionResult> DeleteIDSave([FromBody] string SaveId)
+        [Authorize]
+        public async Task<ActionResult<ApiResponse<SaveInfoResponseDTO<SavedIDRequestDTO>>>> DeleteIDSave([FromBody] Guid SaveId)
         {
-            var response = new ResponseService<SaveInfoResponseDTO<SavedIDRequestDTO>>();
-            var session = (Session?) HttpContext.Items["Session"];
+            var searchSave = await _savedInfoService.FindSavedInfoById(SaveId)
+                ?? throw new NotFoundException("Save does not exist");
 
+            var authResult = await _authorizationService.AuthorizeAsync(User, new OwnedResource(searchSave.UserId), "SameUser");
+            if (!authResult.Succeeded) throw new ForbiddenException("You do not own this resource.");
 
-            if(session == null)
-            {
-                response.msg= "Unauthorized";
-                return StatusCode(401,response);
-            }
+            var deletedSave = await _savedInfoService.DeleteSavedInfo(SaveId)
+                ?? throw new NotFoundException("Save does not exist");
 
-            try
-            {
-                var isGuid = Guid.TryParse(SaveId, out _);
-                if(!isGuid)
-                {
-                    response.msg = "Incorrect id format";
-                    return BadRequest(response);
-                }
-                var searchSave = await _savedInfoService.FindSavedInfoById(Guid.Parse(SaveId));
-                SavedIDInfo? deletedSave;
-                if(searchSave?.UserId!=session.UserId)
-                {
-                    response.msg = "User id does not match";
-                    return BadRequest(response);
-                }
-                deletedSave = await _savedInfoService.DeleteSavedInfo(Guid.Parse(SaveId));
-                if(deletedSave == null)
-                {
-                    response.msg = "Save does not exist";
-                    return Ok(response);
-                }
-                response.msg = "Deletion sucesssfull";
-                response.Response = _mapper.Map<SaveInfoResponseDTO<SavedIDRequestDTO>>(deletedSave);
-                return Ok(response);
-            }
-            catch (Exception ex)
-            {
-                response.msg="Something went wrong with the server";
-                Console.WriteLine(ex);
-                return StatusCode(500,response);
-            }
+            return Ok(ApiResponse<SaveInfoResponseDTO<SavedIDRequestDTO>>.Ok(
+                _mapper.Map<SaveInfoResponseDTO<SavedIDRequestDTO>>(deletedSave), "Deletion successful"));
         }
 
         [HttpPost("create")]
         [EnableCors("AllowOrigin")]
-        public async Task<IActionResult> CreateNewIDSave( [FromForm] List<IFormFile> skillImages, [FromForm] int[] imageIndex,[FromForm] IFormFile? thumbnailImage,[FromForm] IFormFile? splashArtImg,[FromForm] IFormFile? sinnerIcon)
+        [Authorize]
+        public async Task<ActionResult<ApiResponse<SaveInfoResponseDTO<SavedIDRequestDTO>>>> CreateNewIDSave(
+            [FromForm] List<IFormFile> skillImages, [FromForm] int[] imageIndex,[FromForm] IFormFile? thumbnailImage,[FromForm] IFormFile? splashArtImg,[FromForm] IFormFile? sinnerIcon)
         {
-            var response = new ResponseService<SaveInfoResponseDTO<SavedIDRequestDTO>>();
-            var session = (Session?) HttpContext.Items["Session"];
+            var sub = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
+            if (!Guid.TryParse(sub, out var userId))
+                throw new UnauthorizedException("Invalid access token");
 
-            if(session == null)
+            // TODO: replace this with a FluentValidation validator (e.g. for the upload payload) so
+            // ValidationActionFilter enforces it automatically: skillImages.Count <= 40, and
+            // imageIndex.Length == skillImages.Count.
+
+            var saveIDInfo = (SavedIDInfo?) HttpContext.Items["SaveData"]
+                ?? throw new BadRequestException("Save data is not formatted correctly");
+            saveIDInfo.UserId = userId;
+
+            var newSavedInfo = await _savedInfoService.CreateSavedInfo(saveIDInfo, new SaveInfoFilesRequestDTO()
             {
-                response.msg= "Unauthorized";
-                return StatusCode(401,response);
-            }
+                SkillImages = skillImages.Select((image, idx) => new SkillImageEntry { Image = image, Index = imageIndex[idx] }).ToList(),
+                ThumbnailImage = thumbnailImage,
+                SplashArtImg = splashArtImg,
+                SinnerIcon = sinnerIcon
+            });
 
-            if(skillImages.Count>40)
-            {
-                response.msg = "Can only upload less or equal than 40 skill images and custom effect icon";
-                return BadRequest(response);
-            }
-
-            if(imageIndex.Length!=skillImages.Count)
-            {
-                response.msg= "Image index and skill images don't have the same length";
-                return BadRequest(response);
-            }
-
-            try
-            {
-                var saveIDInfo = (SavedIDInfo?) HttpContext.Items["SaveData"];
-                if(saveIDInfo == null)
-                {
-                    response.msg = "Save data is not formatted correctly";
-                    return BadRequest(response);
-                }
-                saveIDInfo.UserId = session.UserId;
-
-                var newSavedInfo = await _savedInfoService.CreateSavedInfo(saveIDInfo, new SaveInfoFiles()
-                {
-                    skillImages = skillImages,
-                    imageIndex = imageIndex,
-                    thumbnailImage = thumbnailImage,
-                    splashArtImg = splashArtImg,
-                    sinnerIcon = sinnerIcon
-                });
-                if(newSavedInfo != null)
-                {
-                    response.Response = _mapper.Map<SaveInfoResponseDTO<SavedIDRequestDTO>>(newSavedInfo);
-                    response.msg = "New save file created successfully";
-                }
-                else
-                {
-                    response.msg = "Cannot create new save";
-                    response.Response = null;
-                    return StatusCode(404,response);
-                }
-
-                return Ok(response);
-            }
-            catch (Exception ex)
-            {
-                response.msg="Something went wrong with the server";
-                Console.WriteLine(ex);
-                return StatusCode(500,response);
-            }
+            return Ok(ApiResponse<SaveInfoResponseDTO<SavedIDRequestDTO>>.Ok(
+                _mapper.Map<SaveInfoResponseDTO<SavedIDRequestDTO>>(newSavedInfo), "New save file created successfully"));
         }
 
         [HttpPost("update")]
         [EnableCors("AllowOrigin")]
-        public async Task<IActionResult> UpdateSave( [FromForm] List<IFormFile> skillImages, [FromForm] int[] imageIndex,[FromForm] IFormFile? thumbnailImage,[FromForm] IFormFile? splashArtImg,[FromForm] IFormFile? sinnerIcon)
+        [Authorize]
+        public async Task<ActionResult<ApiResponse<SaveInfoResponseDTO<SavedIDRequestDTO>>>> UpdateSave(
+            [FromForm] List<IFormFile> skillImages, [FromForm] int[] imageIndex,[FromForm] IFormFile? thumbnailImage,[FromForm] IFormFile? splashArtImg,[FromForm] IFormFile? sinnerIcon)
         {
-            var response = new ResponseService<SaveInfoResponseDTO<SavedIDRequestDTO>>();
-            var session = (Session?) HttpContext.Items["Session"];
-            if(session == null)
+            var sub = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
+            if (!Guid.TryParse(sub, out var userId))
+                throw new UnauthorizedException("Invalid access token");
+
+            // TODO: replace this with a FluentValidation validator (e.g. for the upload payload) so
+            // ValidationActionFilter enforces it automatically: skillImages.Count <= 40, and
+            // imageIndex.Length == skillImages.Count.
+
+            var saveIDInfo = (SavedIDInfo?) HttpContext.Items["SaveData"]
+                ?? throw new BadRequestException("Save data is not formatted correctly");
+            saveIDInfo.UserId = userId;
+
+            var updatingSave = await _savedInfoService.FindSavedInfoById(saveIDInfo.Id)
+                ?? throw new NotFoundException("Save does not exist");
+
+            var authResult = await _authorizationService.AuthorizeAsync(User, new OwnedResource(updatingSave.UserId), "SameUser");
+            if (!authResult.Succeeded) throw new ForbiddenException("You do not own this resource.");
+
+            var newSavedInfo = await _savedInfoService.UpdateSavedInfo(saveIDInfo, new SaveInfoFilesRequestDTO()
             {
-                response.msg= "Unauthorized";
-                return StatusCode(401,response);
-            }
+                SkillImages = skillImages.Select((image, idx) => new SkillImageEntry { Image = image, Index = imageIndex[idx] }).ToList(),
+                ThumbnailImage = thumbnailImage,
+                SplashArtImg = splashArtImg,
+                SinnerIcon = sinnerIcon
+            }) ?? throw new NotFoundException("Cannot update save");
 
-            if(skillImages.Count>40)
-            {
-                response.msg = "Can only upload less or equal than 40 skill images and custom effect icon";
-                return BadRequest(response);
-            }
-
-            if(imageIndex.Length!=skillImages.Count)
-            {
-                response.msg= "Image index and skill images don't have the same length";
-                return BadRequest(response);
-            }
-
-            try
-            {
-                var saveIDInfo = (SavedIDInfo?) HttpContext.Items["SaveData"];
-                if(saveIDInfo == null)
-                {
-                    response.msg = "Save data is not formatted correctly";
-                    return BadRequest(response);
-                }
-                
-                saveIDInfo.UserId = session.UserId;
-
-
-                var updatingSave = await _savedInfoService.FindSavedInfoById(saveIDInfo.Id);
-                if(updatingSave?.UserId!=session.UserId)
-                {
-                    response.msg = "User id does not match";
-                    return BadRequest(response);
-                }
-
-                var newSavedInfo = await _savedInfoService.UpdateSavedInfo(saveIDInfo, new SaveInfoFiles()
-                {
-                    skillImages = skillImages,
-                    imageIndex = imageIndex,
-                    thumbnailImage = thumbnailImage,
-                    splashArtImg = splashArtImg,
-                    sinnerIcon = sinnerIcon
-                });
-                
-                if(newSavedInfo != null)
-                {
-                    response.Response = _mapper.Map<SaveInfoResponseDTO<SavedIDRequestDTO>>(newSavedInfo);
-                    response.msg = "Save has been updated";
-                }
-                else
-                {
-                    response.msg = "Cannot create new save";
-                    response.Response = null;
-                    return StatusCode(404,response);
-                }
-
-                return Ok(response);
-            }
-            catch (Exception ex)
-            {
-                response.msg="Something went wrong with the server";
-                Console.WriteLine(ex);
-                return StatusCode(500,response);
-            }
+            return Ok(ApiResponse<SaveInfoResponseDTO<SavedIDRequestDTO>>.Ok(
+                _mapper.Map<SaveInfoResponseDTO<SavedIDRequestDTO>>(newSavedInfo), "Save has been updated"));
         }
     }
 }
