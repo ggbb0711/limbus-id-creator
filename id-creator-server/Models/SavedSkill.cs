@@ -27,7 +27,7 @@ namespace Server.Models
 
         public virtual ICollection<OffenseSkill> OffenseSkills
         {
-            get => LazyLoader.Load(this, ref _offenseSkills) ?? new List<OffenseSkill>();
+            get => LazyLoader.Load(this, ref _offenseSkills ) ?? [];
             set => _offenseSkills = value;
         }
 

@@ -41,7 +41,7 @@ namespace Server.Controllers
                 _mapper.Map<SaveInfoResponseDTO<SavedIDRequestDTO>>(searchResult)));
         }
 
-        [HttpGet("")]
+        [HttpGet]
         [EnableCors("AllowOrigin")]
         [Authorize]
         public async Task<ActionResult<ApiResponse<List<SaveInfoResponseDTO<SavedIDRequestDTO>>>>> GetSavedInfos([FromQuery] Guid userId,
@@ -65,7 +65,7 @@ namespace Server.Controllers
             return Ok(ApiResponse<List<SaveInfoResponseDTO<SavedIDRequestDTO>>>.Ok(response));
         }
 
-        [HttpPost("delete")]
+        [HttpDelete]
         [EnableCors("AllowOrigin")]
         [Authorize]
         public async Task<ActionResult<ApiResponse<SaveInfoResponseDTO<SavedIDRequestDTO>>>> DeleteIDSave([FromBody] Guid SaveId)
@@ -83,11 +83,11 @@ namespace Server.Controllers
                 _mapper.Map<SaveInfoResponseDTO<SavedIDRequestDTO>>(deletedSave), "Deletion successful"));
         }
 
-        [HttpPost("create")]
+        [HttpPost]
         [EnableCors("AllowOrigin")]
         [Authorize]
         public async Task<ActionResult<ApiResponse<SaveInfoResponseDTO<SavedIDRequestDTO>>>> CreateNewIDSave(
-            [FromForm] List<IFormFile> skillImages, [FromForm] int[] imageIndex,[FromForm] IFormFile? thumbnailImage,[FromForm] IFormFile? splashArtImg,[FromForm] IFormFile? sinnerIcon)
+            [FromForm] SaveInfoFilesRequestDTO files)
         {
             var sub = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
             if (!Guid.TryParse(sub, out var userId))
@@ -101,23 +101,17 @@ namespace Server.Controllers
                 ?? throw new BadRequestException("Save data is not formatted correctly");
             saveIDInfo.UserId = userId;
 
-            var newSavedInfo = await _savedInfoService.CreateSavedInfo(saveIDInfo, new SaveInfoFilesRequestDTO()
-            {
-                SkillImages = skillImages.Select((image, idx) => new SkillImageEntry { Image = image, Index = imageIndex[idx] }).ToList(),
-                ThumbnailImage = thumbnailImage,
-                SplashArtImg = splashArtImg,
-                SinnerIcon = sinnerIcon
-            });
+            var newSavedInfo = await _savedInfoService.CreateSavedInfo(saveIDInfo, files);
 
             return Ok(ApiResponse<SaveInfoResponseDTO<SavedIDRequestDTO>>.Ok(
                 _mapper.Map<SaveInfoResponseDTO<SavedIDRequestDTO>>(newSavedInfo), "New save file created successfully"));
         }
 
-        [HttpPost("update")]
+        [HttpPut]
         [EnableCors("AllowOrigin")]
         [Authorize]
         public async Task<ActionResult<ApiResponse<SaveInfoResponseDTO<SavedIDRequestDTO>>>> UpdateSave(
-            [FromForm] List<IFormFile> skillImages, [FromForm] int[] imageIndex,[FromForm] IFormFile? thumbnailImage,[FromForm] IFormFile? splashArtImg,[FromForm] IFormFile? sinnerIcon)
+            [FromForm] SaveInfoFilesRequestDTO files)
         {
             var sub = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
             if (!Guid.TryParse(sub, out var userId))
@@ -137,13 +131,7 @@ namespace Server.Controllers
             var authResult = await _authorizationService.AuthorizeAsync(User, new OwnedResource(updatingSave.UserId), "SameUser");
             if (!authResult.Succeeded) throw new ForbiddenException("You do not own this resource.");
 
-            var newSavedInfo = await _savedInfoService.UpdateSavedInfo(saveIDInfo, new SaveInfoFilesRequestDTO()
-            {
-                SkillImages = skillImages.Select((image, idx) => new SkillImageEntry { Image = image, Index = imageIndex[idx] }).ToList(),
-                ThumbnailImage = thumbnailImage,
-                SplashArtImg = splashArtImg,
-                SinnerIcon = sinnerIcon
-            }) ?? throw new NotFoundException("Cannot update save");
+            var newSavedInfo = await _savedInfoService.UpdateSavedInfo(saveIDInfo, files) ?? throw new NotFoundException("Cannot update save");
 
             return Ok(ApiResponse<SaveInfoResponseDTO<SavedIDRequestDTO>>.Ok(
                 _mapper.Map<SaveInfoResponseDTO<SavedIDRequestDTO>>(newSavedInfo), "Save has been updated"));

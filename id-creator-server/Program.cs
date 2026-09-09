@@ -95,20 +95,20 @@ builder.Services.AddScoped<ISavedInfoRepository<SavedEGOInfo,SavedEgo>,SavedEGOI
 builder.Services.AddScoped<IPostRepository,PostRepository>();
 builder.Services.AddScoped<ICommentRepository,CommentRepository>();
 builder.Services.AddScoped<IPostViewRepository,PostViewRepository>();
-builder.Services.AddTransient<IJwtTokenService, JwtTokenService>();
-builder.Services.AddTransient<IUserService,UserService>();
-builder.Services.AddTransient<IOAuthService<GoogleJsonWebSignature.Payload>,GoogleOAuthService>();
-builder.Services.AddTransient<ISessionService,SessionService>();
-builder.Services.AddTransient<ICookieSessionService,CookieSessionService>();
+builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
+builder.Services.AddScoped<IUserService,UserService>();
+builder.Services.AddScoped<IOAuthService<GoogleJsonWebSignature.Payload>,GoogleOAuthService>();
+builder.Services.AddScoped<ISessionService,SessionService>();
+builder.Services.AddScoped<ICookieSessionService,CookieSessionService>();
 builder.Services.AddSingleton<IUploadService,AWSS3Service>();
 builder.Services.AddSingleton<IDeleteService,AWSS3Service>();
 builder.Services.AddSingleton<IAuthorizationHandler,SameUserAuthorizationHandler>();
-builder.Services.AddTransient<IImageObjService,ImageObjService>();
-builder.Services.AddTransient<ISavedInfoService<SavedIDInfo>,SavedIDInfoService>();
-builder.Services.AddTransient<ISavedInfoService<SavedEGOInfo>,SavedEGOInfoService>();
-builder.Services.AddTransient<IPostService,PostService>();
-builder.Services.AddTransient<ICommentService,CommentService>();
-builder.Services.AddTransient<IPostViewService,PostViewService>();
+builder.Services.AddScoped<IImageObjService,ImageObjService>();
+builder.Services.AddScoped<ISavedInfoService<SavedIDInfo>,SavedIDInfoService>();
+builder.Services.AddScoped<ISavedInfoService<SavedEGOInfo>,SavedEGOInfoService>();
+builder.Services.AddScoped<IPostService,PostService>();
+builder.Services.AddScoped<ICommentService,CommentService>();
+builder.Services.AddScoped<IPostViewService,PostViewService>();
 builder.Services.AddHostedService<BackgroundHostedService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddLogging();
@@ -139,11 +139,8 @@ if(!env.ListenOn.IsNullOrEmpty())builder.WebHost.UseUrls(env.ListenOn??"");
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseExceptionHandler();
 

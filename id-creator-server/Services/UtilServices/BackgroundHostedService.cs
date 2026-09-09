@@ -5,11 +5,10 @@ using Server.Interface.ServiceInterface.SessionInterface;
 
 namespace Server.Services.UtilServices
 {
-    public class BackgroundHostedService(IServiceProvider services, ILogger logger) : BackgroundService
+    public class BackgroundHostedService(IServiceProvider services) : BackgroundService
     {
         private readonly IServiceProvider _services = services;
         private readonly TimeSpan _period = TimeSpan.FromMinutes(30);
-        private readonly ILogger _logger = logger;
 
         public async Task DoWork()
         {
@@ -28,9 +27,8 @@ namespace Server.Services.UtilServices
                 {
                     await DoWork();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    _logger.LogError(ex, "Error occurred while executing 30-minute job.");
                 }
             }
         }

@@ -4,7 +4,7 @@ using Server.Models;
 
 namespace Server.Repositories
 {
-    public class SavedIdRepository(ServerDbContext ctx) : Repository<SavedId>(ctx), ISavedIdRepository
+    public class SavedIdRepository(ServerDbContext ctx) : Repository<SavedId>(ctx)
     {
     }
 }
