@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Server.Util.Enums;
 
 namespace Server.Models
 {
@@ -8,6 +9,7 @@ namespace Server.Models
     {
         public Guid Id { get; set; }
         public string Url { get; set; } = "";
+        public AssetStatus Status { get; set; } = AssetStatus.Uploaded;
         public DateTime LastUpdated { get; set; } = DateTime.Now;
     }
 }

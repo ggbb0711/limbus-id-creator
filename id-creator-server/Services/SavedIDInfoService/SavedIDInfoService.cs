@@ -14,26 +14,8 @@ namespace Server.Services.SavedInfoService
         private readonly RabbitMQUploadingImagePublisher _publisher = publisher;
         public async Task<SavedIDInfo> CreateSavedInfo(SavedIDInfo newSave, SaveInfoFilesRequestDTO files)
         {
-            var uploadingImages= await PopulateImageField(newSave, files);
-            if(Uri.TryCreate(newSave.ImageAttach.Url,UriKind.Absolute, out _)) uploadingImages.Add(newSave.ImageAttach);
-            if(Uri.TryCreate(newSave.SavedId.SplashArt.Url,UriKind.Absolute, out _)) uploadingImages.Add(newSave.SavedId.SplashArt);
-            if(Uri.TryCreate(newSave.SavedId.SinnerIcon.Url,UriKind.Absolute, out _)) uploadingImages.Add(newSave.SavedId.SinnerIcon);
-            foreach (var offenseSkill in newSave.SavedId.Skill.OffenseSkills)
-            {
-                if(Uri.TryCreate(offenseSkill.ImageAttach.Url,UriKind.Absolute, out _)) uploadingImages.Add(offenseSkill.ImageAttach);
-            }
-            foreach (var defenseSkill in newSave.SavedId.Skill.DefenseSkills)
-            {
-                if(Uri.TryCreate(defenseSkill.ImageAttach.Url,UriKind.Absolute, out _)) uploadingImages.Add(defenseSkill.ImageAttach);
-            }
-            foreach (var customEffect in newSave.SavedId.Skill.CustomEffects)
-            {
-                if(Uri.TryCreate(customEffect.ImageAttach.Url,UriKind.Absolute, out _)) uploadingImages.Add(customEffect.ImageAttach);
-            }
-
             await _saveRepository.CreateNewSave(newSave);
             var newCreatedSaved = await _saveRepository.GetSaved(newSave.Id);
-            UploadImageToRabbitMQ(uploadingImages);
             return newCreatedSaved;
         }
 
@@ -112,7 +94,7 @@ namespace Server.Services.SavedInfoService
                 }
             }
 
-           for (int i = 0 ;i<savedSkill.DefenseSkills.Count;i++)
+            for (int i = 0 ;i<savedSkill.DefenseSkills.Count;i++)
             {
                 var skill = savedSkill.DefenseSkills.ElementAt(i);
                 var oldSkill = oldSavedSkill.DefenseSkills.Where(oldSkill =>oldSkill.Id.Equals(skill.Id)).FirstOrDefault();
@@ -163,9 +145,9 @@ namespace Server.Services.SavedInfoService
         {
             List<Task> tasks = [];
             List<ImageObj> imageObjs = [];
-            var splashArt = savedInfo.SavedId?.SplashArt;
-            var sinnerIconImgObj = savedInfo.SavedId?.SinnerIcon;
-            var savedSkill = savedInfo.SavedId?.Skill;
+            var splashArt = savedInfo.SavedId.SplashArt;
+            var sinnerIconImgObj = savedInfo.SavedId.SinnerIcon;
+            var savedSkill = savedInfo.SavedId.Skill;
 
             if(files.ThumbnailImage!=null)
             {
@@ -213,7 +195,7 @@ namespace Server.Services.SavedInfoService
                 }));
             }
 
-            await Task.WhenAll(tasks.ToArray());
+            await Task.WhenAll([.. tasks]);
             return imageObjs;
         }
 

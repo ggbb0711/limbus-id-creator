@@ -1,6 +1,3 @@
-using System.Text.Json.Serialization;
-using Newtonsoft.Json.Converters;
-
 namespace Server.Util.Enums
 {
     public enum SkillType
@@ -11,5 +8,10 @@ namespace Server.Util.Enums
     public enum PostSortOption
     {
         Newest, Title, MostViewed, MostCommented, Earliest, Latest
+    }
+
+    public enum AssetStatus
+    {
+        Pending, Uploaded, Deleted //Uploaded for backward compatibility and for situation where the url is blank
     }
 }

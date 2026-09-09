@@ -31,6 +31,7 @@ using Server.Services.SavedEGOInfoService;
 using Server.Services.SavedInfoService;
 using Server.Services.UtilServices;
 using Server.Util.Authorization;
+using Server.Util.Interceptors;
 using Server.Util.RabbitMQPublisher;
 
 
@@ -68,10 +69,12 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 builder.Services.AddSwaggerGen();
-if(env.Mode.Equals("Published")) builder.Services.AddDbContext<ServerDbContext>(options =>options.UseNpgsql(Environment.GetEnvironmentVariable("RemoteConnection"), builder =>
+if(env.Mode.Equals("Published")) builder.Services.AddDbContext<ServerDbContext>(options =>options.UseNpgsql(
+    Environment.GetEnvironmentVariable("RemoteConnection"), 
+    builder =>
     {
         builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
-    }));
+    }).AddInterceptors(new ImageInterceptor()));
 else builder.Services.AddDbContext<ServerDbContext>(options =>options.UseNpgsql(Environment.GetEnvironmentVariable("DefaultConnection")));
 builder.Services.Configure<ApiBehaviorOptions>(options=>
 {
@@ -109,7 +112,7 @@ builder.Services.AddScoped<ISavedInfoService<SavedEGOInfo>,SavedEGOInfoService>(
 builder.Services.AddScoped<IPostService,PostService>();
 builder.Services.AddScoped<ICommentService,CommentService>();
 builder.Services.AddScoped<IPostViewService,PostViewService>();
-builder.Services.AddHostedService<BackgroundHostedService>();
+builder.Services.AddHostedService<DeleteExpiredSessionsBackgroundService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddLogging();
 builder.Services.AddAuthentication()

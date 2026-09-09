@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using Server.Interface.Repositories;
 using Server.Interface.ServiceInterface.IPostService;
 using Server.Models;
@@ -26,9 +27,10 @@ namespace Server.Services.PostService
 
         public async Task<List<Post>> FindPosts(SearchPostOption option)
         {
+            Console.WriteLine(JsonConvert.SerializeObject(option));
             return [.. await postRepository.FindAsync(new RepositoryGetParams<Post>()
             {
-                Filter = p=>p.Title.Contains(option.Title, StringComparison.CurrentCultureIgnoreCase)
+                Filter = p=>(p.Title.Contains(option.Title) || p.Title.Contains(""))
                     &&(option.UserId == null||option.UserId == p.UserId)
                     &&(option.Tag.Count<1||option.Tag.All(t=>p.Tags.Select(t=>t.TagName).Contains(t)))
                     && !p.IsRemoved && p.IsActive,

@@ -1,11 +1,8 @@
-
-
-
 using Server.Interface.ServiceInterface.SessionInterface;
 
-namespace Server.Services.UtilServices
+namespace Server.Services.UtilServices.Background
 {
-    public class BackgroundHostedService(IServiceProvider services) : BackgroundService
+    public class DeleteExpiredSessionsBackgroundService(IServiceProvider services) : BackgroundService
     {
         private readonly IServiceProvider _services = services;
         private readonly TimeSpan _period = TimeSpan.FromMinutes(30);

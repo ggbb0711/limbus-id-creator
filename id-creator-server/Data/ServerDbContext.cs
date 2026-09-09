@@ -102,22 +102,6 @@ namespace Server.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
         }
-        
-        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            var deletedImages = ChangeTracker.Entries<ImageObj>()
-                .Where(e => e.State == EntityState.Deleted)
-                .Select(e => e.Entity);
-
-            foreach(var image in deletedImages)
-            {
-                using var scope = _services.CreateScope();
-                var rabbitMQDeletingImagePublisher = scope.ServiceProvider.GetRequiredService<RabbitMQDeletingImagePublisher>();
-                rabbitMQDeletingImagePublisher.PublishDeleteImage(image.Id.ToString());
-            }
-
-            return await base.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
-        }
         public required DbSet<User> Users { get; set; }
         public required DbSet<SavedSkill> SavedSkill { get; set; }
         public required DbSet<SavedIDInfo> SavedIDInfos { get; set; }

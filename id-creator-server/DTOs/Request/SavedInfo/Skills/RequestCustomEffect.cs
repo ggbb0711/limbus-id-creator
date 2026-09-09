@@ -6,6 +6,7 @@ namespace Server.DTOs.Request.SavedInfo.Skills
     {
         public string Name { get; set; } = "";
         public string CustomImg { get; set; } = "";
+        public Guid CustomImgId { get; set; } = Guid.NewGuid();
         public string EffectColor { get; set; } = "#F1F1F1";
         public string Effect { get; set; } = "";
         public bool IsCoinType { get; set; } = false;

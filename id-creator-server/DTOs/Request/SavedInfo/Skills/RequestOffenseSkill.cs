@@ -6,6 +6,6 @@ namespace Server.DTOs.Request.SavedInfo.Skills
         public int SkillAmt { get; set; } = 1;
         public int AtkWeight { get; set; } = 1;
         public string DamageType { get; set; } = "Slash";
-
+        
     }
 }

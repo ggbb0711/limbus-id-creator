@@ -1,12 +1,26 @@
 using Server.Interface.Repositories;
 using Server.Interface.ServiceInterface.ImageObjService;
 using Server.Models;
+using Server.Util.Enums;
 
 namespace Server.Services.ImageObjService
 {
     public class ImageObjService(IImageObjRepository imageObjRepository) : IImageObjService
     {
         private readonly IImageObjRepository _imageObjRepository = imageObjRepository;
+
+
+        public Task<List<ImageObj>> GetImagesByStatus(AssetStatus status)
+        {
+            return _imageObjRepository.GetAllImagesByStatus(status);
+        }
+
+        public async Task<ImageObj> DeleteImage(Guid id)
+        {
+            var image = await _imageObjRepository.GetByIdAsync(id);
+            await _imageObjRepository.RemoveAsync(image);
+            return image;
+        }
 
         public async Task<ImageObj?> UpdateImage(Guid Id, string newUrl, DateTime lastUpdated)
         {

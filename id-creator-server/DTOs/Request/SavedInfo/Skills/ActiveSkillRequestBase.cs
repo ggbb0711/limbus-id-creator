@@ -11,5 +11,6 @@ namespace Server.DTOs.Request.SavedInfo.Skills
         public string SkillEffect { get; set; } = "";
         public string SkillLabel { get; set; } = "SKILL";
         public string SkillFrame { get; set; } = "1";
+        public Guid SkillImageId { get; set; } = Guid.NewGuid();
     }
 }
