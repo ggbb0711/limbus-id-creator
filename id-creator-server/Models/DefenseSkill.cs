@@ -11,8 +11,8 @@ namespace Server.Models
     [PrimaryKey(nameof(Id),nameof(SavedSkillId))]
     public class DefenseSkill:ISkill,IImageAttach,ISkillIndex,ISkillType
     {
-        private ImageObj _imageAttach;
-        private ILazyLoader LazyLoader { get; set; }
+        private ImageObj? _imageAttach;
+        private ILazyLoader LazyLoader { get; set; } = null!;
 
         public DefenseSkill() { }
 
@@ -44,7 +44,7 @@ namespace Server.Models
         [Required]
         public virtual ImageObj ImageAttach
         {
-            get => LazyLoader.Load(this, ref _imageAttach);
+            get => LazyLoader.Load(this, ref _imageAttach)!;
             set => _imageAttach = value;
         }
 

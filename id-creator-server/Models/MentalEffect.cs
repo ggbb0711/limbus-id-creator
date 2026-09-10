@@ -13,7 +13,7 @@ namespace Server.Models
     [PrimaryKey(nameof(Id),nameof(SavedSkillId))]
     public class MentalEffect : ISkill,ISkillIndex,ISkillType
     {
-        private ILazyLoader LazyLoader { get; set; }
+        private ILazyLoader LazyLoader { get; set; } = null!;
 
         public MentalEffect() { }
 

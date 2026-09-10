@@ -10,8 +10,8 @@ namespace Server.Models
     [PrimaryKey(nameof(Id))]
     public class Comment
     {
-        private User _user;
-        private ILazyLoader LazyLoader { get; set; }
+        private User? _user;
+        private ILazyLoader LazyLoader { get; set; } = null!;
 
         public Comment() { }
 
@@ -28,7 +28,7 @@ namespace Server.Models
         public Guid UserId { get; set; }
         public virtual User User
         {
-            get => LazyLoader.Load(this, ref _user);
+            get => LazyLoader.Load(this, ref _user)!;
             set => _user = value;
         }
     }

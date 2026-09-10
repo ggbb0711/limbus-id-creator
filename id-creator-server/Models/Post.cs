@@ -7,10 +7,10 @@ namespace Server.Models
     [PrimaryKey(nameof(Id))]
     public class Post
     {
-        private ICollection<ImageObj> _imageAttaches = new List<ImageObj>();
-        private ICollection<Tag> _tags = new List<Tag>();
-        public User _user;
-        private ILazyLoader LazyLoader { get; set; }
+        private ICollection<ImageObj>? _imageAttaches = new List<ImageObj>();
+        private ICollection<Tag>? _tags = new List<Tag>();
+        private User? _user;
+        private ILazyLoader LazyLoader { get; set; } = null!;
 
         public Post() { }
 
@@ -39,7 +39,7 @@ namespace Server.Models
         public Guid UserId { get; set; }
         public virtual User User
         {
-            get => LazyLoader.Load(this, ref _user);
+            get => LazyLoader.Load(this, ref _user)!;
             set => _user = value;
         }
 

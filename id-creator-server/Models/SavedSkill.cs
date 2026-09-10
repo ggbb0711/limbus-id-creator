@@ -9,12 +9,12 @@ namespace Server.Models
     [PrimaryKey(nameof(Id))]
     public class SavedSkill
     {
-        private ICollection<OffenseSkill> _offenseSkills = [];
-        private ICollection<DefenseSkill> _defenseSkills = [];
-        private ICollection<PassiveSkill> _passiveSkills = [];
-        private ICollection<MentalEffect> _mentalEffects = [];
-        private ICollection<CustomEffect> _customEffects = [];
-        private ILazyLoader LazyLoader { get; set; }
+        private ICollection<OffenseSkill>? _offenseSkills = [];
+        private ICollection<DefenseSkill>? _defenseSkills = [];
+        private ICollection<PassiveSkill>? _passiveSkills = [];
+        private ICollection<MentalEffect>? _mentalEffects = [];
+        private ICollection<CustomEffect>? _customEffects = [];
+        private ILazyLoader LazyLoader { get; set; } = null!;
 
         public SavedSkill() { }
 

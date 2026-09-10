@@ -10,8 +10,8 @@ namespace Server.Models
     [PrimaryKey(nameof(Id))]
     public class User
     {
-        private ImageObj _userIcon;
-        private ILazyLoader LazyLoader { get; set;}
+        private ImageObj? _userIcon;
+        private ILazyLoader LazyLoader { get; set;} = null!;
 
         public User(){}
 
@@ -27,7 +27,7 @@ namespace Server.Models
         [ForeignKey(nameof(ImageObj))]
         public Guid UserIconId {get; set;}
         [Required]
-        public ImageObj UserIcon {get=>LazyLoader.Load(this,ref _userIcon); set=>_userIcon = value;}
+        public ImageObj UserIcon {get=>LazyLoader.Load(this,ref _userIcon)!; set=>_userIcon = value;}
         public DateTime CreatedAt{get; set;} = DateTime.Now;
         public bool IsActive { get; set; } = true;
         public bool IsRemoved { get; set; } = false;

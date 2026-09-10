@@ -9,8 +9,8 @@ namespace Server.Models
     [PrimaryKey(nameof(Id))]
     public class Session
     {
-        private User _user;
-        private ILazyLoader LazyLoader { get; set; }
+        private User? _user;
+        private ILazyLoader LazyLoader { get; set; } = null!;
 
         public Session() { }
 
@@ -28,7 +28,7 @@ namespace Server.Models
 
         public virtual User User
         {
-            get => LazyLoader.Load(this, ref _user);
+            get => LazyLoader.Load(this, ref _user)!;
             set => _user = value;
         }
     }

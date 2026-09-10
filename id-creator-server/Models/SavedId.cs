@@ -11,10 +11,10 @@ namespace Server.Models
     [PrimaryKey(nameof(Id))]
     public class SavedId : ISavedPayload
     {
-        private ImageObj _splashArt;
-        private ImageObj _sinnerIcon;
-        private SavedSkill _skill;
-        private ILazyLoader LazyLoader { get; set; }
+        private ImageObj? _splashArt;
+        private ImageObj? _sinnerIcon;
+        private SavedSkill? _skill;
+        private ILazyLoader LazyLoader { get; set; } = null!;
 
         public SavedId() { }
 
@@ -35,7 +35,7 @@ namespace Server.Models
         [Required]
         public virtual ImageObj SplashArt
         {
-            get => LazyLoader.Load(this, ref _splashArt);
+            get => LazyLoader.Load(this, ref _splashArt)!;
             set => _splashArt = value;
         }
 
@@ -56,7 +56,7 @@ namespace Server.Models
         [Required]
         public virtual ImageObj SinnerIcon
         {
-            get => LazyLoader.Load(this, ref _sinnerIcon);
+            get => LazyLoader.Load(this, ref _sinnerIcon)!;
             set => _sinnerIcon = value;
         }
 
@@ -73,7 +73,7 @@ namespace Server.Models
         [Required]
         public virtual SavedSkill Skill
         {
-            get => LazyLoader.Load(this, ref _skill);
+            get => LazyLoader.Load(this, ref _skill)!;
             set => _skill = value;
         }
     }

@@ -13,9 +13,9 @@ namespace Server.Models
     [PrimaryKey(nameof(Id))]
     public class SavedEGOInfo : ISavedEntry<SavedEgo>
     {
-        private ImageObj _imageAttach;
-        private User _user;
-        private ILazyLoader LazyLoader { get; set; }
+        private ImageObj? _imageAttach;
+        private User? _user;
+        private ILazyLoader LazyLoader { get; set; } = null!;
 
         public SavedEGOInfo() { }
 
@@ -34,7 +34,7 @@ namespace Server.Models
         [Required]
         public virtual ImageObj ImageAttach
         {
-            get => LazyLoader.Load(this, ref _imageAttach);
+            get => LazyLoader.Load(this, ref _imageAttach)!;
             set => _imageAttach = value;
         }
 
@@ -44,11 +44,11 @@ namespace Server.Models
 
         public virtual User User
         {
-            get => LazyLoader.Load(this, ref _user);
+            get => LazyLoader.Load(this, ref _user)!;
             set => _user = value;
         }
         [ForeignKey(nameof(Saved))]
         public Guid SavedEgoKey { get; set;}
-        public SavedEgo Saved { get; set; }
+        public SavedEgo Saved { get; set; } = null!;
     }
 }

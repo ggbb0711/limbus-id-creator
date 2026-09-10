@@ -9,8 +9,8 @@ namespace Server.Models
     [PrimaryKey(nameof(Id))]
     public class Tag
     {
-        private Post _posts;
-        private ILazyLoader LazyLoader { get; set; }
+        private Post? _posts;
+        private ILazyLoader LazyLoader { get; set; } = null!;
 
         public Tag() { }
 
@@ -23,7 +23,7 @@ namespace Server.Models
 
         public virtual Post Posts
         {
-            get => LazyLoader.Load(this, ref _posts);
+            get => LazyLoader.Load(this, ref _posts)!;
             set => _posts = value;
         }
 
