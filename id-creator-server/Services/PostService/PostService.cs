@@ -27,7 +27,6 @@ namespace Server.Services.PostService
 
         public async Task<List<Post>> FindPosts(SearchPostOption option)
         {
-            Console.WriteLine(JsonConvert.SerializeObject(option));
             return [.. await postRepository.FindAsync(new RepositoryGetParams<Post>()
             {
                 Filter = p=>(p.Title.Contains(option.Title) || p.Title.Contains(""))

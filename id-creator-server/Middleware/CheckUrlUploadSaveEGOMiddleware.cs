@@ -1,11 +1,9 @@
 using System.Net;
-using System.Text.Json;
 using AutoMapper;
 using Newtonsoft.Json;
 using Server.DTOs.Requests.SavedInfo;
 using Server.DTOs.Requests.SavedInfo.SavedEgo;
 using Server.Models;
-using Server.Services;
 using Server.Util;
 
 namespace Server.Middleware
@@ -38,8 +36,8 @@ namespace Server.Middleware
                 }
 
                 var saveIDInfo = mapper.Map<SavedEGOInfo>(saveIDInfoRequestDTO);
-                var splashArtUrl = saveIDInfo.SavedEgo.SplashArt.Url;
-                var sinnerIconUrl = saveIDInfo.SavedEgo.SinnerIcon.Url;
+                var splashArtUrl = saveIDInfo.Saved.SplashArt.Url;
+                var sinnerIconUrl = saveIDInfo.Saved.SinnerIcon.Url;
 
                 if(!await FileHelper.CheckUrlSize(splashArtUrl,4000000))
                 {
@@ -53,7 +51,7 @@ namespace Server.Middleware
                     return;
                 }
 
-                foreach(var offenseSkill in saveIDInfo.SavedEgo.Skill.OffenseSkills)
+                foreach(var offenseSkill in saveIDInfo.Saved.Skill.OffenseSkills)
                 {
                     if(!await FileHelper.CheckUrlSize(offenseSkill.ImageAttach.Url,100000))
                     {
@@ -62,7 +60,7 @@ namespace Server.Middleware
                     }
                 }
 
-                foreach(var defenseSkill in saveIDInfo.SavedEgo.Skill.DefenseSkills)
+                foreach(var defenseSkill in saveIDInfo.Saved.Skill.DefenseSkills)
                 {
                     if(!await FileHelper.CheckUrlSize(defenseSkill.ImageAttach.Url,100000))
                     {
@@ -71,7 +69,7 @@ namespace Server.Middleware
                     }
                 }
 
-                foreach(var customEffect in saveIDInfo.SavedEgo.Skill.CustomEffects)
+                foreach(var customEffect in saveIDInfo.Saved.Skill.CustomEffects)
                 {
                     if(!await FileHelper.CheckUrlSize(customEffect.ImageAttach.Url,100000))
                     {

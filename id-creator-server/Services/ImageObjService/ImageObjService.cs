@@ -15,10 +15,10 @@ namespace Server.Services.ImageObjService
             return _imageObjRepository.GetAllImagesByStatus(status);
         }
 
-        public async Task<ImageObj> DeleteImage(Guid id)
+        public async Task<ImageObj?> DeleteImage(Guid id)
         {
             var image = await _imageObjRepository.GetByIdAsync(id);
-            await _imageObjRepository.RemoveAsync(image);
+            if(image != null)await _imageObjRepository.RemoveAsync(image);
             return image;
         }
 

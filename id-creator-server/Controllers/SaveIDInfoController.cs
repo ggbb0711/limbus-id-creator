@@ -19,9 +19,9 @@ namespace Server.Controllers
     [ApiController]
     [Route("API/[controller]")]
     [EnableCors("AllowOrigin")]
-    public class SaveIDInfoController(ISavedInfoService<SavedIDInfo> savedInfoService, IAuthorizationService authorizationService, IMapper map): Controller
+    public class SaveIDInfoController(ISavedInfoService<SavedIDInfo, SavedId> savedInfoService, IAuthorizationService authorizationService, IMapper map): Controller
     {
-        private readonly ISavedInfoService<SavedIDInfo> _savedInfoService = savedInfoService;
+        private readonly ISavedInfoService<SavedIDInfo, SavedId> _savedInfoService = savedInfoService;
         private readonly IAuthorizationService _authorizationService = authorizationService;
         private readonly IMapper _mapper = map;
 

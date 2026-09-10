@@ -5,12 +5,13 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Server.Interface.UtilInterfaces;
 
 namespace Server.Models
 {
     [Index(nameof(Id))]
     [PrimaryKey(nameof(Id))]
-    public class SavedIDInfo
+    public class SavedIDInfo : ISavedEntry<SavedId>
     {
         private ImageObj _imageAttach;
         private User _user;
@@ -47,9 +48,9 @@ namespace Server.Models
             set => _user = value;
         }
 
-        [ForeignKey(nameof(SavedId))]
+        [ForeignKey(nameof(Saved))]
         public Guid SavedIdKey { get; set; }
 
-        public SavedId SavedId { get; set; }
+        public SavedId Saved { get; set; }
     }
 }

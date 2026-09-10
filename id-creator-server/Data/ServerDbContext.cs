@@ -78,13 +78,13 @@ namespace Server.Data
             //     .HasForeignKey<CustomEffect>(a => a.ImageAttachKey)
             //     .OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<SavedIDInfo>()
-                .HasOne(s=>s.SavedId)
+                .HasOne(s=>s.Saved)
                 .WithOne()
                 .HasForeignKey<SavedId>(s=>s.Id)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<SavedEGOInfo>()
-                .HasOne(s=>s.SavedEgo)
+                .HasOne(s=>s.Saved)
                 .WithOne()
                 .HasForeignKey<SavedEgo>(s=>s.Id)
                 .OnDelete(DeleteBehavior.Cascade);

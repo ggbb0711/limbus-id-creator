@@ -5,12 +5,13 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Server.Interface.UtilInterfaces;
 
 namespace Server.Models
 {
     [Index(nameof(Id))]
     [PrimaryKey(nameof(Id))]
-    public class SavedEGOInfo
+    public class SavedEGOInfo : ISavedEntry<SavedEgo>
     {
         private ImageObj _imageAttach;
         private User _user;
@@ -46,8 +47,8 @@ namespace Server.Models
             get => LazyLoader.Load(this, ref _user);
             set => _user = value;
         }
-        [ForeignKey(nameof(SavedEgo))]
+        [ForeignKey(nameof(Saved))]
         public Guid SavedEgoKey { get; set;}
-        public SavedEgo SavedEgo { get; set; }
+        public SavedEgo Saved { get; set; }
     }
 }

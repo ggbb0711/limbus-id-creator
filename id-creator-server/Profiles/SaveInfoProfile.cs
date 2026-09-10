@@ -19,15 +19,15 @@ namespace Server.Profiles
                     Id = src.Id,
                     Url=src.PreviewImg,
                 }))
-                .ForMember(dest => dest.SavedEgo, opt => opt.MapFrom(src => src.SaveInfo))
+                .ForMember(dest => dest.Saved, opt => opt.MapFrom(src => src.SaveInfo))
                 .ForMember(dest => dest.SavedEgoKey, opt => opt.MapFrom(src=>src.Id))
                 .ForMember(dest => dest.UserId, opt => opt.Ignore())
                 .ForMember(dest => dest.User, opt => opt.Ignore())
                 .AfterMap((s,d,ctx)=>
                 {
-                    d.SavedEgo.Id = s.Id;
-                    d.SavedEgo.SavedSkillId = s.Id;
-                    d.SavedEgo.Skill = MapNewSkill(s.Id, s.SaveInfo.SkillDetails, ctx.Mapper);
+                    d.Saved.Id = s.Id;
+                    d.Saved.SavedSkillId = s.Id;
+                    d.Saved.Skill = MapNewSkill(s.Id, s.SaveInfo.SkillDetails, ctx.Mapper);
                 });
 
             CreateMap<SavedInfoRequestDTO<SavedIDRequestDTO>, SavedIDInfo>()
@@ -36,15 +36,15 @@ namespace Server.Profiles
                     Id = src.Id,
                     Url=src.PreviewImg,
                 }))
-                .ForMember(dest => dest.SavedId, opt => opt.MapFrom(src => src.SaveInfo))
+                .ForMember(dest => dest.Saved, opt => opt.MapFrom(src => src.SaveInfo))
                 .ForMember(dest => dest.SavedIdKey, opt => opt.MapFrom(src=>src.Id))
                 .ForMember(dest => dest.UserId, opt => opt.Ignore())
                 .ForMember(dest => dest.User, opt => opt.Ignore())
                 .AfterMap((s,d,ctx)=>
                 {
-                    d.SavedId.Id = s.Id;
-                    d.SavedId.SavedSkillId = s.Id;
-                    d.SavedId.Skill = MapNewSkill(s.Id, s.SaveInfo.SkillDetails,ctx.Mapper);
+                    d.Saved.Id = s.Id;
+                    d.Saved.SavedSkillId = s.Id;
+                    d.Saved.Skill = MapNewSkill(s.Id, s.SaveInfo.SkillDetails,ctx.Mapper);
                 });
 
             CreateMap<SavedEgoRequestDTO, SavedEgo>()
@@ -85,11 +85,11 @@ namespace Server.Profiles
 
             CreateMap<SavedEGOInfo,SaveInfoResponseDTO<SavedEgoRequestDTO>>()
                 .ForMember(dest=>dest.PreviewImg,opt=>opt.MapFrom(src=>src.ImageAttach.Url))
-                .ForMember(dest=>dest.SaveInfo,opt=>opt.MapFrom(src=>src.SavedEgo));
+                .ForMember(dest=>dest.SaveInfo,opt=>opt.MapFrom(src=>src.Saved));
 
             CreateMap<SavedIDInfo,SaveInfoResponseDTO<SavedIDRequestDTO>>()
                 .ForMember(dest=>dest.PreviewImg,opt=>opt.MapFrom(src=>src.ImageAttach.Url))
-                .ForMember(dest=>dest.SaveInfo,opt=>opt.MapFrom(src=>src.SavedId));
+                .ForMember(dest=>dest.SaveInfo,opt=>opt.MapFrom(src=>src.Saved));
 
             CreateMap<RequestOffenseSkill,OffenseSkill>()
                 .ForMember(dest=>dest.Id, opt=>opt.MapFrom(src=>src.InputId))

@@ -4,11 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Server.Interface.UtilInterfaces;
 
 namespace Server.Models
 {
     [PrimaryKey(nameof(Id))]
-    public class SavedId
+    public class SavedId : ISavedPayload
     {
         private ImageObj _splashArt;
         private ImageObj _sinnerIcon;

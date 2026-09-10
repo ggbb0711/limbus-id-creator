@@ -1,51 +1,64 @@
 using Server.DTOs.Requests.SavedInfo;
 using Server.Interface.Repositories;
 using Server.Interface.ServiceInterface.SavedInfoService;
+using Server.Interface.UtilInterfaces;
 using Server.Models;
 using Server.Util;
 using Server.Util.Obj;
-using Server.Util.RabbitMQPublisher;
 
 namespace Server.Services.SavedInfoService
 {
-    public class SavedIDInfoService(ISavedInfoRepository<SavedIDInfo,SavedId> saveRepository, RabbitMQUploadingImagePublisher publisher) : ISavedInfoService<SavedIDInfo>
+    public class SavedInfoService<TEntry, TPayload>(
+        ISaveInfoRepository<TEntry,TPayload> saveRepository,
+        ISavedSkillRepository savedSkillRepository
+    ) : ISavedInfoService<TEntry,TPayload>
+        where TEntry : class, ISavedEntry<TPayload>
+        where TPayload : class, ISavedPayload
     {
-        private readonly ISavedInfoRepository<SavedIDInfo,SavedId> _saveRepository = saveRepository;
-        private readonly RabbitMQUploadingImagePublisher _publisher = publisher;
-        public async Task<SavedIDInfo> CreateSavedInfo(SavedIDInfo newSave, SaveInfoFilesRequestDTO files)
+        private readonly ISaveInfoRepository<TEntry,TPayload> _saveRepository = saveRepository;
+        private readonly ISavedSkillRepository _savedSkillRepository = savedSkillRepository;
+        public async Task<TEntry> CreateSavedInfo(TEntry newSave, SaveInfoFilesRequestDTO files)
         {
             await PopulateImageField(newSave, files);
-            await _saveRepository.CreateNewSave(newSave);
-            var newCreatedSaved = await _saveRepository.GetSaved(newSave.Id);
+            var newCreatedSaved = await _saveRepository.AddAsync(newSave);
+            await _saveRepository.SaveChangeAsync();
             return newCreatedSaved;
         }
 
-        public async Task<SavedIDInfo?> DeleteSavedInfo(Guid Id)
+        public async Task<TEntry?> DeleteSavedInfo(Guid Id)
         {
-            return await _saveRepository.DeleteSaved(Id);
-        }
-
-        public async Task<SavedIDInfo?> FindSavedInfoById(Guid Id,bool includeSkill=false)
-        {
-            return await _saveRepository.GetSaved(Id,includeSkill);
-        }
-
-        public async Task<List<SavedIDInfo>> FindSavedInfos(SearchSaveParams option)
-        {
-            return await _saveRepository.GetMultiSaved(option);
-        }
-
-        public async Task<SavedIDInfo?> UpdateSavedInfo(SavedIDInfo newSave,SaveInfoFilesRequestDTO files)
-        {
-            var uploadingImages = await PopulateImageField(newSave,files);
-            var oldSave = await _saveRepository.GetSaved(newSave.Id,true);
-            if(oldSave==null||!oldSave.UserId.Equals(newSave.UserId)) return null;
-            //Change the id of the newSave to fit with the old save
-            newSave.ImageAttach.Id = oldSave.ImageAttach.Id;
-            if(!oldSave.ImageAttach.Url.Equals(newSave.ImageAttach.Url) && !uploadingImages.Contains(newSave.ImageAttach))
+            var deleteSave = await _saveRepository.GetByIdAsync(Id);
+            if(deleteSave != null)
             {
-                uploadingImages.Add(newSave.ImageAttach);
+                await _saveRepository.RemoveAsync(deleteSave);
+                await _saveRepository.SaveChangeAsync();
             }
+            return deleteSave;
+        }
+
+        public async Task<TEntry?> FindSavedInfoById(Guid Id,bool includeSkill=false)
+        {
+            if(includeSkill) return await _saveRepository.GetByIdAsyncIncludingSaved(Id);
+            return await _saveRepository.GetByIdAsync(Id);
+        }
+
+        public async Task<List<TEntry>> FindSavedInfos(SearchSaveParams option)
+        {
+            return [.. await _saveRepository.FindAsync(new RepositoryGetParams<TEntry>()
+            {
+                Filter = s => s.Name.Contains(option.Name) && s.UserId == option.UserId,
+                OrderBy = q => q.OrderByDescending(s=>s.SaveTime),
+                Skip = option.Page * option.Limit,
+                Take = option.Limit,
+            })];
+        }
+
+        public async Task<TEntry?> UpdateSavedInfo(TEntry newSave,SaveInfoFilesRequestDTO files)
+        {
+            await PopulateImageField(newSave,files);
+            var oldSave = await _saveRepository.GetByIdAsyncIncludingSaved(newSave.Id);
+            if(oldSave==null||!oldSave.UserId.Equals(newSave.UserId)) return null;
+            newSave.ImageAttach.Id = oldSave.ImageAttach.Id;
             
             //Change splashArt, sinnerIcon and savedSkill
             //TODO Implement a method to delete old images
@@ -55,30 +68,23 @@ namespace Server.Services.SavedInfoService
             ImageObj oldSinnerIcon;
             SavedSkill savedSkill;
             SavedSkill oldSavedSkill;
-            if(oldSave.SavedId==null) return null;
-            splashArt = newSave.SavedId.SplashArt;
-            oldSplashArt = oldSave.SavedId.SplashArt;
+            if(oldSave.Saved==null) return null;
+            splashArt = newSave.Saved.SplashArt;
+            oldSplashArt = oldSave.Saved.SplashArt;
 
-            sinnerIcon = newSave.SavedId.SinnerIcon;
-            oldSinnerIcon = oldSave.SavedId.SinnerIcon;
+            sinnerIcon = newSave.Saved.SinnerIcon;
+            oldSinnerIcon = oldSave.Saved.SinnerIcon;
 
             //Transfering the old imageId of splashArt/sinnerIcon to the new ones
-            savedSkill = newSave.SavedId.Skill;
-            oldSavedSkill = oldSave.SavedId.Skill;
+            savedSkill = newSave.Saved.Skill;
+            oldSavedSkill = oldSave.Saved.Skill;
 
 
             splashArt.Id = oldSplashArt.Id;
-            newSave.SavedId.SplashArtId = oldSplashArt.Id;
+            newSave.Saved.SplashArtId = oldSplashArt.Id;
             sinnerIcon.Id = oldSinnerIcon.Id;
-            newSave.SavedId.SinnerIconId = oldSinnerIcon.Id;
-            if(!oldSplashArt.Url.Equals(splashArt.Url))
-            {
-                uploadingImages.Add(splashArt);
-            }
-            if(!oldSinnerIcon.Url.Equals(sinnerIcon.Url))
-            {
-                uploadingImages.Add(sinnerIcon);
-            }
+            newSave.Saved.SinnerIconId = oldSinnerIcon.Id;
+
             //Transfering all the old imageId of the skills to the new ones
             for (int i = 0 ;i<savedSkill.OffenseSkills.Count;i++)
             {
@@ -88,10 +94,6 @@ namespace Server.Services.SavedInfoService
                 {
                     skill.ImageAttach.Id = oldSkill.ImageAttach.Id;
                     skill.ImageAttachId = oldSkill.ImageAttachId;
-                    if(!skill.ImageAttach.Url.Equals(oldSkill.ImageAttach.Url))
-                    {
-                        uploadingImages.Add(skill.ImageAttach);
-                    }
                 }
             }
 
@@ -103,10 +105,6 @@ namespace Server.Services.SavedInfoService
                 {
                     skill.ImageAttach.Id = oldSkill.ImageAttach.Id;
                     skill.ImageAttachId = oldSkill.ImageAttachId;
-                    if(!skill.ImageAttach.Url.Equals(oldSkill.ImageAttach.Url))
-                    {
-                        uploadingImages.Add(skill.ImageAttach);
-                    }
                 }
             }
 
@@ -118,37 +116,27 @@ namespace Server.Services.SavedInfoService
                 {
                     skill.ImageAttach.Id = oldSkill.ImageAttach.Id;
                     skill.ImageAttachId = oldSkill.ImageAttachId;
-                    if(!skill.ImageAttach.Url.Equals(oldSkill.ImageAttach.Url))
-                    {
-                        uploadingImages.Add(skill.ImageAttach);
-                    }
                 }
             }
 
             //Update the save
-            var updatedSave = await _saveRepository.UpdateSaved(new UpdateSaveParams<SavedId>()
-            {
-                UpdateId = newSave.Id,
-                Name = newSave.Name,
-                SaveTime = newSave.SaveTime,
-                ImageAttach = newSave.ImageAttach.Url,
-                Saved = newSave.SavedId,
-            });
+            await _saveRepository.UpdateAsync(newSave);
+            await _savedSkillRepository.UpdateSavedSkill(newSave.Saved.Skill);
+            await _saveRepository.SaveChangeAsync();
+            var updatedSave = await _saveRepository.GetByIdAsync(newSave.Id);
             if(updatedSave!=null) newSave.ImageAttach.LastUpdated = updatedSave.ImageAttach.LastUpdated;
-            UploadImageToRabbitMQ(uploadingImages);
-
-            return await _saveRepository.GetSaved(newSave.Id);
+            return updatedSave;
         }
 
 
         //Add in placheholder base64 string for the images
-        private static async Task<List<ImageObj>> PopulateImageField(SavedIDInfo savedInfo, SaveInfoFilesRequestDTO files)
+        private static async Task<List<ImageObj>> PopulateImageField(TEntry savedInfo, SaveInfoFilesRequestDTO files)
         {
             List<Task> tasks = [];
             List<ImageObj> imageObjs = [];
-            var splashArt = savedInfo.SavedId.SplashArt;
-            var sinnerIconImgObj = savedInfo.SavedId.SinnerIcon;
-            var savedSkill = savedInfo.SavedId.Skill;
+            var splashArt = savedInfo.Saved.SplashArt;
+            var sinnerIconImgObj = savedInfo.Saved.SinnerIcon;
+            var savedSkill = savedInfo.Saved.Skill;
 
             if(files.ThumbnailImage!=null)
             {
@@ -199,15 +187,5 @@ namespace Server.Services.SavedInfoService
             await Task.WhenAll([.. tasks]);
             return imageObjs;
         }
-
-        private void UploadImageToRabbitMQ(List<ImageObj> imageObjs)
-        {
-            imageObjs.ForEach(image =>
-            { 
-                if(FileHelper.IsBase64String(image.Url.Replace("data:image/png;base64,","")))_publisher.PushBase64StringToRabbitMQ(image.Id,image.Url.Replace("data:image/png;base64,",""),image.LastUpdated);
-                else if(Uri.TryCreate(image.Url, UriKind.Absolute, out _)) _publisher.PushURLStringToRabbitMQ(image.Id, image.Url, image.LastUpdated);
-            });
-        }
-
-    }
+    } 
 }
