@@ -14,6 +14,7 @@ namespace Server.Services.SavedInfoService
         private readonly RabbitMQUploadingImagePublisher _publisher = publisher;
         public async Task<SavedIDInfo> CreateSavedInfo(SavedIDInfo newSave, SaveInfoFilesRequestDTO files)
         {
+            await PopulateImageField(newSave, files);
             await _saveRepository.CreateNewSave(newSave);
             var newCreatedSaved = await _saveRepository.GetSaved(newSave.Id);
             return newCreatedSaved;

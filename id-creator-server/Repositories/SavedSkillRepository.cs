@@ -13,18 +13,18 @@ namespace Server.Repositories
             if(oldSavedSkill != null)
             {
                 await Task.WhenAll([
-                    SyncSkillList((ICollection<ISkill>)oldSavedSkill.OffenseSkills,(ICollection<ISkill>) incomingSkills.OffenseSkills),
-                    SyncSkillList((ICollection<ISkill>)oldSavedSkill.DefenseSkills,(ICollection<ISkill>) incomingSkills.DefenseSkills),
-                    SyncSkillList((ICollection<ISkill>)oldSavedSkill.CustomEffects,(ICollection<ISkill>) incomingSkills.CustomEffects),
-                    SyncSkillList((ICollection<ISkill>)oldSavedSkill.MentalEffects,(ICollection<ISkill>) incomingSkills.MentalEffects),
-                    SyncSkillList((ICollection<ISkill>)oldSavedSkill.PassiveSkills,(ICollection<ISkill>) incomingSkills.PassiveSkills),
+                    SyncSkillList(oldSavedSkill.OffenseSkills, incomingSkills.OffenseSkills),
+                    SyncSkillList(oldSavedSkill.DefenseSkills, incomingSkills.DefenseSkills),
+                    SyncSkillList(oldSavedSkill.CustomEffects, incomingSkills.CustomEffects),
+                    SyncSkillList(oldSavedSkill.MentalEffects, incomingSkills.MentalEffects),
+                    SyncSkillList(oldSavedSkill.PassiveSkills, incomingSkills.PassiveSkills),
                 ]);
                 return incomingSkills;
             }
             return oldSavedSkill;
         }
 
-        private async Task SyncSkillList(ICollection<ISkill> oldSkills, ICollection<ISkill> newSkills)
+        private async Task SyncSkillList<T>(ICollection<T> oldSkills, ICollection<T> newSkills) where T: ISkill
         {
             foreach(var newSkill in newSkills)
             {
@@ -41,7 +41,7 @@ namespace Server.Repositories
             var toDeleteSkills = new List<ISkill>();
             foreach(var oldSkill in oldSkills)
             {
-                if(newSkills.Any(newSkill => newSkill.Id == oldSkill.Id))
+                if(!newSkills.Any(newSkill => newSkill.Id == oldSkill.Id))
                 {
                     toDeleteSkills.Add(oldSkill);
                 }

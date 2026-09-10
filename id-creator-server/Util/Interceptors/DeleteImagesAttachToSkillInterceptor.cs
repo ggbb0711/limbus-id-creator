@@ -23,25 +23,25 @@ namespace Server.Util.Interceptors
         {
             if(ctx == null) return;
 
-            var deletedOffenseSkills = (List<IImageAttach>)ctx.ChangeTracker.Entries<OffenseSkill>()
+            var deletedOffenseSkills = ctx.ChangeTracker.Entries<OffenseSkill>()
                 .Where(e => (e.State == EntityState.Deleted))
-                .Select(e => e.Entity);
+                .Select(e => e.Entity.ImageAttach);
             
-            var deletedDefenseSkills = (List<IImageAttach>)ctx.ChangeTracker.Entries<DefenseSkill>()
+            var deletedDefenseSkills = ctx.ChangeTracker.Entries<DefenseSkill>()
                 .Where(e => (e.State == EntityState.Deleted))
-                .Select(e => e.Entity);
+                .Select(e => e.Entity.ImageAttach);
 
-            var deletedCustomEffects = (List<IImageAttach>)ctx.ChangeTracker.Entries<CustomEffect>()
+            var deletedCustomEffects = ctx.ChangeTracker.Entries<CustomEffect>()
                 .Where(e => (e.State == EntityState.Deleted))
-                .Select(e => e.Entity);
+                .Select(e => e.Entity.ImageAttach);
             
             var deletedImages = new List<ImageObj>();
             
-            foreach(var imageAttachedEntity in (List<IImageAttach>)
+            foreach(var imageAttach in (List<ImageObj>)
                 [.. deletedOffenseSkills, 
                 .. deletedDefenseSkills, 
                 .. deletedCustomEffects])
-                deletedImages.Add(imageAttachedEntity.ImageAttach);
+                deletedImages.Add(imageAttach);
             ctx.RemoveRange(deletedImages);
         }
     }
