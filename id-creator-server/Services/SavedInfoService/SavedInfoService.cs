@@ -57,100 +57,64 @@ namespace Server.Services.SavedInfoService
         {
             await PopulateImageField(newSave,files);
             var oldSave = await _saveRepository.GetByIdAsyncIncludingSaved(newSave.Id);
-            if(oldSave==null||!oldSave.UserId.Equals(newSave.UserId)) return null;
-            newSave.ImageAttach.Id = oldSave.ImageAttach.Id;
-            
-            //Change splashArt, sinnerIcon and savedSkill
-            //TODO Implement a method to delete old images
-            ImageObj splashArt;
-            ImageObj oldSplashArt;
-            ImageObj sinnerIcon;
-            ImageObj oldSinnerIcon;
-            SavedSkill savedSkill;
-            SavedSkill oldSavedSkill;
-            if(oldSave.Saved==null) return null;
-            splashArt = newSave.Saved.SplashArt;
-            oldSplashArt = oldSave.Saved.SplashArt;
+            if(oldSave?.Saved==null||!oldSave.UserId.Equals(newSave.UserId)) return null;
 
-            sinnerIcon = newSave.Saved.SinnerIcon;
-            oldSinnerIcon = oldSave.Saved.SinnerIcon;
+            var oldSaved = oldSave.Saved;
+            var newSaved = newSave.Saved;
 
-            //Transfering the old imageId of splashArt/sinnerIcon to the new ones
-            savedSkill = newSave.Saved.Skill;
-            oldSavedSkill = oldSave.Saved.Skill;
+            TransferImageId(newSave.ImageAttach, oldSave.ImageAttach);
+            TransferImageId(newSaved.SplashArt, oldSaved.SplashArt);
+            newSaved.SplashArtId = oldSaved.SplashArt.Id;
+            TransferImageId(newSaved.SinnerIcon, oldSaved.SinnerIcon);
+            newSaved.SinnerIconId = oldSaved.SinnerIcon.Id;
 
-
-            splashArt.Id = oldSplashArt.Id;
-            newSave.Saved.SplashArtId = oldSplashArt.Id;
-            sinnerIcon.Id = oldSinnerIcon.Id;
-            newSave.Saved.SinnerIconId = oldSinnerIcon.Id;
-
-            //Transfering all the old imageId of the skills to the new ones
-            for (int i = 0 ;i<savedSkill.OffenseSkills.Count;i++)
-            {
-                var skill = savedSkill.OffenseSkills.ElementAt(i);
-                var oldSkill = oldSavedSkill.OffenseSkills.Where(oldSkill =>oldSkill.Id.Equals(skill.Id)).FirstOrDefault();
-                if(oldSkill != null)
-                {
-                    skill.ImageAttach.Id = oldSkill.ImageAttach.Id;
-                    skill.ImageAttachId = oldSkill.ImageAttachId;
-                }
-            }
-
-            for (int i = 0 ;i<savedSkill.DefenseSkills.Count;i++)
-            {
-                var skill = savedSkill.DefenseSkills.ElementAt(i);
-                var oldSkill = oldSavedSkill.DefenseSkills.Where(oldSkill =>oldSkill.Id.Equals(skill.Id)).FirstOrDefault();
-                if(oldSkill != null)
-                {
-                    skill.ImageAttach.Id = oldSkill.ImageAttach.Id;
-                    skill.ImageAttachId = oldSkill.ImageAttachId;
-                }
-            }
-
-            for (int i = 0 ;i<savedSkill.CustomEffects.Count;i++)
-            {
-                var skill = savedSkill.CustomEffects.ElementAt(i);
-                var oldSkill = oldSavedSkill.CustomEffects.Where(oldSkill =>oldSkill.Id.Equals(skill.Id)).FirstOrDefault();
-                if(oldSkill != null)
-                {
-                    skill.ImageAttach.Id = oldSkill.ImageAttach.Id;
-                    skill.ImageAttachId = oldSkill.ImageAttachId;
-                }
-            }
+            TransferSkillImageIds(newSaved.Skill.OffenseSkills, oldSaved.Skill.OffenseSkills);
+            TransferSkillImageIds(newSaved.Skill.DefenseSkills, oldSaved.Skill.DefenseSkills);
+            TransferSkillImageIds(newSaved.Skill.CustomEffects, oldSaved.Skill.CustomEffects);
 
             //Update the save
-            await _saveRepository.UpdateAsync(newSave);
-            await _savedSkillRepository.UpdateSavedSkill(newSave.Saved.Skill);
+            await _saveRepository.MergeSavedInfo(oldSave, newSave);
+            await _savedSkillRepository.UpdateSavedSkill(oldSaved.Skill, newSaved.Skill);
             await _saveRepository.SaveChangeAsync();
-            var updatedSave = await _saveRepository.GetByIdAsync(newSave.Id);
-            if(updatedSave!=null) newSave.ImageAttach.LastUpdated = updatedSave.ImageAttach.LastUpdated;
-            return updatedSave;
+            return oldSave;
+        }
+
+        private static void TransferImageId(ImageObj newImg, ImageObj oldImg) => newImg.Id = oldImg.Id;
+
+        private static void TransferSkillImageIds<T>(IEnumerable<T> newSkills, IEnumerable<T> oldSkills)
+            where T : ISkill, IImageAttach
+        {
+            foreach(var skill in newSkills)
+            {
+                var oldSkill = oldSkills.FirstOrDefault(o => o.Id.Equals(skill.Id));
+                if(oldSkill == null) continue;
+                skill.ImageAttach.Id = oldSkill.ImageAttach.Id;
+                skill.ImageAttachId = oldSkill.ImageAttachId;
+            }
         }
 
 
         //Add in placheholder base64 string for the images
-        private static async Task<List<ImageObj>> PopulateImageField(TEntry savedInfo, SaveInfoFilesRequestDTO files)
+        private static async Task PopulateImageField(TEntry savedInfo, SaveInfoFilesRequestDTO files)
         {
             List<Task> tasks = [];
-            List<ImageObj> imageObjs = [];
             var splashArt = savedInfo.Saved.SplashArt;
             var sinnerIconImgObj = savedInfo.Saved.SinnerIcon;
             var savedSkill = savedInfo.Saved.Skill;
 
             if(files.ThumbnailImage!=null)
             {
-                tasks.Add(FileHelper.ConvertToBase64Async(files.ThumbnailImage,url=>{savedInfo.ImageAttach.Url=url;imageObjs.Add(savedInfo.ImageAttach);}));
+                tasks.Add(FileHelper.ConvertToBase64Async(files.ThumbnailImage,url=>{savedInfo.ImageAttach.Url=url;}));
             }
 
             if(files.SplashArtImg!=null)
             {
-                tasks.Add(FileHelper.ConvertToBase64Async(files.SplashArtImg,url=>{splashArt.Url=url;imageObjs.Add(splashArt);}));
+                tasks.Add(FileHelper.ConvertToBase64Async(files.SplashArtImg,url=>{splashArt.Url=url;}));
             }
 
             if(files.SinnerIcon!=null)
             {
-                tasks.Add(FileHelper.ConvertToBase64Async(files.SinnerIcon,url=>{sinnerIconImgObj.Url=url;imageObjs.Add(sinnerIconImgObj);}));
+                tasks.Add(FileHelper.ConvertToBase64Async(files.SinnerIcon,url=>{sinnerIconImgObj.Url=url;}));
             }
             foreach(var entry in files.SkillImages)
             {
@@ -158,34 +122,18 @@ namespace Server.Services.SavedInfoService
                 tasks.Add(FileHelper.ConvertToBase64Async(entry.Image,url=>
                 {
                     for(int j = 0 ;j<savedSkill.OffenseSkills.Count;j++)
-                    {
                         if(savedSkill.OffenseSkills.ElementAt(j).Index==searchIndex)
-                        {
                             savedSkill.OffenseSkills.ElementAt(j).ImageAttach.Url = url;
-                            imageObjs.Add(savedSkill.OffenseSkills.ElementAt(j).ImageAttach);
-                        }
-                    }
                     for(int j = 0 ;j<savedSkill.DefenseSkills.Count;j++)
-                    {
                         if(savedSkill.DefenseSkills.ElementAt(j).Index==searchIndex)
-                        { 
                             savedSkill.DefenseSkills.ElementAt(j).ImageAttach.Url = url;
-                            imageObjs.Add(savedSkill.DefenseSkills.ElementAt(j).ImageAttach);
-                        }
-                    }
                     for(int j = 0 ;j<savedSkill.CustomEffects.Count;j++)
-                    {
                         if(savedSkill.CustomEffects.ElementAt(j).Index==searchIndex)
-                        {
                             savedSkill.CustomEffects.ElementAt(j).ImageAttach.Url = url;
-                            imageObjs.Add(savedSkill.CustomEffects.ElementAt(j).ImageAttach);
-                        }
-                    }
                 }));
             }
 
             await Task.WhenAll([.. tasks]);
-            return imageObjs;
         }
     } 
 }

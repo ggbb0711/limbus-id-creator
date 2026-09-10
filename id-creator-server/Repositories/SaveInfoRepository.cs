@@ -19,19 +19,16 @@ namespace Server.Repositories
           .Include(e => e.Saved).ThenInclude(s => s.Skill).ThenInclude(sk => sk.CustomEffects)
           .Include(e => e.Saved).ThenInclude(s => s.Skill).ThenInclude(sk => sk.MentalEffects)
           .FirstOrDefaultAsync(e => e.Id == id);
-        public new async Task UpdateAsync(TEntry newSave)
+        public Task MergeSavedInfo(TEntry tracked, TEntry incoming)
         {
-            var foundSave = await GetByIdAsyncIncludingSaved(newSave.Id);
-            if (foundSave != null)
-            {
-                foundSave.Name = newSave.Name;
-                foundSave.SaveTime = newSave.SaveTime;
-                foundSave.ImageAttach.Url = newSave.ImageAttach.Url;
-                foundSave.ImageAttach.LastUpdated = DateTime.Now;
-                _ctx.Entry(foundSave.Saved.SplashArt).CurrentValues.SetValues(newSave.Saved.SplashArt);
-                _ctx.Entry(foundSave.Saved.SinnerIcon).CurrentValues.SetValues(newSave.Saved.SinnerIcon);
-                _ctx.Entry(foundSave.Saved).CurrentValues.SetValues(newSave.Saved);
-            }
+            tracked.Name = incoming.Name;
+            tracked.SaveTime = incoming.SaveTime;
+            tracked.ImageAttach.Url = incoming.ImageAttach.Url;
+            tracked.ImageAttach.LastUpdated = DateTime.Now;
+            _ctx.Entry(tracked.Saved.SplashArt).CurrentValues.SetValues(incoming.Saved.SplashArt);
+            _ctx.Entry(tracked.Saved.SinnerIcon).CurrentValues.SetValues(incoming.Saved.SinnerIcon);
+            _ctx.Entry(tracked.Saved).CurrentValues.SetValues(incoming.Saved);
+            return Task.CompletedTask;
         }
     }
 }

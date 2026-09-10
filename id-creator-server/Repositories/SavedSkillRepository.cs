@@ -7,21 +7,16 @@ namespace Server.Repositories
 {
     public class SavedSkillRepository(ServerDbContext ctx) : Repository<SavedSkill>(ctx), ISavedSkillRepository
     {
-        public async Task<SavedSkill?> UpdateSavedSkill(SavedSkill incomingSkills)
+        public async Task<SavedSkill> UpdateSavedSkill(SavedSkill oldSavedSkill, SavedSkill incomingSkills)
         {
-            var oldSavedSkill = await GetByIdAsync(incomingSkills.Id);
-            if(oldSavedSkill != null)
-            {
-                await Task.WhenAll([
-                    SyncSkillList(oldSavedSkill.OffenseSkills, incomingSkills.OffenseSkills),
-                    SyncSkillList(oldSavedSkill.DefenseSkills, incomingSkills.DefenseSkills),
-                    SyncSkillList(oldSavedSkill.CustomEffects, incomingSkills.CustomEffects),
-                    SyncSkillList(oldSavedSkill.MentalEffects, incomingSkills.MentalEffects),
-                    SyncSkillList(oldSavedSkill.PassiveSkills, incomingSkills.PassiveSkills),
-                ]);
-                return incomingSkills;
-            }
-            return oldSavedSkill;
+            await Task.WhenAll([
+                SyncSkillList(oldSavedSkill.OffenseSkills, incomingSkills.OffenseSkills),
+                SyncSkillList(oldSavedSkill.DefenseSkills, incomingSkills.DefenseSkills),
+                SyncSkillList(oldSavedSkill.CustomEffects, incomingSkills.CustomEffects),
+                SyncSkillList(oldSavedSkill.MentalEffects, incomingSkills.MentalEffects),
+                SyncSkillList(oldSavedSkill.PassiveSkills, incomingSkills.PassiveSkills),
+            ]);
+            return incomingSkills;
         }
 
         private async Task SyncSkillList<T>(ICollection<T> oldSkills, ICollection<T> newSkills) where T: ISkill

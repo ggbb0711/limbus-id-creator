@@ -7,7 +7,7 @@ namespace Server.Interface.Repositories
         where TEntry : class, ISavedEntry<TPayload>
         where TPayload : class, ISavedPayload
     {
-        new Task UpdateAsync(TEntry entity);
+        Task MergeSavedInfo(TEntry tracked, TEntry incoming);
         Task<TEntry?> GetByIdAsyncIncludingSaved(Guid id);
     }
 }

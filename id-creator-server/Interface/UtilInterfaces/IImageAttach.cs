@@ -8,5 +8,6 @@ namespace Server.Interface.UtilInterfaces
     public interface IImageAttach
     {
         ImageObj ImageAttach { get; set; }
+        Guid ImageAttachId { get; set; }
     }
 }
