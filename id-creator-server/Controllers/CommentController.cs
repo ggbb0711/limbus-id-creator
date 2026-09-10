@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Server.DTOs.Requests.Comment;
+using Server.Filters;
 using Server.Interface.ServiceInterface.CommentService;
 using Server.Interface.UtilInterfaces;
 using Server.Models;
@@ -24,6 +25,7 @@ namespace Server.Controllers
         [HttpPost("")]
         [EnableCors("AllowOrigin")]
         [Authorize]
+        [ValidationFilter<CommentRequestDTO>]
         public async Task<ActionResult<CommentResponseDTO>> CreateComment([FromBody] CommentRequestDTO commentRequestDTO)
         {
             var sub = User.FindFirstValue(JwtRegisteredClaimNames.Sub);

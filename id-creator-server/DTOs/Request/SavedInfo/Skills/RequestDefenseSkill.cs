@@ -1,3 +1,5 @@
+using FluentValidation;
+
 namespace Server.DTOs.Request.SavedInfo.Skills
 {
     public class RequestDefenseSkill:ActiveSkillRequestBase
@@ -7,5 +9,10 @@ namespace Server.DTOs.Request.SavedInfo.Skills
         public int AtkWeight { get; set; } = 1;
         public string DefenseType { get; set; } = "Block";
         public string DamageType { get; set; } = "Slash"; // For counter skill
+    }
+
+    public class RequestDefenseSkillValidator : AbstractValidator<RequestDefenseSkill>
+    {
+        public RequestDefenseSkillValidator() => Include(new ActiveSkillRequestBaseValidator());
     }
 }

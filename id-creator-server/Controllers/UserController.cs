@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Server.DTOs.Request.User;
 using Server.DTOs.Response.Users;
+using Server.Filters;
 using Server.Interface.ServiceInterface.UserService;
 using Server.Interface.UtilInterfaces;
 using Server.Util.ApiException;
@@ -41,6 +42,7 @@ namespace Server.Controllers
         [HttpPut("{id}")]
         [EnableCors("AllowOrigin")]
         [Authorize]
+        [ValidationFilter<UpdateUserProfileDTO>]
         public async Task<ActionResult<ApiResponse<UserProfileResponseDTO>>> UpdateUser(Guid id,
         [FromForm] UpdateUserProfileDTO updateUserProfileDTO)
         {

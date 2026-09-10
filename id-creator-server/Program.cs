@@ -58,12 +58,7 @@ builder.Services.AddCors(options=>
 
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddScoped<Server.Filters.ValidationActionFilter>();
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
-builder.Services.AddControllers(options =>
-{
-    options.Filters.AddService<Server.Filters.ValidationActionFilter>();
-});
 builder.Services.AddControllers()
     .AddJsonOptions(options=>{
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());

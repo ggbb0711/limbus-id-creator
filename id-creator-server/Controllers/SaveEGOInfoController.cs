@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Server.DTOs.Requests.SavedInfo;
 using Server.DTOs.Requests.SavedInfo.SavedEgo;
 using Server.DTOs.Response.SaveInfo;
+using Server.Filters;
 using Server.Interface.ServiceInterface.SavedInfoService;
 using Server.Interface.UtilInterfaces;
 using Server.Models;
@@ -86,6 +87,8 @@ namespace Server.Controllers
         [HttpPost]
         [EnableCors("AllowOrigin")]
         [Authorize]
+        [ValidationFilter<SaveInfoFilesRequestDTO>]
+        [ValidationFilter<SavedEgoRequestDTO>]
         public async Task<ActionResult<ApiResponse<SaveInfoResponseDTO<SavedEgoRequestDTO>>>> CreateNewEGOSave(
             [FromForm] SaveInfoFilesRequestDTO files,
             [FromForm] SavedInfoRequestDTO<SavedEgoRequestDTO> SaveData)
@@ -106,6 +109,8 @@ namespace Server.Controllers
         [HttpPut]
         [EnableCors("AllowOrigin")]
         [Authorize]
+        [ValidationFilter<SaveInfoFilesRequestDTO>]
+        [ValidationFilter<SavedEgoRequestDTO>]
         public async Task<ActionResult<ApiResponse<SaveInfoResponseDTO<SavedEgoRequestDTO>>>> UpdateSave(
             [FromForm] SaveInfoFilesRequestDTO files,
             [FromForm] SavedInfoRequestDTO<SavedEgoRequestDTO> SaveData)

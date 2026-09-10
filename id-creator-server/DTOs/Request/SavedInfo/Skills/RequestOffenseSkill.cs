@@ -1,3 +1,5 @@
+using FluentValidation;
+
 namespace Server.DTOs.Request.SavedInfo.Skills
 {
     public class RequestOffenseSkill:ActiveSkillRequestBase
@@ -6,6 +8,11 @@ namespace Server.DTOs.Request.SavedInfo.Skills
         public int SkillAmt { get; set; } = 1;
         public int AtkWeight { get; set; } = 1;
         public string DamageType { get; set; } = "Slash";
-        
+
+    }
+
+    public class RequestOffenseSkillValidator : AbstractValidator<RequestOffenseSkill>
+    {
+        public RequestOffenseSkillValidator() => Include(new ActiveSkillRequestBaseValidator());
     }
 }

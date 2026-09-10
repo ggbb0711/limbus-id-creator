@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Server.DTOs.Requests.Post;
 using Server.DTOs.Response.Post;
+using Server.Filters;
 using Server.Interface.ServiceInterface.CommentService;
 using Server.Interface.ServiceInterface.IPostService;
 using Server.Interface.UtilInterfaces;
@@ -25,6 +26,7 @@ namespace Server.Controllers
         [HttpPost("")]
         [EnableCors("AllowOrigin")]
         [Authorize]
+        [ValidationFilter<PostRequestDTO>]
         public async Task<ActionResult<PostResponseDTO>> CreateNewPost([FromBody] PostRequestDTO newPost)
         {
             var sub = User.FindFirstValue(JwtRegisteredClaimNames.Sub);

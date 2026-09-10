@@ -54,6 +54,13 @@ namespace Server.DTOs.Requests.SavedInfo.SavedEgo
             RuleFor(s=>s.SinnerIcon)
                 .MustAsync(async (image,_)=>await FileHelper.CheckUrlSize(image, 100 * 1024))
                 .WithMessage("Sinner icon url size <= 100kb");
+
+            RuleForEach(s => s.SkillDetails).SetInheritanceValidator(v =>
+            {
+                v.Add(new RequestOffenseSkillValidator());
+                v.Add(new RequestDefenseSkillValidator());
+                v.Add(new RequestCustomEffectValidator());
+            });
         }
     }
 }
