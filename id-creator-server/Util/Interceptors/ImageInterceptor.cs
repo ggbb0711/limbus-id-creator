@@ -12,13 +12,13 @@ namespace Server.Util.Interceptors
             ResolveImageEntityChanges(eventData.Context);
             return base.SavingChanges(eventData, result);
         }
-        public override ValueTask<int> SavedChangesAsync(SaveChangesCompletedEventData eventData, int result, CancellationToken cancellationToken = default)
+        public override ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData, InterceptionResult<int> result, CancellationToken cancellationToken = default)
         {
             ResolveImageEntityChanges(eventData.Context);
-            return base.SavedChangesAsync(eventData, result, cancellationToken);
+            return base.SavingChangesAsync(eventData, result, cancellationToken);
         }
 
-        private void ResolveImageEntityChanges(DbContext? ctx)
+        private static void ResolveImageEntityChanges(DbContext? ctx)
         {
             if(ctx == null) return;
 

@@ -30,6 +30,7 @@ using Server.Services.PostService;
 using Server.Services.SavedEGOInfoService;
 using Server.Services.SavedInfoService;
 using Server.Services.UtilServices;
+using Server.Services.UtilServices.Background;
 using Server.Util.Authorization;
 using Server.Util.Interceptors;
 using Server.Util.RabbitMQPublisher;
@@ -74,7 +75,7 @@ if(env.Mode.Equals("Published")) builder.Services.AddDbContext<ServerDbContext>(
     builder =>
     {
         builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
-    }).AddInterceptors(new ImageInterceptor()));
+    }).AddInterceptors(new DeleteImagesAttachToSkillInterceptor(),new ImageInterceptor()));
 else builder.Services.AddDbContext<ServerDbContext>(options =>options.UseNpgsql(Environment.GetEnvironmentVariable("DefaultConnection")));
 builder.Services.Configure<ApiBehaviorOptions>(options=>
 {

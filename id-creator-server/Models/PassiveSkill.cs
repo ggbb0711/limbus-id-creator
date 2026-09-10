@@ -11,7 +11,7 @@ namespace Server.Models
 {
     [Index(nameof(Id))]
     [PrimaryKey(nameof(Id),nameof(SavedSkillId))]
-    public class PassiveSkill : ISkillIndex,ISkillType
+    public class PassiveSkill : ISkill,ISkillIndex,ISkillType
     {
         private ILazyLoader LazyLoader { get; set; }
 

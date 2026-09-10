@@ -9,7 +9,7 @@ namespace Server.Models
 {
     [Index(nameof(Id))]
     [PrimaryKey(nameof(Id),nameof(SavedSkillId))]
-    public class OffenseSkill : IImageAttach,ISkillIndex,ISkillType
+    public class OffenseSkill : ISkill, IImageAttach,ISkillIndex,ISkillType
     {
         private ImageObj _imageAttach = null!;
         private ILazyLoader LazyLoader { get; set; } = null!;

@@ -9,7 +9,7 @@ namespace Server.Models
 {
     [Index(nameof(Id))]
     [PrimaryKey(nameof(Id),nameof(SavedSkillId))]
-    public class CustomEffect : IImageAttach,ISkillIndex,ISkillType
+    public class CustomEffect : ISkill,IImageAttach,ISkillIndex,ISkillType
     {
         private ImageObj _imageAttach;
         private ILazyLoader LazyLoader { get; set; }

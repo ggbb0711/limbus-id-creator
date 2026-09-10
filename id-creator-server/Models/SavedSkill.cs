@@ -9,11 +9,11 @@ namespace Server.Models
     [PrimaryKey(nameof(Id))]
     public class SavedSkill
     {
-        private ICollection<OffenseSkill> _offenseSkills = new List<OffenseSkill>();
-        private ICollection<DefenseSkill> _defenseSkills = new List<DefenseSkill>();
-        private ICollection<PassiveSkill> _passiveSkills = new List<PassiveSkill>();
-        private ICollection<MentalEffect> _mentalEffects = new List<MentalEffect>();
-        private ICollection<CustomEffect> _customEffects = new List<CustomEffect>();
+        private ICollection<OffenseSkill> _offenseSkills = [];
+        private ICollection<DefenseSkill> _defenseSkills = [];
+        private ICollection<PassiveSkill> _passiveSkills = [];
+        private ICollection<MentalEffect> _mentalEffects = [];
+        private ICollection<CustomEffect> _customEffects = [];
         private ILazyLoader LazyLoader { get; set; }
 
         public SavedSkill() { }
@@ -33,25 +33,25 @@ namespace Server.Models
 
         public virtual ICollection<DefenseSkill> DefenseSkills
         {
-            get => LazyLoader.Load(this, ref _defenseSkills) ?? new List<DefenseSkill>();
+            get => LazyLoader.Load(this, ref _defenseSkills) ?? [];
             set => _defenseSkills = value;
         }
 
         public virtual ICollection<PassiveSkill> PassiveSkills
         {
-            get => LazyLoader.Load(this, ref _passiveSkills) ?? new List<PassiveSkill>();
+            get => LazyLoader.Load(this, ref _passiveSkills) ?? [];
             set => _passiveSkills = value;
         }
 
         public virtual ICollection<MentalEffect> MentalEffects
         {
-            get => LazyLoader.Load(this, ref _mentalEffects) ?? new List<MentalEffect>();
+            get => LazyLoader.Load(this, ref _mentalEffects) ?? [];
             set => _mentalEffects = value;
         }
 
         public virtual ICollection<CustomEffect> CustomEffects
         {
-            get => LazyLoader.Load(this, ref _customEffects) ?? new List<CustomEffect>();
+            get => LazyLoader.Load(this, ref _customEffects) ?? [];
             set => _customEffects = value;
         }
         public static SavedSkill DeCompileSkill(List<object> skills)
