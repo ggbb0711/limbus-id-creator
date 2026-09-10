@@ -42,10 +42,8 @@ namespace Server.Controllers
         [EnableCors("AllowOrigin")]
         [Authorize]
         public async Task<ActionResult<ApiResponse<UserProfileResponseDTO>>> UpdateUser(Guid id,
-        UpdateUserProfileDTO updateUserProfileDTO)
+        [FromForm] UpdateUserProfileDTO updateUserProfileDTO)
         {
-            //TO DO: Please add in custom made validators for the UpdateUserProfileDTO so we can validate the icon file (<=100kb)
-            // Also validate the name property which is between 1 and 65 characters
             var authResult = await authorizationService.AuthorizeAsync(User, new OwnedResource(id), "SameUser");
             if (!authResult.Succeeded) throw new ForbiddenException("You are not logged in as this user");
 

@@ -1,11 +1,21 @@
 using System.ComponentModel.DataAnnotations;
+using FluentValidation;
 
 namespace Server.DTOs.Requests.Comment
 {
     public class CommentRequestDTO
     {
-        private Guid PostId { get; init; } = Guid.NewGuid();
-        [Required(ErrorMessage = "Comment cannot be left emptied")]
-        private string Content { get; init; } = "";
+        public Guid PostId { get; init; } = Guid.NewGuid();
+        public string Content { get; init; } = "";
+    }
+
+    public class CommentRequestValidator : AbstractValidator<CommentRequestDTO>
+    {
+        public CommentRequestValidator()
+        {
+            RuleFor(c => c.Content)
+                .NotEmpty()
+                .WithMessage("Comment content must not be emptied");
+        }
     }
 }

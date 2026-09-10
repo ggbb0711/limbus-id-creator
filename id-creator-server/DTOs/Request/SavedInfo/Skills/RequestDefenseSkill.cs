@@ -1,5 +1,3 @@
-using Server.Interface.UtilInterfaces;
-
 namespace Server.DTOs.Request.SavedInfo.Skills
 {
     public class RequestDefenseSkill:ActiveSkillRequestBase

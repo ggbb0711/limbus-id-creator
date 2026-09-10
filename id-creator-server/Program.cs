@@ -115,6 +115,7 @@ builder.Services.AddScoped<ICommentService,CommentService>();
 builder.Services.AddScoped<IPostViewService,PostViewService>();
 builder.Services.AddHostedService<DeleteExpiredSessionsBackgroundService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 builder.Services.AddLogging();
 builder.Services.AddAuthentication()
     .AddJwtBearer(config=>
@@ -158,34 +159,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.UseWhen(ctx=>ctx.Request.Path.StartsWithSegments("/API/SaveIDInfo/create"), app =>
-{
-    app.UseCheckUploadSaveIDFileMiddlewareExtension();
-    app.UseCheckUrlUploadSaveIDMiddlewareExtension();
-});
-
-app.UseWhen(ctx=>ctx.Request.Path.StartsWithSegments("/API/SaveIDInfo/update"), app =>
-{
-    app.UseCheckUploadSaveIDFileMiddlewareExtension();
-    app.UseCheckUrlUploadSaveIDMiddlewareExtension();
-});
-
-app.UseWhen(ctx=>ctx.Request.Path.StartsWithSegments("/API/SaveEGOInfo/create"), app =>
-{
-    app.UseCheckUploadSaveIDFileMiddlewareExtension();
-    app.UseCheckUrlUploadSaveEGOMiddlewareExtension();
-});
-
-app.UseWhen(ctx=>ctx.Request.Path.StartsWithSegments("/API/SaveEGOInfo/update"), app =>
-{
-    app.UseCheckUploadSaveIDFileMiddlewareExtension();
-    app.UseCheckUrlUploadSaveEGOMiddlewareExtension();
-});
-
-app.UseWhen(ctx=>ctx.Request.Path.StartsWithSegments("/API/Post/create"), app =>
-{
-    app.UseCheckPostUrlMiddlewareExtension();
-});
 
 app.Run();

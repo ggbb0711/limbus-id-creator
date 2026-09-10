@@ -87,21 +87,17 @@ namespace Server.Controllers
         [EnableCors("AllowOrigin")]
         [Authorize]
         public async Task<ActionResult<ApiResponse<SaveInfoResponseDTO<SavedEgoRequestDTO>>>> CreateNewEGOSave(
-            [FromForm] SaveInfoFilesRequestDTO files)
+            [FromForm] SaveInfoFilesRequestDTO files,
+            [FromForm] SavedInfoRequestDTO<SavedEgoRequestDTO> SaveData)
         {
             var sub = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
             if (!Guid.TryParse(sub, out var userId))
                 throw new UnauthorizedException("Invalid access token");
 
-            // TODO: replace this with a FluentValidation validator (e.g. for the upload payload) so
-            // ValidationActionFilter enforces it automatically: skillImages.Count <= 40, and
-            // imageIndex.Length == skillImages.Count.
+            var saveEGOInfo = _mapper.Map<SavedEGOInfo>(SaveData);
+            saveEGOInfo.UserId = userId;
 
-            var saveIDInfo = (SavedEGOInfo?) HttpContext.Items["SaveData"]
-                ?? throw new BadRequestException("Save data is not formatted correctly");
-            saveIDInfo.UserId = userId;
-
-            var newSavedInfo = await _savedInfoService.CreateSavedInfo(saveIDInfo, files);
+            var newSavedInfo = await _savedInfoService.CreateSavedInfo(saveEGOInfo, files);
 
             return Ok(ApiResponse<SaveInfoResponseDTO<SavedEgoRequestDTO>>.Ok(
                 _mapper.Map<SaveInfoResponseDTO<SavedEgoRequestDTO>>(newSavedInfo), "New save file created successfully"));
@@ -111,27 +107,23 @@ namespace Server.Controllers
         [EnableCors("AllowOrigin")]
         [Authorize]
         public async Task<ActionResult<ApiResponse<SaveInfoResponseDTO<SavedEgoRequestDTO>>>> UpdateSave(
-            [FromForm] SaveInfoFilesRequestDTO files)
+            [FromForm] SaveInfoFilesRequestDTO files,
+            [FromForm] SavedInfoRequestDTO<SavedEgoRequestDTO> SaveData)
         {
             var sub = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
             if (!Guid.TryParse(sub, out var userId))
                 throw new UnauthorizedException("Invalid access token");
 
-            // TODO: replace this with a FluentValidation validator (e.g. for the upload payload) so
-            // ValidationActionFilter enforces it automatically: skillImages.Count <= 40, and
-            // imageIndex.Length == skillImages.Count.
+            var saveEGOInfo = _mapper.Map<SavedEGOInfo>(SaveData);
+            saveEGOInfo.UserId = userId;
 
-            var saveIDInfo = (SavedEGOInfo?) HttpContext.Items["SaveData"]
-                ?? throw new BadRequestException("Save data is not formatted correctly");
-            saveIDInfo.UserId = userId;
-
-            var updatingSave = await _savedInfoService.FindSavedInfoById(saveIDInfo.Id)
+            var updatingSave = await _savedInfoService.FindSavedInfoById(saveEGOInfo.Id)
                 ?? throw new NotFoundException("Save does not exist");
 
             var authResult = await _authorizationService.AuthorizeAsync(User, new OwnedResource(updatingSave.UserId), "SameUser");
             if (!authResult.Succeeded) throw new ForbiddenException("You do not own this resource.");
 
-            var newSavedInfo = await _savedInfoService.UpdateSavedInfo(saveIDInfo, files) ?? throw new NotFoundException("Cannot update save");
+            var newSavedInfo = await _savedInfoService.UpdateSavedInfo(saveEGOInfo, files) ?? throw new NotFoundException("Cannot update save");
 
             return Ok(ApiResponse<SaveInfoResponseDTO<SavedEgoRequestDTO>>.Ok(
                 _mapper.Map<SaveInfoResponseDTO<SavedEgoRequestDTO>>(newSavedInfo), "Save has been updated"));

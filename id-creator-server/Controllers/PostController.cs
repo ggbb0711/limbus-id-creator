@@ -27,9 +27,6 @@ namespace Server.Controllers
         [Authorize]
         public async Task<ActionResult<PostResponseDTO>> CreateNewPost([FromBody] PostRequestDTO newPost)
         {
-            //TODO: Add validator to check for title must be <200 characters
-            // Images must be between 1 and 8 images
-            // Post must hav less than 22 tags
             var sub = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
             if (!Guid.TryParse(sub, out var userId))
                 throw new UnauthorizedException("Invalid access token");

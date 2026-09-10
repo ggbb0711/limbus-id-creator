@@ -1,4 +1,6 @@
+using FluentValidation;
 using Server.Interface.UtilInterfaces;
+using Server.Util;
 
 namespace Server.DTOs.Request.SavedInfo.Skills
 {
@@ -10,5 +12,15 @@ namespace Server.DTOs.Request.SavedInfo.Skills
         public string EffectColor { get; set; } = "#F1F1F1";
         public string Effect { get; set; } = "";
         public bool IsCoinType { get; set; } = false;
+    }
+
+    public class RequestCustomEffectValidator : AbstractValidator<RequestCustomEffect>
+    {
+        public RequestCustomEffectValidator()
+        {
+            RuleFor(r=>r.CustomImg)
+                .MustAsync(async (image, _)=> await FileHelper.CheckUrlSize(image, 100 * 1024))
+                .WithMessage("Skill icon and custom effect icon size must be <= 100kb");
+        }
     }
 }

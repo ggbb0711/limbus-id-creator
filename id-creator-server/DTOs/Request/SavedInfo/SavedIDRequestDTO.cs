@@ -1,4 +1,6 @@
+using FluentValidation;
 using Server.DTOs.Request.SavedInfo.Skills;
+using Server.Util;
 
 namespace Server.DTOs.Requests.SavedInfo.SavedID
 {
@@ -22,8 +24,19 @@ namespace Server.DTOs.Requests.SavedInfo.SavedID
         public string Rarity { get; set; } = "";
         public List<string> Traits { get; set; } = [];
         public required List<SkillRequestBase> SkillDetails { get; set; }
-
-        
     }
 
+    public class SavedIDRequestDTOValidator : AbstractValidator<SavedIDRequestDTO>
+    {
+        public SavedIDRequestDTOValidator()
+        {
+            RuleFor(s=>s.SplashArt)
+                .MustAsync(async (image,_)=>await FileHelper.CheckUrlSize(image, 4 * 1024 * 1024))
+                .WithMessage("Splash art url size must be <= 4mb");
+            
+            RuleFor(s=>s.SinnerIcon)
+                .MustAsync(async (image,_)=>await FileHelper.CheckUrlSize(image, 100 * 1024))
+                .WithMessage("Sinner icon url size <= 100kb");
+        }
+    }
 }

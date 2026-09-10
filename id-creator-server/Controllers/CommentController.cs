@@ -26,7 +26,6 @@ namespace Server.Controllers
         [Authorize]
         public async Task<ActionResult<CommentResponseDTO>> CreateComment([FromBody] CommentRequestDTO commentRequestDTO)
         {
-            //TODO: Add custom validators to make sure that comment is required
             var sub = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
             if (!Guid.TryParse(sub, out var userId))
                 throw new UnauthorizedException("Invalid access token");
