@@ -1,7 +1,6 @@
 using Google.Apis.Auth;
 using Microsoft.IdentityModel.Tokens;
 using Server.Features.Images;
-using Server.Features.Images.Messaging;
 using Server.Features.User.DTO;
 using Server.Features.User.Repository;
 using Server.Shared.Http;
@@ -9,7 +8,7 @@ using Server.Shared.Model;
 
 namespace Server.Features.User.Service
 {
-    public class UserService(IUserRepository userRepository, RabbitMQUploadingImagePublisher publisher) : IUserService
+    public class UserService(IUserRepository userRepository) : IUserService
     {
         public async Task<UserModel?> GetUserById(Guid userId)
         {
@@ -54,7 +53,6 @@ namespace Server.Features.User.Service
             if(!updateUserProfileDTO.UserName.IsNullOrEmpty()) updatedUser.UserName = updateUserProfileDTO.UserName;
             if(updateUserProfileDTO.UserIconFile != null)
             {
-                publisher.PushFormFileToRabbitMQ(updatedUser.UserIcon.Id, updateUserProfileDTO.UserIconFile, updatedUser.UserIcon.LastUpdated);
                 var iconUrl = await FileHelper.ConvertToBase64Async(updateUserProfileDTO.UserIconFile);
                 updatedUser.UserIcon.Url = iconUrl;
                 updatedUser.UserIcon.LastUpdated = DateTime.Now;

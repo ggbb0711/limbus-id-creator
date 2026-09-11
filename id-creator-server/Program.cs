@@ -12,7 +12,7 @@ using Server.Features.Auth.Repository;
 using Server.Features.Auth.Service;
 using Server.Features.Comment.Repository;
 using Server.Features.Comment.Service;
-using Server.Features.Images.Messaging;
+using Server.Features.Images.Background;
 using Server.Features.Images.Repository;
 using Server.Features.Images.Service;
 using Server.Features.Post.Repository;
@@ -64,7 +64,8 @@ if(env.Mode.Equals("Published")) builder.Services.AddDbContext<ServerDbContext>(
     {
         builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
     }).AddInterceptors(new DeleteImagesAttachToSkillInterceptor(),new ImageInterceptor()));
-else builder.Services.AddDbContext<ServerDbContext>(options =>options.UseNpgsql(Environment.GetEnvironmentVariable("DefaultConnection")));
+else builder.Services.AddDbContext<ServerDbContext>(options =>options.UseNpgsql(Environment.GetEnvironmentVariable("DefaultConnection"))
+    .AddInterceptors(new DeleteImagesAttachToSkillInterceptor(),new ImageInterceptor()));
 builder.Services.Configure<ApiBehaviorOptions>(options=>
 {
     options.InvalidModelStateResponseFactory = context =>
@@ -74,11 +75,8 @@ builder.Services.Configure<ApiBehaviorOptions>(options=>
         throw new Server.Shared.Exception.ValidationException("Validation failed: "+kvp.Value?.Errors.Select(e=>e.ErrorMessage).ToArray().ToString());
     };
 });
-builder.Services.AddSingleton<RabbitMQUploadingImagePublisher>();
-builder.Services.AddHostedService<RabbitMQUploadingImageConsumerService>();
+
 builder.Services.AddSingleton(env);
-builder.Services.AddSingleton<RabbitMQDeletingImagePublisher>();
-builder.Services.AddHostedService<RabbitMQDeletingImageConsumerService>();
 builder.Services.AddScoped<IUserRepository,UserRepository>();
 builder.Services.AddScoped<ISessionRepository,SessionRepository>();
 builder.Services.AddScoped<IImageObjRepository,ImageObjRepository>();
@@ -103,6 +101,8 @@ builder.Services.AddScoped<IPostService,PostService>();
 builder.Services.AddScoped<ICommentService,CommentService>();
 builder.Services.AddScoped<IPostViewService,PostViewService>();
 builder.Services.AddHostedService<DeleteExpiredSessionsBackgroundService>();
+builder.Services.AddHostedService<UploadImagesBackgroundService>();
+builder.Services.AddHostedService<DeleteImagesBackgroundService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 builder.Services.AddLogging();
