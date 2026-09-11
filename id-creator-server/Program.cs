@@ -7,36 +7,30 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Server.Data;
-using Server.Interface.Repositories;
-using Server.Interface.ServiceInterface.CommentService;
-using Server.Interface.ServiceInterface.IJwtTokenService;
-using Server.Interface.ServiceInterface.ImageObjService;
-using Server.Interface.ServiceInterface.IPostService;
-using Server.Interface.ServiceInterface.SavedInfoService;
-using Server.Interface.ServiceInterface.SessionInterface;
-using Server.Interface.ServiceInterface.StaticStorageService;
-using Server.Interface.ServiceInterface.UserService;
-using Server.Interface.ServiceInterface.UtilService;
-using Server.Middleware;
-using Server.Models;
-using Server.PostViewService;
-using Server.Repositories;
-using Server.Services;
-using Server.Services.CommentService;
-using Server.Services.ImageObjService;
-using Server.Services.JwtTokenService;
-using Server.Services.PostService;
-using Server.Services.SavedInfoService;
-using Server.Services.UtilServices;
-using Server.Services.UtilServices.Background;
-using Server.Util.Authorization;
-using Server.Util.Interceptors;
-using Server.Util.RabbitMQPublisher;
+using Server.Features.Auth.Background;
+using Server.Features.Auth.Repository;
+using Server.Features.Auth.Service;
+using Server.Features.Comment.Repository;
+using Server.Features.Comment.Service;
+using Server.Features.Images.Messaging;
+using Server.Features.Images.Repository;
+using Server.Features.Images.Service;
+using Server.Features.Post.Repository;
+using Server.Features.Post.Service;
+using Server.Features.SaveInfo.Repository;
+using Server.Features.SaveInfo.Service;
+using Server.Features.User.Repository;
+using Server.Features.User.Service;
+using Server.Shared.Authorization;
+using Server.Shared.CloudStorage.Service;
+using Server.Shared.Database;
+using Server.Shared.Database.Interceptor;
+using Server.Shared.Middleware;
+using Server.Shared.Model;
 
 
 Env.Load();
-var env = Server.Util.Config.EnvironmentVariables.LoadFromEnvironment();
+var env = Server.Shared.Config.EnvironmentVariables.LoadFromEnvironment();
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpClient();
@@ -77,7 +71,7 @@ builder.Services.Configure<ApiBehaviorOptions>(options=>
     {
         var kvp = context.ModelState
             .First(kvp => kvp.Value?.Errors.Count>0);
-        throw new Server.Util.ApiException.ValidationException("Validation failed: "+kvp.Value?.Errors.Select(e=>e.ErrorMessage).ToArray().ToString());
+        throw new Server.Shared.Exception.ValidationException("Validation failed: "+kvp.Value?.Errors.Select(e=>e.ErrorMessage).ToArray().ToString());
     };
 });
 builder.Services.AddSingleton<RabbitMQUploadingImagePublisher>();

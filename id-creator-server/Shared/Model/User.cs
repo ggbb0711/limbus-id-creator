@@ -1,0 +1,37 @@
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+
+namespace Server.Shared.Model
+{
+    [Index(nameof(Id))]
+    [PrimaryKey(nameof(Id))]
+    public class User
+    {
+        private ImageObj? _userIcon;
+        private ILazyLoader LazyLoader { get; set;} = null!;
+
+        public User(){}
+
+        private User(ILazyLoader lazyLoader)
+        {
+            LazyLoader = lazyLoader;
+        }
+
+        public Guid Id {get; set;}
+        public string UserEmail { get; set; } = "";
+        public string UserName {get; set;} = "";
+        [Required]
+        [ForeignKey(nameof(ImageObj))]
+        public Guid UserIconId {get; set;}
+        [Required]
+        public ImageObj UserIcon {get=>LazyLoader.Load(this,ref _userIcon)!; set=>_userIcon = value;}
+        public DateTime CreatedAt{get; set;} = DateTime.Now;
+        public bool IsActive { get; set; } = true;
+        public bool IsRemoved { get; set; } = false;
+        public ICollection<Comment>? Comments { get; set;} = [];
+        public ICollection<Post> Posts {get; set;} = [];
+    }
+}
