@@ -66,8 +66,16 @@ namespace Server.Repositories
 
             if(expiredSession != null)
             {
-                _ctx.Session.RemoveRange(expiredSession);
-                await _ctx.SaveChangesAsync();
+                try
+                {
+                    _ctx.Session.RemoveRange(expiredSession);
+                    await _ctx.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    foreach (var entry in ex.Entries)
+                        entry.State = EntityState.Detached; 
+                }
             }
 
             return await expiredSession.ToListAsync();
