@@ -161,35 +161,32 @@ namespace Server.Tests.Features.SaveInfo.Service
         }
 
         [Fact]
-        public async Task ShouldFindSavedInfos_ComputesSkipAndTakeAndReturnsRepositoryResults()
+        public async Task ShouldFindSavedInfos_ComputesSkipAndTakeAndReturnsCorrectPage()
         {
             var fixture = new Fixture();
-            var expectedResults = new List<SavedIDInfo>
-            {
-                MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "A"),
-                MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "B"),
-            };
+            var userId = Guid.NewGuid();
 
-            RepositoryGetParams<SavedIDInfo>? captured = null;
+            var entries = Enumerable.Range(0, 6)
+                .Select(i =>
+                {
+                    var entry = MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "Effect");
+                    entry.UserId = userId;
+                    entry.SaveTime = new DateTime(2024, 1, 1).AddDays(i);
+                    return entry;
+                })
+                .ToList();
 
             var saveInfoRepository = new Mock<ISaveInfoRepository<SavedIDInfo, SavedId>>();
             var savedSkillRepository = new Mock<ISavedSkillRepository>();
-
-            saveInfoRepository
-                .Setup(r => r.FindAsync(It.IsAny<RepositoryGetParams<SavedIDInfo>>()))
-                .Callback<RepositoryGetParams<SavedIDInfo>>(p => captured = p)
-                .ReturnsAsync(expectedResults);
+            SetupFindAsync(saveInfoRepository, entries);
 
             var service = new SavedInfoService<SavedIDInfo, SavedId>(saveInfoRepository.Object, savedSkillRepository.Object);
 
-            var option = new SearchSaveParams { Name = "x", UserId = Guid.NewGuid(), Page = 2, Limit = 5 };
+            var result = await service.FindSavedInfos(new SearchSaveParams { UserId = userId, Page = 1, Limit = 2 });
 
-            var result = await service.FindSavedInfos(option);
-
-            Assert.NotNull(captured);
-            Assert.Equal(10, captured.Skip);
-            Assert.Equal(5, captured.Take);
-            Assert.Equal(expectedResults, result);
+            Assert.Equal(2, result.Count);
+            Assert.Equal(entries[3].Id, result[0].Id);
+            Assert.Equal(entries[2].Id, result[1].Id);
         }
 
         [Fact]
@@ -198,48 +195,107 @@ namespace Server.Tests.Features.SaveInfo.Service
             var fixture = new Fixture();
             var userId = Guid.NewGuid();
 
-            RepositoryGetParams<SavedIDInfo>? captured = null;
+            var matchingOld = MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "Effect");
+            matchingOld.UserId = userId;
+            matchingOld.Name = "Ishmael Build";
+            matchingOld.SaveTime = new DateTime(2020, 1, 1);
+
+            var matchingNew = MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "Effect");
+            matchingNew.UserId = userId;
+            matchingNew.Name = "Ishmael Reforged";
+            matchingNew.SaveTime = new DateTime(2022, 1, 1);
+
+            var wrongName = MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "Effect");
+            wrongName.UserId = userId;
+            wrongName.Name = "Something Else";
+            wrongName.SaveTime = new DateTime(2021, 1, 1);
+
+            var wrongUser = MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "Effect");
+            wrongUser.UserId = Guid.NewGuid();
+            wrongUser.Name = "Ishmael Build";
+            wrongUser.SaveTime = new DateTime(2023, 1, 1);
 
             var saveInfoRepository = new Mock<ISaveInfoRepository<SavedIDInfo, SavedId>>();
             var savedSkillRepository = new Mock<ISavedSkillRepository>();
-
-            saveInfoRepository
-                .Setup(r => r.FindAsync(It.IsAny<RepositoryGetParams<SavedIDInfo>>()))
-                .Callback<RepositoryGetParams<SavedIDInfo>>(p => captured = p)
-                .ReturnsAsync([]);
+            SetupFindAsync(saveInfoRepository, [matchingOld, matchingNew, wrongName, wrongUser]);
 
             var service = new SavedInfoService<SavedIDInfo, SavedId>(saveInfoRepository.Object, savedSkillRepository.Object);
 
-            await service.FindSavedInfos(new SearchSaveParams { Name = "Ish", UserId = userId });
+            var result = await service.FindSavedInfos(new SearchSaveParams { Name = "Ish", UserId = userId });
 
-            Assert.NotNull(captured);
-            var filter = captured.Filter!.Compile();
+            Assert.Equal([matchingNew.Id, matchingOld.Id], result.Select(r => r.Id));
+        }
 
-            var matching = MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "Effect");
-            matching.Name = "Ishmael Build";
-            matching.UserId = userId;
-            Assert.True(filter(matching));
+        [Fact]
+        public async Task ShouldFindSavedInfos_WithDefaultOptions_ReturnsAllSavesForUserOnFirstPage()
+        {
+            var fixture = new Fixture();
+            var userId = Guid.NewGuid();
 
-            var wrongName = MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "Effect");
-            wrongName.Name = "Something Else";
-            wrongName.UserId = userId;
-            Assert.False(filter(wrongName));
+            var save1 = MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "Effect");
+            save1.UserId = userId;
+            save1.Name = "Alpha Build";
+            var save2 = MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "Effect");
+            save2.UserId = userId;
+            save2.Name = "Beta Build";
+            var save3 = MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "Effect");
+            save3.UserId = userId;
+            save3.Name = "Gamma Build";
 
-            var wrongUser = MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "Effect");
-            wrongUser.Name = "Ishmael Build";
-            wrongUser.UserId = Guid.NewGuid();
-            Assert.False(filter(wrongUser));
+            var saveInfoRepository = new Mock<ISaveInfoRepository<SavedIDInfo, SavedId>>();
+            var savedSkillRepository = new Mock<ISavedSkillRepository>();
+            SetupFindAsync(saveInfoRepository, [save1, save2, save3]);
 
-            var oldest = MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "Effect");
-            oldest.SaveTime = new DateTime(2020, 1, 1);
-            var middle = MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "Effect");
-            middle.SaveTime = new DateTime(2021, 1, 1);
-            var newest = MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "Effect");
-            newest.SaveTime = new DateTime(2022, 1, 1);
+            var service = new SavedInfoService<SavedIDInfo, SavedId>(saveInfoRepository.Object, savedSkillRepository.Object);
 
-            var ordered = captured.OrderBy!(new List<SavedIDInfo> { oldest, newest, middle }.AsQueryable()).ToList();
+            var result = await service.FindSavedInfos(new SearchSaveParams { UserId = userId });
 
-            Assert.Equal([newest, middle, oldest], ordered);
+            Assert.Equal(3, result.Count);
+            Assert.Contains(result, s => s.Id == save1.Id);
+            Assert.Contains(result, s => s.Id == save2.Id);
+            Assert.Contains(result, s => s.Id == save3.Id);
+        }
+
+        [Fact]
+        public async Task ShouldFindSavedInfos_WithUserId_OnlyReturnsSavesForThatUser()
+        {
+            var fixture = new Fixture();
+            var targetUserId = Guid.NewGuid();
+            var otherUserId = Guid.NewGuid();
+
+            var ownSave1 = MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "Effect");
+            ownSave1.UserId = targetUserId;
+            var ownSave2 = MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "Effect");
+            ownSave2.UserId = targetUserId;
+            var otherUserSave = MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "Effect");
+            otherUserSave.UserId = otherUserId;
+
+            var saveInfoRepository = new Mock<ISaveInfoRepository<SavedIDInfo, SavedId>>();
+            var savedSkillRepository = new Mock<ISavedSkillRepository>();
+            SetupFindAsync(saveInfoRepository, [ownSave1, ownSave2, otherUserSave]);
+
+            var service = new SavedInfoService<SavedIDInfo, SavedId>(saveInfoRepository.Object, savedSkillRepository.Object);
+
+            var result = await service.FindSavedInfos(new SearchSaveParams { UserId = targetUserId });
+
+            Assert.Equal(2, result.Count);
+            Assert.All(result, s => Assert.Equal(targetUserId, s.UserId));
+            Assert.DoesNotContain(result, s => s.Id == otherUserSave.Id);
+        }
+
+        private static void SetupFindAsync(
+            Mock<ISaveInfoRepository<SavedIDInfo, SavedId>> repository,
+            List<SavedIDInfo> allEntries)
+        {
+            repository
+                .Setup(r => r.FindAsync(It.IsAny<RepositoryGetParams<SavedIDInfo>>()))
+                .Returns((RepositoryGetParams<SavedIDInfo> p) =>
+                {
+                    IQueryable<SavedIDInfo> query = allEntries.AsQueryable();
+                    if (p.Filter != null) query = query.Where(p.Filter);
+                    if (p.OrderBy != null) query = p.OrderBy(query);
+                    return Task.FromResult(query.Skip(p.Skip).Take(p.Take).AsEnumerable());
+                });
         }
 
         [Fact]
