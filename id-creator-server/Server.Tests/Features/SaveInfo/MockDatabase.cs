@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Server.Shared.Database;
 
-namespace Server.Tests
+namespace Server.Tests.Features.SaveInfo
 {
     public class MockDatabase
     {

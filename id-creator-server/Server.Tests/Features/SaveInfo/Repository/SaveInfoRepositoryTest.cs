@@ -13,7 +13,7 @@ namespace Server.Tests.Features.SaveInfo.Repository
             var fixture = new Fixture();
 
             var skillId = Guid.NewGuid();
-            var entry = CreateSavedIdEntry(fixture, skillId, "Old Effect");
+            var entry = MockSaveData.CreateSavedIdEntry(fixture, skillId, "Old Effect");
 
             db.SavedIDInfos.Add(entry);
             await db.SaveChangesAsync();
@@ -37,7 +37,7 @@ namespace Server.Tests.Features.SaveInfo.Repository
             Assert.Empty(tracked.Saved.Skill.PassiveSkills);
             Assert.Empty(tracked.Saved.Skill.CustomEffects);
 
-            var incoming = CreateSavedIdEntry(fixture, Guid.NewGuid(), "Should Not Appear");
+            var incoming = MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "Should Not Appear");
             incoming.Id = entry.Id;
             incoming.Saved.Id = tracked.Saved.Id;
             incoming.Saved.SplashArt.Id = tracked.Saved.SplashArt.Id;
@@ -73,7 +73,7 @@ namespace Server.Tests.Features.SaveInfo.Repository
             var fixture = new Fixture();
 
             var skillId = Guid.NewGuid();
-            var entry = CreateSavedEgoEntry(fixture, skillId, "Old Effect");
+            var entry = MockSaveData.CreateSavedEgoEntry(fixture, skillId, "Old Effect");
 
             db.SavedEGOInfos.Add(entry);
             await db.SaveChangesAsync();
@@ -97,7 +97,7 @@ namespace Server.Tests.Features.SaveInfo.Repository
             Assert.Empty(tracked.Saved.Skill.PassiveSkills);
             Assert.Empty(tracked.Saved.Skill.CustomEffects);
 
-            var incoming = CreateSavedEgoEntry(fixture, Guid.NewGuid(), "Should Not Appear");
+            var incoming = MockSaveData.CreateSavedEgoEntry(fixture, Guid.NewGuid(), "Should Not Appear");
             incoming.Id = entry.Id;
             incoming.Saved.Id = tracked.Saved.Id;
             incoming.Saved.SplashArt.Id = tracked.Saved.SplashArt.Id;
@@ -126,90 +126,5 @@ namespace Server.Tests.Features.SaveInfo.Repository
             Assert.Equal("Old Effect", reloaded.Saved.Skill.MentalEffects.First().Effect);
         }
 
-        private static SavedIDInfo CreateSavedIdEntry(Fixture fixture, Guid skillId, string mentalEffectText)
-        {
-            var entryId = Guid.NewGuid();
-
-            var skill = new SavedSkill
-            {
-                Id = skillId,
-                OffenseSkills = [],
-                DefenseSkills = [],
-                PassiveSkills = [],
-                CustomEffects = [],
-                MentalEffects =
-                [
-                    fixture.Build<MentalEffect>()
-                        .With(x => x.SavedSkillId, skillId)
-                        .With(x => x.Effect, mentalEffectText)
-                        .Create(),
-                ],
-            };
-
-            var saved = fixture.Build<SavedId>()
-                .Without(x => x.SplashArt)
-                .Without(x => x.SinnerIcon)
-                .Without(x => x.Skill)
-                .Create();
-            saved.Id = entryId;
-            saved.SplashArt = fixture.Create<ImageObj>();
-            saved.SinnerIcon = fixture.Create<ImageObj>();
-            saved.SavedSkillId = skillId;
-            saved.Skill = skill;
-
-            var entry = fixture.Build<SavedIDInfo>()
-                .Without(x => x.ImageAttach)
-                .Without(x => x.User)
-                .Without(x => x.Saved)
-                .Create();
-            entry.Id = entryId;
-            entry.ImageAttach = fixture.Create<ImageObj>();
-            entry.Saved = saved;
-
-            return entry;
-        }
-
-        private static SavedEGOInfo CreateSavedEgoEntry(Fixture fixture, Guid skillId, string mentalEffectText)
-        {
-            var entryId = Guid.NewGuid();
-
-            var skill = new SavedSkill
-            {
-                Id = skillId,
-                OffenseSkills = [],
-                DefenseSkills = [],
-                PassiveSkills = [],
-                CustomEffects = [],
-                MentalEffects =
-                [
-                    fixture.Build<MentalEffect>()
-                        .With(x => x.SavedSkillId, skillId)
-                        .With(x => x.Effect, mentalEffectText)
-                        .Create(),
-                ],
-            };
-
-            var saved = fixture.Build<SavedEgo>()
-                .Without(x => x.SplashArt)
-                .Without(x => x.SinnerIcon)
-                .Without(x => x.Skill)
-                .Create();
-            saved.Id = entryId;
-            saved.SplashArt = fixture.Create<ImageObj>();
-            saved.SinnerIcon = fixture.Create<ImageObj>();
-            saved.SavedSkillId = skillId;
-            saved.Skill = skill;
-
-            var entry = fixture.Build<SavedEGOInfo>()
-                .Without(x => x.ImageAttach)
-                .Without(x => x.User)
-                .Without(x => x.Saved)
-                .Create();
-            entry.Id = entryId;
-            entry.ImageAttach = fixture.Create<ImageObj>();
-            entry.Saved = saved;
-
-            return entry;
-        }
     }
 }
