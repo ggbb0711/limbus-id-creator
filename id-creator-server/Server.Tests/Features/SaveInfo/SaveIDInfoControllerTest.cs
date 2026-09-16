@@ -53,7 +53,8 @@ namespace Server.Tests.Features.SaveInfo
 
             var controller = new SaveIDInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
 
-            await Assert.ThrowsAsync<NotFoundException>(() => controller.GetSavedInfo(saveId, false));
+            var ex = await Assert.ThrowsAsync<NotFoundException>(() => controller.GetSavedInfo(saveId, false));
+            Assert.Equal("Save does not exist", ex.Message);
             authMock.Verify(a => a.AuthorizeAsync(It.IsAny<ClaimsPrincipal>(), It.IsAny<object>(), It.IsAny<string>()), Times.Never);
         }
 
@@ -73,7 +74,8 @@ namespace Server.Tests.Features.SaveInfo
 
             var controller = new SaveIDInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
 
-            await Assert.ThrowsAsync<ForbiddenException>(() => controller.GetSavedInfo(entry.Id, false));
+            var ex = await Assert.ThrowsAsync<ForbiddenException>(() => controller.GetSavedInfo(entry.Id, false));
+            Assert.Equal("You do not own this resource.", ex.Message);
         }
 
         [Fact]
@@ -97,8 +99,7 @@ namespace Server.Tests.Features.SaveInfo
             var result = await controller.GetSavedInfo(entry.Id, false);
 
             var okResult = Assert.IsType<OkObjectResult>(result.Result);
-            var apiResponse = Assert.IsType<ApiResponse<SaveInfoResponseDTO<SavedIDRequestDTO>>>(okResult.Value);
-            Assert.Same(responseDto, apiResponse.Data);
+            Assert.Equivalent(ApiResponse<SaveInfoResponseDTO<SavedIDRequestDTO>>.Ok(responseDto), okResult.Value);
         }
 
         [Fact]
@@ -135,7 +136,8 @@ namespace Server.Tests.Features.SaveInfo
 
             var controller = new SaveIDInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
 
-            await Assert.ThrowsAsync<ForbiddenException>(() => controller.GetSavedInfos(Guid.NewGuid(), "", 0, 10));
+            var ex = await Assert.ThrowsAsync<ForbiddenException>(() => controller.GetSavedInfos(Guid.NewGuid(), "", 0, 10));
+            Assert.Equal("You do not own this resource.", ex.Message);
             serviceMock.Verify(s => s.FindSavedInfos(It.IsAny<SearchSaveParams>()), Times.Never);
         }
 
@@ -191,8 +193,9 @@ namespace Server.Tests.Features.SaveInfo
             var result = await controller.GetSavedInfos(Guid.NewGuid(), "", 0, 10);
 
             var okResult = Assert.IsType<OkObjectResult>(result.Result);
-            var apiResponse = Assert.IsType<ApiResponse<List<SaveInfoResponseDTO<SavedIDRequestDTO>>>>(okResult.Value);
-            Assert.Equal([response1, response2], apiResponse.Data);
+            Assert.Equivalent(
+                ApiResponse<List<SaveInfoResponseDTO<SavedIDRequestDTO>>>.Ok([response1, response2]),
+                okResult.Value);
         }
 
         [Fact]
@@ -207,7 +210,8 @@ namespace Server.Tests.Features.SaveInfo
 
             var controller = new SaveIDInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
 
-            await Assert.ThrowsAsync<NotFoundException>(() => controller.DeleteIDSave(saveId));
+            var ex = await Assert.ThrowsAsync<NotFoundException>(() => controller.DeleteIDSave(saveId));
+            Assert.Equal("Save does not exist", ex.Message);
             serviceMock.Verify(s => s.DeleteSavedInfo(It.IsAny<Guid>()), Times.Never);
         }
 
@@ -227,7 +231,8 @@ namespace Server.Tests.Features.SaveInfo
 
             var controller = new SaveIDInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
 
-            await Assert.ThrowsAsync<ForbiddenException>(() => controller.DeleteIDSave(entry.Id));
+            var ex = await Assert.ThrowsAsync<ForbiddenException>(() => controller.DeleteIDSave(entry.Id));
+            Assert.Equal("You do not own this resource.", ex.Message);
             serviceMock.Verify(s => s.DeleteSavedInfo(It.IsAny<Guid>()), Times.Never);
         }
 
@@ -248,7 +253,8 @@ namespace Server.Tests.Features.SaveInfo
 
             var controller = new SaveIDInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
 
-            await Assert.ThrowsAsync<NotFoundException>(() => controller.DeleteIDSave(entry.Id));
+            var ex = await Assert.ThrowsAsync<NotFoundException>(() => controller.DeleteIDSave(entry.Id));
+            Assert.Equal("Save does not exist", ex.Message);
         }
 
         [Fact]
@@ -274,9 +280,9 @@ namespace Server.Tests.Features.SaveInfo
 
             serviceMock.Verify(s => s.DeleteSavedInfo(entry.Id), Times.Once);
             var okResult = Assert.IsType<OkObjectResult>(result.Result);
-            var apiResponse = Assert.IsType<ApiResponse<SaveInfoResponseDTO<SavedIDRequestDTO>>>(okResult.Value);
-            Assert.Same(responseDto, apiResponse.Data);
-            Assert.Equal("Deletion successful", apiResponse.Message);
+            Assert.Equivalent(
+                ApiResponse<SaveInfoResponseDTO<SavedIDRequestDTO>>.Ok(responseDto, "Deletion successful"),
+                okResult.Value);
         }
 
         [Fact]
@@ -289,8 +295,9 @@ namespace Server.Tests.Features.SaveInfo
             var controller = new SaveIDInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext { User = CreatePrincipal(null) };
 
-            await Assert.ThrowsAsync<UnauthorizedException>(() =>
+            var ex = await Assert.ThrowsAsync<UnauthorizedException>(() =>
                 controller.CreateNewIDSave(new SaveInfoFilesRequestDTO(), CreateRequestDto()));
+            Assert.Equal("Invalid access token", ex.Message);
             serviceMock.Verify(s => s.CreateSavedInfo(It.IsAny<SavedIDInfo>(), It.IsAny<SaveInfoFilesRequestDTO>()), Times.Never);
         }
 
@@ -304,8 +311,9 @@ namespace Server.Tests.Features.SaveInfo
             var controller = new SaveIDInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext { User = CreatePrincipal("not-a-guid") };
 
-            await Assert.ThrowsAsync<UnauthorizedException>(() =>
+            var ex = await Assert.ThrowsAsync<UnauthorizedException>(() =>
                 controller.CreateNewIDSave(new SaveInfoFilesRequestDTO(), CreateRequestDto()));
+            Assert.Equal("Invalid access token", ex.Message);
             serviceMock.Verify(s => s.CreateSavedInfo(It.IsAny<SavedIDInfo>(), It.IsAny<SaveInfoFilesRequestDTO>()), Times.Never);
         }
 
@@ -336,9 +344,9 @@ namespace Server.Tests.Features.SaveInfo
             Assert.Equal(userId, mappedEntity.UserId);
             serviceMock.Verify(s => s.CreateSavedInfo(mappedEntity, files), Times.Once);
             var okResult = Assert.IsType<OkObjectResult>(result.Result);
-            var apiResponse = Assert.IsType<ApiResponse<SaveInfoResponseDTO<SavedIDRequestDTO>>>(okResult.Value);
-            Assert.Same(responseDto, apiResponse.Data);
-            Assert.Equal("New save file created successfully", apiResponse.Message);
+            Assert.Equivalent(
+                ApiResponse<SaveInfoResponseDTO<SavedIDRequestDTO>>.Ok(responseDto, "New save file created successfully"),
+                okResult.Value);
         }
 
         [Fact]
@@ -351,8 +359,9 @@ namespace Server.Tests.Features.SaveInfo
             var controller = new SaveIDInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext { User = CreatePrincipal(null) };
 
-            await Assert.ThrowsAsync<UnauthorizedException>(() =>
+            var ex = await Assert.ThrowsAsync<UnauthorizedException>(() =>
                 controller.UpdateSave(new SaveInfoFilesRequestDTO(), CreateRequestDto()));
+            Assert.Equal("Invalid access token", ex.Message);
             serviceMock.Verify(s => s.UpdateSavedInfo(It.IsAny<SavedIDInfo>(), It.IsAny<SaveInfoFilesRequestDTO>()), Times.Never);
         }
 
@@ -366,8 +375,9 @@ namespace Server.Tests.Features.SaveInfo
             var controller = new SaveIDInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext { User = CreatePrincipal("not-a-guid") };
 
-            await Assert.ThrowsAsync<UnauthorizedException>(() =>
+            var ex = await Assert.ThrowsAsync<UnauthorizedException>(() =>
                 controller.UpdateSave(new SaveInfoFilesRequestDTO(), CreateRequestDto()));
+            Assert.Equal("Invalid access token", ex.Message);
             serviceMock.Verify(s => s.UpdateSavedInfo(It.IsAny<SavedIDInfo>(), It.IsAny<SaveInfoFilesRequestDTO>()), Times.Never);
         }
 
@@ -390,8 +400,9 @@ namespace Server.Tests.Features.SaveInfo
             var controller = new SaveIDInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext { User = CreatePrincipal(userId.ToString()) };
 
-            await Assert.ThrowsAsync<NotFoundException>(() =>
+            var ex = await Assert.ThrowsAsync<NotFoundException>(() =>
                 controller.UpdateSave(new SaveInfoFilesRequestDTO(), request));
+            Assert.Equal("Save does not exist", ex.Message);
             serviceMock.Verify(s => s.UpdateSavedInfo(It.IsAny<SavedIDInfo>(), It.IsAny<SaveInfoFilesRequestDTO>()), Times.Never);
         }
 
@@ -421,8 +432,9 @@ namespace Server.Tests.Features.SaveInfo
             var controller = new SaveIDInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext { User = CreatePrincipal(tokenUserId.ToString()) };
 
-            await Assert.ThrowsAsync<ForbiddenException>(() =>
+            var ex = await Assert.ThrowsAsync<ForbiddenException>(() =>
                 controller.UpdateSave(new SaveInfoFilesRequestDTO(), request));
+            Assert.Equal("You do not own this resource.", ex.Message);
 
             var ownedResource = Assert.IsType<OwnedResource>(authorizedResource);
             Assert.Equal(foundEntity.UserId, ownedResource.UserId);
@@ -488,9 +500,9 @@ namespace Server.Tests.Features.SaveInfo
 
             serviceMock.Verify(s => s.UpdateSavedInfo(mappedEntity, files), Times.Once);
             var okResult = Assert.IsType<OkObjectResult>(result.Result);
-            var apiResponse = Assert.IsType<ApiResponse<SaveInfoResponseDTO<SavedIDRequestDTO>>>(okResult.Value);
-            Assert.Same(responseDto, apiResponse.Data);
-            Assert.Equal("Save has been updated", apiResponse.Message);
+            Assert.Equivalent(
+                ApiResponse<SaveInfoResponseDTO<SavedIDRequestDTO>>.Ok(responseDto, "Save has been updated"),
+                okResult.Value);
         }
     }
 }

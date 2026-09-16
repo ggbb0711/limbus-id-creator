@@ -52,29 +52,12 @@ namespace Server.Tests.Features.SaveInfo.DTO
             _response = _mapper.Map<SaveInfoResponseDTO<SavedEgoRequestDTO>>(_entity);
         }
 
-        [Fact]
-        public void ForwardMap_SetsImageAttachId_ToRequestId() =>
-            Assert.Equal(_request.Id, _entity.ImageAttachId);
-
-        [Fact]
-        public void ForwardMap_SetsImageAttachUrl_FromPreviewImg() =>
-            Assert.Equal(_request.PreviewImg, _entity.ImageAttach.Url);
-
-        [Fact]
-        public void ForwardMap_SetsSavedEgoKey_ToRequestId() =>
-            Assert.Equal(_request.Id, _entity.SavedEgoKey);
-
-        [Fact]
-        public void ForwardMap_SetsSavedId_ToRequestId() =>
-            Assert.Equal(_request.Id, _entity.Saved.Id);
-
-        [Fact]
-        public void ForwardMap_SetsSavedSkillId_ToRequestId() =>
-            Assert.Equal(_request.Id, _entity.Saved.SavedSkillId);
-
-        [Fact]
-        public void ForwardMap_SetsSplashArtUrl() =>
-            Assert.Equal(SplashArtUrl, _entity.Saved.SplashArt.Url);
+        private static void SyncGeneratedImageFields(ImageObj expected, ImageObj actual)
+        {
+            expected.Id = actual.Id;
+            expected.LastUpdated = actual.LastUpdated;
+            expected.Status = actual.Status;
+        }
 
         [Fact]
         public void ForwardMap_GeneratesFreshGuid_ForSplashArtId()
@@ -88,10 +71,6 @@ namespace Server.Tests.Features.SaveInfo.DTO
             Assert.Equal(_entity.Saved.SplashArt.Id, _entity.Saved.SplashArtId);
 
         [Fact]
-        public void ForwardMap_SetsSinnerIconUrl() =>
-            Assert.Equal(SinnerIconUrl, _entity.Saved.SinnerIcon.Url);
-
-        [Fact]
         public void ForwardMap_GeneratesFreshGuid_ForSinnerIconId()
         {
             Assert.NotEqual(Guid.Empty, _entity.Saved.SinnerIcon.Id);
@@ -103,57 +82,82 @@ namespace Server.Tests.Features.SaveInfo.DTO
             Assert.Equal(_entity.Saved.SinnerIcon.Id, _entity.Saved.SinnerIconId);
 
         [Fact]
-        public void ForwardMap_MapsSanityCost() =>
-            Assert.Equal(SanityCostValue, _entity.Saved.SanityCost);
-
-        [Fact]
-        public void ForwardMap_MapsEgoLevel() =>
-            Assert.Equal(EgoLevelValue, _entity.Saved.EgoLevel);
-
-        [Fact]
-        public void ForwardMap_FlattensSinResistantWrath() =>
-            Assert.Equal(SinResistantWrathValue, _entity.Saved.SinResistantWrath);
-
-        [Fact]
-        public void ForwardMap_FlattensSinCostWrath() =>
-            Assert.Equal(SinCostWrathValue, _entity.Saved.SinCostWrath);
-
-        [Fact]
-        public void ForwardMap_SetsSkillId_ToRequestId() =>
-            Assert.Equal(_request.Id, _entity.Saved.Skill.Id);
-
-        [Fact]
-        public void ForwardMap_OffenseSkill_MapsIdFromInputId() =>
-            Assert.Equal(_offenseInputId, _entity.Saved.Skill.OffenseSkills.Single().Id);
-
-        [Fact]
-        public void ForwardMap_OffenseSkill_MapsImageUrl() =>
-            Assert.Equal(OffenseSkillImageUrl, _entity.Saved.Skill.OffenseSkills.Single().ImageAttach.Url);
-
-        [Fact]
-        public void ReverseMap_SetsPreviewImg_FromImageAttachUrl() =>
-            Assert.Equal(_entity.ImageAttach.Url, _response.PreviewImg);
-
-        [Fact]
-        public void ReverseMap_SetsSplashArtUrl() =>
-            Assert.Equal(_entity.Saved.SplashArt.Url, _response.SaveInfo.SplashArt);
-
-        [Fact]
-        public void ReverseMap_SetsSinnerIconUrl() =>
-            Assert.Equal(_entity.Saved.SinnerIcon.Url, _response.SaveInfo.SinnerIcon);
-
-        [Fact]
-        public void ReverseMap_OffenseSkill_RoundTripsInputId()
+        public void ForwardMap_ProducesExpectedEntity()
         {
-            var offenseSkill = Assert.IsType<RequestOffenseSkill>(_response.SaveInfo.SkillDetails.Single());
-            Assert.Equal(_offenseInputId, offenseSkill.InputId);
+            var expected = new SavedEGOInfo
+            {
+                Id = _request.Id,
+                SaveTime = _request.SaveTime,
+                ImageAttachId = _request.Id,
+                ImageAttach = new ImageObj { Id = _request.Id, Url = PreviewImgUrl },
+                SavedEgoKey = _request.Id,
+                Saved = new SavedEgo
+                {
+                    Id = _request.Id,
+                    SanityCost = SanityCostValue,
+                    SplashArt = new ImageObj { Url = SplashArtUrl },
+                    SinResistantWrath = SinResistantWrathValue,
+                    SinCostWrath = SinCostWrathValue,
+                    SinnerIcon = new ImageObj { Url = SinnerIconUrl },
+                    EgoLevel = EgoLevelValue,
+                    SavedSkillId = _request.Id,
+                    Skill = new SavedSkill
+                    {
+                        Id = _request.Id,
+                        OffenseSkills =
+                        [
+                            new OffenseSkill
+                            {
+                                Id = _offenseInputId,
+                                Index = 0,
+                                SavedSkillId = _request.Id,
+                                ImageAttach = new ImageObj { Url = OffenseSkillImageUrl },
+                            },
+                        ],
+                    },
+                },
+            };
+
+            SyncGeneratedImageFields(expected.ImageAttach, _entity.ImageAttach);
+            SyncGeneratedImageFields(expected.Saved.SplashArt, _entity.Saved.SplashArt);
+            expected.Saved.SplashArtId = expected.Saved.SplashArt.Id;
+            SyncGeneratedImageFields(expected.Saved.SinnerIcon, _entity.Saved.SinnerIcon);
+            expected.Saved.SinnerIconId = expected.Saved.SinnerIcon.Id;
+
+            var expectedOffense = expected.Saved.Skill.OffenseSkills.Single();
+            SyncGeneratedImageFields(expectedOffense.ImageAttach, _entity.Saved.Skill.OffenseSkills.Single().ImageAttach);
+            expectedOffense.ImageAttachId = expectedOffense.ImageAttach.Id;
+
+            Assert.Equivalent(expected, _entity);
         }
 
         [Fact]
-        public void ReverseMap_OffenseSkill_RoundTripsSkillImage()
+        public void ReverseMap_ProducesExpectedResponse()
         {
-            var offenseSkill = Assert.IsType<RequestOffenseSkill>(_response.SaveInfo.SkillDetails.Single());
-            Assert.Equal(OffenseSkillImageUrl, offenseSkill.SkillImage);
+            var expected = new SaveInfoResponseDTO<SavedEgoRequestDTO>
+            {
+                Id = _request.Id,
+                PreviewImg = _entity.ImageAttach.Url,
+                SaveInfo = new SavedEgoRequestDTO
+                {
+                    SanityCost = SanityCostValue,
+                    SplashArt = SplashArtUrl,
+                    SplashArtTranslation = new SplashArtTranslationObj(),
+                    SinResistant = new SavedEgoRequestDTO.SinResistantObj { Wrath = SinResistantWrathValue },
+                    SinCost = new SavedEgoRequestDTO.SinCostObj { Wrath = SinCostWrathValue },
+                    SinnerIcon = SinnerIconUrl,
+                    EgoLevel = EgoLevelValue,
+                    SkillDetails =
+                    [
+                        new RequestOffenseSkill { InputId = _offenseInputId, Index = 0, Type = SkillType.OffenseSkill, SkillImage = OffenseSkillImageUrl },
+                    ],
+                },
+            };
+
+            ((RequestOffenseSkill)expected.SaveInfo.SkillDetails[0]).SkillImageId =
+                ((RequestOffenseSkill)_response.SaveInfo.SkillDetails[0]).SkillImageId;
+
+            Assert.Equivalent(expected, _response);
         }
     }
 }

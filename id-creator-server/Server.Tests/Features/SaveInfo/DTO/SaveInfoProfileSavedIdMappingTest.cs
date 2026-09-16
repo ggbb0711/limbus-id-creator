@@ -59,33 +59,12 @@ namespace Server.Tests.Features.SaveInfo.DTO
             _response = _mapper.Map<SaveInfoResponseDTO<SavedIDRequestDTO>>(_entity);
         }
 
-        [Fact]
-        public void ForwardMap_SetsImageAttachId_ToRequestId() =>
-            Assert.Equal(_request.Id, _entity.ImageAttachId);
-
-        [Fact]
-        public void ForwardMap_SetsImageAttachObjectId_ToRequestId() =>
-            Assert.Equal(_request.Id, _entity.ImageAttach.Id);
-
-        [Fact]
-        public void ForwardMap_SetsImageAttachUrl_FromPreviewImg() =>
-            Assert.Equal(_request.PreviewImg, _entity.ImageAttach.Url);
-
-        [Fact]
-        public void ForwardMap_SetsSavedIdKey_ToRequestId() =>
-            Assert.Equal(_request.Id, _entity.SavedIdKey);
-
-        [Fact]
-        public void ForwardMap_SetsSavedId_ToRequestId() =>
-            Assert.Equal(_request.Id, _entity.Saved.Id);
-
-        [Fact]
-        public void ForwardMap_SetsSavedSkillId_ToRequestId() =>
-            Assert.Equal(_request.Id, _entity.Saved.SavedSkillId);
-
-        [Fact]
-        public void ForwardMap_SetsSplashArtUrl() =>
-            Assert.Equal(SplashArtUrl, _entity.Saved.SplashArt.Url);
+        private static void SyncGeneratedImageFields(ImageObj expected, ImageObj actual)
+        {
+            expected.Id = actual.Id;
+            expected.LastUpdated = actual.LastUpdated;
+            expected.Status = actual.Status;
+        }
 
         [Fact]
         public void ForwardMap_GeneratesFreshGuid_ForSplashArtId()
@@ -99,10 +78,6 @@ namespace Server.Tests.Features.SaveInfo.DTO
             Assert.Equal(_entity.Saved.SplashArt.Id, _entity.Saved.SplashArtId);
 
         [Fact]
-        public void ForwardMap_SetsSinnerIconUrl() =>
-            Assert.Equal(SinnerIconUrl, _entity.Saved.SinnerIcon.Url);
-
-        [Fact]
         public void ForwardMap_GeneratesFreshGuid_ForSinnerIconId()
         {
             Assert.NotEqual(Guid.Empty, _entity.Saved.SinnerIcon.Id);
@@ -114,30 +89,6 @@ namespace Server.Tests.Features.SaveInfo.DTO
             Assert.Equal(_entity.Saved.SinnerIcon.Id, _entity.Saved.SinnerIconId);
 
         [Fact]
-        public void ForwardMap_MapsTitle() =>
-            Assert.Equal(TitleValue, _entity.Saved.Title);
-
-        [Fact]
-        public void ForwardMap_MapsHP() =>
-            Assert.Equal(HPValue, _entity.Saved.HP);
-
-        [Fact]
-        public void ForwardMap_SetsSkillId_ToRequestId() =>
-            Assert.Equal(_request.Id, _entity.Saved.Skill.Id);
-
-        [Fact]
-        public void ForwardMap_OffenseSkill_MapsIdFromInputId() =>
-            Assert.Equal(_offenseInputId, _entity.Saved.Skill.OffenseSkills.Single().Id);
-
-        [Fact]
-        public void ForwardMap_OffenseSkill_MapsSavedSkillId() =>
-            Assert.Equal(_request.Id, _entity.Saved.Skill.OffenseSkills.Single().SavedSkillId);
-
-        [Fact]
-        public void ForwardMap_OffenseSkill_MapsImageUrl() =>
-            Assert.Equal(OffenseSkillImageUrl, _entity.Saved.Skill.OffenseSkills.Single().ImageAttach.Url);
-
-        [Fact]
         public void ForwardMap_OffenseSkill_GeneratesFreshImageAttachId()
         {
             var offenseSkill = _entity.Saved.Skill.OffenseSkills.Single();
@@ -146,102 +97,127 @@ namespace Server.Tests.Features.SaveInfo.DTO
         }
 
         [Fact]
-        public void ForwardMap_DefenseSkill_MapsIdFromInputId() =>
-            Assert.Equal(_defenseInputId, _entity.Saved.Skill.DefenseSkills.Single().Id);
-
-        [Fact]
-        public void ForwardMap_DefenseSkill_MapsSavedSkillId() =>
-            Assert.Equal(_request.Id, _entity.Saved.Skill.DefenseSkills.Single().SavedSkillId);
-
-        [Fact]
-        public void ForwardMap_DefenseSkill_MapsImageUrl() =>
-            Assert.Equal(DefenseSkillImageUrl, _entity.Saved.Skill.DefenseSkills.Single().ImageAttach.Url);
-
-        [Fact]
-        public void ForwardMap_PassiveSkill_MapsIdFromInputId() =>
-            Assert.Equal(_passiveInputId, _entity.Saved.Skill.PassiveSkills.Single().Id);
-
-        [Fact]
-        public void ForwardMap_PassiveSkill_MapsSavedSkillId() =>
-            Assert.Equal(_request.Id, _entity.Saved.Skill.PassiveSkills.Single().SavedSkillId);
-
-        [Fact]
-        public void ForwardMap_CustomEffect_MapsIdFromInputId() =>
-            Assert.Equal(_customInputId, _entity.Saved.Skill.CustomEffects.Single().Id);
-
-        [Fact]
-        public void ForwardMap_CustomEffect_MapsSavedSkillId() =>
-            Assert.Equal(_request.Id, _entity.Saved.Skill.CustomEffects.Single().SavedSkillId);
-
-        [Fact]
-        public void ForwardMap_CustomEffect_MapsImageUrl() =>
-            Assert.Equal(CustomEffectImageUrl, _entity.Saved.Skill.CustomEffects.Single().ImageAttach.Url);
-
-        [Fact]
-        public void ForwardMap_MentalEffect_MapsIdFromInputId() =>
-            Assert.Equal(_mentalInputId, _entity.Saved.Skill.MentalEffects.Single().Id);
-
-        [Fact]
-        public void ForwardMap_MentalEffect_MapsSavedSkillId() =>
-            Assert.Equal(_request.Id, _entity.Saved.Skill.MentalEffects.Single().SavedSkillId);
-
-        [Fact]
-        public void ForwardMap_MentalEffect_MapsEffectText() =>
-            Assert.Equal(MentalEffectText, _entity.Saved.Skill.MentalEffects.Single().Effect);
-
-        [Fact]
-        public void ReverseMap_SetsPreviewImg_FromImageAttachUrl() =>
-            Assert.Equal(_entity.ImageAttach.Url, _response.PreviewImg);
-
-        [Fact]
-        public void ReverseMap_SetsSplashArtUrl() =>
-            Assert.Equal(_entity.Saved.SplashArt.Url, _response.SaveInfo.SplashArt);
-
-        [Fact]
-        public void ReverseMap_SetsSinnerIconUrl() =>
-            Assert.Equal(_entity.Saved.SinnerIcon.Url, _response.SaveInfo.SinnerIcon);
-
-        [Fact]
-        public void ReverseMap_SkillDetails_HasFiveEntries() =>
-            Assert.Equal(5, _response.SaveInfo.SkillDetails.Count);
-
-        [Fact]
         public void ReverseMap_SkillDetails_OrderedByIndex() =>
             Assert.Equal([0, 1, 2, 3, 4], _response.SaveInfo.SkillDetails.Select(s => s.Index).ToList());
 
         [Fact]
-        public void ReverseMap_OffenseSkill_RoundTripsInputId()
+        public void ForwardMap_ProducesExpectedEntity()
         {
-            var offenseSkill = Assert.IsType<RequestOffenseSkill>(_response.SaveInfo.SkillDetails.Single(s => s.Type == SkillType.OffenseSkill));
-            Assert.Equal(_offenseInputId, offenseSkill.InputId);
+            var expected = new SavedIDInfo
+            {
+                Id = _request.Id,
+                SaveTime = _request.SaveTime,
+                ImageAttachId = _request.Id,
+                ImageAttach = new ImageObj { Id = _request.Id, Url = PreviewImgUrl },
+                SavedIdKey = _request.Id,
+                Saved = new SavedId
+                {
+                    Id = _request.Id,
+                    Title = TitleValue,
+                    HP = HPValue,
+                    SplashArt = new ImageObj { Url = SplashArtUrl },
+                    SinnerIcon = new ImageObj { Url = SinnerIconUrl },
+                    SavedSkillId = _request.Id,
+                    Skill = new SavedSkill
+                    {
+                        Id = _request.Id,
+                        OffenseSkills =
+                        [
+                            new OffenseSkill
+                            {
+                                Id = _offenseInputId,
+                                Index = 1,
+                                SavedSkillId = _request.Id,
+                                ImageAttach = new ImageObj { Url = OffenseSkillImageUrl },
+                            },
+                        ],
+                        DefenseSkills =
+                        [
+                            new DefenseSkill
+                            {
+                                Id = _defenseInputId,
+                                Index = 3,
+                                SavedSkillId = _request.Id,
+                                SkillLabel = "SKILL",
+                                ImageAttach = new ImageObj { Url = DefenseSkillImageUrl },
+                            },
+                        ],
+                        PassiveSkills =
+                        [
+                            new PassiveSkill { Id = _passiveInputId, Index = 0, SavedSkillId = _request.Id },
+                        ],
+                        CustomEffects =
+                        [
+                            new CustomEffect
+                            {
+                                Id = _customInputId,
+                                Index = 4,
+                                SavedSkillId = _request.Id,
+                                ImageAttach = new ImageObj { Url = CustomEffectImageUrl },
+                            },
+                        ],
+                        MentalEffects =
+                        [
+                            new MentalEffect { Id = _mentalInputId, Index = 2, SavedSkillId = _request.Id, Effect = MentalEffectText },
+                        ],
+                    },
+                },
+            };
+
+            SyncGeneratedImageFields(expected.ImageAttach, _entity.ImageAttach);
+            SyncGeneratedImageFields(expected.Saved.SplashArt, _entity.Saved.SplashArt);
+            expected.Saved.SplashArtId = expected.Saved.SplashArt.Id;
+            SyncGeneratedImageFields(expected.Saved.SinnerIcon, _entity.Saved.SinnerIcon);
+            expected.Saved.SinnerIconId = expected.Saved.SinnerIcon.Id;
+
+            var expectedOffense = expected.Saved.Skill.OffenseSkills.Single();
+            SyncGeneratedImageFields(expectedOffense.ImageAttach, _entity.Saved.Skill.OffenseSkills.Single().ImageAttach);
+            expectedOffense.ImageAttachId = expectedOffense.ImageAttach.Id;
+
+            var expectedDefense = expected.Saved.Skill.DefenseSkills.Single();
+            SyncGeneratedImageFields(expectedDefense.ImageAttach, _entity.Saved.Skill.DefenseSkills.Single().ImageAttach);
+            expectedDefense.ImageAttachId = expectedDefense.ImageAttach.Id;
+
+            var expectedCustom = expected.Saved.Skill.CustomEffects.Single();
+            SyncGeneratedImageFields(expectedCustom.ImageAttach, _entity.Saved.Skill.CustomEffects.Single().ImageAttach);
+            expectedCustom.ImageAttachId = expectedCustom.ImageAttach.Id;
+
+            Assert.Equivalent(expected, _entity);
         }
 
         [Fact]
-        public void ReverseMap_OffenseSkill_RoundTripsSkillImage()
+        public void ReverseMap_ProducesExpectedResponse()
         {
-            var offenseSkill = Assert.IsType<RequestOffenseSkill>(_response.SaveInfo.SkillDetails.Single(s => s.Type == SkillType.OffenseSkill));
-            Assert.Equal(OffenseSkillImageUrl, offenseSkill.SkillImage);
-        }
+            var expected = new SaveInfoResponseDTO<SavedIDRequestDTO>
+            {
+                Id = _request.Id,
+                PreviewImg = _entity.ImageAttach.Url,
+                SaveInfo = new SavedIDRequestDTO
+                {
+                    Title = TitleValue,
+                    HP = HPValue,
+                    SplashArt = SplashArtUrl,
+                    SplashArtTranslation = new SplashArtTranslationObj(),
+                    SinnerIcon = SinnerIconUrl,
+                    SkillDetails =
+                    [
+                        new RequestPassiveSkill { InputId = _passiveInputId, Index = 0, Type = SkillType.PassiveSkill },
+                        new RequestOffenseSkill { InputId = _offenseInputId, Index = 1, Type = SkillType.OffenseSkill, SkillImage = OffenseSkillImageUrl },
+                        new RequestMentalEffect { InputId = _mentalInputId, Index = 2, Type = SkillType.MentalEffect, Effect = MentalEffectText },
+                        new RequestDefenseSkill { InputId = _defenseInputId, Index = 3, Type = SkillType.DefenseSkill, SkillImage = DefenseSkillImageUrl },
+                        new RequestCustomEffect { InputId = _customInputId, Index = 4, Type = SkillType.CustomEffect, CustomImg = CustomEffectImageUrl },
+                    ],
+                },
+            };
 
-        [Fact]
-        public void ReverseMap_DefenseSkill_RoundTripsInputId()
-        {
-            var defenseSkill = Assert.IsType<RequestDefenseSkill>(_response.SaveInfo.SkillDetails.Single(s => s.Type == SkillType.DefenseSkill));
-            Assert.Equal(_defenseInputId, defenseSkill.InputId);
-        }
+            ((RequestOffenseSkill)expected.SaveInfo.SkillDetails[1]).SkillImageId =
+                ((RequestOffenseSkill)_response.SaveInfo.SkillDetails[1]).SkillImageId;
+            ((RequestDefenseSkill)expected.SaveInfo.SkillDetails[3]).SkillImageId =
+                ((RequestDefenseSkill)_response.SaveInfo.SkillDetails[3]).SkillImageId;
+            ((RequestCustomEffect)expected.SaveInfo.SkillDetails[4]).CustomImgId =
+                ((RequestCustomEffect)_response.SaveInfo.SkillDetails[4]).CustomImgId;
 
-        [Fact]
-        public void ReverseMap_CustomEffect_RoundTripsCustomImg()
-        {
-            var customEffect = Assert.IsType<RequestCustomEffect>(_response.SaveInfo.SkillDetails.Single(s => s.Type == SkillType.CustomEffect));
-            Assert.Equal(CustomEffectImageUrl, customEffect.CustomImg);
-        }
-
-        [Fact]
-        public void ReverseMap_MentalEffect_RoundTripsEffect()
-        {
-            var mentalEffect = Assert.IsType<RequestMentalEffect>(_response.SaveInfo.SkillDetails.Single(s => s.Type == SkillType.MentalEffect));
-            Assert.Equal(MentalEffectText, mentalEffect.Effect);
+            Assert.Equivalent(expected, _response);
         }
     }
 }
