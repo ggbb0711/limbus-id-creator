@@ -24,8 +24,9 @@ namespace Server.Features.Auth.Background
                 {
                     await DoWork();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    Console.WriteLine(ex.Message);
                 }
             }
         }
