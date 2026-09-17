@@ -9,8 +9,8 @@ namespace Server.Shared.CloudStorage.Service
 {
     public class AWSS3Service : IUploadService, IDeleteService
     {
-        private readonly AmazonS3Client _amazonS3Client;
-        private readonly TransferUtility _transferUtility;
+        private readonly IAmazonS3 _amazonS3Client;
+        private readonly ITransferUtility _transferUtility;
         private readonly string AWS_S3_BUCKET_NAME;
         public AWSS3Service(EnvironmentVariables env){
             var AWS_ACCESS_KEY = env.AwsAccessKey;
@@ -24,6 +24,13 @@ namespace Server.Shared.CloudStorage.Service
             _amazonS3Client = new AmazonS3Client(credentials, config);
             _transferUtility = new TransferUtility(_amazonS3Client);
             AWS_S3_BUCKET_NAME = env.AwsS3BucketName;
+        }
+
+        public AWSS3Service(IAmazonS3 amazonS3Client, ITransferUtility transferUtility, string bucketName)
+        {
+            _amazonS3Client = amazonS3Client;
+            _transferUtility = transferUtility;
+            AWS_S3_BUCKET_NAME = bucketName;
         }
 
         public async Task Delete(string publicId)
