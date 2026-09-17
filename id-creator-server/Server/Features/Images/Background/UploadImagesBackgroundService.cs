@@ -2,6 +2,7 @@
 using Server.Features.Images.Enum;
 using Server.Features.Images.Service;
 using Server.Shared.CloudStorage.Service;
+using Server.Shared.Model;
 
 namespace Server.Features.Images.Background
 {
@@ -23,7 +24,9 @@ namespace Server.Features.Images.Background
                 if(FileHelper.IsBase64String(image.Url.Replace("data:image/png;base64,","")))
                 {
                     var uploadUrl = await uploadService.Upload(Convert.FromBase64String(image.Url.Replace("data:image/png;base64,","")),image.Id.ToString());
-                    await imageObjService.UpdateImage(image.Id, uploadUrl, image.LastUpdated);
+                    image.Url = uploadUrl;
+                    image.Status = AssetStatus.Uploaded;
+                    await imageObjService.UpdateImage(image);
                 }
             }))());
             await Task.WhenAll(tasks);
@@ -38,8 +41,9 @@ namespace Server.Features.Images.Background
                 {
                     await DoWork();
                 }
-                catch (System.Exception)
+                catch (Exception ex)
                 {
+                    Console.WriteLine(ex.Message);
                 }
             }
         }

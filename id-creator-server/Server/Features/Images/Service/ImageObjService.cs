@@ -21,14 +21,14 @@ namespace Server.Features.Images.Service
             return image;
         }
 
-        public async Task<ImageObj?> UpdateImage(Guid Id, string newUrl, DateTime lastUpdated)
+        public async Task<ImageObj?> UpdateImage(ImageObj updateImage)
         {
-            var foundImage = await _imageObjRepository.GetByIdAsync(Id);
-            if ((foundImage != null && !lastUpdated.ToString().Equals(foundImage.LastUpdated.ToString()))
+            var foundImage = await _imageObjRepository.GetByIdAsync(updateImage.Id);
+            if ((foundImage != null && !updateImage.LastUpdated.ToString().Equals(foundImage.LastUpdated.ToString()))
                 || foundImage == null) return null;
-            var separator = newUrl.Contains('?') ? "&" : "?";
-            foundImage.Url = $"{newUrl}{separator}v={foundImage.LastUpdated.Ticks}";
-            foundImage.LastUpdated = lastUpdated;
+            var separator = updateImage.Url.Contains('?') ? "&" : "?";
+            foundImage.Url = $"{updateImage.Url}{separator}v={foundImage.LastUpdated.Ticks}";
+            foundImage.LastUpdated = updateImage.LastUpdated;
 
             var updatedImage = await _imageObjRepository.UpdateAsync(foundImage);
             await _imageObjRepository.SaveChangeAsync();

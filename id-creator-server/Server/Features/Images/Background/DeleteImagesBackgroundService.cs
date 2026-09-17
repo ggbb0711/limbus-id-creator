@@ -35,8 +35,9 @@ namespace Server.Features.Images.Background
                 {
                     await DoWork();
                 }
-                catch (System.Exception)
+                catch (Exception ex)
                 {
+                    Console.WriteLine(ex.Message);
                 }
             }
         }

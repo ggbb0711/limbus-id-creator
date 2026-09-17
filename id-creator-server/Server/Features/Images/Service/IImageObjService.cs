@@ -7,7 +7,7 @@ namespace Server.Features.Images.Service
 {
     public interface IImageObjService
     {
-        public Task<ImageObj?> UpdateImage(Guid Id, string newUrl, DateTime lastUpdated);
+        public Task<ImageObj?> UpdateImage(ImageObj updatedImage);
         public Task<List<ImageObj>> GetImagesByStatus(AssetStatus status);
         public Task<ImageObj?> DeleteImage(Guid id);
     }
