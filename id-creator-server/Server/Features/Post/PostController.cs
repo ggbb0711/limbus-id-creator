@@ -41,7 +41,8 @@ namespace Server.Features.Post
             var sub = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
             _ = Guid.TryParse(sub, out var userId);
             
-            var foundPost = await postService.GetPostById(postId);
+            var foundPost = await postService.GetPostById(postId)
+                ?? throw new NotFoundException("Post does not exist");
             var postResponse = mapper.Map<PostResponseDTO>(foundPost);
             postResponse.ViewCount = await postViewService.LogView(new PostView()
             {
