@@ -27,7 +27,7 @@ namespace Server.Shared.Repository
 
             if (param.Filter is not null)
             {
-                query = query.Where(param.Filter).Skip(param.Skip).Take(param.Take);
+                query = query.Where(param.Filter);
             }
 
             foreach (var includeProperty in param.IncludeProperties.Split
@@ -38,12 +38,12 @@ namespace Server.Shared.Repository
 
             if (param.OrderBy != null)
             {
-                return Task.FromResult(param.OrderBy(query).AsEnumerable());
+                query = param.OrderBy(query);
             }
-            else
-            {
-                return Task.FromResult(query.AsEnumerable());
-            }
+
+            query = query.Skip(param.Skip).Take(param.Take);
+
+            return Task.FromResult(query.AsEnumerable());
         }
 
         public async Task<T?> GetByIdAsync(Guid id)

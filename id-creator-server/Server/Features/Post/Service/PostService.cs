@@ -1,3 +1,5 @@
+using System.Text.Json;
+using Microsoft.IdentityModel.Tokens;
 using Server.Features.Comment.Repository;
 using Server.Features.Post.Enum;
 using Server.Features.Post.Repository;
@@ -23,7 +25,7 @@ namespace Server.Features.Post.Service
         {
             return [.. await postRepository.FindAsync(new RepositoryGetParams<PostModel>()
             {
-                Filter = p=>(p.Title.Contains(option.Title) || p.Title.Contains(""))
+                Filter = p=>(p.Title.Contains(option.Title) || option.Title.IsNullOrEmpty())
                     &&(option.UserId == Guid.Empty||option.UserId == p.UserId)
                     &&(option.Tag.Count<1||option.Tag.All(t=>p.Tags.Select(t=>t.TagName).Contains(t)))
                     && !p.IsRemoved && p.IsActive,

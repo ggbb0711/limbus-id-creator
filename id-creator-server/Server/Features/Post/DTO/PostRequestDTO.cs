@@ -29,7 +29,7 @@ namespace Server.Features.Post.DTO
                 .Must(tags => tags.Count < 22)
                 .WithMessage("Post cannot have more than 22 tags");
             
-            RuleForEach(p=>p.Tags)
+            RuleForEach(p=>p.ImagesAttach)
                 .MustAsync( async (tag, _) => 
                 {
                     return await FileHelper.CheckUrlSize(tag, 7000000);

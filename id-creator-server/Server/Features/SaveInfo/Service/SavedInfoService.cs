@@ -26,7 +26,7 @@ namespace Server.Features.SaveInfo.Service
 
         public async Task<TEntry?> DeleteSavedInfo(Guid Id)
         {
-            var deleteSave = await _saveRepository.GetByIdAsync(Id);
+            var deleteSave = await _saveRepository.GetByIdAsyncIncludingSaved(Id);
             if(deleteSave != null)
             {
                 await _saveRepository.RemoveAsync(deleteSave);

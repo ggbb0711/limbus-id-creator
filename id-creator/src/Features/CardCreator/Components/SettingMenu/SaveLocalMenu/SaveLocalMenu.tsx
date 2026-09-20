@@ -8,6 +8,7 @@ import EditIcon from "Assets/Icons/EditIcon";
 import { IEgoInfo } from "Features/CardCreator/Types/IEgoInfo";
 import { IIdInfo } from "Features/CardCreator/Types/IIdInfo";
 import { EnvironmentVariables } from "Config/Environments";
+import formatDateForBackend from "Utils/formatDateForBackend";
 import { useAppSelector, useAppDispatch } from "Stores/AppStore";
 import { setIdInfo } from "Features/CardCreator/Stores/IdInfoSlice";
 import { setEgoInfo } from "Features/CardCreator/Stores/EgoInfoSlice";
@@ -53,8 +54,8 @@ const SaveLocalMenu=({saveMode, close}:{saveMode: "ID" | "EGO", close: ()=>void}
         else{
             const saveFile = new SaveFile(cardData, newSaveName)
             saveFile.id = uuid()
-            saveFile.saveName = newSaveName
-            const createdDate = new Date().toLocaleString()
+            saveFile.name = newSaveName
+            const createdDate = formatDateForBackend(new Date())
             createSave({...saveFile, updateTime:createdDate, saveTime: createdDate})
         }
         closePopup()
@@ -99,11 +100,11 @@ const SaveLocalMenu=({saveMode, close}:{saveMode: "ID" | "EGO", close: ()=>void}
                         <p className="created-time">Last updated: {data.updateTime}</p>
                         <p className="created-time">Created: {data.saveTime}</p>
                         <div className="center-element save-tab-input-container">
-                            <p>{data.saveName}</p>
+                            <p>{data.name}</p>
                             <div onClick={()=>{
                                 setPopupMode("overwrite")
                                 setNameChangingSaveId(data.id)
-                                openPopup(data.saveName)
+                                openPopup(data.name)
                             }}>
                                 <EditIcon/>
                             </div>

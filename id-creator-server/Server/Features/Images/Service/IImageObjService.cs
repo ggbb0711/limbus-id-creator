@@ -10,5 +10,6 @@ namespace Server.Features.Images.Service
         public Task<ImageObj?> UpdateImage(ImageObj updatedImage);
         public Task<List<ImageObj>> GetImagesByStatus(AssetStatus status);
         public Task<ImageObj?> DeleteImage(Guid id);
+        public Task<ImageObj?> DeleteImage(ImageObj id);
     }
 }

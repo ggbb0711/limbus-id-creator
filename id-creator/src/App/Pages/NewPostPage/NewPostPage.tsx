@@ -11,7 +11,7 @@ import Editor from 'react-simple-wysiwyg';
 import uuid from "react-uuid";
 import { useNavigate } from "react-router-dom";
 import useAlert from "Hooks/useAlert";
-import { useCheckAuthQuery } from "Api/AuthApi";
+import { useAuth } from "Hooks/useAuth";
 import { useCreatePostMutation } from "Api/PostAPI";
 
 interface IChoosenSave{
@@ -25,7 +25,7 @@ export default function NewPostPage():ReactElement{
     const [choosenSave,setChoosenSave] = useState<IChoosenSave[]>([])
     const [saveMode,setSaveMode] = useState("Identity")
     const [description,setDescription] = useState("")
-    const {data: loginUser} = useCheckAuthQuery()
+    const {user: loginUser} = useAuth()
     const {setIsLoginMenuActive} = useLoginMenu()
     const {addAlert} = useAlert()
     const navigate = useNavigate()

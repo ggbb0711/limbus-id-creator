@@ -13,10 +13,10 @@ namespace Server.Features.SaveInfo.Repository
         await Set
           .Include(e => e.Saved).ThenInclude(s => s.SplashArt)
           .Include(e => e.Saved).ThenInclude(s => s.SinnerIcon)
-          .Include(e => e.Saved).ThenInclude(s => s.Skill).ThenInclude(sk => sk.OffenseSkills)
-          .Include(e => e.Saved).ThenInclude(s => s.Skill).ThenInclude(sk => sk.DefenseSkills)
+          .Include(e => e.Saved).ThenInclude(s => s.Skill).ThenInclude(sk => sk.OffenseSkills).ThenInclude(o => o.ImageAttach)
+          .Include(e => e.Saved).ThenInclude(s => s.Skill).ThenInclude(sk => sk.DefenseSkills).ThenInclude(d => d.ImageAttach)
           .Include(e => e.Saved).ThenInclude(s => s.Skill).ThenInclude(sk => sk.PassiveSkills)
-          .Include(e => e.Saved).ThenInclude(s => s.Skill).ThenInclude(sk => sk.CustomEffects)
+          .Include(e => e.Saved).ThenInclude(s => s.Skill).ThenInclude(sk => sk.CustomEffects).ThenInclude(c => c.ImageAttach)
           .Include(e => e.Saved).ThenInclude(s => s.Skill).ThenInclude(sk => sk.MentalEffects)
           .FirstOrDefaultAsync(e => e.Id == id);
         public Task MergeSavedInfo(TEntry tracked, TEntry incoming)

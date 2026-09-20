@@ -1,8 +1,8 @@
 import React from "react";
-import { dropDownEl } from "Components/DropDown/DropDown";
+import { DropDownEl } from "Components/DropDown/DropDown";
 import "./EgoLevelDropDown.css"
 
-export const EgoLevelDropDown:{[key:string]:dropDownEl}={
+export const EgoLevelDropDown:{[key:string]:DropDownEl<string>}={
     ZAYIN:{
         el:
         <div>

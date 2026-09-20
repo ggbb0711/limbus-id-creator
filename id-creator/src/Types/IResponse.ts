@@ -2,6 +2,8 @@
 
 export default interface IResponse<ResponseType>
 {
-    response:ResponseType,
-    msg:string
+    success:boolean,
+    data:ResponseType,
+    message:string,
+    errorCode:string|null
 }

@@ -17,8 +17,8 @@ interface ICreateCommentBody {
 const CommentApi = BaseApi.injectEndpoints({
     endpoints: (builder) => ({
         getComments: builder.query<IComment[], IGetCommentsParams>({
-            query: ({ postId, page, limit }) => `/Comment?PostId=${postId}&page=${page}&limit=${limit}`,
-            transformResponse: (response: IResponse<IComment[]>) => response.response,
+            query: ({ postId, page, limit }) => `/Comment/post/${postId}?page=${page}&limit=${limit}`,
+            transformResponse: (response: IResponse<IComment[]>) => response.data,
             serializeQueryArgs: ({ queryArgs }) => queryArgs.postId,
             merge: (currentCache, newItems) => {
                 currentCache.push(...newItems)
@@ -29,12 +29,12 @@ const CommentApi = BaseApi.injectEndpoints({
 
         createComment: builder.mutation<IComment, ICreateCommentBody>({
             query: (body) => ({
-                url: '/Comment/create',
+                url: '/Comment',
                 method: 'POST',
                 headers: { 'Content-type': 'application/json' },
                 body,
             }),
-            transformResponse: (response: IResponse<IComment>) => response.response,
+            transformResponse: (response: IResponse<IComment>) => response.data,
             invalidatesTags: (result, error, { postId }) => [{ type: 'Comment', id: postId }],
         }),
     }),

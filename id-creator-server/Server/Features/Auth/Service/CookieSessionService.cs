@@ -11,6 +11,8 @@ namespace Server.Features.Auth.Service
 {
     public class CookieSessionService:ICookieSessionService
     {
+        private const string SessionCookiePath = "/API/Auth";
+
         private readonly IDataProtector _dataProtector;
 
         public CookieSessionService(IDataProtectionProvider dataProtector, EnvironmentVariables env)
@@ -20,7 +22,7 @@ namespace Server.Features.Auth.Service
 
         public void AddSessionCookie(HttpResponse res,Guid sessionId,DateTime expireDate)
         {
-            res.Cookies.Delete("Session-Cookie");
+            res.Cookies.Delete("Session-Cookie", new CookieOptions { Path = SessionCookiePath });
 
             var cookie = new CookieHeaderValue("Session-id",_dataProtector.Protect(sessionId.ToString()));
             var cookieOptions = new CookieOptions
@@ -29,7 +31,7 @@ namespace Server.Features.Auth.Service
                 HttpOnly = true,
                 Expires = expireDate,
                 SameSite = Microsoft.AspNetCore.Http.SameSiteMode.None,
-                Path = "/API/OAuth/refresh"
+                Path = SessionCookiePath
             };
 
             res.Cookies.Append("Session-Cookie",cookie.ToString(),cookieOptions);
@@ -58,7 +60,7 @@ namespace Server.Features.Auth.Service
         {
             if(!req.Cookies["Session-Cookie"].IsNullOrEmpty())
             {
-                res.Cookies.Delete("Session-Cookie");
+                res.Cookies.Delete("Session-Cookie", new CookieOptions { Path = SessionCookiePath });
             }
             return;
         }

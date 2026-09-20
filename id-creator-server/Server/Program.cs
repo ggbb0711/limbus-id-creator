@@ -17,6 +17,7 @@ using Server.Features.Images.Repository;
 using Server.Features.Images.Service;
 using Server.Features.Post.Repository;
 using Server.Features.Post.Service;
+using Server.Features.SaveInfo.JsonConverter;
 using Server.Features.SaveInfo.Repository;
 using Server.Features.SaveInfo.Service;
 using Server.Features.User.Repository;
@@ -27,6 +28,7 @@ using Server.Shared.Database;
 using Server.Shared.Database.Interceptor;
 using Server.Shared.Middleware;
 using Server.Shared.Model;
+using Server.Shared.ModelBinding;
 
 
 Env.Load();
@@ -53,9 +55,13 @@ builder.Services.AddCors(options=>
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
-builder.Services.AddControllers()
+builder.Services.AddControllers(options=>
+    {
+        options.ModelBinderProviders.Insert(0, new JsonFormFieldModelBinderProvider());
+    })
     .AddJsonOptions(options=>{
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        options.JsonSerializerOptions.Converters.Add(new SkillRequestBaseSystemTextJsonConverter());
     });
 builder.Services.AddSwaggerGen();
 if(env.Mode.Equals("Published")) builder.Services.AddDbContext<ServerDbContext>(options =>options.UseNpgsql(
@@ -72,7 +78,8 @@ builder.Services.Configure<ApiBehaviorOptions>(options=>
     {
         var kvp = context.ModelState
             .First(kvp => kvp.Value?.Errors.Count>0);
-        throw new Server.Shared.Exception.ValidationException("Validation failed: "+kvp.Value?.Errors.Select(e=>e.ErrorMessage).ToArray().ToString());
+        var message = string.Join(" ", kvp.Value!.Errors.Select(e=>e.ErrorMessage));
+        throw new Server.Shared.Exception.ValidationException("Validation failed: "+message);
     };
 });
 
@@ -133,8 +140,11 @@ if(!env.ListenOn.IsNullOrEmpty())builder.WebHost.UseUrls(env.ListenOn??"");
 
 var app = builder.Build();
 
-app.UseSwagger();
-app.UseSwaggerUI();
+if(env.Mode.Equals("Dev"))
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseExceptionHandler();
 

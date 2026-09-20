@@ -41,7 +41,7 @@ export default function InputPassivePage({
                     <label htmlFor="wrath_own_cost"><img className="stat-icon" src="/Images/sin-affinity/affinity_Wrath_big.webp" alt="wrath-input-resistant-icon" /></label>
                     <div className="resistant-content">
                         <div>
-                            <input type="number" className="input stat-page-input-border input-number" {...registerNumber("ownCost.wrath_cost")} id="wrath_own_cost"/>
+                            <input type="number" className="input stat-page-input-border input-number" {...registerNumber("reqOwn.wrath")} id="wrath_own_cost"/>
                         </div>
                     </div>
                 </div>
@@ -49,7 +49,7 @@ export default function InputPassivePage({
                     <label htmlFor="lust_own_cost"><img className="stat-icon" src="/Images/sin-affinity/affinity_Lust_big.webp" alt="lust-input-resistant-icon" /></label>
                     <div className="resistant-content">
                         <div>
-                            <input type="number" className="input stat-page-input-border input-number" {...registerNumber("ownCost.lust_cost")} id="lust_own_cost"/>
+                            <input type="number" className="input stat-page-input-border input-number" {...registerNumber("reqOwn.lust")} id="lust_own_cost"/>
                         </div>
                     </div>
                 </div>
@@ -57,7 +57,7 @@ export default function InputPassivePage({
                     <label htmlFor="sloth_own_cost"><img className="stat-icon" src="/Images/sin-affinity/affinity_Sloth_big.webp" alt="sloth-input-resistant-icon" /></label>
                     <div className="resistant-content">
                         <div>
-                            <input type="number" className="input stat-page-input-border input-number" {...registerNumber("ownCost.sloth_cost")} id="sloth_own_cost"/>
+                            <input type="number" className="input stat-page-input-border input-number" {...registerNumber("reqOwn.sloth")} id="sloth_own_cost"/>
                         </div>
                     </div>
                 </div>
@@ -65,7 +65,7 @@ export default function InputPassivePage({
                     <label htmlFor="gluttony_own_cost"><img className="stat-icon" src="/Images/sin-affinity/affinity_Gluttony_big.webp" alt="gluttony-input-resistant-icon" /></label>
                     <div className="resistant-content">
                         <div>
-                            <input type="number" className="input stat-page-input-border input-number" {...registerNumber("ownCost.gluttony_cost")} id="gluttony_own_cost"/>
+                            <input type="number" className="input stat-page-input-border input-number" {...registerNumber("reqOwn.gluttony")} id="gluttony_own_cost"/>
                         </div>
                     </div>
                 </div>
@@ -73,7 +73,7 @@ export default function InputPassivePage({
                     <label htmlFor="gloom_own_cost"><img className="stat-icon" src="/Images/sin-affinity/affinity_Gloom_big.webp" alt="gloom-input-resistant-icon" /></label>
                     <div className="resistant-content">
                         <div>
-                            <input type="number" className="input stat-page-input-border input-number" {...registerNumber("ownCost.gloom_cost")} id="gloom_own_cost"/>
+                            <input type="number" className="input stat-page-input-border input-number" {...registerNumber("reqOwn.gloom")} id="gloom_own_cost"/>
                         </div>
                     </div>
                 </div>
@@ -81,7 +81,7 @@ export default function InputPassivePage({
                     <label htmlFor="pride_own_cost"><img className="stat-icon" src="/Images/sin-affinity/affinity_Pride_big.webp" alt="pride-input-resistant-icon" /></label>
                     <div className="resistant-content">
                         <div>
-                            <input type="number" className="input stat-page-input-border input-number" {...registerNumber("ownCost.pride_cost")} id="pride_own_cost"/>
+                            <input type="number" className="input stat-page-input-border input-number" {...registerNumber("reqOwn.pride")} id="pride_own_cost"/>
                         </div>
                     </div>
                 </div>
@@ -89,7 +89,7 @@ export default function InputPassivePage({
                     <label htmlFor="envy_own_cost"><img className="stat-icon" src="/Images/sin-affinity/affinity_Envy_big.webp" alt="envy-input-resistant-icon" /></label>
                     <div className="resistant-content">
                         <div>
-                            <input type="number" className="input stat-page-input-border input-number" {...registerNumber("ownCost.envy_cost")} id="envy_own_cost"/>
+                            <input type="number" className="input stat-page-input-border input-number" {...registerNumber("reqOwn.envy")} id="envy_own_cost"/>
                         </div>
                     </div>
                 </div>
@@ -100,7 +100,7 @@ export default function InputPassivePage({
                         <label htmlFor="wrath_res_cost"><img className="stat-icon" src="/Images/sin-affinity/affinity_Wrath_big.webp" alt="wrath-input-resistant-icon" /></label>
                         <div className="resistant-content">
                             <div>
-                                <input type="number" className="input stat-page-input-border input-number" {...registerNumber("resCost.wrath_cost")} id="wrath_res_cost"/>
+                                <input type="number" className="input stat-page-input-border input-number" {...registerNumber("reqRes.wrath")} id="wrath_res_cost"/>
                             </div>
                         </div>
                     </div>
@@ -108,7 +108,7 @@ export default function InputPassivePage({
                         <label htmlFor="lust_res_cost"><img className="stat-icon" src="/Images/sin-affinity/affinity_Lust_big.webp" alt="lust-input-resistant-icon" /></label>
                         <div className="resistant-content">
                             <div>
-                                <input type="number" className="input stat-page-input-border input-number" {...registerNumber("resCost.lust_cost")} id="lust_res_cost"/>
+                                <input type="number" className="input stat-page-input-border input-number" {...registerNumber("reqRes.lust")} id="lust_res_cost"/>
                             </div>
                         </div>
                     </div>
@@ -116,7 +116,7 @@ export default function InputPassivePage({
                         <label htmlFor="sloth_res_cost"><img className="stat-icon" src="/Images/sin-affinity/affinity_Sloth_big.webp" alt="sloth-input-resistant-icon" /></label>
                         <div className="resistant-content">
                             <div>
-                                <input type="number" className="input stat-page-input-border input-number" {...registerNumber("resCost.sloth_cost")} id="sloth_res_cost"/>
+                                <input type="number" className="input stat-page-input-border input-number" {...registerNumber("reqRes.sloth")} id="sloth_res_cost"/>
                             </div>
                         </div>
                     </div>
@@ -124,7 +124,7 @@ export default function InputPassivePage({
                         <label htmlFor="gluttony_res_cost"><img className="stat-icon" src="/Images/sin-affinity/affinity_Gluttony_big.webp" alt="gluttony-input-resistant-icon" /></label>
                         <div className="resistant-content">
                             <div>
-                                <input type="number" className="input stat-page-input-border input-number" {...registerNumber("resCost.gluttony_cost")} id="gluttony_res_cost"/>
+                                <input type="number" className="input stat-page-input-border input-number" {...registerNumber("reqRes.gluttony")} id="gluttony_res_cost"/>
                             </div>
                         </div>
                     </div>
@@ -132,7 +132,7 @@ export default function InputPassivePage({
                         <label htmlFor="gloom_res_cost"><img className="stat-icon" src="/Images/sin-affinity/affinity_Gloom_big.webp" alt="gloom-input-resistant-icon" /></label>
                         <div className="resistant-content">
                             <div>
-                                <input type="number" className="input stat-page-input-border input-number" {...registerNumber("resCost.gloom_cost")} id="gloom_res_cost"/>
+                                <input type="number" className="input stat-page-input-border input-number" {...registerNumber("reqRes.gloom")} id="gloom_res_cost"/>
                             </div>
                         </div>
                     </div>
@@ -140,7 +140,7 @@ export default function InputPassivePage({
                         <label htmlFor="pride_res_cost"><img className="stat-icon" src="/Images/sin-affinity/affinity_Pride_big.webp" alt="pride-input-resistant-icon" /></label>
                         <div className="resistant-content">
                             <div>
-                                <input type="number" className="input stat-page-input-border input-number" {...registerNumber("resCost.pride_cost")} id="pride_res_cost"/>
+                                <input type="number" className="input stat-page-input-border input-number" {...registerNumber("reqRes.pride")} id="pride_res_cost"/>
                             </div>
                         </div>
                     </div>
@@ -148,7 +148,7 @@ export default function InputPassivePage({
                         <label htmlFor="envy_res_cost"><img className="stat-icon" src="/Images/sin-affinity/affinity_Envy_big.webp" alt="envy-input-resistant-icon" /></label>
                         <div className="resistant-content">
                             <div>
-                                <input type="number" className="input stat-page-input-border input-number" {...registerNumber("resCost.envy_cost")} id="envy_res_cost"/>
+                                <input type="number" className="input stat-page-input-border input-number" {...registerNumber("reqRes.envy")} id="envy_res_cost"/>
                             </div>
                         </div>
                     </div>

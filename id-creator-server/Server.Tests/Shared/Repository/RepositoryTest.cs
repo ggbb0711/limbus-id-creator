@@ -147,7 +147,7 @@ namespace Server.Tests.Shared.Repository
         }
 
         [Fact]
-        public async Task FindAsync_WithNoFilter_ReturnsAllEntities_IgnoringSkipAndTake()
+        public async Task FindAsync_WithNoFilter_AppliesSkipAndTake()
         {
             var db = MockDatabase.CreateDbConnection();
             var fixture = new Fixture();
@@ -161,7 +161,7 @@ namespace Server.Tests.Shared.Repository
 
             var result = await repo.FindAsync(new RepositoryGetParams<SavedIDInfo> { Skip = 0, Take = 1 });
 
-            Assert.Equal(3, result.Count());
+            Assert.Single(result);
         }
 
         [Fact]
@@ -193,7 +193,7 @@ namespace Server.Tests.Shared.Repository
         }
 
         [Fact]
-        public async Task FindAsync_AppliesOrderByAfterSkipAndTake_NotBeforeIt()
+        public async Task FindAsync_AppliesOrderByBeforeSkipAndTake()
         {
             var db = MockDatabase.CreateDbConnection();
             var fixture = new Fixture();
@@ -223,9 +223,9 @@ namespace Server.Tests.Shared.Repository
             var names = result.Select(s => s.Name).ToList();
 
             Assert.Equal(2, names.Count);
-            Assert.Contains("First", names);
             Assert.Contains("Second", names);
-            Assert.DoesNotContain("Third", names);
+            Assert.Contains("Third", names);
+            Assert.DoesNotContain("First", names);
         }
 
         [Fact]

@@ -1,4 +1,5 @@
 
+using System.Text.Json;
 using Server.Features.Images.Enum;
 using Server.Features.Images.Service;
 using Server.Shared.CloudStorage.Service;
@@ -21,7 +22,7 @@ namespace Server.Features.Images.Background
             foreach ( var image in images ) tasks.Add(((Func<Task>)(async () =>
             {
                 await deleteService.Delete(image.Id.ToString());
-                await imageObjService.DeleteImage(image.Id);
+                await imageObjService.DeleteImage(image);
             }))());
             await Task.WhenAll(tasks);
         }

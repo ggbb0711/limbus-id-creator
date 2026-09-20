@@ -11,7 +11,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
-      - E:/Docker/limbus-postgres-data:/var/lib/postgresql/18/data #Change your folder here
+      - pgdata:/var/lib/postgresql/18/data
     restart: unless-stopped
 
   pgadmin:
@@ -27,3 +27,5 @@ services:
     depends_on:
       - postgres
     restart: unless-stopped
+volumes:
+  pgdata:

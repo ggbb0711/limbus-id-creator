@@ -101,7 +101,7 @@ export default function SearchSaveInput({userId,saveMode,chooseSave}:{userId:str
                         <img src={save.previewImg} className="search-save-preview-img" alt="preview-img" />
                         <div>
                             <p>Updated: {save.saveTime}</p>
-                            <p>{save.saveName}</p>
+                            <p>{save.name}</p>
                         </div>
                     </div>
                 })}</>}

@@ -22,15 +22,15 @@ namespace Server.Shared.Database.Interceptor
             if(ctx == null) return;
 
             var deletedOffenseSkills = ctx.ChangeTracker.Entries<OffenseSkill>()
-                .Where(e => e.State == EntityState.Deleted)
+                .Where(e => e.State == EntityState.Deleted && e.Entity.ImageAttach != null)
                 .Select(e => e.Entity.ImageAttach);
 
             var deletedDefenseSkills = ctx.ChangeTracker.Entries<DefenseSkill>()
-                .Where(e => e.State == EntityState.Deleted)
+                .Where(e => e.State == EntityState.Deleted && e.Entity.ImageAttach != null)
                 .Select(e => e.Entity.ImageAttach);
 
             var deletedCustomEffects = ctx.ChangeTracker.Entries<CustomEffect>()
-                .Where(e => e.State == EntityState.Deleted)
+                .Where(e => e.State == EntityState.Deleted && e.Entity.ImageAttach != null)
                 .Select(e => e.Entity.ImageAttach);
 
             var deletedImages = new List<ImageObj>();

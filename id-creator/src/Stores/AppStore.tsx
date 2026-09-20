@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { AlertReducer } from './Slices/AlertSlice'
 import { UiReducer } from './Slices/UiSlice'
+import { AuthReducer } from './Slices/AuthSlice'
 import { IdInfoReducer } from 'Features/CardCreator/Stores/IdInfoSlice'
 import { EgoInfoReducer } from 'Features/CardCreator/Stores/EgoInfoSlice'
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,6 +12,7 @@ export const AppStore = configureStore({
     reducer: {
         alert: AlertReducer,
         ui: UiReducer,
+        auth: AuthReducer,
         idInfo: IdInfoReducer,
         egoInfo: EgoInfoReducer,
         api: BaseApi.reducer,

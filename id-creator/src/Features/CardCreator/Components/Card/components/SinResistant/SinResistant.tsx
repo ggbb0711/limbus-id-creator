@@ -3,31 +3,31 @@ import "./SinResistant.css"
 import React from "react";
 
 interface sinResistant{
-    wrath_resistant:number;
-    lust_resistant:number;
-    sloth_resistant:number;
-    gluttony_resistant:number;
-    gloom_resistant:number;
-    pride_resistant:number;
-    envy_resistant:number;
+    wrath:number;
+    lust:number;
+    sloth:number;
+    gluttony:number;
+    gloom:number;
+    pride:number;
+    envy:number;
 }
 
 
 export default function SinResistant({sinResistant}:{sinResistant:sinResistant}):ReactElement{
     const {
-        wrath_resistant,
-        lust_resistant,
-        sloth_resistant,
-        gluttony_resistant,
-        gloom_resistant,
-        pride_resistant,
-        envy_resistant,
+        wrath,
+        lust,
+        sloth,
+        gluttony,
+        gloom,
+        pride,
+        envy,
     }=sinResistant
 
     function changeResistantColor(value:number):string{
         if(value<1) return "var(--Endure)"
         if(value>=2.0) return "var(--Fatal)"
-        
+
         return"var(--Normal)"
     }
 
@@ -37,56 +37,56 @@ export default function SinResistant({sinResistant}:{sinResistant:sinResistant})
         if(value>=2.0) return "Fatal"
         return "Normal"
     }
-    
+
     return <div className="sin-resistant-container">
-        <div className="sin-resistant" style={{color:changeResistantColor(wrath_resistant)}}>
+        <div className="sin-resistant" style={{color:changeResistantColor(wrath)}}>
             <img src="/Images/sin-affinity/affinity_Wrath_big.webp" alt="Wrath-resistant-icon" />
             <div>
-                <p>{changeResistantText(wrath_resistant)}</p>
-                <p>[x{wrath_resistant}]</p>
+                <p>{changeResistantText(wrath)}</p>
+                <p>[x{wrath}]</p>
             </div>
         </div>
-        <div className="sin-resistant" style={{color:changeResistantColor(lust_resistant)}}>
+        <div className="sin-resistant" style={{color:changeResistantColor(lust)}}>
             <img src="/Images/sin-affinity/affinity_Lust_big.webp" alt="Lust-resistant-icon" />
             <div>
-                <p>{changeResistantText(lust_resistant)}</p>
-                <p>[x{lust_resistant}]</p>
-            </div>        
+                <p>{changeResistantText(lust)}</p>
+                <p>[x{lust}]</p>
+            </div>
         </div>
-        <div className="sin-resistant" style={{color:changeResistantColor(sloth_resistant)}}>
+        <div className="sin-resistant" style={{color:changeResistantColor(sloth)}}>
             <img src="/Images/sin-affinity/affinity_Sloth_big.webp" alt="Sloth-resistant-icon" />
             <div>
-                <p>{changeResistantText(sloth_resistant)}</p>
-                <p>[x{sloth_resistant}]</p>
+                <p>{changeResistantText(sloth)}</p>
+                <p>[x{sloth}]</p>
             </div>
         </div>
-        <div className="sin-resistant" style={{color:changeResistantColor(gluttony_resistant)}}>
+        <div className="sin-resistant" style={{color:changeResistantColor(gluttony)}}>
             <img src="/Images/sin-affinity/affinity_Gluttony_big.webp" alt="Gluttony-resistant-icon" />
             <div>
-                <p>{changeResistantText(gluttony_resistant)}</p>
-                <p>[x{gluttony_resistant}]</p>
+                <p>{changeResistantText(gluttony)}</p>
+                <p>[x{gluttony}]</p>
             </div>
         </div>
-        <div className="sin-resistant" style={{color:changeResistantColor(gloom_resistant)}}>
+        <div className="sin-resistant" style={{color:changeResistantColor(gloom)}}>
             <img src="/Images/sin-affinity/affinity_Gloom_big.webp" alt="Gloom-resistant-icon" />
             <div>
-                <p>{changeResistantText(gloom_resistant)}</p>
-                <p>[x{gloom_resistant}]</p>
+                <p>{changeResistantText(gloom)}</p>
+                <p>[x{gloom}]</p>
             </div>
         </div>
-        <div className="sin-resistant" style={{color:changeResistantColor(pride_resistant)}}>
+        <div className="sin-resistant" style={{color:changeResistantColor(pride)}}>
             <img src="/Images/sin-affinity/affinity_Pride_big.webp" alt="Pride-resistant-icon" />
             <div>
-                <p>{changeResistantText(pride_resistant)}</p>
-                <p>[x{pride_resistant}]</p>
+                <p>{changeResistantText(pride)}</p>
+                <p>[x{pride}]</p>
             </div>
         </div>
-        <div className="sin-resistant" style={{color:changeResistantColor(envy_resistant)}}>
+        <div className="sin-resistant" style={{color:changeResistantColor(envy)}}>
             <img src="/Images/sin-affinity/affinity_Envy_big.webp" alt="Envy-resistant-icon" />
             <div>
-                <p>{changeResistantText(envy_resistant)}</p>
-                <p>[x{envy_resistant}]</p>
-            </div>        
+                <p>{changeResistantText(envy)}</p>
+                <p>[x{envy}]</p>
+            </div>
         </div>
     </div>
 }

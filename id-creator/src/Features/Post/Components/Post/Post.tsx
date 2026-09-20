@@ -74,7 +74,7 @@ export default function Post({post,isLoading}:{post:IPost|null,isLoading:boolean
     return <div className="post-container post-page-element-container">
         {!post?<div>Post not found</div>:<>
             <h1 className="post-title">{post.title}</h1>
-            {isLoading?<></>:<p className="post-date">Posted: {post.created.split(" ")[0]}</p>}
+            {isLoading?<></>:<p className="post-date">Posted: {new Date(post.created).toLocaleDateString()}</p>}
             <div className="post-author-container">
                 <div className="center-element">
                     {isLoading?<UserProfileLoading/>:

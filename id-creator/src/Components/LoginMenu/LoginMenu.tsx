@@ -5,7 +5,7 @@ import { CodeResponse, useGoogleLogin } from "@react-oauth/google";
 import GoogleIcon from "Assets/Icons/GoogleIcon";
 import PopUpMenu from "../PopUpMenu/PopUpMenu";
 import useAlert from "Hooks/useAlert";
-import { useRegisterMutation } from "Api/AuthApi";
+import { useLoginWithGoogleMutation } from "Api/AuthApi";
 import { useAppSelector, useAppDispatch } from "Stores/AppStore";
 import { closeLoginMenu, toggleLoginMenu } from "Stores/Slices/UiSlice";
 
@@ -14,7 +14,7 @@ function LoginMenu(){
     const dispatch = useAppDispatch()
     const [user,setUser] = useState<Omit<CodeResponse, "error" | "error_description" | "error_uri">>()
     const {addAlert} = useAlert();
-    const [ register, {isLoading} ] = useRegisterMutation();
+    const [ loginWithGoogle, {isLoading} ] = useLoginWithGoogleMutation();
 
 
     const login = useGoogleLogin({
@@ -31,7 +31,7 @@ function LoginMenu(){
             const registerUser = async ()=>{
                 if (user) {
                     try{
-                        await register(JSON.stringify(user.code)).unwrap();
+                        await loginWithGoogle(JSON.stringify(user.code)).unwrap();
                         addAlert("Success","Login successfully");
                         dispatch(closeLoginMenu());
                     }

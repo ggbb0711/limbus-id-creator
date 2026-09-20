@@ -35,6 +35,7 @@ namespace Server.Tests.Features.Images.Service
 
             Assert.Same(image, result);
             repository.Verify(r => r.RemoveAsync(image), Times.Once);
+            repository.Verify(r => r.SaveChangeAsync(), Times.Once);
         }
 
         [Fact]

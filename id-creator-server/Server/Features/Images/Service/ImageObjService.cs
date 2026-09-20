@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Server.Features.Images.Enum;
 using Server.Features.Images.Repository;
 using Server.Shared.Model;
@@ -14,10 +15,17 @@ namespace Server.Features.Images.Service
             return _imageObjRepository.GetAllImagesByStatus(status);
         }
 
+        public async Task<ImageObj?> DeleteImage(ImageObj image)
+        {
+            await _imageObjRepository.RemoveAsync(image);
+            await _imageObjRepository.SaveChangeAsync();
+            return image;
+        }
+
         public async Task<ImageObj?> DeleteImage(Guid id)
         {
             var image = await _imageObjRepository.GetByIdAsync(id);
-            if(image != null)await _imageObjRepository.RemoveAsync(image);
+            if(image != null) await DeleteImage(image);
             return image;
         }
 

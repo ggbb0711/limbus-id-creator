@@ -52,7 +52,7 @@ export default function UserPage():ReactElement{
                 <div className="page-content">
 
                     <div className="user-container">
-                        <p className="user-meta-txt">Created at: {user.createdAt.split(" ")[0]}</p>
+                        <p className="user-meta-txt">Created at: {new Date(user.createdAt).toLocaleDateString()}</p>
                         {isFetchingUser?<UserProfileLoading/>:<UserProfile userProfile={user} userId={userId!} />}
                         <div className="user-log-out-container">
                             {user.owned && <button className={isLoggingOut?"main-button active":"main-button"} onClick={logout}>{isLoggingOut?"Logging out...":"Logout"}</button>}

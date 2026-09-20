@@ -122,7 +122,7 @@ export default function InputStatPage({collaspPage}:{collaspPage:()=>void}):Reac
                         <label htmlFor="wrath_cost"><img className="stat-icon" src="/Images/sin-affinity/affinity_Wrath_big.webp" alt="wrath-input-resistant-icon" /></label>
                         <div className="resistant-content">
                             <div>
-                                <input type="number" className="input stat-page-input-border input-number" {...registerNumber("sinCost.wrath_cost")} id="wrath_cost"/>
+                                <input type="number" className="input stat-page-input-border input-number" {...registerNumber("sinCost.wrath")} id="wrath_cost"/>
                             </div>
                         </div>
                     </div>
@@ -130,7 +130,7 @@ export default function InputStatPage({collaspPage}:{collaspPage:()=>void}):Reac
                         <label htmlFor="lust_cost"><img className="stat-icon" src="/Images/sin-affinity/affinity_Lust_big.webp" alt="Lust-input-resistant-icon" /></label>
                         <div className="resistant-content">
                             <div>
-                                <input type="number" className="input stat-page-input-border input-number" {...registerNumber("sinCost.lust_cost")} id="lust_cost"/>
+                                <input type="number" className="input stat-page-input-border input-number" {...registerNumber("sinCost.lust")} id="lust_cost"/>
                             </div>
                         </div>
                     </div>
@@ -138,7 +138,7 @@ export default function InputStatPage({collaspPage}:{collaspPage:()=>void}):Reac
                         <label htmlFor="sloth_cost"><img className="stat-icon" src="/Images/sin-affinity/affinity_Sloth_big.webp" alt="Sloth-input-resistant-icon" /></label>
                         <div className="resistant-content">
                             <div>
-                                <input type="number" className="input stat-page-input-border input-number" {...registerNumber("sinCost.sloth_cost")} id="sloth_cost"/>
+                                <input type="number" className="input stat-page-input-border input-number" {...registerNumber("sinCost.sloth")} id="sloth_cost"/>
                             </div>
                         </div>
                     </div>
@@ -146,7 +146,7 @@ export default function InputStatPage({collaspPage}:{collaspPage:()=>void}):Reac
                         <label htmlFor="gluttony_cost"><img className="stat-icon" src="/Images/sin-affinity/affinity_Gluttony_big.webp" alt="Gluttony-input-resistant-icon" /></label>
                         <div className="resistant-content">
                             <div>
-                                <input type="number" className="input stat-page-input-border input-number" {...registerNumber("sinCost.gluttony_cost")} id="gluttony_cost"/>
+                                <input type="number" className="input stat-page-input-border input-number" {...registerNumber("sinCost.gluttony")} id="gluttony_cost"/>
                             </div>
                         </div>
                     </div>
@@ -154,7 +154,7 @@ export default function InputStatPage({collaspPage}:{collaspPage:()=>void}):Reac
                         <label htmlFor="gloom_cost"><img className="stat-icon" src="/Images/sin-affinity/affinity_Gloom_big.webp" alt="Gloom-input-resistant-icon" /></label>
                         <div className="resistant-content">
                             <div>
-                                <input type="number" className="input stat-page-input-border input-number" {...registerNumber("sinCost.gloom_cost")} id="gloom_cost"/>
+                                <input type="number" className="input stat-page-input-border input-number" {...registerNumber("sinCost.gloom")} id="gloom_cost"/>
                             </div>
                         </div>
                     </div>
@@ -162,7 +162,7 @@ export default function InputStatPage({collaspPage}:{collaspPage:()=>void}):Reac
                         <label htmlFor="pride_cost"><img className="stat-icon" src="/Images/sin-affinity/affinity_Pride_big.webp" alt="Pride-input-resistant-icon" /></label>
                         <div className="resistant-content">
                             <div>
-                                <input type="number" className="input stat-page-input-border input-number" {...registerNumber("sinCost.pride_cost")} id="pride_cost"/>
+                                <input type="number" className="input stat-page-input-border input-number" {...registerNumber("sinCost.pride")} id="pride_cost"/>
                             </div>
                         </div>
                     </div>
@@ -170,7 +170,7 @@ export default function InputStatPage({collaspPage}:{collaspPage:()=>void}):Reac
                         <label htmlFor="envy_cost"><img className="stat-icon" src="/Images/sin-affinity/affinity_Envy_big.webp" alt="Envy-input-resistant-icon" /></label>
                         <div className="resistant-content">
                             <div>
-                                <input type="number" className="input stat-page-input-border input-number" {...registerNumber("sinCost.envy_cost")} id="envy_cost"/>
+                                <input type="number" className="input stat-page-input-border input-number" {...registerNumber("sinCost.envy")} id="envy_cost"/>
                             </div>
                         </div>
                     </div>
@@ -180,43 +180,43 @@ export default function InputStatPage({collaspPage}:{collaspPage:()=>void}):Reac
                 <div className="input-container">
                     <label htmlFor="wrath_resistant"><img className="stat-icon" src="/Images/sin-affinity/affinity_Wrath_big.webp" alt="wrath-input-resistant-icon" /></label>
                     <div className="resistant-content">
-                        <input style={{color:changeResistantColor(sinResistant?.wrath_resistant)}} type="number" className="input stat-page-input-border input-number" {...registerNumber("sinResistant.wrath_resistant")} id="wrath_resistant"/>
+                        <input style={{color:changeResistantColor(sinResistant?.wrath)}} type="number" className="input stat-page-input-border input-number" {...registerNumber("sinResistant.wrath")} id="wrath_resistant"/>
                     </div>
                 </div>
                 <div className="input-container">
                     <label htmlFor="lust_resistant"><img className="stat-icon" src="/Images/sin-affinity/affinity_Lust_big.webp" alt="Lust-input-resistant-icon" /></label>
                     <div className="resistant-content">
-                        <input style={{color:changeResistantColor(sinResistant?.lust_resistant)}} type="number" className="input stat-page-input-border input-number" {...registerNumber("sinResistant.lust_resistant")} id="lust_resistant"/>
+                        <input style={{color:changeResistantColor(sinResistant?.lust)}} type="number" className="input stat-page-input-border input-number" {...registerNumber("sinResistant.lust")} id="lust_resistant"/>
                     </div>
                 </div>
                 <div className="input-container">
                     <label htmlFor="sloth_resistant"><img className="stat-icon" src="/Images/sin-affinity/affinity_Sloth_big.webp" alt="Sloth-input-resistant-icon" /></label>
                     <div className="resistant-content">
-                        <input style={{color:changeResistantColor(sinResistant?.sloth_resistant)}} type="number" className="input stat-page-input-border input-number" {...registerNumber("sinResistant.sloth_resistant")} id="sloth_resistant"/>
+                        <input style={{color:changeResistantColor(sinResistant?.sloth)}} type="number" className="input stat-page-input-border input-number" {...registerNumber("sinResistant.sloth")} id="sloth_resistant"/>
                     </div>
                 </div>
                 <div className="input-container">
                     <label htmlFor="gluttony_resistant"><img className="stat-icon" src="/Images/sin-affinity/affinity_Gluttony_big.webp" alt="Gluttony-input-resistant-icon" /></label>
                     <div className="resistant-content">
-                        <input style={{color:changeResistantColor(sinResistant?.gluttony_resistant)}} type="number" className="input stat-page-input-border input-number" {...registerNumber("sinResistant.gluttony_resistant")} id="gluttony_resistant"/>
+                        <input style={{color:changeResistantColor(sinResistant?.gluttony)}} type="number" className="input stat-page-input-border input-number" {...registerNumber("sinResistant.gluttony")} id="gluttony_resistant"/>
                     </div>
                 </div>
                 <div className="input-container">
                     <label htmlFor="gloom_resistant"><img className="stat-icon" src="/Images/sin-affinity/affinity_Gloom_big.webp" alt="Gloom-input-resistant-icon" /></label>
                     <div className="resistant-content">
-                        <input style={{color:changeResistantColor(sinResistant?.gloom_resistant)}} type="number" className="input stat-page-input-border input-number" {...registerNumber("sinResistant.gloom_resistant")} id="gloom_resistant"/>
+                        <input style={{color:changeResistantColor(sinResistant?.gloom)}} type="number" className="input stat-page-input-border input-number" {...registerNumber("sinResistant.gloom")} id="gloom_resistant"/>
                     </div>
                 </div>
                 <div className="input-container">
                     <label htmlFor="pride_resistant"><img className="stat-icon" src="/Images/sin-affinity/affinity_Pride_big.webp" alt="Pride-input-resistant-icon" /></label>
                     <div className="resistant-content">
-                        <input style={{color:changeResistantColor(sinResistant?.pride_resistant)}} type="number" className="input stat-page-input-border input-number" {...registerNumber("sinResistant.pride_resistant")} id="pride_resistant"/>
+                        <input style={{color:changeResistantColor(sinResistant?.pride)}} type="number" className="input stat-page-input-border input-number" {...registerNumber("sinResistant.pride")} id="pride_resistant"/>
                     </div>
                 </div>
                 <div className="input-container">
                     <label htmlFor="envy_resistant"><img className="stat-icon" src="/Images/sin-affinity/affinity_Envy_big.webp" alt="Envy-input-resistant-icon" /></label>
                     <div className="resistant-content">
-                        <input style={{color:changeResistantColor(sinResistant?.envy_resistant)}} type="number" className="input stat-page-input-border input-number" {...registerNumber("sinResistant.envy_resistant")} id="envy_resistant"/>
+                        <input style={{color:changeResistantColor(sinResistant?.envy)}} type="number" className="input stat-page-input-border input-number" {...registerNumber("sinResistant.envy")} id="envy_resistant"/>
                     </div>
                 </div>
             </div>

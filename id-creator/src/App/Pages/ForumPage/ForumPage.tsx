@@ -9,7 +9,7 @@ import PaginatedPost from "Components/PaginatedPost/PaginatedPost";
 import TagInput from "Components/TagInput/TagInput";
 import TagsContainer from "Components/TagsContainer/TagsContainer";
 import useAlert from "Hooks/useAlert";
-import { useCheckAuthQuery } from "Api/AuthApi";
+import { useAuth } from "Hooks/useAuth";
 import { useGetPostsQuery } from "Api/PostAPI";
 import { PostSortOptions } from "Types/Enums/PostSortOptions";
 
@@ -18,7 +18,7 @@ export default function ForumPage():ReactElement{
     const [tags,setTags] = useState<ITag[]>([])
     const [sortedBy,setSortedBy] = useState(PostSortOptions.Latest)
     const [currPage,setCurrPage] = useState(0)
-    const {data: user} = useCheckAuthQuery()
+    const {user} = useAuth()
     const {setIsLoginMenuActive} = useLoginMenu()
     const {addAlert} = useAlert()
 
@@ -71,11 +71,11 @@ export default function ForumPage():ReactElement{
                             el: <div>Earliest</div>,
                             value: PostSortOptions.Earliest
                         },
-                        Most_Viewed:{
+                        MostViewed:{
                             el: <div>Most Viewed</div>,
                             value: PostSortOptions.MostViewed
                         },
-                        Most_Commented:{
+                        MostCommented:{
                             el: <div>Most Commented</div>,
                             value: PostSortOptions.MostCommented
                         },
@@ -84,7 +84,7 @@ export default function ForumPage():ReactElement{
                             value: PostSortOptions.Title
                         },
                     }}
-                    propVal={sortedBy.toString()}
+                    propVal={PostSortOptions[sortedBy]}
                     cb={(s)=>setSortedBy(s)}/>
                 </div>
             </div>

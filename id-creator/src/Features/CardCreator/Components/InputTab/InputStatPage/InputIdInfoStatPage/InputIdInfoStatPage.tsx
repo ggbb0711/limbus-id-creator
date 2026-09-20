@@ -210,7 +210,7 @@ export default function InputIdInfoStatPage({collaspPage}:{collaspPage:()=>void}
             <div className="input-group-container">
                 <div className="input-container">
                     <label className="input-label" htmlFor="slashResistant">
-                        <img className="stat-icon" src="/Images/attack/attackt_slash.webp" alt="attackt_slash" />
+                        <img className="stat-icon" src="/Images/attack/attackt_Slash.webp" alt="attackt_slash" />
                         <span className="input-label">
                             Slash resist (<span style={{color:changeResistantColor(slashResistant)}}>{changeResistantText(slashResistant)}</span>): 
                         </span>
@@ -221,7 +221,7 @@ export default function InputIdInfoStatPage({collaspPage}:{collaspPage:()=>void}
             <div className="input-group-container">
                 <div className="input-container">
                     <label className="input-label" htmlFor="pierceResistant">
-                        <img className="stat-icon" src="/Images/attack/attackt_pierce.webp" alt="attackt_pierce" />
+                        <img className="stat-icon" src="/Images/attack/attackt_Pierce.webp" alt="attackt_pierce" />
                         <span className="input-label">
                             Pierce resist (<span style={{color:changeResistantColor(pierceResistant)}}>{changeResistantText(pierceResistant)}</span>) :
                         </span>
@@ -232,7 +232,7 @@ export default function InputIdInfoStatPage({collaspPage}:{collaspPage:()=>void}
             <div className="input-group-container">
                 <div className="input-container">
                     <label className="input-label" htmlFor="bluntResistant">
-                        <img className="stat-icon" src="/Images/attack/attackt_blunt.webp" alt="attackt_blunt" />
+                        <img className="stat-icon" src="/Images/attack/attackt_Blunt.webp" alt="attackt_blunt" />
                         <span>
                             Blunt resist (<span style={{color:changeResistantColor(bluntResistant)}}>{changeResistantText(bluntResistant)}</span>) :
                         </span>

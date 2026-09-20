@@ -6,14 +6,15 @@
     "frontend:install": "npm install --prefix id-creator",
     "frontend:start": "npm start --prefix id-creator",
 
-    "backend:install": "dotnet restore id-creator-server/Server.csproj",
-    "backend:start": "dotnet run --project id-creator-server/Server.csproj",
+    "backend:install": "cd id-creator-server/Server && dotnet restore",
+    "backend:start": "cd id-creator-server/Server && dotnet run",
+    "backend:dev": "cd id-creator-server/Server && dotnet watch",
 
-    "db:start": "docker-compose -f id-creator-server/docker-compose.postgres.yml up -d",
-    "db:stop": "docker-compose -f id-creator-server/docker-compose.postgres.yml down",
-    "db:migrate": "dotnet ef database update --project id-creator-server/Server.csproj",
+    "db:start": "cd id-creator-server/Server && docker compose -f up -d",
+    "db:stop": "cd id-creator-server/Server && docker compose -f down",
+    "db:migrate": "cd id-creator-server/Server && dotnet ef database update",
 
-    "infra:start": "docker-compose -f id-creator-server/docker-compose.yml up -d rabbitmq",
+    "infra:start": "cd id-creator-server/Server && docker compose -f up -d rabbitmq",
 
     "install": "npm run frontend:install && npm run backend:install",
     "setup": "npm run db:start && npm run infra:start && npm run db:migrate",

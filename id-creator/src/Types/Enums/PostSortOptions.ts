@@ -1,3 +1,3 @@
 export enum PostSortOptions{
-    Newest, Title, MostViewed, MostCommented, Earliest, Latest
+    Title, MostViewed, MostCommented, Earliest, Latest
 }
