@@ -1,0 +1,18 @@
+using FluentValidation;
+
+namespace Server.Features.SaveInfo.DTO.Skills
+{
+    public class RequestDefenseSkill:ActiveSkillRequestBase
+    {
+        public int SkillLevel { get; set; } = 0;
+        public int SkillAmt { get; set; } = 1;
+        public int AtkWeight { get; set; } = 1;
+        public string DefenseType { get; set; } = "Block";
+        public string DamageType { get; set; } = "Slash"; // For counter skill
+    }
+
+    public class RequestDefenseSkillValidator : AbstractValidator<RequestDefenseSkill>
+    {
+        public RequestDefenseSkillValidator() => Include(new ActiveSkillRequestBaseValidator());
+    }
+}

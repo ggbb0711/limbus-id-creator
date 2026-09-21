@@ -1,7 +1,8 @@
 import { Table } from "dexie";
 import { ISaveFile } from "Types/ISaveFile";
 import { useCallback, useEffect, useState } from "react";
-import { indexDB } from "Features/CardCreator/Utils/IndexDB";
+import { indexDB, normalizeLocalSave } from "Features/CardCreator/Utils/IndexDB";
+import formatDateForBackend from "Utils/formatDateForBackend";
 
 
 export default function useSaveLocal<SaveObj>(LocalSaveDataName:string){
@@ -39,20 +40,22 @@ export default function useSaveLocal<SaveObj>(LocalSaveDataName:string){
 
     const getAllSaves = useCallback(async () => {
         if (!saveDataTable) return null
-        return await saveDataTable.toArray()
+        const raw = await saveDataTable.toArray()
+        return raw.map(r => normalizeLocalSave<SaveObj>(r))
     }, [saveDataTable])
 
     const loadSave = useCallback(async (id: string)=>{
         if(!saveDataTable) return null
-        return await saveDataTable.get(id) as ISaveFile<SaveObj>
+        const raw = await saveDataTable.get(id)
+        return raw ? normalizeLocalSave<SaveObj>(raw) : null
     },[saveDataTable])
 
     const changeSaveName = useCallback(async(id:string,newName:string)=>{
         if(!saveDataTable) return null
         try{
-            await saveDataTable.update(id, {saveName: newName, updateTime: new Date().toLocaleString()})
+            await saveDataTable.update(id, {name: newName, updateTime: formatDateForBackend(new Date())})
             setSaveData(saveData.map(item=>item.id===id?
-                {...item, saveName: newName, updateTime: new Date().toLocaleString()}:
+                {...item, name: newName, updateTime: formatDateForBackend(new Date())}:
                 item
             ))
         }
@@ -65,9 +68,9 @@ export default function useSaveLocal<SaveObj>(LocalSaveDataName:string){
         if(!saveDataTable) return null
         try {
             setIsLoading(true)
-            await saveDataTable.update(id, {saveInfo: saveObj, updateTime: new Date().toLocaleString()})            
+            await saveDataTable.update(id, {saveInfo: saveObj, updateTime: formatDateForBackend(new Date())})
             setSaveData(saveData.map(item=>item.id===id?
-                {...item, saveInfo: saveObj, updateTime: new Date().toLocaleString()}:
+                {...item, saveInfo: saveObj, updateTime: formatDateForBackend(new Date())}:
                 item
             ))
         } catch (error) {

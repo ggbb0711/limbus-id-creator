@@ -1,0 +1,32 @@
+name: Backend CI
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "id-creator-server/**"
+      - ".github/workflows/backend-ci.yml"
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      - name: Restore
+        run: dotnet restore id-creator-server/id-creator-server.slnx
+
+      - name: Build
+        run: dotnet build id-creator-server/id-creator-server.slnx --no-restore --configuration Release
+
+      - name: Test
+        run: dotnet test id-creator-server/id-creator-server.slnx --no-build --configuration Release

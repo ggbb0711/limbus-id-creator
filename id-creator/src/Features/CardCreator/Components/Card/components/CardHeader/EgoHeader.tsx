@@ -11,11 +11,11 @@ interface EgoHeaderProps {
 
 function egoLevelImg(egoLevel:string){
     switch(egoLevel){
-        case "ZAYIN": return "/Images/ego-level/ZAYIN_level.webp"
-        case "HE": return "/Images/ego-level/HE_level.webp"
-        case "TETH": return "/Images/ego-level/TETH_level.webp"
-        case "WAW": return "/Images/ego-level/WAW_level.webp"
-        case "ALEPH": return "/Images/ego-level/ALEPH_level.webp"
+        case "ZAYIN": return "/Images/ego-level/ZAYIN_Level.webp"
+        case "HE": return "/Images/ego-level/HE_Level.webp"
+        case "TETH": return "/Images/ego-level/TETH_Level.webp"
+        case "WAW": return "/Images/ego-level/WAW_Level.webp"
+        case "ALEPH": return "/Images/ego-level/ALEPH_Level.webp"
         case "UNDEFINED": return "/Images/ego-level/undef.webp"
     }
 }

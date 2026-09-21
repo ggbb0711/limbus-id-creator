@@ -28,5 +28,10 @@ indexDB.version(1).stores({
     EgoLocalSaves: 'id'
 })
 
+function normalizeLocalSave<T>(raw: any): ISaveFile<T> {
+    if (!raw) return raw
+    return { ...raw, name: raw.name ?? raw.saveName ?? "Untitled" }
+}
+
 export type { LocalSaves };
-export { indexDB };
+export { indexDB, normalizeLocalSave };

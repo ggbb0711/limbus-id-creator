@@ -10,23 +10,23 @@ interface ISplashArtTranslation{
 }
 
 interface ISinResistant {
-    wrath_resistant:number;
-    lust_resistant:number;
-    sloth_resistant:number;
-    gluttony_resistant:number;
-    gloom_resistant:number;
-    pride_resistant:number;
-    envy_resistant:number;
+    wrath:number;
+    lust:number;
+    sloth:number;
+    gluttony:number;
+    gloom:number;
+    pride:number;
+    envy:number;
 }
 
 interface ISinCost{
-    wrath_cost:number;
-    lust_cost:number;
-    sloth_cost:number;
-    gluttony_cost:number;
-    gloom_cost:number;
-    pride_cost:number;
-    envy_cost:number;
+    wrath:number;
+    lust:number;
+    sloth:number;
+    gluttony:number;
+    gloom:number;
+    pride:number;
+    envy:number;
 }
 
 export interface IEgoInfo{
@@ -55,22 +55,22 @@ export class EgoInfo implements IEgoInfo{
         y:0
     };
     sinResistant:ISinResistant = {
-        wrath_resistant:1,
-        lust_resistant:1,
-        sloth_resistant:1,
-        gluttony_resistant:1,
-        gloom_resistant:1,
-        pride_resistant:1,
-        envy_resistant:1,
+        wrath:1,
+        lust:1,
+        sloth:1,
+        gluttony:1,
+        gloom:1,
+        pride:1,
+        envy:1,
     };
     sinCost:ISinCost={
-        wrath_cost:0,
-        lust_cost:0,
-        sloth_cost:0,
-        gluttony_cost:0,
-        gloom_cost:0,
-        pride_cost:0,
-        envy_cost:0,  
+        wrath:0,
+        lust:0,
+        sloth:0,
+        gluttony:0,
+        gloom:0,
+        pride:0,
+        envy:0,
     };
     sinnerColor:string = "var(--Yi-Sang-color)";
     sinnerIcon:string = "/Images/sinner-icon/Yi_Sang_Icon.webp";

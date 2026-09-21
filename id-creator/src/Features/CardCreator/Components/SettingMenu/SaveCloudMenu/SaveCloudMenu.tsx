@@ -18,8 +18,9 @@ import { useLoginMenu } from "Hooks/useLoginMenu";
 import * as Sentry from "@sentry/react"
 import useAlert from "Hooks/useAlert";
 import TurnRefToImg from "Utils/TurnRefToImg";
+import formatDateForBackend from "Utils/formatDateForBackend";
 import { getDomRef } from "Stores/Slices/ImgDomRefSlice";
-import { useCheckAuthQuery } from "Api/AuthApi";
+import { useAuth } from "Hooks/useAuth";
 import { useAppSelector, useAppDispatch } from "Stores/AppStore";
 import { setIdInfo } from "Features/CardCreator/Stores/IdInfoSlice";
 import { setEgoInfo } from "Features/CardCreator/Stores/EgoInfoSlice";
@@ -61,7 +62,7 @@ export default function SaveCloudMenu({saveMode}:{saveMode:"ID"|"EGO"}):ReactEle
     const [namePopup,setNamePopup] = useState(false)
     const [searchSaveName,setSearchSaveName] = useState("")
     const [saveName,setSaveName] = useState("New save file")
-    const {data: loginUser} = useCheckAuthQuery()
+    const {user: loginUser} = useAuth()
     const {setIsLoginMenuActive} = useLoginMenu()
     const {addAlert} = useAlert()
     const dispatch = useAppDispatch()
@@ -84,7 +85,7 @@ export default function SaveCloudMenu({saveMode}:{saveMode:"ID"|"EGO"}):ReactEle
 
     async function createForm(saveFileData: ISaveFile<IIdInfo|IEgoInfo>, domRef: React.MutableRefObject<any>): Promise<FormData> {
         const form = new FormData()
-        saveFileData.saveTime = (new Date()).toLocaleString('en-GB')
+        saveFileData.saveTime = formatDateForBackend(new Date())
         const saveData = JSON.parse(JSON.stringify(saveFileData)) as ISaveFile<IIdInfo|IEgoInfo>
         const saveInfo = {...saveData.saveInfo}
 
@@ -128,9 +129,16 @@ export default function SaveCloudMenu({saveMode}:{saveMode:"ID"|"EGO"}):ReactEle
             maxWidthOrHeight: Math.max(1650, Math.floor(width * (2/3)))
         }))
 
+        let formSkillImageIndex = 0
         skillResults.forEach(result => {
-            if(result){ form.append("skillImages", result.file); form.append("imageIndex", result.index.toString()); result.clear() }
+            if(result){
+                form.append(`SkillImages[${formSkillImageIndex}].Image`, result.file)
+                form.append(`SkillImages[${formSkillImageIndex}].Index`, result.index.toString())
+                result.clear()
+                formSkillImageIndex++
+            }
         })
+        saveInfo.skillDetails = saveInfo.skillDetails.map((skill, i) => ({ ...skill, index: i })) as typeof saveInfo.skillDetails
         saveData.saveInfo=saveInfo
         form.append("SaveData",JSON.stringify(saveData))
         return form
@@ -192,11 +200,11 @@ export default function SaveCloudMenu({saveMode}:{saveMode:"ID"|"EGO"}):ReactEle
         }
     }
 
-    async function overwriteSave(saveId: string){
+    async function overwriteSave(saveId: string, existingName: string){
         try {
             setIsCreating(true)
             setCreateSaveBtnLoadMsg("Waiting for save image to load...")
-            const saveFileData = new SaveFile(cardData, saveName)
+            const saveFileData = new SaveFile(cardData, existingName)
             saveFileData.id = saveId
             const imgDomRef = getDomRef();
             if(!imgDomRef){
@@ -249,8 +257,8 @@ export default function SaveCloudMenu({saveMode}:{saveMode:"ID"|"EGO"}):ReactEle
             {isLoadingSaveData?<div className="loading-cloud-tab"><div className="loader"></div></div>:<></>}
             <div className="save-menu-list">
                 {loginUser?<>
-                    {saveList.map(save=><SaveCloudTab key={save.id} saveDate={save.saveTime} saveName={save.saveName} previewUrl={save.previewImg ?? ""}
-                                    deleteSave={()=>deleteSave(save.id)} loadSave={()=>loadSave(save.id)} overwriteSave={()=>overwriteSave(save.id)}/>)}
+                    {saveList.map(save=><SaveCloudTab key={save.id} saveDate={save.saveTime} saveName={save.name} previewUrl={save.previewImg ?? ""}
+                                    deleteSave={()=>deleteSave(save.id)} loadSave={()=>loadSave(save.id)} overwriteSave={()=>overwriteSave(save.id, save.name)}/>)}
                 </>:
                     <div className="save-cloud-login-remainder">
                         <p>Please login to save to the cloud</p>

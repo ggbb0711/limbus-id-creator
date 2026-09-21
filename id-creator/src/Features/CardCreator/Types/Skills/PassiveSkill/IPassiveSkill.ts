@@ -4,13 +4,13 @@ import { IType } from "../../IType";
 import { SkillTypes } from "../../SkillTypes";
 
 interface ISinCost{
-    wrath_cost:number;
-    lust_cost:number;
-    sloth_cost:number;
-    gluttony_cost:number;
-    gloom_cost:number;
-    pride_cost:number;
-    envy_cost:number;
+    wrath:number;
+    lust:number;
+    sloth:number;
+    gluttony:number;
+    gloom:number;
+    pride:number;
+    envy:number;
 }
 
 export interface IPassiveSkill extends IType,IUID{
@@ -20,8 +20,8 @@ export interface IPassiveSkill extends IType,IUID{
     req:string,//Res, Own or None
     reqNo:number,
     skillLabel: string,
-    ownCost:ISinCost,
-    resCost:ISinCost
+    reqOwn:ISinCost,
+    reqRes:ISinCost
 }
 
 export class PassiveSkill implements IPassiveSkill,IUID{
@@ -33,24 +33,24 @@ export class PassiveSkill implements IPassiveSkill,IUID{
     affinity:string="Wrath";
     req:string="Own";//Res or own or none
     reqNo:number=1;
-    ownCost: ISinCost = {
-        wrath_cost: 0,
-        lust_cost: 0,
-        sloth_cost: 0,
-        gluttony_cost: 0,
-        gloom_cost: 0,
-        pride_cost: 0,
-        envy_cost: 0
+    reqOwn: ISinCost = {
+        wrath: 0,
+        lust: 0,
+        sloth: 0,
+        gluttony: 0,
+        gloom: 0,
+        pride: 0,
+        envy: 0
     };
 
-    resCost: ISinCost = {
-        wrath_cost: 0,
-        lust_cost: 0,
-        sloth_cost: 0,
-        gluttony_cost: 0,
-        gloom_cost: 0,
-        pride_cost: 0,
-        envy_cost: 0
+    reqRes: ISinCost = {
+        wrath: 0,
+        lust: 0,
+        sloth: 0,
+        gluttony: 0,
+        gloom: 0,
+        pride: 0,
+        envy: 0
     };
     public constructor(name?:string,skillLabel?:string){
         this.name=(name)?name:""

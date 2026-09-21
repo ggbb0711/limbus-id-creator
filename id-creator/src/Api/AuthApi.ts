@@ -1,47 +1,60 @@
-import { ILoginUser } from "Types/API/OAuth/ILoginUser";
 import { BaseApi } from "./BaseApi";
 import IResponse from "Types/IResponse";
-
+import { AuthResponseDTO, UserSessionProfileDTO } from "Types/API/Auth/IAuthResponse";
+import { setCredentials, clearCredentials } from "Stores/Slices/AuthSlice";
 
 export const AuthApi = BaseApi.injectEndpoints({
     endpoints: (builder)=>({
-        checkAuth: builder.query<ILoginUser | null,void>({
-            query: ()=>({
-                url: '/OAuth/oauth2/login',
-                method: 'POST',
-                credentials: "include",
-            }),
-            transformResponse: (response: IResponse<ILoginUser>) => response.response,
-            transformErrorResponse: ()=> null,
-        }),
-        register: builder.mutation<ILoginUser,string>({
-            query: (accessToken)=>({
-                url: '/OAuth/oauth2/register',
+        loginWithGoogle: builder.mutation<AuthResponseDTO,string>({
+            query: (code)=>({
+                url: '/Auth/oauth/google',
                 method: "POST",
-                credentials: "include",
                 headers:{
                     "Content-type":"application/json"
                 },
-                body: accessToken,
+                body: code,
             }),
-            transformResponse: (response: IResponse<ILoginUser>) => response.response,
+            transformResponse: (response: IResponse<AuthResponseDTO>) => response.data,
             async onQueryStarted(_, { dispatch, queryFulfilled }){
                 const { data } = await queryFulfilled;
-                dispatch(AuthApi.util.upsertQueryData('checkAuth', undefined, data));
+                dispatch(setCredentials({ accessToken: data.accessToken, user: data.userSessionProfile }));
             }
+        }),
+        refresh: builder.mutation<AuthResponseDTO,void>({
+            query: ()=>({
+                url: '/Auth/refresh',
+                method: "POST",
+            }),
+            transformResponse: (response: IResponse<AuthResponseDTO>) => response.data,
+            async onQueryStarted(_, { dispatch, queryFulfilled }){
+                try{
+                    const { data } = await queryFulfilled;
+                    dispatch(setCredentials({ accessToken: data.accessToken, user: data.userSessionProfile }));
+                }
+                catch{
+                    dispatch(clearCredentials());
+                }
+            }
+        }),
+        getAuthStatus: builder.query<UserSessionProfileDTO,void>({
+            query: ()=>'/Auth/status',
+            transformResponse: (response: IResponse<UserSessionProfileDTO>) => response.data,
         }),
         logOut: builder.mutation<void,void>({
             query: ()=>({
-                url: '/OAuth/oauth2/logout',
+                url: '/Auth/logout',
                 method: "POST",
-                credentials: "include",
             }),
             async onQueryStarted(_, { dispatch, queryFulfilled }){
-                await queryFulfilled;
-                dispatch(AuthApi.util.upsertQueryData('checkAuth', undefined, null));
+                try{
+                    await queryFulfilled;
+                }
+                finally{
+                    dispatch(clearCredentials());
+                }
             }
         })
     })
 })
 
-export const {useCheckAuthQuery,useRegisterMutation,useLogOutMutation} = AuthApi
+export const {useLoginWithGoogleMutation,useRefreshMutation,useGetAuthStatusQuery,useLogOutMutation} = AuthApi

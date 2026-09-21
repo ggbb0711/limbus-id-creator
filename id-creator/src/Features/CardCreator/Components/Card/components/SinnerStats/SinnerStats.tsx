@@ -73,7 +73,7 @@ export default function SinnerStats({minSpeed, maxSpeed, hp, staggerResist, defe
                 </div>
                 <div className="stat-container">
                     <div className="stat-container-slot">
-                        <img className="stat-icon" src="/Images/attack/attackt_slash.webp" alt="attackt_slash" />
+                        <img className="stat-icon" src="/Images/attack/attackt_Slash.webp" alt="attackt_slash" />
                         <div className="stat-content">
                             <div style={{color:changeResistantColor(slashResistant)}}>
                             <p>{changeResistantText(slashResistant)}</p>
@@ -82,7 +82,7 @@ export default function SinnerStats({minSpeed, maxSpeed, hp, staggerResist, defe
                         </div>
                     </div>
                     <div className="stat-container-slot">
-                        <img className="stat-icon" src="/Images/attack/attackt_pierce.webp" alt="attackt_pierce" />
+                        <img className="stat-icon" src="/Images/attack/attackt_Pierce.webp" alt="attackt_pierce" />
                         <div className="stat-content">
                             <div style={{color:changeResistantColor(pierceResistant)}}>
                                 <p>{changeResistantText(pierceResistant)}</p>
@@ -91,7 +91,7 @@ export default function SinnerStats({minSpeed, maxSpeed, hp, staggerResist, defe
                         </div>
                     </div>
                     <div className="stat-container-slot">
-                        <img className="stat-icon" src="/Images/attack/attackt_blunt.webp" alt="attackt_blunt" />
+                        <img className="stat-icon" src="/Images/attack/attackt_Blunt.webp" alt="attackt_blunt" />
                         <div className="stat-content">
                             <div style={{color:changeResistantColor(bluntResistant)}}>
                                 <p>{changeResistantText(bluntResistant)}</p>

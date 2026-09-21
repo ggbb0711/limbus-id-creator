@@ -6,14 +6,14 @@ import { useLoginMenu } from "Hooks/useLoginMenu";
 import { CommentContainer, PostCommentInput } from "Features/Post/Components/Comment/Comment";
 import "../Shared/Styles/PageLayout.css"
 import useAlert from "Hooks/useAlert";
-import { useCheckAuthQuery } from "Api/AuthApi";
+import { useAuth } from "Hooks/useAuth";
 import { useGetPostQuery } from "Api/PostAPI";
 import { useGetCommentsQuery, useCreateCommentMutation } from "Api/CommentApi";
 
 export default function PostPage():ReactElement{
     const {postId} = useParams()
     const {addAlert} = useAlert()
-    const {data: loginUser} = useCheckAuthQuery()
+    const {user: loginUser} = useAuth()
     const {setIsLoginMenuActive} = useLoginMenu()
     const [commentPage, setCommentPage] = useState(0)
     const { data: post, isLoading: isLoadingPost } = useGetPostQuery(postId!)

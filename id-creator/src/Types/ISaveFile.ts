@@ -1,8 +1,9 @@
 import uuid from "react-uuid";
+import formatDateForBackend from "Utils/formatDateForBackend";
 
 
 export interface ISaveFile<info>{
-    saveName:string;
+    name:string;
     saveTime: string;
     updateTime: string;
     saveInfo:info;
@@ -12,14 +13,14 @@ export interface ISaveFile<info>{
 
 export class SaveFile<info> implements ISaveFile<info>{
     id:string;
-    saveName: string="New save file";
-    saveTime: string = new Date().toLocaleString();
-    updateTime: string = new Date().toLocaleString();
+    name: string="New save file";
+    saveTime: string = formatDateForBackend(new Date());
+    updateTime: string = formatDateForBackend(new Date());
     saveInfo: info;
     previewImg: string="";
-    public constructor(saveInfo:info,saveName:string,previewImg?:string){
+    public constructor(saveInfo:info,name:string,previewImg?:string){
         this.saveInfo = saveInfo
-        this.saveName = saveName
+        this.name = name
         this.previewImg=previewImg||''
         this.id = uuid()
     }

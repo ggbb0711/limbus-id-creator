@@ -5,12 +5,12 @@ import "./HeaderLayout.css"
 import KofiIcon from "Assets/Icons/KofiIcon";
 import SideBar from "Components/SideBar/SideBar";
 import { useLoginMenu } from "Hooks/useLoginMenu";
-import { useCheckAuthQuery } from "Api/AuthApi";
+import { useAuth } from "Hooks/useAuth";
 
 export default function HeaderLayout():ReactElement{
     const [isSideBarActive,setActiveSideBar] = useState(false)
     const {setIsLoginMenuActive} = useLoginMenu()
-    const {data: loginUser} = useCheckAuthQuery()
+    const {user: loginUser} = useAuth()
 
     return <>
         <nav className="site-header">

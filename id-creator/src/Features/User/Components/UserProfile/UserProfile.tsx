@@ -5,7 +5,7 @@ import CheckIcon from "Assets/Icons/CheckIcon";
 import { IUserProfile } from "Types/API/OAuth/IUserProfile";
 import "./UserProfile.css";
 import useAlert from "Hooks/useAlert";
-import { useChangeNameMutation, useChangeProfileImgMutation } from "Api/UserApi";
+import { useUpdateUserMutation } from "Api/UserApi";
 
 export function UserProfile({userProfile,userId}:{userProfile:IUserProfile,userId:string}):ReactElement{
     const {userName,userIcon} = userProfile
@@ -15,13 +15,13 @@ export function UserProfile({userProfile,userId}:{userProfile:IUserProfile,userI
     const {addAlert} = useAlert()
     const [userError,setUserErr] = useState("")
 
-    const [changeName, {isLoading: isChangingName}] = useChangeNameMutation()
-    const [changeProfileImg, {isLoading: isChangingProfile}] = useChangeProfileImgMutation()
+    const [updateUser, {isLoading: isChangingName}] = useUpdateUserMutation()
+    const [updateUserIcon, {isLoading: isChangingProfile}] = useUpdateUserMutation()
 
     async function handleChangeName(){
         if(!name||isChangingName) return
         try {
-            await changeName({ userId, name }).unwrap()
+            await updateUser({ userId, name }).unwrap()
             addAlert("Success","Name changed")
             setIsChangeName(false)
         } catch {
@@ -34,10 +34,8 @@ export function UserProfile({userProfile,userId}:{userProfile:IUserProfile,userI
             addAlert("Failure", "No file selected")
             return
         }
-        const form = new FormData()
-        form.append('newProfile',e.currentTarget.files[0])
         try {
-            await changeProfileImg({ userId, form }).unwrap()
+            await updateUserIcon({ userId, name, iconFile: e.currentTarget.files[0] }).unwrap()
             addAlert("Success","Profile changed")
         } catch {
             addAlert("Failure","Can't change profile")

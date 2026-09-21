@@ -9,6 +9,7 @@ import { EnvironmentVariables } from "Config/Environments";
 import { EditorProvider } from "react-simple-wysiwyg";
 import { Provider as ReduxProvider } from 'react-redux';
 import { AppStore } from "Stores/AppStore";
+import AuthBootstrap from "./AuthBootstrap";
 
 export default function Provider({children}:{children: ReactNode}){
      return (
@@ -16,6 +17,7 @@ export default function Provider({children}:{children: ReactNode}){
              <DndProvider backend={TouchBackend} options={{ enableMouseEvents: true }}>
                 <ReduxProvider store={AppStore}>
                     <EditorProvider>
+                        <AuthBootstrap/>
                         <LoginMenu/>
                         {children}
                         <AlertPopUp />

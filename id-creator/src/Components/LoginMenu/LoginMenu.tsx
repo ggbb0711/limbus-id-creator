@@ -1,23 +1,24 @@
 import { useEffect, useState } from "react";
 import React from "react";
 import "./LoginMenu.css"
-import { TokenResponse, useGoogleLogin } from "@react-oauth/google";
+import { CodeResponse, useGoogleLogin } from "@react-oauth/google";
 import GoogleIcon from "Assets/Icons/GoogleIcon";
 import PopUpMenu from "../PopUpMenu/PopUpMenu";
 import useAlert from "Hooks/useAlert";
-import { useRegisterMutation } from "Api/AuthApi";
+import { useLoginWithGoogleMutation } from "Api/AuthApi";
 import { useAppSelector, useAppDispatch } from "Stores/AppStore";
 import { closeLoginMenu, toggleLoginMenu } from "Stores/Slices/UiSlice";
 
 function LoginMenu(){
     const isLoginMenuActive = useAppSelector(state => state.ui.isLoginMenuActive)
     const dispatch = useAppDispatch()
-    const [user,setUser] = useState<Omit<TokenResponse, "error" | "error_description" | "error_uri">>()
+    const [user,setUser] = useState<Omit<CodeResponse, "error" | "error_description" | "error_uri">>()
     const {addAlert} = useAlert();
-    const [ register, {isLoading} ] = useRegisterMutation();
+    const [ loginWithGoogle, {isLoading} ] = useLoginWithGoogleMutation();
 
 
     const login = useGoogleLogin({
+        flow: "auth-code",
         onSuccess: (codeRes)=>{
             setUser(codeRes)
         },
@@ -30,7 +31,7 @@ function LoginMenu(){
             const registerUser = async ()=>{
                 if (user) {
                     try{
-                        await register(JSON.stringify(user.access_token)).unwrap();
+                        await loginWithGoogle(JSON.stringify(user.code)).unwrap();
                         addAlert("Success","Login successfully");
                         dispatch(closeLoginMenu());
                     }
