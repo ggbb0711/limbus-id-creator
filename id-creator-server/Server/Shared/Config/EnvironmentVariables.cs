@@ -11,7 +11,6 @@ namespace Server.Shared.Config
         public string? ListenOn { get; init; }
         public required string CookieSessionProtectorSecret { get; init; }
         public required string TokenEndpoint { get; init; }
-        public required string CloudinaryUrl { get; init; }
         public required string AwsS3BucketName { get; init; }
         public required string AwsAccessKey { get; init; }
         public required string AwsSecretKey { get; init; }
@@ -31,7 +30,6 @@ namespace Server.Shared.Config
             ListenOn = Environment.GetEnvironmentVariable("LISTEN_ON"),
             CookieSessionProtectorSecret = Require("CookieSessionProtectorSecret"),
             TokenEndpoint = Require("TokenEndpoint"),
-            CloudinaryUrl = Require("CLOUDINARY_URL"),
             AwsS3BucketName = Require("AWS_S3_BUCKET_NAME"),
             AwsAccessKey = Require("AWS_ACCESS_KEY"),
             AwsSecretKey = Require("AWS_SECRET_KEY"),

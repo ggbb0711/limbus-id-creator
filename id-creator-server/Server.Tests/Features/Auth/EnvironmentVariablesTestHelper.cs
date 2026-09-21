@@ -20,7 +20,6 @@ namespace Server.Tests.Features.Auth
             ListenOn = null,
             CookieSessionProtectorSecret = cookieSessionProtectorSecret,
             TokenEndpoint = "https://example.com/token",
-            CloudinaryUrl = "cloudinary://test",
             AwsS3BucketName = "test-bucket",
             AwsAccessKey = "test-access-key",
             AwsSecretKey = "test-secret-key",
