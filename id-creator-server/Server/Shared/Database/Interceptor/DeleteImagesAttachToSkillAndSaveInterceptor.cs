@@ -1,25 +1,47 @@
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Server.Shared.Model;
 
 namespace Server.Shared.Database.Interceptor
 {
-    public class DeleteImagesAttachToSkillInterceptor() : SaveChangesInterceptor
+    public class DeleteImagesAttachToSkillAndSaveInterceptor() : SaveChangesInterceptor
     {
         public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
         {
-            DeleteImagesAttachToSkill(eventData.Context);
+            DeleteImagesAttachToSkillAndSave(eventData.Context);
             return base.SavingChanges(eventData, result);
         }
         public override ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData, InterceptionResult<int> result, CancellationToken cancellationToken = default)
         {
-            DeleteImagesAttachToSkill(eventData.Context);
+            DeleteImagesAttachToSkillAndSave(eventData.Context);
             return base.SavingChangesAsync(eventData, result, cancellationToken);
         }
 
-        private static void DeleteImagesAttachToSkill(DbContext? ctx)
+        private static void DeleteImagesAttachToSkillAndSave(DbContext? ctx)
         {
             if(ctx == null) return;
+
+            var baseLineSavedIdImages = ctx.ChangeTracker.Entries<SavedIDInfo>()
+                .Where(e => e.State == EntityState.Deleted)
+                .SelectMany(e => new[]
+                {
+                    e.Entity.ImageAttach,
+                    e.Entity.Saved.SplashArt,
+                    e.Entity.Saved.SinnerIcon
+                })
+                .ToList();
+            
+            var baseLineSavedEGOImages = ctx.ChangeTracker.Entries<SavedEGOInfo>()
+                .Where(e => e.State == EntityState.Deleted)
+                .SelectMany(e => new[]
+                {
+                    e.Entity.ImageAttach,
+                    e.Entity.Saved.SplashArt,
+                    e.Entity.Saved.SinnerIcon
+                })
+                .ToList();
+            
 
             var deletedOffenseSkills = ctx.ChangeTracker.Entries<OffenseSkill>()
                 .Where(e => e.State == EntityState.Deleted && e.Entity.ImageAttach != null)
@@ -36,7 +58,9 @@ namespace Server.Shared.Database.Interceptor
             var deletedImages = new List<ImageObj>();
 
             foreach(var imageAttach in (List<ImageObj>)
-                [.. deletedOffenseSkills,
+                [..baseLineSavedIdImages,
+                ..baseLineSavedEGOImages,
+                .. deletedOffenseSkills,
                 .. deletedDefenseSkills,
                 .. deletedCustomEffects])
                 deletedImages.Add(imageAttach);

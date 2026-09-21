@@ -13,7 +13,6 @@ export interface DropDownEl<T>{
 export default function DropDown<T=string>({dropDownEl,propVal,disabled,cb}:{dropDownEl:{[key:string]:DropDownEl<T>},propVal?:string,disabled?:boolean,cb:(newVal:T)=>void}):ReactElement{
     const [currVal,setCurrVal]=useState((propVal)?dropDownEl[propVal]:Object.values(dropDownEl)[0])
     const [isActive,setIsActive]=useState(false)
-    console.log(dropDownEl,propVal)
 
     useEffect(()=>{
         if(propVal) setCurrVal(dropDownEl[propVal])

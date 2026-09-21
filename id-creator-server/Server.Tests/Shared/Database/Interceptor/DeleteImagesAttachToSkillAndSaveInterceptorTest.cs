@@ -6,13 +6,13 @@ using Server.Tests.Features.SaveInfo;
 
 namespace Server.Tests.Shared.Database.Interceptor
 {
-    public class DeleteImagesAttachToSkillInterceptorTest
+    public class DeleteImagesAttachToSkillAndSaveInterceptorTest
     {
         private static ServerDbContext CreateDbConnection()
         {
             var options = new DbContextOptionsBuilder<ServerDbContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                .AddInterceptors(new DeleteImagesAttachToSkillInterceptor())
+                .AddInterceptors(new DeleteImagesAttachToSkillAndSaveInterceptor())
                 .Options;
 
             return new ServerDbContext(options);
@@ -85,6 +85,66 @@ namespace Server.Tests.Shared.Database.Interceptor
 
             Assert.Null(await db.CustomEffect.FindAsync(customEffect.Id, customEffect.SavedSkillId));
             Assert.Null(await db.ImageObjs.FindAsync(imageId));
+        }
+
+        [Fact]
+        public async Task SavingChangesAsync_RemovesAllAssociatedImages_WhenSavedIDInfoIsDeleted()
+        {
+            using var db = CreateDbConnection();
+            var fixture = new Fixture();
+            var entry = MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "Effect");
+
+            db.SavedIDInfos.Add(entry);
+            await db.SaveChangesAsync();
+            db.ChangeTracker.Clear();
+
+            var thumbnailId = entry.ImageAttach.Id;
+            var splashArtId = entry.Saved.SplashArt.Id;
+            var sinnerIconId = entry.Saved.SinnerIcon.Id;
+
+            var reloaded = await db.SavedIDInfos
+                .Include(e => e.ImageAttach)
+                .Include(e => e.Saved).ThenInclude(s => s.SplashArt)
+                .Include(e => e.Saved).ThenInclude(s => s.SinnerIcon)
+                .FirstOrDefaultAsync(e => e.Id == entry.Id);
+            Assert.NotNull(reloaded);
+            db.SavedIDInfos.Remove(reloaded!);
+            await db.SaveChangesAsync();
+
+            Assert.Null(await db.SavedIDInfos.FindAsync(entry.Id));
+            Assert.Null(await db.ImageObjs.FindAsync(thumbnailId));
+            Assert.Null(await db.ImageObjs.FindAsync(splashArtId));
+            Assert.Null(await db.ImageObjs.FindAsync(sinnerIconId));
+        }
+
+        [Fact]
+        public async Task SavingChangesAsync_RemovesAllAssociatedImages_WhenSavedEGOInfoIsDeleted()
+        {
+            using var db = CreateDbConnection();
+            var fixture = new Fixture();
+            var entry = MockSaveData.CreateSavedEgoEntry(fixture, Guid.NewGuid(), "Effect");
+
+            db.SavedEGOInfos.Add(entry);
+            await db.SaveChangesAsync();
+            db.ChangeTracker.Clear();
+
+            var thumbnailId = entry.ImageAttach.Id;
+            var splashArtId = entry.Saved.SplashArt.Id;
+            var sinnerIconId = entry.Saved.SinnerIcon.Id;
+
+            var reloaded = await db.SavedEGOInfos
+                .Include(e => e.ImageAttach)
+                .Include(e => e.Saved).ThenInclude(s => s.SplashArt)
+                .Include(e => e.Saved).ThenInclude(s => s.SinnerIcon)
+                .FirstOrDefaultAsync(e => e.Id == entry.Id);
+            Assert.NotNull(reloaded);
+            db.SavedEGOInfos.Remove(reloaded!);
+            await db.SaveChangesAsync();
+
+            Assert.Null(await db.SavedEGOInfos.FindAsync(entry.Id));
+            Assert.Null(await db.ImageObjs.FindAsync(thumbnailId));
+            Assert.Null(await db.ImageObjs.FindAsync(splashArtId));
+            Assert.Null(await db.ImageObjs.FindAsync(sinnerIconId));
         }
     }
 }

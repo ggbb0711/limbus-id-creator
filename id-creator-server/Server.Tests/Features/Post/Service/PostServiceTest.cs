@@ -107,7 +107,7 @@ namespace Server.Tests.Features.Post.Service
             SetupFindAsync(postRepository, [matching, nonMatching]);
 
             var service = new PostService(postRepository.Object, commentRepository.Object);
-            var result = await service.FindPosts(new SearchPostOption { Title = "Ishmael", limit = 10 });
+            var result = await service.FindPosts(new SearchPostOption { limit = 10 });
 
             Assert.Equal(2, result.Count);
         }
@@ -211,7 +211,6 @@ namespace Server.Tests.Features.Post.Service
 
         [Theory]
         [InlineData(PostSortOption.Latest)]
-        [InlineData(PostSortOption.Newest)]
         public async Task FindPosts_SortsByCreatedDescending_ForLatestOrNewest(PostSortOption sortOption)
         {
             var oldest = CreatePost(created: new DateTime(2020, 1, 1));

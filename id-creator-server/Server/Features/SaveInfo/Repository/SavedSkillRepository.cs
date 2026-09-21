@@ -27,6 +27,8 @@ namespace Server.Features.SaveInfo.Repository
                 if(skill != null)
                 {
                     _ctx.Entry(skill).CurrentValues.SetValues(newSkill);
+                    if(skill is IImageAttach attach)
+                        attach.ImageAttach.Url = ((IImageAttach) newSkill).ImageAttach.Url;
                 }
                 else
                 {

@@ -200,11 +200,11 @@ export default function SaveCloudMenu({saveMode}:{saveMode:"ID"|"EGO"}):ReactEle
         }
     }
 
-    async function overwriteSave(saveId: string){
+    async function overwriteSave(saveId: string, existingName: string){
         try {
             setIsCreating(true)
             setCreateSaveBtnLoadMsg("Waiting for save image to load...")
-            const saveFileData = new SaveFile(cardData, saveName)
+            const saveFileData = new SaveFile(cardData, existingName)
             saveFileData.id = saveId
             const imgDomRef = getDomRef();
             if(!imgDomRef){
@@ -258,7 +258,7 @@ export default function SaveCloudMenu({saveMode}:{saveMode:"ID"|"EGO"}):ReactEle
             <div className="save-menu-list">
                 {loginUser?<>
                     {saveList.map(save=><SaveCloudTab key={save.id} saveDate={save.saveTime} saveName={save.name} previewUrl={save.previewImg ?? ""}
-                                    deleteSave={()=>deleteSave(save.id)} loadSave={()=>loadSave(save.id)} overwriteSave={()=>overwriteSave(save.id)}/>)}
+                                    deleteSave={()=>deleteSave(save.id)} loadSave={()=>loadSave(save.id)} overwriteSave={()=>overwriteSave(save.id, save.name)}/>)}
                 </>:
                     <div className="save-cloud-login-remainder">
                         <p>Please login to save to the cloud</p>

@@ -111,5 +111,98 @@ namespace Server.Tests.Features.SaveInfo.Repository
             Assert.Equal("New Passive", updatedPs.Name);
             Assert.Contains(result.PassiveSkills, p => p.Id == psNew.Id);
         }
+
+        [Fact]
+        public async Task ShouldReassignImageUrl_ForMatchedOffenseDefenseAndCustomEffectSkills_WhenUrlChanges()
+        {
+            var db = MockDatabase.CreateDbConnection();
+            var fixture = new Fixture();
+
+            var savedSkillId = Guid.NewGuid();
+
+            var offense = MockSaveData.CreateOffenseSkills(fixture, 0)[0];
+            offense.SavedSkillId = savedSkillId;
+            var defense = MockSaveData.CreateDefenseSkills(fixture, 0)[0];
+            defense.SavedSkillId = savedSkillId;
+            var custom = MockSaveData.CreateCustomEffects(fixture, 0)[0];
+            custom.SavedSkillId = savedSkillId;
+
+            var oldSavedSkill = new SavedSkill
+            {
+                Id = savedSkillId,
+                OffenseSkills = [offense],
+                DefenseSkills = [defense],
+                CustomEffects = [custom],
+                PassiveSkills = [],
+                MentalEffects = [],
+            };
+
+            db.SavedSkill.Add(oldSavedSkill);
+            await db.SaveChangesAsync();
+            db.ChangeTracker.Clear();
+
+            var trackedOldSkill = await db.SavedSkill
+                .Include(s => s.MentalEffects)
+                .Include(s => s.PassiveSkills)
+                .Include(s => s.OffenseSkills)
+                .Include(s => s.DefenseSkills)
+                .Include(s => s.CustomEffects)
+                .FirstAsync(s => s.Id == savedSkillId);
+
+            var originalOffenseImageId = offense.ImageAttach.Id;
+            var originalDefenseImageId = defense.ImageAttach.Id;
+            var originalCustomImageId = custom.ImageAttach.Id;
+
+            var incomingOffense = MockSaveData.CreateOffenseSkills(fixture, 0)[0];
+            incomingOffense.Id = offense.Id;
+            incomingOffense.SavedSkillId = savedSkillId;
+            incomingOffense.ImageAttach.Id = originalOffenseImageId;
+            incomingOffense.ImageAttachId = originalOffenseImageId;
+            incomingOffense.ImageAttach.Url = "https://example.com/new-offense.png";
+
+            var incomingDefense = MockSaveData.CreateDefenseSkills(fixture, 0)[0];
+            incomingDefense.Id = defense.Id;
+            incomingDefense.SavedSkillId = savedSkillId;
+            incomingDefense.ImageAttach.Id = originalDefenseImageId;
+            incomingDefense.ImageAttachId = originalDefenseImageId;
+            incomingDefense.ImageAttach.Url = "https://example.com/new-defense.png";
+
+            var incomingCustom = MockSaveData.CreateCustomEffects(fixture, 0)[0];
+            incomingCustom.Id = custom.Id;
+            incomingCustom.SavedSkillId = savedSkillId;
+            incomingCustom.ImageAttach.Id = originalCustomImageId;
+            incomingCustom.ImageAttachId = originalCustomImageId;
+            incomingCustom.ImageAttach.Url = "https://example.com/new-custom.png";
+
+            var incomingSkill = new SavedSkill
+            {
+                Id = savedSkillId,
+                OffenseSkills = [incomingOffense],
+                DefenseSkills = [incomingDefense],
+                CustomEffects = [incomingCustom],
+                PassiveSkills = [],
+                MentalEffects = [],
+            };
+
+            var repo = new SavedSkillRepository(db);
+            await repo.UpdateSavedSkill(trackedOldSkill, incomingSkill);
+            await db.SaveChangesAsync();
+            db.ChangeTracker.Clear();
+
+            var reloadedOffense = await db.OffenseSkill.Include(s => s.ImageAttach)
+                .FirstAsync(s => s.Id == offense.Id && s.SavedSkillId == savedSkillId);
+            Assert.Equal("https://example.com/new-offense.png", reloadedOffense.ImageAttach.Url);
+            Assert.Equal(originalOffenseImageId, reloadedOffense.ImageAttach.Id);
+
+            var reloadedDefense = await db.DefenseSkill.Include(s => s.ImageAttach)
+                .FirstAsync(s => s.Id == defense.Id && s.SavedSkillId == savedSkillId);
+            Assert.Equal("https://example.com/new-defense.png", reloadedDefense.ImageAttach.Url);
+            Assert.Equal(originalDefenseImageId, reloadedDefense.ImageAttach.Id);
+
+            var reloadedCustom = await db.CustomEffect.Include(s => s.ImageAttach)
+                .FirstAsync(s => s.Id == custom.Id && s.SavedSkillId == savedSkillId);
+            Assert.Equal("https://example.com/new-custom.png", reloadedCustom.ImageAttach.Url);
+            Assert.Equal(originalCustomImageId, reloadedCustom.ImageAttach.Id);
+        }
     }
 }

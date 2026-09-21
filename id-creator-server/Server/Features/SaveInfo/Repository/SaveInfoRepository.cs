@@ -11,6 +11,7 @@ namespace Server.Features.SaveInfo.Repository
     {
         public async Task<TEntry?> GetByIdAsyncIncludingSaved(Guid id) =>
         await Set
+          .Include(e => e.ImageAttach)
           .Include(e => e.Saved).ThenInclude(s => s.SplashArt)
           .Include(e => e.Saved).ThenInclude(s => s.SinnerIcon)
           .Include(e => e.Saved).ThenInclude(s => s.Skill).ThenInclude(sk => sk.OffenseSkills).ThenInclude(o => o.ImageAttach)

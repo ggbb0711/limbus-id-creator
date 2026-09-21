@@ -36,6 +36,9 @@ namespace Server.Tests.Features.SaveInfo.Repository
             Assert.Empty(tracked.Saved.Skill.DefenseSkills);
             Assert.Empty(tracked.Saved.Skill.PassiveSkills);
             Assert.Empty(tracked.Saved.Skill.CustomEffects);
+            Assert.NotNull(tracked.ImageAttach);
+            Assert.Equal(entry.ImageAttach.Id, tracked.ImageAttach.Id);
+            Assert.Equal(entry.ImageAttach.Url, tracked.ImageAttach.Url);
 
             var incoming = MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "Should Not Appear");
             incoming.Id = entry.Id;
@@ -96,6 +99,9 @@ namespace Server.Tests.Features.SaveInfo.Repository
             Assert.Empty(tracked.Saved.Skill.DefenseSkills);
             Assert.Empty(tracked.Saved.Skill.PassiveSkills);
             Assert.Empty(tracked.Saved.Skill.CustomEffects);
+            Assert.NotNull(tracked.ImageAttach);
+            Assert.Equal(entry.ImageAttach.Id, tracked.ImageAttach.Id);
+            Assert.Equal(entry.ImageAttach.Url, tracked.ImageAttach.Url);
 
             var incoming = MockSaveData.CreateSavedEgoEntry(fixture, Guid.NewGuid(), "Should Not Appear");
             incoming.Id = entry.Id;

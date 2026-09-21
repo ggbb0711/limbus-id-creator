@@ -30,7 +30,7 @@ namespace Server.Tests.Features.Images.Background
             var imageObjService = new Mock<IImageObjService>();
             imageObjService.Setup(s => s.GetImagesByStatus(AssetStatus.Deleted)).ReturnsAsync([image1, image2]);
             deleteService.Setup(s => s.Delete(It.IsAny<string>())).Returns(Task.CompletedTask);
-            imageObjService.Setup(s => s.DeleteImage(It.IsAny<Guid>())).ReturnsAsync((ImageObj?)null);
+            imageObjService.Setup(s => s.DeleteImage(It.IsAny<ImageObj>())).ReturnsAsync((ImageObj?)null);
 
             var provider = new ServiceCollection()
                 .AddSingleton(deleteService.Object)
@@ -41,8 +41,8 @@ namespace Server.Tests.Features.Images.Background
 
             deleteService.Verify(s => s.Delete(image1.Id.ToString()), Times.Once);
             deleteService.Verify(s => s.Delete(image2.Id.ToString()), Times.Once);
-            imageObjService.Verify(s => s.DeleteImage(image1.Id), Times.Once);
-            imageObjService.Verify(s => s.DeleteImage(image2.Id), Times.Once);
+            imageObjService.Verify(s => s.DeleteImage(image1), Times.Once);
+            imageObjService.Verify(s => s.DeleteImage(image2), Times.Once);
         }
 
         [Fact]
@@ -60,7 +60,7 @@ namespace Server.Tests.Features.Images.Background
             await InvokeDoWork(new DeleteImagesBackgroundService(provider));
 
             deleteService.Verify(s => s.Delete(It.IsAny<string>()), Times.Never);
-            imageObjService.Verify(s => s.DeleteImage(It.IsAny<Guid>()), Times.Never);
+            imageObjService.Verify(s => s.DeleteImage(It.IsAny<ImageObj>()), Times.Never);
         }
     }
 }

@@ -69,9 +69,9 @@ if(env.Mode.Equals("Published")) builder.Services.AddDbContext<ServerDbContext>(
     builder =>
     {
         builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
-    }).AddInterceptors(new DeleteImagesAttachToSkillInterceptor(),new ImageInterceptor()));
+    }).AddInterceptors(new DeleteImagesAttachToSkillAndSaveInterceptor(),new ImageInterceptor()));
 else builder.Services.AddDbContext<ServerDbContext>(options =>options.UseNpgsql(Environment.GetEnvironmentVariable("DefaultConnection"))
-    .AddInterceptors(new DeleteImagesAttachToSkillInterceptor(),new ImageInterceptor()));
+    .AddInterceptors(new DeleteImagesAttachToSkillAndSaveInterceptor(),new ImageInterceptor()));
 builder.Services.Configure<ApiBehaviorOptions>(options=>
 {
     options.InvalidModelStateResponseFactory = context =>

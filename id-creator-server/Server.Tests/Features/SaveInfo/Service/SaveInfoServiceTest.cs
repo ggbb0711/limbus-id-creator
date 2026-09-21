@@ -88,7 +88,7 @@ namespace Server.Tests.Features.SaveInfo.Service
             var saveInfoRepository = new Mock<ISaveInfoRepository<SavedIDInfo, SavedId>>();
             var savedSkillRepository = new Mock<ISavedSkillRepository>();
 
-            saveInfoRepository.Setup(r => r.GetByIdAsync(entry.Id)).ReturnsAsync(entry);
+            saveInfoRepository.Setup(r => r.GetByIdAsyncIncludingSaved(entry.Id)).ReturnsAsync(entry);
             saveInfoRepository.Setup(r => r.RemoveAsync(entry)).Returns(Task.CompletedTask);
             saveInfoRepository.Setup(r => r.SaveChangeAsync()).Returns(Task.CompletedTask);
 
@@ -109,7 +109,7 @@ namespace Server.Tests.Features.SaveInfo.Service
             var saveInfoRepository = new Mock<ISaveInfoRepository<SavedIDInfo, SavedId>>();
             var savedSkillRepository = new Mock<ISavedSkillRepository>();
 
-            saveInfoRepository.Setup(r => r.GetByIdAsync(id)).ReturnsAsync((SavedIDInfo?)null);
+            saveInfoRepository.Setup(r => r.GetByIdAsyncIncludingSaved(id)).ReturnsAsync((SavedIDInfo?)null);
 
             var service = new SavedInfoService<SavedIDInfo, SavedId>(saveInfoRepository.Object, savedSkillRepository.Object);
 
