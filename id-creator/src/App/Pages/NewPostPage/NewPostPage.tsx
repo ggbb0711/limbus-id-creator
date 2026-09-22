@@ -8,11 +8,11 @@ import { ITag } from "Utils/TagList";
 import SearchSaveInput from "../../../Features/CardCreator/Components/SearchSaveInput/SearchSaveInput";
 import CloseIcon from "Assets/Icons/CloseIcon";
 import Editor from 'react-simple-wysiwyg';
-import uuid from "react-uuid";
 import { useNavigate } from "react-router-dom";
 import useAlert from "Hooks/useAlert";
 import { useAuth } from "Hooks/useAuth";
 import { useCreatePostMutation } from "Api/PostAPI";
+import getApiErrorMessage from "Utils/getApiErrorMessage";
 
 interface IChoosenSave{
     PreviewUrl:string,
@@ -34,24 +34,23 @@ export default function NewPostPage():ReactElement{
 
     async function handleCreatePost(){
         if(isPosting) return
-        if(!postName) return addAlert("Failure","Post name length must be between 1 and 200")
+        if(!postName) return addAlert("Failure","Post name length must be between 1 and 199")
         if(choosenSave.length<1) return addAlert("Failure","Post must have between 1 and 8 images")
         if(!loginUser) return
         try {
             const uploadTags = tags.map(t=>(t.tagName))
             if(choosenSave.some(s=>s.SaveType==="Identity")&&!tags.some(t=>t.tagName==="Identity")) uploadTags.push("Identity")
             if(choosenSave.some(s=>s.SaveType==="Ego")&&!tags.some(t=>t.tagName==="Ego")) uploadTags.push("Ego")
+            if(uploadTags.length>21) return addAlert("Failure","Post cannot have more than 21 tags (including the Identity/Ego tag)")
             const result = await createPost({
-                id: uuid(),
                 title: postName,
                 description,
                 imagesAttach: choosenSave.map(s=>s.PreviewUrl),
-                userId: loginUser.id,
                 tags: uploadTags,
             }).unwrap()
             navigate("/Post/"+result.id)
-        } catch {
-            addAlert("Failure","Something went wrong with the server")
+        } catch (error) {
+            addAlert("Failure",getApiErrorMessage(error))
         }
     }
 
@@ -72,19 +71,17 @@ export default function NewPostPage():ReactElement{
         {loginUser?<div className="page-content">
             <h1 className="header-txt">Create new post</h1>
             <div className="post-input-container">
-                <label htmlFor="post-name">Post Name (Required) {postName.length}/200: </label>
-                <input type="text" name="post-name" id="post-name" className="input" placeholder="Enter the post name" value={postName} onChange={(e)=>{if(postName.length<200)setPostName(e.target.value)}}/>
+                <label htmlFor="post-name">Post Name (Required) {postName.length}/199: </label>
+                <input type="text" name="post-name" id="post-name" className="input" placeholder="Enter the post name" maxLength={199} value={postName} onChange={(e)=>setPostName(e.target.value)}/>
             </div>
             <div className="post-input-container">
                 <label htmlFor="tag">Tags {tags.length}/20:</label>
                 <TagInput completeFn={(tag)=>{setTags([...new Set([...tags,tag])])}} maxTag={20} customClass={"input"} id={"tag"} ></TagInput>
             </div>
             {tags.length>0&&<TagsContainer tags={tags} deleteTag={(i)=>{
-                if(tags.length<20){
-                    const newTags = [...tags]
-                    newTags.splice(i,1)
-                    setTags(newTags)
-                }
+                const newTags = [...tags]
+                newTags.splice(i,1)
+                setTags(newTags)
             }}/>}
 
             <div className="post-input-container">

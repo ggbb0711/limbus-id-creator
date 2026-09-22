@@ -9,6 +9,7 @@ import "./User.css"
 import useAlert from "Hooks/useAlert";
 import { useLogOutMutation } from "Api/AuthApi";
 import { useGetPostsQuery } from "Api/PostAPI";
+import getApiErrorMessage from "Utils/getApiErrorMessage";
 import { useGetUserQuery } from "Api/UserApi";
 
 export default function UserPage():ReactElement{
@@ -33,7 +34,7 @@ export default function UserPage():ReactElement{
     const maxCount = postsData?.total ?? 0
 
     useEffect(() => {
-        if (postsError) addAlert("Failure", "Something went wrong with the server")
+        if (postsError) addAlert("Failure", getApiErrorMessage(postsError))
     }, [postsError])
 
     async function logout(){

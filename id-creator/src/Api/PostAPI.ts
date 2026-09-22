@@ -13,27 +13,30 @@ interface IGetPostsParams {
 }
 
 interface IGetPostsResponse {
-    list: (IPost & { imagesAttach: string[] })[]
+    list: IPost[]
     total: number
 }
 
 interface ICreatePostBody {
-    id: string
     title: string
     description: string
     imagesAttach: string[]
-    userId: string
     tags: string[]
 }
 
-const PostApi = BaseApi.injectEndpoints({
+export const PostApi = BaseApi.injectEndpoints({
     endpoints: (builder) => ({
         getPosts: builder.query<IGetPostsResponse, IGetPostsParams>({
-            query: ({ title = '', tag = [], sortedBy = PostSortOptions[PostSortOptions.Latest], page, limit, userId }) => {
-                const tagString = tag.map(tag=>"Tag="+tag).join("&")
-                let url = `/Post?Title=${title}&SortedBy=${sortedBy}&page=${page}&limit=${limit}&${tagString}`
-                if (userId) url += `&UserId=${userId}`
-                return url
+            query: ({ title = '', tag = [], sortedBy = PostSortOptions.Latest, page, limit, userId }) => {
+                const params = new URLSearchParams({
+                    Title: title,
+                    SortedBy: PostSortOptions[sortedBy],
+                    page: page.toString(),
+                    limit: limit.toString(),
+                })
+                tag.forEach(t => params.append('Tag', t))
+                if (userId) params.append('UserId', userId)
+                return `/Post?${params.toString()}`
             },
             transformResponse: (response: IResponse<IGetPostsResponse>) => response.data,
             providesTags: ['Posts'],

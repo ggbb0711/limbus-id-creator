@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useRef } from "react";
+import React, { useState, useCallback } from "react";
 import { ReactElement } from "react";
 import Post from "Features/Post/Components/Post/Post";
 import { useParams } from "react-router-dom";
@@ -9,6 +9,7 @@ import useAlert from "Hooks/useAlert";
 import { useAuth } from "Hooks/useAuth";
 import { useGetPostQuery } from "Api/PostAPI";
 import { useGetCommentsQuery, useCreateCommentMutation } from "Api/CommentApi";
+import getApiErrorMessage from "Utils/getApiErrorMessage";
 
 export default function PostPage():ReactElement{
     const {postId} = useParams()
@@ -23,17 +24,7 @@ export default function PostPage():ReactElement{
         limit: 10,
     })
 
-    const [hasMore, setHasMore] = useState(true)
-    const prevLengthRef = useRef(0)
-
-    useEffect(()=>{
-        if(!isFetchingComments){
-            if(comments.length === prevLengthRef.current){
-                setHasMore(false)
-            }
-            prevLengthRef.current = comments.length
-        }
-    },[comments.length, isFetchingComments])
+    const hasMore = post ? comments.length < post.commentCount : true
 
     const [createComment] = useCreateCommentMutation()
 
@@ -48,13 +39,12 @@ export default function PostPage():ReactElement{
         }
         try {
             await createComment({
-                userId: loginUser.id,
                 postId: post!.id,
-                comment,
+                content: comment,
             }).unwrap()
             addAlert("Success","Comment posted")
-        } catch {
-            addAlert("Failure","Something went wrong with the server")
+        } catch (error) {
+            addAlert("Failure",getApiErrorMessage(error))
         }
     }
 

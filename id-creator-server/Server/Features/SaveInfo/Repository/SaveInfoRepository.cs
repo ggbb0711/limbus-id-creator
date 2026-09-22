@@ -19,6 +19,7 @@ namespace Server.Features.SaveInfo.Repository
           .Include(e => e.Saved).ThenInclude(s => s.Skill).ThenInclude(sk => sk.PassiveSkills)
           .Include(e => e.Saved).ThenInclude(s => s.Skill).ThenInclude(sk => sk.CustomEffects).ThenInclude(c => c.ImageAttach)
           .Include(e => e.Saved).ThenInclude(s => s.Skill).ThenInclude(sk => sk.MentalEffects)
+          .AsSplitQuery()
           .FirstOrDefaultAsync(e => e.Id == id);
         public Task MergeSavedInfo(TEntry tracked, TEntry incoming)
         {

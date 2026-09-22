@@ -11,6 +11,7 @@ import TagsContainer from "Components/TagsContainer/TagsContainer";
 import useAlert from "Hooks/useAlert";
 import { useAuth } from "Hooks/useAuth";
 import { useGetPostsQuery } from "Api/PostAPI";
+import getApiErrorMessage from "Utils/getApiErrorMessage";
 import { PostSortOptions } from "Types/Enums/PostSortOptions";
 
 export default function ForumPage():ReactElement{
@@ -37,7 +38,7 @@ export default function ForumPage():ReactElement{
     const maxCount = data?.total ?? 0
 
     useEffect(() => {
-        if (error) addAlert("Failure", "Something went wrong with the server")
+        if (error) addAlert("Failure", getApiErrorMessage(error))
     }, [error])
 
     useEffect(() => {
