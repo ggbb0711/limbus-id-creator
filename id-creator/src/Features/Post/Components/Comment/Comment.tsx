@@ -15,7 +15,7 @@ function Comment({comment}:{comment:IComment}){
             </div>
         </div>
         <p className="post-date">Posted: {comment.created.split("T")[0]}</p>
-        <p className="description-txt" dangerouslySetInnerHTML={{__html:comment.comment}}></p>
+        <p className="description-txt" dangerouslySetInnerHTML={{__html:comment.content}}></p>
     </div>
 </div>
 }
