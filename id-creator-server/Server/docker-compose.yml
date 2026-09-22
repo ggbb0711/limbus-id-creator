@@ -30,6 +30,7 @@ services:
     #   - postgres
     restart: on-failure
     environment:
+      - JWTSecret=${JWTSecret}
       - TokenEndpoint=${TokenEndpoint}
       - SessionExpiredDay=${SessionExpiredDay}
       - DefaultConnection=${DefaultConnection}
@@ -40,9 +41,12 @@ services:
       - RABBITMQ_HOST_USER_NAME=${RABBITMQ_HOST_USER_NAME}
       - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
       - RABBITMQ_VH=${RABBITMQ_VH}
-      - CLOUDINARY_IMG_URL_START=${CLOUDINARY_IMG_URL_START}
+      - RABBITMQ_REQUESTED_HEARTBEAT=${RABBITMQ_REQUESTED_HEARTBEAT}
       - MODE=${MODE}
       - LISTEN_ON=${LISTEN_ON}
       - AWS_ACCESS_KEY=${AWS_ACCESS_KEY}
       - AWS_SECRET_KEY=${AWS_SECRET_KEY}
       - AWS_S3_BUCKET_NAME=${AWS_S3_BUCKET_NAME}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - GOOGLE_REDIRECT_URI=${GOOGLE_REDIRECT_URI}
