@@ -3,5 +3,5 @@ export interface IComment{
     userName:string,
     userId:string,
     comment:string,
-    date:string
+    created:string
 }

@@ -14,7 +14,7 @@ function Comment({comment}:{comment:IComment}){
                 <Link to={"/User/"+comment.userId}><p className="post-author-name">{comment.userName}</p></Link>
             </div>
         </div>
-        <p className="post-date">Posted: {comment.date.split(" ")[0]}</p>
+        <p className="post-date">Posted: {comment.created.split("T")[0]}</p>
         <p className="description-txt" dangerouslySetInnerHTML={{__html:comment.comment}}></p>
     </div>
 </div>
