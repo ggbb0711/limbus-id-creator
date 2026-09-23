@@ -8,7 +8,7 @@ import SinResistant from "./components/SinResistant/SinResistant";
 import SkillDetailContainer from "./components/SkillDetailContainer/SkillDetailContainer";
 import { useAppSelector, useAppDispatch } from "Stores/AppStore";
 import { setEgoInfo } from "Features/CardCreator/Stores/EgoInfoSlice";
-import SinnerSplashArt from "./components/SinnerSplashArt/SinnerSplashArt";
+import EgoSplashArt from "./components/SinnerSplashArt/EgoSplashArt";
 
 
 const EgoCard=forwardRef<HTMLDivElement,{changeActiveTab:React.Dispatch<React.SetStateAction<number>>}>(({changeActiveTab},ref):ReactElement=>{
@@ -67,7 +67,7 @@ const EgoCard=forwardRef<HTMLDivElement,{changeActiveTab:React.Dispatch<React.Se
                     <div className="Card-container">
                         {EgoInfoValue.splashArt?
                         <div className="ego-splash-art-container">
-                            <SinnerSplashArt splashArt={EgoInfoValue.splashArt} splashArtScale={EgoInfoValue.splashArtScale} splashArtTranslation={EgoInfoValue.splashArtTranslation}/>
+                            <EgoSplashArt splashArt={EgoInfoValue.splashArt} splashArtScale={EgoInfoValue.splashArtScale} splashArtTranslation={EgoInfoValue.splashArtTranslation}/>
                         </div>:<></>}
 
                         <div className="content-container">
