@@ -28,7 +28,7 @@ namespace Server.Tests.Features.Images.Background
 
             var deleteService = new Mock<IDeleteService>();
             var imageObjService = new Mock<IImageObjService>();
-            imageObjService.Setup(s => s.GetImagesByStatus(AssetStatus.Deleted)).ReturnsAsync([image1, image2]);
+            imageObjService.Setup(s => s.GetImagesByStatus(AssetStatus.Deleted,500)).ReturnsAsync([image1, image2]);
             deleteService.Setup(s => s.Delete(It.IsAny<string>())).Returns(Task.CompletedTask);
             imageObjService.Setup(s => s.DeleteImage(It.IsAny<ImageObj>())).ReturnsAsync((ImageObj?)null);
 
@@ -50,7 +50,7 @@ namespace Server.Tests.Features.Images.Background
         {
             var deleteService = new Mock<IDeleteService>();
             var imageObjService = new Mock<IImageObjService>();
-            imageObjService.Setup(s => s.GetImagesByStatus(AssetStatus.Deleted)).ReturnsAsync([]);
+            imageObjService.Setup(s => s.GetImagesByStatus(AssetStatus.Deleted,500)).ReturnsAsync([]);
 
             var provider = new ServiceCollection()
                 .AddSingleton(deleteService.Object)

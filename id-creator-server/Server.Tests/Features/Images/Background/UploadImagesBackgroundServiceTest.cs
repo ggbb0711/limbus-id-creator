@@ -38,7 +38,7 @@ namespace Server.Tests.Features.Images.Background
 
             var uploadService = new Mock<IUploadService>();
             var imageObjService = new Mock<IImageObjService>();
-            imageObjService.Setup(s => s.GetImagesByStatus(AssetStatus.Pending)).ReturnsAsync([pendingImage, nonBase64Image]);
+            imageObjService.Setup(s => s.GetImagesByStatus(AssetStatus.Pending,500)).ReturnsAsync([pendingImage, nonBase64Image]);
             uploadService.Setup(s => s.Upload(It.IsAny<byte[]>(), It.IsAny<string>())).ReturnsAsync(uploadedUrl);
             imageObjService.Setup(s => s.UpdateImage(It.IsAny<ImageObj>())).ReturnsAsync((ImageObj img) => img);
 
@@ -70,7 +70,7 @@ namespace Server.Tests.Features.Images.Background
         {
             var uploadService = new Mock<IUploadService>();
             var imageObjService = new Mock<IImageObjService>();
-            imageObjService.Setup(s => s.GetImagesByStatus(AssetStatus.Pending)).ReturnsAsync([]);
+            imageObjService.Setup(s => s.GetImagesByStatus(AssetStatus.Pending,500)).ReturnsAsync([]);
 
             var provider = new ServiceCollection()
                 .AddSingleton(uploadService.Object)

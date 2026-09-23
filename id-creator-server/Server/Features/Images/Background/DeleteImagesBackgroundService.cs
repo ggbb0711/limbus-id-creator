@@ -16,7 +16,7 @@ namespace Server.Features.Images.Background
 
             var deleteService = scope.ServiceProvider.GetRequiredService<IDeleteService>();
             var imageObjService = scope.ServiceProvider.GetRequiredService<IImageObjService>();
-            var images = await imageObjService.GetImagesByStatus(AssetStatus.Deleted);
+            var images = await imageObjService.GetImagesByStatus(AssetStatus.Deleted, 500);
             var tasks = new List<Task>();
 
             foreach ( var image in images ) tasks.Add(((Func<Task>)(async () =>

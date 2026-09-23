@@ -8,6 +8,6 @@ namespace Server.Features.Images.Repository
 {
     public interface IImageObjRepository : IRepository<ImageObj>
     {
-        Task<List<ImageObj>> GetAllImagesByStatus(AssetStatus status);
+        Task<List<ImageObj>> GetAllImagesByStatus(AssetStatus status, int take = 10);
     }
 }

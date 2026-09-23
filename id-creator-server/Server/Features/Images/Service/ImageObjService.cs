@@ -10,9 +10,12 @@ namespace Server.Features.Images.Service
         private readonly IImageObjRepository _imageObjRepository = imageObjRepository;
 
 
-        public Task<List<ImageObj>> GetImagesByStatus(AssetStatus status)
+        public async Task<List<ImageObj>> GetImagesByStatus(AssetStatus status, int take = 10)
         {
-            return _imageObjRepository.GetAllImagesByStatus(status);
+            if(status == AssetStatus.Pending) Console.WriteLine("Uploading images");
+            var images = await _imageObjRepository.GetAllImagesByStatus(status, take);
+            if(status == AssetStatus.Pending)Console.WriteLine("Upload images: " + JsonSerializer.Serialize(images));
+            return images;
         }
 
         public async Task<ImageObj?> DeleteImage(ImageObj image)

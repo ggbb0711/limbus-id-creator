@@ -12,9 +12,9 @@ namespace Server.Features.Images.Repository
     public class ImageObjRepository(ServerDbContext ctx) : Repository<ImageObj>(ctx), IImageObjRepository
     {
 
-        public async Task<List<ImageObj>> GetAllImagesByStatus(AssetStatus status = AssetStatus.Uploaded)
+        public async Task<List<ImageObj>> GetAllImagesByStatus(AssetStatus status = AssetStatus.Uploaded, int take = 10)
         {
-            return await _ctx.ImageObjs.Where(i=>i.Status == status).ToListAsync();
+            return await _ctx.ImageObjs.Where(i=>i.Status == status).OrderBy(i=>i.Id).Take(take).ToListAsync();
         }
     }
 }
