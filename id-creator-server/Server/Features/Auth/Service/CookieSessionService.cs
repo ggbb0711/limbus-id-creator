@@ -22,8 +22,6 @@ namespace Server.Features.Auth.Service
 
         public void AddSessionCookie(HttpResponse res,Guid sessionId,DateTime expireDate)
         {
-            res.Cookies.Delete("Session-Cookie", new CookieOptions { Path = SessionCookiePath });
-
             var cookie = new CookieHeaderValue("Session-id",_dataProtector.Protect(sessionId.ToString()));
             var cookieOptions = new CookieOptions
             {
@@ -60,7 +58,7 @@ namespace Server.Features.Auth.Service
         {
             if(!req.Cookies["Session-Cookie"].IsNullOrEmpty())
             {
-                res.Cookies.Delete("Session-Cookie", new CookieOptions { Path = SessionCookiePath });
+                res.Cookies.Delete("Session-Cookie");
             }
             return;
         }

@@ -1,7 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using DotNetEnv;
 using Microsoft.IdentityModel.Tokens;
 using Server.Shared.Config;
 

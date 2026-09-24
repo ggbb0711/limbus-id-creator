@@ -65,12 +65,12 @@ builder.Services.AddControllers(options=>
     });
 builder.Services.AddSwaggerGen();
 if(env.Mode.Equals("Published")) builder.Services.AddDbContext<ServerDbContext>(options =>options.UseNpgsql(
-    Environment.GetEnvironmentVariable("RemoteConnection"), 
+    env.RemoteConnection, 
     builder =>
     {
         builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
     }).AddInterceptors(new DeleteImagesAttachToSkillAndSaveInterceptor(),new ImageInterceptor()));
-else builder.Services.AddDbContext<ServerDbContext>(options =>options.UseNpgsql(Environment.GetEnvironmentVariable("DefaultConnection"))
+else builder.Services.AddDbContext<ServerDbContext>(options =>options.UseNpgsql(env.DefaultConnection)
     .AddInterceptors(new DeleteImagesAttachToSkillAndSaveInterceptor(),new ImageInterceptor()));
 builder.Services.Configure<ApiBehaviorOptions>(options=>
 {
@@ -121,7 +121,7 @@ builder.Services.AddAuthentication()
         config.TokenValidationParameters = new TokenValidationParameters()
         {
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWTSecret")!)),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(env.JWTSecret)),
             ValidateIssuer = true,
             ValidIssuer = "id-creator-api",
             ValidateAudience = true,

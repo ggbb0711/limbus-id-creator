@@ -37,7 +37,7 @@ namespace Server.Features.Auth
             if(session==null || session.Expired<=DateTime.Now || session.User?.IsActive != true)
                 throw new UnauthorizedException("Session expired or revoked");
             await sessionService.DeleteSessionById(session.Id);
-
+            cookieSessionService.DeleteSessionCookie(Request,Response);
             return Ok(ApiResponse<Session>.Ok(session,"Deleted successfully"));
         }
 
@@ -64,7 +64,8 @@ namespace Server.Features.Auth
             var tokenResponse = await oauthService.ExchangeTokenInfoAsync(code) ?? throw new BadRequestException("Cannot get token from google.");
             var registerUser = await userService.Login(tokenResponse) ?? throw new UnauthorizedAccessException("This account has been banned or removed, please contact the admin.");
             var session = await  sessionService.AddSession(registerUser.Id);
-;
+
+            cookieSessionService.DeleteSessionCookie(Request,Response);
             cookieSessionService.AddSessionCookie(Response,session.Id, session.Expired);
             var accessToken = jwtTokenService.CreateAccessToken(session.User);
             return Ok(ApiResponse<AuthResponseDTO>.Ok(
@@ -87,6 +88,7 @@ namespace Server.Features.Auth
 
             var newSession = await sessionService.AddSession(session.UserId);
             await sessionService.DeleteSessionById(session.Id);
+            cookieSessionService.DeleteSessionCookie(Request,Response);
             cookieSessionService.AddSessionCookie(Response,newSession.Id, newSession.Expired);
 
             var accessToken = jwtTokenService.CreateAccessToken(session.User);
