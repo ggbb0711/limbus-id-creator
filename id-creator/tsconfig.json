@@ -1,16 +1,57 @@
 {
   "compilerOptions": {
-    "jsx": "react",
-    "baseUrl": "src",
+    "jsx": "react-jsx",
+    "paths": {
+      "Api/*": ["./src/Api/*"],
+      "App/*": ["./src/App/*"],
+      "Assets/*": ["./src/Assets/*"],
+      "Components/*": ["./src/Components/*"],
+      "Config/*": ["./src/Config/*"],
+      "Features/*": ["./src/Features/*"],
+      "Hooks/*": ["./src/Hooks/*"],
+      "Stores/*": ["./src/Stores/*"],
+      "Styles/*": ["./src/Styles/*"],
+      "Types/*": ["./src/Types/*"],
+      "Utils/*": ["./src/Utils/*"]
+    },
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "moduleResolution":"node",
-    "module": "es2015",
-    "types": ["node", "react"],
+    "moduleResolution": "node",
+    "module": "esnext",
+    "types": [
+      "node",
+      "react"
+    ],
     "target": "ES2015",
     "ignoreDeprecations": "6.0",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "noEmit": true,
+    "incremental": true,
+    "isolatedModules": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["src", "./module.css.d.ts", "ReactMapInteraction.d.ts"],
-  "exclude": ["build"],
-    
+  "include": [
+    "src",
+    "./module.css.d.ts",
+    "ReactMapInteraction.d.ts",
+    "app/layout.tsx",
+    "build/types/**/*.ts",
+    "build/dev/types/**/*.ts",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
+  ],
+  "exclude": [
+    "build"
+  ]
 }

@@ -7,7 +7,7 @@ import IResponse from 'Types/IResponse';
 import { AuthResponseDTO } from 'Types/API/Auth/IAuthResponse';
 
 const rawBaseQuery = fetchBaseQuery({
-    baseUrl: EnvironmentVariables.REACT_APP_SERVER_URL + "/API",
+    baseUrl: EnvironmentVariables.NEXT_PUBLIC_SERVER_URL + "/API",
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
         const token = (getState() as RootState).auth.accessToken

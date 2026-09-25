@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+import React from "react";
+
+export default function RootLayout({children}:{children: React.ReactNode}){
+    return ( <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/cropped-limbus_logo_feather.webp" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <link rel="canonical" href="https://limbus-company-id-creator.com/" />
 
     <meta name="description" content="Create custom Limbus Company Identity and E.G.O cards with our fan-made character creator. Design, customize, and share your own characters with the community." />
     <meta name="keywords" content="Limbus Company, ID creator, EGO creator, fan character creator, custom identity card, Project Moon, Limbus Company fan tool" />
@@ -24,11 +21,12 @@
     <meta name="twitter:description" content="Create custom Limbus Company Identity and E.G.O. Design, customize, and share your own characters with the community." />
     <meta name="twitter:image" content="https://limbus-company-id-creator.com/Images/SiteLogo.webp" />
 
-    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" /> -->
+    {/* <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" /> */}
     <script type="text/javascript" src="//www.turnjs.com/lib/turn.min.js "></script>
     <title>Limbus Company id creator - Custom character creator</title>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">{children}</div>
   </body>
-</html>
+</html>)
+}

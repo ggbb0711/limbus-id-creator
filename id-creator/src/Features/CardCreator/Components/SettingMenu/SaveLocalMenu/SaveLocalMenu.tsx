@@ -39,7 +39,7 @@ const SaveLocalMenu=({saveMode, close}:{saveMode: "ID" | "EGO", close: ()=>void}
 
     const createNewSave = ()=>{
         if(!isLoading){
-            const maxLenStr = EnvironmentVariables.REACT_APP_LOCAL_SAVE_MAX_LEN
+            const maxLenStr = EnvironmentVariables.NEXT_PUBLIC_LOCAL_SAVE_MAX_LEN
             const maxLen = Number(maxLenStr ?? 10)
             if(saveData.length<maxLen){
                 openPopup()
@@ -133,7 +133,7 @@ const SaveLocalMenu=({saveMode, close}:{saveMode: "ID" | "EGO", close: ()=>void}
                 )}
             </>:<p style={{fontFamily:"'Mikodacs' , 'Rubik', sans-serif"}}></p>}
         </div>
-        <p>Current local save: {saveData.length}/{EnvironmentVariables.REACT_APP_LOCAL_SAVE_MAX_LEN??10}</p>
+        <p>Current local save: {saveData.length}/{EnvironmentVariables.NEXT_PUBLIC_LOCAL_SAVE_MAX_LEN??10}</p>
         <button className="main-button create-new-save-btn" onClick={createNewSave}>{isLoading?"Loading...":"Create a new save"}</button>
     </>
 }

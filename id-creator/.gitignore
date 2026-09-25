@@ -9,7 +9,6 @@ temp.json
 
 # testing
 /coverage
-
 # production
 /build
 
@@ -27,3 +26,7 @@ yarn-debug.log*
 yarn-error.log*
 
 plan.md
+
+.next/
+tsconfig.tsbuildinfo
+next-env.d.ts
