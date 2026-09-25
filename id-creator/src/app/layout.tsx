@@ -4,6 +4,7 @@ import "styles/reset.css";
 import "styles/style.css";
 import { mikodacs, rubik } from "styles/fonts";
 import { siteMetadata } from "config/siteMetadata";
+import { GoogleAnalytics } from '@next/third-parties/google'
 import Providers from "./providers";
 
 export const metadata: Metadata = siteMetadata
@@ -16,15 +17,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     return (
       <html lang="en" className={`${rubik.variable} ${mikodacs.variable}`}>
         <head>
-          {/* <!-- Google tag (gtag.js) --> */}
-          <script async src="https://www.googletagmanager.com/gtag/js?id=G-DRPHJ20BKN"></script>
-          <script>
-            {`window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', 'G-DRPHJ20BKN');`}
-          </script>
           {/* Google site verification */}
           <meta name="google-site-verification" content="EOMmuwe09B4xyHvvl87ibojAIuf1snvLw9eP5Gt-Cm4" />
           {/* Adsense snippets */}
@@ -35,6 +27,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <body>
           <Providers>{children}</Providers>
         </body>
+        <GoogleAnalytics gaId="G-DRPHJ20BKN"/>
       </html>
     )
 }
