@@ -26,9 +26,9 @@ namespace Server.Features.Images.Background
                 {
                     var uploadUrl = await uploadService.Upload(Convert.FromBase64String(image.Url.Replace("data:image/png;base64,","")),image.Id.ToString());
                     image.Url = uploadUrl;
-                    await imageObjService.UpdateImage(image);
                 }
                 image.Status = AssetStatus.Uploaded;
+                await imageObjService.UpdateImage(image);
             }))());
             await Task.WhenAll(tasks);
         }
