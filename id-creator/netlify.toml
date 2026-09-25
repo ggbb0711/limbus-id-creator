@@ -1,6 +1,6 @@
 [build]
   command = "npm run build"
-  # No `publish` — Netlify's Next.js runtime is detected automatically
+  publish = ".next"
 
 # Redirect .netlify.app to .com domain
 [[redirects]]
