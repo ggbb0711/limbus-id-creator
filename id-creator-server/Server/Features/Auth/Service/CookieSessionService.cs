@@ -58,7 +58,10 @@ namespace Server.Features.Auth.Service
         {
             if(!req.Cookies["Session-Cookie"].IsNullOrEmpty())
             {
+                //Backward compatability for people that didn't have cookie with the scope cookie path
                 res.Cookies.Delete("Session-Cookie");
+                
+                res.Cookies.Delete("Session-Cookie", new CookieOptions { Path = SessionCookiePath });
             }
             return;
         }
