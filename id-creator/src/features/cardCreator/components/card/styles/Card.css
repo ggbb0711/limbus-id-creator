@@ -1,0 +1,52 @@
+.Card{
+    height: var(--Id-card-height);
+    width: fit-content;
+    background-color: black;
+    color: white;
+    position: relative;
+    font-family: var(--font-rubik), sans-serif;   
+}
+
+.Card-container{
+    height: 100%;
+    display: flex;
+    box-sizing: border-box;
+}
+
+
+
+.ego-splash-art-container{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 12px;
+}
+
+.splashArtImg{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.content-container{
+    height: 100%;
+    position: relative;
+    padding: 15px 25px;
+    overflow-y: clip;
+    width: auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.sinner-icon-background{
+    position: absolute;
+    width: 175px;
+    height: 175px;
+    left: calc(85% - 148.75px);
+    top: calc(25% - 43.75px);
+    opacity: 0.3;
+    object-fit: contain;
+}

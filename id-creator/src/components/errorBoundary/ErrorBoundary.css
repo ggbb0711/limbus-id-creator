@@ -1,0 +1,66 @@
+.error-boundary-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--font-rubik), sans-serif;
+    color: white;
+    min-height: 100vh;
+}
+
+.error-boundary-content {
+    width: 100%;
+    max-width: 1200px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 24px;
+    box-sizing: border-box;
+}
+
+.error-boundary-title {
+    font-family: var(--font-mikodacs), var(--font-rubik), sans-serif;
+    font-size: 32px;
+    margin: 0;
+    color: var(--white-skin-color);
+}
+
+.error-boundary-message {
+    font-size: 16px;
+    color: var(--white-neutral-weak);
+    margin: 0;
+}
+
+.error-boundary-contact-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.error-boundary-contact-method {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 18px;
+}
+
+.error-boundary-contact-method-icon {
+    color: var(--hover-border-color);
+    display: flex;
+    align-items: center;
+}
+
+.error-boundary-contact-method a {
+    color: var(--hover-border-color);
+    text-decoration: none;
+    transition: color 0.1s;
+}
+
+.error-boundary-contact-method a:hover {
+    color: var(--white-skin-color);
+}
+
+.error-boundary-contact-method span {
+    color: var(--white-neutral-weak);
+}

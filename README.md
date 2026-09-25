@@ -37,9 +37,9 @@ npm install
 
 ```
 NODE_PATH=./src
-REACT_APP_GOOGLE_CLIENT_ID=<your-google-oauth-client-id>
-REACT_APP_LOCAL_SAVE_MAX_LEN=5
-REACT_APP_SERVER_URL=http://localhost:8080
+NEXT_PUBLIC_GOOGLE_CLIENT_ID=<your-google-oauth-client-id>
+NEXT_PUBLIC_LOCAL_SAVE_MAX_LEN=5
+NEXT_PUBLIC_SERVER_URL=http://localhost:8080
 ```
 
 **Backend** — create `id-creator-server/.env`:
