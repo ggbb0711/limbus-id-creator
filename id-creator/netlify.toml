@@ -2,6 +2,11 @@
   command = "npm run build"
   publish = ".next"
 
+# Netlify's Next.js adapter (OpenNext). Declared explicitly because automatic detection didn't apply to this
+# site (created as a CRA site). Without it .next is published as static files and every route 404s.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
 # Redirect .netlify.app to .com domain
 [[redirects]]
   from = "https://limbus-company-id-creator.netlify.app/*"
