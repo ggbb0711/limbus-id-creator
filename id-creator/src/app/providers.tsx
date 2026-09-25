@@ -7,7 +7,6 @@ import AlertPopUp from "components/alertPopUp/AlertPopUp";
 import AuthBootstrap from "components/authBootstrap/AuthBootstrap";
 import { clientEnv } from "config/env.client";
 
-// Providers needed on every route. Creator-only providers (drag and drop, card ref) live in app/creator/layout.tsx.
 export default function Providers({ children }: { children: ReactNode }) {
     return (
         <StoreProvider>
