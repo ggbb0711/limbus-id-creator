@@ -14,6 +14,14 @@
   status = 301
   force = true
 
+# Backward compatibility: cards saved by the old CRA app reference images with relative paths
+# ("Images/...") that resolve under /creator/ (e.g. /creator/Images/status-effect/X.webp).
+# Serve them from public/Images without changing the URL.
+[[redirects]]
+  from = "/creator/Images/*"
+  to = "/Images/:splat"
+  status = 200
+
 # Proxy API requests to backend (runs at the CDN edge, not through the Next server)
 [[redirects]]
   from = "/API/*"
