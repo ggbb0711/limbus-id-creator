@@ -3,11 +3,11 @@ import path from 'path'
 import { withSentryConfig } from '@sentry/nextjs/config'
 
 const nextConfig: NextConfig = {
-  // The repo root has its own package-lock.json; pin the app root so Next doesn't pick that one
   turbopack: {
     root: path.join(__dirname),
   },
   images: {
+    qualities: [75, 90],
     remotePatterns: [
       // Post images / uploaded user icons (id-creator-server AWSS3Service)
       { protocol: 'https', hostname: 'limbus-id-creator.s3.us-east-1.amazonaws.com' },

@@ -7,13 +7,11 @@ import CommentIcon from "assets/icons/CommentIcon";
 import ViewIcon from "assets/icons/ViewIcon";
 import { TagList } from "utils/TagList";
 
-// No hooks: usable from Server Components (home page) and client lists (PaginatedPost).
 export function PostDisplayCard({id,title,cardImg,userIcon,userName,userId,created,tags,viewCount,commentCount}:IPostDisplayCard){
     return <div className="post-display-card">
         <Link href={"/post/"+id}>
             <div className="post-display-card-img-container">
-                {/* Card exports are 1440x1000; CSS keeps width:100%/height:auto so the real ratio wins once loaded */}
-                <Image className="post-display-card-img" src={cardImg} alt={title} width={1440} height={1000} sizes="(max-width: 768px) 50vw, 300px" />
+                <Image className="post-display-card-img" src={cardImg} alt={title} width={1440} height={1000} sizes="(max-width: 940px) 100vw, 580px" quality={90} />
             </div>
         </Link>
         <div className="post-display-card-footer">

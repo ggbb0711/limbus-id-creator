@@ -61,7 +61,7 @@ function PostCarousel({postImages}:{postImages:string[]}){
             <ArrowDownIcon/>
         </div>
         :<></>}
-        {postImages.map((image,i)=><Image key={i} className={`post-img ${i!=currImg?"hidden":""}`} src={image} alt="card-img" fill sizes="(max-width: 1200px) 100vw, 1200px" preload={i===0} style={{objectFit:"contain"}} onClick={()=>{
+        {postImages.map((image,i)=><Image key={i} className={`post-img ${i!=currImg?"hidden":""}`} src={image} alt="card-img" fill sizes="(max-width: 1200px) 100vw, 1200px" quality={90} preload={i===0} style={{objectFit:"contain"}} onClick={()=>{
                 setIsViewModeActive(true)
             }}/>)}
         <ViewImagePopUp images={postImages} index={currImg} isActive={isViewModeActive} closeFn={()=>{
