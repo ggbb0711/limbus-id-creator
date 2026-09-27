@@ -47,19 +47,11 @@
     margin: 0 2px;
 }
 
-.toolbar-color-label {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-}
-
-.toolbar-color-input {
-    width: 24px;
-    height: 24px;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    background: none;
+.toolbar-color-picker .color-picker-input {
+    width: 96px;
+    height: 28px;
+    padding-right: 32px;
+    font-size: 12px;
 }
 
 .toolbar-select {

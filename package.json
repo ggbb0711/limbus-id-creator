@@ -5,6 +5,7 @@
   "scripts": {
     "frontend:install": "npm install --prefix id-creator",
     "frontend:start": "npm start --prefix id-creator",
+    "frontend:dev": "npm run dev --prefix id-creator",
 
     "backend:install": "cd id-creator-server/Server && dotnet restore",
     "backend:start": "cd id-creator-server/Server && dotnet run",

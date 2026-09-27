@@ -11,6 +11,7 @@ import TipTapEditor from "../components/tipTapEditor/TipTapEditor";
 import UploadImgBtn from "../components/uploadImgBtn/UploadImgBtn";
 import { compressAndReadImage } from "features/cardCreator/utils/CompressAndReadImage";
 import { useSkillForm } from "features/cardCreator/hooks/useSkillForm";
+import ColorPicker from "components/colorPicker/ColorPicker";
 
 export default function InputCustomEffectPage({
     index,
@@ -62,7 +63,7 @@ export default function InputCustomEffectPage({
             <div className="input-group-container">
                 <div className="input-container">
                     <label htmlFor="effectColor" className="input-label">Choose the effect color: </label>
-                    <input type="color" id="effectColor" {...register("effectColor")}/>
+                    <ColorPicker id="effectColor" value={effectColor} onChange={(color)=>setValue("effectColor",color)}/>
                 </div>
             </div>
             <div className="input-group-container">

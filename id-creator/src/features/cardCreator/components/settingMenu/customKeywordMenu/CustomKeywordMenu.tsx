@@ -5,6 +5,7 @@ import uuid from "react-uuid";
 import CheckIcon from "assets/icons/CheckIcon";
 import SettingIcon from "assets/icons/SettingIcon";
 import DeleteIcon from "assets/icons/DeleteIcon";
+import ColorPicker from "components/colorPicker/ColorPicker";
 
 function CustomKeywordTab({keyword,changeKeyword,deleteKeyword}:{keyword:ICustomKeyword,changeKeyword:(id:string,newKeyword:string,newColor:string)=>void,deleteKeyword:(id:string)=>void}){
     const [isEditMode,setIsEditMode] = useState(false)
@@ -33,7 +34,7 @@ function CustomKeywordTab({keyword,changeKeyword,deleteKeyword}:{keyword:ICustom
             onChange={(e)=>setEdittingKeyword(e.target.value)}
             disabled = {!isEditMode}
             className={`input editting-custom-keyword-input ${isEditMode?"active":""}`}/>
-            {isEditMode?<input type="color" value={edittingKeywordColor} onChange={(e)=>setEdittingKeywordColor(e.target.value)}/>:<></>}
+            {isEditMode?<ColorPicker value={edittingKeywordColor} onChange={setEdittingKeywordColor}/>:<></>}
         </div>
     </div>
 }
@@ -87,7 +88,7 @@ export default function CustomKeywordMenu(){
             onChange={(e)=>setNewKeyword(e.target.value)}></input>
             <div className="center-element">
                 <label htmlFor="new-kewyord-color-input">Color: </label>
-                <input type="color" id="new-kewyord-color-input" name="new-keyword-color-input" value={newKeywordColor} onChange={(e)=>setNewKeywordColor(e.target.value)}/>
+                <ColorPicker id="new-kewyord-color-input" value={newKeywordColor} onChange={setNewKeywordColor}/>
             </div>
             <input type="submit" className="main-button" value={"Add"}></input>
         </form>

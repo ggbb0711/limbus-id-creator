@@ -17,6 +17,7 @@ import { setIdInfo } from "features/cardCreator/stores/IdInfoSlice";
 import { compressAndReadImage } from "features/cardCreator/utils/CompressAndReadImage";
 import { useForm } from "react-hook-form";
 import { IIdInfo } from "features/cardCreator/types/IIdInfo";
+import ColorPicker from "components/colorPicker/ColorPicker";
 
 export default function InputIdInfoStatPage({collaspPage}:{collaspPage:()=>void}):ReactElement{
     const idInfoValue = useAppSelector(state => state.idInfo.value)
@@ -56,6 +57,7 @@ export default function InputIdInfoStatPage({collaspPage}:{collaspPage:()=>void}
     }
 
     const splashArt = watch("splashArt")
+    const sinnerColor = watch("sinnerColor")
     const splashArtScale = watch("splashArtScale")
     const splashArtTranslation = watch("splashArtTranslation")
     const slashResistant = watch("slashResistant")
@@ -96,7 +98,7 @@ export default function InputIdInfoStatPage({collaspPage}:{collaspPage:()=>void}
             </div>
             <div className="sinner-color-input-container">
                 <p>Pick a color for your sinner: </p>
-                <input className="sinner-color-input" type="color" id="sinnerColor" {...register("sinnerColor")}/>
+                <ColorPicker className="sinner-color-input" id="sinnerColor" value={sinnerColor} onChange={(color)=>setValue("sinnerColor",color)}/>
             </div>
             {splashArt?
                 <>

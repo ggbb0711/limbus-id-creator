@@ -1,6 +1,7 @@
 import React from "react"
 import { Editor, useEditorState } from "@tiptap/react"
 import "./Toolbar.css"
+import ColorPicker from "components/colorPicker/ColorPicker";
 
 interface ToolbarProps {
     editor: Editor | null
@@ -58,14 +59,12 @@ export default function Toolbar({ editor }: ToolbarProps) {
 
             <span className="toolbar-separator" />
 
-            <label className="toolbar-color-label" title="Text color">
-                <input
-                    type="color"
-                    className="toolbar-color-input"
-                    value={state.color}
-                    onChange={(e) => editor.chain().focus().setColor(e.target.value).run()}
-                />
-            </label>
+            <ColorPicker
+                className="toolbar-color-picker"
+                title="Text color"
+                value={state.color}
+                onChange={(color) => editor.chain().setColor(color).run()}
+            />
             <button
                 type="button"
                 className="toolbar-btn toolbar-btn-sm"
