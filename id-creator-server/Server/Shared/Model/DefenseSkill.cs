@@ -32,6 +32,7 @@ namespace Server.Shared.Model
         public int AtkWeight { get; set; } = 1;
         public string DefenseType { get; set; } = "Block";
         public string DamageType { get; set; } = "Slash";
+        public bool ShowDefenseIcon { get; set; } = true;
         public string Name { get; set; } = "";
         public string SkillAffinity { get; set; } = "Wrath";
         public int BasePower { get; set; } = 0;

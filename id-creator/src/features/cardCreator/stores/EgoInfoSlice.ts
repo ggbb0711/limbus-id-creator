@@ -3,6 +3,7 @@ import { IEgoInfo, EgoInfo } from 'features/cardCreator/types/IEgoInfo'
 import { PassiveSkill } from 'features/cardCreator/types/skills/passiveSkill/IPassiveSkill'
 import { SkillDetail } from 'features/cardCreator/types/SkillDetail'
 import { CustomEffect } from 'features/cardCreator/types/skills/customEffect/ICustomEffect'
+import { DefenseSkill } from 'features/cardCreator/types/skills/defenseSkill/IDefenseSkill'
 
 interface EgoInfoState {
     value: IEgoInfo
@@ -24,6 +25,17 @@ function hydrateCustomEffects(info: IEgoInfo): IEgoInfo {
     hydrated.skillDetails = hydrated.skillDetails.map(skill => {
         if (skill.type === "CustomEffect") {
             return { ...new CustomEffect(), ...skill }
+        }
+        return skill
+    })
+    return hydrated
+}
+
+function hydrateDefenseSkills(info: IEgoInfo): IEgoInfo {
+    const hydrated = { ...info }
+    hydrated.skillDetails = hydrated.skillDetails.map(skill => {
+        if (skill.type === "DefenseSkill") {
+            return { ...new DefenseSkill(), ...skill }
         }
         return skill
     })
@@ -65,7 +77,7 @@ const EgoInfoSlice = createSlice({
     initialState,
     reducers: {
         setEgoInfo(state, action: PayloadAction<IEgoInfo>) {
-            state.value = fixBackwardCompatPaths(hydrateSkillFrames(hydrateCustomEffects(hydratePassiveSkills(action.payload))))
+            state.value = fixBackwardCompatPaths(hydrateSkillFrames(hydrateDefenseSkills(hydrateCustomEffects(hydratePassiveSkills(action.payload)))))
         },
         updateEgoInfoField(state, action: PayloadAction<{ field: string, value: any }>) {
             (state.value as any)[action.payload.field] = action.payload.value

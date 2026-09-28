@@ -9,6 +9,7 @@ namespace Server.Features.SaveInfo.DTO.Skills
         public int AtkWeight { get; set; } = 1;
         public string DefenseType { get; set; } = "Block";
         public string DamageType { get; set; } = "Slash"; // For counter skill
+        public bool ShowDefenseIcon { get; set; } = true;
     }
 
     public class RequestDefenseSkillValidator : AbstractValidator<RequestDefenseSkill>
