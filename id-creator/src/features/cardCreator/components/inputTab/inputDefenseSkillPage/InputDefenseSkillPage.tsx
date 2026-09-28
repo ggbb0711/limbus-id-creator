@@ -61,6 +61,12 @@ export default function InputDefenseSkillPage({
                     <SinAffinityInput onChangeSinAffinity={(newVal)=>setValue("skillAffinity",newVal)} activeSin={skillAffinity}/>
                 </div>
             </div>
+            <div className="input-group-container">
+                <div className="input-container">
+                    <label htmlFor="showDefenseIcon" className="input-label">Show defense icon: </label>
+                    <input type="checkbox" id="showDefenseIcon" {...register("showDefenseIcon")}/>
+                </div>
+            </div>
             {skillAffinity !== "None" &&
                 <div className="input-group-container">
                     <div className="input-container">

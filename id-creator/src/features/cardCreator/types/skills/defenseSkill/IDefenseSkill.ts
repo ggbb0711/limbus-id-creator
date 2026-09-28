@@ -10,6 +10,7 @@ export interface IDefenseSkill extends IActiveSkill,IType,IUID{
     skillAmt: number,
     skillLevel:number,
     atkWeight: number,
+    showDefenseIcon: boolean,
 }
 
 export class DefenseSkill implements IDefenseSkill, IUID{
@@ -28,6 +29,7 @@ export class DefenseSkill implements IDefenseSkill, IUID{
     skillEffect: string="";
     skillLabel: string = "Defense";
     skillFrame: string = "1"
+    showDefenseIcon: boolean = true;
     type = SkillTypes.DefenseSkill;
     public constructor(name?:string){
         this.name=(name)?name:""

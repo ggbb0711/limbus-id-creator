@@ -8,15 +8,17 @@ import SkillEffect from "../../components/skillEffect/SkillEffect";
 import { CoinEffect, getCoinEffect } from "features/cardCreator/utils/getCoinEffect";
 import { assetPaths } from "utils/assetPaths";
 
-const DefenseSkillSplash = ({skillAffinity,skillImage,defenseType,skillFrame}:{skillAffinity:string,skillImage?:string,defenseType:string,skillFrame:string}):ReactElement => {
+const DefenseSkillSplash = ({skillAffinity,skillImage,defenseType,skillFrame,showDefenseIcon}:{skillAffinity:string,skillImage?:string,defenseType:string,skillFrame:string,showDefenseIcon:boolean}):ReactElement => {
     const frameSrc = assetPaths.skillFrame(skillAffinity, skillFrame)
     return(
         <div className="skill-splash">
             <img src={frameSrc} alt={skillAffinity+"Frame"} className={`sin-frame ${skillAffinity==="None"?"none-affinity":""}`} />
             <div className="splash-container" style={{'backgroundColor':`var(--${skillAffinity})`}}>
-                <div className="defense-icon-container">
-                    <img src={`/Images/defense/defense_${defenseType}.webp`} alt={`defense_${defenseType}`} />
-                </div>
+                {showDefenseIcon &&
+                    <div className="defense-icon-container">
+                        <img src={`/Images/defense/defense_${defenseType}.webp`} alt={`defense_${defenseType}`} />
+                    </div>
+                }
                 { skillImage && <img className="skill-image" src={skillImage} alt="skill image" crossOrigin="anonymous" />}
             </div>
         </div>
@@ -39,6 +41,7 @@ const DefenseSinnerSkill = forwardRef<HTMLDivElement, { defenseSkill: IDefenseSk
         skillAmt,
         atkWeight,
         skillFrame,
+        showDefenseIcon,
     } = defenseSkill;
 
     const renderCoin = (coinEffect: CoinEffect, key: number): ReactElement => {
@@ -73,7 +76,7 @@ const DefenseSinnerSkill = forwardRef<HTMLDivElement, { defenseSkill: IDefenseSk
             <div className="skill-section">
                 <div>
                     <div className="coin-splash-container">
-                        <DefenseSkillSplash skillAffinity={skillAffinity} skillImage={skillImage} defenseType={defenseType} skillFrame={skillFrame} />
+                        <DefenseSkillSplash skillAffinity={skillAffinity} skillImage={skillImage} defenseType={defenseType} skillFrame={skillFrame} showDefenseIcon={showDefenseIcon} />
                         <div className="skill-power">
                             {basePower}
                             {defenseType === "Counter" ? (
