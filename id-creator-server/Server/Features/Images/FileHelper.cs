@@ -4,6 +4,25 @@ namespace Server.Features.Images
 {
     public class FileHelper
     {
+        public const string Base64PngPrefix = "data:image/png;base64,";
+
+        public static bool IsBase64DataUrl(string url)
+        {
+            return url.StartsWith(Base64PngPrefix) && IsBase64String(url[Base64PngPrefix.Length..]);
+        }
+
+        public static long GetBase64DecodedSize(string base64)
+        {
+            var padding = base64.EndsWith("==") ? 2 : base64.EndsWith('=') ? 1 : 0;
+            return (long)base64.Length / 4 * 3 - padding;
+        }
+
+        public static bool IsHttpUrl(string url)
+        {
+            return Uri.TryCreate(url, UriKind.Absolute, out var uri)
+                && (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps);
+        }
+
         public static async Task<string> ConvertToBase64Async(IFormFile file,Action<string>? cb = null)
         {
             if (file == null || file.Length == 0)
@@ -109,15 +128,29 @@ namespace Server.Features.Images
 
         public static async Task<bool> CheckUrlSize(string url,long maxFileSize)
         {
-            if(Uri.TryCreate(url,UriKind.Absolute, out _) && !url.StartsWith("/Images"))
+            if(url.StartsWith("data:"))
             {
-                var urlSize = await GetImageSizeFromUrl(url);
-                return urlSize <= maxFileSize && urlSize>0;
+                if(!IsBase64DataUrl(url)) return false;
+                var urlSize = GetBase64DecodedSize(url[Base64PngPrefix.Length..]);
+                return urlSize <=maxFileSize && urlSize>0;
             }
 
-            if(IsBase64String(url.Replace("data:image/png;base64,","")))
+            if(IsHttpUrl(url))
             {
-                var urlSize = Convert.FromBase64String(url).Length;
+                try
+                {
+                    var urlSize = await GetImageSizeFromUrl(url);
+                    return urlSize <= maxFileSize && urlSize>0;
+                }
+                catch (HttpRequestException)
+                {
+                    return false;
+                }
+            }
+
+            if(IsBase64String(url))
+            {
+                var urlSize = GetBase64DecodedSize(url);
                 return urlSize <=maxFileSize && urlSize>0;
             }
             return true;
