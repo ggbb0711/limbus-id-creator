@@ -17,6 +17,7 @@
     "@tiptap/starter-kit": "^3.19.0",
     "@tiptap/suggestion": "^3.19.0",
     "browser-image-compression": "^2.0.2",
+    "colord": "^2.10.0",
     "dexie": "^4.2.0",
     "modern-screenshot": "^4.6.8",
     "next": "^16.3.6",

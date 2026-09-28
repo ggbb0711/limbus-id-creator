@@ -18,3 +18,38 @@
 .clr-picker input.clr-color{
     font-family: var(--font-rubik), sans-serif;
 }
+
+.clr-picker .clr-actions{
+    order: 2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    width: calc(100% - 32px);
+    margin: 0 16px 10px;
+}
+
+.clr-picker #clr-clear-saved{
+    flex-basis: 100%;
+}
+
+.clr-picker .clr-action{
+    flex: 1;
+    height: 28px;
+    background: #333;
+    color: white;
+    border: 1px solid #555;
+    border-radius: 4px;
+    font-family: var(--font-rubik), sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.clr-picker .clr-action:hover:not(:disabled){
+    background: var(--button);
+    border-color: white;
+}
+
+.clr-picker .clr-action:disabled{
+    opacity: 0.4;
+    cursor: not-allowed;
+}
