@@ -12,7 +12,7 @@ import UploadImgBtn from "../components/uploadImgBtn/UploadImgBtn";
 import { compressAndReadImage } from "features/cardCreator/utils/CompressAndReadImage";
 import { useSkillForm } from "features/cardCreator/hooks/useSkillForm";
 import ColorPicker from "components/colorPicker/ColorPicker";
-import { STATUS_EFFECT_COLOR_PRESETS } from "components/colorPicker/ColorPresets";
+import { CUSTOM_EFFECT_COLOR_GROUPS } from "components/colorPicker/ColorPresets";
 
 export default function InputCustomEffectPage({
     index,
@@ -64,7 +64,7 @@ export default function InputCustomEffectPage({
             <div className="input-group-container">
                 <div className="input-container">
                     <label htmlFor="effectColor" className="input-label">Choose the effect color: </label>
-                    <ColorPicker presets={STATUS_EFFECT_COLOR_PRESETS} id="effectColor" value={effectColor} onChange={(color)=>setValue("effectColor",color)}/>
+                    <ColorPicker presets={CUSTOM_EFFECT_COLOR_GROUPS} id="effectColor" value={effectColor} onChange={(color)=>setValue("effectColor",color)}/>
                 </div>
             </div>
             <div className="input-group-container">

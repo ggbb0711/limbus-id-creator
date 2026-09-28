@@ -53,3 +53,76 @@
     opacity: 0.4;
     cursor: not-allowed;
 }
+
+.clr-container{
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.clr-container .clr-picker{
+    pointer-events: auto;
+}
+
+#clr-picker{
+    flex-direction: column;
+    flex-wrap: nowrap;
+    max-height: min(420px, calc(100vh - 16px));
+}
+
+.clr-picker .clr-header{
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+}
+
+.clr-picker .clr-header .clr-preview{
+    margin: 0;
+}
+
+.clr-picker .clr-header .clr-close{
+    margin: 0;
+}
+
+.clr-picker .clr-gradient{
+    flex-shrink: 0;
+}
+
+.clr-picker .clr-scroll-body{
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.clr-picker .clr-swatches .clr-swatch-group{
+    display: block;
+    padding: 0 0 10px;
+}
+
+.clr-picker .clr-swatch-title{
+    margin: 0 0 6px;
+    color: white;
+    font-family: var(--font-rubik), sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.clr-picker .clr-swatches .clr-swatch-row{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    padding: 0;
+}
+
+.clr-picker .clr-swatch-empty{
+    margin: 0;
+    color: #999;
+    font-size: 12px;
+}

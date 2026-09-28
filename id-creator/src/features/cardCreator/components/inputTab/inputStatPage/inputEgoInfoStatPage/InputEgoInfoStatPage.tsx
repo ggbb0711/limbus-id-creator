@@ -15,7 +15,7 @@ import { compressAndReadImage } from "features/cardCreator/utils/CompressAndRead
 import { useForm } from "react-hook-form";
 import { IEgoInfo } from "features/cardCreator/types/IEgoInfo";
 import ColorPicker from "components/colorPicker/ColorPicker";
-import { SINNER_COLOR_PRESETS } from "components/colorPicker/ColorPresets";
+import { STAT_PAGE_COLOR_GROUPS } from "components/colorPicker/ColorPresets";
 
 export default function InputStatPage({collaspPage}:{collaspPage:()=>void}):ReactElement{
     const EgoInfoValue = useAppSelector(state => state.egoInfo.value)
@@ -75,7 +75,7 @@ export default function InputStatPage({collaspPage}:{collaspPage:()=>void}):Reac
             </div>
             <div className="sinner-color-input-container">
                 <p>Pick a color for your sinner: </p>
-                <ColorPicker presets={SINNER_COLOR_PRESETS} className="sinner-color-input" id="sinnerColor" value={sinnerColor} onChange={(color)=>setValue("sinnerColor",color)}/>
+                <ColorPicker presets={STAT_PAGE_COLOR_GROUPS} className="sinner-color-input" id="sinnerColor" value={sinnerColor} onChange={(color)=>setValue("sinnerColor",color)}/>
             </div>
             {splashArt?<div className="input-group-container">
                     <p className="center-element">Delete the splash art? <span className="material-symbols-outlined delete-splash-art-btn" onClick={()=>setValue("splashArt","")}>

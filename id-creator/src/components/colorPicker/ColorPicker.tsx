@@ -4,20 +4,20 @@ import labPlugin from "colord/plugins/lab";
 import namesPlugin from "colord/plugins/names";
 import "@melloware/coloris/dist/coloris.css"
 import "./ColorPicker.css"
-import { ColorPreset } from "./ColorPresets";
+import { ColorPreset, ColorPresetGroup } from "./ColorPresets";
 
 extend([labPlugin,namesPlugin])
 
 const SAVED_COLORS_KEY = "savedColors"
 const MAX_SAVED_COLORS = 12
-const NO_PRESETS:ColorPreset[] = []
+const NO_PRESETS:ColorPresetGroup[] = []
 
 type ColorisModule = typeof import("@melloware/coloris")
 
 let coloris:ColorisModule|null = null
 let colorisSetup:Promise<ColorisModule>|null = null
 let activeInput:HTMLInputElement|null = null
-let activePresets:ColorPreset[] = NO_PRESETS
+let activePresets:ColorPresetGroup[] = NO_PRESETS
 
 function loadSavedColors():string[]{
     try{
@@ -75,17 +75,67 @@ function updateActionButtons(){
     if(clearButton) clearButton.disabled = savedColors.length===0
 }
 
+interface SwatchSection {
+    title:string,
+    swatches:{label:string,color:string}[],
+    emptyText?:string
+}
+
+function createSwatchSection(section:SwatchSection,buttons:HTMLElement[]){
+    const group = document.createElement("div")
+    group.className = "clr-swatch-group"
+    const title = document.createElement("h3")
+    title.className = "clr-swatch-title"
+    title.textContent = section.title
+    group.append(title)
+    if(buttons.length===0 && section.emptyText){
+        const empty = document.createElement("p")
+        empty.className = "clr-swatch-empty"
+        empty.textContent = section.emptyText
+        group.append(empty)
+        return group
+    }
+    const row = document.createElement("div")
+    row.className = "clr-swatch-row"
+    buttons.forEach((button,i)=>{
+        button.title = section.swatches[i].label
+        row.append(button)
+    })
+    group.append(row)
+    return group
+}
+
+function groupSwatches(sections:SwatchSection[]){
+    const swatchesContainer = document.getElementById("clr-swatches")
+    if(!swatchesContainer) return
+    const buttons = Array.from(swatchesContainer.querySelectorAll<HTMLElement>("button"))
+    swatchesContainer.textContent = ""
+    let index = 0
+    sections.forEach(section=>{
+        const sectionButtons = buttons.slice(index,index+section.swatches.length)
+        index += section.swatches.length
+        swatchesContainer.append(createSwatchSection(section,sectionButtons))
+    })
+}
+
 function updateSwatches(){
     if(!coloris) return
-    const presets = resolvePresets(activePresets)
-    const savedColors = loadSavedColors().filter(color=>!presets.some(preset=>isSameColor(preset.color,color)))
-    const swatches = [...presets.map(preset=>preset.color),...savedColors]
-    coloris({swatches} as Parameters<ColorisModule>[0])
-    swatches.forEach((color,i)=>{
-        const button = document.getElementById(`clr-swatch-${i}`)
-        if(button) button.title = presets[i]?.label ?? `Saved: ${color}`
-    })
+    const presetSections:SwatchSection[] = activePresets
+        .map(group=>({title:group.title,swatches:resolvePresets(group.presets)}))
+        .filter(section=>section.swatches.length>0)
+    const presetColors = presetSections.flatMap(section=>section.swatches.map(swatch=>swatch.color))
+    const customSection:SwatchSection = {
+        title:"Custom",
+        swatches:loadSavedColors()
+            .filter(color=>!presetColors.some(presetColor=>isSameColor(presetColor,color)))
+            .map(color=>({label:`Saved: ${color}`,color})),
+        emptyText:"No saved colors yet",
+    }
+    const sections = [...presetSections,customSection]
+    coloris({swatches:sections.flatMap(section=>section.swatches.map(swatch=>swatch.color))} as Parameters<ColorisModule>[0])
+    groupSwatches(sections)
     updateActionButtons()
+    coloris.updatePosition()
 }
 
 function saveActiveColor(){
@@ -131,11 +181,47 @@ function addActionButtons(){
     swatchesContainer.before(actions)
 }
 
+function arrangePickerLayout(){
+    const picker = document.getElementById("clr-picker")
+    const colorArea = document.getElementById("clr-color-area")
+    const preview = document.getElementById("clr-color-preview")
+    const closeButton = document.getElementById("clr-close")
+    if(!picker || !colorArea || !preview || !closeButton || document.getElementById("clr-scroll-body")) return
+
+    const header = document.createElement("div")
+    header.id = "clr-header"
+    header.className = "clr-header"
+    header.append(preview,closeButton)
+
+    const scrollBody = document.createElement("div")
+    scrollBody.id = "clr-scroll-body"
+    scrollBody.className = "clr-scroll-body"
+    const scrollableSelectors = [".clr-hue",".clr-alpha","#clr-color-value","#clr-format","#clr-swatches","#clr-clear"]
+    scrollableSelectors.forEach(selector=>{
+        const element = picker.querySelector(selector)
+        if(element) scrollBody.append(element)
+    })
+
+    picker.prepend(header)
+    colorArea.after(scrollBody)
+}
+
+function getPickerContainer(){
+    const existing = document.getElementById("clr-container")
+    if(existing) return existing
+    const container = document.createElement("div")
+    container.id = "clr-container"
+    container.className = "clr-container"
+    document.body.appendChild(container)
+    return container
+}
+
 function setupColoris(){
     colorisSetup ??= import("@melloware/coloris").then(({default:Coloris})=>{
         Coloris.init()
         Coloris({
             el: ".coloris-input",
+            parent: getPickerContainer(),
             wrap: false,
             themeMode: "dark",
             format: "auto",
@@ -144,6 +230,8 @@ function setupColoris(){
             closeButton: true,
         })
         coloris = Coloris
+        document.addEventListener("scroll",()=>Coloris.updatePosition(),true)
+        arrangePickerLayout()
         addActionButtons()
         updateSwatches()
         return Coloris
@@ -151,7 +239,7 @@ function setupColoris(){
     return colorisSetup
 }
 
-export default function ColorPicker({value,onChange,id,className,title,presets=NO_PRESETS}:{value:string,onChange:(color:string)=>void,id?:string,className?:string,title?:string,presets?:ColorPreset[]}):ReactElement{
+export default function ColorPicker({value,onChange,id,className,title,presets=NO_PRESETS}:{value:string,onChange:(color:string)=>void,id?:string,className?:string,title?:string,presets?:ColorPresetGroup[]}):ReactElement{
     const inputRef = useRef<HTMLInputElement>(null)
     const onChangeRef = useRef(onChange)
     const presetsRef = useRef(presets)
