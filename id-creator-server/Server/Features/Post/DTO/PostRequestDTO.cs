@@ -30,6 +30,10 @@ namespace Server.Features.Post.DTO
                 .WithMessage("Post cannot have more than 22 tags");
             
             RuleForEach(p=>p.ImagesAttach)
+                .Must(image => FileHelper.IsBase64DataUrl(image) || FileHelper.IsHttpUrl(image))
+                .WithMessage("Post images must be an uploaded image URL or a PNG base64 image");
+
+            RuleForEach(p=>p.ImagesAttach)
                 .MustAsync( async (tag, _) => 
                 {
                     return await FileHelper.CheckUrlSize(tag, 7000000);

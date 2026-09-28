@@ -19,7 +19,7 @@ namespace Server.Tests.Features.Images.Background
         }
 
         [Fact]
-        public async Task DoWork_UploadsAndUpdates_OnlyImagesWithValidBase64Url()
+        public async Task DoWork_UploadsOnlyBase64Images_AndMarksAllPendingImagesUploaded()
         {
             var base64Bytes = "pending-image-content"u8.ToArray();
             var pendingImage = new ImageObj
@@ -61,8 +61,11 @@ namespace Server.Tests.Features.Images.Background
 
             uploadService.Verify(s => s.Upload(It.IsAny<byte[]>(), nonBase64Image.Id.ToString()), Times.Never);
             imageObjService.Verify(
-                s => s.UpdateImage(It.Is<ImageObj>(i => i.Id == nonBase64Image.Id)),
-                Times.Never);
+                s => s.UpdateImage(It.Is<ImageObj>(i =>
+                    i.Id == nonBase64Image.Id
+                    && i.Url == "https://example.com/already-hosted.png"
+                    && i.Status == AssetStatus.Uploaded)),
+                Times.Once);
         }
 
         [Fact]
