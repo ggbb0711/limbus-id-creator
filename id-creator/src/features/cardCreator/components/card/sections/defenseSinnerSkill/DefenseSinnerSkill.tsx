@@ -79,18 +79,20 @@ const DefenseSinnerSkill = forwardRef<HTMLDivElement, { defenseSkill: IDefenseSk
                         <DefenseSkillSplash skillAffinity={skillAffinity} skillImage={skillImage} defenseType={defenseType} skillFrame={skillFrame} showDefenseIcon={showDefenseIcon} />
                         <div className="skill-power">
                             {basePower}
-                            {defenseType === "Counter" ? (
-                                <img className="damage-type" src={`/Images/attack/attackt_${damageType}.webp`} alt="" />
-                            ) : (
-                                <img className="damage-type" src={`/Images/defense/defense_${defenseType}.webp`} alt="" />
+                            {defenseType === "Counter" || defenseType ==="ClashableCounter" ? (
+                                <img className="damage-type" src={`/Images/attack/attackt_${damageType}.webp`} alt={`${damageType}_icon`} />
+                            ) : defenseType === "ClashableGuard" ? (
+                                <img className="damage-type" src={`/Images/defense/defense_Block.webp`} alt={`Block_icon`} />
+                            ): (
+                                <img className="damage-type" src={`/Images/defense/defense_${defenseType}.webp`} alt={`${defenseType}_icon`} />
                             )}
                             {(coinPow < 0 ? "" : "+") + coinPow}
                         </div>
                         <div className="skill-level">
-                            {defenseType === "Counter" ? (
-                                <img src="/Images/stat/stat_attack.webp" className="skill-level-icon" alt="defense_icon" />
+                            {defenseType === "Counter" || defenseType ==="ClashableCounter" ? (
+                                <img src="/Images/stat/stat_attack.webp" className="skill-level-icon" alt="attack_icon" />
                             ) : (
-                                <img src={"/Images/stat/stat_defense.webp"} className="skill-level-icon" alt="attack_icon" />
+                                <img src={"/Images/stat/stat_defense.webp"} className="skill-level-icon" alt="defense_icon" />
                             )}
 
                             <div>

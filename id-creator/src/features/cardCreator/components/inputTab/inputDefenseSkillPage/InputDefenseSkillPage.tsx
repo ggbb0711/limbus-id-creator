@@ -52,7 +52,7 @@ export default function InputDefenseSkillPage({
                 </div>
                 <div className="input-container">
                     <p className="input-label">Damage type:</p>
-                    <DamageTypeInput onChangeDamageType={(newVal)=>setValue("damageType",newVal)} activeDamageType={damageType} disabled={defenseType!=="Counter"}/>
+                    <DamageTypeInput onChangeDamageType={(newVal)=>setValue("damageType",newVal)} activeDamageType={damageType} disabled={defenseType!=="Counter" && defenseType!=="ClashableCounter"}/>
                 </div>
             </div>
             <div className="input-group-container">
