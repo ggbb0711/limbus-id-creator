@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, ReactNode } from "react";
 import { ReactElement } from "react";
 import Post from "features/post/components/post/Post";
 import { useLoginMenu } from "hooks/useLoginMenu";
@@ -12,7 +12,7 @@ import { IComment } from "types/iPost/IComment";
 import { useGetCommentsQuery, useCreateCommentMutation } from "api/CommentApi";
 import getApiErrorMessage from "utils/getApiErrorMessage";
 
-export default function PostPage({initialPost,initialComments=[]}:{initialPost:IPost,initialComments?:IComment[]}):ReactElement{
+export default function PostPage({initialPost,initialComments=[],sidebar}:{initialPost:IPost,initialComments?:IComment[],sidebar?:ReactNode}):ReactElement{
     const postId = initialPost.id
     const {addAlert} = useAlert()
     const {user: loginUser, isInitializing} = useAuth()
@@ -54,10 +54,12 @@ export default function PostPage({initialPost,initialComments=[]}:{initialPost:I
         setCommentPage(prev => prev + 1)
     },[])
 
-    return <div className="page-container">
-        <div className="page-content">
+    return <div className="post-page-layout">
+        <div className="page-content post-page-post">
             <Post post={post} isLoading={false}/>
         </div>
+        {sidebar&&<div className="post-page-sidebar">{sidebar}</div>}
+        <div className="post-page-comments">
         <div className="page-content">
             <CommentContainer comments={comments} loadMore={loadMoreComments} isLoading={isFetchingComments} hasMore={hasMore}/>
         </div>
@@ -67,6 +69,7 @@ export default function PostPage({initialPost,initialComments=[]}:{initialPost:I
                 if(post) return <button className="main-button" onClick={()=>setIsLoginMenuActive(true)}>Login to comment</button>
                 return <></>
             })()}
+        </div>
         </div>
     </div>
 }

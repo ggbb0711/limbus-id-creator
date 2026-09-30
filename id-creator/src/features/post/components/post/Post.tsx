@@ -93,7 +93,7 @@ export default function Post({post,isLoading}:{post:IPost|null,isLoading:boolean
                     </Link>
                 </div>
             </div>
-            <div className="center-element">
+            <div className="center-element post-tag-list">
                 {post.tags.map((tag)=><CardTag key={tag} tagKey={tag} card={TagList[tag]} />)}
             </div>
             {isLoading?<div className="post-img-loader">
