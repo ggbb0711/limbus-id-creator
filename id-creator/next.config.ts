@@ -6,14 +6,15 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.join(__dirname),
   },
+  outputFileTracingIncludes: {
+    '/': ['./src/content/blog/**/*'],
+    '/**': ['./src/content/blog/**/*'],
+  },
   images: {
     qualities: [75, 90],
     remotePatterns: [
-      // Post images / uploaded user icons (id-creator-server AWSS3Service)
       { protocol: 'https', hostname: 'limbus-id-creator.s3.us-east-1.amazonaws.com' },
-      // Legacy uploads
       { protocol: 'https', hostname: 'res.cloudinary.com' },
-      // Google account profile pictures (default user icon)
       { protocol: 'https', hostname: 'lh3.googleusercontent.com' },
     ],
   },
@@ -28,7 +29,6 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        // Not content-hashed, so no `immutable`
         source: '/Images/:path*',
         headers: [{ key: 'Cache-Control', value: 'public, max-age=604800, stale-while-revalidate=86400' }],
       },

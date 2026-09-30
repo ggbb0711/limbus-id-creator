@@ -16,11 +16,13 @@ import formatDisplayDate from "utils/formatDisplayDate";
 import "./Post.css";
 import "../shared/Style.css"
 
-function CardTag({card}:{card:ITag}):ReactElement{
-    return <div className="card-tag center-element">
-        {card?.icon&&<Image className="card-tag-img" src={card?.icon} alt="card-tag" width={10} height={10}/>}
+function CardTag({tagKey,card}:{tagKey:string,card?:ITag}):ReactElement{
+    const content = <>
+        {card?.icon&&<Image className="card-tag-img" src={card.icon} alt={card.tagName} width={10} height={10}/>}
         <p>{card?.tagName}</p>
-    </div>
+    </>
+    if(!card) return <div className="card-tag center-element">{content}</div>
+    return <Link href={`/forum?tag=${tagKey}`} className="card-tag card-tag-link center-element">{content}</Link>
 }
 
 function ViewImagePopUp({images,index=0,isActive,closeFn}:{images:string[],index:number,isActive:boolean,closeFn:()=>void}){
@@ -32,7 +34,7 @@ function ViewImagePopUp({images,index=0,isActive,closeFn}:{images:string[],index
         {isActive?<div className="image-pop-up-container">
             <TransformWrapper minScale={0.05} maxScale={3} limitToBounds={false} doubleClick={{disabled:true}}>
                 <TransformComponent wrapperStyle={{width:"100%",height:"100%"}}>
-                    {images.map((image,i)=><img key={i} src={image} alt="view-img" className={`image-pop-up ${i!=currChoice?"hidden":""}`} />)}
+                    {images.map((image,i)=><img key={i} src={image} alt={`Full size image ${i+1}`} className={`image-pop-up ${i!=currChoice?"hidden":""}`} />)}
                 </TransformComponent>
             </TransformWrapper>
             <div className="image-pop-up-close" onClick={()=>{
@@ -52,7 +54,7 @@ function ViewImagePopUp({images,index=0,isActive,closeFn}:{images:string[],index
     </>
 }
 
-function PostCarousel({postImages}:{postImages:string[]}){
+function PostCarousel({postImages,title}:{postImages:string[],title:string}){
     const [currImg,setCurrImg] = useState(0)
     const [isViewModeActive,setIsViewModeActive] = useState(false)
     
@@ -61,7 +63,7 @@ function PostCarousel({postImages}:{postImages:string[]}){
             <ArrowDownIcon/>
         </div>
         :<></>}
-        {postImages.map((image,i)=><Image key={i} className={`post-img ${i!=currImg?"hidden":""}`} src={image} alt="card-img" fill sizes="(max-width: 1200px) 100vw, 1200px" quality={90} preload={i===0} style={{objectFit:"contain"}} onClick={()=>{
+        {postImages.map((image,i)=><Image key={i} className={`post-img ${i!=currImg?"hidden":""}`} src={image} alt={postImages.length>1?`${title} (image ${i+1} of ${postImages.length})`:title} fill sizes="(max-width: 1200px) 100vw, 1200px" quality={90} preload={i===0} style={{objectFit:"contain"}} onClick={()=>{
                 setIsViewModeActive(true)
             }}/>)}
         <ViewImagePopUp images={postImages} index={currImg} isActive={isViewModeActive} closeFn={()=>{
@@ -92,11 +94,11 @@ export default function Post({post,isLoading}:{post:IPost|null,isLoading:boolean
                 </div>
             </div>
             <div className="center-element">
-                {post.tags.map((tag,i)=><CardTag key={i} card={TagList[tag]} />)}
+                {post.tags.map((tag)=><CardTag key={tag} tagKey={tag} card={TagList[tag]} />)}
             </div>
             {isLoading?<div className="post-img-loader">
                 <div className="loader"></div>
-            </div>:<PostCarousel postImages={post.imagesAttach} />}
+            </div>:<PostCarousel postImages={post.imagesAttach} title={post.title} />}
             <div className="description-txt" dangerouslySetInnerHTML={{__html:post.description}}>
             </div>
             <div className="center-element">

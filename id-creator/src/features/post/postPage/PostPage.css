@@ -1,0 +1,18 @@
+.post-page-layout{
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+.post-page-main{
+    min-width: 0;
+}
+
+@media screen and (min-width: 1100px) {
+    .post-page-layout{
+        grid-template-columns: minmax(0, 1fr) 320px;
+        align-items: start;
+    }
+}

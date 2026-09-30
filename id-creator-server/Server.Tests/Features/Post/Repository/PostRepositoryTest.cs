@@ -28,5 +28,40 @@ namespace Server.Tests.Features.Post.Repository
 
             Assert.Equal(1, result);
         }
+
+        [Fact]
+        public async Task GetPostCount_ExcludesPostsInExcludeIds()
+        {
+            var db = MockDatabase.CreateDbConnection();
+            var excluded = new PostModel { Title = "Excluded", IsActive = true, IsRemoved = false };
+            var kept = new PostModel { Title = "Kept", IsActive = true, IsRemoved = false };
+            db.Post.AddRange(excluded, kept);
+            await db.SaveChangesAsync();
+            db.ChangeTracker.Clear();
+
+            var repository = new PostRepository(db);
+            var result = repository.GetPostCount(new SearchPostOption { Title = "", ExcludeIds = [excluded.Id] });
+
+            Assert.Equal(1, result);
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public async Task GetPostCount_CountsAllActivePosts_WhenTitleIsEmptyOrNull(string? title)
+        {
+            var db = MockDatabase.CreateDbConnection();
+            db.Post.AddRange(
+                new PostModel { Title = "First", IsActive = true, IsRemoved = false },
+                new PostModel { Title = "Second", IsActive = true, IsRemoved = false },
+                new PostModel { Title = "Removed", IsActive = true, IsRemoved = true });
+            await db.SaveChangesAsync();
+            db.ChangeTracker.Clear();
+
+            var repository = new PostRepository(db);
+            var result = repository.GetPostCount(new SearchPostOption { Title = title! });
+
+            Assert.Equal(2, result);
+        }
     }
 }

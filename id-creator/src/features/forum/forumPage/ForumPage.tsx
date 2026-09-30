@@ -15,6 +15,7 @@ import { useAuth } from "hooks/useAuth";
 import { useGetPostsQuery } from "api/PostAPI";
 import getApiErrorMessage from "utils/getApiErrorMessage";
 import { PostSortOptions } from "types/enums/PostSortOptions";
+import { IPost } from "types/iPost/IPost";
 
 const tagKeyOf = (tag: ITag) => Object.keys(TagList).find((key) => TagList[key].tagName === tag.tagName)
 
@@ -23,7 +24,7 @@ function parseSort(value: string | null): PostSortOptions {
     return sort ?? PostSortOptions.Latest
 }
 
-export default function ForumPage():ReactElement{
+export default function ForumPage({initialPosts}:{initialPosts?:{list:IPost[],total:number}|null}):ReactElement{
     const router = useRouter()
     const pathname = usePathname()
     const searchParams = useSearchParams()
@@ -72,13 +73,17 @@ export default function ForumPage():ReactElement{
         return () => clearTimeout(timeout)
     }, [searchPostName])
 
-    const { data, isFetching, error } = useGetPostsQuery({
+    const { data: fetchedPosts, isFetching, error } = useGetPostsQuery({
         title: urlSearch,
         tag: tags.map(t => t.tagName),
         sortedBy,
         page: currPage,
         limit: 10,
     })
+
+    const isDefaultQuery = !urlSearch && tags.length === 0 && sortedBy === PostSortOptions.Latest && currPage === 0
+    const showInitialPosts = !fetchedPosts && isDefaultQuery && !!initialPosts
+    const data = showInitialPosts ? initialPosts : fetchedPosts
 
     const postList = data?.list.map((p) => ({
         ...p,
@@ -152,7 +157,7 @@ export default function ForumPage():ReactElement{
                 pageLimit={10}
                 postList={postList}
                 fetchPost={(page)=>updateQuery({ page })}
-                isLoading={isFetching}/>
+                isLoading={isFetching && !showInitialPosts}/>
         </div>
     </div>
 }

@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { siteUrl } from "config/siteMetadata";
 import { getLatestPosts } from "api/server/posts";
+import { getAllPosts } from "features/blog/posts";
 
 export const revalidate = 3600
 
@@ -20,6 +21,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const posts = (await getLatestPosts(100))?.list ?? []
     return [
         ...staticRoutes.map(({ path, changeFrequency, priority }) => ({ url: `${siteUrl}${path}`, changeFrequency, priority })),
+        ...getAllPosts().map((a) => ({ url: `${siteUrl}/blog/${a.slug}`, lastModified: a.published, changeFrequency: "monthly" as const, priority: 0.7 })),
         ...posts.map((post) => ({ url: `${siteUrl}/post/${post.id}`, changeFrequency: "weekly" as const, priority: 0.6 })),
     ]
 }
