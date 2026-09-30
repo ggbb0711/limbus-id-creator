@@ -1,18 +1,48 @@
 .post-page-layout{
     display: grid;
     grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+        "post"
+        "sidebar"
+        "comments";
     width: 100%;
     max-width: 1500px;
     margin: 0 auto;
+    color: white;
+    font-family: var(--font-rubik), sans-serif;
 }
 
-.post-page-main{
+.post-page-layout *{
+    box-sizing: border-box;
+}
+
+.post-page-post{
+    grid-area: post;
     min-width: 0;
+    max-width: none;
+}
+
+.post-page-sidebar{
+    grid-area: sidebar;
+    min-width: 0;
+}
+
+.post-page-comments{
+    grid-area: comments;
+    min-width: 0;
+}
+
+.post-page-comments > .page-content{
+    max-width: none;
 }
 
 @media screen and (min-width: 1100px) {
     .post-page-layout{
         grid-template-columns: minmax(0, 1fr) 320px;
+        grid-template-rows: auto 1fr;
+        grid-template-areas:
+            "post sidebar"
+            "comments sidebar";
         align-items: start;
     }
 }

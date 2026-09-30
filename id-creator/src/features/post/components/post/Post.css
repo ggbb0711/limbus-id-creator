@@ -112,6 +112,15 @@
     border: 1px solid var(--brown-pale);
 }
 
+.post-tag-list{
+    flex-wrap: wrap;
+}
+
+.post-tag-list .card-tag{
+    white-space: nowrap;
+    word-break: normal;
+}
+
 .card-tag-link{
     color: inherit;
     text-decoration: none;

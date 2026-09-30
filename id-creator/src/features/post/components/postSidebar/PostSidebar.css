@@ -86,3 +86,27 @@
     font-size: 13px;
     color: var(--white-neutral-weak);
 }
+
+@media screen and (max-width: 1099px) {
+    .post-sidebar{
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .post-sidebar-list{
+        flex-direction: row;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        overscroll-behavior-x: contain;
+        padding-bottom: 8px;
+    }
+
+    .post-sidebar-list > li{
+        flex: 0 0 260px;
+        scroll-snap-align: start;
+    }
+
+    .post-sidebar-item{
+        height: 100%;
+    }
+}

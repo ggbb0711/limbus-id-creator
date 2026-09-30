@@ -37,10 +37,9 @@ export default async function Page({ params }: PageProps<"/post/[postId]">) {
     const authorPosts = byAuthor?.list ?? []
     const latest = (await getLatestPostsExcluding(postsPerSection, [post.id, ...authorPosts.map((p) => p.id)]))?.list ?? []
 
-    return <div className="post-page-layout">
-        <div className="post-page-main">
-            <PostPage initialPost={post} initialComments={initialComments} />
-        </div>
-        <PostSidebar post={post} authorPosts={authorPosts} latestPosts={latest} />
-    </div>
+    return <PostPage
+        initialPost={post}
+        initialComments={initialComments}
+        sidebar={<PostSidebar post={post} authorPosts={authorPosts} latestPosts={latest} />}
+    />
 }
