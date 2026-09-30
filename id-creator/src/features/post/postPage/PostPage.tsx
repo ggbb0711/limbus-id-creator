@@ -8,19 +8,19 @@ import useAlert from "hooks/useAlert";
 import { useAuth } from "hooks/useAuth";
 import { useGetPostQuery } from "api/PostAPI";
 import { IPost } from "types/iPost/IPost";
+import { IComment } from "types/iPost/IComment";
 import { useGetCommentsQuery, useCreateCommentMutation } from "api/CommentApi";
 import getApiErrorMessage from "utils/getApiErrorMessage";
 
-export default function PostPage({initialPost}:{initialPost:IPost}):ReactElement{
+export default function PostPage({initialPost,initialComments=[]}:{initialPost:IPost,initialComments?:IComment[]}):ReactElement{
     const postId = initialPost.id
     const {addAlert} = useAlert()
     const {user: loginUser, isInitializing} = useAuth()
     const {setIsLoginMenuActive} = useLoginMenu()
     const [commentPage, setCommentPage] = useState(0)
 
-    // Wait for AuthBootstrap so the view is attributed to the logged-in user
     const { data: post = initialPost } = useGetPostQuery(postId, { skip: isInitializing })
-    const { data: comments = [], isFetching: isFetchingComments } = useGetCommentsQuery({
+    const { data: comments = initialComments, isFetching: isFetchingComments } = useGetCommentsQuery({
         postId,
         page: commentPage,
         limit: 10,

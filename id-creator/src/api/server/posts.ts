@@ -25,3 +25,18 @@ export const getLatestPosts = cache(async (limit: number): Promise<IPostList | n
         return null
     }
 })
+
+async function getSidebarPosts(filter: { UserId?: string }, limit: number, excludeIds: string[]): Promise<IPostList | null> {
+    const params = new URLSearchParams({ Title: '', SortedBy: 'Latest', page: '0', limit: String(limit) })
+    if (filter.UserId) params.append('UserId', filter.UserId)
+    excludeIds.forEach((id) => params.append('ExcludeIds', id))
+    try {
+        return await apiGet<IPostList>(`/Post?${params}`)
+    } catch (err) {
+        console.error('getSidebarPosts failed', err)
+        return null
+    }
+}
+
+export const getPostsByUser = (userId: string, limit: number, excludeIds: string[] = []) => getSidebarPosts({ UserId: userId }, limit, excludeIds)
+export const getLatestPostsExcluding = (limit: number, excludeIds: string[]) => getSidebarPosts({}, limit, excludeIds)

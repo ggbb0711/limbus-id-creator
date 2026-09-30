@@ -34,6 +34,7 @@ export default function Header():ReactElement{
                 <Link href="/creator/identity" className={navClass("/creator/identity")}>Create Id</Link>
                 <Link href="/creator/ego" className={navClass("/creator/ego")}>Create Ego</Link>
                 <Link href="/forum" className={navClass("/forum")}>Forum</Link>
+                <Link href="/blog" className={navClass("/blog")}>Blog</Link>
                 {isInitializing?<></>:loginUser?
                     <Link href={"/user/"+loginUser.id} className="main-button">My account</Link>:
                     <button className="main-button nav-button" onClick={()=>setIsLoginMenuActive(true)}>Login</button>}

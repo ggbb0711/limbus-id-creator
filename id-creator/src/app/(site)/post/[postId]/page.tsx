@@ -1,9 +1,13 @@
-import React from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getPost } from "api/server/posts";
+import { getLatestPostsExcluding, getPost, getPostsByUser } from "api/server/posts";
+import { getFirstComments } from "api/server/comments";
 import PostPage from "features/post/postPage/PostPage";
+import PostSidebar from "features/post/components/postSidebar/PostSidebar";
+import "features/post/postPage/PostPage.css";
 import stripHtml from "utils/stripHtml";
+
+const postsPerSection = 4
 
 export async function generateMetadata({ params }: PageProps<"/post/[postId]">): Promise<Metadata> {
     const { postId } = await params
@@ -25,5 +29,18 @@ export default async function Page({ params }: PageProps<"/post/[postId]">) {
     const { postId } = await params
     const post = await getPost(postId)
     if (!post) notFound()
-    return <PostPage initialPost={post} />
+
+    const [initialComments, byAuthor] = await Promise.all([
+        getFirstComments(postId, 10),
+        getPostsByUser(post.userId, postsPerSection, [post.id]),
+    ])
+    const authorPosts = byAuthor?.list ?? []
+    const latest = (await getLatestPostsExcluding(postsPerSection, [post.id, ...authorPosts.map((p) => p.id)]))?.list ?? []
+
+    return <div className="post-page-layout">
+        <div className="post-page-main">
+            <PostPage initialPost={post} initialComments={initialComments} />
+        </div>
+        <PostSidebar post={post} authorPosts={authorPosts} latestPosts={latest} />
+    </div>
 }

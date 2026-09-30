@@ -1,4 +1,3 @@
-import React from "react";
 import type { Metadata } from "next";
 import { EgoCreator } from "features/cardCreator/pages/CreatorClient";
 

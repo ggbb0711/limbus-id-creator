@@ -113,6 +113,54 @@ namespace Server.Tests.Features.Post.Service
         }
 
         [Fact]
+        public async Task FindPosts_ExcludesPostsInExcludeIds()
+        {
+            var excluded = CreatePost();
+            var alsoExcluded = CreatePost();
+            var kept = CreatePost();
+            var postRepository = new Mock<IPostRepository>();
+            var commentRepository = new Mock<ICommentRepository>();
+            SetupFindAsync(postRepository, [excluded, kept, alsoExcluded]);
+
+            var service = new PostService(postRepository.Object, commentRepository.Object);
+            var result = await service.FindPosts(new SearchPostOption { ExcludeIds = [excluded.Id, alsoExcluded.Id], limit = 10 });
+
+            var found = Assert.Single(result);
+            Assert.Equal(kept.Id, found.Id);
+        }
+
+        [Fact]
+        public async Task FindPosts_ReturnsAllPosts_WhenExcludeIdsIsEmpty()
+        {
+            var first = CreatePost();
+            var second = CreatePost();
+            var postRepository = new Mock<IPostRepository>();
+            var commentRepository = new Mock<ICommentRepository>();
+            SetupFindAsync(postRepository, [first, second]);
+
+            var service = new PostService(postRepository.Object, commentRepository.Object);
+            var result = await service.FindPosts(new SearchPostOption { ExcludeIds = [], limit = 10 });
+
+            Assert.Equal(2, result.Count);
+        }
+
+        [Fact]
+        public async Task FindPosts_FillsLimit_AfterExcludingPosts()
+        {
+            var excluded = CreatePost(created: DateTime.Now);
+            var second = CreatePost(created: DateTime.Now.AddMinutes(-1));
+            var third = CreatePost(created: DateTime.Now.AddMinutes(-2));
+            var postRepository = new Mock<IPostRepository>();
+            var commentRepository = new Mock<ICommentRepository>();
+            SetupFindAsync(postRepository, [excluded, second, third]);
+
+            var service = new PostService(postRepository.Object, commentRepository.Object);
+            var result = await service.FindPosts(new SearchPostOption { ExcludeIds = [excluded.Id], limit = 2 });
+
+            Assert.Equal([second.Id, third.Id], result.Select(p => p.Id));
+        }
+
+        [Fact]
         public async Task FindPosts_FiltersByUserId_WhenUserIdIsNotEmpty()
         {
             var targetUserId = Guid.NewGuid();

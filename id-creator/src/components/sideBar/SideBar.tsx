@@ -25,6 +25,7 @@ export default function SideBar({isActive,setActiveSideBar}:{isActive:boolean,se
                     <Link href="/creator/identity" onClick={close} className="main-button nav-button">Create Id</Link>
                     <Link href="/creator/ego" onClick={close} className="main-button nav-button">Create Ego</Link>
                     <Link href="/forum" onClick={close} className="main-button nav-button">Forum</Link>
+                    <Link href="/blog" onClick={close} className="main-button nav-button">Blog</Link>
                     {loginUser?
                         <Link href={"/user/"+loginUser.id} onClick={close} className="main-button">My account</Link>:
                         <button className={"main-button nav-button"} onClick={()=>setIsLoginMenuActive(true)}>Login</button>}

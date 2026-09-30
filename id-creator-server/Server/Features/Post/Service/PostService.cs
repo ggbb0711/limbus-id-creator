@@ -28,6 +28,7 @@ namespace Server.Features.Post.Service
                 Filter = p=>(p.Title.Contains(option.Title) || option.Title.IsNullOrEmpty())
                     &&(option.UserId == Guid.Empty||option.UserId == p.UserId)
                     &&(option.Tag.Count<1||option.Tag.All(t=>p.Tags.Select(t=>t.TagName).Contains(t)))
+                    &&(option.ExcludeIds.Count<1||!option.ExcludeIds.Contains(p.Id))
                     && !p.IsRemoved && p.IsActive,
                 OrderBy = query => option.SortedBy switch
                     {

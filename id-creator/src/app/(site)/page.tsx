@@ -7,7 +7,6 @@ export const metadata: Metadata = {
     alternates: { canonical: "/" },
 }
 
-// Re-render at most once a minute so new posts show up without a rebuild
 export const revalidate = 60
 
 export default async function Page() {
