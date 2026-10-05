@@ -11,8 +11,7 @@ import getImageDimensions from "features/cardCreator/utils/image/getImageDimensi
 import base64ToFile from "features/cardCreator/utils/image/base64ToFile";
 import "./SaveCloudMenu.css";
 import "../SettingMenu.css";
-import { IEgoInfo } from "features/cardCreator/types/IEgoInfo";
-import { IIdInfo } from "features/cardCreator/types/IIdInfo";
+import { CardInfo } from "features/cardCreator/types/CardInfo";
 import { useLoginMenu } from "hooks/useLoginMenu";
 import * as Sentry from "@sentry/nextjs"
 import useAlert from "hooks/useAlert";
@@ -20,8 +19,9 @@ import formatDateForBackend from "features/cardCreator/utils/save/formatDateForB
 import { useCardDomRef } from "features/cardCreator/contexts/CardDomRefContext";
 import { useAuth } from "hooks/useAuth";
 import { useAppSelector, useAppDispatch } from "stores/AppStore";
-import { setIdInfo } from "features/cardCreator/stores/IdInfoSlice";
-import { setEgoInfo } from "features/cardCreator/stores/EgoInfoSlice";
+import { loadCard } from "features/cardCreator/stores/cardActions";
+import { selectCard } from "features/cardCreator/hooks/useCardInfo";
+import { toCardMode } from "features/cardCreator/contexts/CardModeContext";
 import { closeSettingMenu } from "features/cardCreator/stores/SettingMenuSlice";
 import {
     useGetSaveListQuery,
@@ -66,9 +66,8 @@ export default function SaveCloudMenu({saveMode}:{saveMode:SaveMode}):ReactEleme
     const cardDomRef = useCardDomRef()
     const dispatch = useAppDispatch()
 
-    const idInfoValue = useAppSelector(state => state.idInfo.value)
-    const egoInfoValue = useAppSelector(state => state.egoInfo.value)
-    const cardData = saveMode === "ID" ? idInfoValue : egoInfoValue
+    const cardMode = toCardMode(saveMode)
+    const cardData = useAppSelector(state => selectCard(state, cardMode))
 
     const { data: saveList = [], isFetching: isLoadingSaveList } = useGetSaveListQuery(
         { userId: loginUser?.id ?? "", searchName: searchSaveName, saveMode },
@@ -82,7 +81,7 @@ export default function SaveCloudMenu({saveMode}:{saveMode:SaveMode}):ReactEleme
 
     const isLoadingSaveData = isLoadingSaveList || isLoadingSave || isDeleting || isCreating
 
-    async function createForm(saveFileData: ISaveFile<IIdInfo|IEgoInfo>, domRef: React.RefObject<HTMLDivElement | null>): Promise<FormData> {
+    async function createForm(saveFileData: ISaveFile<CardInfo>, domRef: React.RefObject<HTMLDivElement | null>): Promise<FormData> {
         const { default: TurnRefToImg } = await import("features/cardCreator/utils/image/TurnRefToImg")
         const saveData = { ...saveFileData, saveTime: formatDateForBackend(new Date()) }
         const { images, stripped } = collectBase64Images(saveData.saveInfo)
@@ -151,11 +150,7 @@ export default function SaveCloudMenu({saveMode}:{saveMode:SaveMode}):ReactEleme
     async function loadSave(saveId: string){
         try {
             const result = await triggerGetSave({ saveId, saveMode }).unwrap()
-            if(saveMode === "ID"){
-                dispatch(setIdInfo(result.saveInfo as IIdInfo))
-            } else {
-                dispatch(setEgoInfo(result.saveInfo as IEgoInfo))
-            }
+            dispatch(loadCard(cardMode, result.saveInfo))
             dispatch(closeSettingMenu())
         } catch(error){
             console.log(error)

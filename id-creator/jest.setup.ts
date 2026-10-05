@@ -13,3 +13,7 @@ Object.defineProperty(window, 'matchMedia',{
         dispatchEvent:()=>false
     })
 })
+if (typeof globalThis.structuredClone !== 'function') {
+    const { serialize, deserialize } = jest.requireActual<typeof import('v8')>('v8')
+    globalThis.structuredClone = <T,>(value: T): T => deserialize(serialize(value))
+}

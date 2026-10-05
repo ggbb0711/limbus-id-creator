@@ -6,5 +6,7 @@ function Loading() {
     return <div className="center-element-vertically" style={{ flex: 1 }}><div className="loader" /></div>
 }
 
-export const IdCreator = dynamic(() => import("./IdCardPage"), { ssr: false, loading: Loading })
-export const EgoCreator = dynamic(() => import("./EgoCardPage"), { ssr: false, loading: Loading })
+const CardEditorPage = dynamic(() => import("./CardEditorPage"), { ssr: false, loading: Loading })
+
+export const IdCreator = () => <CardEditorPage mode="id" />
+export const EgoCreator = () => <CardEditorPage mode="ego" />

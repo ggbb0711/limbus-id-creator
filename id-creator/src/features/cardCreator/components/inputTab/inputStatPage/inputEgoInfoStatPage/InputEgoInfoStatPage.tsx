@@ -13,7 +13,7 @@ import SinnerEgoIconInput from "../sinnerEgoIconInput/SinnerEgoIconInput";
 import SinnerSplashArtRepositionInput from "../sinnerSplashArtRepositionInput/SinnerSplashArtRepositionInput";
 import UploadImgBtn from "../../components/uploadImgBtn/UploadImgBtn";
 import { useAppSelector, useAppDispatch } from "stores/AppStore";
-import { setEgoInfo } from "features/cardCreator/stores/EgoInfoSlice";
+import { egoInfoSlice } from "features/cardCreator/stores/EgoInfoSlice";
 import { compressAndReadImage } from "features/cardCreator/utils/image/CompressAndReadImage";
 import { useForm } from "react-hook-form";
 import { IEgoInfo } from "features/cardCreator/types/IEgoInfo";
@@ -42,7 +42,7 @@ export default function InputStatPage({collapsePage}:{collapsePage:()=>void}):Re
     useEffect(() => { reset(structuredClone(EgoInfoValue)) }, [JSON.stringify(EgoInfoValue)])
 
     useEffect(() => {
-        const sub = watch((values) => dispatch(setEgoInfo(structuredClone(values) as any)))
+        const sub = watch((values) => dispatch(egoInfoSlice.actions.setInfo(structuredClone(values) as any)))
         return () => sub.unsubscribe()
     }, [watch, dispatch])
 

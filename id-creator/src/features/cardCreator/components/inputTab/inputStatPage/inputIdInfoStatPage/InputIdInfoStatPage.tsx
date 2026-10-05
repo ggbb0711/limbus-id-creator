@@ -17,7 +17,7 @@ import SinnerRarityIconInput from "../sinnerRarityInput/SinnerRarityInput";
 import SinnerSplashArtRepositionInput from "../sinnerSplashArtRepositionInput/SinnerSplashArtRepositionInput";
 import UploadImgBtn from "../../components/uploadImgBtn/UploadImgBtn";
 import { useAppSelector, useAppDispatch } from "stores/AppStore";
-import { setIdInfo } from "features/cardCreator/stores/IdInfoSlice";
+import { idInfoSlice } from "features/cardCreator/stores/IdInfoSlice";
 import { compressAndReadImage } from "features/cardCreator/utils/image/CompressAndReadImage";
 import { useForm } from "react-hook-form";
 import { IIdInfo } from "features/cardCreator/types/IIdInfo";
@@ -46,7 +46,7 @@ export default function InputIdInfoStatPage({collapsePage}:{collapsePage:()=>voi
     useEffect(() => { reset(structuredClone(idInfoValue)) }, [JSON.stringify(idInfoValue)])
 
     useEffect(() => {
-        const sub = watch((values) => dispatch(setIdInfo(structuredClone(values) as any)))
+        const sub = watch((values) => dispatch(idInfoSlice.actions.setInfo(structuredClone(values) as any)))
         return () => sub.unsubscribe()
     }, [watch, dispatch])
 

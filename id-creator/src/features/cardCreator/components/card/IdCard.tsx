@@ -8,7 +8,7 @@ import SinnerStats from "./components/sinnerStats/SinnerStats";
 import SkillDetailContainer from "./components/skillDetailContainer/SkillDetailContainer";
 import { reorderSkills } from "features/cardCreator/utils/card/reorderSkills";
 import { useAppSelector, useAppDispatch } from "stores/AppStore";
-import { setIdInfo } from "features/cardCreator/stores/IdInfoSlice";
+import { idInfoSlice } from "features/cardCreator/stores/IdInfoSlice";
 
 
 const IdCard=forwardRef<HTMLDivElement,{changeActiveTab:React.Dispatch<React.SetStateAction<number>>}>(({changeActiveTab},ref):ReactElement=>{
@@ -21,7 +21,7 @@ const IdCard=forwardRef<HTMLDivElement,{changeActiveTab:React.Dispatch<React.Set
         const result = reorderSkills(idInfoValue.skillDetails, fromSkillID, toSkillID)
         if(!result) return
         changeActiveTab(i => i > -2 ? result.newIndex : i)
-        dispatch(setIdInfo({...idInfoValue, skillDetails: result.list}))
+        dispatch(idInfoSlice.actions.moveSkill({ fromId: fromSkillID, toId: toSkillID }))
     }
 
 

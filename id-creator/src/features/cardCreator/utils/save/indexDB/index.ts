@@ -1,25 +1,27 @@
-import { IEgoInfo } from 'features/cardCreator/types/IEgoInfo';
-import { IIdInfo } from 'features/cardCreator/types/IIdInfo';
-import Dexie, { EntityTable } from 'dexie';
-import { ISaveFile } from 'features/cardCreator/types/ISaveFile';
+import Dexie, { EntityTable } from "dexie"
+import { SaveMode } from "features/cardCreator/constants"
+import { CardInfo } from "features/cardCreator/types/CardInfo"
+import { ISaveFile } from "features/cardCreator/types/ISaveFile"
 
-const indexDB = new Dexie("LocalSaves") as Dexie & {
-    currIdSave: EntityTable<IIdInfo, 'localSaveId'>,
-    IdLocalSaves: EntityTable<ISaveFile<IIdInfo>, 'id'>,
-    currEgoSave: EntityTable<IEgoInfo, 'localSaveId'>,
-    EgoLocalSaves: EntityTable<ISaveFile<IEgoInfo>, 'id'>
-};
+export type CurrentCardTable = EntityTable<CardInfo, "localSaveId">
+export type LocalSavesTable = EntityTable<ISaveFile<CardInfo>, "id">
 
-indexDB.version(1).stores({
-    currIdSave: '++localSaveId',
-    IdLocalSaves: 'id',
-    currEgoSave: '++localSaveId',
-    EgoLocalSaves: 'id'
-})
-
-function normalizeLocalSave<T>(raw: any): ISaveFile<T> {
-    if (!raw) return raw
-    return { ...raw, name: raw.name ?? raw.saveName ?? "Untitled" }
+export const indexDB = new Dexie("LocalSaves") as Dexie & {
+    currIdSave: CurrentCardTable
+    IdLocalSaves: LocalSavesTable
+    currEgoSave: CurrentCardTable
+    EgoLocalSaves: LocalSavesTable
 }
 
-export { indexDB, normalizeLocalSave };
+indexDB.version(1).stores({
+    currIdSave: "++localSaveId",
+    IdLocalSaves: "id",
+    currEgoSave: "++localSaveId",
+    EgoLocalSaves: "id",
+})
+
+export const CURRENT_CARD_KEY = 1
+
+export const savesTable = (mode: SaveMode): LocalSavesTable => (mode === "ID" ? indexDB.IdLocalSaves : indexDB.EgoLocalSaves)
+
+export const currentCardTable = (mode: SaveMode): CurrentCardTable => (mode === "ID" ? indexDB.currIdSave : indexDB.currEgoSave)

@@ -7,21 +7,18 @@ import { SaveMode } from "features/cardCreator/constants";
 import useSaveLocal from "features/cardCreator/hooks/useSaveLocal";
 import PopUpMenu from "components/ui/popUpMenu/PopUpMenu";
 import EditIcon from "assets/icons/EditIcon";
-import { IEgoInfo } from "features/cardCreator/types/IEgoInfo";
-import { IIdInfo } from "features/cardCreator/types/IIdInfo";
 import { useAppSelector, useAppDispatch } from "stores/AppStore";
-import { setIdInfo } from "features/cardCreator/stores/IdInfoSlice";
-import { setEgoInfo } from "features/cardCreator/stores/EgoInfoSlice";
+import { toCardMode } from "features/cardCreator/contexts/CardModeContext";
+import { loadCard } from "features/cardCreator/stores/cardActions";
+import { selectCard } from "features/cardCreator/hooks/useCardInfo";
 
 
 const SaveLocalMenu=({saveMode, close}:{saveMode: SaveMode, close: ()=>void})=>{
-    const localSaveName = saveMode === "ID" ? "IdLocalSaves" : "EgoLocalSaves"
-    const idInfoValue = useAppSelector(state => state.idInfo.value)
-    const egoInfoValue = useAppSelector(state => state.egoInfo.value)
+    const cardMode = toCardMode(saveMode)
+    const cardData = useAppSelector(state => selectCard(state, cardMode))
     const dispatch = useAppDispatch()
-    const cardData = saveMode === "ID" ? idInfoValue : egoInfoValue
 
-    const {saveData,isLoading,deleteSave,createSave,changeSaveName,loadSave,overwriteSave} = useSaveLocal<IIdInfo|IEgoInfo>(localSaveName)
+    const {saveData,isLoading,deleteSave,createSave,changeSaveName,loadSave,overwriteSave} = useSaveLocal(saveMode)
     const [namePopup,setNamePopup] = useState(false)
     const [popupMode,setPopupMode] = useState<"create"|"overwrite">("create")
     const [nameChangingSaveId,setNameChangingSaveId] = useState<string|null>(null)
@@ -55,7 +52,6 @@ const SaveLocalMenu=({saveMode, close}:{saveMode: SaveMode, close: ()=>void})=>{
         closePopup()
     }
 
-    // Copy before sorting: Array.prototype.sort works in place and would mutate hook state
     const sortedSaves = useMemo(
         ()=>sortSavesByTimeDesc(saveData),
         [saveData]
@@ -105,10 +101,8 @@ const SaveLocalMenu=({saveMode, close}:{saveMode: SaveMode, close: ()=>void})=>{
                             </button>
                             <button className="main-button" onClick={async ()=>{
                                 const save = await loadSave(data.id)
-                                if(save){
-                                    if(saveMode === "ID") dispatch(setIdInfo(save.saveInfo as IIdInfo))
-                                    else dispatch(setEgoInfo(save.saveInfo as IEgoInfo))
-                                }
+                                if(!save) return
+                                dispatch(loadCard(cardMode, save.saveInfo))
                                 close()
                             }}>
                                 Load

@@ -1,96 +1,83 @@
-import { Table } from "dexie";
-import { ISaveFile } from "features/cardCreator/types/ISaveFile";
-import { useCallback, useEffect, useState } from "react";
-import { indexDB, normalizeLocalSave } from "features/cardCreator/utils/save/indexDB";
-import formatDateForBackend from "features/cardCreator/utils/save/formatDateForBackend";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { SaveMode } from "features/cardCreator/constants"
+import { toCardMode } from "features/cardCreator/contexts/CardModeContext"
+import { CardInfo } from "features/cardCreator/types/CardInfo"
+import { ISaveFile } from "features/cardCreator/types/ISaveFile"
+import { savesTable } from "features/cardCreator/utils/save/indexDB"
+import { migrateCardInfo, migrateSaveFile } from "features/cardCreator/utils/save/migrateCardInfo"
+import formatDateForBackend from "features/cardCreator/utils/save/formatDateForBackend"
+import { safeDb } from "features/cardCreator/utils/save/safeDb"
+import useAlert from "hooks/useAlert"
 
+export type LocalSave = ISaveFile<CardInfo>
 
-export default function useSaveLocal<SaveObj>(LocalSaveDataName:string){
-    const [saveDataTable,setSaveDataTable] = useState<Table<any>|null>(null)
-    const [saveData,setSaveData] = useState<ISaveFile<SaveObj>[]>([]) 
+export default function useSaveLocal(saveMode: SaveMode) {
+    const table = useMemo(() => savesTable(saveMode), [saveMode])
+    const cardMode = toCardMode(saveMode)
+    const [saveData, setSaveData] = useState<LocalSave[]>([])
     const [isLoading, setIsLoading] = useState(false)
+    const { addAlert } = useAlert()
+    const addAlertRef = useRef(addAlert)
 
-    const deleteSave = useCallback(async (id:string)=>{
-        if(!saveDataTable) return null
-        try {
-           setIsLoading(true)
-           await saveDataTable?.delete(id)
-           setSaveData(saveData.filter((item)=>item.id!==id))
-        } catch (error) {
-            console.log(error)
-        } finally {
-            setIsLoading(false)
-        }
-    },[saveData, saveDataTable])
+    useEffect(() => {
+        addAlertRef.current = addAlert
+    })
 
-    const createSave = useCallback(async (saveObj: ISaveFile<SaveObj>)=>{
-        if(!saveDataTable) return null
-        try {
-           setIsLoading(true)
-           const id = await saveDataTable?.add(saveObj)
-           console.log("Saved with id: ",id)
-           setSaveData([{ ...saveObj},...saveData])
-        } catch (error) {
-            console.log(error)
-        }
-        finally {
-            setIsLoading(false)
-        }
-    },[saveData, saveDataTable])
+    const migrate = useCallback(
+        (raw: unknown): LocalSave => migrateSaveFile(raw, info => migrateCardInfo(cardMode, info)),
+        [cardMode]
+    )
 
-    const getAllSaves = useCallback(async () => {
-        if (!saveDataTable) return null
-        const raw = await saveDataTable.toArray()
-        return raw.map(r => normalizeLocalSave<SaveObj>(r))
-    }, [saveDataTable])
+    const run = useCallback(async <T,>(operation: () => Promise<T>, context: string, failureMessage: string) => {
+        setIsLoading(true)
+        const result = await safeDb(operation, context)
+        setIsLoading(false)
+        if (!result.ok) addAlertRef.current("Failure", failureMessage)
+        return result
+    }, [])
 
-    const loadSave = useCallback(async (id: string)=>{
-        if(!saveDataTable) return null
-        const raw = await saveDataTable.get(id)
-        return raw ? normalizeLocalSave<SaveObj>(raw) : null
-    },[saveDataTable])
-
-    const changeSaveName = useCallback(async(id:string,newName:string)=>{
-        if(!saveDataTable) return null
-        try{
-            await saveDataTable.update(id, {name: newName, updateTime: formatDateForBackend(new Date())})
-            setSaveData(saveData.map(item=>item.id===id?
-                {...item, name: newName, updateTime: formatDateForBackend(new Date())}:
-                item
-            ))
-        }
-        catch(error){
-            console.log(error)
-        }
-    },[saveData, saveDataTable])
-
-    const overwriteSave = useCallback(async (id: string,saveObj:SaveObj)=>{
-        if(!saveDataTable) return null
-        try {
-            setIsLoading(true)
-            await saveDataTable.update(id, {saveInfo: saveObj, updateTime: formatDateForBackend(new Date())})
-            setSaveData(saveData.map(item=>item.id===id?
-                {...item, saveInfo: saveObj, updateTime: formatDateForBackend(new Date())}:
-                item
-            ))
-        } catch (error) {
-            console.log(error)
-        }
-        finally {
-            setIsLoading(false)
-        }
-    },[saveData,saveDataTable])
-
-
-    useEffect(()=>{
-        if(LocalSaveDataName)setSaveDataTable(indexDB.table(LocalSaveDataName))
-    },[LocalSaveDataName])
-
-    useEffect(()=>{
-        if(saveDataTable)getAllSaves().then(saves=>{
-            if(saves) setSaveData(saves)
+    useEffect(() => {
+        let cancelled = false
+        safeDb(() => table.toArray(), "loadLocalSaves").then(result => {
+            if (cancelled) return
+            if (result.ok) setSaveData(result.data.map(migrate))
+            else addAlertRef.current("Failure", "Could not read your local saves")
         })
-    },[saveDataTable,getAllSaves])
+        return () => {
+            cancelled = true
+        }
+    }, [table, migrate])
 
-    return {saveData,isLoading,deleteSave,createSave,getAllSaves,changeSaveName,loadSave,overwriteSave}
+    const createSave = useCallback(async (save: LocalSave) => {
+        const result = await run(() => table.add(save), "createLocalSave", "Could not create the save")
+        if (result.ok) setSaveData(previous => [save, ...previous])
+        return result.ok
+    }, [run, table])
+
+    const deleteSave = useCallback(async (id: string) => {
+        const result = await run(() => table.delete(id), "deleteLocalSave", "Could not delete the save")
+        if (result.ok) setSaveData(previous => previous.filter(save => save.id !== id))
+        return result.ok
+    }, [run, table])
+
+    const changeSaveName = useCallback(async (id: string, name: string) => {
+        const updateTime = formatDateForBackend(new Date())
+        const result = await run(() => table.update(id, { name, updateTime }), "renameLocalSave", "Could not rename the save")
+        if (result.ok) setSaveData(previous => previous.map(save => (save.id === id ? { ...save, name, updateTime } : save)))
+        return result.ok
+    }, [run, table])
+
+    const overwriteSave = useCallback(async (id: string, saveInfo: CardInfo) => {
+        const updateTime = formatDateForBackend(new Date())
+        const result = await run(() => table.update(id, { saveInfo, updateTime }), "overwriteLocalSave", "Could not overwrite the save")
+        if (result.ok) setSaveData(previous => previous.map(save => (save.id === id ? { ...save, saveInfo, updateTime } : save)))
+        return result.ok
+    }, [run, table])
+
+    const loadSave = useCallback(async (id: string): Promise<LocalSave | null> => {
+        const result = await run(() => table.get(id), "loadLocalSave", "Could not load the save")
+        return result.ok && result.data ? migrate(result.data) : null
+    }, [run, table, migrate])
+
+    return { saveData, isLoading, createSave, deleteSave, changeSaveName, overwriteSave, loadSave }
 }

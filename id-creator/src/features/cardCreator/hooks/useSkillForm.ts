@@ -1,10 +1,8 @@
 import { useEffect, useCallback } from 'react'
 import { useForm, UseFormReturn, Path, UseFormRegisterReturn, FieldErrors } from 'react-hook-form'
-import { useCardMode } from 'features/cardCreator/contexts/CardModeContext'
-import { useAppDispatch, useAppSelector } from 'stores/AppStore'
+import { useAppDispatch } from 'stores/AppStore'
 import { useStatusEffect } from './useStatusEffect'
-import { deleteIdInfoSkill, updateIdInfoSkill, changeIdInfoSkillType } from 'features/cardCreator/stores/IdInfoSlice'
-import { deleteEgoInfoSkill, updateEgoInfoSkill, changeEgoInfoSkillType } from 'features/cardCreator/stores/EgoInfoSlice'
+import { useCardActions, useCardSelector } from './useCardInfo'
 import { SkillDetail } from 'features/cardCreator/types/SkillDetail'
 import { SkillType } from 'features/cardCreator/types/SkillTypes'
 import { getSkillData } from 'features/cardCreator/skills/skillData'
@@ -19,12 +17,10 @@ interface UseSkillFormReturn<T extends SkillDetail> extends UseFormReturn<T> {
 }
 
 export function useSkillForm<T extends SkillDetail>(index: number): UseSkillFormReturn<T> {
-    const mode = useCardMode()
     const dispatch = useAppDispatch()
+    const { updateSkill, deleteSkill: deleteSkillAction } = useCardActions()
 
-    const skill = useAppSelector(state =>
-        mode === "id" ? state.idInfo.value.skillDetails[index] : state.egoInfo.value.skillDetails[index]
-    ) as T
+    const skill = useCardSelector(info => info.skillDetails[index]) as T
 
     const keyWordList = useStatusEffect()
 
@@ -34,23 +30,15 @@ export function useSkillForm<T extends SkillDetail>(index: number): UseSkillForm
 
     useEffect(() => {
         const sub = form.watch((values) => {
-            const action = mode === "id" ? updateIdInfoSkill : updateEgoInfoSkill
-            dispatch(action({ index, skill: structuredClone(values) as SkillDetail }))
+            dispatch(updateSkill({ index, skill: structuredClone(values) as SkillDetail }))
         })
         return () => sub.unsubscribe()
-    }, [form.watch, index, mode])
+    }, [form.watch, index, updateSkill, dispatch])
 
-    const deleteSkill = () => dispatch(
-        mode === "id" ? deleteIdInfoSkill(skill.inputId) : deleteEgoInfoSkill(skill.inputId)
-    )
+    const deleteSkill = () => dispatch(deleteSkillAction(skill.inputId))
 
     const changeSkillType = (newType: SkillType) => {
-        const newSkill = getSkillData(newType).create()
-        dispatch(
-            mode === "id"
-                ? changeIdInfoSkillType({ index, skill: newSkill })
-                : changeEgoInfoSkillType({ index, skill: newSkill })
-        )
+        dispatch(updateSkill({ index, skill: getSkillData(newType).create() }))
     }
 
     const registerNumber = useCallback((name: Path<T>) => {

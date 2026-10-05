@@ -8,7 +8,7 @@ import SinResistant from "./components/sinResistant/SinResistant";
 import SkillDetailContainer from "./components/skillDetailContainer/SkillDetailContainer";
 import { reorderSkills } from "features/cardCreator/utils/card/reorderSkills";
 import { useAppSelector, useAppDispatch } from "stores/AppStore";
-import { setEgoInfo } from "features/cardCreator/stores/EgoInfoSlice";
+import { egoInfoSlice } from "features/cardCreator/stores/EgoInfoSlice";
 import EgoSplashArt from "./components/sinnerSplashArt/EgoSplashArt";
 
 
@@ -21,7 +21,7 @@ const EgoCard=forwardRef<HTMLDivElement,{changeActiveTab:React.Dispatch<React.Se
         const result = reorderSkills(EgoInfoValue.skillDetails, fromSkillID, toSkillID)
         if(!result) return
         changeActiveTab(i => i > -2 ? result.newIndex : i)
-        dispatch(setEgoInfo({...EgoInfoValue, skillDetails: result.list}))
+        dispatch(egoInfoSlice.actions.moveSkill({ fromId: fromSkillID, toId: toSkillID }))
     }
 
     return(

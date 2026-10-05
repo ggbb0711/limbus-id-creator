@@ -7,13 +7,17 @@ import InputIdInfoStatPage from "../inputStatPage/inputIdInfoStatPage/InputIdInf
 import InputEgoInfoStatPage from "../inputStatPage/inputEgoInfoStatPage/InputEgoInfoStatPage";
 import InputTabSide from "../inputTabSide/InputTabSide";
 import useAlert from "hooks/useAlert";
-import { useAppSelector, useAppDispatch } from "stores/AppStore";
-import { addIdInfoSkill } from "features/cardCreator/stores/IdInfoSlice";
-import { addEgoInfoSkill } from "features/cardCreator/stores/EgoInfoSlice";
-import { useCardMode } from "features/cardCreator/contexts/CardModeContext";
+import { useAppDispatch } from "stores/AppStore";
+import { CardMode, useCardMode } from "features/cardCreator/contexts/CardModeContext";
+import { useCardActions, useCardSelector } from "features/cardCreator/hooks/useCardInfo";
 import { SkillDetail } from "features/cardCreator/types/SkillDetail";
 
 const STORAGE_KEY = "inputPanelWidth"
+
+const STAT_PAGES: Record<CardMode, typeof InputIdInfoStatPage> = {
+    id: InputIdInfoStatPage,
+    ego: InputEgoInfoStatPage,
+}
 
 function getSavedWidth(): number {
     return parseSavedWidth(localStorage.getItem(STORAGE_KEY))
@@ -29,12 +33,10 @@ export default function InputTabContainer({
         changeActiveTab:(i:number)=>void}):ReactElement{
     const mode = useCardMode()
     const dispatch = useAppDispatch()
-    const skillDetails = useAppSelector(state =>
-        mode === "id" ? state.idInfo.value.skillDetails : state.egoInfo.value.skillDetails
-    )
-    const sinnerIcon = useAppSelector(state =>
-        mode === "id" ? state.idInfo.value.sinnerIcon : state.egoInfo.value.sinnerIcon
-    )
+    const { addSkill } = useCardActions()
+    const skillDetails = useCardSelector(info => info.skillDetails)
+    const sinnerIcon = useCardSelector(info => info.sinnerIcon)
+    const StatPage = STAT_PAGES[mode]
     const {addAlert} = useAlert()
 
     const [panelWidth, setPanelWidth] = useState(getSavedWidth)
@@ -93,7 +95,7 @@ export default function InputTabContainer({
 
     function addTab(skill: SkillDetail){
         if(skillDetails.length>=appConfig.limits.card.maxSkills) addAlert("Failure",`There can only be ${appConfig.limits.card.maxSkills} or fewer skills/effects`)
-        else dispatch(mode === "id" ? addIdInfoSkill(skill) : addEgoInfoSkill(skill))
+        else dispatch(addSkill(skill))
     }
 
     function renderSkillPage(skill: SkillDetail | undefined, index: number){
@@ -109,7 +111,7 @@ export default function InputTabContainer({
         activeTab={activeTab} addTab={addTab} resetBtnHandler={resetBtnHandler}></InputTabSide>
         {isPanelOpen && <>
             {activeTab === -1
-                ? (mode === "id" ? <InputIdInfoStatPage collapsePage={()=>changeActiveTab(-2)}/> : <InputEgoInfoStatPage collapsePage={()=>changeActiveTab(-2)}/>)
+                ? <StatPage collapsePage={()=>changeActiveTab(-2)}/>
                 : renderSkillPage(skillDetails[activeTab], activeTab)}
             {!isMobile && <div className="input-tab-resize-handle" onMouseDown={handleMouseDown}></div>}
         </>}
