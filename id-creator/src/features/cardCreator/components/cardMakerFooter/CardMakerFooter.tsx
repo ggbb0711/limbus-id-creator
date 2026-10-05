@@ -21,8 +21,8 @@ export default function CardMakerFooter(){
         try {
             const { default: TurnRefToImg } = await import("utils/TurnRefToImg")
             const imgUrl = await TurnRefToImg(domRef)
-            addAlert("Success","Download successful")
             DownloadImg(imgUrl,"Custom")
+            addAlert("Success","Download started")
         } catch (err) {
             console.log(err)
             addAlert("Failure","ERROR: Missing asset detected. Please look for and update the missing asset.")

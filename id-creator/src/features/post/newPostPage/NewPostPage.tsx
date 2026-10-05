@@ -79,7 +79,7 @@ export default function NewPostPage():ReactElement{
             </div>
             <div className="post-input-container">
                 <label htmlFor="tag">Tags {tags.length}/20:</label>
-                <TagInput completeFn={(tag)=>{setTags([...new Set([...tags,tag])])}} maxTag={20} customClass={"input"} id={"tag"} ></TagInput>
+                <TagInput completeFn={(tag)=>{setTags([...new Set([...tags,tag])])}} maxTag={20} selectedCount={tags.length} customClass={"input"} id={"tag"} ></TagInput>
             </div>
             {tags.length>0&&<TagsContainer tags={tags} deleteTag={(i)=>{
                 const newTags = [...tags]
@@ -117,7 +117,7 @@ export default function NewPostPage():ReactElement{
                 <label htmlFor="description">Description:</label>
                 <Editor className="input post-description-input" name="description" id="description" value={description} onChange={(e)=>setDescription(e.target.value)}/>
             </div>
-            <button className={`main-button ${isPosting??"active"}`} onClick={handleCreatePost}>{isPosting?"Posting...":"Post"}</button>
+            <button className={`main-button ${isPosting ? "active" : ""}`} onClick={handleCreatePost}>{isPosting?"Posting...":"Post"}</button>
         </div>:
             <div className="page-content">
                 Please login to post

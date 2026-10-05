@@ -45,6 +45,8 @@ export default function TipTapEditor({ inputId, content, changeHandler, matchLis
     const changeHandlerRef = useRef(changeHandler)
     changeHandlerRef.current = changeHandler
 
+    const inputIdRef = useRef(inputId)
+
     const editor = useEditor({
         extensions: [
             StarterKit.configure({
@@ -150,6 +152,7 @@ export default function TipTapEditor({ inputId, content, changeHandler, matchLis
         ],
         content,
         editorProps: {
+            attributes: () => ({ id: inputIdRef.current }),
             handlePaste: (view, event) => {
                 event.preventDefault()
                 const text = event.clipboardData?.getData("text/plain") ?? ""
@@ -173,6 +176,7 @@ export default function TipTapEditor({ inputId, content, changeHandler, matchLis
     })
 
     useEffect(() => {
+        inputIdRef.current = inputId
         if (editor && !editor.isDestroyed) {
             editor.commands.setContent(content, { emitUpdate: false })
         }

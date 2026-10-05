@@ -77,7 +77,7 @@ export function PostCommentInput({authorIcon,authorName,createComment}:{authorIc
         <EditorProvider>
             <Editor className="input comment-input" name="comment" id="comment" value={commentValue} onChange={(e)=>setCommentValue(e.target.value)}/>
         </EditorProvider>
-        <button className={`main-button ${isPosting && "active"}`} onClick={postFnc}>
+        <button className={`main-button ${isPosting ? "active" : ""}`} onClick={postFnc}>
             {isPosting ? "Posting...": "Post"}
         </button>
     </div>

@@ -8,10 +8,15 @@ export default function UploadImgBtn({onFileInputChange, name, id,btnTxt,btnClas
     const {addAlert} = useAlert()
     
     return(
-        <button className={"upload-img-btn main-button fill-button-component "+btnClass}>
+        <button className={`upload-img-btn main-button fill-button-component ${btnClass ?? ""}`}>
             <input className="upload-file-input" type="file" name={name} id={id} accept="image/png, image/jpeg" onChange={(e)=>{
-                    if(e.target.files && e.target.files[0].size<=maxSize) onFileInputChange(e)
-                    else addAlert("Failure","That file is larger than the input limit")
+                    const file = e.target.files?.[0]
+                    if(!file) return
+                    if(file.size>maxSize){
+                        addAlert("Failure","That file is larger than the input limit")
+                        return
+                    }
+                    onFileInputChange(e)
                 }} onClick={(e)=>{e.currentTarget.value = ""}}/>
             <span>
                 <UploadFileIcon />

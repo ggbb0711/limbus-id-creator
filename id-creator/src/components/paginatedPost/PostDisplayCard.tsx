@@ -6,6 +6,7 @@ import { IPostDisplayCard } from "types/iPostDisplayCard/IPostDisplayCard";
 import CommentIcon from "assets/icons/CommentIcon";
 import ViewIcon from "assets/icons/ViewIcon";
 import { TagList } from "utils/TagList";
+import formatDisplayDate from "utils/formatDisplayDate";
 
 export function PostDisplayCard({id,title,cardImg,userIcon,userName,userId,created,tags,viewCount,commentCount}:IPostDisplayCard){
     return <div className="post-display-card">
@@ -15,7 +16,7 @@ export function PostDisplayCard({id,title,cardImg,userIcon,userName,userId,creat
             </div>
         </Link>
         <div className="post-display-card-footer">
-            <p className="post-display-meta-txt">Posted: {created.split(" ")[0]}</p>
+            <p className="post-display-meta-txt">Posted: {formatDisplayDate(created)}</p>
             <div className="post-display-tag-container">
                 {tags.slice(0,3).map((t,i)=><div key={i} className="post-display-card-tag">
                     {TagList[t]?.icon&&<Image className="post-display-card-tag-img" src={TagList[t]?.icon} alt={t+"_icon"} width={12} height={12} />}

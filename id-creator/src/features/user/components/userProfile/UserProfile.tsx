@@ -9,6 +9,9 @@ import "./UserProfile.css";
 import useAlert from "hooks/useAlert";
 import { useUpdateUserMutation } from "api/UserApi";
 
+// Must match MaximumLength in id-creator-server UpdateUserProfileDTOValidator
+const MAX_USERNAME_LENGTH = 65
+
 export function UserProfile({userProfile,userId,owned}:{userProfile:IUserProfile,userId:string,owned:boolean}):ReactElement{
     const {userName,userIcon} = userProfile
     const [isChangeName,setIsChangeName] = useState(false)
@@ -50,11 +53,11 @@ export function UserProfile({userProfile,userId,owned}:{userProfile:IUserProfile
         return <div className="center-element warning-message">
             {isChangeName?
                 <button className={`main-button ${isChangingName?"active":""} center-element user-name-edit`} onClick={()=>{
-                    if(name.length<=65&&name.length>0){
+                    if(name.length<=MAX_USERNAME_LENGTH&&name.length>0){
                         handleChangeName()
                     }
                     else{
-                        setUserErr("(Username must have at least one character and less than or equal to 64 characters)")
+                        setUserErr(`(Username must have at least one character and less than or equal to ${MAX_USERNAME_LENGTH} characters)`)
                         setNameLenErr(true)
                     }
                 }}>
@@ -75,7 +78,7 @@ export function UserProfile({userProfile,userId,owned}:{userProfile:IUserProfile
         <div className="user-profile-img-container">
             <Image className="user-personal-icon" src={userIcon} alt="user-icon" width={80} height={80} />
             {owned &&
-                <button className={`main-button ${isChangingProfile && "active"} center-element input-profile-img-button`}>
+                <button className={`main-button ${isChangingProfile ? "active" : ""} center-element input-profile-img-button`}>
                     {isChangingProfile?
                         <p>Editing...</p>:
                         <>

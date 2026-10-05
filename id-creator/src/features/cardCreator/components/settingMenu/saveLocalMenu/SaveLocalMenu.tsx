@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useState } from "react";
 import "../SettingMenu.css"
 import { SaveFile } from "types/ISaveFile";
 import useSaveLocal from "features/cardCreator/hooks/useSaveLocal";
@@ -59,15 +59,11 @@ const SaveLocalMenu=({saveMode, close}:{saveMode: "ID" | "EGO", close: ()=>void}
         closePopup()
     }
 
-    //Some of the save can have the same id
-    //This is to create new save for some
-    //of the save with same id
-    useEffect(()=>{
-        saveData.map(save=>{
-            if(saveData.some(s=>s.id===save.id)||!save.id) save.id = uuid()
-            return save
-        })
-    },[localSaveName])
+    // Copy before sorting: Array.prototype.sort works in place and would mutate hook state
+    const sortedSaves = useMemo(
+        ()=>[...saveData].sort((a,b)=>Date.parse(b.saveTime)-Date.parse(a.saveTime)),
+        [saveData]
+    )
 
     return<>
         <div className={`${namePopup?"":"hidden"}`}>
@@ -87,12 +83,7 @@ const SaveLocalMenu=({saveMode, close}:{saveMode: "ID" | "EGO", close: ()=>void}
         </div>
         <div className="save-menu-list local">
             {saveData.length>0?<>
-                {saveData.sort((a,b)=>{
-                    const prevDate = new Date(a.saveTime)
-                    const nextDate = new Date(b.saveTime)
-
-                    return prevDate < nextDate ? 1 : -1
-                }).map((data)=>
+                {sortedSaves.map((data)=>
                     <div className={`save-tab center-element-vertically`} key={data.id}>
                         {data.previewImg?<img className="save-preview-img" src={data.previewImg} alt="preview-save" />:<></>}
                         <p className="created-time">Last updated: {data.updateTime}</p>

@@ -75,8 +75,8 @@ export default function InputIdInfoStatPage({collaspPage}:{collaspPage:()=>void}
     function changeResistantText(value:number):string{
         if(value<=0.5) return "Ineff"
         if(value<1) return "Endure"
-        if(value>=1.5) return "Weak"
         if(value>=2.0) return "Fatal"
+        if(value>=1.5) return "Weak"
         return "Normal"
     }
 

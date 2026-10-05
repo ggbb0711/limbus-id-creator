@@ -236,8 +236,8 @@ export default function SaveCloudMenu({saveMode}:{saveMode:"ID"|"EGO"}):ReactEle
         <div className={`${namePopup?"":"hidden"}`}>
             <PopUpMenu setIsActive={()=>setNamePopup(false)}>
                 <div className="save-cloud-name-popup">
-                    <label htmlFor="saveName">Enter the name of the new save:</label>
-                    <input className="input save-cloud-name-input" name="saveName" id="saveName" type="text" placeholder="Save name"
+                    <label htmlFor="newCloudSaveName">Enter the name of the new save:</label>
+                    <input className="input save-cloud-name-input" name="newCloudSaveName" id="newCloudSaveName" type="text" placeholder="Save name"
                     value={saveName}
                     onChange={(e)=>{
                         setSaveName(e.target.value)
@@ -252,8 +252,8 @@ export default function SaveCloudMenu({saveMode}:{saveMode:"ID"|"EGO"}):ReactEle
             </PopUpMenu>
         </div>
         <div >
-            <label htmlFor="saveName">Search: </label>
-            <input className="input save-cloud-name-input" name="saveName" id="saveName" type="text" placeholder="Save name" value={searchSaveName} onChange={(e)=>setSearchSaveName(e.target.value)}/>
+            <label htmlFor="searchCloudSaveName">Search: </label>
+            <input className="input save-cloud-name-input" name="searchCloudSaveName" id="searchCloudSaveName" type="text" placeholder="Save name" value={searchSaveName} onChange={(e)=>setSearchSaveName(e.target.value)}/>
         </div>
         <div className="save-menu-list-container">
             {isLoadingSaveData?<div className="loading-cloud-tab"><div className="loader"></div></div>:<></>}

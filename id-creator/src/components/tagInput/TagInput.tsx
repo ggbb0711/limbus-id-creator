@@ -4,7 +4,7 @@ import { ReactElement } from "react";
 import { ITag, TagList } from "utils/TagList";
 import "./TagInput.css"
 
-export default function TagInput({completeFn,customClass="",id}:{completeFn:(keyword:ITag)=>void,maxTag:number,customClass?:string,id:string}):ReactElement{
+export default function TagInput({completeFn,maxTag,selectedCount,customClass="",id}:{completeFn:(keyword:ITag)=>void,maxTag:number,selectedCount:number,customClass?:string,id:string}):ReactElement{
     const [text,setText] = useState("")
     const [tagList,setTagList] = useState<ITag[]>([])
     const [currChoice,setCurrChoice] = useState(0)
@@ -23,13 +23,14 @@ export default function TagInput({completeFn,customClass="",id}:{completeFn:(key
         }
     },[tagList])
 
-    const chooseOption = useCallback((choice:ITag)=>{
+    const chooseOption = useCallback((choice:ITag|undefined)=>{
+        if(!choice || selectedCount>=maxTag) return
         completeFn(choice)
         setCurrChoice(0)
         setTagList(Object.keys(TagList).map(key=>TagList[key]))
         setText("")
         setIsActive(false)
-    },[completeFn,setCurrChoice,setTagList,setText])
+    },[completeFn,selectedCount,maxTag,setCurrChoice,setTagList,setText])
 
     const scrollToView = ()=>{
         const selected = selectRef?.current?.querySelector(".found-tag.active")
@@ -42,10 +43,8 @@ export default function TagInput({completeFn,customClass="",id}:{completeFn:(key
     }
 
     useEffect(()=>{
-        const foundTag = []
-        for(const tag in TagList){
-            if(tag.toLowerCase().match(text.replace(" ","_").toLowerCase())) foundTag.push(TagList[tag])
-        }
+        const search = text.trim().replaceAll(" ","_").toLowerCase()
+        const foundTag = Object.keys(TagList).filter(tag=>tag.toLowerCase().includes(search)).map(tag=>TagList[tag])
         setTagList(foundTag)
         setCurrChoice(0)
     },[text])

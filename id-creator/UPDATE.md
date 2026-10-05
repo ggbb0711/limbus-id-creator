@@ -1,16 +1,11 @@
-- For the refactor, I want to look through the frontend code and reassess, what they are doing, are they optimize
-- Clean the code, optimize them, make better exception handling
-    - Use more of typescript feature, change the type and class to have more inheritance, interfaces,..., refactor them to not reuse the same code over and over again like it is right now in the code
-- Write unit test for the code
-
----
-
 # Frontend Refactor Plan — `id-creator`
+
+> **Detailed step-by-step guides for each session are in [`docs/refactor/`](docs/refactor/README.md).** Each guide gives the file:line locations, the current code, what to replace it with, why, and sources. The guides were checked against the code on 2026-10-02, and they take precedence where they differ from this summary.
 
 ## Context
 `id-creator/UPDATE.md` asks for a frontend refactor: reassess and optimize the code, clean it up, improve exception handling, use more TypeScript features (interfaces, inheritance, generics) so the same code is not repeated, and add unit tests. An audit of all ~300 files in `src/` found:
-- **Duplication.** The Id and Ego slices, pages, cards and stat pages are about 90% copies of each other. The Offense and Defense sections and input pages are about 85% copies. A 5-way skill-type switch is repeated 6 times. The 7-sin grids are unrolled by hand in 5 places. Resistance helpers exist in 4 copies. `registerNumber` exists in 3 copies.
-- **Types.** `IType.type` is typed as the whole `SkillTypes` enum, so `SkillDetail` is not a discriminated union. That forces `as IXxx` casts everywhere, and one of them is wrong: `MentalEffect` is cast as `ICustomEffect`. `strict: false` and `no-explicit-any` is turned off.
+- **Duplication.** The Id and Ego slices, pages, cards and stat pages are about 90% copies of each other. The Offense and Defense sections and input pages are about 85% copies. The 5 skill types are branched on in about 10 places: 3 `switch`es, 2 object maps, a dropdown literal, the add menu, cloud-save image collection and the slice hydrators. The 7-sin grids are unrolled by hand in 5 places. Resistance helpers exist in 4 copies. `registerNumber` exists in 3 copies.
+- **Types.** `IType.type` is typed as the whole `SkillTypes` enum, so `SkillDetail` is not a discriminated union. That forces `as IXxx` casts everywhere, and one of them is wrong: `MentalEffect` is cast as `ICustomEffect` in 2 files. `strict: false` and `no-explicit-any` is turned off.
 - **Error handling.** IndexedDB errors are swallowed with `console.log` or never caught. Image uploads have no try/catch. API errors never reach Sentry. `JSON.parse` of localStorage is unguarded.
 - **Performance.** Components select the whole card state. `JSON.stringify` of the full card, including base64 images, is used as an effect dependency. IndexedDB is written on every keystroke.
 - **Bugs and XSS.** There are real bugs (listed in Phase 0). Backend HTML and custom keyword HTML are rendered without sanitizing.
@@ -27,7 +22,7 @@ Work happens on the `refactor/update-frontend-code` branch in small commits, one
 - Add dev dependencies: `jest`, `jest-environment-jsdom`, `@testing-library/react`, `@testing-library/jest-dom`, `@testing-library/user-event`, `@types/jest`.
 - Create `jest.config.ts` using `nextJest({ dir: './' })`, with:
   - `testEnvironment: 'jsdom'`
-  - `setupFilesAfterEach` importing jest-dom
+  - `setupFilesAfterEnv` importing jest-dom and a `matchMedia` mock
   - a `moduleNameMapper` entry for each tsconfig alias (`^api/(.*)$` → `<rootDir>/src/api/$1`, and the same for components, features, hooks, stores, types, utils, config, assets, styles)
   - `transformIgnorePatterns` set to allow ESM packages if needed (`react-uuid`, `dexie`, `@tiptap`)
 - Add scripts: `test`, `test:watch`, `test:coverage`. Put tests next to the code as `*.test.ts(x)`.
@@ -39,7 +34,10 @@ Work happens on the `refactor/update-frontend-code` branch in small commits, one
 - `UploadImgBtn.tsx:13`: crashes when the file dialog is cancelled. The `btnClass` prop renders as `undefined`.
 - `SaveLocalMenu.tsx:65-70`: the dedupe effect is broken, so remove it. `:90` sorts state in place during render.
 - `SaveCloudMenu.tsx:240,256`: duplicate `id="saveName"`.
-- TipTap: the editor ids are hardcoded (`"skillEffect"`/`"effect"`), and `inputId` is never applied to the DOM.
+- TipTap: 4 of the 5 pages hardcode the editor id (`"skillEffect"`/`"effect"`); Offense already uses a unique one. `inputId` is never applied to the DOM.
+- `IdCard`/`EgoCard` `moveSkill`: the dragged skill is lost if the drop target id isn't found.
+- `TagInput`: `maxTag` is never enforced, and pressing Enter with no matches passes `undefined`.
+- Typecheck baseline: stale `.next` types reference a removed `blog/[slug]` route. Run `rm -rf .next && npx next typegen` before using `npm run typecheck` as a gate.
 - `statuses/buff.json` and `debuff.json`: `before_the_king_in_binds` is defined in both files.
 - `features/post/newPostPage/NewPostPage.tsx:120`: uses `??` where `&&` was meant. `Comment.tsx:80` and `UserProfile.tsx:78` render the class name `"false"`.
 - `UserProfile.tsx:53`: the name limit is 65 but the message says 64.
@@ -53,12 +51,16 @@ Files: `cc/types/**`, `cc/types/SkillDetail.ts`, `cc/types/IType.ts`, `IIdInfo.t
 - **Discriminated union.**
   - Replace the `SkillTypes` enum with `as const` string literals: `export const SKILL_TYPES = {...} as const; type SkillType = typeof SKILL_TYPES[keyof ...]`.
   - Each interface declares a literal `type`, for example `type: 'OffenseSkill'`.
-  - `SkillDetail = IOffenseSkill | IDefenseSkill | IPassiveSkill | ICustomEffect | IMentalEffect`, with no `|never`.
+  - `SkillDetail = IOffenseSkill | IDefenseSkill | IPassiveSkill | ICustomEffect | IMentalEffect`. Replace the inline copies of this union (which carry a no-op `|never`) with `SkillDetail`.
 - **Shared base types.**
   - `ISkillBase { inputId; type }`
-  - `IActiveSkill extends ISkillBase` holds the shared Offense/Defense fields. `IOffenseSkill` and `IDefenseSkill` extend it.
-  - `ICardInfoBase` holds title, name, splashArt*, sinnerColor, sinnerIcon, skillDetails and localSaveId. `IIdInfo` and `IEgoInfo` extend it.
-  - Declare the shared sub-types once: `ISplashArtTranslation`, and `SinRecord<T = number> = Record<SinAffinity, T>`, which replaces the three `ISinCost`/`ISinResistant` copies and the local copies in `SinCost.tsx` and `SinResistant.tsx`.
+  - The **existing** `IActiveSkill` (`cc/types/skills/activeSkill/IActiveSkill.ts`) is reworked to extend `ISkillBase` and to also hold `skillLevel`, `skillAmt`, `atkWeight` and `damageType`. `IOffenseSkill` and `IDefenseSkill` extend it.
+  - `ICardInfoBase` holds title, name, splashArt*, sinnerColor, sinnerIcon, skillDetails and `localSaveId: 1`. `IIdInfo` and `IEgoInfo` extend it. `localSaveId` must stay `1`: Dexie ignores the `put(x, 1)` key for the inbound `++localSaveId` key.
+  - Declare the shared sub-types once:
+    - `ISplashArtTranslation`
+    - `SinKey = Lowercase<Exclude<SinAffinity,'None'>>` and `SinRecord<T = number> = Record<SinKey, T>`. The record keys are lowercase, and `SinAffinity` is capitalised and includes `"None"`.
+
+    `SinRecord` replaces the three `ISinCost`/`ISinResistant` copies and the local copies in `SinCost.tsx` and `SinResistant.tsx`.
 - **Literal unions** for `SinAffinity`, `DamageType`, `DefenseType`, `SkillFrame`, `EgoLevel` and `SaveMode ('ID'|'EGO')`. Put `SIN_AFFINITIES` in `cc/constants.ts`.
 - **Factories instead of positional constructors.**
   - Replace them with `createOffenseSkill(overrides?: Partial<IOffenseSkill>)`, and the same for each type. This fixes the `0 → 1` falsy-default bug.
@@ -72,7 +74,7 @@ Files: `cc/types/**`, `cc/types/SkillDetail.ts`, `cc/types/IType.ts`, `IIdInfo.t
   - `PostSortOptions` becomes a string union.
   - Move the `SaveFile` runtime class out of `types/` into `utils/`.
 
-## Phase 2 — Skill registry (removes the 6 repeated switches)
+## Phase 2 — Skill registry (removes the repeated per-type branches)
 Create `cc/skills/registry.ts`:
 ```ts
 type SkillDef<T extends SkillDetail> = {
@@ -99,7 +101,7 @@ Use the registry in:
   - Reducers: `setInfo`, `updateField<K extends keyof T>`, `addSkill` (limit `MAX_SKILLS = 40`), `updateSkill`, `deleteSkill`, `moveSkill` (moved here from `IdCard`/`EgoCard`).
   - Drop the duplicate `changeSkillType` and the unused reducers.
   - `IdInfoSlice` and `EgoInfoSlice` become about 5 lines each.
-- **Mode-aware hook.** A `useCardInfo()` hook built on `CardModeContext` returns `{ info, actions }`. This removes the `mode === "id" ? A : B` ternaries in `useSkillForm`, `useStatusEffect` and the pages.
+- **Mode-aware hook.** A `useCardInfo()` hook built on `CardModeContext` returns `{ info, actions }`. This removes the `mode === "id" ? A : B` ternaries in `useSkillForm`, `useStatusEffect`, `InputTabContainer` and `SaveLocalMenu`.
 - **IndexedDB** (`cc/utils/indexDB`, `hooks/useSaveLocal.ts`):
   - Use the typed `EntityTable<ISaveFile<IIdInfo>>` and `EntityTable<ISaveFile<IEgoInfo>>`, and select tables by `SaveMode` instead of string lookup.
   - Add a `safeDb<T>(op, errMsg)` wrapper that catches, reports to Sentry, calls `addAlert`, and returns a `Result<T>` (`{ok:true,data}|{ok:false,error}`).
@@ -114,7 +116,7 @@ Under `cc/components/shared/`:
   - `ImageUploadField`, which owns the async try/catch, a loading state and `addAlert`.
   - `EffectEditorField`, with unique `inputId`s.
   - `SkillStatsSection`, shared by Offense and Defense.
-- **`SinNumberGrid`**, driven by `SIN_AFFINITIES`. Used by the passive page, the ego stat page, `SinCost`, `SinResistant` and `SinAffinityInput`. This removes about 250 lines.
+- **`SinNumberInputs`**, driven by `SIN_AFFINITIES`. Used by the passive page, the ego stat page, `SinCost`, `SinResistant` and `PassiveSinnerSkill`. `SinAffinityInput` is a picker, not a grid, so it stays as it is. This removes about 250 lines.
 - **`SinnerIconPicker`**, driven by a `SINNERS` constant. It replaces `SinnerIconInput` and `SinnerEgoIconInput`.
 - **`ActiveSkillSection`** with `splash`, `powerIcon` and `levelIcon` props, plus `CoinRow`. It replaces the bodies of `OffenseSinnerSkill` and `DefenseSinnerSkill`.
 - **`SplashArt`**: `SinnerSplashArt` and `EgoSplashArt` merged. `CardZoomShell` holds the shared TransformWrapper config. A `useInfoForm<T>()` hook covers the Id and Ego stat pages.
@@ -125,13 +127,13 @@ Under `cc/components/shared/`:
   - a shared `NAV_LINKS` constant for Header and SideBar
   - a single `error.tsx` component re-exported from `(site)` and `creator`
   - `usePaginatedPosts(params)` for ForumPage and UserPage, with the `IPost → card` mapping moved into `transformResponse`
-  - one `formatDisplayDate` used everywhere
+  - the existing `utils/formatDisplayDate.ts` used everywhere (it is only used in `Post` and `UserPage` today)
 
 ## Phase 5 — Pure utils (test-first targets)
 Extract into `cc/utils/` or `src/utils/`, each with a `*.test.ts` next to it:
 - `getResistTier(value, 'damage'|'sin')` (4 copies today)
 - `reorderSkills` / `moveSkill` reducer
-- `getCoinEffects`
+- `getCoinEffects`: a plural wrapper around the existing `cc/utils/getCoinEffect.ts`, which has no tests yet
 - `getSkillPowerIcon` and `getSkillLevelIcon`
 - `formatSigned`
 - `getActiveRequirements`, which also covers the casing bug
@@ -147,7 +149,7 @@ Extract into `cc/utils/` or `src/utils/`, each with a `*.test.ts` next to it:
 - Forum: `parseSort`, `tagKeyOf` and `buildForumQuery`
 
 ## Phase 6 — Error handling and Sentry
-- `utils/reportError.ts`: `reportError(err, context)` calls `Sentry.captureException` and does the dev-only `console.error`. Replace every `console.log(error)` with it.
+- `utils/reportError.ts`: `reportError(err, context)` calls `Sentry.captureException` and does the dev-only `console.error`. Replace all 15 `console.*` calls with it.
 - RTK Query:
   - `api/errorMiddleware.ts` uses `isRejectedWithValue` to report to Sentry. The alert stays opt-in per call site, through a new `useApiErrorAlert(error)` hook that replaces the copy-pasted `useEffect`.
   - Remove the duplicate refresh logic between `BaseApi.ts` and `AuthApi.ts`.
@@ -169,7 +171,11 @@ Extract into `cc/utils/` or `src/utils/`, each with a `*.test.ts` next to it:
 - `env.client.ts`: warn or throw on missing values, the same way `env.server.ts` does.
 
 ## Phase 7 — XSS sanitization
-- Add `dompurify` and create `utils/sanitizeHtml.ts`, a single configured sanitizer that allows the tags and attributes the card/status-effect markup needs.
+- Add `isomorphic-dompurify` (it has to work during server-side rendering) and create `utils/sanitizeHtml.ts`, a single configured sanitizer that allows the tags and attributes the card/status-effect markup needs.
+- Besides the sites below, also cover these:
+  - `StatusEffectNode.ts:23,30` (parseHTML)
+  - `TipTapEditor.tsx:26-27` (raw keyword HTML)
+  - `KeywordSuggestion.ts:22` (`insertContent` of an HTML string)
 - Use it at every `dangerouslySetInnerHTML` and `innerHTML` site:
   - `Post.tsx:100`
   - `Comment.tsx:20`
@@ -187,7 +193,9 @@ Extract into `cc/utils/` or `src/utils/`, each with a `*.test.ts` next to it:
   - the save menus
 - Wrap the card sections in `React.memo`.
 - Remove every `JSON.stringify(...)` effect dependency, since Redux already gives stable references. The places are: the pages, `SkillDetailContainer`, `useStatusEffect`, the stat pages and `CustomKeywordMenu`.
-- Break the watch → dispatch → reset loop in the stat pages: only reset when the save is loaded (a load counter or `localSaveId` change), not on every store change.
+- Break the watch → dispatch → reset loop in the stat pages.
+  - Reset only when a **`loadId` counter** in the slice changes. `localSaveId` is always `1`, so it can't tell you when a save was loaded.
+  - Have the stat pages dispatch only the field that changed (`updateField`), never the whole snapshot. Otherwise the form would overwrite icon picks and skill reorders.
 - Also, `useSkillForm` should reset when the save it came from is loaded again, not only when `inputId` changes.
 - Memoize the callbacks passed down (`changeActiveTab`, `collapsePage`, `draggingHandler`). Move the `ChangeInputType` options to a module-level constant.
 - DOM measurement:
@@ -202,7 +210,7 @@ Extract into `cc/utils/` or `src/utils/`, each with a `*.test.ts` next to it:
 - Turn on `strictNullChecks` and `noImplicitAny`, fix the errors, then set `strict: true`.
 - ESLint:
   - Re-enable `@typescript-eslint/no-explicit-any` as `error`.
-  - Add `react-hooks/exhaustive-deps` as `warn` and fix the missing deps it finds, in ForumPage, UserPage, DropDown, TagInput, LoginMenu and SearchSaveInput.
+  - `react-hooks/exhaustive-deps` is already on as `warn` (via `eslint-config-next`). Fix all 37 warnings across about 20 files, then optionally raise the rule to `error`.
 - Add `'use client'` to the hook-using components that are missing it: `LoginMenu`, `AlertPopUp`, `DropDown`, `TagInput`, `AccordionSection`.
 - Remove:
   - the unused ad components, or keep them if ads are coming back
@@ -225,9 +233,9 @@ Extract into `cc/utils/` or `src/utils/`, each with a `*.test.ts` next to it:
   - The `getPosts` query-string builder.
   - The `CommentApi` merge dedupe.
   - The `serverFetch.apiGet` status mapping, with a mocked `fetch`.
-- **Existing utils:** `stripHtml`, `formatDisplayDate`, `getApiErrorMessage`, `checkBase64Image`, `base64ToFile`, `assetPaths`, `getCoinEffect`, `sanitizeHtml` and `escapeHtml`.
+- **Existing utils:** `stripHtml`, `formatDisplayDate`, `getApiErrorMessage`, `checkBase64Image`, `base64ToFile`, `assetPaths` and `getCoinEffect`. Also test the **new** `sanitizeHtml` and `escapeHtml` utils.
 - **Hooks** (`renderHook`): `useSaveLocal` with `fake-indexeddb`, `useKeyPress` listener cleanup, and `useAlert` timer cleanup.
-- **Components** (RTL, light): `UploadImgBtn` when the dialog is cancelled, `SinNumberGrid` rendering 7 rows, and `SkillPageShell` asking for confirmation before delete.
+- **Components** (RTL, light): `UploadImgBtn` when the dialog is cancelled, `SinNumberInputs` rendering 7 rows, and `SkillPageShell` asking for confirmation before delete.
 - **Data integrity:** no status-effect key appears in more than one status JSON file.
 
 ## Suggested order and commits

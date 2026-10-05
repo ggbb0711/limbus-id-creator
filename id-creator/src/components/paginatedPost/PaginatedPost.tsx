@@ -45,7 +45,7 @@ export default function PaginatedPost({currPage,maxCount,pageLimit,postList,fetc
     return <div className="paginated-post-container">
         <div className="paginated-post-nav-container" ref={headPost} id="head-post">
             <ReactPaginate className="center-element paginated-bullet-point-container"
-                pageCount={maxCount/pageLimit}
+                pageCount={Math.ceil(maxCount/pageLimit)}
                 forcePage={currPage} 
                 onPageChange={(e)=>changePage(e.selected)}
                 pageClassName="paginated-bullet-point"
@@ -57,7 +57,7 @@ export default function PaginatedPost({currPage,maxCount,pageLimit,postList,fetc
         <PostDisplayList isLoading={isLoading} cardList={postList}/>
         <div className="paginated-post-nav-container">
         <ReactPaginate className="center-element paginated-bullet-point-container"
-            pageCount={maxCount/pageLimit}
+            pageCount={Math.ceil(maxCount/pageLimit)}
             forcePage={currPage} 
             onPageChange={(e)=>changePage(e.selected)}
             pageClassName="paginated-bullet-point"

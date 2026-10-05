@@ -18,6 +18,7 @@ export default function InputPassivePage({
         collaspPage:()=>void}):ReactElement{
 
     const { register, setValue, watch, deleteSkill, changeSkillType, registerNumber, keyWordList } = useSkillForm<IPassiveSkill>(index)
+    const inputId = watch("inputId")
     const [showConfirm, setShowConfirm] = useState(false)
 
     const type = watch("type")
@@ -169,13 +170,13 @@ export default function InputPassivePage({
             </div>
             <div className="input-group-container">
                 <div className="input-container">
-                    <label className="input-label" htmlFor="skillEffect">Passive description:</label>
+                    <label className="input-label" htmlFor={`skillEffect_${inputId}`}>Passive description:</label>
                     <p className="effect-guide">To enter a status effect/coin effect/attack effect, put them in square bracket with underscore instead of spacebar like [sinking_deluge]/[coin_1]/[heads_hit] -{">"}
                         <span contentEditable={false} style={{color:"var(--Debuff-color)",textDecoration:"underline"}}><img className='status-icon' src='/Images/status-effect/Sinking_Deluge.webp' alt='sinking_deluge_icon' />Sinking Deluge</span>/
                         <span contentEditable={false}><img className='status-icon' src='/Images/status-effect/Coin_Effect_1.webp' alt='coin-effect-1' /></span>/
                         <span contentEditable={false} style={{color:'#c7ff94'}}>[Heads Hit]</span>
                     </p>
-                    <TipTapEditor inputId={"skillEffect"} content={skillEffect} changeHandler={(html)=>setValue("skillEffect",html)} matchList={keyWordList}/>
+                    <TipTapEditor inputId={`skillEffect_${inputId}`} content={skillEffect} changeHandler={(html)=>setValue("skillEffect",html)} matchList={keyWordList}/>
                 </div>
             </div>
         </AccordionSection>

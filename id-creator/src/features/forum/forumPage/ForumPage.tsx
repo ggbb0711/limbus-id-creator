@@ -103,7 +103,7 @@ export default function ForumPage():ReactElement{
                 <TagInput completeFn={(tag)=>{
                     const key = tagKeyOf(tag)
                     if (key) updateQuery({ tag: [...new Set([...tagKeys, key])] })
-                }} maxTag={22} customClass={"input"} id={"tag"} ></TagInput>
+                }} maxTag={22} selectedCount={tagKeys.length} customClass={"input"} id={"tag"} ></TagInput>
             </div>
             <TagsContainer tags={tags} deleteTag={(i)=>{
                 const newTagKeys = [...tagKeys]

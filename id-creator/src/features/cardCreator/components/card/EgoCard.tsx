@@ -17,12 +17,11 @@ const EgoCard=forwardRef<HTMLDivElement,{changeActiveTab:React.Dispatch<React.Se
     const dispatch = useAppDispatch()
 
     function moveSkill(fromSkillID:string,toSkillID:string){
-        //Do nothing if they are the same id
         if(fromSkillID!=toSkillID){
+            if(!EgoInfoValue.skillDetails.some(s=>s.inputId===toSkillID)) return
             const newSkillDetails = [...EgoInfoValue.skillDetails]
             let skill;
             let skillIndex=-1
-            // //Find and delete the fromSkill
             for(let i=0;i<newSkillDetails.length;i++){
                 if(newSkillDetails[i].inputId===fromSkillID){
                     skill=newSkillDetails[i]

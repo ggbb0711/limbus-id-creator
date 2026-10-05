@@ -17,12 +17,11 @@ const IdCard=forwardRef<HTMLDivElement,{changeActiveTab:React.Dispatch<React.Set
 
 
     function moveSkill(fromSkillID:string,toSkillID:string){
-        //Do nothing if they are the same id
         if(fromSkillID!=toSkillID){
+            if(!idInfoValue.skillDetails.some(s=>s.inputId===toSkillID)) return
             const newSkillDetails = [...idInfoValue.skillDetails]
             let skill;
             let skillIndex=-1
-            // //Find and delete the fromSkill
             for(let i=0;i<newSkillDetails.length;i++){
                 if(newSkillDetails[i].inputId===fromSkillID){
                     skill=newSkillDetails[i]

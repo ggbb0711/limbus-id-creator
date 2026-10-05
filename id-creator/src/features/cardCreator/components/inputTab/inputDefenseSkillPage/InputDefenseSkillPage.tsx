@@ -23,6 +23,7 @@ export default function InputDefenseSkillPage({
         collaspPage:()=>void}):ReactElement{
 
     const { register, setValue, watch, deleteSkill, changeSkillType, registerNumber, keyWordList, errors } = useSkillForm<IDefenseSkill>(index)
+    const inputId = watch("inputId")
     const [showConfirm, setShowConfirm] = useState(false)
 
     const skillAffinity = watch("skillAffinity")
@@ -96,7 +97,7 @@ export default function InputDefenseSkillPage({
                     {errors.coinNo && <p className="input-error-msg">{errors.coinNo.message}</p>}
                 </div>
                 <div className="input-container">
-                    <label className="input-label" htmlFor="skillLevel">Offense level:</label>
+                    <label className="input-label" htmlFor="skillLevel">Defense level:</label>
                     <input className={`input block ${errors.skillLevel ? "input-error" : ""}`} type="number" id="skillLevel" {...registerNumber("skillLevel")}/>
                     {errors.skillLevel && <p className="input-error-msg">{errors.skillLevel.message}</p>}
                 </div>
@@ -150,14 +151,14 @@ export default function InputDefenseSkillPage({
             </div>
             <div className="input-group-container">
                 <div className="input-container">
-                    <label className="input-label" htmlFor="skillEffect">Skill description:</label>
+                    <label className="input-label" htmlFor={`skillEffect_${inputId}`}>Skill description:</label>
                     <p className="effect-guide">To enter a status effect/coin effect/special coin(Unbreakable coin)/attack effect, put them in square bracket with underscore instead of spacebar like [sinking_deluge]/[coin_1]/[coin_1_unbreakable]/[heads_hit] -{">"}
                         <span contentEditable={false} style={{color:"var(--Debuff-color)",textDecoration:"underline"}}><img className='status-icon' src='/Images/status-effect/Sinking_Deluge.webp' alt='sinking_deluge_icon' />Sinking Deluge</span>/
                         <span contentEditable={false}><img className='status-icon' src='/Images/status-effect/Coin_Effect_1.webp' alt='coin-effect-1' /></span>/
                         <span contentEditable={false} className='center-element'><img className='status-icon' src='/Images/status-effect/Coin_Effect_1.webp' alt='coin-effect-1' data-custom-coin-effect='coin-effect-1-unbreakable' /> <span contentEditable={false} className='center-element' style={{color:"var(--Neutral-color)",textDecoration:"underline"}}><img className='status-icon' src='/Images/Unbreakable_Coin.webp' alt='unbreakable_coin_icon' />Unbreakable Coin</span></span>
                         <span contentEditable={false} style={{color:'#c7ff94'}}>[Heads Hit]</span>
                     </p>
-                    <TipTapEditor inputId={"skillEffect"} content={skillEffect} changeHandler={(html)=>setValue("skillEffect",html)} matchList={keyWordList}/>
+                    <TipTapEditor inputId={`skillEffect_${inputId}`} content={skillEffect} changeHandler={(html)=>setValue("skillEffect",html)} matchList={keyWordList}/>
                 </div>
             </div>
         </AccordionSection>
