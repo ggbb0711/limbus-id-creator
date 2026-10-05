@@ -1,20 +1,19 @@
 import React, { useMemo, useState } from "react";
 import "../SettingMenu.css"
-import { SaveFile } from "types/ISaveFile";
+import { createSaveFile } from "utils/createSaveFile";
+import { SaveMode } from "features/cardCreator/constants";
 import useSaveLocal from "features/cardCreator/hooks/useSaveLocal";
-import uuid from "react-uuid";
 import PopUpMenu from "components/popUpMenu/PopUpMenu";
 import EditIcon from "assets/icons/EditIcon";
 import { IEgoInfo } from "features/cardCreator/types/IEgoInfo";
 import { IIdInfo } from "features/cardCreator/types/IIdInfo";
 import { clientEnv } from "config/env.client";
-import formatDateForBackend from "utils/formatDateForBackend";
 import { useAppSelector, useAppDispatch } from "stores/AppStore";
 import { setIdInfo } from "features/cardCreator/stores/IdInfoSlice";
 import { setEgoInfo } from "features/cardCreator/stores/EgoInfoSlice";
 
 
-const SaveLocalMenu=({saveMode, close}:{saveMode: "ID" | "EGO", close: ()=>void})=>{
+const SaveLocalMenu=({saveMode, close}:{saveMode: SaveMode, close: ()=>void})=>{
     const localSaveName = saveMode === "ID" ? "IdLocalSaves" : "EgoLocalSaves"
     const idInfoValue = useAppSelector(state => state.idInfo.value)
     const egoInfoValue = useAppSelector(state => state.egoInfo.value)
@@ -50,11 +49,7 @@ const SaveLocalMenu=({saveMode, close}:{saveMode: "ID" | "EGO", close: ()=>void}
             if(nameChangingSaveId) changeSaveName(nameChangingSaveId,newSaveName)
         }
         else{
-            const saveFile = new SaveFile(cardData, newSaveName)
-            saveFile.id = uuid()
-            saveFile.name = newSaveName
-            const createdDate = formatDateForBackend(new Date())
-            createSave({...saveFile, updateTime:createdDate, saveTime: createdDate})
+            createSave(createSaveFile(cardData, newSaveName))
         }
         closePopup()
     }

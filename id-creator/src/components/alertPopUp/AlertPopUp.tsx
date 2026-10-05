@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ReactElement } from "react";
 import "./AlertPopUp.css"
-import { IAlert } from "types/utils/IAlert";
+import { AlertStatus, IAlert } from "types/utils/IAlert";
 import ClosIcon from "assets/icons/CloseIcon";
 import useAlert from "hooks/useAlert";
 
@@ -16,7 +16,7 @@ export default function AlertPopUp():ReactElement{
     </div>
 }
 
-function Alert({status,msg}:{status:string,msg:string}):ReactElement{
+function Alert({status,msg}:{status:AlertStatus,msg:string}):ReactElement{
     const [slideIn,setSlideIn] = useState(false)
 
     useEffect(()=>{
@@ -26,9 +26,8 @@ function Alert({status,msg}:{status:string,msg:string}):ReactElement{
         }, 3000);
     },[])
 
-    function getAlertColor(status:string){
-        if(status==="Success") return "var(--Gluttony)"
-        if(status==="Failure") return "var(--Wrath)"
+    function getAlertColor(status:AlertStatus){
+        return status==="Success" ? "var(--Gluttony)" : "var(--Wrath)"
     }   
 
     function close(){

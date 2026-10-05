@@ -1,11 +1,8 @@
-export interface UserSessionProfileDTO {
-    id:string,
-    userEmail:string,
-    userName:string,
-    userIcon:string
-}
+import { UserSummary } from "types/api/user/UserSummary"
+
+export type UserSessionProfileDTO = UserSummary
 
 export interface AuthResponseDTO {
-    accessToken:string,
-    userSessionProfile:UserSessionProfileDTO
+    accessToken: string
+    userSessionProfile: UserSessionProfileDTO
 }

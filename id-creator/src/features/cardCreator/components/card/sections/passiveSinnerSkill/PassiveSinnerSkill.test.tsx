@@ -1,11 +1,10 @@
 import { render, screen } from '@testing-library/react'
 import PassiveSinnerSkill from './PassiveSinnerSkill'
-import { PassiveSkill } from 'features/cardCreator/types/skills/passiveSkill/IPassiveSkill'
+import { IPassiveSkill, createPassiveSkill } from 'features/cardCreator/types/skills/passiveSkill/IPassiveSkill'
 
-function renderPassive(reqOwn: Partial<PassiveSkill['reqOwn']>, reqRes: Partial<PassiveSkill['reqRes']> = {}) {
-    const skill = new PassiveSkill('Test passive')
-    skill.reqOwn = { ...skill.reqOwn, ...reqOwn }
-    skill.reqRes = { ...skill.reqRes, ...reqRes }
+function renderPassive(reqOwn: Partial<IPassiveSkill['reqOwn']>, reqRes: Partial<IPassiveSkill['reqRes']> = {}) {
+    const base = createPassiveSkill({ name: 'Test passive' })
+    const skill = createPassiveSkill({ ...base, reqOwn: { ...base.reqOwn, ...reqOwn }, reqRes: { ...base.reqRes, ...reqRes } })
     return render(<PassiveSinnerSkill passiveSkill={skill} />)
 }
 

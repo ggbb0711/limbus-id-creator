@@ -1,19 +1,10 @@
 import { ReactElement } from "react";
 import "./SinResistant.css"
 import React from "react";
-
-interface sinResistant{
-    wrath:number;
-    lust:number;
-    sloth:number;
-    gluttony:number;
-    gloom:number;
-    pride:number;
-    envy:number;
-}
+import { SinRecord } from "features/cardCreator/constants";
 
 
-export default function SinResistant({sinResistant}:{sinResistant:sinResistant}):ReactElement{
+export default function SinResistant({sinResistant}:{sinResistant:SinRecord}):ReactElement{
     const {
         wrath,
         lust,

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import uuid from 'react-uuid';
-import { IAlert } from 'types/utils/IAlert'
+import { AlertStatus, IAlert } from 'types/utils/IAlert'
 
 const initialState : {value: IAlert[]} = {value: []}; 
 
@@ -12,7 +12,7 @@ const AlertSlice = createSlice({
             reducer: (state, action: PayloadAction<IAlert>) => {
                 state.value.push(action.payload);
             },
-            prepare: (status: string, msg: string) => {
+            prepare: (status: AlertStatus, msg: string) => {
                 return { payload: { status, msg, alertId: uuid() } };
             }
         },

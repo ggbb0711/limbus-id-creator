@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { SaveMode } from "features/cardCreator/constants";
 
 interface UiState {
     isLoginMenuActive: boolean
     isSettingMenuActive: boolean
     settingMenuDisplayMode: "Local" | "Cloud" | "Custom keywords"
-    settingMenuSaveMode: "ID" | "EGO"
+    settingMenuSaveMode: SaveMode
 }
 
 const initialState: UiState = {
@@ -36,7 +37,7 @@ const UiSlice = createSlice({
         setSettingDisplayMode(state, action: PayloadAction<"Local" | "Cloud" | "Custom keywords">) {
             state.settingMenuDisplayMode = action.payload
         },
-        setSettingMenuSaveMode(state, action: PayloadAction<"ID" | "EGO">) {
+        setSettingMenuSaveMode(state, action: PayloadAction<SaveMode>) {
             state.settingMenuSaveMode = action.payload
         },
     },

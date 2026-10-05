@@ -15,13 +15,12 @@ export function useStatusEffect(): { [key: string]: string } {
         const statusObj: { [key: string]: string } = {}
         skillDetails.forEach((skill) => {
             if (skill.type === "CustomEffect") {
-                const customEffect = skill as ICustomEffect
-                if (customEffect.name) {
-                    const statusKey = customEffect.name.replace(/\s/g, "_").toLowerCase()
-                    statusObj[statusKey] = addNewStatusEffect(customEffect)
-                    if (customEffect.isCoinType) {
+                if (skill.name) {
+                    const statusKey = skill.name.replace(/\s/g, "_").toLowerCase()
+                    statusObj[statusKey] = addNewStatusEffect(skill)
+                    if (skill.isCoinType) {
                         for (let i = 1; i <= 9; i++) {
-                            statusObj[`coin_${i}_${statusKey}`] = addNewCustomCoinEffect(customEffect, statusKey, i)
+                            statusObj[`coin_${i}_${statusKey}`] = addNewCustomCoinEffect(skill, statusKey, i)
                         }
                     }
                 }

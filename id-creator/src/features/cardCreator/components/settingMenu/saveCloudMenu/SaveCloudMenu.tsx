@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { ReactElement } from "react";
-import { ISaveFile, SaveFile } from "types/ISaveFile";
-import { IOffenseSkill } from "features/cardCreator/types/skills/offenseSkill/IOffenseSkill";
-import { IDefenseSkill } from "features/cardCreator/types/skills/defenseSkill/IDefenseSkill";
-import { ICustomEffect } from "features/cardCreator/types/skills/customEffect/ICustomEffect";
-import uuid from "react-uuid";
+import { ISaveFile } from "types/ISaveFile";
+import { createSaveFile } from "utils/createSaveFile";
+import { isActiveSkill } from "features/cardCreator/types/SkillDetail";
+import { SaveMode } from "features/cardCreator/constants";
 import PopUpMenu from "components/popUpMenu/PopUpMenu";
 import imageCompression from 'browser-image-compression';
 import getImageDimensions from "utils/getImageDimensions";
@@ -55,7 +54,7 @@ function SaveCloudTab({saveName,saveDate,previewUrl,deleteSave,loadSave,overwrit
     </div>
 }
 
-export default function SaveCloudMenu({saveMode}:{saveMode:"ID"|"EGO"}):ReactElement{
+export default function SaveCloudMenu({saveMode}:{saveMode:SaveMode}):ReactElement{
     const [createSaveBtnLoadMsg,setCreateSaveBtnLoadMsg] = useState("")
     const [isCreating,setIsCreating] = useState(false)
     const [namePopup,setNamePopup] = useState(false)
@@ -99,14 +98,11 @@ export default function SaveCloudMenu({saveMode}:{saveMode:"ID"|"EGO"}):ReactEle
         })
 
         const skillImageTasks = saveInfo.skillDetails.map(async (skill, i) => {
-            if(skill.type==="OffenseSkill" && checkBase64Image((skill as IOffenseSkill).skillImage)){
-                return { file: await compressToWebP(base64ToFile((skill as IOffenseSkill).skillImage, "new file")), index: i, clear: () => { (saveInfo.skillDetails[i] as IOffenseSkill).skillImage = "" } }
+            if(isActiveSkill(skill) && checkBase64Image(skill.skillImage)){
+                return { file: await compressToWebP(base64ToFile(skill.skillImage, "new file")), index: i, clear: () => { skill.skillImage = "" } }
             }
-            if(skill.type==="DefenseSkill" && checkBase64Image((skill as IDefenseSkill).skillImage)){
-                return { file: await compressToWebP(base64ToFile((skill as IDefenseSkill).skillImage, "new file")), index: i, clear: () => { (saveInfo.skillDetails[i] as IDefenseSkill).skillImage = "" } }
-            }
-            if(skill.type==="CustomEffect" && checkBase64Image((skill as ICustomEffect).customImg)){
-                return { file: await compressToWebP(base64ToFile((skill as ICustomEffect).customImg, "new file")), index: i, clear: () => { (saveInfo.skillDetails[i] as ICustomEffect).customImg = "" } }
+            if(skill.type==="CustomEffect" && checkBase64Image(skill.customImg)){
+                return { file: await compressToWebP(base64ToFile(skill.customImg, "new file")), index: i, clear: () => { skill.customImg = "" } }
             }
             return null
         })
@@ -150,8 +146,7 @@ export default function SaveCloudMenu({saveMode}:{saveMode:"ID"|"EGO"}):ReactEle
         try {
             setIsCreating(true)
             setCreateSaveBtnLoadMsg("Waiting for save image to load...")
-            const saveFileData = new SaveFile(cardData, saveName)
-            saveFileData.id = uuid()
+            const saveFileData = createSaveFile(cardData, saveName)
             const imgDomRef = cardDomRef;
             if(!imgDomRef.current){
                 addAlert("Failure","ERROR: Cannot find reference for the id/ego sheet");
@@ -206,8 +201,7 @@ export default function SaveCloudMenu({saveMode}:{saveMode:"ID"|"EGO"}):ReactEle
         try {
             setIsCreating(true)
             setCreateSaveBtnLoadMsg("Waiting for save image to load...")
-            const saveFileData = new SaveFile(cardData, existingName)
-            saveFileData.id = saveId
+            const saveFileData = { ...createSaveFile(cardData, existingName), id: saveId }
             const imgDomRef = cardDomRef;
             if(!imgDomRef.current){
                 addAlert("Failure","ERROR: Cannot find reference for the id/ego sheet");

@@ -14,13 +14,12 @@ import useAlert from "hooks/useAlert";
 import { useAuth } from "hooks/useAuth";
 import { useGetPostsQuery } from "api/PostAPI";
 import getApiErrorMessage from "utils/getApiErrorMessage";
-import { PostSortOptions } from "types/enums/PostSortOptions";
+import { PostSortOption, isPostSortOption } from "types/enums/PostSortOptions";
 
 const tagKeyOf = (tag: ITag) => Object.keys(TagList).find((key) => TagList[key].tagName === tag.tagName)
 
-function parseSort(value: string | null): PostSortOptions {
-    const sort = value ? PostSortOptions[value as keyof typeof PostSortOptions] : undefined
-    return sort ?? PostSortOptions.Latest
+function parseSort(value: string | null): PostSortOption {
+    return isPostSortOption(value) ? value : "Latest"
 }
 
 export default function ForumPage():ReactElement{
@@ -38,7 +37,7 @@ export default function ForumPage():ReactElement{
     const {setIsLoginMenuActive} = useLoginMenu()
     const {addAlert} = useAlert()
 
-    function updateQuery(next: { q?: string, tag?: string[], sort?: PostSortOptions, page?: number }) {
+    function updateQuery(next: { q?: string, tag?: string[], sort?: PostSortOption, page?: number }) {
         const params = new URLSearchParams(searchParams.toString())
         if (next.q !== undefined) {
             if (next.q) params.set("q", next.q)
@@ -49,8 +48,8 @@ export default function ForumPage():ReactElement{
             next.tag.forEach((key) => params.append("tag", key))
         }
         if (next.sort !== undefined) {
-            if (next.sort === PostSortOptions.Latest) params.delete("sort")
-            else params.set("sort", PostSortOptions[next.sort])
+            if (next.sort === "Latest") params.delete("sort")
+            else params.set("sort", next.sort)
         }
 
         const page = next.page ?? 0
@@ -113,29 +112,29 @@ export default function ForumPage():ReactElement{
             <div className="center-element">
                 <p>Sorted by: </p>
                 <div className="forum-sorted-by">
-                    <DropDown<PostSortOptions> dropDownEl={{
+                    <DropDown<PostSortOption> dropDownEl={{
                         Latest:{
                             el: <div>Latest</div>,
-                            value: PostSortOptions.Latest
+                            value: "Latest"
                         },
                         Earliest:{
                             el: <div>Earliest</div>,
-                            value: PostSortOptions.Earliest
+                            value: "Earliest"
                         },
                         MostViewed:{
                             el: <div>Most Viewed</div>,
-                            value: PostSortOptions.MostViewed
+                            value: "MostViewed"
                         },
                         MostCommented:{
                             el: <div>Most Commented</div>,
-                            value: PostSortOptions.MostCommented
+                            value: "MostCommented"
                         },
                         Title:{
                             el: <div>Title</div>,
-                            value: PostSortOptions.Title
+                            value: "Title"
                         },
                     }}
-                    propVal={PostSortOptions[sortedBy]}
+                    propVal={sortedBy}
                     cb={(s)=>updateQuery({ sort: s })}/>
                 </div>
             </div>

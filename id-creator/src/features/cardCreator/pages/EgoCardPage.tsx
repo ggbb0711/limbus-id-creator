@@ -7,7 +7,6 @@ import { EgoCard } from 'features/cardCreator/components/card/EgoCard';
 import InputTabContainer from 'features/cardCreator/components/inputTab/inputTabContainer/InputTabContainer';
 import ResetMenu from 'features/cardCreator/components/resetMenu/ResetMenu';
 import SettingMenu from 'features/cardCreator/components/settingMenu/SettingMenu';
-import { EgoInfo } from 'features/cardCreator/types/IEgoInfo';
 import CardMakerFooter from 'features/cardCreator/components/cardMakerFooter/CardMakerFooter';
 import { useCardDomRef } from 'features/cardCreator/contexts/CardDomRefContext';
 import { useAppDispatch, useAppSelector } from 'stores/AppStore';
@@ -48,7 +47,7 @@ export default function EgoCardPage():ReactElement{
     useEffect(()=>{
         //Save the last change
         if(!isRestored) return
-        indexDB.currEgoSave.put(new EgoInfo(egoInfoValue), 1)
+        indexDB.currEgoSave.put({ ...egoInfoValue, localSaveId: 1 })
     },[isRestored, JSON.stringify(egoInfoValue)])
 
     return <CardModeContext.Provider value="ego">

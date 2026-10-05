@@ -1,12 +1,12 @@
 import { BaseApi } from "./BaseApi";
 import IResponse from "types/IResponse";
 import { IPost } from "types/iPost/IPost";
-import { PostSortOptions } from "types/enums/PostSortOptions";
+import { PostSortOption } from "types/enums/PostSortOptions";
 
 interface IGetPostsParams {
     title?: string
     tag?: string[]
-    sortedBy?: PostSortOptions
+    sortedBy?: PostSortOption
     page: number
     limit: number
     userId?: string
@@ -27,10 +27,10 @@ interface ICreatePostBody {
 export const PostApi = BaseApi.injectEndpoints({
     endpoints: (builder) => ({
         getPosts: builder.query<IGetPostsResponse, IGetPostsParams>({
-            query: ({ title = '', tag = [], sortedBy = PostSortOptions.Latest, page, limit, userId }) => {
+            query: ({ title = '', tag = [], sortedBy = "Latest", page, limit, userId }) => {
                 const params = new URLSearchParams({
                     Title: title,
-                    SortedBy: PostSortOptions[sortedBy],
+                    SortedBy: sortedBy,
                     page: page.toString(),
                     limit: limit.toString(),
                 })

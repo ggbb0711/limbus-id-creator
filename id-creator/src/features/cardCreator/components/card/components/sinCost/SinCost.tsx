@@ -1,17 +1,8 @@
 import React, { ReactElement } from "react";
 import "./SinCost.css"
+import { SinRecord } from "features/cardCreator/constants";
 
-interface sinCost{
-    wrath:number,
-    lust:number,
-    sloth:number,
-    gluttony:number,
-    gloom:number,
-    pride:number,
-    envy:number,
-}
-
-export default function SinCost({sinCost}:{sinCost:sinCost}):ReactElement{
+export default function SinCost({sinCost}:{sinCost:SinRecord}):ReactElement{
     const {
         wrath,
         lust,

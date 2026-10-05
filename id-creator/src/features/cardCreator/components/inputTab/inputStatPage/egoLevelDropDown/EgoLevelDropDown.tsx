@@ -1,8 +1,9 @@
 import React from "react";
 import { DropDownEl } from "components/dropDown/DropDown";
 import "./EgoLevelDropDown.css"
+import { EgoLevel } from "features/cardCreator/constants";
 
-export const EgoLevelDropDown:{[key:string]:DropDownEl<string>}={
+export const EgoLevelDropDown:Record<EgoLevel,DropDownEl<EgoLevel>>={
     ZAYIN:{
         el:
         <div>

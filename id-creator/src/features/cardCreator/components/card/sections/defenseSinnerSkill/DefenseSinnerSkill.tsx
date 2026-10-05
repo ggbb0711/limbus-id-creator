@@ -59,7 +59,7 @@ const DefenseSinnerSkill = forwardRef<HTMLDivElement, { defenseSkill: IDefenseSk
         }
     }
 
-    const printCoins = function (coinNo: number,skillEffect:string): (ReactElement | never)[] {
+    const printCoins = function (coinNo: number,skillEffect:string): ReactElement[] {
         if (coinNo > 10) return [<img key={0} src={assetPaths.coin.normal} alt="coin_icon" />];
 
         const arr = [];

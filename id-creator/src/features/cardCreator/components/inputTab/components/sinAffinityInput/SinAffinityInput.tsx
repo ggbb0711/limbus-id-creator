@@ -1,8 +1,9 @@
 import React from "react";
 import { ReactElement } from "react";
 import "./SinAffinityInput.css"
+import { SinAffinity } from "features/cardCreator/constants";
 
-export default function SinAffinityInput({onChangeSinAffinity,activeSin,disabled}:{onChangeSinAffinity:(sinAffinity:string)=>void,activeSin:string,disabled?:boolean}):ReactElement{
+export default function SinAffinityInput({onChangeSinAffinity,activeSin,disabled}:{onChangeSinAffinity:(sinAffinity:SinAffinity)=>void,activeSin:SinAffinity,disabled?:boolean}):ReactElement{
     return <div className="sin-affinity-input-container">
         {disabled?<div className="disabled"></div>:<></>}
         <img className={`sin-affinity-input-option ${activeSin==="Wrath"?"active":""}`} src="/Images/sin-affinity/affinity_Wrath_big.webp" alt="sin-Wrath-icon" onClick={()=>onChangeSinAffinity("Wrath")}/>

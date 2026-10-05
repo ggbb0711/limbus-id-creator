@@ -2,8 +2,9 @@ import React from "react";
 import { ReactElement } from "react";
 import "./SkillFrameInput.css"
 import { assetPaths } from "utils/assetPaths";
+import { SinAffinity, SkillFrame } from "features/cardCreator/constants";
 
-export default function SkillFrameInput({onChangeSkillFrame,activeFrame,skillAffinity}:{onChangeSkillFrame:(frame:string)=>void,activeFrame:string,skillAffinity:string}):ReactElement{
+export default function SkillFrameInput({onChangeSkillFrame,activeFrame,skillAffinity}:{onChangeSkillFrame:(frame:SkillFrame)=>void,activeFrame:SkillFrame,skillAffinity:SinAffinity}):ReactElement{
     const disabled = skillAffinity === "None"
     return <div className="skill-frame-input-container">
         {disabled?<div className="disabled"></div>:<></>}

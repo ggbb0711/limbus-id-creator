@@ -1,11 +1,12 @@
 import DropDown from "components/dropDown/DropDown";
 import React from "react";
 import { ReactElement } from "react";
+import { SkillType } from "features/cardCreator/types/SkillTypes";
 
 
-export default function ChangeInputType({changeSkillType,type}:{changeSkillType:(newVal:string)=>void,type:string}):ReactElement{
+export default function ChangeInputType({changeSkillType,type}:{changeSkillType:(newVal:SkillType)=>void,type:SkillType}):ReactElement{
     
-    return <DropDown dropDownEl={{
+    return <DropDown<SkillType> dropDownEl={{
         OffenseSkill:{
             el:<p>Offensive skill</p>,
             value:"OffenseSkill"

@@ -8,7 +8,6 @@ import SettingMenu from 'features/cardCreator/components/settingMenu/SettingMenu
 import { IdCard } from 'features/cardCreator/components/card/IdCard';
 import InputTabContainer from 'features/cardCreator/components/inputTab/inputTabContainer/InputTabContainer';
 import ResetMenu from 'features/cardCreator/components/resetMenu/ResetMenu';
-import { IdInfo } from 'features/cardCreator/types/IIdInfo';
 import { useCardDomRef } from 'features/cardCreator/contexts/CardDomRefContext';
 import { useAppDispatch, useAppSelector } from 'stores/AppStore';
 import { setIdInfo, resetIdInfo } from 'features/cardCreator/stores/IdInfoSlice';
@@ -48,7 +47,7 @@ export default function IdCardPage():ReactElement{
     useEffect(()=>{
         //Save the last change
         if(!isRestored) return
-        indexDB.currIdSave.put(new IdInfo(idInfoValue), 1)
+        indexDB.currIdSave.put({ ...idInfoValue, localSaveId: 1 })
     },[isRestored, JSON.stringify(idInfoValue)])
 
     return <CardModeContext.Provider value="id">

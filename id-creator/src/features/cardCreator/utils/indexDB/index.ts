@@ -3,21 +3,10 @@ import { IIdInfo } from 'features/cardCreator/types/IIdInfo';
 import Dexie, { EntityTable } from 'dexie';
 import { ISaveFile } from 'types/ISaveFile';
 
-interface LocalSaves {
-    currIdSave: IIdInfo;
-    IdLocalSaves: ISaveFile<IIdInfo>;
-    currEgoSave: IIdInfo;
-    EgoLocalSaves: ISaveFile<IEgoInfo>;
-}
-
 const indexDB = new Dexie("LocalSaves") as Dexie & {
-    currIdSave: EntityTable<
-        IIdInfo & { localSaveId?: number },
-        'localSaveId'>,
+    currIdSave: EntityTable<IIdInfo, 'localSaveId'>,
     IdLocalSaves: EntityTable<ISaveFile<IIdInfo>, 'id'>,
-    currEgoSave: EntityTable<
-        IEgoInfo & { localSaveId?: number },
-        'localSaveId'>,
+    currEgoSave: EntityTable<IEgoInfo, 'localSaveId'>,
     EgoLocalSaves: EntityTable<ISaveFile<IEgoInfo>, 'id'>
 };
 
@@ -33,5 +22,4 @@ function normalizeLocalSave<T>(raw: any): ISaveFile<T> {
     return { ...raw, name: raw.name ?? raw.saveName ?? "Untitled" }
 }
 
-export type { LocalSaves };
 export { indexDB, normalizeLocalSave };

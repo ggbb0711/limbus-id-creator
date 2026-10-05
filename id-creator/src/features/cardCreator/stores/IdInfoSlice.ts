@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IIdInfo, IdInfo } from 'features/cardCreator/types/IIdInfo'
-import { PassiveSkill } from 'features/cardCreator/types/skills/passiveSkill/IPassiveSkill'
+import { IIdInfo, createIdInfo } from 'features/cardCreator/types/IIdInfo'
+import { createPassiveSkill } from 'features/cardCreator/types/skills/passiveSkill/IPassiveSkill'
 import { SkillDetail } from 'features/cardCreator/types/SkillDetail'
-import { CustomEffect } from 'features/cardCreator/types/skills/customEffect/ICustomEffect'
-import { DefenseSkill } from 'features/cardCreator/types/skills/defenseSkill/IDefenseSkill'
+import { createCustomEffect } from 'features/cardCreator/types/skills/customEffect/ICustomEffect'
+import { createDefenseSkill } from 'features/cardCreator/types/skills/defenseSkill/IDefenseSkill'
 
 interface IdInfoState {
     value: IIdInfo
@@ -13,7 +13,7 @@ function hydratePassiveSkills(info: IIdInfo): IIdInfo {
     const hydrated = { ...info }
     hydrated.skillDetails = hydrated.skillDetails.map(skill => {
         if (skill.type === "PassiveSkill") {
-            return { ...new PassiveSkill(), ...skill }
+            return { ...createPassiveSkill(), ...skill }
         }
         return skill
     })
@@ -24,7 +24,7 @@ function hydrateCustomEffects(info: IIdInfo): IIdInfo {
     const hydrated = { ...info }
     hydrated.skillDetails = hydrated.skillDetails.map(skill => {
         if (skill.type === "CustomEffect") {
-            return { ...new CustomEffect(), ...skill }
+            return { ...createCustomEffect(), ...skill }
         }
         return skill
     })
@@ -35,7 +35,7 @@ function hydrateDefenseSkills(info: IIdInfo): IIdInfo {
     const hydrated = { ...info }
     hydrated.skillDetails = hydrated.skillDetails.map(skill => {
         if (skill.type === "DefenseSkill") {
-            return { ...new DefenseSkill(), ...skill }
+            return { ...createDefenseSkill(), ...skill }
         }
         return skill
     })
@@ -75,12 +75,8 @@ function fixBackwardCompatPaths(info: IIdInfo): IIdInfo {
     return fixed
 }
 
-function toPlain(info: IIdInfo): IIdInfo {
-    return JSON.parse(JSON.stringify(info))
-}
-
 const initialState: IdInfoState = {
-    value: toPlain(new IdInfo()),
+    value: createIdInfo(),
 }
 
 const IdInfoSlice = createSlice({
@@ -94,7 +90,7 @@ const IdInfoSlice = createSlice({
             (state.value as any)[action.payload.field] = action.payload.value
         },
         resetIdInfo(state) {
-            state.value = toPlain(new IdInfo())
+            state.value = createIdInfo()
         },
         setIdInfoSkillDetails(state, action: PayloadAction<IIdInfo['skillDetails']>) {
             state.value.skillDetails = action.payload

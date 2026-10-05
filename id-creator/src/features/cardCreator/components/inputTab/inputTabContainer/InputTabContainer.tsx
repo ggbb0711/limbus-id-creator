@@ -1,10 +1,5 @@
 import React, { ReactElement, useState, useRef, useCallback, useEffect } from "react";
 import "./InputTabContainer.css"
-import { IOffenseSkill } from "features/cardCreator/types/skills/offenseSkill/IOffenseSkill";
-import { ICustomEffect } from "features/cardCreator/types/skills/customEffect/ICustomEffect";
-import { IDefenseSkill } from "features/cardCreator/types/skills/defenseSkill/IDefenseSkill";
-import { IMentalEffect } from "features/cardCreator/types/skills/mentalEffect/IMentalEffect";
-import { IPassiveSkill } from "features/cardCreator/types/skills/passiveSkill/IPassiveSkill";
 import InputCustomEffectPage from "../inputCustomEffectPage/InputCustomEffectPage";
 import InputDefenseSkillPage from "../inputDefenseSkillPage/InputDefenseSkillPage";
 import InputMentalEffect from "../inputMentalEffect/InputMentalEffect";
@@ -106,12 +101,12 @@ export default function InputTabContainer({
         }
     }, [changeActiveTab])
 
-    function addTab(skill: IOffenseSkill|IDefenseSkill|IPassiveSkill|ICustomEffect|IMentalEffect){
+    function addTab(skill: SkillDetail){
         if(skillDetails.length>=40) addAlert("Failure","There can only be 40 or less skill/effects")
-        else dispatch(mode === "id" ? addIdInfoSkill(skill as SkillDetail) : addEgoInfoSkill(skill as SkillDetail))
+        else dispatch(mode === "id" ? addIdInfoSkill(skill) : addEgoInfoSkill(skill))
     }
 
-    function renderSkillPage(skill: IOffenseSkill|IDefenseSkill|IPassiveSkill|ICustomEffect|IMentalEffect|never, index: number){
+    function renderSkillPage(skill: SkillDetail | undefined, index: number){
         if(!skill) return;
         const shared = { index, collaspPage: () => changeActiveTab(-2) }
         switch(skill.type){

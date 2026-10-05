@@ -98,7 +98,7 @@ Use the registry in:
   - Add a `schemaVersion` field to saved data.
   - Migration runs only on **load** (from IndexedDB, the cloud or a local save), not on every `setIdInfo`.
 - **Generic slice factory.** Add `createCardSlice<T extends ICardInfoBase>(name, createDefault)` in `cc/stores/createCardSlice.ts`.
-  - Reducers: `setInfo`, `updateField<K extends keyof T>`, `addSkill` (limit `MAX_SKILLS = 40`), `updateSkill`, `deleteSkill`, `moveSkill` (moved here from `IdCard`/`EgoCard`).
+  - Reducers: `setInfo`, `updateField<K extends keyof T>`, `addSkill` (limit from `appConfig.limits.card.maxSkills`, default 40; see Phase 10), `updateSkill`, `deleteSkill`, `moveSkill` (moved here from `IdCard`/`EgoCard`).
   - Drop the duplicate `changeSkillType` and the unused reducers.
   - `IdInfoSlice` and `EgoInfoSlice` become about 5 lines each.
 - **Mode-aware hook.** A `useCardInfo()` hook built on `CardModeContext` returns `{ info, actions }`. This removes the `mode === "id" ? A : B` ternaries in `useSkillForm`, `useStatusEffect`, `InputTabContainer` and `SaveLocalMenu`.
@@ -224,6 +224,25 @@ Extract into `cc/utils/` or `src/utils/`, each with a `*.test.ts` next to it:
 
 ---
 
+## Phase 10 — Configurable limits via `.env`
+Guide: [`docs/refactor/11-env-config.md`](docs/refactor/11-env-config.md). Do it **right after Phase 0**, so later phases read from the config instead of adding new hardcoded numbers.
+- **Parsers:** add `src/config/readEnv.ts` with `readInt`/`readNumber`. Missing, invalid or out-of-range values fall back to a documented default, with a one-time `console.warn` in development.
+- **`appConfig`** (`src/config/env.client.ts`, `NEXT_PUBLIC_*`, fixed at build time):
+  - card limits: skills 40, traits 10, custom keywords 20, local saves 10
+  - post limits: user tags 20, forum filter tags 21 (fixes today's 22), images 8, title 199
+  - username 65
+  - upload byte limits for each image field, including the user-icon check that is missing today
+  - page sizes: posts 10, comments 10 (the `CommentApi` cache key must use the same value), cloud saves 50
+  - timings: alert 4000, search debounce 300, autosave debounce 500
+  - image compression settings
+- **`serverConfig`** (`src/config/env.server.ts`, read at runtime): `apiGet` revalidate 60 and timeout 10000, home latest posts 4, sitemap posts 100.
+- **`.env.example`, committed:** lists every variable with its default. Each comment names the backend validator it must match: `UpdateUserProfileDTO.cs`, `PostRequestDTO.cs`, `SaveInfoFilesRequestDTO.cs`, `SavedIDRequestDTO.cs`, `SavedEgoRequestDTO.cs`. Changing a frontend value does not change what the backend accepts.
+- **Stays in code:**
+  - `export const revalidate` (Next requires a static literal)
+  - `images.qualities` together with the `quality` props
+  - the 9 coin-effect assets
+  - panel widths, zoom and layout math
+
 ## Unit test coverage targets
 - **Pure utils (Phase 5):** full branch coverage.
 - **Migration:** a fixture-based test that feeds old-format ID/EGO saves (with `saveName`, `.png` paths, missing `skillFrame`, missing defense fields) through the migration and checks they come out as valid current objects. Priority: highest.
@@ -239,7 +258,7 @@ Extract into `cc/utils/` or `src/utils/`, each with a `*.test.ts` next to it:
 - **Data integrity:** no status-effect key appears in more than one status JSON file.
 
 ## Suggested order and commits
-Phase 0 → 5 (utils and tests first, so the later refactors have a safety net) → 1 → 2 → 3 → 4 → 6 → 7 → 8 → 9. Commit each phase separately so the diff is easy to review.
+Phase 0 → 10 (config first, so later phases don't add new hardcoded numbers) → 5 (utils and tests, so the later refactors have a safety net) → 1 → 2 → 3 → 4 → 6 → 7 → 8 → 9. Commit each phase separately so the diff is easy to review.
 
 ## Verification
 After each phase:

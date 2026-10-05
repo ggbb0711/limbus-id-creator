@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IEgoInfo, EgoInfo } from 'features/cardCreator/types/IEgoInfo'
-import { PassiveSkill } from 'features/cardCreator/types/skills/passiveSkill/IPassiveSkill'
+import { IEgoInfo, createEgoInfo } from 'features/cardCreator/types/IEgoInfo'
+import { createPassiveSkill } from 'features/cardCreator/types/skills/passiveSkill/IPassiveSkill'
 import { SkillDetail } from 'features/cardCreator/types/SkillDetail'
-import { CustomEffect } from 'features/cardCreator/types/skills/customEffect/ICustomEffect'
-import { DefenseSkill } from 'features/cardCreator/types/skills/defenseSkill/IDefenseSkill'
+import { createCustomEffect } from 'features/cardCreator/types/skills/customEffect/ICustomEffect'
+import { createDefenseSkill } from 'features/cardCreator/types/skills/defenseSkill/IDefenseSkill'
 
 interface EgoInfoState {
     value: IEgoInfo
@@ -13,7 +13,7 @@ function hydratePassiveSkills(info: IEgoInfo): IEgoInfo {
     const hydrated = { ...info }
     hydrated.skillDetails = hydrated.skillDetails.map(skill => {
         if (skill.type === "PassiveSkill") {
-            return { ...new PassiveSkill(), ...skill }
+            return { ...createPassiveSkill(), ...skill }
         }
         return skill
     })
@@ -24,7 +24,7 @@ function hydrateCustomEffects(info: IEgoInfo): IEgoInfo {
     const hydrated = { ...info }
     hydrated.skillDetails = hydrated.skillDetails.map(skill => {
         if (skill.type === "CustomEffect") {
-            return { ...new CustomEffect(), ...skill }
+            return { ...createCustomEffect(), ...skill }
         }
         return skill
     })
@@ -35,7 +35,7 @@ function hydrateDefenseSkills(info: IEgoInfo): IEgoInfo {
     const hydrated = { ...info }
     hydrated.skillDetails = hydrated.skillDetails.map(skill => {
         if (skill.type === "DefenseSkill") {
-            return { ...new DefenseSkill(), ...skill }
+            return { ...createDefenseSkill(), ...skill }
         }
         return skill
     })
@@ -64,12 +64,8 @@ function fixBackwardCompatPaths(info: IEgoInfo): IEgoInfo {
     return fixed
 }
 
-function toPlain(info: IEgoInfo): IEgoInfo {
-    return JSON.parse(JSON.stringify(info))
-}
-
 const initialState: EgoInfoState = {
-    value: toPlain(new EgoInfo()),
+    value: createEgoInfo(),
 }
 
 const EgoInfoSlice = createSlice({
@@ -83,7 +79,7 @@ const EgoInfoSlice = createSlice({
             (state.value as any)[action.payload.field] = action.payload.value
         },
         resetEgoInfo(state) {
-            state.value = toPlain(new EgoInfo())
+            state.value = createEgoInfo()
         },
         setEgoInfoSkillDetails(state, action: PayloadAction<IEgoInfo['skillDetails']>) {
             state.value.skillDetails = action.payload

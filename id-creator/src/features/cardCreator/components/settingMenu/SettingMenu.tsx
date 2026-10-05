@@ -1,4 +1,5 @@
 import React from "react";
+import { SaveMode } from "features/cardCreator/constants";
 import "./SettingMenu.css"
 import CloseIcon from "assets/icons/CloseIcon";
 import CustomKeywordMenu from "./customKeywordMenu/CustomKeywordMenu";
@@ -7,7 +8,7 @@ import { SaveLocalMenu } from "./saveLocalMenu/SaveLocalMenu";
 import { useAppSelector, useAppDispatch } from "stores/AppStore";
 import { closeSettingMenu, setSettingDisplayMode } from "stores/slices/UiSlice";
 
-export default function SettingMenu({saveMode}:{saveMode: "ID" | "EGO"}){
+export default function SettingMenu({saveMode}:{saveMode: SaveMode}){
     const isActive = useAppSelector(state => state.ui.isSettingMenuActive)
     const displayMode = useAppSelector(state => state.ui.settingMenuDisplayMode)
     const dispatch = useAppDispatch()

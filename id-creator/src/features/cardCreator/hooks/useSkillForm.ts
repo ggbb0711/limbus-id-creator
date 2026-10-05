@@ -6,26 +6,26 @@ import { useStatusEffect } from './useStatusEffect'
 import { deleteIdInfoSkill, updateIdInfoSkill, changeIdInfoSkillType } from 'features/cardCreator/stores/IdInfoSlice'
 import { deleteEgoInfoSkill, updateEgoInfoSkill, changeEgoInfoSkillType } from 'features/cardCreator/stores/EgoInfoSlice'
 import { SkillDetail } from 'features/cardCreator/types/SkillDetail'
-import { OffenseSkill } from 'features/cardCreator/types/skills/offenseSkill/IOffenseSkill'
-import { DefenseSkill } from 'features/cardCreator/types/skills/defenseSkill/IDefenseSkill'
-import { PassiveSkill } from 'features/cardCreator/types/skills/passiveSkill/IPassiveSkill'
-import { CustomEffect } from 'features/cardCreator/types/skills/customEffect/ICustomEffect'
-import { MentalEffect } from 'features/cardCreator/types/skills/mentalEffect/IMentalEffect'
+import { SkillType } from 'features/cardCreator/types/SkillTypes'
+import { createOffenseSkill } from 'features/cardCreator/types/skills/offenseSkill/IOffenseSkill'
+import { createDefenseSkill } from 'features/cardCreator/types/skills/defenseSkill/IDefenseSkill'
+import { createPassiveSkill } from 'features/cardCreator/types/skills/passiveSkill/IPassiveSkill'
+import { createCustomEffect } from 'features/cardCreator/types/skills/customEffect/ICustomEffect'
+import { createMentalEffect } from 'features/cardCreator/types/skills/mentalEffect/IMentalEffect'
 
-function createSkillByType(newType: string): SkillDetail {
+function createSkillByType(newType: SkillType): SkillDetail {
     switch (newType) {
-        case "OffenseSkill": return new OffenseSkill()
-        case "DefenseSkill": return new DefenseSkill()
-        case "PassiveSkill": return new PassiveSkill()
-        case "CustomEffect": return new CustomEffect()
-        case "MentalEffect": return new MentalEffect()
-        default: return new OffenseSkill()
+        case "OffenseSkill": return createOffenseSkill()
+        case "DefenseSkill": return createDefenseSkill()
+        case "PassiveSkill": return createPassiveSkill()
+        case "CustomEffect": return createCustomEffect()
+        case "MentalEffect": return createMentalEffect()
     }
 }
 
 interface UseSkillFormReturn<T extends SkillDetail> extends UseFormReturn<T> {
     deleteSkill: () => void
-    changeSkillType: (newType: string) => void
+    changeSkillType: (newType: SkillType) => void
     registerNumber: (name: Path<T>) => UseFormRegisterReturn
     errors: FieldErrors<T>
     skill: T
@@ -58,7 +58,7 @@ export function useSkillForm<T extends SkillDetail>(index: number): UseSkillForm
         mode === "id" ? deleteIdInfoSkill(skill.inputId) : deleteEgoInfoSkill(skill.inputId)
     )
 
-    const changeSkillType = (newType: string) => {
+    const changeSkillType = (newType: SkillType) => {
         const newSkill = createSkillByType(newType)
         dispatch(
             mode === "id"
