@@ -11,7 +11,7 @@ import ConfirmDialog from "components/ui/confirmDialog/ConfirmDialog";
 import ChangeInputType from "../components/changeInputType/ChangeInputType";
 import TipTapEditor from "../components/tipTapEditor/TipTapEditor";
 import UploadImgBtn from "../components/uploadImgBtn/UploadImgBtn";
-import { compressAndReadImage } from "features/cardCreator/utils/CompressAndReadImage";
+import { compressAndReadImage } from "features/cardCreator/utils/image/CompressAndReadImage";
 import { useSkillForm } from "features/cardCreator/hooks/useSkillForm";
 import ColorPicker from "features/cardCreator/components/colorPicker/ColorPicker";
 import { CUSTOM_EFFECT_COLOR_GROUPS } from "features/cardCreator/components/colorPicker/ColorPresets";

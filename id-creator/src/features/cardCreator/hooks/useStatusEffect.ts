@@ -1,10 +1,9 @@
 import { useMemo } from 'react'
-import { baseStatusEffect } from 'features/cardCreator/utils/BaseStatusEffect'
-import { ICustomEffect } from 'features/cardCreator/types/skills/customEffect/ICustomEffect'
-import { ICustomKeyword } from 'features/cardCreator/types/ICustomKeyword'
+import { baseStatusEffect } from 'features/cardCreator/utils/keywords/BaseStatusEffect'
+import { buildCustomEffectKeywords, buildLocalKeywords } from 'features/cardCreator/utils/keywords/keywords'
 import { useCardMode } from 'features/cardCreator/contexts/CardModeContext'
 import { useAppSelector } from 'stores/AppStore'
-import { CUSTOM_KEYWORDS_STORAGE_KEY, parseCustomKeywords } from 'features/cardCreator/utils/customKeywordStorage'
+import { CUSTOM_KEYWORDS_STORAGE_KEY, parseCustomKeywords } from 'features/cardCreator/utils/keywords/customKeywordStorage'
 
 export function useStatusEffect(): { [key: string]: string } {
     const mode = useCardMode()
@@ -12,33 +11,10 @@ export function useStatusEffect(): { [key: string]: string } {
         mode === "id" ? state.idInfo.value.skillDetails : state.egoInfo.value.skillDetails
     )
 
-    const skillCustomEffects = useMemo(() => {
-        const statusObj: { [key: string]: string } = {}
-        skillDetails.forEach((skill) => {
-            if (skill.type === "CustomEffect") {
-                if (skill.name) {
-                    const statusKey = skill.name.replace(/\s/g, "_").toLowerCase()
-                    statusObj[statusKey] = addNewStatusEffect(skill)
-                    if (skill.isCoinType) {
-                        for (let i = 1; i <= 9; i++) {
-                            statusObj[`coin_${i}_${statusKey}`] = addNewCustomCoinEffect(skill, statusKey, i)
-                        }
-                    }
-                }
-            }
-        })
-        return statusObj
-    }, [JSON.stringify(skillDetails)])
+    const skillCustomEffects = useMemo(() => buildCustomEffectKeywords(skillDetails), [JSON.stringify(skillDetails)])
 
     const storedCustomKeywords = localStorage.getItem(CUSTOM_KEYWORDS_STORAGE_KEY)
-    const localCustomKeywords = useMemo(() => {
-        const statusObj: { [key: string]: string } = {}
-        parseCustomKeywords(storedCustomKeywords).forEach((keyword: ICustomKeyword) => {
-            statusObj[keyword.keyword.replace(/\s/g, "_").toLowerCase()] =
-                `<span class='center-element' contenteditable='false' style='color:${keyword.color}'>${keyword.keyword}</span>`
-        })
-        return statusObj
-    }, [storedCustomKeywords])
+    const localCustomKeywords = useMemo(() => buildLocalKeywords(parseCustomKeywords(storedCustomKeywords)), [storedCustomKeywords])
 
     const statusEffect = useMemo(() => {
         return { ...baseStatusEffect, ...skillCustomEffects, ...localCustomKeywords }
@@ -47,10 +23,3 @@ export function useStatusEffect(): { [key: string]: string } {
     return statusEffect
 }
 
-function addNewStatusEffect(customEffect: ICustomEffect): string {
-    return `<span class='center-element' contenteditable='false' style='${customEffect.effectColor ? `color:${customEffect.effectColor};` : ''}text-decoration:underline;'>${customEffect.customImg ? `<img class='status-icon' src='${customEffect.customImg}' alt='custom_icon' />` : ''}${customEffect.name}</span>`
-}
-
-function addNewCustomCoinEffect(customEffect: ICustomEffect, statusKey: string, coinNo: number): string {
-    return `<span class='center-element' contenteditable='false'><img class='status-icon' src='/Images/status-effect/Coin_Effect_${coinNo}.webp' alt='coin-effect-${coinNo}' /> <span class='center-element' contenteditable='false' data-custom-coin-effect='coin-effect-${coinNo}-custom-${statusKey}' style='${customEffect.effectColor ? `color:${customEffect.effectColor};` : ''}text-decoration:underline;'>${customEffect.customImg ? `<img class='status-icon' src='${customEffect.customImg}' alt='custom_icon' />` : ''}${customEffect.name}</span></span>`
-}

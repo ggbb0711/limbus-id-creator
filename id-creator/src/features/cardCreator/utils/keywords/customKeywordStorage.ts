@@ -1,4 +1,5 @@
 import { ICustomKeyword } from "features/cardCreator/types/ICustomKeyword"
+import { safeParseJSON } from "utils/safeParseJSON"
 
 export const CUSTOM_KEYWORDS_STORAGE_KEY = "customKeywords"
 
@@ -8,15 +9,8 @@ const isCustomKeyword = (value: unknown): value is ICustomKeyword => {
     return typeof keyword.customKeywordID === "string" && typeof keyword.keyword === "string" && typeof keyword.color === "string"
 }
 
-export function parseCustomKeywords(raw: string | null): ICustomKeyword[] {
-    if (!raw) return []
-    try {
-        const parsed: unknown = JSON.parse(raw)
-        return Array.isArray(parsed) ? parsed.filter(isCustomKeyword) : []
-    } catch {
-        return []
-    }
-}
+export const parseCustomKeywords = (raw: string | null): ICustomKeyword[] =>
+    safeParseJSON(raw, [], value => (Array.isArray(value) ? value.filter(isCustomKeyword) : []))
 
 export function loadCustomKeywords(): ICustomKeyword[] {
     try {

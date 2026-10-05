@@ -6,6 +6,7 @@ import EgoHeader from "./components/cardHeader/EgoHeader";
 import SinCost from "./components/sinCost/SinCost";
 import SinResistant from "./components/sinResistant/SinResistant";
 import SkillDetailContainer from "./components/skillDetailContainer/SkillDetailContainer";
+import { reorderSkills } from "features/cardCreator/utils/card/reorderSkills";
 import { useAppSelector, useAppDispatch } from "stores/AppStore";
 import { setEgoInfo } from "features/cardCreator/stores/EgoInfoSlice";
 import EgoSplashArt from "./components/sinnerSplashArt/EgoSplashArt";
@@ -17,34 +18,10 @@ const EgoCard=forwardRef<HTMLDivElement,{changeActiveTab:React.Dispatch<React.Se
     const dispatch = useAppDispatch()
 
     function moveSkill(fromSkillID:string,toSkillID:string){
-        if(fromSkillID!=toSkillID){
-            if(!EgoInfoValue.skillDetails.some(s=>s.inputId===toSkillID)) return
-            const newSkillDetails = [...EgoInfoValue.skillDetails]
-            let skill;
-            let skillIndex=-1
-            for(let i=0;i<newSkillDetails.length;i++){
-                if(newSkillDetails[i].inputId===fromSkillID){
-                    skill=newSkillDetails[i]
-                    skillIndex=i
-                    newSkillDetails.splice(i,1)
-                    break;
-                }
-            }
-            if(skill){
-                for(let k=0;k<newSkillDetails.length;k++){
-                    if(newSkillDetails[k].inputId===toSkillID){
-                        const replacingIndex = (skillIndex<=k)?k+1:k
-                        newSkillDetails.splice(replacingIndex,0,skill)
-                        changeActiveTab((i)=>{
-                            if(i>-2) return replacingIndex
-                            return i
-                        })
-                        break;
-                    }
-                }
-            }
-            dispatch(setEgoInfo({...EgoInfoValue,skillDetails:newSkillDetails}))
-        }
+        const result = reorderSkills(EgoInfoValue.skillDetails, fromSkillID, toSkillID)
+        if(!result) return
+        changeActiveTab(i => i > -2 ? result.newIndex : i)
+        dispatch(setEgoInfo({...EgoInfoValue, skillDetails: result.list}))
     }
 
     return(

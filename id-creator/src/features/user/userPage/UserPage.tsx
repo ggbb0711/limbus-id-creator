@@ -3,14 +3,13 @@ import { appConfig } from "config/env.client";
 import React, { useEffect, useState } from "react";
 import { ReactElement } from "react";
 import { useRouter } from "next/navigation";
-import PaginatedPost from "components/paginatedPost/PaginatedPost";
+import { PaginatedPost, useGetPostsQuery } from "features/post";
 import { UserProfile } from "features/user/components/userProfile/UserProfile";
-import UserProfileLoading from "components/userProfileLoading/UserProfileLoading";
+import UserProfileLoading from "features/user/components/userProfileLoading/UserProfileLoading";
 import "./User.css"
 import useAlert from "hooks/useAlert";
 import { useLogOutMutation } from "api/AuthApi";
-import { useGetPostsQuery } from "api/PostApi";
-import getApiErrorMessage from "utils/getApiErrorMessage";
+import getApiErrorMessage from "api/getApiErrorMessage";
 import { useGetUserQuery } from "features/user/api/UserApi";
 import { useAuth } from "hooks/useAuth";
 import { IUserProfile } from "features/user/types/IUserProfile";

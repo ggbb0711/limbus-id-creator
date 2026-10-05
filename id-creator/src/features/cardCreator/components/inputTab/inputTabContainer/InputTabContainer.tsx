@@ -2,6 +2,7 @@ import { appConfig } from "config/env.client";
 import React, { ReactElement, useState, useRef, useCallback, useEffect } from "react";
 import "./InputTabContainer.css"
 import { getSkillView } from "features/cardCreator/skills/SkillRegistry";
+import { clampPanelWidth, parseSavedWidth } from "features/cardCreator/utils/layout/panelWidth";
 import InputIdInfoStatPage from "../inputStatPage/inputIdInfoStatPage/InputIdInfoStatPage";
 import InputEgoInfoStatPage from "../inputStatPage/inputEgoInfoStatPage/InputEgoInfoStatPage";
 import InputTabSide from "../inputTabSide/InputTabSide";
@@ -12,18 +13,10 @@ import { addEgoInfoSkill } from "features/cardCreator/stores/EgoInfoSlice";
 import { useCardMode } from "features/cardCreator/contexts/CardModeContext";
 import { SkillDetail } from "features/cardCreator/types/SkillDetail";
 
-const MIN_CLOSE_WIDTH = 240
-const MAX_WIDTH = 700
-const DEFAULT_WIDTH = 400
 const STORAGE_KEY = "inputPanelWidth"
 
 function getSavedWidth(): number {
-    const saved = localStorage.getItem(STORAGE_KEY)
-    if (saved) {
-        const num = Number(saved)
-        if (num >= MIN_CLOSE_WIDTH && num <= MAX_WIDTH) return num
-    }
-    return DEFAULT_WIDTH
+    return parseSavedWidth(localStorage.getItem(STORAGE_KEY))
 }
 
 export default function InputTabContainer({
@@ -70,16 +63,16 @@ export default function InputTabContainer({
             if (!isDragging.current || !containerRef.current) return
             const containerRect = containerRef.current.getBoundingClientRect()
             const newWidth = e.clientX - containerRect.left
-            if (newWidth < MIN_CLOSE_WIDTH) {
+            const resize = clampPanelWidth(newWidth)
+            if (resize.kind === "close") {
                 isDragging.current = false
                 document.body.style.cursor = ""
                 document.body.style.userSelect = ""
                 changeActiveTab(-2)
                 return
             }
-            const clamped = Math.min(newWidth, MAX_WIDTH)
-            setPanelWidth(clamped)
-            localStorage.setItem(STORAGE_KEY, String(clamped))
+            setPanelWidth(resize.width)
+            localStorage.setItem(STORAGE_KEY, String(resize.width))
         }
 
         const handleMouseUp = () => {

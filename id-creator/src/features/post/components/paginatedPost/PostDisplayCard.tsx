@@ -2,10 +2,10 @@ import React, { ReactElement } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import "./PaginatedPost.css"
-import { IPostDisplayCard } from "types/post/IPostDisplayCard";
+import { IPostDisplayCard } from "features/post/types/IPostDisplayCard";
 import CommentIcon from "assets/icons/CommentIcon";
 import ViewIcon from "assets/icons/ViewIcon";
-import { TagList } from "utils/TagList";
+import { TagList } from "features/post/utils/TagList";
 import formatDisplayDate from "utils/formatDisplayDate";
 
 export function PostDisplayCard({id,title,cardImg,userIcon,userName,userId,created,tags,viewCount,commentCount}:IPostDisplayCard){

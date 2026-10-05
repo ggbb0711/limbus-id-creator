@@ -1,6 +1,6 @@
 import uuid from "react-uuid"
 import { ISaveFile } from "features/cardCreator/types/ISaveFile"
-import formatDateForBackend from "features/cardCreator/utils/formatDateForBackend"
+import formatDateForBackend from "features/cardCreator/utils/save/formatDateForBackend"
 
 export function createSaveFile<T>(saveInfo: T, name: string, previewImg = ""): ISaveFile<T> {
     const now = formatDateForBackend(new Date())

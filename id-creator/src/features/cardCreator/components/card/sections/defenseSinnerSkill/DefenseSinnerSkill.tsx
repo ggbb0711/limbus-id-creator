@@ -5,8 +5,10 @@ import "./DefenseSinnerSkill.css";
 import { IDefenseSkill } from "features/cardCreator/types/skills/defenseSkill/IDefenseSkill";
 import SkillTitle from "../../components/skillTitle/SkillTitle";
 import SkillEffect from "../../components/skillEffect/SkillEffect";
-import { CoinEffect, getCoinEffect } from "features/cardCreator/utils/getCoinEffect";
-import { assetPaths } from "features/cardCreator/utils/assetPaths";
+import { CoinEffect, MAX_DRAWN_COINS, getCoinEffects } from "features/cardCreator/utils/card/getCoinEffect";
+import { getSkillLevelIcon, getSkillPowerIcon } from "features/cardCreator/utils/card/skillIcons";
+import formatSigned from "features/cardCreator/utils/card/formatSigned";
+import { assetPaths } from "features/cardCreator/utils/card/assetPaths";
 
 const DefenseSkillSplash = ({skillAffinity,skillImage,defenseType,skillFrame,showDefenseIcon}:{skillAffinity:string,skillImage?:string,defenseType:string,skillFrame:string,showDefenseIcon:boolean}):ReactElement => {
     const frameSrc = assetPaths.skillFrame(skillAffinity, skillFrame)
@@ -28,7 +30,6 @@ const DefenseSkillSplash = ({skillAffinity,skillImage,defenseType,skillFrame,sho
 const DefenseSinnerSkill = forwardRef<HTMLDivElement, { defenseSkill: IDefenseSkill }>(({ defenseSkill }, ref) => {
     const {
         defenseType,
-        damageType,
         name,
         skillAffinity,
         basePower,
@@ -43,6 +44,8 @@ const DefenseSinnerSkill = forwardRef<HTMLDivElement, { defenseSkill: IDefenseSk
         skillFrame,
         showDefenseIcon,
     } = defenseSkill;
+    const powerIcon = getSkillPowerIcon(defenseSkill)
+    const levelIcon = getSkillLevelIcon(defenseSkill)
 
     const renderCoin = (coinEffect: CoinEffect, key: number): ReactElement => {
         switch (coinEffect.type) {
@@ -59,16 +62,8 @@ const DefenseSinnerSkill = forwardRef<HTMLDivElement, { defenseSkill: IDefenseSk
         }
     }
 
-    const printCoins = function (coinNo: number,skillEffect:string): ReactElement[] {
-        if (coinNo > 10) return [<img key={0} src={assetPaths.coin.normal} alt="coin_icon" />];
-
-        const arr = [];
-
-        for (let i = 0; i < coinNo; i++) {
-            arr.push(renderCoin(getCoinEffect(skillEffect, i + 1), i));
-        }
-        return arr;
-    };
+    const printCoins = (coinNo: number, skillEffect: string): ReactElement[] =>
+        getCoinEffects(skillEffect, coinNo).map((effect, i) => renderCoin(effect, i))
 
     return (
         <div ref={ref} className="skill-section-container active-skill-container">
@@ -79,25 +74,15 @@ const DefenseSinnerSkill = forwardRef<HTMLDivElement, { defenseSkill: IDefenseSk
                         <DefenseSkillSplash skillAffinity={skillAffinity} skillImage={skillImage} defenseType={defenseType} skillFrame={skillFrame} showDefenseIcon={showDefenseIcon} />
                         <div className="skill-power">
                             {basePower}
-                            {defenseType === "Counter" || defenseType ==="ClashableCounter" ? (
-                                <img className="damage-type" src={`/Images/attack/attackt_${damageType}.webp`} alt={`${damageType}_icon`} />
-                            ) : defenseType === "ClashableGuard" ? (
-                                <img className="damage-type" src={`/Images/defense/defense_Block.webp`} alt={`Block_icon`} />
-                            ): (
-                                <img className="damage-type" src={`/Images/defense/defense_${defenseType}.webp`} alt={`${defenseType}_icon`} />
-                            )}
-                            {(coinPow < 0 ? "" : "+") + coinPow}
+                            <img className="damage-type" src={powerIcon.src} alt={powerIcon.alt} />
+                            {formatSigned(coinPow)}
                         </div>
                         <div className="skill-level">
-                            {defenseType === "Counter" || defenseType ==="ClashableCounter" ? (
-                                <img src="/Images/stat/stat_attack.webp" className="skill-level-icon" alt="attack_icon" />
-                            ) : (
-                                <img src={"/Images/stat/stat_defense.webp"} className="skill-level-icon" alt="defense_icon" />
-                            )}
+                            <img src={levelIcon.src} className="skill-level-icon" alt={levelIcon.alt} />
 
                             <div>
                                 <p>Id level</p>
-                                <p>{skillLevel < 0 ? skillLevel : "+" + skillLevel}</p>
+                                <p>{formatSigned(skillLevel)}</p>
                             </div>
                         </div>
                     </div>
@@ -108,7 +93,7 @@ const DefenseSinnerSkill = forwardRef<HTMLDivElement, { defenseSkill: IDefenseSk
                         <div>
                             <div className="coin-container">
                                 {printCoins(coinNo,skillEffect)}
-                                {coinNo > 10 ? `x ${coinNo}` : ""}
+                                {coinNo > MAX_DRAWN_COINS ? `x ${coinNo}` : ""}
                             </div>
                             <div className="active-skill-title-container">
                                 <div className="active-skill-title">

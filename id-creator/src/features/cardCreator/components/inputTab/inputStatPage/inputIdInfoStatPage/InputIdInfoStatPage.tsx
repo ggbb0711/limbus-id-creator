@@ -1,3 +1,5 @@
+import { canAddTag } from "utils/canAddTag";
+import { getResistTier } from "features/cardCreator/utils/card/getResistTier";
 import { appConfig } from "config/env.client";
 import { filesize } from "filesize";
 import React, { useEffect, useState } from "react";
@@ -16,7 +18,7 @@ import SinnerSplashArtRepositionInput from "../sinnerSplashArtRepositionInput/Si
 import UploadImgBtn from "../../components/uploadImgBtn/UploadImgBtn";
 import { useAppSelector, useAppDispatch } from "stores/AppStore";
 import { setIdInfo } from "features/cardCreator/stores/IdInfoSlice";
-import { compressAndReadImage } from "features/cardCreator/utils/CompressAndReadImage";
+import { compressAndReadImage } from "features/cardCreator/utils/image/CompressAndReadImage";
 import { useForm } from "react-hook-form";
 import { IIdInfo } from "features/cardCreator/types/IIdInfo";
 import ColorPicker from "features/cardCreator/components/colorPicker/ColorPicker";
@@ -53,7 +55,7 @@ export default function InputIdInfoStatPage({collapsePage}:{collapsePage:()=>voi
 
     function handleAddTrait() {
         const trimmed = traitInput.trim()
-        if (trimmed && !traits.includes(trimmed) && traits.length < appConfig.limits.card.maxTraits) {
+        if (canAddTag(traits, trimmed, appConfig.limits.card.maxTraits)) {
             setValue("traits", [...traits, trimmed])
             setTraitInput("")
         }
@@ -66,21 +68,6 @@ export default function InputIdInfoStatPage({collapsePage}:{collapsePage:()=>voi
     const slashResistant = watch("slashResistant")
     const pierceResistant = watch("pierceResistant")
     const bluntResistant = watch("bluntResistant")
-
-    function changeResistantColor(value:number):string{
-        if(value<1) return "var(--Endure)"
-        if(value>=1.5) return "var(--Fatal)"
-
-        return"var(--Normal)"
-    }
-
-    function changeResistantText(value:number):string{
-        if(value<=0.5) return "Ineff"
-        if(value<1) return "Endure"
-        if(value>=2.0) return "Fatal"
-        if(value>=1.5) return "Weak"
-        return "Normal"
-    }
 
     return <div className="input-page input-stat-page">
         <div className="input-page-icon-container">
@@ -213,10 +200,10 @@ export default function InputIdInfoStatPage({collapsePage}:{collapsePage:()=>voi
                     <label className="input-label" htmlFor="slashResistant">
                         <img className="stat-icon" src="/Images/attack/attackt_Slash.webp" alt="attackt_slash" />
                         <span className="input-label">
-                            Slash resist (<span style={{color:changeResistantColor(slashResistant)}}>{changeResistantText(slashResistant)}</span>): 
+                            Slash resist (<span style={{color:getResistTier(slashResistant,"damage").color}}>{getResistTier(slashResistant,"damage").label}</span>): 
                         </span>
                     </label>
-                    <input style={{color:changeResistantColor(slashResistant)}} type="number" className="input stat-page-input-border" {...registerNumber("slashResistant")} id="slashResistant"/>
+                    <input style={{color:getResistTier(slashResistant,"damage").color}} type="number" className="input stat-page-input-border" {...registerNumber("slashResistant")} id="slashResistant"/>
                 </div>
             </div>
             <div className="input-group-container">
@@ -224,10 +211,10 @@ export default function InputIdInfoStatPage({collapsePage}:{collapsePage:()=>voi
                     <label className="input-label" htmlFor="pierceResistant">
                         <img className="stat-icon" src="/Images/attack/attackt_Pierce.webp" alt="attackt_pierce" />
                         <span className="input-label">
-                            Pierce resist (<span style={{color:changeResistantColor(pierceResistant)}}>{changeResistantText(pierceResistant)}</span>) :
+                            Pierce resist (<span style={{color:getResistTier(pierceResistant,"damage").color}}>{getResistTier(pierceResistant,"damage").label}</span>) :
                         </span>
                     </label>
-                    <input style={{color:changeResistantColor(pierceResistant)}} type="number" className="input stat-page-input-border" {...registerNumber("pierceResistant")} id="pierceResistant"/>
+                    <input style={{color:getResistTier(pierceResistant,"damage").color}} type="number" className="input stat-page-input-border" {...registerNumber("pierceResistant")} id="pierceResistant"/>
                 </div>
             </div>
             <div className="input-group-container">
@@ -235,10 +222,10 @@ export default function InputIdInfoStatPage({collapsePage}:{collapsePage:()=>voi
                     <label className="input-label" htmlFor="bluntResistant">
                         <img className="stat-icon" src="/Images/attack/attackt_Blunt.webp" alt="attackt_blunt" />
                         <span>
-                            Blunt resist (<span style={{color:changeResistantColor(bluntResistant)}}>{changeResistantText(bluntResistant)}</span>) :
+                            Blunt resist (<span style={{color:getResistTier(bluntResistant,"damage").color}}>{getResistTier(bluntResistant,"damage").label}</span>) :
                         </span>
                     </label>
-                    <input style={{color:changeResistantColor(bluntResistant)}} type="number" className="input stat-page-input-border" {...registerNumber("bluntResistant")} id="bluntResistant"/>
+                    <input style={{color:getResistTier(bluntResistant,"damage").color}} type="number" className="input stat-page-input-border" {...registerNumber("bluntResistant")} id="bluntResistant"/>
                 </div>
             </div>
         </AccordionSection>

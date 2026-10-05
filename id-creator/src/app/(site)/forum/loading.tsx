@@ -1,6 +1,6 @@
 import React from "react";
-import { PostDisplayCardLoading } from "components/paginatedPost/PostDisplayCard";
-import "components/paginatedPost/PaginatedPost.css";
+import { PostDisplayCardLoading } from "features/post/components/paginatedPost/PostDisplayCard";
+import "features/post/components/paginatedPost/PaginatedPost.css";
 
 export default function Loading() {
     return <div className="page-container">

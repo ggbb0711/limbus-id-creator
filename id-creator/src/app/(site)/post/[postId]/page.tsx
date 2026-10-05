@@ -1,7 +1,7 @@
 import React from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getPost } from "api/server/posts";
+import { getPost } from "features/post/api/server/posts";
 import PostPage from "features/post/postPage/PostPage";
 import stripHtml from "utils/stripHtml";
 

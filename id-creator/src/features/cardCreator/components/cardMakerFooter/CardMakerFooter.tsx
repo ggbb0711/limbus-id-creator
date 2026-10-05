@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import DownloadImg from "features/cardCreator/utils/DownloadImg";
+import DownloadImg from "features/cardCreator/utils/image/DownloadImg";
 import "./CardMakerFooter.css"
 import DownloadIcon from "assets/icons/DownloadIcon";
 import SettingIcon from "assets/icons/SettingIcon";
@@ -19,7 +19,7 @@ export default function CardMakerFooter(){
         if(isLoading || !domRef.current) return
         setIsLoading(true)
         try {
-            const { default: TurnRefToImg } = await import("features/cardCreator/utils/TurnRefToImg")
+            const { default: TurnRefToImg } = await import("features/cardCreator/utils/image/TurnRefToImg")
             const imgUrl = await TurnRefToImg(domRef)
             DownloadImg(imgUrl,"Custom")
             addAlert("Success","Download started")

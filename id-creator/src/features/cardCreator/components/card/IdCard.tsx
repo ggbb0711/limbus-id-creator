@@ -6,6 +6,7 @@ import IdHeader from "./components/cardHeader/IdHeader";
 import SinnerSplashArt from "./components/sinnerSplashArt/SinnerSplashArt";
 import SinnerStats from "./components/sinnerStats/SinnerStats";
 import SkillDetailContainer from "./components/skillDetailContainer/SkillDetailContainer";
+import { reorderSkills } from "features/cardCreator/utils/card/reorderSkills";
 import { useAppSelector, useAppDispatch } from "stores/AppStore";
 import { setIdInfo } from "features/cardCreator/stores/IdInfoSlice";
 
@@ -17,34 +18,10 @@ const IdCard=forwardRef<HTMLDivElement,{changeActiveTab:React.Dispatch<React.Set
 
 
     function moveSkill(fromSkillID:string,toSkillID:string){
-        if(fromSkillID!=toSkillID){
-            if(!idInfoValue.skillDetails.some(s=>s.inputId===toSkillID)) return
-            const newSkillDetails = [...idInfoValue.skillDetails]
-            let skill;
-            let skillIndex=-1
-            for(let i=0;i<newSkillDetails.length;i++){
-                if(newSkillDetails[i].inputId===fromSkillID){
-                    skill=newSkillDetails[i]
-                    skillIndex=i
-                    newSkillDetails.splice(i,1)
-                    break;
-                }
-            }
-            if(skill){
-                for(let k=0;k<newSkillDetails.length;k++){
-                    if(newSkillDetails[k].inputId===toSkillID){
-                        const replacingIndex = (skillIndex<=k)?k+1:k
-                        newSkillDetails.splice(replacingIndex,0,skill)
-                        changeActiveTab((i)=>{
-                            if(i>-2) return replacingIndex
-                            return i
-                        })
-                        break;
-                    }
-                }
-            }
-            dispatch(setIdInfo({...idInfoValue,skillDetails:newSkillDetails}))
-        }
+        const result = reorderSkills(idInfoValue.skillDetails, fromSkillID, toSkillID)
+        if(!result) return
+        changeActiveTab(i => i > -2 ? result.newIndex : i)
+        dispatch(setIdInfo({...idInfoValue, skillDetails: result.list}))
     }
 
 

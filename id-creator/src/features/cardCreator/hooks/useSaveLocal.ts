@@ -1,8 +1,8 @@
 import { Table } from "dexie";
 import { ISaveFile } from "features/cardCreator/types/ISaveFile";
 import { useCallback, useEffect, useState } from "react";
-import { indexDB, normalizeLocalSave } from "features/cardCreator/utils/indexDB";
-import formatDateForBackend from "features/cardCreator/utils/formatDateForBackend";
+import { indexDB, normalizeLocalSave } from "features/cardCreator/utils/save/indexDB";
+import formatDateForBackend from "features/cardCreator/utils/save/formatDateForBackend";
 
 
 export default function useSaveLocal<SaveObj>(LocalSaveDataName:string){

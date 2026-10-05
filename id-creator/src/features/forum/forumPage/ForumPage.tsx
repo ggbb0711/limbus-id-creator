@@ -1,27 +1,19 @@
 'use client'
+import { canAddTag } from "utils/canAddTag";
 import { appConfig } from "config/env.client";
 import { useEffect, useState } from "react";
 import { ReactElement } from "react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { ITag, TagList } from "utils/TagList";
+import { PaginatedPost, PostSortOption, TagInput, TagList, TagsContainer, useGetPostsQuery } from "features/post";
 import "./ForumPage.css"
 import DropDown from "components/ui/dropDown/DropDown";
 import { useLoginMenu } from "hooks/useLoginMenu";
-import PaginatedPost from "components/paginatedPost/PaginatedPost";
-import TagInput from "components/tagInput/TagInput";
-import TagsContainer from "components/tagsContainer/TagsContainer";
 import useAlert from "hooks/useAlert";
 import { useAuth } from "hooks/useAuth";
-import { useGetPostsQuery } from "api/PostApi";
-import getApiErrorMessage from "utils/getApiErrorMessage";
-import { PostSortOption, isPostSortOption } from "types/post/PostSortOptions";
+import getApiErrorMessage from "api/getApiErrorMessage";
+import { ForumQueryUpdate, buildForumQuery, parseSort, tagKeyOf } from "features/forum/utils/forumQuery";
 
-const tagKeyOf = (tag: ITag) => Object.keys(TagList).find((key) => TagList[key].tagName === tag.tagName)
-
-function parseSort(value: string | null): PostSortOption {
-    return isPostSortOption(value) ? value : "Latest"
-}
 
 export default function ForumPage():ReactElement{
     const router = useRouter()
@@ -38,25 +30,8 @@ export default function ForumPage():ReactElement{
     const {setIsLoginMenuActive} = useLoginMenu()
     const {addAlert} = useAlert()
 
-    function updateQuery(next: { q?: string, tag?: string[], sort?: PostSortOption, page?: number }) {
-        const params = new URLSearchParams(searchParams.toString())
-        if (next.q !== undefined) {
-            if (next.q) params.set("q", next.q)
-            else params.delete("q")
-        }
-        if (next.tag !== undefined) {
-            params.delete("tag")
-            next.tag.forEach((key) => params.append("tag", key))
-        }
-        if (next.sort !== undefined) {
-            if (next.sort === "Latest") params.delete("sort")
-            else params.set("sort", next.sort)
-        }
-
-        const page = next.page ?? 0
-        if (page > 0) params.set("page", String(page))
-        else params.delete("page")
-        const query = params.toString()
+    function updateQuery(next: ForumQueryUpdate) {
+        const query = buildForumQuery(searchParams.toString(), next)
         router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false })
     }
 
@@ -102,7 +77,7 @@ export default function ForumPage():ReactElement{
                 <label htmlFor="tag">Tags:</label>
                 <TagInput completeFn={(tag)=>{
                     const key = tagKeyOf(tag)
-                    if (key) updateQuery({ tag: [...new Set([...tagKeys, key])] })
+                    if (canAddTag(tagKeys, key, appConfig.limits.post.maxForumFilterTags)) updateQuery({ tag: [...tagKeys, key] })
                 }} maxTag={appConfig.limits.post.maxForumFilterTags} selectedCount={tagKeys.length} customClass={"input"} id={"tag"} ></TagInput>
             </div>
             <TagsContainer tags={tags} deleteTag={(i)=>{

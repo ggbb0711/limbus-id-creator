@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { siteUrl } from "config/siteMetadata";
-import { getLatestPosts } from "api/server/posts";
+import { getLatestPosts } from "features/post/api/server/posts";
 import { serverConfig } from "config/env.server";
 
 export const revalidate = 3600

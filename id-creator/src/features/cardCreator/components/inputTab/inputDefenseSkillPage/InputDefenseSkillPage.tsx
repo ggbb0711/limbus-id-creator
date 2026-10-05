@@ -15,7 +15,7 @@ import DefenseTypeInput from "../components/defenseTypeInput/DefenseTypeInput";
 import ChangeInputType from "../components/changeInputType/ChangeInputType";
 import TipTapEditor from "../components/tipTapEditor/TipTapEditor";
 import UploadImgBtn from "../components/uploadImgBtn/UploadImgBtn";
-import { compressAndReadImage } from "features/cardCreator/utils/CompressAndReadImage";
+import { compressAndReadImage } from "features/cardCreator/utils/image/CompressAndReadImage";
 import { useSkillForm } from "features/cardCreator/hooks/useSkillForm";
 
 export default function InputDefenseSkillPage({

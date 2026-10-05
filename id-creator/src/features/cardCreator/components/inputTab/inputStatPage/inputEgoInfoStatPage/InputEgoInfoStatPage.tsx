@@ -1,3 +1,4 @@
+import { getResistTier } from "features/cardCreator/utils/card/getResistTier";
 import { appConfig } from "config/env.client";
 import { filesize } from "filesize";
 import React, { useEffect } from "react";
@@ -13,7 +14,7 @@ import SinnerSplashArtRepositionInput from "../sinnerSplashArtRepositionInput/Si
 import UploadImgBtn from "../../components/uploadImgBtn/UploadImgBtn";
 import { useAppSelector, useAppDispatch } from "stores/AppStore";
 import { setEgoInfo } from "features/cardCreator/stores/EgoInfoSlice";
-import { compressAndReadImage } from "features/cardCreator/utils/CompressAndReadImage";
+import { compressAndReadImage } from "features/cardCreator/utils/image/CompressAndReadImage";
 import { useForm } from "react-hook-form";
 import { IEgoInfo } from "features/cardCreator/types/IEgoInfo";
 import ColorPicker from "features/cardCreator/components/colorPicker/ColorPicker";
@@ -50,13 +51,6 @@ export default function InputStatPage({collapsePage}:{collapsePage:()=>void}):Re
     const splashArtScale = watch("splashArtScale")
     const splashArtTranslation = watch("splashArtTranslation")
     const sinResistant = watch("sinResistant")
-
-    function changeResistantColor(value:number):string{
-        if(value<1) return "var(--Endure)"
-        if(value>=2.0) return "var(--Fatal)"
-
-        return"var(--Normal)"
-    }
 
     return <div className="input-page input-stat-page">
         <div className="input-page-icon-container">
@@ -185,43 +179,43 @@ export default function InputStatPage({collapsePage}:{collapsePage:()=>void}):Re
                 <div className="input-container">
                     <label htmlFor="wrath_resistant"><img className="stat-icon" src="/Images/sin-affinity/affinity_Wrath_big.webp" alt="wrath-input-resistant-icon" /></label>
                     <div className="resistant-content">
-                        <input style={{color:changeResistantColor(sinResistant?.wrath)}} type="number" className="input stat-page-input-border input-number" {...registerNumber("sinResistant.wrath")} id="wrath_resistant"/>
+                        <input style={{color:getResistTier(sinResistant?.wrath,"sin").color}} type="number" className="input stat-page-input-border input-number" {...registerNumber("sinResistant.wrath")} id="wrath_resistant"/>
                     </div>
                 </div>
                 <div className="input-container">
                     <label htmlFor="lust_resistant"><img className="stat-icon" src="/Images/sin-affinity/affinity_Lust_big.webp" alt="Lust-input-resistant-icon" /></label>
                     <div className="resistant-content">
-                        <input style={{color:changeResistantColor(sinResistant?.lust)}} type="number" className="input stat-page-input-border input-number" {...registerNumber("sinResistant.lust")} id="lust_resistant"/>
+                        <input style={{color:getResistTier(sinResistant?.lust,"sin").color}} type="number" className="input stat-page-input-border input-number" {...registerNumber("sinResistant.lust")} id="lust_resistant"/>
                     </div>
                 </div>
                 <div className="input-container">
                     <label htmlFor="sloth_resistant"><img className="stat-icon" src="/Images/sin-affinity/affinity_Sloth_big.webp" alt="Sloth-input-resistant-icon" /></label>
                     <div className="resistant-content">
-                        <input style={{color:changeResistantColor(sinResistant?.sloth)}} type="number" className="input stat-page-input-border input-number" {...registerNumber("sinResistant.sloth")} id="sloth_resistant"/>
+                        <input style={{color:getResistTier(sinResistant?.sloth,"sin").color}} type="number" className="input stat-page-input-border input-number" {...registerNumber("sinResistant.sloth")} id="sloth_resistant"/>
                     </div>
                 </div>
                 <div className="input-container">
                     <label htmlFor="gluttony_resistant"><img className="stat-icon" src="/Images/sin-affinity/affinity_Gluttony_big.webp" alt="Gluttony-input-resistant-icon" /></label>
                     <div className="resistant-content">
-                        <input style={{color:changeResistantColor(sinResistant?.gluttony)}} type="number" className="input stat-page-input-border input-number" {...registerNumber("sinResistant.gluttony")} id="gluttony_resistant"/>
+                        <input style={{color:getResistTier(sinResistant?.gluttony,"sin").color}} type="number" className="input stat-page-input-border input-number" {...registerNumber("sinResistant.gluttony")} id="gluttony_resistant"/>
                     </div>
                 </div>
                 <div className="input-container">
                     <label htmlFor="gloom_resistant"><img className="stat-icon" src="/Images/sin-affinity/affinity_Gloom_big.webp" alt="Gloom-input-resistant-icon" /></label>
                     <div className="resistant-content">
-                        <input style={{color:changeResistantColor(sinResistant?.gloom)}} type="number" className="input stat-page-input-border input-number" {...registerNumber("sinResistant.gloom")} id="gloom_resistant"/>
+                        <input style={{color:getResistTier(sinResistant?.gloom,"sin").color}} type="number" className="input stat-page-input-border input-number" {...registerNumber("sinResistant.gloom")} id="gloom_resistant"/>
                     </div>
                 </div>
                 <div className="input-container">
                     <label htmlFor="pride_resistant"><img className="stat-icon" src="/Images/sin-affinity/affinity_Pride_big.webp" alt="Pride-input-resistant-icon" /></label>
                     <div className="resistant-content">
-                        <input style={{color:changeResistantColor(sinResistant?.pride)}} type="number" className="input stat-page-input-border input-number" {...registerNumber("sinResistant.pride")} id="pride_resistant"/>
+                        <input style={{color:getResistTier(sinResistant?.pride,"sin").color}} type="number" className="input stat-page-input-border input-number" {...registerNumber("sinResistant.pride")} id="pride_resistant"/>
                     </div>
                 </div>
                 <div className="input-container">
                     <label htmlFor="envy_resistant"><img className="stat-icon" src="/Images/sin-affinity/affinity_Envy_big.webp" alt="Envy-input-resistant-icon" /></label>
                     <div className="resistant-content">
-                        <input style={{color:changeResistantColor(sinResistant?.envy)}} type="number" className="input stat-page-input-border input-number" {...registerNumber("sinResistant.envy")} id="envy_resistant"/>
+                        <input style={{color:getResistTier(sinResistant?.envy,"sin").color}} type="number" className="input stat-page-input-border input-number" {...registerNumber("sinResistant.envy")} id="envy_resistant"/>
                     </div>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 'use client'
 import React, { ReactElement, useEffect, useState } from 'react';
 import 'features/cardCreator/styles/EditorPage.css'
-import { indexDB } from 'features/cardCreator/utils/indexDB';
+import { indexDB } from 'features/cardCreator/utils/save/indexDB';
 import DragAndDroppableSkillPreviewLayer from 'features/cardCreator/components/card/components/dragAndDroppableSkill/DragAndDroppableSkillPreviewLayer';
 import { EgoCard } from 'features/cardCreator/components/card/EgoCard';
 import InputTabContainer from 'features/cardCreator/components/inputTab/inputTabContainer/InputTabContainer';

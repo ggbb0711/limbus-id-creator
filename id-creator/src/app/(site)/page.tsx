@@ -1,7 +1,7 @@
 import React from "react";
 import type { Metadata } from "next";
 import HomePage from "features/home/homePage/HomePage";
-import { getLatestPosts } from "api/server/posts";
+import { getLatestPosts } from "features/post/api/server/posts";
 import { serverConfig } from "config/env.server";
 
 export const metadata: Metadata = {

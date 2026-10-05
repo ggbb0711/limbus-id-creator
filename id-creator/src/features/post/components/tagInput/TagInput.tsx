@@ -1,7 +1,8 @@
+'use client'
 import useKeyPress from "hooks/useKeyPress";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ReactElement } from "react";
-import { ITag, TagList } from "utils/TagList";
+import { ITag, TagList } from "features/post/utils/TagList";
 import "./TagInput.css"
 
 export default function TagInput({completeFn,maxTag,selectedCount,customClass="",id}:{completeFn:(keyword:ITag)=>void,maxTag:number,selectedCount:number,customClass?:string,id:string}):ReactElement{

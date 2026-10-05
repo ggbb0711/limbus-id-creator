@@ -4,8 +4,10 @@ import "../SinnerSkill.css"
 import { IOffenseSkill } from "features/cardCreator/types/skills/offenseSkill/IOffenseSkill";
 import SkillTitle from "../../components/skillTitle/SkillTitle";
 import SkillEffect from "../../components/skillEffect/SkillEffect";
-import { CoinEffect, getCoinEffect } from "features/cardCreator/utils/getCoinEffect";
-import { assetPaths } from "features/cardCreator/utils/assetPaths";
+import { CoinEffect, MAX_DRAWN_COINS, getCoinEffects } from "features/cardCreator/utils/card/getCoinEffect";
+import { getSkillLevelIcon, getSkillPowerIcon } from "features/cardCreator/utils/card/skillIcons";
+import formatSigned from "features/cardCreator/utils/card/formatSigned";
+import { assetPaths } from "features/cardCreator/utils/card/assetPaths";
 
 const OffenseSkillSplash = ({skillAffinity,skillImage,skillFrame}:{skillAffinity:string,skillImage?:string,skillFrame:string}):ReactElement =>{
     const frameSrc = assetPaths.skillFrame(skillAffinity, skillFrame)
@@ -25,7 +27,6 @@ const OffenseSkillSplash = ({skillAffinity,skillImage,skillFrame}:{skillAffinity
 
 const OffenseSinnerSkill = forwardRef<HTMLDivElement, { offenseSkill: IOffenseSkill }>(({ offenseSkill }, ref) => {
     const {
-        damageType,
         name,
         skillAffinity,
         basePower,
@@ -39,6 +40,8 @@ const OffenseSinnerSkill = forwardRef<HTMLDivElement, { offenseSkill: IOffenseSk
         atkWeight,
         skillFrame,
     } = offenseSkill;
+    const powerIcon = getSkillPowerIcon(offenseSkill)
+    const levelIcon = getSkillLevelIcon(offenseSkill)
 
     const renderCoin = (coinEffect: CoinEffect, key: number): ReactElement => {
         switch (coinEffect.type) {
@@ -55,16 +58,8 @@ const OffenseSinnerSkill = forwardRef<HTMLDivElement, { offenseSkill: IOffenseSk
         }
     }
 
-    const printCoins = function (coinNo: number,skillEffect:string): ReactElement[] {
-        if (coinNo > 10) return [<img key={0} src={assetPaths.coin.normal} alt="coin_icon" />];
-
-        const arr = [];
-
-        for (let i = 0; i < coinNo; i++) {
-            arr.push(renderCoin(getCoinEffect(skillEffect, i + 1), i));
-        }
-        return arr;
-    }
+    const printCoins = (coinNo: number, skillEffect: string): ReactElement[] =>
+        getCoinEffects(skillEffect, coinNo).map((effect, i) => renderCoin(effect, i))
 
     return (
         <div className="skill-section-container active-skill-container" ref={ref}>
@@ -75,14 +70,14 @@ const OffenseSinnerSkill = forwardRef<HTMLDivElement, { offenseSkill: IOffenseSk
                         <OffenseSkillSplash skillAffinity={skillAffinity} skillImage={skillImage} skillFrame={skillFrame} />
                         <div className="skill-power">
                             {basePower}
-                            <img className="damage-type" src={`/Images/attack/attackt_${damageType}.webp`} alt="" />
-                            {(coinPow < 0 ? "" : "+") + coinPow}
+                            <img className="damage-type" src={powerIcon.src} alt={powerIcon.alt} />
+                            {formatSigned(coinPow)}
                         </div>
                         <div className="skill-level">
-                            <img src={"/Images/stat/stat_attack.webp"} className="skill-level-icon" alt="attack_icon" />
+                            <img src={levelIcon.src} className="skill-level-icon" alt={levelIcon.alt} />
                             <div>
                                 <p>Id level</p>
-                                <p>{skillLevel < 0 ? skillLevel : "+" + skillLevel}</p>
+                                <p>{formatSigned(skillLevel)}</p>
                             </div>
                         </div>
                     </div>
@@ -93,7 +88,7 @@ const OffenseSinnerSkill = forwardRef<HTMLDivElement, { offenseSkill: IOffenseSk
                         <div>
                             <div className="coin-container">
                                 {printCoins(coinNo,skillEffect)}
-                                {coinNo > 10 ? `x ${coinNo}` : ""}
+                                {coinNo > MAX_DRAWN_COINS ? `x ${coinNo}` : ""}
                             </div>
                             <div className="active-skill-title-container">
                                 <div className="active-skill-title">

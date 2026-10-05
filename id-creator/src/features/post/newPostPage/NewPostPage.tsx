@@ -1,20 +1,21 @@
 'use client'
+import { canAddTag } from "utils/canAddTag";
 import { appConfig } from "config/env.client";
 import { useLoginMenu } from "hooks/useLoginMenu";
 import React, { useState } from "react";
 import { ReactElement } from "react";
 import "./NewPostPage.css";
-import TagInput from "components/tagInput/TagInput";
-import TagsContainer from "components/tagsContainer/TagsContainer";
-import { ITag } from "utils/TagList";
+import TagInput from "features/post/components/tagInput/TagInput";
+import TagsContainer from "features/post/components/tagsContainer/TagsContainer";
+import { ITag } from "features/post/utils/TagList";
 import { SearchSaveInput } from "features/cardCreator";
 import CloseIcon from "assets/icons/CloseIcon";
 import Editor from 'react-simple-wysiwyg';
 import { useRouter } from "next/navigation";
 import useAlert from "hooks/useAlert";
 import { useAuth } from "hooks/useAuth";
-import { useCreatePostMutation } from "api/PostApi";
-import getApiErrorMessage from "utils/getApiErrorMessage";
+import { useCreatePostMutation } from "features/post/api/PostApi";
+import getApiErrorMessage from "api/getApiErrorMessage";
 
 interface IChoosenSave{
     PreviewUrl:string,
@@ -81,7 +82,7 @@ export default function NewPostPage():ReactElement{
             </div>
             <div className="post-input-container">
                 <label htmlFor="tag">Tags {tags.length}/{maxUserTags}:</label>
-                <TagInput completeFn={(tag)=>{setTags([...new Set([...tags,tag])])}} maxTag={maxUserTags} selectedCount={tags.length} customClass={"input"} id={"tag"} ></TagInput>
+                <TagInput completeFn={(tag)=>{if(canAddTag(tags, tag, maxUserTags)) setTags([...tags, tag])}} maxTag={maxUserTags} selectedCount={tags.length} customClass={"input"} id={"tag"} ></TagInput>
             </div>
             {tags.length>0&&<TagsContainer tags={tags} deleteTag={(i)=>{
                 const newTags = [...tags]

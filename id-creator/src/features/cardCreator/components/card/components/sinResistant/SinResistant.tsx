@@ -1,8 +1,8 @@
+import { getResistTier } from "features/cardCreator/utils/card/getResistTier";
 import { ReactElement } from "react";
 import "./SinResistant.css"
 import React from "react";
 import { SinRecord } from "features/cardCreator/constants";
-
 
 export default function SinResistant({sinResistant}:{sinResistant:SinRecord}):ReactElement{
     const {
@@ -15,67 +15,53 @@ export default function SinResistant({sinResistant}:{sinResistant:SinRecord}):Re
         envy,
     }=sinResistant
 
-    function changeResistantColor(value:number):string{
-        if(value<1) return "var(--Endure)"
-        if(value>=2.0) return "var(--Fatal)"
-
-        return"var(--Normal)"
-    }
-
-    function changeResistantText(value:number):string{
-        if(value<=0.5) return "Ineff"
-        if(value<1) return "Endure"
-        if(value>=2.0) return "Fatal"
-        return "Normal"
-    }
-
     return <div className="sin-resistant-container">
-        <div className="sin-resistant" style={{color:changeResistantColor(wrath)}}>
+        <div className="sin-resistant" style={{color:getResistTier(wrath,"sin").color}}>
             <img src="/Images/sin-affinity/affinity_Wrath_big.webp" alt="Wrath-resistant-icon" />
             <div>
-                <p>{changeResistantText(wrath)}</p>
+                <p>{getResistTier(wrath,"sin").label}</p>
                 <p>[x{wrath}]</p>
             </div>
         </div>
-        <div className="sin-resistant" style={{color:changeResistantColor(lust)}}>
+        <div className="sin-resistant" style={{color:getResistTier(lust,"sin").color}}>
             <img src="/Images/sin-affinity/affinity_Lust_big.webp" alt="Lust-resistant-icon" />
             <div>
-                <p>{changeResistantText(lust)}</p>
+                <p>{getResistTier(lust,"sin").label}</p>
                 <p>[x{lust}]</p>
             </div>
         </div>
-        <div className="sin-resistant" style={{color:changeResistantColor(sloth)}}>
+        <div className="sin-resistant" style={{color:getResistTier(sloth,"sin").color}}>
             <img src="/Images/sin-affinity/affinity_Sloth_big.webp" alt="Sloth-resistant-icon" />
             <div>
-                <p>{changeResistantText(sloth)}</p>
+                <p>{getResistTier(sloth,"sin").label}</p>
                 <p>[x{sloth}]</p>
             </div>
         </div>
-        <div className="sin-resistant" style={{color:changeResistantColor(gluttony)}}>
+        <div className="sin-resistant" style={{color:getResistTier(gluttony,"sin").color}}>
             <img src="/Images/sin-affinity/affinity_Gluttony_big.webp" alt="Gluttony-resistant-icon" />
             <div>
-                <p>{changeResistantText(gluttony)}</p>
+                <p>{getResistTier(gluttony,"sin").label}</p>
                 <p>[x{gluttony}]</p>
             </div>
         </div>
-        <div className="sin-resistant" style={{color:changeResistantColor(gloom)}}>
+        <div className="sin-resistant" style={{color:getResistTier(gloom,"sin").color}}>
             <img src="/Images/sin-affinity/affinity_Gloom_big.webp" alt="Gloom-resistant-icon" />
             <div>
-                <p>{changeResistantText(gloom)}</p>
+                <p>{getResistTier(gloom,"sin").label}</p>
                 <p>[x{gloom}]</p>
             </div>
         </div>
-        <div className="sin-resistant" style={{color:changeResistantColor(pride)}}>
+        <div className="sin-resistant" style={{color:getResistTier(pride,"sin").color}}>
             <img src="/Images/sin-affinity/affinity_Pride_big.webp" alt="Pride-resistant-icon" />
             <div>
-                <p>{changeResistantText(pride)}</p>
+                <p>{getResistTier(pride,"sin").label}</p>
                 <p>[x{pride}]</p>
             </div>
         </div>
-        <div className="sin-resistant" style={{color:changeResistantColor(envy)}}>
+        <div className="sin-resistant" style={{color:getResistTier(envy,"sin").color}}>
             <img src="/Images/sin-affinity/affinity_Envy_big.webp" alt="Envy-resistant-icon" />
             <div>
-                <p>{changeResistantText(envy)}</p>
+                <p>{getResistTier(envy,"sin").label}</p>
                 <p>[x{envy}]</p>
             </div>
         </div>

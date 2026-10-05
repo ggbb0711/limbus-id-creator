@@ -1,3 +1,4 @@
+import { canAddTag } from "utils/canAddTag";
 import React, { KeyboardEvent, ReactElement, useRef } from "react";
 
 // Replaces react-tagsinput (React <= 18 only) with the same DOM, so the existing trait styles still apply.
@@ -16,7 +17,7 @@ export default function TraitInput({value,onChange,inputValue,onChangeInput,maxT
 
     function addTag():boolean{
         const tag = inputValue.trim()
-        if(!tag || value.includes(tag) || value.length >= maxTags) return false
+        if(!canAddTag(value, tag, maxTags)) return false
         onChange([...value, tag])
         onChangeInput("")
         return true

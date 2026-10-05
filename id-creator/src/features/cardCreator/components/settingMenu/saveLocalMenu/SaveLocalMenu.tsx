@@ -1,7 +1,8 @@
 import { appConfig } from "config/env.client";
 import React, { useMemo, useState } from "react";
 import "../SettingMenu.css"
-import { createSaveFile } from "features/cardCreator/utils/createSaveFile";
+import { createSaveFile } from "features/cardCreator/utils/save/createSaveFile";
+import { sortSavesByTimeDesc } from "features/cardCreator/utils/save/sortSaves";
 import { SaveMode } from "features/cardCreator/constants";
 import useSaveLocal from "features/cardCreator/hooks/useSaveLocal";
 import PopUpMenu from "components/ui/popUpMenu/PopUpMenu";
@@ -56,7 +57,7 @@ const SaveLocalMenu=({saveMode, close}:{saveMode: SaveMode, close: ()=>void})=>{
 
     // Copy before sorting: Array.prototype.sort works in place and would mutate hook state
     const sortedSaves = useMemo(
-        ()=>[...saveData].sort((a,b)=>Date.parse(b.saveTime)-Date.parse(a.saveTime)),
+        ()=>sortSavesByTimeDesc(saveData),
         [saveData]
     )
 

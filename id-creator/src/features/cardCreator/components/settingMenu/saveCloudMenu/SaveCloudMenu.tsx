@@ -2,14 +2,13 @@ import { appConfig } from "config/env.client";
 import React, { useState } from "react";
 import { ReactElement } from "react";
 import { ISaveFile } from "features/cardCreator/types/ISaveFile";
-import { createSaveFile } from "features/cardCreator/utils/createSaveFile";
-import { clearSkillImage, readSkillImage } from "features/cardCreator/skills/skillData";
+import { createSaveFile } from "features/cardCreator/utils/save/createSaveFile";
+import { buildSaveFormData, collectBase64Images } from "features/cardCreator/utils/save/cloudSaveForm";
 import { SaveMode } from "features/cardCreator/constants";
 import PopUpMenu from "components/ui/popUpMenu/PopUpMenu";
 import imageCompression from 'browser-image-compression';
-import getImageDimensions from "features/cardCreator/utils/getImageDimensions";
-import base64ToFile from "features/cardCreator/utils/base64ToFile";
-import checkBase64Image from "features/cardCreator/utils/checkBase64Image";
+import getImageDimensions from "features/cardCreator/utils/image/getImageDimensions";
+import base64ToFile from "features/cardCreator/utils/image/base64ToFile";
 import "./SaveCloudMenu.css";
 import "../SettingMenu.css";
 import { IEgoInfo } from "features/cardCreator/types/IEgoInfo";
@@ -17,7 +16,7 @@ import { IIdInfo } from "features/cardCreator/types/IIdInfo";
 import { useLoginMenu } from "hooks/useLoginMenu";
 import * as Sentry from "@sentry/nextjs"
 import useAlert from "hooks/useAlert";
-import formatDateForBackend from "features/cardCreator/utils/formatDateForBackend";
+import formatDateForBackend from "features/cardCreator/utils/save/formatDateForBackend";
 import { useCardDomRef } from "features/cardCreator/contexts/CardDomRefContext";
 import { useAuth } from "hooks/useAuth";
 import { useAppSelector, useAppDispatch } from "stores/AppStore";
@@ -84,59 +83,29 @@ export default function SaveCloudMenu({saveMode}:{saveMode:SaveMode}):ReactEleme
     const isLoadingSaveData = isLoadingSaveList || isLoadingSave || isDeleting || isCreating
 
     async function createForm(saveFileData: ISaveFile<IIdInfo|IEgoInfo>, domRef: React.RefObject<HTMLDivElement | null>): Promise<FormData> {
-        // Loaded on demand: modern-screenshot is only needed when saving
-        const { default: TurnRefToImg } = await import("features/cardCreator/utils/TurnRefToImg")
-        const form = new FormData()
-        saveFileData.saveTime = formatDateForBackend(new Date())
-        const saveData = JSON.parse(JSON.stringify(saveFileData)) as ISaveFile<IIdInfo|IEgoInfo>
-        const saveInfo = {...saveData.saveInfo}
+        const { default: TurnRefToImg } = await import("features/cardCreator/utils/image/TurnRefToImg")
+        const saveData = { ...saveFileData, saveTime: formatDateForBackend(new Date()) }
+        const { images, stripped } = collectBase64Images(saveData.saveInfo)
 
-        const compressToWebP = (file: File) => imageCompression(file, {
+        const compressToWebP = (file: File, maxWidthOrHeight?: number) => imageCompression(file, {
             maxSizeMB: appConfig.image.compressMaxSizeMB,
             useWebWorker: true,
             fileType: "image/webp",
             initialQuality: appConfig.image.webpQuality,
+            ...(maxWidthOrHeight ? { maxWidthOrHeight } : {}),
         })
 
-        const skillImageTasks = saveInfo.skillDetails.map(async (skill, i) => {
-            const image = readSkillImage(skill)
-            if(!image || !checkBase64Image(image)) return null
-            return { file: await compressToWebP(base64ToFile(image, "new file")), index: i, clear: () => { saveInfo.skillDetails[i] = clearSkillImage(skill) } }
-        })
-
-        const [sinnerIconFile, splashArtFile, imgUrl, ...skillResults] = await Promise.all([
-            checkBase64Image(saveInfo.sinnerIcon) ? compressToWebP(base64ToFile(saveInfo.sinnerIcon, "new file")) : Promise.resolve(null),
-            checkBase64Image(saveInfo.splashArt)  ? compressToWebP(base64ToFile(saveInfo.splashArt, "new file"))  : Promise.resolve(null),
+        const [screenshot, ...compressed] = await Promise.all([
             TurnRefToImg(domRef),
-            ...skillImageTasks
+            ...images.map(image => compressToWebP(base64ToFile(image.dataUrl, "new file"))),
         ])
 
-        if(sinnerIconFile){ form.append("sinnerIcon", sinnerIconFile); saveInfo.sinnerIcon = "" }
-        if(splashArtFile){ form.append("splashArtImg", splashArtFile); saveInfo.splashArt = "" }
+        const thumbnailFile = base64ToFile(screenshot, "new file")
+        const { width } = await getImageDimensions(thumbnailFile)
+        const thumbnail = await compressToWebP(thumbnailFile, Math.max(appConfig.image.compressMinDimension, Math.floor(width * (2/3))))
 
-        const thumbnailImageFile = base64ToFile(imgUrl as string, "new file")
-        const {width} = await getImageDimensions(thumbnailImageFile)
-        form.append("thumbnailImage", await imageCompression(thumbnailImageFile, {
-            maxSizeMB: appConfig.image.compressMaxSizeMB,
-            useWebWorker: true,
-            fileType: "image/webp",
-            initialQuality: appConfig.image.webpQuality,
-            maxWidthOrHeight: Math.max(appConfig.image.compressMinDimension, Math.floor(width * (2/3)))
-        }))
-
-        let formSkillImageIndex = 0
-        skillResults.forEach(result => {
-            if(result){
-                form.append(`SkillImages[${formSkillImageIndex}].Image`, result.file)
-                form.append(`SkillImages[${formSkillImageIndex}].Index`, result.index.toString())
-                result.clear()
-                formSkillImageIndex++
-            }
-        })
-        saveInfo.skillDetails = saveInfo.skillDetails.map((skill, i) => ({ ...skill, index: i })) as typeof saveInfo.skillDetails
-        saveData.saveInfo=saveInfo
-        form.append("SaveData",JSON.stringify(saveData))
-        return form
+        const files = images.map((image, i) => ({ target: image.target, file: compressed[i] }))
+        return buildSaveFormData({ ...saveData, saveInfo: stripped }, thumbnail, files)
     }
 
     async function createNewSaveFile(){

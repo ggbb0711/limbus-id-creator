@@ -7,10 +7,10 @@ import { useLoginMenu } from "hooks/useLoginMenu";
 import { CommentContainer, PostCommentInput } from "features/post/components/comment/Comment";
 import useAlert from "hooks/useAlert";
 import { useAuth } from "hooks/useAuth";
-import { useGetPostQuery } from "api/PostApi";
-import { IPost } from "types/post/IPost";
+import { useGetPostQuery } from "features/post/api/PostApi";
+import { IPost } from "features/post/types/IPost";
 import { useGetCommentsQuery, useCreateCommentMutation } from "features/post/api/CommentApi";
-import getApiErrorMessage from "utils/getApiErrorMessage";
+import getApiErrorMessage from "api/getApiErrorMessage";
 
 export default function PostPage({initialPost}:{initialPost:IPost}):ReactElement{
     const postId = initialPost.id

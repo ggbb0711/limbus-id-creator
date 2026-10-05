@@ -1,7 +1,7 @@
 import 'server-only'
 import { cache } from 'react'
-import { apiGet } from './serverFetch'
-import { IPost } from 'types/post/IPost'
+import { apiGet } from 'api/server/serverFetch'
+import { IPost } from 'features/post/types/IPost'
 
 interface IPostList {
     list: IPost[]

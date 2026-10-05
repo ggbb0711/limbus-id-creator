@@ -1,6 +1,6 @@
 import React from "react";
 import { ReactElement } from "react";
-import { ITag } from "utils/TagList";
+import { ITag } from "features/post/utils/TagList";
 import "./TagsContainer.css"
 import CloseIcon from "assets/icons/CloseIcon";
 

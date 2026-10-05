@@ -1,8 +1,8 @@
 'use client'
 import React, { useState, useEffect } from "react";
 import { ReactElement } from "react";
-import { IPost } from "types/post/IPost";
-import { ITag, TagList } from "utils/TagList";
+import { IPost } from "features/post/types/IPost";
+import { ITag, TagList } from "features/post/utils/TagList";
 import Link from "next/link";
 import Image from "next/image";
 import ViewIcon from "assets/icons/ViewIcon";
@@ -10,7 +10,7 @@ import CommentIcon from "assets/icons/CommentIcon";
 import ArrowDownIcon from "assets/icons/ArrowDownIcon";
 import ArrowUpIcon from "assets/icons/ArrowUpIcon";
 import CloseIcon from "assets/icons/CloseIcon";
-import UserProfileLoading from "components/userProfileLoading/UserProfileLoading";
+import { UserProfileLoading } from "features/user";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import formatDisplayDate from "utils/formatDisplayDate";
 import "./Post.css";

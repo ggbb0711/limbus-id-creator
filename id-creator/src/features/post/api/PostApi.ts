@@ -1,7 +1,7 @@
-import { BaseApi } from "./BaseApi";
+import { BaseApi } from "api/BaseApi";
 import IResponse from "types/IResponse";
-import { IPost } from "types/post/IPost";
-import { PostSortOption } from "types/post/PostSortOptions";
+import { IPost } from "features/post/types/IPost";
+import { PostSortOption } from "features/post/types/PostSortOptions";
 
 interface IGetPostsParams {
     title?: string

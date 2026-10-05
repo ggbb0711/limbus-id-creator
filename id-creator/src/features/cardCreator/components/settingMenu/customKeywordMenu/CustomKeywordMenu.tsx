@@ -7,7 +7,7 @@ import CheckIcon from "assets/icons/CheckIcon";
 import SettingIcon from "assets/icons/SettingIcon";
 import DeleteIcon from "assets/icons/DeleteIcon";
 import ColorPicker from "features/cardCreator/components/colorPicker/ColorPicker";
-import { loadCustomKeywords, saveCustomKeywords } from "features/cardCreator/utils/customKeywordStorage";
+import { loadCustomKeywords, saveCustomKeywords } from "features/cardCreator/utils/keywords/customKeywordStorage";
 
 function CustomKeywordTab({keyword,changeKeyword,deleteKeyword}:{keyword:ICustomKeyword,changeKeyword:(id:string,newKeyword:string,newColor:string)=>void,deleteKeyword:(id:string)=>void}){
     const [isEditMode,setIsEditMode] = useState(false)

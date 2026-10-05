@@ -1,5 +1,5 @@
 import { appConfig } from "config/env.client";
-import getImageDimensions from 'features/cardCreator/utils/getImageDimensions'
+import getImageDimensions from 'features/cardCreator/utils/image/getImageDimensions'
 
 export async function compressAndReadImage(file: File): Promise<string> {
     const [{ default: imageCompression }, { width }] = await Promise.all([

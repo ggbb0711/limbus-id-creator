@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import { fireEvent, render, screen } from '@testing-library/react'
 import CustomKeywordMenu from './CustomKeywordMenu'
-import { CUSTOM_KEYWORDS_STORAGE_KEY } from 'features/cardCreator/utils/customKeywordStorage'
+import { CUSTOM_KEYWORDS_STORAGE_KEY } from 'features/cardCreator/utils/keywords/customKeywordStorage'
 
 const stored = () => JSON.parse(localStorage.getItem(CUSTOM_KEYWORDS_STORAGE_KEY) ?? 'null')
 

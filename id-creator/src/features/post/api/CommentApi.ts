@@ -1,6 +1,6 @@
 import { appConfig } from "config/env.client";
 import { BaseApi } from "api/BaseApi";
-import { PostApi } from "api/PostApi";
+import { PostApi } from "features/post/api/PostApi";
 import IResponse from "types/IResponse";
 import { IComment } from "features/post/types/IComment";
 

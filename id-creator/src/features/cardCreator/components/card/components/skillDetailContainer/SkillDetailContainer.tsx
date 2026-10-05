@@ -1,4 +1,5 @@
 import React, { ReactElement, useCallback, useEffect, useRef, useState } from "react";
+import { computeColumns } from "features/cardCreator/utils/layout/computeColumns";
 import "./SkillDetailContainer.css"
 import { SkillDetail } from "features/cardCreator/types/SkillDetail";
 
@@ -29,19 +30,10 @@ export default function SkillDetailContainer({skillDetails,draggingHandler,chang
     }, [moveSkill, skillDetails, draggingHandler])
 
     useEffect(()=>{
-        if(containerRef.current){
-            let currentColHeight=0
-            let colNo=1
-            containerRef.current.childNodes.forEach((child:HTMLDivElement)=>{
-                currentColHeight+=child.clientHeight
-                if(currentColHeight>containerRef.current.clientHeight-5){
-                    colNo++
-                    currentColHeight=child.clientHeight
-                }
-                currentColHeight+=25
-            })
-            setCurrentWidth(colNo*500+(colNo-1)*25)
-        }
+        const container = containerRef.current
+        if(!container) return
+        const heights = Array.from(container.children, child => (child as HTMLElement).clientHeight)
+        setCurrentWidth(computeColumns(heights, container.clientHeight).width)
     },[JSON.stringify(skillDetails)])
 
     return(

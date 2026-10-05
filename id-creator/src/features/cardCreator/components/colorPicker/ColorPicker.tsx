@@ -1,3 +1,4 @@
+import { safeParseJSON } from "utils/safeParseJSON";
 import React, { ReactElement, useEffect, useRef } from "react";
 import { colord, extend } from "colord";
 import labPlugin from "colord/plugins/lab";
@@ -21,8 +22,8 @@ let activePresets:ColorPresetGroup[] = NO_PRESETS
 
 function loadSavedColors():string[]{
     try{
-        const saved = JSON.parse(localStorage.getItem(SAVED_COLORS_KEY) ?? "[]")
-        return Array.isArray(saved) ? saved.filter((color):color is string=>typeof color==="string") : []
+        return safeParseJSON<string[]>(localStorage.getItem(SAVED_COLORS_KEY), [], saved =>
+            Array.isArray(saved) ? saved.filter((color):color is string=>typeof color==="string") : [])
     }catch{
         return []
     }

@@ -38,3 +38,10 @@ export function getCoinEffect(skillEffect: string, coinNo: number): CoinEffect {
 
     return getCustomCoinEffect(skillEffect, coinNo) ?? { type: "normal" }
 }
+
+export const MAX_DRAWN_COINS = 10
+
+export function getCoinEffects(skillEffect: string, coinNo: number, max = MAX_DRAWN_COINS): CoinEffect[] {
+    if (coinNo > max) return [{ type: "normal" }]
+    return Array.from({ length: Math.max(0, coinNo) }, (_, i) => getCoinEffect(skillEffect, i + 1))
+}

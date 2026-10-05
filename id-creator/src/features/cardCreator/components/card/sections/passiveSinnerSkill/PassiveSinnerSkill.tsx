@@ -4,7 +4,8 @@ import "./PassiveSinnerSkill.css"
 import { IPassiveSkill } from "features/cardCreator/types/skills/passiveSkill/IPassiveSkill";
 import SkillEffect from "../../components/skillEffect/SkillEffect";
 import SkillTitle from "../../components/skillTitle/SkillTitle";
-import { assetPaths } from "features/cardCreator/utils/assetPaths";
+import { assetPaths } from "features/cardCreator/utils/card/assetPaths";
+import { getActiveRequirements } from "features/cardCreator/utils/card/getActiveRequirements";
 
 const PassiveSinnerSkill = forwardRef<HTMLDivElement, { passiveSkill: IPassiveSkill }>(({ passiveSkill }, ref) => {
     const {
@@ -14,6 +15,8 @@ const PassiveSinnerSkill = forwardRef<HTMLDivElement, { passiveSkill: IPassiveSk
         reqOwn,
         reqRes
     } = passiveSkill;
+    const ownRequirements = getActiveRequirements(reqOwn)
+    const resRequirements = getActiveRequirements(reqRes)
     return (
         <div className="skill-section-container" ref={ref}>
             <p className="skill-label">{skillLabel}</p>
@@ -25,24 +28,24 @@ const PassiveSinnerSkill = forwardRef<HTMLDivElement, { passiveSkill: IPassiveSk
                         </div>
 
                         <div>
-                            {Object.values(reqOwn).some(v=>v>0)&&
+                            {ownRequirements.length>0&&
                             <div className="req-container">
                                 <p>Own: </p>
                                 <div className="passive-cost-container">
-                                    {Object.entries(reqOwn).filter(([, amount])=>amount>=1).map(([k, amount])=>
-                                    <span className="center-element" key={k}>
-                                        {amount} <img className="req-sin-icon" src={assetPaths.affinityBig(k[0].toUpperCase()+k.slice(1))} alt={`${k}_icon`} />
+                                    {ownRequirements.map(({key, amount, iconName})=>
+                                    <span className="center-element" key={key}>
+                                        {amount} <img className="req-sin-icon" src={assetPaths.affinityBig(iconName)} alt={`${key}_icon`} />
                                     </span>)}
                                 </div>
                             </div>}
 
-                            {Object.values(reqRes).some(v=>v>0)&&
+                            {resRequirements.length>0&&
                             <div className="req-container">
                                 <p>Res: </p>
                                 <div className="passive-cost-container">
-                                    {Object.entries(reqRes).filter(([, amount])=>amount>=1).map(([k, amount])=>
-                                    <span className="center-element" key={k}>
-                                        {amount} <img className="req-sin-icon" src={assetPaths.affinityBig(k[0].toUpperCase()+k.slice(1))} alt={`${k}_icon`} />
+                                    {resRequirements.map(({key, amount, iconName})=>
+                                    <span className="center-element" key={key}>
+                                        {amount} <img className="req-sin-icon" src={assetPaths.affinityBig(iconName)} alt={`${key}_icon`} />
                                     </span>)}
                                 </div>
                             </div>}

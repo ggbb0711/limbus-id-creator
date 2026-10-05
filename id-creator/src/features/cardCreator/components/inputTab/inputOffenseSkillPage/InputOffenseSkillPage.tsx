@@ -14,7 +14,7 @@ import TipTapEditor from "../components/tipTapEditor/TipTapEditor";
 import SinAffinityInput from "../components/sinAffinityInput/SinAffinityInput";
 import SkillFrameInput from "../components/skillFrameInput/SkillFrameInput";
 import UploadImgBtn from "../components/uploadImgBtn/UploadImgBtn";
-import { compressAndReadImage } from "features/cardCreator/utils/CompressAndReadImage";
+import { compressAndReadImage } from "features/cardCreator/utils/image/CompressAndReadImage";
 import { useSkillForm } from "features/cardCreator/hooks/useSkillForm";
 
 export default function InputOffenseSkillPage({
