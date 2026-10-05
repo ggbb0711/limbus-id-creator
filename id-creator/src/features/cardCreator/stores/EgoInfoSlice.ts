@@ -1,56 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IEgoInfo, createEgoInfo } from 'features/cardCreator/types/IEgoInfo'
-import { createPassiveSkill } from 'features/cardCreator/types/skills/passiveSkill/IPassiveSkill'
 import { SkillDetail } from 'features/cardCreator/types/SkillDetail'
-import { createCustomEffect } from 'features/cardCreator/types/skills/customEffect/ICustomEffect'
-import { createDefenseSkill } from 'features/cardCreator/types/skills/defenseSkill/IDefenseSkill'
+import { migrateSkill } from 'features/cardCreator/skills/skillData'
 
 interface EgoInfoState {
     value: IEgoInfo
 }
 
-function hydratePassiveSkills(info: IEgoInfo): IEgoInfo {
-    const hydrated = { ...info }
-    hydrated.skillDetails = hydrated.skillDetails.map(skill => {
-        if (skill.type === "PassiveSkill") {
-            return { ...createPassiveSkill(), ...skill }
-        }
-        return skill
-    })
-    return hydrated
-}
-
-function hydrateCustomEffects(info: IEgoInfo): IEgoInfo {
-    const hydrated = { ...info }
-    hydrated.skillDetails = hydrated.skillDetails.map(skill => {
-        if (skill.type === "CustomEffect") {
-            return { ...createCustomEffect(), ...skill }
-        }
-        return skill
-    })
-    return hydrated
-}
-
-function hydrateDefenseSkills(info: IEgoInfo): IEgoInfo {
-    const hydrated = { ...info }
-    hydrated.skillDetails = hydrated.skillDetails.map(skill => {
-        if (skill.type === "DefenseSkill") {
-            return { ...createDefenseSkill(), ...skill }
-        }
-        return skill
-    })
-    return hydrated
-}
-
-function hydrateSkillFrames(info: IEgoInfo): IEgoInfo {
-    const hydrated = { ...info }
-    hydrated.skillDetails = hydrated.skillDetails.map(skill => {
-        if ((skill.type === "OffenseSkill" || skill.type === "DefenseSkill") && !('skillFrame' in skill && skill.skillFrame)) {
-            return { ...skill, skillFrame: "1" }
-        }
-        return skill
-    })
-    return hydrated
+function hydrateSkills(info: IEgoInfo): IEgoInfo {
+    return { ...info, skillDetails: info.skillDetails.map(migrateSkill) }
 }
 
 function fixBackwardCompatPaths(info: IEgoInfo): IEgoInfo {
@@ -73,7 +31,7 @@ const EgoInfoSlice = createSlice({
     initialState,
     reducers: {
         setEgoInfo(state, action: PayloadAction<IEgoInfo>) {
-            state.value = fixBackwardCompatPaths(hydrateSkillFrames(hydrateDefenseSkills(hydrateCustomEffects(hydratePassiveSkills(action.payload)))))
+            state.value = fixBackwardCompatPaths(hydrateSkills(action.payload))
         },
         updateEgoInfoField(state, action: PayloadAction<{ field: string, value: any }>) {
             (state.value as any)[action.payload.field] = action.payload.value

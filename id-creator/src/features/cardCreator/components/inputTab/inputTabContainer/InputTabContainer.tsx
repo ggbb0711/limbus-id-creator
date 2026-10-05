@@ -1,10 +1,6 @@
 import React, { ReactElement, useState, useRef, useCallback, useEffect } from "react";
 import "./InputTabContainer.css"
-import InputCustomEffectPage from "../inputCustomEffectPage/InputCustomEffectPage";
-import InputDefenseSkillPage from "../inputDefenseSkillPage/InputDefenseSkillPage";
-import InputMentalEffect from "../inputMentalEffect/InputMentalEffect";
-import InputOffenseSkillPage from "../inputOffenseSkillPage/InputOffenseSkillPage";
-import InputPassivePage from "../inputPassivePage/InputPassivePage";
+import { getSkillView } from "features/cardCreator/skills/SkillRegistry";
 import InputIdInfoStatPage from "../inputStatPage/inputIdInfoStatPage/InputIdInfoStatPage";
 import InputEgoInfoStatPage from "../inputStatPage/inputEgoInfoStatPage/InputEgoInfoStatPage";
 import InputTabSide from "../inputTabSide/InputTabSide";
@@ -108,19 +104,8 @@ export default function InputTabContainer({
 
     function renderSkillPage(skill: SkillDetail | undefined, index: number){
         if(!skill) return;
-        const shared = { index, collaspPage: () => changeActiveTab(-2) }
-        switch(skill.type){
-            case "OffenseSkill":
-                return <InputOffenseSkillPage {...shared} />
-            case "DefenseSkill":
-                return <InputDefenseSkillPage {...shared} />
-            case "PassiveSkill":
-                return <InputPassivePage {...shared} />
-            case "CustomEffect":
-                return <InputCustomEffectPage {...shared} />
-            case "MentalEffect":
-                return <InputMentalEffect {...shared} />
-        }
+        const { InputPage } = getSkillView(skill.type)
+        return <InputPage key={skill.inputId} index={index} collapsePage={() => changeActiveTab(-2)} />
     }
 
     const containerStyle = isPanelOpen && !isMobile ? { width: panelWidth + "px" } : undefined
@@ -130,7 +115,7 @@ export default function InputTabContainer({
         activeTab={activeTab} addTab={addTab} resetBtnHandler={resetBtnHandler}></InputTabSide>
         {isPanelOpen && <>
             {activeTab === -1
-                ? (mode === "id" ? <InputIdInfoStatPage collaspPage={()=>changeActiveTab(-2)}/> : <InputEgoInfoStatPage collaspPage={()=>changeActiveTab(-2)}/>)
+                ? (mode === "id" ? <InputIdInfoStatPage collapsePage={()=>changeActiveTab(-2)}/> : <InputEgoInfoStatPage collapsePage={()=>changeActiveTab(-2)}/>)
                 : renderSkillPage(skillDetails[activeTab], activeTab)}
             {!isMobile && <div className="input-tab-resize-handle" onMouseDown={handleMouseDown}></div>}
         </>}

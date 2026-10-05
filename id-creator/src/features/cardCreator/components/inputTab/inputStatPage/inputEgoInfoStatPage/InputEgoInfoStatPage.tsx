@@ -17,7 +17,7 @@ import { IEgoInfo } from "features/cardCreator/types/IEgoInfo";
 import ColorPicker from "components/colorPicker/ColorPicker";
 import { STAT_PAGE_COLOR_GROUPS } from "components/colorPicker/ColorPresets";
 
-export default function InputStatPage({collaspPage}:{collaspPage:()=>void}):ReactElement{
+export default function InputStatPage({collapsePage}:{collapsePage:()=>void}):ReactElement{
     const EgoInfoValue = useAppSelector(state => state.egoInfo.value)
     const dispatch = useAppDispatch()
 
@@ -58,7 +58,7 @@ export default function InputStatPage({collaspPage}:{collaspPage:()=>void}):Reac
 
     return <div className="input-page input-stat-page">
         <div className="input-page-icon-container">
-            <div className="collasp-icon" onClick={collaspPage}>
+            <div className="collasp-icon" onClick={collapsePage}>
                 <ArrowDownIcon></ArrowDownIcon>
             </div>
         </div>

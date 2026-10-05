@@ -16,9 +16,9 @@ import { CUSTOM_EFFECT_COLOR_GROUPS } from "components/colorPicker/ColorPresets"
 
 export default function InputCustomEffectPage({
     index,
-    collaspPage}:{
+    collapsePage}:{
         index:number,
-        collaspPage:()=>void}):ReactElement{
+        collapsePage:()=>void}):ReactElement{
 
     const { register, setValue, watch, deleteSkill, changeSkillType, keyWordList } = useSkillForm<ICustomEffect>(index)
     const inputId = watch("inputId")
@@ -31,7 +31,7 @@ export default function InputCustomEffectPage({
 
     return <div className="input-page">
         <div className="input-page-icon-container">
-            <div className="collasp-icon" onClick={collaspPage}>
+            <div className="collasp-icon" onClick={collapsePage}>
                 <ArrowDownIcon></ArrowDownIcon>
             </div>
         </div>

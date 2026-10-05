@@ -13,9 +13,9 @@ import { useSkillForm } from "features/cardCreator/hooks/useSkillForm";
 
 export default function InputPassivePage({
     index,
-    collaspPage}:{
+    collapsePage}:{
         index:number,
-        collaspPage:()=>void}):ReactElement{
+        collapsePage:()=>void}):ReactElement{
 
     const { register, setValue, watch, deleteSkill, changeSkillType, registerNumber, keyWordList } = useSkillForm<IPassiveSkill>(index)
     const inputId = watch("inputId")
@@ -26,7 +26,7 @@ export default function InputPassivePage({
 
     return <div className="input-page input-passive-page">
         <div className="input-page-icon-container">
-            <div className="collasp-icon" onClick={collaspPage}>
+            <div className="collasp-icon" onClick={collapsePage}>
                 <ArrowDownIcon></ArrowDownIcon>
             </div>
         </div>

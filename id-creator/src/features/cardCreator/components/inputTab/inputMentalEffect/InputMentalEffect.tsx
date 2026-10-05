@@ -11,9 +11,9 @@ import { useSkillForm } from "features/cardCreator/hooks/useSkillForm";
 
 export default function InputMentalEffect({
     index,
-    collaspPage}:{
+    collapsePage}:{
         index:number,
-        collaspPage:()=>void}):ReactElement{
+        collapsePage:()=>void}):ReactElement{
 
     const { setValue, watch, deleteSkill, changeSkillType, keyWordList } = useSkillForm<IMentalEffect>(index)
     const inputId = watch("inputId")
@@ -24,7 +24,7 @@ export default function InputMentalEffect({
 
     return <div className="input-page">
         <div className="input-page-icon-container">
-            <div className="collasp-icon" onClick={collaspPage}>
+            <div className="collasp-icon" onClick={collapsePage}>
                 <ArrowDownIcon></ArrowDownIcon>
             </div>
         </div>

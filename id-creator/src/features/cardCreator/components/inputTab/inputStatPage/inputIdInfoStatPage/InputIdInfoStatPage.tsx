@@ -20,7 +20,7 @@ import { IIdInfo } from "features/cardCreator/types/IIdInfo";
 import ColorPicker from "components/colorPicker/ColorPicker";
 import { STAT_PAGE_COLOR_GROUPS } from "components/colorPicker/ColorPresets";
 
-export default function InputIdInfoStatPage({collaspPage}:{collaspPage:()=>void}):ReactElement{
+export default function InputIdInfoStatPage({collapsePage}:{collapsePage:()=>void}):ReactElement{
     const idInfoValue = useAppSelector(state => state.idInfo.value)
     const dispatch = useAppDispatch()
 
@@ -82,7 +82,7 @@ export default function InputIdInfoStatPage({collaspPage}:{collaspPage:()=>void}
 
     return <div className="input-page input-stat-page">
         <div className="input-page-icon-container">
-            <div className="collasp-icon" onClick={collaspPage}>
+            <div className="collasp-icon" onClick={collapsePage}>
                 <ArrowDownIcon></ArrowDownIcon>
             </div>
         </div>

@@ -18,9 +18,9 @@ import { useSkillForm } from "features/cardCreator/hooks/useSkillForm";
 
 export default function InputDefenseSkillPage({
     index,
-    collaspPage}:{
+    collapsePage}:{
         index:number,
-        collaspPage:()=>void}):ReactElement{
+        collapsePage:()=>void}):ReactElement{
 
     const { register, setValue, watch, deleteSkill, changeSkillType, registerNumber, keyWordList, errors } = useSkillForm<IDefenseSkill>(index)
     const inputId = watch("inputId")
@@ -36,7 +36,7 @@ export default function InputDefenseSkillPage({
 
     return <div className="input-page input-defense-skill-page" style={{background:`var(--${skillAffinity}-input-page)`}}>
         <div className="input-page-icon-container">
-            <div className="collasp-icon" onClick={collaspPage}>
+            <div className="collasp-icon" onClick={collapsePage}>
                 <ArrowDownIcon></ArrowDownIcon>
             </div>
         </div>

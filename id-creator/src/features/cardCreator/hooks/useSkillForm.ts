@@ -7,21 +7,7 @@ import { deleteIdInfoSkill, updateIdInfoSkill, changeIdInfoSkillType } from 'fea
 import { deleteEgoInfoSkill, updateEgoInfoSkill, changeEgoInfoSkillType } from 'features/cardCreator/stores/EgoInfoSlice'
 import { SkillDetail } from 'features/cardCreator/types/SkillDetail'
 import { SkillType } from 'features/cardCreator/types/SkillTypes'
-import { createOffenseSkill } from 'features/cardCreator/types/skills/offenseSkill/IOffenseSkill'
-import { createDefenseSkill } from 'features/cardCreator/types/skills/defenseSkill/IDefenseSkill'
-import { createPassiveSkill } from 'features/cardCreator/types/skills/passiveSkill/IPassiveSkill'
-import { createCustomEffect } from 'features/cardCreator/types/skills/customEffect/ICustomEffect'
-import { createMentalEffect } from 'features/cardCreator/types/skills/mentalEffect/IMentalEffect'
-
-function createSkillByType(newType: SkillType): SkillDetail {
-    switch (newType) {
-        case "OffenseSkill": return createOffenseSkill()
-        case "DefenseSkill": return createDefenseSkill()
-        case "PassiveSkill": return createPassiveSkill()
-        case "CustomEffect": return createCustomEffect()
-        case "MentalEffect": return createMentalEffect()
-    }
-}
+import { getSkillData } from 'features/cardCreator/skills/skillData'
 
 interface UseSkillFormReturn<T extends SkillDetail> extends UseFormReturn<T> {
     deleteSkill: () => void
@@ -59,7 +45,7 @@ export function useSkillForm<T extends SkillDetail>(index: number): UseSkillForm
     )
 
     const changeSkillType = (newType: SkillType) => {
-        const newSkill = createSkillByType(newType)
+        const newSkill = getSkillData(newType).create()
         dispatch(
             mode === "id"
                 ? changeIdInfoSkillType({ index, skill: newSkill })

@@ -1,56 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IIdInfo, createIdInfo } from 'features/cardCreator/types/IIdInfo'
-import { createPassiveSkill } from 'features/cardCreator/types/skills/passiveSkill/IPassiveSkill'
 import { SkillDetail } from 'features/cardCreator/types/SkillDetail'
-import { createCustomEffect } from 'features/cardCreator/types/skills/customEffect/ICustomEffect'
-import { createDefenseSkill } from 'features/cardCreator/types/skills/defenseSkill/IDefenseSkill'
+import { migrateSkill } from 'features/cardCreator/skills/skillData'
 
 interface IdInfoState {
     value: IIdInfo
 }
 
-function hydratePassiveSkills(info: IIdInfo): IIdInfo {
-    const hydrated = { ...info }
-    hydrated.skillDetails = hydrated.skillDetails.map(skill => {
-        if (skill.type === "PassiveSkill") {
-            return { ...createPassiveSkill(), ...skill }
-        }
-        return skill
-    })
-    return hydrated
-}
-
-function hydrateCustomEffects(info: IIdInfo): IIdInfo {
-    const hydrated = { ...info }
-    hydrated.skillDetails = hydrated.skillDetails.map(skill => {
-        if (skill.type === "CustomEffect") {
-            return { ...createCustomEffect(), ...skill }
-        }
-        return skill
-    })
-    return hydrated
-}
-
-function hydrateDefenseSkills(info: IIdInfo): IIdInfo {
-    const hydrated = { ...info }
-    hydrated.skillDetails = hydrated.skillDetails.map(skill => {
-        if (skill.type === "DefenseSkill") {
-            return { ...createDefenseSkill(), ...skill }
-        }
-        return skill
-    })
-    return hydrated
-}
-
-function hydrateSkillFrames(info: IIdInfo): IIdInfo {
-    const hydrated = { ...info }
-    hydrated.skillDetails = hydrated.skillDetails.map(skill => {
-        if ((skill.type === "OffenseSkill" || skill.type === "DefenseSkill") && !('skillFrame' in skill && skill.skillFrame)) {
-            return { ...skill, skillFrame: "1" }
-        }
-        return skill
-    })
-    return hydrated
+function hydrateSkills(info: IIdInfo): IIdInfo {
+    return { ...info, skillDetails: info.skillDetails.map(migrateSkill) }
 }
 
 function hydrateTraits(info: IIdInfo): IIdInfo {
@@ -84,7 +42,7 @@ const IdInfoSlice = createSlice({
     initialState,
     reducers: {
         setIdInfo(state, action: PayloadAction<IIdInfo>) {
-            state.value = fixBackwardCompatPaths(hydrateTraits(hydrateSkillFrames(hydrateDefenseSkills(hydrateCustomEffects(hydratePassiveSkills(action.payload))))))
+            state.value = fixBackwardCompatPaths(hydrateTraits(hydrateSkills(action.payload)))
         },
         updateIdInfoField(state, action: PayloadAction<{ field: string, value: any }>) {
             (state.value as any)[action.payload.field] = action.payload.value

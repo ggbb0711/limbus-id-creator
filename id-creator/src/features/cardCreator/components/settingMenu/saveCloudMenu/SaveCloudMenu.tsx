@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ReactElement } from "react";
 import { ISaveFile } from "types/ISaveFile";
 import { createSaveFile } from "utils/createSaveFile";
-import { isActiveSkill } from "features/cardCreator/types/SkillDetail";
+import { clearSkillImage, readSkillImage } from "features/cardCreator/skills/skillData";
 import { SaveMode } from "features/cardCreator/constants";
 import PopUpMenu from "components/popUpMenu/PopUpMenu";
 import imageCompression from 'browser-image-compression';
@@ -98,13 +98,9 @@ export default function SaveCloudMenu({saveMode}:{saveMode:SaveMode}):ReactEleme
         })
 
         const skillImageTasks = saveInfo.skillDetails.map(async (skill, i) => {
-            if(isActiveSkill(skill) && checkBase64Image(skill.skillImage)){
-                return { file: await compressToWebP(base64ToFile(skill.skillImage, "new file")), index: i, clear: () => { skill.skillImage = "" } }
-            }
-            if(skill.type==="CustomEffect" && checkBase64Image(skill.customImg)){
-                return { file: await compressToWebP(base64ToFile(skill.customImg, "new file")), index: i, clear: () => { skill.customImg = "" } }
-            }
-            return null
+            const image = readSkillImage(skill)
+            if(!image || !checkBase64Image(image)) return null
+            return { file: await compressToWebP(base64ToFile(image, "new file")), index: i, clear: () => { saveInfo.skillDetails[i] = clearSkillImage(skill) } }
         })
 
         const [sinnerIconFile, splashArtFile, imgUrl, ...skillResults] = await Promise.all([
