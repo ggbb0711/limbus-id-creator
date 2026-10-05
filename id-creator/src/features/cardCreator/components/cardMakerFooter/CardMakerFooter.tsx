@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import DownloadImg from "utils/DownloadImg";
+import DownloadImg from "features/cardCreator/utils/DownloadImg";
 import "./CardMakerFooter.css"
 import DownloadIcon from "assets/icons/DownloadIcon";
 import SettingIcon from "assets/icons/SettingIcon";
 import useAlert from "hooks/useAlert";
 import { useCardDomRef } from "features/cardCreator/contexts/CardDomRefContext";
 import { useAppDispatch } from "stores/AppStore";
-import { openSettingMenu } from "stores/slices/UiSlice";
+import { openSettingMenu } from "features/cardCreator/stores/SettingMenuSlice";
 
 export default function CardMakerFooter(){
     const dispatch = useAppDispatch()
@@ -19,7 +19,7 @@ export default function CardMakerFooter(){
         if(isLoading || !domRef.current) return
         setIsLoading(true)
         try {
-            const { default: TurnRefToImg } = await import("utils/TurnRefToImg")
+            const { default: TurnRefToImg } = await import("features/cardCreator/utils/TurnRefToImg")
             const imgUrl = await TurnRefToImg(domRef)
             DownloadImg(imgUrl,"Custom")
             addAlert("Success","Download started")

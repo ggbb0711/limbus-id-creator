@@ -1,20 +1,21 @@
 'use client'
+import { appConfig } from "config/env.client";
 import { useEffect, useState } from "react";
 import { ReactElement } from "react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ITag, TagList } from "utils/TagList";
 import "./ForumPage.css"
-import DropDown from "components/dropDown/DropDown";
+import DropDown from "components/ui/dropDown/DropDown";
 import { useLoginMenu } from "hooks/useLoginMenu";
 import PaginatedPost from "components/paginatedPost/PaginatedPost";
 import TagInput from "components/tagInput/TagInput";
 import TagsContainer from "components/tagsContainer/TagsContainer";
 import useAlert from "hooks/useAlert";
 import { useAuth } from "hooks/useAuth";
-import { useGetPostsQuery } from "api/PostAPI";
+import { useGetPostsQuery } from "api/PostApi";
 import getApiErrorMessage from "utils/getApiErrorMessage";
-import { PostSortOption, isPostSortOption } from "types/enums/PostSortOptions";
+import { PostSortOption, isPostSortOption } from "types/post/PostSortOptions";
 
 const tagKeyOf = (tag: ITag) => Object.keys(TagList).find((key) => TagList[key].tagName === tag.tagName)
 
@@ -67,7 +68,7 @@ export default function ForumPage():ReactElement{
 
     useEffect(() => {
         if (searchPostName === urlSearch) return
-        const timeout = setTimeout(() => updateQuery({ q: searchPostName }), 300)
+        const timeout = setTimeout(() => updateQuery({ q: searchPostName }), appConfig.timing.searchDebounceMs)
         return () => clearTimeout(timeout)
     }, [searchPostName])
 
@@ -76,7 +77,7 @@ export default function ForumPage():ReactElement{
         tag: tags.map(t => t.tagName),
         sortedBy,
         page: currPage,
-        limit: 10,
+        limit: appConfig.paging.postsPerPage,
     })
 
     const postList = data?.list.map((p) => ({
@@ -102,7 +103,7 @@ export default function ForumPage():ReactElement{
                 <TagInput completeFn={(tag)=>{
                     const key = tagKeyOf(tag)
                     if (key) updateQuery({ tag: [...new Set([...tagKeys, key])] })
-                }} maxTag={22} selectedCount={tagKeys.length} customClass={"input"} id={"tag"} ></TagInput>
+                }} maxTag={appConfig.limits.post.maxForumFilterTags} selectedCount={tagKeys.length} customClass={"input"} id={"tag"} ></TagInput>
             </div>
             <TagsContainer tags={tags} deleteTag={(i)=>{
                 const newTagKeys = [...tagKeys]
@@ -148,7 +149,7 @@ export default function ForumPage():ReactElement{
             </div>
             <PaginatedPost currPage={currPage}
                 maxCount={maxCount}
-                pageLimit={10}
+                pageLimit={appConfig.paging.postsPerPage}
                 postList={postList}
                 fetchPost={(page)=>updateQuery({ page })}
                 isLoading={isFetching}/>

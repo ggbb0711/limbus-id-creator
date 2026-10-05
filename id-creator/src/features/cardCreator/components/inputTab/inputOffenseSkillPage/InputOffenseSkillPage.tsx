@@ -1,11 +1,13 @@
+import { appConfig } from "config/env.client";
+import { filesize } from "filesize";
 import React, { useState } from "react";
 import { ReactElement } from "react";
 import "../InputPage.css"
 import { IOffenseSkill } from "features/cardCreator/types/skills/offenseSkill/IOffenseSkill";
 import DeleteIcon from "assets/icons/DeleteIcon";
 import ArrowDownIcon from "assets/icons/ArrowDownIcon";
-import AccordionSection from "components/accordionSection/AccordionSection";
-import ConfirmDialog from "components/confirmDialog/ConfirmDialog";
+import AccordionSection from "components/ui/accordionSection/AccordionSection";
+import ConfirmDialog from "components/ui/confirmDialog/ConfirmDialog";
 import ChangeInputType from "../components/changeInputType/ChangeInputType";
 import DamageTypeInput from "../components/damageTypeInput/DamageTypeInput";
 import TipTapEditor from "../components/tipTapEditor/TipTapEditor";
@@ -122,7 +124,7 @@ export default function InputOffenseSkillPage({
                             const url = await compressAndReadImage(e.currentTarget.files[0])
                             setValue("skillImage",url)
                         }
-                    }} btnTxt={"Upload skill img (<= 100kb)"} maxSize={100000}/>
+                    }} btnTxt={`Upload skill img (<= ${filesize(appConfig.limits.upload.skillImage)})`} maxSize={appConfig.limits.upload.skillImage}/>
                 </div>
             </div>
             <div className="input-group-container">

@@ -4,7 +4,7 @@ import "./UploadImgBtn.css"
 import UploadFileIcon from "assets/icons/UploadFileIcon";
 import useAlert from "hooks/useAlert";
 
-export default function UploadImgBtn({onFileInputChange, name, id,btnTxt,btnClass,maxSize=100000}:{onFileInputChange:(e:React.ChangeEvent<HTMLInputElement>)=>void, name: string, id: string,btnTxt:string|ReactElement,btnClass?:string,maxSize?:number}):ReactElement{
+export default function UploadImgBtn({onFileInputChange, name, id,btnTxt,btnClass,maxSize}:{onFileInputChange:(e:React.ChangeEvent<HTMLInputElement>)=>void, name: string, id: string,btnTxt:string|ReactElement,btnClass?:string,maxSize:number}):ReactElement{
     const {addAlert} = useAlert()
     
     return(

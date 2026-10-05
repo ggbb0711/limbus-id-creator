@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Editor, EditorProvider } from "react-simple-wysiwyg"
-import { IComment } from "types/iPost/IComment"
+import { IComment } from "features/post/types/IComment"
 import "./Comment.css";
 import "../shared/Style.css";
 

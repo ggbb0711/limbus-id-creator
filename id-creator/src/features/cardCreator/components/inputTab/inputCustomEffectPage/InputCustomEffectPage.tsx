@@ -1,18 +1,20 @@
+import { appConfig } from "config/env.client";
+import { filesize } from "filesize";
 import { ICustomEffect } from "features/cardCreator/types/skills/customEffect/ICustomEffect";
 import React, { useState } from "react";
 import { ReactElement } from "react";
 import "../InputPage.css"
 import DeleteIcon from "assets/icons/DeleteIcon";
 import ArrowDownIcon from "assets/icons/ArrowDownIcon";
-import AccordionSection from "components/accordionSection/AccordionSection";
-import ConfirmDialog from "components/confirmDialog/ConfirmDialog";
+import AccordionSection from "components/ui/accordionSection/AccordionSection";
+import ConfirmDialog from "components/ui/confirmDialog/ConfirmDialog";
 import ChangeInputType from "../components/changeInputType/ChangeInputType";
 import TipTapEditor from "../components/tipTapEditor/TipTapEditor";
 import UploadImgBtn from "../components/uploadImgBtn/UploadImgBtn";
 import { compressAndReadImage } from "features/cardCreator/utils/CompressAndReadImage";
 import { useSkillForm } from "features/cardCreator/hooks/useSkillForm";
-import ColorPicker from "components/colorPicker/ColorPicker";
-import { CUSTOM_EFFECT_COLOR_GROUPS } from "components/colorPicker/ColorPresets";
+import ColorPicker from "features/cardCreator/components/colorPicker/ColorPicker";
+import { CUSTOM_EFFECT_COLOR_GROUPS } from "features/cardCreator/components/colorPicker/ColorPresets";
 
 export default function InputCustomEffectPage({
     index,
@@ -59,7 +61,7 @@ export default function InputCustomEffectPage({
                             const url = await compressAndReadImage(e.currentTarget.files[0])
                             setValue("customImg",url)
                         }
-                    }} btnTxt={"Upload custom img (<= 100kb)"} maxSize={100000}/>
+                    }} btnTxt={`Upload custom img (<= ${filesize(appConfig.limits.upload.skillImage)})`} maxSize={appConfig.limits.upload.skillImage}/>
                 </div>
             </div>
             <div className="input-group-container">

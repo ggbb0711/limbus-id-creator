@@ -1,7 +1,7 @@
 import React from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getUser } from "api/server/users";
+import { getUser } from "features/user/api/server/users";
 import UserPage from "features/user/userPage/UserPage";
 
 export async function generateMetadata({ params }: PageProps<"/user/[userId]">): Promise<Metadata> {

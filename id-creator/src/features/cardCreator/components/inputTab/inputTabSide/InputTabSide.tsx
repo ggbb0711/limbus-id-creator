@@ -1,3 +1,4 @@
+import { appConfig } from "config/env.client";
 import AddIcon from "assets/icons/AddIcon";
 import React, { useState } from "react";
 import "./InputTabSide.css"
@@ -22,7 +23,7 @@ export default function InputTabSide({sinnerIcon,
 
     return <ul className="input-tab-side-container">
         <li className="input-tab-side icon-side" onClick={()=>{
-            if(skillDetails.length<40) setIsAdding(!isAdding)
+            if(skillDetails.length<appConfig.limits.card.maxSkills) setIsAdding(!isAdding)
         }}>
             <AddIcon/>
         </li>

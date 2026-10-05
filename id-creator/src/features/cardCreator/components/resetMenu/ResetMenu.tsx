@@ -1,5 +1,5 @@
 import React from "react";
-import PopUpMenu from "components/popUpMenu/PopUpMenu";
+import PopUpMenu from "components/ui/popUpMenu/PopUpMenu";
 import "./ResetMenu.css"
 import CheckIcon from "assets/icons/CheckIcon";
 import CloseIcon from "assets/icons/CloseIcon";

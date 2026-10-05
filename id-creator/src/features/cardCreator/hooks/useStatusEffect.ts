@@ -4,6 +4,7 @@ import { ICustomEffect } from 'features/cardCreator/types/skills/customEffect/IC
 import { ICustomKeyword } from 'features/cardCreator/types/ICustomKeyword'
 import { useCardMode } from 'features/cardCreator/contexts/CardModeContext'
 import { useAppSelector } from 'stores/AppStore'
+import { CUSTOM_KEYWORDS_STORAGE_KEY, parseCustomKeywords } from 'features/cardCreator/utils/customKeywordStorage'
 
 export function useStatusEffect(): { [key: string]: string } {
     const mode = useCardMode()
@@ -29,19 +30,15 @@ export function useStatusEffect(): { [key: string]: string } {
         return statusObj
     }, [JSON.stringify(skillDetails)])
 
+    const storedCustomKeywords = localStorage.getItem(CUSTOM_KEYWORDS_STORAGE_KEY)
     const localCustomKeywords = useMemo(() => {
-        const customKeywordString = localStorage.getItem("customKeywords")
-        if (customKeywordString) {
-            const customKeywords = JSON.parse(customKeywordString)
-            const statusObj: { [key: string]: string } = {}
-            customKeywords.forEach((keyword: ICustomKeyword) => {
-                statusObj[keyword.keyword.replace(/\s/g, "_").toLowerCase()] =
-                    `<span class='center-element' contenteditable='false' style='color:${keyword.color}'>${keyword.keyword}</span>`
-            })
-            return statusObj
-        }
-        return {}
-    }, [localStorage.getItem("customKeywords")])
+        const statusObj: { [key: string]: string } = {}
+        parseCustomKeywords(storedCustomKeywords).forEach((keyword: ICustomKeyword) => {
+            statusObj[keyword.keyword.replace(/\s/g, "_").toLowerCase()] =
+                `<span class='center-element' contenteditable='false' style='color:${keyword.color}'>${keyword.keyword}</span>`
+        })
+        return statusObj
+    }, [storedCustomKeywords])
 
     const statusEffect = useMemo(() => {
         return { ...baseStatusEffect, ...skillCustomEffects, ...localCustomKeywords }

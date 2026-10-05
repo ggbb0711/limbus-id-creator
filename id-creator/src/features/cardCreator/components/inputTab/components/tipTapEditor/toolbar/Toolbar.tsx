@@ -1,7 +1,7 @@
 import React from "react"
 import { Editor, useEditorState } from "@tiptap/react"
 import "./Toolbar.css"
-import ColorPicker from "components/colorPicker/ColorPicker";
+import ColorPicker from "features/cardCreator/components/colorPicker/ColorPicker";
 
 interface ToolbarProps {
     editor: Editor | null

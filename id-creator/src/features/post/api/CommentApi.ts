@@ -1,7 +1,8 @@
-import { BaseApi } from "./BaseApi";
-import { PostApi } from "./PostAPI";
+import { appConfig } from "config/env.client";
+import { BaseApi } from "api/BaseApi";
+import { PostApi } from "api/PostApi";
 import IResponse from "types/IResponse";
-import { IComment } from "types/iPost/IComment";
+import { IComment } from "features/post/types/IComment";
 
 interface IGetCommentsParams {
     postId: string
@@ -42,7 +43,7 @@ const CommentApi = BaseApi.injectEndpoints({
             transformResponse: (response: IResponse<IComment>) => response.data,
             async onQueryStarted({ postId }, { dispatch, queryFulfilled }) {
                 const { data } = await queryFulfilled
-                dispatch(CommentApi.util.updateQueryData('getComments', { postId, page: 0, limit: 10 }, draft => {
+                dispatch(CommentApi.util.updateQueryData('getComments', { postId, page: 0, limit: appConfig.paging.commentsPerPage }, draft => {
                     draft.push(data)
                 }))
                 dispatch(PostApi.util.updateQueryData('getPost', postId, draft => {

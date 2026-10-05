@@ -1,7 +1,7 @@
 import React from "react";
 import { ReactElement } from "react";
 import "./SkillFrameInput.css"
-import { assetPaths } from "utils/assetPaths";
+import { assetPaths } from "features/cardCreator/utils/assetPaths";
 import { SinAffinity, SkillFrame } from "features/cardCreator/constants";
 
 export default function SkillFrameInput({onChangeSkillFrame,activeFrame,skillAffinity}:{onChangeSkillFrame:(frame:SkillFrame)=>void,activeFrame:SkillFrame,skillAffinity:SinAffinity}):ReactElement{

@@ -1,4 +1,5 @@
-import getImageDimensions from 'utils/getImageDimensions'
+import { appConfig } from "config/env.client";
+import getImageDimensions from 'features/cardCreator/utils/getImageDimensions'
 
 export async function compressAndReadImage(file: File): Promise<string> {
     const [{ default: imageCompression }, { width }] = await Promise.all([
@@ -6,9 +7,9 @@ export async function compressAndReadImage(file: File): Promise<string> {
         getImageDimensions(file),
     ])
     const compressedFile = await imageCompression(file, {
-        maxSizeMB: 1,
+        maxSizeMB: appConfig.image.compressMaxSizeMB,
         useWebWorker: true,
-        maxWidthOrHeight: Math.max(1650, Math.floor(width * (2 / 3)))
+        maxWidthOrHeight: Math.max(appConfig.image.compressMinDimension, Math.floor(width * (2 / 3)))
     })
 
     return new Promise<string>((resolve, reject) => {

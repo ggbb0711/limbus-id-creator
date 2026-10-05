@@ -1,4 +1,5 @@
 'use client'
+import { appConfig } from "config/env.client";
 import React, { useEffect, useState } from "react";
 import { ReactElement } from "react";
 import { useRouter } from "next/navigation";
@@ -8,11 +9,11 @@ import UserProfileLoading from "components/userProfileLoading/UserProfileLoading
 import "./User.css"
 import useAlert from "hooks/useAlert";
 import { useLogOutMutation } from "api/AuthApi";
-import { useGetPostsQuery } from "api/PostAPI";
+import { useGetPostsQuery } from "api/PostApi";
 import getApiErrorMessage from "utils/getApiErrorMessage";
-import { useGetUserQuery } from "api/UserApi";
+import { useGetUserQuery } from "features/user/api/UserApi";
 import { useAuth } from "hooks/useAuth";
-import { IUserProfile } from "types/api/oAuth/IUserProfile";
+import { IUserProfile } from "features/user/types/IUserProfile";
 import formatDisplayDate from "utils/formatDisplayDate";
 
 export default function UserPage({initialUser}:{initialUser:IUserProfile}):ReactElement{
@@ -28,7 +29,7 @@ export default function UserPage({initialUser}:{initialUser:IUserProfile}):React
 
     const { data: postsData, isLoading: isLoadingPosts, error: postsError } = useGetPostsQuery({
         page: currPage,
-        limit: 10,
+        limit: appConfig.paging.postsPerPage,
         userId,
     })
 
@@ -69,7 +70,7 @@ export default function UserPage({initialUser}:{initialUser:IUserProfile}):React
                 <div className="page-content">
                     <PaginatedPost currPage={currPage}
                         maxCount={maxCount}
-                        pageLimit={10}
+                        pageLimit={appConfig.paging.postsPerPage}
                         postList={postList}
                         fetchPost={setCurrPage}
                         isLoading={isLoadingPosts}/>

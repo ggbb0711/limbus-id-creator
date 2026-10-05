@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
+import { clientEnv } from './env.client'
 
-export const siteUrl = 'https://limbus-company-id-creator.com'
+export const siteUrl = clientEnv.siteUrl
 
 const title = 'Limbus Company ID Creator - Custom Card Maker'
 const description =

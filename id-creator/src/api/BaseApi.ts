@@ -4,7 +4,7 @@ import { clientEnv } from 'config/env.client';
 import { RootState } from 'stores/AppStore';
 import { setCredentials, clearCredentials } from 'stores/slices/AuthSlice';
 import IResponse from 'types/IResponse';
-import { AuthResponseDTO } from 'types/api/auth/IAuthResponse';
+import { AuthResponseDTO } from 'types/auth/IAuthResponse';
 
 const rawBaseQuery = fetchBaseQuery({
     baseUrl: clientEnv.serverUrl + "/API",

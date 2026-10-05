@@ -1,7 +1,7 @@
 import 'server-only'
 import { cache } from 'react'
 import { apiGet } from './serverFetch'
-import { IPost } from 'types/iPost/IPost'
+import { IPost } from 'types/post/IPost'
 
 interface IPostList {
     list: IPost[]
@@ -10,7 +10,7 @@ interface IPostList {
 
 // cache() dedupes within one request, so generateMetadata + page share a single fetch.
 // Note: the backend logs a view on GET /Post/{id}; the client still requests the post itself
-// (Features/Post/PostPage) so views keep being counted per user.
+// (features/post/postPage/PostPage) so views keep being counted per user.
 export const getPost = cache((postId: string) =>
     apiGet<IPost>(`/Post/${encodeURIComponent(postId)}`),
 )

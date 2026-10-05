@@ -11,7 +11,7 @@ import ResetMenu from 'features/cardCreator/components/resetMenu/ResetMenu';
 import { useCardDomRef } from 'features/cardCreator/contexts/CardDomRefContext';
 import { useAppDispatch, useAppSelector } from 'stores/AppStore';
 import { setIdInfo, resetIdInfo } from 'features/cardCreator/stores/IdInfoSlice';
-import { setSettingMenuSaveMode } from 'stores/slices/UiSlice';
+import { setSettingMenuSaveMode } from 'features/cardCreator/stores/SettingMenuSlice';
 import CardModeContext from 'features/cardCreator/contexts/CardModeContext';
 
 

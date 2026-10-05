@@ -1,3 +1,4 @@
+import { appConfig } from "config/env.client";
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IIdInfo, createIdInfo } from 'features/cardCreator/types/IIdInfo'
 import { SkillDetail } from 'features/cardCreator/types/SkillDetail'
@@ -54,7 +55,7 @@ const IdInfoSlice = createSlice({
             state.value.skillDetails = action.payload
         },
         addIdInfoSkill(state, action: PayloadAction<SkillDetail>) {
-            if (state.value.skillDetails.length < 40)
+            if (state.value.skillDetails.length < appConfig.limits.card.maxSkills)
                 state.value.skillDetails.push(action.payload)
         },
         deleteIdInfoSkill(state, action: PayloadAction<string>) {

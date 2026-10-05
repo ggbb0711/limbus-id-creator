@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { UserSessionProfileDTO } from 'types/api/auth/IAuthResponse'
+import { UserSessionProfileDTO } from 'types/auth/IAuthResponse'
 
 interface AuthState {
     accessToken: string | null,

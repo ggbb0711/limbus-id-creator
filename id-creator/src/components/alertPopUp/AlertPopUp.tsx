@@ -1,7 +1,8 @@
+import { appConfig } from "config/env.client";
 import React, { useEffect, useState } from "react";
 import { ReactElement } from "react";
 import "./AlertPopUp.css"
-import { AlertStatus, IAlert } from "types/utils/IAlert";
+import { AlertStatus, IAlert } from "types/IAlert";
 import ClosIcon from "assets/icons/CloseIcon";
 import useAlert from "hooks/useAlert";
 
@@ -23,7 +24,7 @@ function Alert({status,msg}:{status:AlertStatus,msg:string}):ReactElement{
         setSlideIn(true)
         setTimeout(() => {
             setSlideIn(false)
-        }, 3000);
+        }, appConfig.timing.alertMs - 1000);
     },[])
 
     function getAlertColor(status:AlertStatus){

@@ -1,3 +1,5 @@
+import { appConfig } from "config/env.client";
+import { filesize } from "filesize";
 import React, { useEffect, useState } from "react";
 import { ReactElement } from "react";
 import "../../InputPage.css"
@@ -7,7 +9,7 @@ import TraitInput from "./TraitInput"
 import AddIcon from "assets/icons/AddIcon"
 import DeleteIcon from "assets/icons/DeleteIcon";
 import ArrowDownIcon from "assets/icons/ArrowDownIcon";
-import AccordionSection from "components/accordionSection/AccordionSection";
+import AccordionSection from "components/ui/accordionSection/AccordionSection";
 import SinnerIconInput from "../sinnerIconInput/SinnerIconInput";
 import SinnerRarityIconInput from "../sinnerRarityInput/SinnerRarityInput";
 import SinnerSplashArtRepositionInput from "../sinnerSplashArtRepositionInput/SinnerSplashArtRepositionInput";
@@ -17,8 +19,8 @@ import { setIdInfo } from "features/cardCreator/stores/IdInfoSlice";
 import { compressAndReadImage } from "features/cardCreator/utils/CompressAndReadImage";
 import { useForm } from "react-hook-form";
 import { IIdInfo } from "features/cardCreator/types/IIdInfo";
-import ColorPicker from "components/colorPicker/ColorPicker";
-import { STAT_PAGE_COLOR_GROUPS } from "components/colorPicker/ColorPresets";
+import ColorPicker from "features/cardCreator/components/colorPicker/ColorPicker";
+import { STAT_PAGE_COLOR_GROUPS } from "features/cardCreator/components/colorPicker/ColorPresets";
 
 export default function InputIdInfoStatPage({collapsePage}:{collapsePage:()=>void}):ReactElement{
     const idInfoValue = useAppSelector(state => state.idInfo.value)
@@ -51,7 +53,7 @@ export default function InputIdInfoStatPage({collapsePage}:{collapsePage:()=>voi
 
     function handleAddTrait() {
         const trimmed = traitInput.trim()
-        if (trimmed && !traits.includes(trimmed) && traits.length < 10) {
+        if (trimmed && !traits.includes(trimmed) && traits.length < appConfig.limits.card.maxTraits) {
             setValue("traits", [...traits, trimmed])
             setTraitInput("")
         }
@@ -95,7 +97,7 @@ export default function InputIdInfoStatPage({collapsePage}:{collapsePage:()=>voi
                         const url = await compressAndReadImage(e.currentTarget.files[0])
                         setValue("sinnerIcon",url)
                     }
-                }} btnTxt={"Upload sinner icon (<= 100kb)"} maxSize={100000}/>
+                }} btnTxt={`Upload sinner icon (<= ${filesize(appConfig.limits.upload.idSinnerIcon)})`} maxSize={appConfig.limits.upload.idSinnerIcon}/>
             </div>
             <div className="sinner-color-input-container">
                 <p>Pick a color for your sinner: </p>
@@ -122,7 +124,7 @@ export default function InputIdInfoStatPage({collapsePage}:{collapsePage:()=>voi
                     const url = await compressAndReadImage(e.currentTarget.files[0])
                     setValue("splashArt",url)
                 }
-            }} btnTxt={"Upload splash art (<= 4mb)"} maxSize={4000000}/>
+            }} btnTxt={`Upload splash art (<= ${filesize(appConfig.limits.upload.idSplashArt)})`} maxSize={appConfig.limits.upload.idSplashArt}/>
             <div>
                 <p>Pick the sinner rarity: </p>
                 <SinnerRarityIconInput/>
@@ -141,12 +143,12 @@ export default function InputIdInfoStatPage({collapsePage}:{collapsePage:()=>voi
             </div>
             <div className="input-group-container">
                 <div className="input-container">
-                    <label className="input-label" htmlFor="traits">Traits: ({traits.length}/10)</label>
+                    <label className="input-label" htmlFor="traits">Traits: ({traits.length}/{appConfig.limits.card.maxTraits})</label>
                     <div className="trait-input-row">
                         <TraitInput
                             value={traits}
                             onChange={(newTags) => setValue("traits", newTags)}
-                            maxTags={10}
+                            maxTags={appConfig.limits.card.maxTraits}
                             inputValue={traitInput}
                             onChangeInput={setTraitInput}
                             inputProps={{placeholder: "Add trait...", id: "traits"}}
@@ -157,7 +159,7 @@ export default function InputIdInfoStatPage({collapsePage}:{collapsePage:()=>voi
                             type="button"
                             className="main-button trait-add-btn"
                             onClick={handleAddTrait}
-                            disabled={traits.length >= 10}
+                            disabled={traits.length >= appConfig.limits.card.maxTraits}
                             aria-label="Add trait"
                         >
                             <AddIcon/>

@@ -1,3 +1,4 @@
+import { appConfig } from "config/env.client";
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IEgoInfo, createEgoInfo } from 'features/cardCreator/types/IEgoInfo'
 import { SkillDetail } from 'features/cardCreator/types/SkillDetail'
@@ -43,7 +44,7 @@ const EgoInfoSlice = createSlice({
             state.value.skillDetails = action.payload
         },
         addEgoInfoSkill(state, action: PayloadAction<SkillDetail>) {
-            if (state.value.skillDetails.length < 40)
+            if (state.value.skillDetails.length < appConfig.limits.card.maxSkills)
                 state.value.skillDetails.push(action.payload)
         },
         deleteEgoInfoSkill(state, action: PayloadAction<string>) {

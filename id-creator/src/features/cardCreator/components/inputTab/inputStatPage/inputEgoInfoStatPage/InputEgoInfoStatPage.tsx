@@ -1,10 +1,12 @@
+import { appConfig } from "config/env.client";
+import { filesize } from "filesize";
 import React, { useEffect } from "react";
 import { ReactElement } from "react";
 import "../../InputPage.css"
 import "../InputStatPage.css"
-import DropDown from "components/dropDown/DropDown";
+import DropDown from "components/ui/dropDown/DropDown";
 import ArrowDownIcon from "assets/icons/ArrowDownIcon";
-import AccordionSection from "components/accordionSection/AccordionSection";
+import AccordionSection from "components/ui/accordionSection/AccordionSection";
 import { EgoLevelDropDown } from "../egoLevelDropDown/EgoLevelDropDown";
 import SinnerEgoIconInput from "../sinnerEgoIconInput/SinnerEgoIconInput";
 import SinnerSplashArtRepositionInput from "../sinnerSplashArtRepositionInput/SinnerSplashArtRepositionInput";
@@ -14,8 +16,8 @@ import { setEgoInfo } from "features/cardCreator/stores/EgoInfoSlice";
 import { compressAndReadImage } from "features/cardCreator/utils/CompressAndReadImage";
 import { useForm } from "react-hook-form";
 import { IEgoInfo } from "features/cardCreator/types/IEgoInfo";
-import ColorPicker from "components/colorPicker/ColorPicker";
-import { STAT_PAGE_COLOR_GROUPS } from "components/colorPicker/ColorPresets";
+import ColorPicker from "features/cardCreator/components/colorPicker/ColorPicker";
+import { STAT_PAGE_COLOR_GROUPS } from "features/cardCreator/components/colorPicker/ColorPresets";
 
 export default function InputStatPage({collapsePage}:{collapsePage:()=>void}):ReactElement{
     const EgoInfoValue = useAppSelector(state => state.egoInfo.value)
@@ -71,7 +73,7 @@ export default function InputStatPage({collapsePage}:{collapsePage:()=>void}):Re
                         const url = await compressAndReadImage(e.currentTarget.files[0])
                         setValue("sinnerIcon",url)
                     }
-                }} btnTxt={"Upload sinner icon (<= 80kb)"} maxSize={80000}/>
+                }} btnTxt={`Upload sinner icon (<= ${filesize(appConfig.limits.upload.egoSinnerIcon)})`} maxSize={appConfig.limits.upload.egoSinnerIcon}/>
             </div>
             <div className="sinner-color-input-container">
                 <p>Pick a color for your sinner: </p>
@@ -92,7 +94,7 @@ export default function InputStatPage({collapsePage}:{collapsePage:()=>void}):Re
                     const url = await compressAndReadImage(e.currentTarget.files[0])
                     setValue("splashArt",url)
                 }
-            }} btnTxt={"Upload splash art (<= 1.2mb)"} maxSize={1200000}/>
+            }} btnTxt={`Upload splash art (<= ${filesize(appConfig.limits.upload.egoSplashArt)})`} maxSize={appConfig.limits.upload.egoSplashArt}/>
             <div className="input-group-container">
                 <div className="input-container">
                     <label className="input-label" htmlFor="title">Title: </label>

@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import "./PaginatedPost.css"
-import { IPostDisplayCard } from "types/iPostDisplayCard/IPostDisplayCard";
+import { IPostDisplayCard } from "types/post/IPostDisplayCard";
 import CommentIcon from "assets/icons/CommentIcon";
 import ViewIcon from "assets/icons/ViewIcon";
 import { TagList } from "utils/TagList";

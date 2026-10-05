@@ -4,7 +4,7 @@ import "./PassiveSinnerSkill.css"
 import { IPassiveSkill } from "features/cardCreator/types/skills/passiveSkill/IPassiveSkill";
 import SkillEffect from "../../components/skillEffect/SkillEffect";
 import SkillTitle from "../../components/skillTitle/SkillTitle";
-import { assetPaths } from "utils/assetPaths";
+import { assetPaths } from "features/cardCreator/utils/assetPaths";
 
 const PassiveSinnerSkill = forwardRef<HTMLDivElement, { passiveSkill: IPassiveSkill }>(({ passiveSkill }, ref) => {
     const {

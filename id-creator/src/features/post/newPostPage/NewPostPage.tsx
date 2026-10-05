@@ -1,4 +1,5 @@
 'use client'
+import { appConfig } from "config/env.client";
 import { useLoginMenu } from "hooks/useLoginMenu";
 import React, { useState } from "react";
 import { ReactElement } from "react";
@@ -6,13 +7,13 @@ import "./NewPostPage.css";
 import TagInput from "components/tagInput/TagInput";
 import TagsContainer from "components/tagsContainer/TagsContainer";
 import { ITag } from "utils/TagList";
-import SearchSaveInput from "features/cardCreator/components/searchSaveInput/SearchSaveInput";
+import { SearchSaveInput } from "features/cardCreator";
 import CloseIcon from "assets/icons/CloseIcon";
 import Editor from 'react-simple-wysiwyg';
 import { useRouter } from "next/navigation";
 import useAlert from "hooks/useAlert";
 import { useAuth } from "hooks/useAuth";
-import { useCreatePostMutation } from "api/PostAPI";
+import { useCreatePostMutation } from "api/PostApi";
 import getApiErrorMessage from "utils/getApiErrorMessage";
 
 interface IChoosenSave{
@@ -21,6 +22,7 @@ interface IChoosenSave{
 }
 
 export default function NewPostPage():ReactElement{
+    const { maxTitleLength, maxUserTags, maxImages } = appConfig.limits.post
     const [postName,setPostName] = useState("")
     const [tags,setTags] = useState<ITag[]>([])
     const [choosenSave,setChoosenSave] = useState<IChoosenSave[]>([])
@@ -35,14 +37,14 @@ export default function NewPostPage():ReactElement{
 
     async function handleCreatePost(){
         if(isPosting) return
-        if(!postName) return addAlert("Failure","Post name length must be between 1 and 199")
-        if(choosenSave.length<1) return addAlert("Failure","Post must have between 1 and 8 images")
+        if(!postName) return addAlert("Failure",`Post name length must be between 1 and ${maxTitleLength}`)
+        if(choosenSave.length<1) return addAlert("Failure",`Post must have between 1 and ${maxImages} images`)
         if(!loginUser) return
         try {
             const uploadTags = tags.map(t=>(t.tagName))
             if(choosenSave.some(s=>s.SaveType==="Identity")&&!tags.some(t=>t.tagName==="Identity")) uploadTags.push("Identity")
             if(choosenSave.some(s=>s.SaveType==="Ego")&&!tags.some(t=>t.tagName==="Ego")) uploadTags.push("Ego")
-            if(uploadTags.length>21) return addAlert("Failure","Post cannot have more than 21 tags (including the Identity/Ego tag)")
+            if(uploadTags.length>maxUserTags+1) return addAlert("Failure",`Post cannot have more than ${maxUserTags+1} tags (including the Identity/Ego tag)`)
             const result = await createPost({
                 title: postName,
                 description,
@@ -58,7 +60,7 @@ export default function NewPostPage():ReactElement{
     }
 
     function chooseSave(saveUrl:string){
-        if(choosenSave.length<8)setChoosenSave([...choosenSave,{
+        if(choosenSave.length<maxImages)setChoosenSave([...choosenSave,{
             PreviewUrl : saveUrl,
             SaveType: saveMode
         }])
@@ -74,12 +76,12 @@ export default function NewPostPage():ReactElement{
         {loginUser?<div className="page-content">
             <h1 className="header-txt">Create new post</h1>
             <div className="post-input-container">
-                <label htmlFor="post-name">Post Name (Required) {postName.length}/199: </label>
-                <input type="text" name="post-name" id="post-name" className="input" placeholder="Enter the post name" maxLength={199} value={postName} onChange={(e)=>setPostName(e.target.value)}/>
+                <label htmlFor="post-name">Post Name (Required) {postName.length}/{maxTitleLength}: </label>
+                <input type="text" name="post-name" id="post-name" className="input" placeholder="Enter the post name" maxLength={maxTitleLength} value={postName} onChange={(e)=>setPostName(e.target.value)}/>
             </div>
             <div className="post-input-container">
-                <label htmlFor="tag">Tags {tags.length}/20:</label>
-                <TagInput completeFn={(tag)=>{setTags([...new Set([...tags,tag])])}} maxTag={20} selectedCount={tags.length} customClass={"input"} id={"tag"} ></TagInput>
+                <label htmlFor="tag">Tags {tags.length}/{maxUserTags}:</label>
+                <TagInput completeFn={(tag)=>{setTags([...new Set([...tags,tag])])}} maxTag={maxUserTags} selectedCount={tags.length} customClass={"input"} id={"tag"} ></TagInput>
             </div>
             {tags.length>0&&<TagsContainer tags={tags} deleteTag={(i)=>{
                 const newTags = [...tags]
@@ -89,7 +91,7 @@ export default function NewPostPage():ReactElement{
 
             <div className="post-input-container">
                 <div>
-                    <label htmlFor="search-save">Enter ID/EGO you want to add to the post (Required) {choosenSave.length}/8:</label>
+                    <label htmlFor="search-save">Enter ID/EGO you want to add to the post (Required) {choosenSave.length}/{maxImages}:</label>
                     <div className="post-save-mode-container">
                         <div className="center-element">
                             <label htmlFor="Identity">Identity</label>

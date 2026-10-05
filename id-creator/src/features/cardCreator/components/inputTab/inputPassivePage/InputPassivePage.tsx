@@ -5,8 +5,8 @@ import "../InputPage.css"
 import "../inputStatPage/InputStatPage.css"
 import DeleteIcon from "assets/icons/DeleteIcon";
 import ArrowDownIcon from "assets/icons/ArrowDownIcon";
-import AccordionSection from "components/accordionSection/AccordionSection";
-import ConfirmDialog from "components/confirmDialog/ConfirmDialog";
+import AccordionSection from "components/ui/accordionSection/AccordionSection";
+import ConfirmDialog from "components/ui/confirmDialog/ConfirmDialog";
 import ChangeInputType from "../components/changeInputType/ChangeInputType";
 import TipTapEditor from "../components/tipTapEditor/TipTapEditor";
 import { useSkillForm } from "features/cardCreator/hooks/useSkillForm";

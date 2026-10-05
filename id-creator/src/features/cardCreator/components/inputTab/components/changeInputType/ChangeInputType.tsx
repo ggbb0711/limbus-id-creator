@@ -1,4 +1,4 @@
-import DropDown, { DropDownEl } from "components/dropDown/DropDown";
+import DropDown, { DropDownEl } from "components/ui/dropDown/DropDown";
 import React from "react";
 import { ReactElement } from "react";
 import { SKILL_TYPES, SkillType } from "features/cardCreator/types/SkillTypes";

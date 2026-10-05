@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import "./HomePage.css"
 import { PostDisplayCard } from "components/paginatedPost/PostDisplayCard";
-import { IPost } from "types/iPost/IPost";
+import { IPost } from "types/post/IPost";
 import siteLogo from "assets/images/SiteLogo.webp";
 
 export default function HomePage({ latestPosts }: { latestPosts: IPost[] }){

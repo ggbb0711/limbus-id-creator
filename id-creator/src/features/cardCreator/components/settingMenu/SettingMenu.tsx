@@ -6,11 +6,11 @@ import CustomKeywordMenu from "./customKeywordMenu/CustomKeywordMenu";
 import SaveCloudMenu from "./saveCloudMenu/SaveCloudMenu";
 import { SaveLocalMenu } from "./saveLocalMenu/SaveLocalMenu";
 import { useAppSelector, useAppDispatch } from "stores/AppStore";
-import { closeSettingMenu, setSettingDisplayMode } from "stores/slices/UiSlice";
+import { closeSettingMenu, setSettingDisplayMode } from "features/cardCreator/stores/SettingMenuSlice";
 
 export default function SettingMenu({saveMode}:{saveMode: SaveMode}){
-    const isActive = useAppSelector(state => state.ui.isSettingMenuActive)
-    const displayMode = useAppSelector(state => state.ui.settingMenuDisplayMode)
+    const isActive = useAppSelector(state => state.settingMenu.isSettingMenuActive)
+    const displayMode = useAppSelector(state => state.settingMenu.settingMenuDisplayMode)
     const dispatch = useAppDispatch()
 
     const close = () => dispatch(closeSettingMenu())

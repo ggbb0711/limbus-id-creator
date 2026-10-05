@@ -4,6 +4,7 @@ import { UiReducer } from './slices/UiSlice'
 import { AuthReducer } from './slices/AuthSlice'
 import { IdInfoReducer } from 'features/cardCreator/stores/IdInfoSlice'
 import { EgoInfoReducer } from 'features/cardCreator/stores/EgoInfoSlice'
+import { SettingMenuReducer } from 'features/cardCreator/stores/SettingMenuSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { BaseApi } from 'api/BaseApi'
 
@@ -14,6 +15,7 @@ export const makeStore = () => configureStore({
         auth: AuthReducer,
         idInfo: IdInfoReducer,
         egoInfo: EgoInfoReducer,
+        settingMenu: SettingMenuReducer,
         [BaseApi.reducerPath]: BaseApi.reducer,
     },
     middleware: (getDefault) => getDefault().concat(BaseApi.middleware),

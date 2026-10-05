@@ -3,7 +3,7 @@ import React from "react";
 import "./LoginMenu.css"
 import { CodeResponse, useGoogleLogin } from "@react-oauth/google";
 import GoogleIcon from "assets/icons/GoogleIcon";
-import PopUpMenu from "../popUpMenu/PopUpMenu";
+import PopUpMenu from "components/ui/popUpMenu/PopUpMenu";
 import useAlert from "hooks/useAlert";
 import { useLoginWithGoogleMutation } from "api/AuthApi";
 import { useAppSelector, useAppDispatch } from "stores/AppStore";

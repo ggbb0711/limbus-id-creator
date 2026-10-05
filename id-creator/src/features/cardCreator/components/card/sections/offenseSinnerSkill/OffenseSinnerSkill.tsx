@@ -5,7 +5,7 @@ import { IOffenseSkill } from "features/cardCreator/types/skills/offenseSkill/IO
 import SkillTitle from "../../components/skillTitle/SkillTitle";
 import SkillEffect from "../../components/skillEffect/SkillEffect";
 import { CoinEffect, getCoinEffect } from "features/cardCreator/utils/getCoinEffect";
-import { assetPaths } from "utils/assetPaths";
+import { assetPaths } from "features/cardCreator/utils/assetPaths";
 
 const OffenseSkillSplash = ({skillAffinity,skillImage,skillFrame}:{skillAffinity:string,skillImage?:string,skillFrame:string}):ReactElement =>{
     const frameSrc = assetPaths.skillFrame(skillAffinity, skillFrame)

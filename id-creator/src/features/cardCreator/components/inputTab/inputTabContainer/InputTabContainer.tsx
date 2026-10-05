@@ -1,3 +1,4 @@
+import { appConfig } from "config/env.client";
 import React, { ReactElement, useState, useRef, useCallback, useEffect } from "react";
 import "./InputTabContainer.css"
 import { getSkillView } from "features/cardCreator/skills/SkillRegistry";
@@ -98,7 +99,7 @@ export default function InputTabContainer({
     }, [changeActiveTab])
 
     function addTab(skill: SkillDetail){
-        if(skillDetails.length>=40) addAlert("Failure","There can only be 40 or less skill/effects")
+        if(skillDetails.length>=appConfig.limits.card.maxSkills) addAlert("Failure",`There can only be ${appConfig.limits.card.maxSkills} or fewer skills/effects`)
         else dispatch(mode === "id" ? addIdInfoSkill(skill) : addEgoInfoSkill(skill))
     }
 

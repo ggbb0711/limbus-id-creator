@@ -1,6 +1,7 @@
+import { appConfig } from "config/env.client";
 import { useAppDispatch, useAppSelector } from "stores/AppStore";
 import { addAlertReducer, removeAlertReducer } from "stores/slices/AlertSlice";
-import { AlertStatus } from "types/utils/IAlert";
+import { AlertStatus } from "types/IAlert";
 
 export default function useAlert() {
    const dispatch = useAppDispatch();
@@ -9,7 +10,7 @@ export default function useAlert() {
       const newId = dispatch(addAlertReducer(status, msg)).payload.alertId;
       setTimeout(() => {
          dispatch(removeAlertReducer(newId));
-      }, 4000);
+      }, appConfig.timing.alertMs);
    };
    return { alertArr, addAlert };
 }

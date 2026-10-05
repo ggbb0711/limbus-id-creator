@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect } from "react";
 import { ReactElement } from "react";
-import { IPost } from "types/iPost/IPost";
+import { IPost } from "types/post/IPost";
 import { ITag, TagList } from "utils/TagList";
 import Link from "next/link";
 import Image from "next/image";

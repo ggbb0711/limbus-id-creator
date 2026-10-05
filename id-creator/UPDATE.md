@@ -243,6 +243,49 @@ Guide: [`docs/refactor/11-env-config.md`](docs/refactor/11-env-config.md). Do it
   - the 9 coin-effect assets
   - panel widths, zoom and layout math
 
+## Phase 11 — File structure (feature ownership)
+Guide: [`docs/refactor/12-file-structure.md`](docs/refactor/12-file-structure.md).
+- **The rule:** code used by one feature moves into `src/features/<feature>/{api,types,components,utils,stores}`. Shared code stays at the top level, and generic UI primitives go to `components/ui/`.
+- **Moves:**
+  - APIs: `SaveInfoApi` → card creator, `CommentApi` → post, `UserApi` and `api/server/users` → user, and `PostAPI` is renamed `PostApi`.
+  - Types: `ISaveFile` → card creator, `IComment` → post, `IUserProfile` → user (it was under `oAuth`). `iPost`, `iPostDisplayCard` and `enums` become `types/post/`; `api/auth` and `api/user` become `types/auth` and `types/user`.
+  - Utils: the eight card-creator-only utils, including the two dynamic `TurnRefToImg` imports.
+  - Components: `colorPicker` → card creator; `dropDown`, `popUpMenu`, `confirmDialog` and `accordionSection` → `components/ui/`.
+  - Stores: the setting-menu state moves out of the global `UiSlice`.
+- **Boundaries:** add `features/cardCreator/index.ts` for `SearchSaveInput`, and an ESLint `no-restricted-imports` rule that blocks cross-feature imports.
+- **Deletes:** the unused ad components and 5 unused icons.
+
+## Phase 12 — Rest of the site (forum, posts, comments, users, auth, layout)
+Guides:
+- [`13-forum-and-home.md`](docs/refactor/13-forum-and-home.md)
+- [`14-posts-and-comments.md`](docs/refactor/14-posts-and-comments.md)
+- [`15-user-and-auth.md`](docs/refactor/15-user-and-auth.md)
+- [`16-layout-static-shared-ui.md`](docs/refactor/16-layout-static-shared-ui.md)
+
+Highest-priority items:
+- **Security (backend):** every user's email is returned by the public `GET /User/{id}`.
+- **User page:**
+  - it server-renders a spinner instead of the profile
+  - changing pages shows stale posts
+  - an icon upload sends an unconfirmed name
+  - the logged-in user's name and icon go stale after an edit
+- **Forum:**
+  - the search debounce race undoes sort and tag changes
+  - `?tag=constructor` resolves to a built-in function
+  - Back doesn't work
+  - failed requests are shown as empty lists (home too)
+- **Comments:**
+  - infinite scroll can stall or loop
+  - optimistic comments can show up twice or in the wrong place
+  - comment HTML sits inside `<p>`
+- **Alerts:** `useAlert` re-renders every caller on every alert, and alerts aren't announced to screen readers.
+- **Accessibility:** about 12 `div onClick` controls are replaced by `IconButton`, `BusyButton` and `Dialog`. Other fixes: an accessible carousel and dropdown, plus labels.
+- **Other:**
+  - the Google script loads on every page
+  - offset-less backend dates parse as local time, and invalid dates crash the page
+  - the About page's Ko-fi link is wrong
+  - the GA id, site URL and verification token are hardcoded
+
 ## Unit test coverage targets
 - **Pure utils (Phase 5):** full branch coverage.
 - **Migration:** a fixture-based test that feeds old-format ID/EGO saves (with `saveName`, `.png` paths, missing `skillFrame`, missing defense fields) through the migration and checks they come out as valid current objects. Priority: highest.
@@ -258,7 +301,8 @@ Guide: [`docs/refactor/11-env-config.md`](docs/refactor/11-env-config.md). Do it
 - **Data integrity:** no status-effect key appears in more than one status JSON file.
 
 ## Suggested order and commits
-Phase 0 → 10 (config first, so later phases don't add new hardcoded numbers) → 5 (utils and tests, so the later refactors have a safety net) → 1 → 2 → 3 → 4 → 6 → 7 → 8 → 9. Commit each phase separately so the diff is easy to review.
+Done: Phase 0, 1, 2.
+Remaining: Phase 11 (file structure) → 10 (config) → 5 (utils and tests) → 3 → 4 → session 16 (shared UI primitives) → sessions 13, 14, 15 → 6 → 7 → 8 → 9. Commit each phase separately so the diff is easy to review.
 
 ## Verification
 After each phase:

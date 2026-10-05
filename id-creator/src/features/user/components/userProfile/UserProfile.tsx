@@ -1,16 +1,17 @@
 'use client'
+import { appConfig } from "config/env.client";
+import { filesize } from "filesize";
 import React, { useState } from "react";
 import Image from "next/image";
 import { ReactElement } from "react";
 import EditIcon from "assets/icons/EditIcon";
 import CheckIcon from "assets/icons/CheckIcon";
-import { IUserProfile } from "types/api/oAuth/IUserProfile";
+import { IUserProfile } from "features/user/types/IUserProfile";
 import "./UserProfile.css";
 import useAlert from "hooks/useAlert";
-import { useUpdateUserMutation } from "api/UserApi";
+import { useUpdateUserMutation } from "features/user/api/UserApi";
 
-// Must match MaximumLength in id-creator-server UpdateUserProfileDTOValidator
-const MAX_USERNAME_LENGTH = 65
+const MAX_USERNAME_LENGTH = appConfig.limits.user.maxUsernameLength
 
 export function UserProfile({userProfile,userId,owned}:{userProfile:IUserProfile,userId:string,owned:boolean}):ReactElement{
     const {userName,userIcon} = userProfile
@@ -37,6 +38,10 @@ export function UserProfile({userProfile,userId,owned}:{userProfile:IUserProfile
     async function handleChangeProfileImg(e:React.ChangeEvent<HTMLInputElement>){
         if (!e.currentTarget.files || !e.currentTarget.files[0]) {
             addAlert("Failure", "No file selected")
+            return
+        }
+        if (e.currentTarget.files[0].size > appConfig.limits.upload.userIcon) {
+            addAlert("Failure", `Profile pictures must be ${filesize(appConfig.limits.upload.userIcon)} or smaller`)
             return
         }
         try {

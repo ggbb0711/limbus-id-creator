@@ -11,7 +11,7 @@ import CardMakerFooter from 'features/cardCreator/components/cardMakerFooter/Car
 import { useCardDomRef } from 'features/cardCreator/contexts/CardDomRefContext';
 import { useAppDispatch, useAppSelector } from 'stores/AppStore';
 import { setEgoInfo, resetEgoInfo } from 'features/cardCreator/stores/EgoInfoSlice';
-import { setSettingMenuSaveMode } from 'stores/slices/UiSlice';
+import { setSettingMenuSaveMode } from 'features/cardCreator/stores/SettingMenuSlice';
 import CardModeContext from 'features/cardCreator/contexts/CardModeContext';
 
 

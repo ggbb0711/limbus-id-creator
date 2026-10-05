@@ -1,14 +1,15 @@
+import { appConfig } from "config/env.client";
 import React, { useState } from "react";
 import { ReactElement } from "react";
-import { ISaveFile } from "types/ISaveFile";
-import { createSaveFile } from "utils/createSaveFile";
+import { ISaveFile } from "features/cardCreator/types/ISaveFile";
+import { createSaveFile } from "features/cardCreator/utils/createSaveFile";
 import { clearSkillImage, readSkillImage } from "features/cardCreator/skills/skillData";
 import { SaveMode } from "features/cardCreator/constants";
-import PopUpMenu from "components/popUpMenu/PopUpMenu";
+import PopUpMenu from "components/ui/popUpMenu/PopUpMenu";
 import imageCompression from 'browser-image-compression';
-import getImageDimensions from "utils/getImageDimensions";
-import base64ToFile from "utils/base64ToFile";
-import checkBase64Image from "utils/checkBase64Image";
+import getImageDimensions from "features/cardCreator/utils/getImageDimensions";
+import base64ToFile from "features/cardCreator/utils/base64ToFile";
+import checkBase64Image from "features/cardCreator/utils/checkBase64Image";
 import "./SaveCloudMenu.css";
 import "../SettingMenu.css";
 import { IEgoInfo } from "features/cardCreator/types/IEgoInfo";
@@ -16,20 +17,20 @@ import { IIdInfo } from "features/cardCreator/types/IIdInfo";
 import { useLoginMenu } from "hooks/useLoginMenu";
 import * as Sentry from "@sentry/nextjs"
 import useAlert from "hooks/useAlert";
-import formatDateForBackend from "utils/formatDateForBackend";
+import formatDateForBackend from "features/cardCreator/utils/formatDateForBackend";
 import { useCardDomRef } from "features/cardCreator/contexts/CardDomRefContext";
 import { useAuth } from "hooks/useAuth";
 import { useAppSelector, useAppDispatch } from "stores/AppStore";
 import { setIdInfo } from "features/cardCreator/stores/IdInfoSlice";
 import { setEgoInfo } from "features/cardCreator/stores/EgoInfoSlice";
-import { closeSettingMenu } from "stores/slices/UiSlice";
+import { closeSettingMenu } from "features/cardCreator/stores/SettingMenuSlice";
 import {
     useGetSaveListQuery,
     useLazyGetSaveQuery,
     useCreateSaveMutation,
     useUpdateSaveMutation,
     useDeleteSaveMutation,
-} from "api/SaveInfoApi";
+} from "features/cardCreator/api/SaveInfoApi";
 
 function SaveCloudTab({saveName,saveDate,previewUrl,deleteSave,loadSave,overwriteSave}:{saveName:string,saveDate:string,previewUrl:string,deleteSave:()=>void,loadSave:()=>void,overwriteSave:()=>void}):ReactElement{
     return <div className="save-cloud-tab">
@@ -84,17 +85,17 @@ export default function SaveCloudMenu({saveMode}:{saveMode:SaveMode}):ReactEleme
 
     async function createForm(saveFileData: ISaveFile<IIdInfo|IEgoInfo>, domRef: React.RefObject<HTMLDivElement | null>): Promise<FormData> {
         // Loaded on demand: modern-screenshot is only needed when saving
-        const { default: TurnRefToImg } = await import("utils/TurnRefToImg")
+        const { default: TurnRefToImg } = await import("features/cardCreator/utils/TurnRefToImg")
         const form = new FormData()
         saveFileData.saveTime = formatDateForBackend(new Date())
         const saveData = JSON.parse(JSON.stringify(saveFileData)) as ISaveFile<IIdInfo|IEgoInfo>
         const saveInfo = {...saveData.saveInfo}
 
         const compressToWebP = (file: File) => imageCompression(file, {
-            maxSizeMB: 1,
+            maxSizeMB: appConfig.image.compressMaxSizeMB,
             useWebWorker: true,
             fileType: "image/webp",
-            initialQuality: 0.7,
+            initialQuality: appConfig.image.webpQuality,
         })
 
         const skillImageTasks = saveInfo.skillDetails.map(async (skill, i) => {
@@ -116,11 +117,11 @@ export default function SaveCloudMenu({saveMode}:{saveMode:SaveMode}):ReactEleme
         const thumbnailImageFile = base64ToFile(imgUrl as string, "new file")
         const {width} = await getImageDimensions(thumbnailImageFile)
         form.append("thumbnailImage", await imageCompression(thumbnailImageFile, {
-            maxSizeMB: 1,
+            maxSizeMB: appConfig.image.compressMaxSizeMB,
             useWebWorker: true,
             fileType: "image/webp",
-            initialQuality: 0.7,
-            maxWidthOrHeight: Math.max(1650, Math.floor(width * (2/3)))
+            initialQuality: appConfig.image.webpQuality,
+            maxWidthOrHeight: Math.max(appConfig.image.compressMinDimension, Math.floor(width * (2/3)))
         }))
 
         let formSkillImageIndex = 0

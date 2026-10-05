@@ -1,4 +1,5 @@
 'use client'
+import { appConfig } from "config/env.client";
 import React, { useState, useCallback } from "react";
 import { ReactElement } from "react";
 import Post from "features/post/components/post/Post";
@@ -6,9 +7,9 @@ import { useLoginMenu } from "hooks/useLoginMenu";
 import { CommentContainer, PostCommentInput } from "features/post/components/comment/Comment";
 import useAlert from "hooks/useAlert";
 import { useAuth } from "hooks/useAuth";
-import { useGetPostQuery } from "api/PostAPI";
-import { IPost } from "types/iPost/IPost";
-import { useGetCommentsQuery, useCreateCommentMutation } from "api/CommentApi";
+import { useGetPostQuery } from "api/PostApi";
+import { IPost } from "types/post/IPost";
+import { useGetCommentsQuery, useCreateCommentMutation } from "features/post/api/CommentApi";
 import getApiErrorMessage from "utils/getApiErrorMessage";
 
 export default function PostPage({initialPost}:{initialPost:IPost}):ReactElement{
@@ -23,7 +24,7 @@ export default function PostPage({initialPost}:{initialPost:IPost}):ReactElement
     const { data: comments = [], isFetching: isFetchingComments } = useGetCommentsQuery({
         postId,
         page: commentPage,
-        limit: 10,
+        limit: appConfig.paging.commentsPerPage,
     })
 
     const hasMore = post ? comments.length < post.commentCount : true

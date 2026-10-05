@@ -3,7 +3,7 @@ import { SaveMode } from "features/cardCreator/constants";
 import { ReactElement } from "react";
 import "./SearchSaveInput.css"
 import useKeyPress from "hooks/useKeyPress";
-import { useGetSaveListQuery } from "api/SaveInfoApi";
+import { useGetSaveListQuery } from "features/cardCreator/api/SaveInfoApi";
 
 export default function SearchSaveInput({userId,saveMode,chooseSave}:{userId:string,saveMode:SaveMode,chooseSave:(saveUrl:string)=>void}):ReactElement{
     const [searchName,setSearchName] = useState("")

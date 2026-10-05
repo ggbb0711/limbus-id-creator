@@ -1,6 +1,6 @@
 import { BaseApi } from "./BaseApi";
 import IResponse from "types/IResponse";
-import { AuthResponseDTO, UserSessionProfileDTO } from "types/api/auth/IAuthResponse";
+import { AuthResponseDTO, UserSessionProfileDTO } from "types/auth/IAuthResponse";
 import { setCredentials, clearCredentials } from "stores/slices/AuthSlice";
 
 export const AuthApi = BaseApi.injectEndpoints({

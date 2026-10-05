@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import uuid from 'react-uuid';
-import { AlertStatus, IAlert } from 'types/utils/IAlert'
+import { AlertStatus, IAlert } from 'types/IAlert'
 
 const initialState : {value: IAlert[]} = {value: []}; 
 

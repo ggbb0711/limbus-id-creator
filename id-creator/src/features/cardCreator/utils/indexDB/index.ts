@@ -1,7 +1,7 @@
 import { IEgoInfo } from 'features/cardCreator/types/IEgoInfo';
 import { IIdInfo } from 'features/cardCreator/types/IIdInfo';
 import Dexie, { EntityTable } from 'dexie';
-import { ISaveFile } from 'types/ISaveFile';
+import { ISaveFile } from 'features/cardCreator/types/ISaveFile';
 
 const indexDB = new Dexie("LocalSaves") as Dexie & {
     currIdSave: EntityTable<IIdInfo, 'localSaveId'>,

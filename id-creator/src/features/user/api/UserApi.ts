@@ -1,6 +1,6 @@
-import { BaseApi } from "./BaseApi";
+import { BaseApi } from "api/BaseApi";
 import IResponse from "types/IResponse";
-import { IUserProfile } from "types/api/oAuth/IUserProfile";
+import { IUserProfile } from "features/user/types/IUserProfile";
 
 const UserApi = BaseApi.injectEndpoints({
     endpoints: (builder) => ({

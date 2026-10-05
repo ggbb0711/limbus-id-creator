@@ -1,13 +1,13 @@
+import { appConfig } from "config/env.client";
 import React, { useMemo, useState } from "react";
 import "../SettingMenu.css"
-import { createSaveFile } from "utils/createSaveFile";
+import { createSaveFile } from "features/cardCreator/utils/createSaveFile";
 import { SaveMode } from "features/cardCreator/constants";
 import useSaveLocal from "features/cardCreator/hooks/useSaveLocal";
-import PopUpMenu from "components/popUpMenu/PopUpMenu";
+import PopUpMenu from "components/ui/popUpMenu/PopUpMenu";
 import EditIcon from "assets/icons/EditIcon";
 import { IEgoInfo } from "features/cardCreator/types/IEgoInfo";
 import { IIdInfo } from "features/cardCreator/types/IIdInfo";
-import { clientEnv } from "config/env.client";
 import { useAppSelector, useAppDispatch } from "stores/AppStore";
 import { setIdInfo } from "features/cardCreator/stores/IdInfoSlice";
 import { setEgoInfo } from "features/cardCreator/stores/EgoInfoSlice";
@@ -38,7 +38,7 @@ const SaveLocalMenu=({saveMode, close}:{saveMode: SaveMode, close: ()=>void})=>{
 
     const createNewSave = ()=>{
         if(!isLoading){
-            if(saveData.length<clientEnv.localSaveMaxLen){
+            if(saveData.length<appConfig.limits.card.localSaveMaxLen){
                 openPopup()
             }
         }
@@ -117,7 +117,7 @@ const SaveLocalMenu=({saveMode, close}:{saveMode: SaveMode, close: ()=>void})=>{
                 )}
             </>:<p style={{fontFamily:"var(--font-mikodacs), var(--font-rubik), sans-serif"}}></p>}
         </div>
-        <p>Current local save: {saveData.length}/{clientEnv.localSaveMaxLen}</p>
+        <p>Current local save: {saveData.length}/{appConfig.limits.card.localSaveMaxLen}</p>
         <button className="main-button create-new-save-btn" onClick={createNewSave}>{isLoading?"Loading...":"Create a new save"}</button>
     </>
 }

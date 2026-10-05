@@ -2,7 +2,7 @@
 import React, { ReactElement, useRef } from "react";
 import "./PaginatedPost.css"
 import ReactPaginate from "react-paginate";
-import { IPostDisplayCard } from "types/iPostDisplayCard/IPostDisplayCard";
+import { IPostDisplayCard } from "types/post/IPostDisplayCard";
 import { PostDisplayCard, PostDisplayCardLoading } from "./PostDisplayCard";
 
 function PostDisplayList({isLoading,cardList}:{cardList:IPostDisplayCard[],isLoading:boolean}):ReactElement{

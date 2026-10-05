@@ -6,7 +6,7 @@ import { IDefenseSkill } from "features/cardCreator/types/skills/defenseSkill/ID
 import SkillTitle from "../../components/skillTitle/SkillTitle";
 import SkillEffect from "../../components/skillEffect/SkillEffect";
 import { CoinEffect, getCoinEffect } from "features/cardCreator/utils/getCoinEffect";
-import { assetPaths } from "utils/assetPaths";
+import { assetPaths } from "features/cardCreator/utils/assetPaths";
 
 const DefenseSkillSplash = ({skillAffinity,skillImage,defenseType,skillFrame,showDefenseIcon}:{skillAffinity:string,skillImage?:string,defenseType:string,skillFrame:string,showDefenseIcon:boolean}):ReactElement => {
     const frameSrc = assetPaths.skillFrame(skillAffinity, skillFrame)

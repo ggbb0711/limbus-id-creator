@@ -1,5 +1,5 @@
 import React from "react";
-import { DropDownEl } from "components/dropDown/DropDown";
+import { DropDownEl } from "components/ui/dropDown/DropDown";
 import "./EgoLevelDropDown.css"
 import { EgoLevel } from "features/cardCreator/constants";
 
