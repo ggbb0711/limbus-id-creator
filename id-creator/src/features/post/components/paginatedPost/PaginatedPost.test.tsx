@@ -1,4 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react'
+import { Provider } from 'react-redux'
+import { makeStore } from 'stores/AppStore'
 import PaginatedPost, { pageCountOf } from './PaginatedPost'
 import { IPostDisplayCard } from 'features/post/types/IPostDisplayCard'
 
@@ -9,7 +11,7 @@ const card = (id: string): IPostDisplayCard => ({
 function setup(props: Partial<React.ComponentProps<typeof PaginatedPost>> = {}) {
     const fetchPost = jest.fn()
     const onRetry = jest.fn()
-    const view = render(<PaginatedPost currPage={0} maxCount={0} pageLimit={6} postList={[]} fetchPost={fetchPost} isLoading={false} onRetry={onRetry} {...props}/>)
+    const view = render(<Provider store={makeStore()}><PaginatedPost currPage={0} maxCount={0} pageLimit={6} postList={[]} fetchPost={fetchPost} isLoading={false} onRetry={onRetry} {...props}/></Provider>)
     return { fetchPost, onRetry, ...view }
 }
 
@@ -44,6 +46,7 @@ describe('PaginatedPost', () => {
         setup({ postList: [card('a'), card('b')], maxCount: 2 })
         expect(screen.getByText('Post a')).toBeInTheDocument()
         expect(screen.getAllByRole('navigation', { name: 'Pagination' })).toHaveLength(2)
+        expect(screen.getAllByRole('button', { name: 'Share this post' })).toHaveLength(2)
     })
 
     it('counts pages safely', () => {

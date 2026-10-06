@@ -6,6 +6,7 @@ import { IPostDisplayCard } from "features/post/types/IPostDisplayCard";
 import { getTag } from "features/post/utils/TagList";
 import TagChip from "features/post/components/tagChip/TagChip";
 import PostStats from "features/post/components/postStats/PostStats";
+import ShareMenu from "features/post/components/shareMenu/ShareMenu";
 import Spinner from "components/ui/spinner/Spinner";
 import formatDisplayDate from "utils/formatDisplayDate";
 
@@ -39,6 +40,7 @@ export function PostDisplayCard({ id, title, cardImg, userIcon, userName, userId
             </div>
             <div className="post-display-tag-container r">
                 <PostStats viewCount={viewCount} commentCount={commentCount} itemClassName="post-display-card-tag" iconSize={12}/>
+                <ShareMenu postId={id} title={title} triggerClassName="post-display-card-tag" iconSize={12}/>
             </div>
         </div>
     </div>

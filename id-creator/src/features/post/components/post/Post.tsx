@@ -6,6 +6,7 @@ import AuthorBadge from "features/post/components/authorBadge/AuthorBadge";
 import formatDisplayDate from "utils/formatDisplayDate";
 import PostCarousel from "./PostCarousel";
 import LivePostStats from "./LivePostStats";
+import ShareMenu from "features/post/components/shareMenu/ShareMenu";
 import "./Post.css";
 import "../shared/Style.css"
 
@@ -25,6 +26,7 @@ export default function Post({ post }: { post: IPost }): ReactElement {
         <div className="description-txt" dangerouslySetInnerHTML={{ __html: post.description }}></div>
         <div className="center-element">
             <LivePostStats initialPost={post}/>
+            <ShareMenu postId={post.id} title={post.title} triggerClassName="card-tag center-element" iconSize={16}/>
         </div>
     </article>
 }

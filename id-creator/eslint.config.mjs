@@ -77,6 +77,12 @@ export default defineConfig([
       "check-file/filename-naming-convention": "off",
     },
   },
+  {
+    files: ["src/components/socialCard/**", "src/features/*/components/*SocialCard/**"],
+    rules: {
+      "@next/next/no-img-element": "off",
+    },
+  },
   // The card is captured by modern-screenshot, which needs plain <img> (no lazy loading / srcset)
   {
     files: ["src/features/cardCreator/**"],

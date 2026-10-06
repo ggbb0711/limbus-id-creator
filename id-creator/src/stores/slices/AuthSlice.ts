@@ -18,6 +18,9 @@ const AuthSlice = createSlice({
             state.user = action.payload.user
             state.isInitializing = false
         },
+        updateSessionUser: (state, action: PayloadAction<Partial<Pick<UserSessionProfileDTO, "userName" | "userIcon">>>) => {
+            if (state.user) Object.assign(state.user, action.payload)
+        },
         clearCredentials: (state) => {
             state.accessToken = null
             state.user = null
@@ -26,5 +29,5 @@ const AuthSlice = createSlice({
     }
 })
 
-export const { setCredentials, clearCredentials } = AuthSlice.actions
+export const { setCredentials, updateSessionUser, clearCredentials } = AuthSlice.actions
 export const AuthReducer = AuthSlice.reducer

@@ -1,67 +1,69 @@
 'use client'
-import React, { useState } from "react";
+import React, { useCallback } from "react";
 import { ReactElement } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { PaginatedPost, usePaginatedPosts } from "features/post";
 import { UserProfile } from "features/user/components/userProfile/UserProfile";
-import UserProfileLoading from "features/user/components/userProfileLoading/UserProfileLoading";
 import "./User.css"
 import { useAddAlert } from "hooks/useAddAlert";
 import { useLogOutMutation } from "api/AuthApi";
+import getApiErrorMessage from "api/getApiErrorMessage";
 import { useGetUserQuery } from "features/user/api/UserApi";
 import { useAuth } from "hooks/useAuth";
 import { IUserProfile } from "features/user/types/IUserProfile";
 import formatDisplayDate from "utils/formatDisplayDate";
+import { parsePage, withPage } from "utils/parsePage";
 import BusyButton from "components/ui/busyButton/BusyButton";
 
-export default function UserPage({initialUser}:{initialUser:IUserProfile}):ReactElement{
-    const [currPage,setCurrPage] = useState(0)
-    const [ logOut, {isLoading: isLoggingOut} ] = useLogOutMutation();
-    const userId = initialUser.id
-    const {user: loginUser} = useAuth()
-    const addAlert = useAddAlert()
+export default function UserPage({ initialUser }: { initialUser: Omit<IUserProfile,"userEmail"> }): ReactElement {
     const router = useRouter()
+    const pathname = usePathname()
+    const searchParams = useSearchParams()
+    const currPage = parsePage(searchParams.get("page"))
+    const [logOut, { isLoading: isLoggingOut }] = useLogOutMutation()
+    const userId = initialUser.id
+    const { user: loginUser } = useAuth()
+    const addAlert = useAddAlert()
 
-    const { data: user = initialUser, isLoading: isFetchingUser } = useGetUserQuery(userId)
+    const { data: user = initialUser, isFetching: isRefreshingUser } = useGetUserQuery(userId)
     const owned = !!loginUser && loginUser.id === user.id
 
     const { postList, maxCount, pageSize, isLoading: isLoadingPosts, error: postsError, refetch: refetchPosts } = usePaginatedPosts(currPage, { userId })
 
-    async function logout(){
+    const changePage = useCallback((page: number) => {
+        const query = withPage(window.location.search, page)
+        router.push(query ? `${pathname}?${query}` : pathname, { scroll: false })
+    }, [pathname, router])
+
+    async function logout() {
         try {
             await logOut().unwrap()
-            addAlert("Success","Logout successful")
+            addAlert("Success", "Logout successful")
             router.push("/forum")
-        } catch {
-            addAlert("Failure","Something went wrong with the server")
+        } catch (error) {
+            addAlert("Failure", getApiErrorMessage(error))
         }
     }
 
     return <div className="page-container">
-        {user?
-            <>
-                <div className="page-content">
-
-                    <div className="user-container">
-                        <p className="user-meta-txt">Created at: {formatDisplayDate(user.createdAt)}</p>
-                        {isFetchingUser?<UserProfileLoading/>:<UserProfile userProfile={user} userId={userId} owned={owned} />}
-                        <div className="user-log-out-container">
-                            {owned && <BusyButton busy={isLoggingOut} busyText="Logging out..." onClick={logout}>Logout</BusyButton>}
-                        </div>
-                    </div>
-
+        <div className="page-content">
+            <div className="user-container" aria-busy={isRefreshingUser}>
+                <p className="user-meta-txt">Created at: {formatDisplayDate(user.createdAt)}</p>
+                <UserProfile userProfile={user} owned={owned}/>
+                <div className="user-log-out-container">
+                    {owned && <BusyButton busy={isLoggingOut} busyText="Logging out..." onClick={logout}>Logout</BusyButton>}
                 </div>
-                <div className="page-content">
-                    <PaginatedPost currPage={currPage}
-                        maxCount={maxCount}
-                        pageLimit={pageSize}
-                        postList={postList}
-                        fetchPost={setCurrPage}
-                        isLoading={isLoadingPosts}
-                        error={postsError}
-                        onRetry={refetchPosts}/>
-                </div>
-            </>
-        :<p>User not found</p>}
+            </div>
+        </div>
+        <div className="page-content">
+            <PaginatedPost currPage={currPage}
+                maxCount={maxCount}
+                pageLimit={pageSize}
+                postList={postList}
+                fetchPost={changePage}
+                isLoading={isLoadingPosts}
+                error={postsError}
+                onRetry={refetchPosts}/>
+        </div>
     </div>
 }

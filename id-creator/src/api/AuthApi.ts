@@ -2,6 +2,12 @@ import { BaseApi } from "./BaseApi";
 import IResponse from "types/IResponse";
 import { AuthResponseDTO, UserSessionProfileDTO } from "types/auth/IAuthResponse";
 import { setCredentials, clearCredentials } from "stores/slices/AuthSlice";
+import type { Dispatch } from "@reduxjs/toolkit";
+
+export function endSession(dispatch: Dispatch) {
+    dispatch(clearCredentials())
+    dispatch(BaseApi.util.resetApiState())
+}
 
 export const AuthApi = BaseApi.injectEndpoints({
     endpoints: (builder)=>({
@@ -50,7 +56,7 @@ export const AuthApi = BaseApi.injectEndpoints({
                     await queryFulfilled;
                 }
                 finally{
-                    dispatch(clearCredentials());
+                    endSession(dispatch);
                 }
             }
         })

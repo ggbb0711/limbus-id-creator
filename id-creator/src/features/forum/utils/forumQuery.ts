@@ -1,6 +1,9 @@
 import { PostSortOption, TagKey, isPostSortOption, isTagKey } from "features/post"
 
+import { parsePage } from "utils/parsePage"
+
 export { tagKeyOf } from "features/post"
+export { parsePage }
 
 export interface ForumQueryUpdate {
     q?: string
@@ -19,12 +22,6 @@ export interface ForumParams {
 type ParamSource = { get(name: string): string | null, getAll(name: string): string[] }
 
 export const parseSort = (value: string | null): PostSortOption => (isPostSortOption(value) ? value : "Latest")
-
-export function parsePage(value: string | null): number {
-    if (!value || !/^\d+$/.test(value)) return 0
-    const page = Number(value)
-    return Number.isSafeInteger(page) ? page : 0
-}
 
 export function parseForumParams(params: ParamSource): ForumParams {
     return {
