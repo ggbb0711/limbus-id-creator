@@ -3,7 +3,6 @@ import { appConfig } from "config/env.client";
 import React, { useState, useCallback } from "react";
 import { ReactElement } from "react";
 import Post from "features/post/components/post/Post";
-import { useLoginMenu } from "hooks/useLoginMenu";
 import { CommentContainer, PostCommentInput } from "features/post/components/comment/Comment";
 import useAlert from "hooks/useAlert";
 import { useAuth } from "hooks/useAuth";
@@ -11,12 +10,12 @@ import { useGetPostQuery } from "features/post/api/PostApi";
 import { IPost } from "features/post/types/IPost";
 import { useGetCommentsQuery, useCreateCommentMutation } from "features/post/api/CommentApi";
 import getApiErrorMessage from "api/getApiErrorMessage";
+import LoginPromptButton from "components/loginMenu/LoginPromptButton";
 
 export default function PostPage({initialPost}:{initialPost:IPost}):ReactElement{
     const postId = initialPost.id
     const {addAlert} = useAlert()
     const {user: loginUser, isInitializing} = useAuth()
-    const {setIsLoginMenuActive} = useLoginMenu()
     const [commentPage, setCommentPage] = useState(0)
 
     // Wait for AuthBootstrap so the view is attributed to the logged-in user
@@ -65,7 +64,7 @@ export default function PostPage({initialPost}:{initialPost:IPost}):ReactElement
         <div className="page-content">
             {(()=>{
                 if(loginUser && post) return <PostCommentInput authorIcon={loginUser.userIcon} authorName={loginUser.userName} createComment={createNewComment}/>
-                if(post) return <button className="main-button" onClick={()=>setIsLoginMenuActive(true)}>Login to comment</button>
+                if(post) return <LoginPromptButton>Login to comment</LoginPromptButton>
                 return <></>
             })()}
         </div>

@@ -1,7 +1,6 @@
 'use client'
 import { canAddTag } from "utils/canAddTag";
 import { appConfig } from "config/env.client";
-import { useLoginMenu } from "hooks/useLoginMenu";
 import React, { useState } from "react";
 import { ReactElement } from "react";
 import "./NewPostPage.css";
@@ -16,6 +15,7 @@ import useAlert from "hooks/useAlert";
 import { useAuth } from "hooks/useAuth";
 import { useCreatePostMutation } from "features/post/api/PostApi";
 import getApiErrorMessage from "api/getApiErrorMessage";
+import LoginPromptButton from "components/loginMenu/LoginPromptButton";
 
 interface IChoosenSave{
     PreviewUrl:string,
@@ -30,7 +30,6 @@ export default function NewPostPage():ReactElement{
     const [saveMode,setSaveMode] = useState("Identity")
     const [description,setDescription] = useState("")
     const {user: loginUser} = useAuth()
-    const {setIsLoginMenuActive} = useLoginMenu()
     const {addAlert} = useAlert()
     const router = useRouter()
 
@@ -124,7 +123,7 @@ export default function NewPostPage():ReactElement{
         </div>:
             <div className="page-content">
                 Please login to post
-                <button className="main-button" onClick={()=>setIsLoginMenuActive(true)}>Login</button>
+                <LoginPromptButton/>
             </div>}
     </div>
 }

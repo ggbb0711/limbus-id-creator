@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ReactElement } from "react";
 import { ITag, TagList } from "features/post/utils/TagList";
 import "./TagInput.css"
+import TagChip from "features/post/components/tagChip/TagChip";
 
 export default function TagInput({completeFn,maxTag,selectedCount,customClass="",id}:{completeFn:(keyword:ITag)=>void,maxTag:number,selectedCount:number,customClass?:string,id:string}):ReactElement{
     const [text,setText] = useState("")
@@ -93,10 +94,8 @@ export default function TagInput({completeFn,maxTag,selectedCount,customClass=""
                 <div className="found-tag-container" ref={selectRef}>
                     {isActive&&tagList.map((tag:ITag,i)=>{
                         scrollToView()
-                        return <div className={`found-tag center-element ${currChoice===i?"active":""}`} onClick={()=>chooseOption(tag)} key={i}>
-                        {tag.icon&&<img className="status-icon" src={tag.icon} alt={tag.tagName+"_icon"}></img>}
-                        {tag.tagName}
-                    </div>})}
+                        return <TagChip key={i} tag={tag} className={`found-tag center-element ${currChoice===i?"active":""}`} iconClassName="status-icon" iconSize={15} onClick={()=>chooseOption(tag)}/>
+                    })}
                 </div>
             </div>
     </div> 

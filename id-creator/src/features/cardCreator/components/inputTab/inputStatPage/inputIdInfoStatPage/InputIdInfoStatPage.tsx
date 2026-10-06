@@ -1,8 +1,7 @@
 import { canAddTag } from "utils/canAddTag";
 import { getResistTier } from "features/cardCreator/utils/card/getResistTier";
 import { appConfig } from "config/env.client";
-import { filesize } from "filesize";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ReactElement } from "react";
 import "../../InputPage.css"
 import "../InputStatPage.css"
@@ -12,43 +11,24 @@ import AddIcon from "assets/icons/AddIcon"
 import DeleteIcon from "assets/icons/DeleteIcon";
 import ArrowDownIcon from "assets/icons/ArrowDownIcon";
 import AccordionSection from "components/ui/accordionSection/AccordionSection";
-import SinnerIconInput from "../sinnerIconInput/SinnerIconInput";
+import SinnerIconPicker from "../sinnerIconPicker/SinnerIconPicker";
 import SinnerRarityIconInput from "../sinnerRarityInput/SinnerRarityInput";
 import SinnerSplashArtRepositionInput from "../sinnerSplashArtRepositionInput/SinnerSplashArtRepositionInput";
-import UploadImgBtn from "../../components/uploadImgBtn/UploadImgBtn";
-import { useAppSelector, useAppDispatch } from "stores/AppStore";
-import { idInfoSlice } from "features/cardCreator/stores/IdInfoSlice";
-import { compressAndReadImage } from "features/cardCreator/utils/image/CompressAndReadImage";
-import { useForm } from "react-hook-form";
+import ImageUploadField from "features/cardCreator/components/shared/imageUploadField/ImageUploadField";
+import NumberField from "features/cardCreator/components/shared/numberField/NumberField";
+import { DAMAGE_TYPES, DamageType } from "features/cardCreator/constants";
 import { IIdInfo } from "features/cardCreator/types/IIdInfo";
+import { useInfoForm } from "features/cardCreator/hooks/useInfoForm";
 import ColorPicker from "features/cardCreator/components/colorPicker/ColorPicker";
 import { STAT_PAGE_COLOR_GROUPS } from "features/cardCreator/components/colorPicker/ColorPresets";
 
-export default function InputIdInfoStatPage({collapsePage}:{collapsePage:()=>void}):ReactElement{
-    const idInfoValue = useAppSelector(state => state.idInfo.value)
-    const dispatch = useAppDispatch()
+const resistField = (damageType: DamageType) => `${damageType.toLowerCase()}Resistant` as "slashResistant" | "pierceResistant" | "bluntResistant"
 
-    const { register, setValue, watch, reset } = useForm<IIdInfo>({ defaultValues: structuredClone(idInfoValue) })
+const StatLabel = ({ icon, alt, text }: { icon: string, alt: string, text: string }) =>
+    <><img className="stat-icon" src={icon} alt={alt} /> <span>{text}</span></>
 
-    const registerNumber = (name: string) => {
-        const reg = register(name as any, { valueAsNumber: true })
-        return {
-            ...reg,
-            onBlur: (e: any) => {
-                reg.onBlur(e)
-                if (isNaN(e.target.valueAsNumber) || e.target.value === '') {
-                    setValue(name as any, 0)
-                }
-            }
-        }
-    }
-
-    useEffect(() => { reset(structuredClone(idInfoValue)) }, [JSON.stringify(idInfoValue)])
-
-    useEffect(() => {
-        const sub = watch((values) => dispatch(idInfoSlice.actions.setInfo(structuredClone(values) as any)))
-        return () => sub.unsubscribe()
-    }, [watch, dispatch])
+export default function InputIdInfoStatPage({ collapsePage }: { collapsePage: () => void }): ReactElement {
+    const { register, setValue, watch, registerNumber } = useInfoForm<IIdInfo>()
 
     const traits = watch("traits") ?? []
     const [traitInput, setTraitInput] = useState("")
@@ -65,53 +45,41 @@ export default function InputIdInfoStatPage({collapsePage}:{collapsePage:()=>voi
     const sinnerColor = watch("sinnerColor")
     const splashArtScale = watch("splashArtScale")
     const splashArtTranslation = watch("splashArtTranslation")
-    const slashResistant = watch("slashResistant")
-    const pierceResistant = watch("pierceResistant")
-    const bluntResistant = watch("bluntResistant")
 
     return <div className="input-page input-stat-page">
         <div className="input-page-icon-container">
             <div className="collasp-icon" onClick={collapsePage}>
-                <ArrowDownIcon></ArrowDownIcon>
+                <ArrowDownIcon/>
             </div>
         </div>
         <AccordionSection title="Sinner General Info">
             <div className="sinner-icon-input-container">
                 <p>Pick the sinner icon: </p>
-                <SinnerIconInput/>
-                <UploadImgBtn name="sinner-icon-image-input" id="sinner-icon-image-input" onFileInputChange={async(e)=>{
-                    if(e.currentTarget.files && e.currentTarget.files.length>0){
-                        const url = await compressAndReadImage(e.currentTarget.files[0])
-                        setValue("sinnerIcon",url)
-                    }
-                }} btnTxt={`Upload sinner icon (<= ${filesize(appConfig.limits.upload.idSinnerIcon)})`} maxSize={appConfig.limits.upload.idSinnerIcon}/>
+                <SinnerIconPicker/>
+                <ImageUploadField id="sinner-icon-image-input" buttonText="Upload sinner icon" maxSize={appConfig.limits.upload.idSinnerIcon}
+                    onChange={(url) => setValue("sinnerIcon", url)}/>
             </div>
             <div className="sinner-color-input-container">
                 <p>Pick a color for your sinner: </p>
-                <ColorPicker presets={STAT_PAGE_COLOR_GROUPS} className="sinner-color-input" id="sinnerColor" value={sinnerColor} onChange={(color)=>setValue("sinnerColor",color)}/>
+                <ColorPicker presets={STAT_PAGE_COLOR_GROUPS} className="sinner-color-input" id="sinnerColor" value={sinnerColor} onChange={(color) => setValue("sinnerColor", color)}/>
             </div>
-            {splashArt?
+            {splashArt &&
                 <>
                     <div className="input-group-container">
                         <p>Control the position of the splash art by dragging and zooming on this circle:</p>
-                        <SinnerSplashArtRepositionInput scale={splashArtScale} translation={splashArtTranslation} onChange={(value:{scale:number,translation:{x:number,y:number}})=>{
-                            setValue("splashArtScale",value.scale)
-                            setValue("splashArtTranslation",value.translation)
+                        <SinnerSplashArtRepositionInput scale={splashArtScale} translation={splashArtTranslation} onChange={(value) => {
+                            setValue("splashArtScale", value.scale)
+                            setValue("splashArtTranslation", value.translation)
                         }}/>
                     </div>
                     <div className="input-group-container">
-                        <button onClick={()=>setValue("splashArt","")} className="main-button">
+                        <button onClick={() => setValue("splashArt", "")} className="main-button">
                             <p className="center-element delete-txt"><DeleteIcon/> Delete splash art</p>
                         </button>
                     </div>
-                </>
-               :<></>}
-            <UploadImgBtn name="splash-art-image-input" id="splash-art-image-input" onFileInputChange={async(e)=>{
-                if(e.currentTarget.files && e.currentTarget.files.length>0){
-                    const url = await compressAndReadImage(e.currentTarget.files[0])
-                    setValue("splashArt",url)
-                }
-            }} btnTxt={`Upload splash art (<= ${filesize(appConfig.limits.upload.idSplashArt)})`} maxSize={appConfig.limits.upload.idSplashArt}/>
+                </>}
+            <ImageUploadField id="splash-art-image-input" buttonText="Upload splash art" maxSize={appConfig.limits.upload.idSplashArt}
+                onChange={(url) => setValue("splashArt", url)}/>
             <div>
                 <p>Pick the sinner rarity: </p>
                 <SinnerRarityIconInput/>
@@ -138,7 +106,7 @@ export default function InputIdInfoStatPage({collapsePage}:{collapsePage:()=>voi
                             maxTags={appConfig.limits.card.maxTraits}
                             inputValue={traitInput}
                             onChangeInput={setTraitInput}
-                            inputProps={{placeholder: "Add trait...", id: "traits"}}
+                            inputProps={{ placeholder: "Add trait...", id: "traits" }}
                             className="input stat-page-input-border trait-input"
                             tagClassName="trait-tab"
                         />
@@ -157,37 +125,18 @@ export default function InputIdInfoStatPage({collapsePage}:{collapsePage:()=>voi
         </AccordionSection>
         <AccordionSection title="Sinner Stats">
             <div className="input-group-container">
-                <div className="input-container">
-                    <label className="input-label" htmlFor="minSpeed">
-                        <img className="stat-icon" src="/Images/stat/stat_speed.webp" alt="speed_icon" /> 
-                        <span>Speed from</span></label>
-                    <input className="input stat-page-input-border" type="number" id="minSpeed" {...registerNumber("minSpeed")}/>
-                </div>
-                <div className="input-container">
-                    <label className="input-label" htmlFor="maxSpeed">
-                        <img className="stat-icon" src="/Images/stat/stat_speed.webp" alt="speed_icon" /> 
-                        <span>Speed to</span>
-                    </label>
-                    <input className="input stat-page-input-border" type="number" id="maxSpeed" {...registerNumber("maxSpeed")}/>
-                </div>
+                <NumberField<IIdInfo> name="minSpeed" registerNumber={registerNumber} inputClassName="stat-page-input-border"
+                    label={<StatLabel icon="/Images/stat/stat_speed.webp" alt="speed_icon" text="Speed from"/>}/>
+                <NumberField<IIdInfo> name="maxSpeed" registerNumber={registerNumber} inputClassName="stat-page-input-border"
+                    label={<StatLabel icon="/Images/stat/stat_speed.webp" alt="speed_icon" text="Speed to"/>}/>
             </div>
             <div className="input-group-container">
-                <div className="input-container">
-                    <label className="input-label" htmlFor="hp">
-                        <img className="stat-icon" src="/Images/stat/stat_hp.webp" alt="hp_icon" /> 
-                        <span>Health</span>
-                    </label>
-                    <input type="number" className="input stat-page-input-border" id="hp" {...registerNumber("hp")}/>
-                </div>
+                <NumberField<IIdInfo> name="hp" registerNumber={registerNumber} inputClassName="stat-page-input-border"
+                    label={<StatLabel icon="/Images/stat/stat_hp.webp" alt="hp_icon" text="Health"/>}/>
             </div>
             <div className="input-group-container">
-                <div className="input-container">
-                    <label className="input-label" htmlFor="defenseLevel">
-                        <img className="stat-icon" src="/Images/stat/stat_def.webp" alt="def_icon" /> 
-                        <span>Defense</span>
-                    </label>
-                    <input type="number" className="input stat-page-input-border" id="defenseLevel" {...registerNumber("defenseLevel")}/>
-                </div>
+                <NumberField<IIdInfo> name="defenseLevel" registerNumber={registerNumber} inputClassName="stat-page-input-border"
+                    label={<StatLabel icon="/Images/stat/stat_def.webp" alt="def_icon" text="Defense"/>}/>
             </div>
             <div className="input-group-container">
                 <div className="input-container">
@@ -195,39 +144,17 @@ export default function InputIdInfoStatPage({collapsePage}:{collapsePage:()=>voi
                     <input type="text" className="input stat-page-input-border" id="staggerResist" {...register("staggerResist")}/>
                 </div>
             </div>
-            <div className="input-group-container">
-                <div className="input-container">
-                    <label className="input-label" htmlFor="slashResistant">
-                        <img className="stat-icon" src="/Images/attack/attackt_Slash.webp" alt="attackt_slash" />
-                        <span className="input-label">
-                            Slash resist (<span style={{color:getResistTier(slashResistant,"damage").color}}>{getResistTier(slashResistant,"damage").label}</span>): 
-                        </span>
-                    </label>
-                    <input style={{color:getResistTier(slashResistant,"damage").color}} type="number" className="input stat-page-input-border" {...registerNumber("slashResistant")} id="slashResistant"/>
+            {DAMAGE_TYPES.map(damageType => {
+                const field = resistField(damageType)
+                const tier = getResistTier(watch(field), "damage")
+                return <div className="input-group-container" key={damageType}>
+                    <NumberField<IIdInfo> name={field} registerNumber={registerNumber} inputClassName="stat-page-input-border" style={{ color: tier.color }}
+                        label={<>
+                            <img className="stat-icon" src={`/Images/attack/attackt_${damageType}.webp`} alt={`attackt_${damageType.toLowerCase()}`} />
+                            <span>{damageType} resist (<span style={{ color: tier.color }}>{tier.label}</span>):</span>
+                        </>}/>
                 </div>
-            </div>
-            <div className="input-group-container">
-                <div className="input-container">
-                    <label className="input-label" htmlFor="pierceResistant">
-                        <img className="stat-icon" src="/Images/attack/attackt_Pierce.webp" alt="attackt_pierce" />
-                        <span className="input-label">
-                            Pierce resist (<span style={{color:getResistTier(pierceResistant,"damage").color}}>{getResistTier(pierceResistant,"damage").label}</span>) :
-                        </span>
-                    </label>
-                    <input style={{color:getResistTier(pierceResistant,"damage").color}} type="number" className="input stat-page-input-border" {...registerNumber("pierceResistant")} id="pierceResistant"/>
-                </div>
-            </div>
-            <div className="input-group-container">
-                <div className="input-container">
-                    <label className="input-label" htmlFor="bluntResistant">
-                        <img className="stat-icon" src="/Images/attack/attackt_Blunt.webp" alt="attackt_blunt" />
-                        <span>
-                            Blunt resist (<span style={{color:getResistTier(bluntResistant,"damage").color}}>{getResistTier(bluntResistant,"damage").label}</span>) :
-                        </span>
-                    </label>
-                    <input style={{color:getResistTier(bluntResistant,"damage").color}} type="number" className="input stat-page-input-border" {...registerNumber("bluntResistant")} id="bluntResistant"/>
-                </div>
-            </div>
+            })}
         </AccordionSection>
     </div>
 }

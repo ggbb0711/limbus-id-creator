@@ -4,13 +4,13 @@ import Link from "next/link";
 import Image from "next/image";
 import "./SideBar.css"
 import KofiIcon from "assets/icons/KofiIcon";
-import { useLoginMenu } from "hooks/useLoginMenu";
 import { useAuth } from "hooks/useAuth";
 import siteLogo from "assets/images/SiteLogo.webp";
+import LoginPromptButton from "components/loginMenu/LoginPromptButton";
+import { NAV_LINKS } from "config/navLinks";
 
 
 export default function SideBar({isActive,setActiveSideBar}:{isActive:boolean,setActiveSideBar:(a:boolean)=>void}){
-    const {setIsLoginMenuActive} = useLoginMenu()
     const {user: loginUser} = useAuth()
     const close = ()=>setActiveSideBar(false)
 
@@ -22,12 +22,10 @@ export default function SideBar({isActive,setActiveSideBar}:{isActive:boolean,se
                     <Image src={siteLogo} alt="Limbus ID Creator" className="site-logo" sizes="300px"/>
                 </Link>
                 <div className="side-bar-nav">
-                    <Link href="/creator/identity" onClick={close} className="main-button nav-button">Create Id</Link>
-                    <Link href="/creator/ego" onClick={close} className="main-button nav-button">Create Ego</Link>
-                    <Link href="/forum" onClick={close} className="main-button nav-button">Forum</Link>
+                    {NAV_LINKS.map(link => <Link key={link.href} href={link.href} onClick={close} className="main-button nav-button">{link.label}</Link>)}
                     {loginUser?
                         <Link href={"/user/"+loginUser.id} onClick={close} className="main-button">My account</Link>:
-                        <button className={"main-button nav-button"} onClick={()=>setIsLoginMenuActive(true)}>Login</button>}
+                        <LoginPromptButton className="main-button nav-button"/>}
                     {loginUser&&<Link href="/new-post" onClick={close} className="main-button">Post</Link>}
                     <a href="https://ko-fi.com/johnlimbusidmaker" target="_blank" rel="noreferrer" style={{justifyContent:"center"}} className="main-button center-element">
                         <KofiIcon width="16px" height="16px"/>

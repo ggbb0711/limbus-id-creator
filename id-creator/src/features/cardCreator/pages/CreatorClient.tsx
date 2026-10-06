@@ -1,9 +1,9 @@
 'use client'
-import React from "react";
 import dynamic from "next/dynamic";
+import Spinner from "components/ui/spinner/Spinner";
 
 function Loading() {
-    return <div className="center-element-vertically" style={{ flex: 1 }}><div className="loader" /></div>
+    return <div className="center-element-vertically" style={{ flex: 1 }}><Spinner /></div>
 }
 
 const CardEditorPage = dynamic(() => import("./CardEditorPage"), { ssr: false, loading: Loading })

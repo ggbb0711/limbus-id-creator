@@ -1,15 +1,13 @@
 'use client'
-import { appConfig } from "config/env.client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ReactElement } from "react";
 import { useRouter } from "next/navigation";
-import { PaginatedPost, useGetPostsQuery } from "features/post";
+import { PaginatedPost, usePaginatedPosts } from "features/post";
 import { UserProfile } from "features/user/components/userProfile/UserProfile";
 import UserProfileLoading from "features/user/components/userProfileLoading/UserProfileLoading";
 import "./User.css"
 import useAlert from "hooks/useAlert";
 import { useLogOutMutation } from "api/AuthApi";
-import getApiErrorMessage from "api/getApiErrorMessage";
 import { useGetUserQuery } from "features/user/api/UserApi";
 import { useAuth } from "hooks/useAuth";
 import { IUserProfile } from "features/user/types/IUserProfile";
@@ -26,21 +24,7 @@ export default function UserPage({initialUser}:{initialUser:IUserProfile}):React
     const { data: user = initialUser, isLoading: isFetchingUser } = useGetUserQuery(userId)
     const owned = !!loginUser && loginUser.id === user.id
 
-    const { data: postsData, isLoading: isLoadingPosts, error: postsError } = useGetPostsQuery({
-        page: currPage,
-        limit: appConfig.paging.postsPerPage,
-        userId,
-    })
-
-    const postList = postsData?.list.map((p) => ({
-        ...p,
-        cardImg: p.imagesAttach[0]
-    })) ?? []
-    const maxCount = postsData?.total ?? 0
-
-    useEffect(() => {
-        if (postsError) addAlert("Failure", getApiErrorMessage(postsError))
-    }, [postsError])
+    const { postList, maxCount, pageSize, isLoading: isLoadingPosts } = usePaginatedPosts(currPage, { userId })
 
     async function logout(){
         try {
@@ -69,7 +53,7 @@ export default function UserPage({initialUser}:{initialUser:IUserProfile}):React
                 <div className="page-content">
                     <PaginatedPost currPage={currPage}
                         maxCount={maxCount}
-                        pageLimit={appConfig.paging.postsPerPage}
+                        pageLimit={pageSize}
                         postList={postList}
                         fetchPost={setCurrPage}
                         isLoading={isLoadingPosts}/>

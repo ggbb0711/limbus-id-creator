@@ -5,14 +5,12 @@ import { useEffect, useState } from "react";
 import { ReactElement } from "react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { PaginatedPost, PostSortOption, TagInput, TagList, TagsContainer, useGetPostsQuery } from "features/post";
+import { PaginatedPost, PostSortOption, TagInput, TagList, TagsContainer, usePaginatedPosts } from "features/post";
 import "./ForumPage.css"
 import DropDown from "components/ui/dropDown/DropDown";
-import { useLoginMenu } from "hooks/useLoginMenu";
-import useAlert from "hooks/useAlert";
 import { useAuth } from "hooks/useAuth";
-import getApiErrorMessage from "api/getApiErrorMessage";
 import { ForumQueryUpdate, buildForumQuery, parseSort, tagKeyOf } from "features/forum/utils/forumQuery";
+import LoginPromptButton from "components/loginMenu/LoginPromptButton";
 
 
 export default function ForumPage():ReactElement{
@@ -27,8 +25,6 @@ export default function ForumPage():ReactElement{
     const [searchPostName,setSearchPostName] = useState(urlSearch)
 
     const {user} = useAuth()
-    const {setIsLoginMenuActive} = useLoginMenu()
-    const {addAlert} = useAlert()
 
     function updateQuery(next: ForumQueryUpdate) {
         const query = buildForumQuery(searchParams.toString(), next)
@@ -47,23 +43,11 @@ export default function ForumPage():ReactElement{
         return () => clearTimeout(timeout)
     }, [searchPostName])
 
-    const { data, isFetching, error } = useGetPostsQuery({
+    const { postList, maxCount, pageSize, isFetching } = usePaginatedPosts(currPage, {
         title: urlSearch,
         tag: tags.map(t => t.tagName),
         sortedBy,
-        page: currPage,
-        limit: appConfig.paging.postsPerPage,
     })
-
-    const postList = data?.list.map((p) => ({
-        ...p,
-        cardImg: p.imagesAttach[0]
-    })) ?? []
-    const maxCount = data?.total ?? 0
-
-    useEffect(() => {
-        if (error) addAlert("Failure", getApiErrorMessage(error))
-    }, [error])
 
     const tagKeys = tags.map(tagKeyOf).filter((key): key is string => !!key)
 
@@ -117,14 +101,12 @@ export default function ForumPage():ReactElement{
             <div className="forum-new-post-container">
                 {user?
                     <Link href="/new-post" className="main-button">Create new Post</Link>:
-                    <button className="main-button" onClick={()=>setIsLoginMenuActive(true)}>
-                        Login to post
-                    </button>
+                    <LoginPromptButton>Login to post</LoginPromptButton>
                 }
             </div>
             <PaginatedPost currPage={currPage}
                 maxCount={maxCount}
-                pageLimit={appConfig.paging.postsPerPage}
+                pageLimit={pageSize}
                 postList={postList}
                 fetchPost={(page)=>updateQuery({ page })}
                 isLoading={isFetching}/>

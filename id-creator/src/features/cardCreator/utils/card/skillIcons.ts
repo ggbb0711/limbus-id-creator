@@ -9,7 +9,7 @@ export interface IconSource {
 
 type ActiveSkill = IOffenseSkill | IDefenseSkill
 
-const isCounter = (defenseType: DefenseType) => defenseType === "Counter" || defenseType === "ClashableCounter"
+export const isCounter = (defenseType: DefenseType) => defenseType === "Counter" || defenseType === "ClashableCounter"
 
 export const isAttackingSkill = (skill: ActiveSkill): boolean =>
     skill.type === "OffenseSkill" || isCounter(skill.defenseType)

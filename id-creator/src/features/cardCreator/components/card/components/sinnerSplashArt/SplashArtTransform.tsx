@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
+import { ISplashArtTranslation } from "features/cardCreator/types/ICardInfoBase"
 
-export default function SplashArtTransform({ scale, translation, children }: { scale: number, translation: { x: number, y: number }, children: ReactNode }) {
+export default function SplashArtTransform({ scale, translation, children }: { scale: number, translation: ISplashArtTranslation, children: ReactNode }) {
     return (
         <div style={{ height: "100%", width: "100%", position: "relative", touchAction: "none" }}>
             <div

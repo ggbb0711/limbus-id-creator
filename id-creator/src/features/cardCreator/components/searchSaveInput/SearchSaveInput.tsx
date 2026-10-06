@@ -4,6 +4,7 @@ import { ReactElement } from "react";
 import "./SearchSaveInput.css"
 import useKeyPress from "hooks/useKeyPress";
 import { useGetSaveListQuery } from "features/cardCreator/api/SaveInfoApi";
+import formatDisplayDate from "utils/formatDisplayDate";
 
 export default function SearchSaveInput({userId,saveMode,chooseSave}:{userId:string,saveMode:SaveMode,chooseSave:(saveUrl:string)=>void}):ReactElement{
     const [searchName,setSearchName] = useState("")
@@ -101,7 +102,7 @@ export default function SearchSaveInput({userId,saveMode,chooseSave}:{userId:str
                     }}>
                         <img src={save.previewImg} className="search-save-preview-img" alt="preview-img" />
                         <div>
-                            <p>Updated: {save.saveTime}</p>
+                            <p>Updated: {formatDisplayDate(save.saveTime, { withTime: true })}</p>
                             <p>{save.name}</p>
                         </div>
                     </div>

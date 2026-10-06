@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { ReactElement } from "react";
 import { IPost } from "features/post/types/IPost";
-import { ITag, TagList } from "features/post/utils/TagList";
+import { TagList } from "features/post/utils/TagList";
+import TagChip from "features/post/components/tagChip/TagChip";
 import Link from "next/link";
 import Image from "next/image";
 import ViewIcon from "assets/icons/ViewIcon";
@@ -15,13 +16,7 @@ import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import formatDisplayDate from "utils/formatDisplayDate";
 import "./Post.css";
 import "../shared/Style.css"
-
-function CardTag({card}:{card:ITag}):ReactElement{
-    return <div className="card-tag center-element">
-        {card?.icon&&<Image className="card-tag-img" src={card?.icon} alt="card-tag" width={10} height={10}/>}
-        <p>{card?.tagName}</p>
-    </div>
-}
+import Spinner from "components/ui/spinner/Spinner";
 
 function ViewImagePopUp({images,index=0,isActive,closeFn}:{images:string[],index:number,isActive:boolean,closeFn:()=>void}){
     const [currChoice,setCurrChoice] = useState(index)
@@ -92,10 +87,10 @@ export default function Post({post,isLoading}:{post:IPost|null,isLoading:boolean
                 </div>
             </div>
             <div className="center-element">
-                {post.tags.map((tag,i)=><CardTag key={i} card={TagList[tag]} />)}
+                {post.tags.map((tag,i)=><TagChip key={i} tag={TagList[tag]} className="card-tag center-element" iconClassName="card-tag-img" iconSize={10}/>)}
             </div>
             {isLoading?<div className="post-img-loader">
-                <div className="loader"></div>
+                <Spinner/>
             </div>:<PostCarousel postImages={post.imagesAttach} />}
             <div className="description-txt" dangerouslySetInnerHTML={{__html:post.description}}>
             </div>

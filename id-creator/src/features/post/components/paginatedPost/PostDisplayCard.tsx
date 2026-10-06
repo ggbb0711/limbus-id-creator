@@ -6,7 +6,9 @@ import { IPostDisplayCard } from "features/post/types/IPostDisplayCard";
 import CommentIcon from "assets/icons/CommentIcon";
 import ViewIcon from "assets/icons/ViewIcon";
 import { TagList } from "features/post/utils/TagList";
+import TagChip from "features/post/components/tagChip/TagChip";
 import formatDisplayDate from "utils/formatDisplayDate";
+import Spinner from "components/ui/spinner/Spinner";
 
 export function PostDisplayCard({id,title,cardImg,userIcon,userName,userId,created,tags,viewCount,commentCount}:IPostDisplayCard){
     return <div className="post-display-card">
@@ -18,10 +20,7 @@ export function PostDisplayCard({id,title,cardImg,userIcon,userName,userId,creat
         <div className="post-display-card-footer">
             <p className="post-display-meta-txt">Posted: {formatDisplayDate(created)}</p>
             <div className="post-display-tag-container">
-                {tags.slice(0,3).map((t,i)=><div key={i} className="post-display-card-tag">
-                    {TagList[t]?.icon&&<Image className="post-display-card-tag-img" src={TagList[t]?.icon} alt={t+"_icon"} width={12} height={12} />}
-                    <p>{TagList[t]?.tagName}</p>
-                </div>)}
+                {tags.slice(0,3).map((t,i)=><TagChip key={i} tag={TagList[t]} className="post-display-card-tag" iconClassName="post-display-card-tag-img" iconSize={12}/>)}
                 {tags.length>3&&<p className="post-display-meta-txt">({tags.length-3} more)</p>}
             </div>
             <div className="center-element">
@@ -53,6 +52,6 @@ export function PostDisplayCard({id,title,cardImg,userIcon,userName,userId,creat
 
 export function PostDisplayCardLoading():ReactElement{
     return <div className="post-display-card-loading">
-        <div className="loader"></div>
+        <Spinner/>
     </div>
 }

@@ -1,23 +1,19 @@
 import Link from "next/link";
 import Image from "next/image";
 import "./HomePage.css"
-import { IPost, PostDisplayCard } from "features/post";
+import { IPost, PostDisplayCard, toPostDisplayCard } from "features/post";
 import siteLogo from "assets/images/SiteLogo.webp";
+import { NAV_LINKS } from "config/navLinks";
 
 export default function HomePage({ latestPosts }: { latestPosts: IPost[] }){
-    const cards = latestPosts.map((p) => ({
-        ...p,
-        cardImg: p.imagesAttach[0]
-    }))
+    const cards = latestPosts.map(toPostDisplayCard)
 
     return <div className="page-container home-page-container">
         <div className="page-content home-page-content">
             <Image src={siteLogo} alt="Limbus ID Creator logo" className="hero-site-logo" sizes="(max-width: 900px) 100vw, 850px" preload/>
             <h1 className="home-page-hero-text">Hello, welcome to the Limbus ID creator. A fan project for those who want to create custom characters from the game <a href="https://limbuscompany.com/" className="home-page-link" target="_blank" rel="noreferrer">Limbus Company</a></h1>
             <div className="action-button-container">
-                <Link href="/creator/identity" className="main-button nav-button">Create Id</Link>
-                <Link href="/creator/ego" className="main-button nav-button">Create Ego</Link>
-                <Link href="/forum" className="main-button nav-button">Forum</Link>
+                {NAV_LINKS.map(link => <Link key={link.href} href={link.href} className="main-button nav-button">{link.label}</Link>)}
             </div>
         </div>
         <div className="page-content latest-posts-section">

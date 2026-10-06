@@ -6,6 +6,8 @@ import { Editor, EditorProvider } from "react-simple-wysiwyg"
 import { IComment } from "features/post/types/IComment"
 import "./Comment.css";
 import "../shared/Style.css";
+import Spinner from "components/ui/spinner/Spinner";
+import formatDisplayDate from "utils/formatDisplayDate";
 
 function Comment({comment}:{comment:IComment}){
     return <div className="post-comment-container post-page-element-container">
@@ -16,7 +18,7 @@ function Comment({comment}:{comment:IComment}){
                 <Link href={"/user/"+comment.userId}><p className="post-author-name">{comment.userName}</p></Link>
             </div>
         </div>
-        <p className="post-date">Posted: {comment.created.split("T")[0]}</p>
+        <p className="post-date">Posted: {formatDisplayDate(comment.created)}</p>
         <p className="description-txt" dangerouslySetInnerHTML={{__html:comment.content}}></p>
     </div>
 </div>
@@ -50,7 +52,7 @@ export function CommentContainer({comments,loadMore,isLoading,hasMore}:{comments
 
     return <>
         {comments.map((comment,i)=><Comment key={i} comment={comment}/>)}
-        {hasMore && <div ref={loaderRef}>{isLoading&&<div className="loader"></div>}</div>}
+        {hasMore && <div ref={loaderRef}>{isLoading&&<Spinner/>}</div>}
     </>
 }
 

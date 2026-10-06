@@ -1,51 +1,19 @@
 import React, { ReactElement } from "react";
 import "./SinCost.css"
 import { SinRecord } from "features/cardCreator/constants";
+import { SinValueList } from "features/cardCreator/components/shared/sinNumberInputs/SinNumberInputs";
+import { assetPaths } from "features/cardCreator/utils/card/assetPaths";
 
-export default function SinCost({sinCost}:{sinCost:SinRecord}):ReactElement{
-    const {
-        wrath,
-        lust,
-        sloth,
-        gluttony,
-        gloom,
-        pride,
-        envy,
-    }=sinCost
+const textColor = (cost: number) => cost > 0 ? "#EBC9A8" : "#8E8A82"
 
-    function textColor(cost:number){
-        return (cost>0)?"#EBC9A8":"#8E8A82"
-    }
-
+export default function SinCost({ sinCost }: { sinCost: SinRecord }): ReactElement {
     return <div className="sin-cost-container">
         <p className="cost-txt">COST</p>
-        <div className="center-element sin-cost" style={{color:textColor(wrath)}}>
-            <img src="/Images/sin-affinity/affinity_Wrath_big.webp" alt="Wrath-cost-icon" />
-            <p>{wrath}</p>
-        </div>
-        <div className="center-element sin-cost" style={{color:textColor(lust)}}>
-            <img src="/Images/sin-affinity/affinity_Lust_big.webp" alt="Lust-cost-icon" />
-            <p>{lust}</p>
-        </div>
-        <div className="center-element sin-cost" style={{color:textColor(sloth)}}>
-            <img src="/Images/sin-affinity/affinity_Sloth_big.webp" alt="Sloth-cost-icon" />
-            <p>{sloth}</p>
-        </div>
-        <div className="center-element sin-cost" style={{color:textColor(gluttony)}}>
-            <img src="/Images/sin-affinity/affinity_Gluttony_big.webp" alt="Gluttony-cost-icon" />
-            <p>{gluttony}</p>
-        </div>
-        <div className="center-element sin-cost" style={{color:textColor(gloom)}}>
-            <img src="/Images/sin-affinity/affinity_Gloom_big.webp" alt="Gloom-cost-icon" />
-            <p>{gloom}</p>
-        </div>
-        <div className="center-element sin-cost" style={{color:textColor(pride)}}>
-            <img src="/Images/sin-affinity/affinity_Pride_big.webp" alt="Pride-cost-icon" />
-            <p>{pride}</p>
-        </div>
-        <div className="center-element sin-cost" style={{color:textColor(envy)}}>
-            <img src="/Images/sin-affinity/affinity_Envy_big.webp" alt="Envy-cost-icon" />
-            <p>{envy}</p>
-        </div>
+        <SinValueList values={sinCost} render={(sin, cost) =>
+            <div className="center-element sin-cost" style={{ color: textColor(cost) }}>
+                <img src={assetPaths.affinityBig(sin)} alt={`${sin}-cost-icon`} />
+                <p>{cost}</p>
+            </div>
+        }/>
     </div>
 }

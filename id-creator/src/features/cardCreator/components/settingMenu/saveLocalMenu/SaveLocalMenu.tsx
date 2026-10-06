@@ -11,6 +11,7 @@ import { useAppSelector, useAppDispatch } from "stores/AppStore";
 import { toCardMode } from "features/cardCreator/contexts/CardModeContext";
 import { loadCard } from "features/cardCreator/stores/cardActions";
 import { selectCard } from "features/cardCreator/hooks/useCardInfo";
+import formatDisplayDate from "utils/formatDisplayDate";
 
 
 const SaveLocalMenu=({saveMode, close}:{saveMode: SaveMode, close: ()=>void})=>{
@@ -78,8 +79,8 @@ const SaveLocalMenu=({saveMode, close}:{saveMode: SaveMode, close: ()=>void})=>{
                 {sortedSaves.map((data)=>
                     <div className={`save-tab center-element-vertically`} key={data.id}>
                         {data.previewImg?<img className="save-preview-img" src={data.previewImg} alt="preview-save" />:<></>}
-                        <p className="created-time">Last updated: {data.updateTime}</p>
-                        <p className="created-time">Created: {data.saveTime}</p>
+                        <p className="created-time">Last updated: {formatDisplayDate(data.updateTime, { withTime: true })}</p>
+                        <p className="created-time">Created: {formatDisplayDate(data.saveTime, { withTime: true })}</p>
                         <div className="center-element save-tab-input-container">
                             <p>{data.name}</p>
                             <div onClick={()=>{

@@ -1,8 +1,9 @@
-import { useEffect, useCallback } from 'react'
-import { useForm, UseFormReturn, Path, UseFormRegisterReturn, FieldErrors } from 'react-hook-form'
+import { useEffect } from 'react'
+import { useForm, UseFormReturn, FieldErrors, DefaultValues } from 'react-hook-form'
 import { useAppDispatch } from 'stores/AppStore'
 import { useStatusEffect } from './useStatusEffect'
 import { useCardActions, useCardSelector } from './useCardInfo'
+import { RegisterNumber, useNumberRegister } from './useNumberRegister'
 import { SkillDetail } from 'features/cardCreator/types/SkillDetail'
 import { SkillType } from 'features/cardCreator/types/SkillTypes'
 import { getSkillData } from 'features/cardCreator/skills/skillData'
@@ -10,7 +11,7 @@ import { getSkillData } from 'features/cardCreator/skills/skillData'
 interface UseSkillFormReturn<T extends SkillDetail> extends UseFormReturn<T> {
     deleteSkill: () => void
     changeSkillType: (newType: SkillType) => void
-    registerNumber: (name: Path<T>) => UseFormRegisterReturn
+    registerNumber: RegisterNumber<T>
     errors: FieldErrors<T>
     skill: T
     keyWordList: { [key: string]: string }
@@ -24,9 +25,9 @@ export function useSkillForm<T extends SkillDetail>(index: number): UseSkillForm
 
     const keyWordList = useStatusEffect()
 
-    const form = useForm<T>({ defaultValues: structuredClone(skill) as any, mode: "onChange" })
+    const form = useForm<T>({ defaultValues: structuredClone(skill) as DefaultValues<T>, mode: "onChange" })
 
-    useEffect(() => { form.reset(structuredClone(skill) as any) }, [skill.inputId])
+    useEffect(() => { form.reset(structuredClone(skill) as DefaultValues<T>) }, [skill.inputId])
 
     useEffect(() => {
         const sub = form.watch((values) => {
@@ -41,20 +42,7 @@ export function useSkillForm<T extends SkillDetail>(index: number): UseSkillForm
         dispatch(updateSkill({ index, skill: getSkillData(newType).create() }))
     }
 
-    const registerNumber = useCallback((name: Path<T>) => {
-        const reg = form.register(name, {
-            valueAsNumber: true,
-        } as any)
-        return {
-            ...reg,
-            onBlur: async (e: any) => {
-                await reg.onBlur(e)
-                if (isNaN(e.target.valueAsNumber) || e.target.value === '') {
-                    form.setValue(name, 0 as any)
-                }
-            }
-        }
-    }, [form.register, form.setValue])
+    const registerNumber = useNumberRegister(form)
 
     const { errors } = form.formState
 

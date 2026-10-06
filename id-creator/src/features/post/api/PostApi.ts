@@ -1,21 +1,31 @@
 import { BaseApi } from "api/BaseApi";
 import IResponse from "types/IResponse";
 import { IPost } from "features/post/types/IPost";
+import { IPostDisplayCard } from "features/post/types/IPostDisplayCard";
+import { toPostDisplayCard } from "features/post/utils/toPostDisplayCard";
 import { PostSortOption } from "features/post/types/PostSortOptions";
 
-interface IGetPostsParams {
+export interface GetPostsFilter {
     title?: string
     tag?: string[]
     sortedBy?: PostSortOption
-    page: number
-    limit: number
     userId?: string
 }
 
-interface IGetPostsResponse {
-    list: IPost[]
+interface IGetPostsParams extends GetPostsFilter {
+    page: number
+    limit: number
+}
+
+interface IGetPostsResponse<T> {
+    list: T[]
     total: number
 }
+
+export const transformPostsResponse = (response: IResponse<IGetPostsResponse<IPost>>): IGetPostsResponse<IPostDisplayCard> => ({
+    list: response.data.list.map(toPostDisplayCard),
+    total: response.data.total,
+})
 
 interface ICreatePostBody {
     title: string
@@ -26,7 +36,7 @@ interface ICreatePostBody {
 
 export const PostApi = BaseApi.injectEndpoints({
     endpoints: (builder) => ({
-        getPosts: builder.query<IGetPostsResponse, IGetPostsParams>({
+        getPosts: builder.query<IGetPostsResponse<IPostDisplayCard>, IGetPostsParams>({
             query: ({ title = '', tag = [], sortedBy = "Latest", page, limit, userId }) => {
                 const params = new URLSearchParams({
                     Title: title,
@@ -38,7 +48,7 @@ export const PostApi = BaseApi.injectEndpoints({
                 if (userId) params.append('UserId', userId)
                 return `/Post?${params.toString()}`
             },
-            transformResponse: (response: IResponse<IGetPostsResponse>) => response.data,
+            transformResponse: transformPostsResponse,
             providesTags: ['Posts'],
         }),
 

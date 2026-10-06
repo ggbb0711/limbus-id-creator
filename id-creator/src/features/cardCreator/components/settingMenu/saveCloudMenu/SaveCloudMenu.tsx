@@ -12,7 +12,6 @@ import base64ToFile from "features/cardCreator/utils/image/base64ToFile";
 import "./SaveCloudMenu.css";
 import "../SettingMenu.css";
 import { CardInfo } from "features/cardCreator/types/CardInfo";
-import { useLoginMenu } from "hooks/useLoginMenu";
 import * as Sentry from "@sentry/nextjs"
 import useAlert from "hooks/useAlert";
 import formatDateForBackend from "features/cardCreator/utils/save/formatDateForBackend";
@@ -23,6 +22,8 @@ import { loadCard } from "features/cardCreator/stores/cardActions";
 import { selectCard } from "features/cardCreator/hooks/useCardInfo";
 import { toCardMode } from "features/cardCreator/contexts/CardModeContext";
 import { closeSettingMenu } from "features/cardCreator/stores/SettingMenuSlice";
+import Spinner from "components/ui/spinner/Spinner";
+import LoginPromptButton from "components/loginMenu/LoginPromptButton";
 import {
     useGetSaveListQuery,
     useLazyGetSaveQuery,
@@ -30,13 +31,14 @@ import {
     useUpdateSaveMutation,
     useDeleteSaveMutation,
 } from "features/cardCreator/api/SaveInfoApi";
+import formatDisplayDate from "utils/formatDisplayDate";
 
 function SaveCloudTab({saveName,saveDate,previewUrl,deleteSave,loadSave,overwriteSave}:{saveName:string,saveDate:string,previewUrl:string,deleteSave:()=>void,loadSave:()=>void,overwriteSave:()=>void}):ReactElement{
     return <div className="save-cloud-tab">
         <div className="center-element save-cloud-tab-content">
             <img className="preview-img" src={previewUrl} alt="preview-img" />
             <div style={{textAlign:"left"}}>
-                <p className="created-time">Updated: {saveDate}</p>
+                <p className="created-time">Updated: {formatDisplayDate(saveDate, { withTime: true })}</p>
                 <p>{saveName}</p>
             </div>
         </div>
@@ -61,7 +63,6 @@ export default function SaveCloudMenu({saveMode}:{saveMode:SaveMode}):ReactEleme
     const [searchSaveName,setSearchSaveName] = useState("")
     const [saveName,setSaveName] = useState("New save file")
     const {user: loginUser} = useAuth()
-    const {setIsLoginMenuActive} = useLoginMenu()
     const {addAlert} = useAlert()
     const cardDomRef = useCardDomRef()
     const dispatch = useAppDispatch()
@@ -182,7 +183,7 @@ export default function SaveCloudMenu({saveMode}:{saveMode:SaveMode}):ReactEleme
     }
 
     const loadCreateNewSaveButton = ()=>{
-        if(!loginUser) return <button className="main-button create-new-save-btn" onClick={()=>{setIsLoginMenuActive(true)}}>Login</button>
+        if(!loginUser) return <LoginPromptButton className="main-button create-new-save-btn"/>
         if(isCreating) return <button className="main-button active create-new-save-btn">{createSaveBtnLoadMsg}</button>
         return <button className="main-button create-new-save-btn" onClick={()=>setNamePopup(true)}>Create a new save</button>
     }
@@ -211,7 +212,7 @@ export default function SaveCloudMenu({saveMode}:{saveMode:SaveMode}):ReactEleme
             <input className="input save-cloud-name-input" name="searchCloudSaveName" id="searchCloudSaveName" type="text" placeholder="Save name" value={searchSaveName} onChange={(e)=>setSearchSaveName(e.target.value)}/>
         </div>
         <div className="save-menu-list-container">
-            {isLoadingSaveData?<div className="loading-cloud-tab"><div className="loader"></div></div>:<></>}
+            {isLoadingSaveData?<div className="loading-cloud-tab"><Spinner/></div>:<></>}
             <div className="save-menu-list">
                 {loginUser?<>
                     {saveList.map(save=><SaveCloudTab key={save.id} saveDate={save.saveTime} saveName={save.name} previewUrl={save.previewImg ?? ""}
@@ -219,7 +220,7 @@ export default function SaveCloudMenu({saveMode}:{saveMode:SaveMode}):ReactEleme
                 </>:
                     <div className="save-cloud-login-remainder">
                         <p>Please login to save to the cloud</p>
-                        <button className="main-button" onClick={()=>{setIsLoginMenuActive(true)}}>Login</button>
+                        <LoginPromptButton/>
                     </div>
                 }
             </div>
