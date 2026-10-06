@@ -5,7 +5,7 @@ import { IUserProfile } from "features/user/types/IUserProfile";
 const UserApi = BaseApi.injectEndpoints({
     endpoints: (builder) => ({
         getUser: builder.query<IUserProfile, string>({
-            query: (userId) => `/User/${userId}`,
+            query: (userId) => `/User/${encodeURIComponent(userId)}`,
             transformResponse: (response: IResponse<IUserProfile>) => response.data,
             providesTags: (result, error, userId) => [{ type: 'User', id: userId }],
         }),
@@ -16,7 +16,7 @@ const UserApi = BaseApi.injectEndpoints({
                 form.append('UserName', name)
                 if (iconFile) form.append('UserIconFile', iconFile)
                 return {
-                    url: `/User/${userId}`,
+                    url: `/User/${encodeURIComponent(userId)}`,
                     method: 'PUT',
                     body: form,
                 }

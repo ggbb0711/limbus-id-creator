@@ -2,16 +2,13 @@ import 'server-only'
 import { cache } from 'react'
 import { apiGet } from 'api/server/serverFetch'
 import { IPost } from 'features/post/types/IPost'
-import { IPostDisplayCard } from 'features/post/types/IPostDisplayCard'
+import { IPostList } from 'features/post/types/IPostList'
 import { toPostDisplayCard } from 'features/post/utils/toPostDisplayCard'
-import { GetPostsParams, buildPostsQuery } from 'features/post/api/buildPostsQuery'
+import { buildPostsQuery } from 'features/post/api/buildPostsQuery'
+import { GetPostsParams } from 'features/post/types/PostRequests'
 import { Result, fail, ok } from 'utils/result'
 import { reportError } from 'utils/reportError'
 
-export interface PostPage {
-    list: IPostDisplayCard[]
-    total: number
-}
 
 // cache() dedupes within one request, so generateMetadata + page share a single fetch.
 // Note: the backend logs a view on GET /Post/{id}; the client still requests the post itself
@@ -20,9 +17,9 @@ export const getPost = cache((postId: string) =>
     apiGet<IPost>(`/Post/${encodeURIComponent(postId)}`),
 )
 
-const fetchPostPage = cache(async (query: string): Promise<Result<PostPage>> => {
+const fetchPostPage = cache(async (query: string): Promise<Result<IPostList>> => {
     try {
-        const data = await apiGet<{ list: IPost[], total: number }>(`/Post?${query}`)
+        const data = await apiGet<IPostList<IPost>>(`/Post?${query}`)
         return ok({ list: (data?.list ?? []).map(toPostDisplayCard), total: data?.total ?? 0 })
     } catch (error) {
         reportError(error, { context: 'getPosts', extra: { query } })

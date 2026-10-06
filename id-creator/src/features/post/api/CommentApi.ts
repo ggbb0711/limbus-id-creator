@@ -1,34 +1,16 @@
-import { appConfig } from "config/env.client";
 import { BaseApi } from "api/BaseApi";
 import { PostApi } from "features/post/api/PostApi";
 import IResponse from "types/IResponse";
-import { IComment } from "features/post/types/IComment";
-
-interface IGetCommentsParams {
-    postId: string
-    page: number
-    limit: number
-}
-
-interface ICreateCommentBody {
-    postId: string
-    content: string
-}
-
-// Comments have no id, so identify them by author + creation time
-const commentKey = (c: IComment) => c.userId + c.created
+import { IComment, ICommentPage, ICreateCommentBody, IGetCommentsParams } from "features/post/types/IComment";
+import { appendCreatedComment, mergeCommentPage, toCommentPage, toWallClock } from "features/post/utils/comments";
 
 const CommentApi = BaseApi.injectEndpoints({
     endpoints: (builder) => ({
-        getComments: builder.query<IComment[], IGetCommentsParams>({
-            query: ({ postId, page, limit }) => `/Comment/post/${postId}?page=${page}&limit=${limit}`,
-            transformResponse: (response: IResponse<IComment[]>) => response.data,
+        getComments: builder.query<ICommentPage, IGetCommentsParams>({
+            query: ({ postId, page, limit }) => `/Comment/post/${encodeURIComponent(postId)}?${new URLSearchParams({ page: String(page), limit: String(limit) })}`,
+            transformResponse: (response: IResponse<IComment[]>, _meta, { limit }) => toCommentPage(response.data ?? [], limit),
             serializeQueryArgs: ({ queryArgs }) => queryArgs.postId,
-            merge: (currentCache, newItems, { arg }) => {
-                if (arg.page === 0) return newItems
-                const existing = new Set(currentCache.map(commentKey))
-                currentCache.push(...newItems.filter(c => !existing.has(commentKey(c))))
-            },
+            merge: (currentCache, incoming, { arg }) => mergeCommentPage(currentCache, incoming, arg.page),
             forceRefetch: ({ currentArg, previousArg }) => currentArg !== previousArg,
             providesTags: (result, error, { postId }) => [{ type: 'Comment', id: postId }],
         }),
@@ -40,12 +22,10 @@ const CommentApi = BaseApi.injectEndpoints({
                 headers: { 'Content-type': 'application/json' },
                 body,
             }),
-            transformResponse: (response: IResponse<IComment>) => response.data,
+            transformResponse: (response: IResponse<IComment>) => ({ ...response.data, created: toWallClock(response.data.created) }),
             async onQueryStarted({ postId }, { dispatch, queryFulfilled }) {
                 const { data } = await queryFulfilled
-                dispatch(CommentApi.util.updateQueryData('getComments', { postId, page: 0, limit: appConfig.paging.commentsPerPage }, draft => {
-                    draft.push(data)
-                }))
+                dispatch(CommentApi.util.updateQueryData('getComments', { postId, page: 0, limit: 0 }, draft => appendCreatedComment(draft, data)))
                 dispatch(PostApi.util.updateQueryData('getPost', postId, draft => {
                     draft.commentCount += 1
                 }))

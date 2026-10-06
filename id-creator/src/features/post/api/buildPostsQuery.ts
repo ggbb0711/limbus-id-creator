@@ -1,16 +1,4 @@
-import { PostSortOption } from "features/post/types/PostSortOptions"
-
-export interface GetPostsFilter {
-    title?: string
-    tag?: string[]
-    sortedBy?: PostSortOption
-    userId?: string
-}
-
-export interface GetPostsParams extends GetPostsFilter {
-    page: number
-    limit: number
-}
+import { GetPostsParams } from "features/post/types/PostRequests"
 
 export function buildPostsQuery({ title = "", tag = [], sortedBy = "Latest", page, limit, userId }: GetPostsParams): string {
     const params = new URLSearchParams({

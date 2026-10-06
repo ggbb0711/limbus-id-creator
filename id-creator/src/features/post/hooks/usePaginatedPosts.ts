@@ -4,17 +4,13 @@ import { appConfig } from "config/env.client"
 import getApiErrorMessage from "api/getApiErrorMessage"
 import { useAddAlert } from "hooks/useAddAlert"
 import { useGetPostsQuery } from "features/post/api/PostApi"
-import { GetPostsFilter, buildPostsQuery } from "features/post/api/buildPostsQuery"
-import { IPostDisplayCard } from "features/post/types/IPostDisplayCard"
-
-export interface PostPage {
-    list: IPostDisplayCard[]
-    total: number
-}
+import { buildPostsQuery } from "features/post/api/buildPostsQuery"
+import { GetPostsFilter } from "features/post/types/PostRequests"
+import { IPostList } from "features/post/types/IPostList"
 
 export interface InitialPostPage {
     query: string
-    data: PostPage
+    data: IPostList
 }
 
 export function usePaginatedPosts(page: number, filter: GetPostsFilter = {}, initial?: InitialPostPage) {

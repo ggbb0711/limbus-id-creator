@@ -14,7 +14,7 @@ import { SITE_LINKS } from "config/siteLinks";
 export const SIDE_BAR_ID = "site-sidebar"
 
 export default function SideBar({ isActive, setActiveSideBar }: { isActive: boolean, setActiveSideBar: (a: boolean) => void }) {
-    const { user: loginUser } = useAuth()
+    const { user: loginUser, isInitializing } = useAuth()
     const outlineRef = useRef<HTMLDivElement>(null)
     const close = () => setActiveSideBar(false)
     useDialog(isActive, close, outlineRef)
@@ -28,7 +28,7 @@ export default function SideBar({ isActive, setActiveSideBar }: { isActive: bool
                 </Link>
                 <div className="side-bar-nav">
                     {NAV_LINKS.map(link => <Link key={link.href} href={link.href} onClick={close} className="main-button nav-button">{link.label}</Link>)}
-                    {loginUser ?
+                    {isInitializing ? null : loginUser ?
                         <Link href={"/user/" + loginUser.id} onClick={close} className="main-button">My account</Link> :
                         <LoginPromptButton className="main-button nav-button" onClick={close}/>}
                     {loginUser && <Link href="/new-post" onClick={close} className="main-button">Post</Link>}

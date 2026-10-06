@@ -1,102 +1,30 @@
-'use client'
-import React, { useState, useEffect, useRef } from "react";
-import { ReactElement } from "react";
+import React, { ReactElement } from "react";
 import { IPost } from "features/post/types/IPost";
 import { getTag } from "features/post/utils/TagList";
 import TagChip from "features/post/components/tagChip/TagChip";
-import Image from "next/image";
-import ArrowDownIcon from "assets/icons/ArrowDownIcon";
-import ArrowUpIcon from "assets/icons/ArrowUpIcon";
-import CloseIcon from "assets/icons/CloseIcon";
-import { UserProfileLoading } from "features/user";
-import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
+import AuthorBadge from "features/post/components/authorBadge/AuthorBadge";
 import formatDisplayDate from "utils/formatDisplayDate";
+import PostCarousel from "./PostCarousel";
+import LivePostStats from "./LivePostStats";
 import "./Post.css";
 import "../shared/Style.css"
-import Spinner from "components/ui/spinner/Spinner";
-import IconButton from "components/ui/iconButton/IconButton";
-import { useDialog } from "components/ui/dialog/useDialog";
-import AuthorBadge from "features/post/components/authorBadge/AuthorBadge";
-import PostStats from "features/post/components/postStats/PostStats";
 
-function ViewImagePopUp({images,index=0,isActive,closeFn}:{images:string[],index:number,isActive:boolean,closeFn:()=>void}){
-    const [currChoice,setCurrChoice] = useState(index)
-    
-    const containerRef = useRef<HTMLDivElement>(null)
-
-    useEffect(()=>{setCurrChoice(index)},[index])
-
-    function close(){
-        setCurrChoice(index)
-        closeFn()
-    }
-
-    useDialog(isActive, close, containerRef)
-
-    return <>
-        {isActive?<div className="image-pop-up-container" ref={containerRef} role="dialog" aria-modal="true" aria-label="Image viewer" tabIndex={-1}>
-            <TransformWrapper minScale={0.05} maxScale={3} limitToBounds={false} doubleClick={{disabled:true}}>
-                <TransformComponent wrapperStyle={{width:"100%",height:"100%"}}>
-                    {images.map((image,i)=><img key={i} src={image} alt="view-img" className={`image-pop-up ${i!=currChoice?"hidden":""}`} />)}
-                </TransformComponent>
-            </TransformWrapper>
-            <IconButton className="image-pop-up-close" label="Close image viewer" onClick={close}>
-                <CloseIcon/>
-            </IconButton>
-            {currChoice>0&&<IconButton className="image-pop-up-arrow left" label="Previous image" onClick={()=>setCurrChoice(currChoice-1)}>
-                <ArrowDownIcon/>
-            </IconButton>}
-            {currChoice<images.length-1&&<IconButton className="image-pop-up-arrow right" label="Next image" onClick={()=>setCurrChoice(currChoice+1)}>
-                <ArrowUpIcon/>
-            </IconButton>}
+export default function Post({ post }: { post: IPost }): ReactElement {
+    return <article className="post-container post-page-element-container">
+        <h1 className="post-title">{post.title}</h1>
+        <p className="post-date">Posted: {formatDisplayDate(post.created)}</p>
+        <div className="post-author-container">
+            <div className="center-element">
+                <AuthorBadge userId={post.userId} userName={post.userName} userIcon={post.userIcon} size={80} iconClassName="post-author-icon"/>
+            </div>
         </div>
-        :<></>}
-    </>
-}
-
-function PostCarousel({postImages}:{postImages:string[]}){
-    const [currImg,setCurrImg] = useState(0)
-    const [isViewModeActive,setIsViewModeActive] = useState(false)
-    
-    return <div className="post-carousel-container">
-        {currImg>0&&<IconButton className="post-carousel-arrow left" label="Previous image" onClick={()=>setCurrImg(currImg-1)}>
-            <ArrowDownIcon/>
-        </IconButton>}
-        {postImages.map((image,i)=><Image key={i} className={`post-img ${i!=currImg?"hidden":""}`} src={image} alt="card-img" fill sizes="(max-width: 1200px) 100vw, 1200px" quality={90} preload={i===0} style={{objectFit:"contain"}} onClick={()=>{
-                setIsViewModeActive(true)
-            }}/>)}
-        <ViewImagePopUp images={postImages} index={currImg} isActive={isViewModeActive} closeFn={()=>{
-                setIsViewModeActive(false)
-            }}/>
-        {currImg<postImages.length-1&&<IconButton className="post-carousel-arrow right" label="Next image" onClick={()=>setCurrImg(currImg+1)}>
-            <ArrowUpIcon/>
-        </IconButton>}
-        
-    </div>
-}
-
-export default function Post({post,isLoading}:{post:IPost|null,isLoading:boolean}):ReactElement{
-    return <div className="post-container post-page-element-container">
-        {!post?<div>Post not found</div>:<>
-            <h1 className="post-title">{post.title}</h1>
-            {isLoading?<></>:<p className="post-date">Posted: {formatDisplayDate(post.created)}</p>}
-            <div className="post-author-container">
-                <div className="center-element">
-                    {isLoading?<UserProfileLoading/>:
-                    <AuthorBadge userId={post.userId} userName={post.userName} userIcon={post.userIcon} size={80} iconClassName="post-author-icon"/>}
-                </div>
-            </div>
-            <div className="center-element">
-                {post.tags.map((tag)=><TagChip key={tag} tag={getTag(tag)} className="card-tag center-element" iconClassName="card-tag-img" iconSize={10}/>)}
-            </div>
-            {isLoading?<div className="post-img-loader">
-                <Spinner/>
-            </div>:<PostCarousel postImages={post.imagesAttach} />}
-            <div className="description-txt" dangerouslySetInnerHTML={{__html:post.description}}>
-            </div>
-            <div className="center-element">
-                <PostStats viewCount={post.viewCount} commentCount={post.commentCount} itemClassName="card-tag center-element" iconSize={16}/>
-            </div>
-        </>}
-    </div>
+        <div className="center-element">
+            {post.tags.map(tag => <TagChip key={tag} tag={getTag(tag)} className="card-tag center-element" iconClassName="card-tag-img" iconSize={10}/>)}
+        </div>
+        <PostCarousel images={post.imagesAttach} title={post.title}/>
+        <div className="description-txt" dangerouslySetInnerHTML={{ __html: post.description }}></div>
+        <div className="center-element">
+            <LivePostStats initialPost={post}/>
+        </div>
+    </article>
 }

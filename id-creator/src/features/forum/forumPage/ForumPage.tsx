@@ -38,7 +38,7 @@ export default function ForumPage({ initialPosts }: { initialPosts?: InitialPost
         setSearchPostName(urlSearch)
     }
 
-    const { user } = useAuth()
+    const { user, isInitializing } = useAuth()
 
     const updateQuery = useCallback((next: ForumQueryUpdate, mode: HistoryMode = "push") => {
         const query = buildForumQuery(window.location.search, next)
@@ -80,7 +80,7 @@ export default function ForumPage({ initialPosts }: { initialPosts?: InitialPost
                 </div>
             </div>
             <div className="forum-new-post-container">
-                {user ?
+                {isInitializing ? null : user ?
                     <Link href="/new-post" className="main-button">Create new Post</Link> :
                     <LoginPromptButton>Login to post</LoginPromptButton>
                 }

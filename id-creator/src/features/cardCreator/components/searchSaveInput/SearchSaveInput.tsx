@@ -6,7 +6,7 @@ import { useCombobox } from "hooks/useCombobox";
 import { useGetSaveListQuery } from "features/cardCreator/api/SaveInfoApi";
 import formatDisplayDate from "utils/formatDisplayDate";
 
-export default function SearchSaveInput({ userId, saveMode, chooseSave }: { userId: string, saveMode: SaveMode, chooseSave: (saveUrl: string) => void }): ReactElement {
+export default function SearchSaveInput({ userId, saveMode, chooseSave, inputId }: { userId: string, saveMode: SaveMode, chooseSave: (saveUrl: string) => void, inputId?: string }): ReactElement {
     const [searchName, setSearchName] = useState("")
 
     const { data: saveList = [] } = useGetSaveListQuery(
@@ -25,7 +25,7 @@ export default function SearchSaveInput({ userId, saveMode, chooseSave }: { user
     })
 
     return <div className="post-save-mode-input-container" ref={containerRef}>
-        <input type="text" className="input post-save-input" placeholder="ID/EGO name" aria-label="Search your saves" value={searchName}
+        <input type="text" id={inputId} className="input post-save-input" placeholder="ID/EGO name" aria-label={inputId ? undefined : "Search your saves"} value={searchName}
             {...combobox.inputProps}
             onChange={(e) => {
                 setSearchName(e.target.value)
