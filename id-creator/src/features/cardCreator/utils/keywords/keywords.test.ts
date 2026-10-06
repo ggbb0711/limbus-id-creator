@@ -51,7 +51,7 @@ describe('buildCustomEffectKeywords', () => {
     it('adds coin variants only for coin effects', () => {
         const result = buildCustomEffectKeywords([createCustomEffect({ name: 'Burn', isCoinType: true })])
         expect(Object.keys(result)).toHaveLength(10)
-        expect(result.coin_3_burn).toContain("data-custom-coin-effect='coin-effect-3-custom-burn'")
+        expect(result.coin_3_burn).toContain('data-custom-coin-effect="coin-effect-3-custom-burn"')
     })
 
     it('escapes names and drops unsafe colours and image urls', () => {
@@ -68,14 +68,14 @@ describe('buildCustomEffectKeywords', () => {
 
     it('keeps safe custom images', () => {
         const html = buildCustomEffectKeywords([createCustomEffect({ name: 'Icon', customImg: 'data:image/png;base64,AAA' })]).icon
-        expect(html).toContain("src='data:image/png;base64,AAA'")
+        expect(html).toContain('src="data:image/png;base64,AAA"')
     })
 })
 
 describe('buildLocalKeywords', () => {
     it('keys keywords by their normalised name and escapes them', () => {
         const result = buildLocalKeywords([{ customKeywordID: '1', keyword: 'Big <Hit>', color: '#00ff00' }])
-        expect(result).toEqual({ 'big_<hit>': "<span class='center-element' contenteditable='false' style='color:#00ff00;'>Big &lt;Hit&gt;</span>" })
+        expect(result).toEqual({ 'big_<hit>': '<span class="center-element" contenteditable="false" style="color:#00ff00;">Big &lt;Hit&gt;</span>' })
     })
 
     it('normalises keys the same way as custom effects', () => {

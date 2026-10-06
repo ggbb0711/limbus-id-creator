@@ -20,6 +20,7 @@
     "colord": "^2.10.0",
     "dexie": "^4.2.0",
     "filesize": "^11.0.25",
+    "isomorphic-dompurify": "^4.5.0",
     "modern-screenshot": "^4.6.8",
     "next": "^16.3.6",
     "react": "^19.3.0",

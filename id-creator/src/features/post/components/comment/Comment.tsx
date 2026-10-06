@@ -10,6 +10,7 @@ import Spinner from "components/ui/spinner/Spinner";
 import formatDisplayDate from "utils/formatDisplayDate";
 import BusyButton from "components/ui/busyButton/BusyButton";
 import AuthorBadge from "features/post/components/authorBadge/AuthorBadge";
+import { sanitizePostHtml } from "utils/sanitizeHtml"
 
 function Comment({ comment }: { comment: IComment }) {
     return <div className="post-comment-container post-page-element-container">
@@ -20,7 +21,7 @@ function Comment({ comment }: { comment: IComment }) {
                 </div>
             </div>
             <p className="post-date">Posted: {formatDisplayDate(comment.created)}</p>
-            <div className="description-txt" dangerouslySetInnerHTML={{ __html: comment.content }}></div>
+            <div className="description-txt" dangerouslySetInnerHTML={{ __html: sanitizePostHtml(comment.content) }}></div>
         </div>
     </div>
 }
@@ -88,7 +89,6 @@ export function PostCommentInput({ authorIcon, authorName, createComment }: Post
             <Image className="post-author-icon-small" src={authorIcon} alt="" width={32} height={32} />
             <p className="post-author-name">{authorName}</p>
         </div>
-        {/* The named Editor needs a provider (it used to be global in App/Provider.tsx) */}
         <EditorProvider>
             <Editor className="input comment-input" name="comment" id="comment" aria-label="Write a comment" value={commentValue} onChange={(e) => setCommentValue(e.target.value)}/>
         </EditorProvider>

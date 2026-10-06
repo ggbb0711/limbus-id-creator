@@ -2,6 +2,7 @@ import { ICustomKeyword } from "features/cardCreator/types/ICustomKeyword"
 import { SkillDetail, isSkillType } from "features/cardCreator/types/SkillDetail"
 import { ICustomEffect } from "features/cardCreator/types/skills/customEffect/ICustomEffect"
 import { escapeHtml, isSafeCssColor, isSafeImageUrl } from "features/cardCreator/utils/keywords/escapeHtml"
+import { sanitizeCardHtml } from "utils/sanitizeHtml"
 
 export type KeywordMap = Readonly<Record<string, string>>
 
@@ -40,11 +41,11 @@ const customImage = (src: string) =>
     src && isSafeImageUrl(src) ? `<img class='status-icon' src='${escapeHtml(src)}' alt='custom_icon' />` : ""
 
 export function customEffectHtml(effect: ICustomEffect): string {
-    return `<span class='center-element' contenteditable='false' style='${colorStyle(effect.effectColor)}text-decoration:underline;'>${customImage(effect.customImg)}${escapeHtml(effect.name)}</span>`
+    return sanitizeCardHtml(`<span class='center-element' contenteditable='false' style='${colorStyle(effect.effectColor)}text-decoration:underline;'>${customImage(effect.customImg)}${escapeHtml(effect.name)}</span>`)
 }
 
 export function customCoinEffectHtml(effect: ICustomEffect, statusKey: string, coinNo: number): string {
-    return `<span class='center-element' contenteditable='false'><img class='status-icon' src='/Images/status-effect/Coin_Effect_${coinNo}.webp' alt='coin-effect-${coinNo}' /> <span class='center-element' contenteditable='false' data-custom-coin-effect='coin-effect-${coinNo}-custom-${escapeHtml(statusKey)}' style='${colorStyle(effect.effectColor)}text-decoration:underline;'>${customImage(effect.customImg)}${escapeHtml(effect.name)}</span></span>`
+    return sanitizeCardHtml(`<span class='center-element' contenteditable='false'><img class='status-icon' src='/Images/status-effect/Coin_Effect_${coinNo}.webp' alt='coin-effect-${coinNo}' /> <span class='center-element' contenteditable='false' data-custom-coin-effect='coin-effect-${coinNo}-custom-${escapeHtml(statusKey)}' style='${colorStyle(effect.effectColor)}text-decoration:underline;'>${customImage(effect.customImg)}${escapeHtml(effect.name)}</span></span>`)
 }
 
 export function buildCustomEffectKeywords(skills: readonly SkillDetail[]): Record<string, string> {
@@ -64,6 +65,6 @@ export function buildCustomEffectKeywords(skills: readonly SkillDetail[]): Recor
 export function buildLocalKeywords(keywords: readonly ICustomKeyword[]): Record<string, string> {
     return Object.fromEntries(keywords.map(keyword => [
         toKeywordKey(keyword.keyword),
-        `<span class='center-element' contenteditable='false' style='${colorStyle(keyword.color)}'>${escapeHtml(keyword.keyword)}</span>`,
+        sanitizeCardHtml(`<span class='center-element' contenteditable='false' style='${colorStyle(keyword.color)}'>${escapeHtml(keyword.keyword)}</span>`),
     ]))
 }

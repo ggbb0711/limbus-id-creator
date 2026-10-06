@@ -59,4 +59,12 @@ describe('CommentContainer', () => {
         const { container } = render(<CommentContainer comments={[{ userId: 'u', userName: 'n', userIcon: '/u.webp', postId: 'p', content: '<p>Hi</p>', created: '2024-01-01T00:00:00' }]} loadMore={jest.fn()} isLoading={false} hasMore={false}/>)
         expect(container.querySelector('div.description-txt > p')).toHaveTextContent('Hi')
     })
+
+    it('strips script handlers from comment html but keeps the text', () => {
+        const { container } = render(<CommentContainer comments={[{ userId: 'u', userName: 'n', userIcon: '/u.webp', postId: 'p', content: '<img src=x onerror="alert(1)">Hi <a href="javascript:alert(1)">there</a>', created: '2024-01-01T00:00:00' }]} loadMore={jest.fn()} isLoading={false} hasMore={false}/>)
+        const body = container.querySelector('.description-txt') as HTMLElement
+        expect(body.querySelector('[onerror]')).toBeNull()
+        expect(body.querySelector('a')?.getAttribute('href')).toBeFalsy()
+        expect(body.textContent).toBe('Hi there')
+    })
 })

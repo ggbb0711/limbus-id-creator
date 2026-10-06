@@ -10,6 +10,7 @@ import ShareMenu from "features/post/components/shareMenu/ShareMenu";
 import "./Post.css";
 import "../shared/Style.css"
 import SectionErrorBoundary from "components/errorBoundary/SectionErrorBoundary";
+import { sanitizePostHtml } from "utils/sanitizeHtml";
 
 export default function Post({ post }: { post: IPost }): ReactElement {
     return <article className="post-container post-page-element-container">
@@ -26,9 +27,9 @@ export default function Post({ post }: { post: IPost }): ReactElement {
         <SectionErrorBoundary context="postCarousel" label="post images">
             <PostCarousel images={post.imagesAttach} title={post.title}/>
         </SectionErrorBoundary>
-        <div className="description-txt" dangerouslySetInnerHTML={{ __html: post.description }}></div>
+        <div className="description-txt" dangerouslySetInnerHTML={{ __html: sanitizePostHtml(post.description) }}></div>
         <div className="center-element">
-            <LivePostStats initialPost={post}/>
+            <LivePostStats postId={post.id} viewCount={post.viewCount} commentCount={post.commentCount}/>
             <ShareMenu postId={post.id} title={post.title} triggerClassName="card-tag center-element" iconSize={16}/>
         </div>
     </article>

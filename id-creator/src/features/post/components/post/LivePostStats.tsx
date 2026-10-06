@@ -2,11 +2,16 @@
 import React, { ReactElement } from "react";
 import { useAuth } from "hooks/useAuth";
 import { useGetPostQuery } from "features/post/api/PostApi";
-import { IPost } from "features/post/types/IPost";
 import PostStats from "features/post/components/postStats/PostStats";
 
-export default function LivePostStats({ initialPost }: { initialPost: IPost }): ReactElement {
+interface LivePostStatsProps {
+    postId: string
+    viewCount: number
+    commentCount: number
+}
+
+export default function LivePostStats({ postId, viewCount, commentCount }: LivePostStatsProps): ReactElement {
     const { isInitializing } = useAuth()
-    const { data: post = initialPost } = useGetPostQuery(initialPost.id, { skip: isInitializing })
-    return <PostStats viewCount={post.viewCount} commentCount={post.commentCount} itemClassName="card-tag center-element" iconSize={16}/>
+    const { data } = useGetPostQuery(postId, { skip: isInitializing })
+    return <PostStats viewCount={data?.viewCount ?? viewCount} commentCount={data?.commentCount ?? commentCount} itemClassName="card-tag center-element" iconSize={16}/>
 }
