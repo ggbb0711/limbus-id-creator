@@ -6,6 +6,7 @@ import { clampPanelWidth, parseSavedWidth } from "features/cardCreator/utils/lay
 import InfoStatPage from "../inputStatPage/InfoStatPage";
 import InputTabSide from "../inputTabSide/InputTabSide";
 import { useAddAlert } from "hooks/useAddAlert";
+import { readStorage, writeStorage } from "utils/storage";
 import { useAppDispatch } from "stores/AppStore";
 import { useCardActions, useCardSelector } from "features/cardCreator/hooks/useCardInfo";
 import { SkillDetail } from "features/cardCreator/types/SkillDetail";
@@ -13,7 +14,7 @@ import { SkillDetail } from "features/cardCreator/types/SkillDetail";
 const STORAGE_KEY = "inputPanelWidth"
 
 function getSavedWidth(): number {
-    return parseSavedWidth(localStorage.getItem(STORAGE_KEY))
+    return parseSavedWidth(readStorage(STORAGE_KEY))
 }
 
 export default function InputTabContainer({
@@ -65,7 +66,7 @@ export default function InputTabContainer({
                 return
             }
             setPanelWidth(resize.width)
-            localStorage.setItem(STORAGE_KEY, String(resize.width))
+            writeStorage(STORAGE_KEY, String(resize.width))
         }
 
         const handleMouseUp = () => {

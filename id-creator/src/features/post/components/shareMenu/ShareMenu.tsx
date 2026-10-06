@@ -6,6 +6,8 @@ import "./ShareMenu.css"
 import ShareIcon from "assets/icons/ShareIcon";
 import LinkIcon from "assets/icons/LinkIcon";
 import { useAddAlert } from "hooks/useAddAlert";
+import { useClickOutside } from "hooks/useClickOutside";
+import { copyToClipboard } from "utils/copyToClipboard";
 import { cycleIndex } from "hooks/useCombobox";
 import { reportError } from "utils/reportError";
 import { absolutePostUrl } from "features/post/utils/postMetadata";
@@ -49,20 +51,16 @@ export default function ShareMenu({ postId, title, triggerClassName, iconSize }:
         items()[0]?.focus()
     }, [isOpen])
 
+    useClickOutside([menuRef, triggerRef], isOpen, () => setIsOpen(false))
+
     useEffect(() => {
         if (!isOpen) return
-        const onPointerDown = (event: MouseEvent) => {
-            const target = event.target as Node
-            if (!menuRef.current?.contains(target) && !triggerRef.current?.contains(target)) setIsOpen(false)
-        }
         const onViewportChange = (event: Event) => {
             if (!menuRef.current?.contains(event.target as Node)) setIsOpen(false)
         }
-        document.addEventListener("mousedown", onPointerDown)
         window.addEventListener("scroll", onViewportChange, true)
         window.addEventListener("resize", onViewportChange)
         return () => {
-            document.removeEventListener("mousedown", onPointerDown)
             window.removeEventListener("scroll", onViewportChange, true)
             window.removeEventListener("resize", onViewportChange)
         }
@@ -97,13 +95,13 @@ export default function ShareMenu({ postId, title, triggerClassName, iconSize }:
 
     async function copyLink() {
         close(true)
-        try {
-            await navigator.clipboard.writeText(url)
+        const result = await copyToClipboard(url)
+        if (result.ok) {
             addAlert("Success", "Link copied")
-        } catch (error) {
-            reportError(error, { context: "copyPostLink" })
-            addAlert("Failure", "Couldn't copy the link")
+            return
         }
+        reportError(result.error, { context: "copyPostLink" })
+        addAlert("Failure", "Couldn't copy the link")
     }
 
     async function shareNatively() {

@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { DefaultValues, useForm } from "react-hook-form"
 import { useCardEditor } from "features/cardCreator/editors/CardEditorContext"
 import { CardInfo } from "features/cardCreator/types/CardInfo"
@@ -12,11 +12,20 @@ export function useInfoForm<T extends CardInfo>() {
     const form = useForm<T>({ defaultValues: structuredClone(value) as DefaultValues<T> })
     const registerNumber = useNumberRegister(form)
     const { reset, watch } = form
-
-    useEffect(() => { reset(structuredClone(value)) }, [JSON.stringify(value)])
+    const lastDispatched = useRef<CardInfo>(value)
 
     useEffect(() => {
-        const subscription = watch(values => dispatch(editor.setInfo(structuredClone(values) as T)))
+        if (value === lastDispatched.current) return
+        lastDispatched.current = value
+        reset(structuredClone(value) as DefaultValues<T>)
+    }, [value, reset])
+
+    useEffect(() => {
+        const subscription = watch(values => {
+            const info = structuredClone(values) as T
+            lastDispatched.current = info
+            dispatch(editor.setInfo(info))
+        })
         return () => subscription.unsubscribe()
     }, [watch, dispatch, editor])
 

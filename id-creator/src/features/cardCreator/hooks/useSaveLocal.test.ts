@@ -40,25 +40,44 @@ describe('useSaveLocal', () => {
         const { result } = await renderReady()
 
         await act(async () => expect(await result.current.createSave(makeSave('a'))).toBe(true))
-        expect(result.current.saveData.map(save => save.id)).toEqual(['a'])
+        await waitFor(() => expect(result.current.saveData.map(save => save.id)).toEqual(['a']))
 
         await act(async () => expect(await result.current.changeSaveName('a', 'Renamed')).toBe(true))
-        expect(result.current.saveData[0].name).toBe('Renamed')
+        await waitFor(() => expect(result.current.saveData[0].name).toBe('Renamed'))
         expect((await indexDB.IdLocalSaves.get('a'))?.name).toBe('Renamed')
 
         await act(async () => expect(await result.current.overwriteSave('a', createIdInfo({ title: 'New' }))).toBe(true))
-        expect(result.current.saveData[0].saveInfo.title).toBe('New')
+        await waitFor(() => expect(result.current.saveData[0].saveInfo.title).toBe('New'))
         expect((await indexDB.IdLocalSaves.get('a'))?.saveInfo.title).toBe('New')
 
         await act(async () => expect(await result.current.deleteSave('a')).toBe(true))
-        expect(result.current.saveData).toEqual([])
+        await waitFor(() => expect(result.current.saveData).toEqual([]))
         expect(await indexDB.IdLocalSaves.count()).toBe(0)
+    })
+
+    it('reflects writes made outside the hook', async () => {
+        const { result } = await renderReady()
+        await act(async () => { await indexDB.IdLocalSaves.put(makeSave('external')) })
+        await waitFor(() => expect(result.current.saveData.map(save => save.id)).toEqual(['external']))
+    })
+
+    it('only lists saves of its own mode', async () => {
+        await indexDB.EgoLocalSaves.put(makeSave('ego'))
+        const { result } = await renderReady()
+        expect(result.current.saveData).toEqual([])
+        await indexDB.EgoLocalSaves.clear()
+    })
+
+    it('reports loading until the first read finishes', async () => {
+        const { result } = renderHook(() => useSaveLocal(idEditor))
+        expect(result.current.isLoading).toBe(true)
+        await waitFor(() => expect(result.current.isLoading).toBe(false))
     })
 
     it('loads a single migrated save', async () => {
         await indexDB.IdLocalSaves.put(makeSave('b'))
         const { result } = await renderReady()
-        let loaded: LocalSave | null = null
+        let loaded = null as LocalSave | null
         await act(async () => { loaded = await result.current.loadSave('b') })
         expect(loaded?.saveInfo.title).toBe('b')
     })
@@ -75,6 +94,7 @@ describe('useSaveLocal', () => {
         jest.spyOn(indexDB.IdLocalSaves, 'add').mockRejectedValueOnce(new Error('quota'))
         await act(async () => expect(await result.current.createSave(makeSave('c'))).toBe(false))
         expect(result.current.saveData).toEqual([])
+        expect(result.current.isLoading).toBe(false)
         expect(addAlert).toHaveBeenCalledWith('Failure', 'Could not create the save')
     })
 
@@ -82,5 +102,6 @@ describe('useSaveLocal', () => {
         jest.spyOn(indexDB.IdLocalSaves, 'toArray').mockRejectedValueOnce(new Error('blocked'))
         renderHook(() => useSaveLocal(idEditor))
         await waitFor(() => expect(addAlert).toHaveBeenCalledWith('Failure', 'Could not read your local saves'))
+        expect(addAlert).toHaveBeenCalledTimes(1)
     })
 })

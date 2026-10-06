@@ -1,9 +1,6 @@
 import { PostSortOption, TagKey, isPostSortOption, isTagKey } from "features/post"
 
-import { parsePage } from "utils/parsePage"
-
-export { tagKeyOf } from "features/post"
-export { parsePage }
+import { parsePage, withPage } from "utils/parsePage"
 
 export interface ForumQueryUpdate {
     q?: string
@@ -55,8 +52,5 @@ export function buildForumQuery(current: URLSearchParams | string, next: ForumQu
         if (next.sort === "Latest") params.delete("sort")
         else params.set("sort", next.sort)
     }
-    const page = next.page ?? 0
-    if (page > 0) params.set("page", String(page))
-    else params.delete("page")
-    return params.toString()
+    return withPage(params.toString(), next.page ?? 0)
 }

@@ -9,6 +9,7 @@ import { InitialPostPage, PaginatedPost, PostSortOption, TagInput, TagList, Tags
 import "./ForumPage.css"
 import DropDown, { DropDownOption } from "components/ui/dropDown/DropDown";
 import { useAuth } from "hooks/useAuth";
+import { useDebouncedValue } from "hooks/useDebouncedValue";
 import { ForumQueryUpdate, buildForumQuery, parseForumParams } from "features/forum/utils/forumQuery";
 import LoginPromptButton from "components/loginMenu/LoginPromptButton";
 
@@ -47,11 +48,12 @@ export default function ForumPage({ initialPosts }: { initialPosts?: InitialPost
         else router.replace(url, { scroll: false })
     }, [pathname, router])
 
+    const debouncedSearch = useDebouncedValue(searchPostName, appConfig.timing.searchDebounceMs)
+
     useEffect(() => {
-        if (searchPostName === urlSearch) return
-        const timeout = setTimeout(() => updateQuery({ q: searchPostName }, "replace"), appConfig.timing.searchDebounceMs)
-        return () => clearTimeout(timeout)
-    }, [searchPostName, urlSearch, updateQuery])
+        if (debouncedSearch !== searchPostName || debouncedSearch === urlSearch) return
+        updateQuery({ q: debouncedSearch }, "replace")
+    }, [debouncedSearch, searchPostName, urlSearch, updateQuery])
 
     const { postList, maxCount, pageSize, isLoading, error, refetch } = usePaginatedPosts(currPage, {
         title: urlSearch,

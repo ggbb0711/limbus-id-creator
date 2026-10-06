@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import "./SkillEffect.css"
-import { sanitizeCardHtml } from "utils/sanitizeHtml";
+import { sanitizeCardHtml } from "utils/htmlUtils";
 
 export default function SkillEffect({effect}:{effect:string}):ReactElement{
     

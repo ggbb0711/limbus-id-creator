@@ -277,11 +277,6 @@ button{
 
 
 
-/* Style for the wysiwyg simple editor */
-.rsw-ce{
-    height: 150px;
-    overflow-y: auto;
-}
 
 @keyframes rotate {
     100%   {transform: rotate(360deg)}

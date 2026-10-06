@@ -7,7 +7,7 @@ import { useAuth } from "hooks/useAuth";
 import { useCreateCommentMutation, useGetCommentsQuery } from "features/post/api/CommentApi";
 import getApiErrorMessage from "api/getApiErrorMessage";
 import LoginPromptButton from "components/loginMenu/LoginPromptButton";
-import stripHtml from "utils/stripHtml";
+import { stripHtml } from "utils/htmlUtils";
 
 export default function PostComments({ postId }: { postId: string }): ReactElement {
     const addAlert = useAddAlert()

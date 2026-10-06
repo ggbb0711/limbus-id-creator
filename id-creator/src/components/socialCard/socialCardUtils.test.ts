@@ -1,4 +1,4 @@
-import { isSupportedImageType, supportedDataUrl, truncateText } from './socialCard'
+import { isSupportedImageType, supportedDataUrl, truncateText } from './socialCardUtils'
 
 describe('social card helpers', () => {
     it('accepts only image types the renderer can draw', () => {

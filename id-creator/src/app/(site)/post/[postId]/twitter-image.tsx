@@ -1,5 +1,5 @@
 import { renderPostSocialImage, postSocialImageAlt } from "features/post/api/server/PostSocialImage";
-import { SOCIAL_CARD_CONTENT_TYPE, SOCIAL_CARD_SIZE } from "utils/socialCard";
+import { SOCIAL_CARD_CONTENT_TYPE, SOCIAL_CARD_SIZE } from "components/socialCard/socialCardUtils";
 
 export const alt = postSocialImageAlt
 export const size = SOCIAL_CARD_SIZE

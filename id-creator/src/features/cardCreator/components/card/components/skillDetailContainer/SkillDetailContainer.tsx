@@ -34,7 +34,7 @@ export default function SkillDetailContainer({skillDetails,draggingHandler,chang
         if(!container) return
         const heights = Array.from(container.children, child => (child as HTMLElement).clientHeight)
         setCurrentWidth(computeColumns(heights, container.clientHeight).width)
-    },[JSON.stringify(skillDetails)])
+    },[skillDetails])
 
     return(
         <div className="skill-detail-container" ref={containerRef} style={{minWidth:Math.max(currentWidth,700)}}>

@@ -1,3 +1,4 @@
+import { z } from "zod"
 import { SaveMode } from "features/cardCreator"
 import { ITag } from "./TagList"
 
@@ -17,11 +18,18 @@ export interface NewPostLimits {
     maxUserTags: number
 }
 
-export function validateNewPost({ title, saves }: { title: string, saves: readonly ChosenSave[] }, { maxTitleLength, maxImages }: NewPostLimits): string | null {
-    const trimmed = title.trim()
-    if (trimmed.length < 1 || trimmed.length > maxTitleLength) return `Post name length must be between 1 and ${maxTitleLength}`
-    if (saves.length < 1 || saves.length > maxImages) return `Post must have between 1 and ${maxImages} images`
-    return null
+const newPostSchema = ({ maxTitleLength, maxImages }: NewPostLimits) => {
+    const titleMessage = `Post name length must be between 1 and ${maxTitleLength}`
+    const imagesMessage = `Post must have between 1 and ${maxImages} images`
+    return z.object({
+        title: z.string().trim().min(1, titleMessage).max(maxTitleLength, titleMessage),
+        saves: z.array(z.unknown()).min(1, imagesMessage).max(maxImages, imagesMessage),
+    })
+}
+
+export function validateNewPost(post: { title: string, saves: readonly ChosenSave[] }, limits: NewPostLimits): string | null {
+    const result = newPostSchema(limits).safeParse(post)
+    return result.success ? null : result.error.issues[0].message
 }
 
 export type UploadTagsResult = { tags: string[] } | { error: string }

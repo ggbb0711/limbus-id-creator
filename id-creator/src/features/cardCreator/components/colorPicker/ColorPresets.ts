@@ -1,3 +1,5 @@
+import { SINNER_DEFINITIONS } from "features/cardCreator/constants"
+
 export interface ColorPreset {
     label:string,
     cssVar:string
@@ -10,20 +12,7 @@ export interface ColorPresetGroup {
 
 export const SINNER_COLOR_GROUP:ColorPresetGroup = {
     title:"Sinner colors",
-    presets:[
-        {label:"Yi Sang",cssVar:"--Yi-Sang-color"},
-        {label:"Faust",cssVar:"--Faust-color"},
-        {label:"Don Quixote",cssVar:"--Don-color"},
-        {label:"Ryōshū",cssVar:"--Ryōshū-color"},
-        {label:"Meursault",cssVar:"--Meursault-color"},
-        {label:"Hong Lu",cssVar:"--Hong-Lu-color"},
-        {label:"Heathcliff",cssVar:"--Heathcliff-color"},
-        {label:"Ishmael",cssVar:"--Ishmael-color"},
-        {label:"Rodion",cssVar:"--Rodya-color"},
-        {label:"Sinclair",cssVar:"--Sinclair-color"},
-        {label:"Outis",cssVar:"--Outis-color"},
-        {label:"Gregor",cssVar:"--Gregor-color"},
-    ],
+    presets:SINNER_DEFINITIONS.map(({label,colorVar})=>({label,cssVar:colorVar})),
 }
 
 export const SIN_COLOR_GROUP:ColorPresetGroup = {

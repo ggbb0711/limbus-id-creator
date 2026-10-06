@@ -1,58 +1,16 @@
+import { SINNER_DEFINITIONS, SinnerKey, sinnerIconSrc } from "features/cardCreator"
 
 export interface ITag{
     icon:string,
     tagName:string
 }
 
+const SINNER_TAGS = Object.fromEntries(
+    SINNER_DEFINITIONS.map(({ key, tagName }) => [key, { icon: sinnerIconSrc(key), tagName }])
+) as Record<SinnerKey, ITag>
+
 export const TagList={
-    "Yi_Sang":{
-        icon:"/Images/sinner-icon/Yi_Sang_Icon.webp",
-        tagName:"Yi Sang"
-    },
-    "Faust":{
-        icon:"/Images/sinner-icon/Faust_Icon.webp",
-        tagName:"Faust"
-    },
-    "Don_Quixote":{
-        icon:"/Images/sinner-icon/Don_Quixote_Icon.webp",
-        tagName:"Don Quixote"
-    },
-    "Ryoshu":{
-        icon:"/Images/sinner-icon/Ryoshu_Icon.webp",
-        tagName:"Ryoshu"
-    },
-    "Meursault":{
-        icon:"/Images/sinner-icon/Meursault_Icon.webp",
-        tagName:"Meursault"
-    },
-    "Hong_Lu":{
-        icon:"/Images/sinner-icon/Hong_Lu_Icon.webp",
-        tagName:"Hong Lu"
-    },
-    "Heathcliff":{
-        icon:"/Images/sinner-icon/Heathcliff_Icon.webp",
-        tagName:"Heathcliff"
-    },
-    "Ishmael":{
-        icon:"/Images/sinner-icon/Ishmael_Icon.webp",
-        tagName:"Ishmael"
-    },
-    "Sinclair":{
-        icon:"/Images/sinner-icon/Sinclair_Icon.webp",
-        tagName:"Sinclair"
-    },
-    "Rodion":{
-        icon:"/Images/sinner-icon/Rodion_Icon.webp",
-        tagName:"Rodion"
-    },
-    "Outis":{
-        icon:"/Images/sinner-icon/Outis_Icon.webp",
-        tagName:"Outis"
-    },
-    "Gregor":{
-        icon:"/Images/sinner-icon/Gregor_Icon.webp",
-        tagName:"Gregor"
-    },
+    ...SINNER_TAGS,
     "Charge":{
         icon:"/Images/status-effect/Charge.webp",
         tagName:"Charge"

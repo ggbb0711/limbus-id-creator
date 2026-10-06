@@ -2,7 +2,7 @@ import 'server-only'
 import { readFile } from 'fs/promises'
 import { join } from 'path'
 import { reportError } from 'utils/reportError'
-import { isSupportedImageType, supportedDataUrl } from 'utils/socialCard'
+import { isSupportedImageType, supportedDataUrl } from './socialCardUtils'
 
 const MAX_IMAGE_BYTES = 4_000_000
 const FETCH_TIMEOUT_MS = 5000

@@ -1,4 +1,4 @@
-import { sanitizeCardHtml, sanitizePostHtml } from './sanitizeHtml'
+import { sanitizeCardHtml, sanitizePostHtml, stripHtml } from './htmlUtils'
 
 const parse = (html: string) => {
     const template = document.createElement('template')
@@ -93,5 +93,43 @@ describe('sanitizeCardHtml', () => {
 
     it('does not allow arbitrary data attributes', () => {
         expect(parse(sanitizeCardHtml('<span data-evil="1">x</span>')).querySelector('[data-evil]')).toBeNull()
+    })
+})
+
+describe('stripHtml', () => {
+    it('removes tags and decodes entities', () => {
+        expect(stripHtml('<p>Hello&nbsp;<b>world</b> &amp; co</p>')).toBe('Hello world & co')
+    })
+
+    it('returns an empty string for markup-only input', () => {
+        expect(stripHtml('<p><br></p>')).toBe('')
+    })
+
+    it('keeps words in separate blocks apart', () => {
+        expect(stripHtml('<p>first</p><p>second</p><div>third<br>fourth</div>')).toBe('first second third fourth')
+    })
+
+    it('decodes numeric and named entities', () => {
+        expect(stripHtml('caf&#233; &#x2014; &eacute;t&eacute; &lt;3 &quot;q&quot; &#39;s')).toBe('café — été <3 "q" \'s')
+    })
+
+    it('drops script and style content', () => {
+        expect(stripHtml('<p>ok</p><script>alert(1)</script><style>p{}</style>')).toBe('ok')
+    })
+
+    it('handles a > inside an attribute', () => {
+        expect(stripHtml('<a title="a > b" href="#">link</a>')).toBe('link')
+    })
+
+    it('handles comments and unclosed tags', () => {
+        expect(stripHtml('<!-- hidden --><p>text<b>bold')).toBe('text bold')
+    })
+
+    it('returns plain text unchanged apart from whitespace', () => {
+        expect(stripHtml('  plain\n\ttext  ')).toBe('plain text')
+    })
+
+    it('returns an empty string for empty input', () => {
+        expect(stripHtml('')).toBe('')
     })
 })

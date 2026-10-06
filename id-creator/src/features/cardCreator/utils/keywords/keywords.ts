@@ -2,7 +2,7 @@ import { ICustomKeyword } from "features/cardCreator/types/ICustomKeyword"
 import { SkillDetail, isSkillType } from "features/cardCreator/types/SkillDetail"
 import { ICustomEffect } from "features/cardCreator/types/skills/customEffect/ICustomEffect"
 import { escapeHtml, isSafeCssColor, isSafeImageUrl } from "features/cardCreator/utils/keywords/escapeHtml"
-import { sanitizeCardHtml } from "utils/sanitizeHtml"
+import { sanitizeCardHtml } from "utils/htmlUtils"
 
 export type KeywordMap = Readonly<Record<string, string>>
 
@@ -15,15 +15,13 @@ export const CUSTOM_COIN_EFFECT_COUNT = 9
 
 const STATUS_NODE_PATTERN = /<span\s+data-status-effect[^>]*>[\s\S]*?<\/span>\s*<\/span>|<[^>]*>|(\[([^ ]+)\])/g
 
-const escapeAttribute = (value: string) => value.replace(/&/g, "&amp;").replace(/"/g, "&quot;")
-
 export const toKeywordKey = (name: string) => name.replace(/\s/g, "_").toLowerCase()
 
 export function replaceKeywordsAsNodes(html: string, keywords: KeywordMap): string {
     return html.replace(STATUS_NODE_PATTERN, (match, bracket, key) => {
         if (!bracket) return match
         const selected = keywords[key.toLowerCase().replace(/&amp;/g, "&")]
-        return selected ? `<span data-status-effect="${escapeAttribute(selected)}">${selected}</span>` : match
+        return selected ? `<span data-status-effect="${escapeHtml(selected)}">${selected}</span>` : match
     })
 }
 

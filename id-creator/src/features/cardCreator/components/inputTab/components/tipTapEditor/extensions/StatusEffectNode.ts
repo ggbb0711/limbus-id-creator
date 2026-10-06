@@ -1,5 +1,5 @@
 import { Node } from "@tiptap/core"
-import { sanitizeCardHtml } from "utils/sanitizeHtml"
+import { sanitizeCardHtml } from "utils/htmlUtils"
 
 const StatusEffectNode = Node.create({
     name: "statusEffect",

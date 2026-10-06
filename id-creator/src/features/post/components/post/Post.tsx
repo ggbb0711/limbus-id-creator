@@ -10,7 +10,7 @@ import ShareMenu from "features/post/components/shareMenu/ShareMenu";
 import "./Post.css";
 import "../shared/Style.css"
 import SectionErrorBoundary from "components/errorBoundary/SectionErrorBoundary";
-import { sanitizePostHtml } from "utils/sanitizeHtml";
+import { sanitizePostHtml } from "utils/htmlUtils";
 
 export default function Post({ post }: { post: IPost }): ReactElement {
     return <article className="post-container post-page-element-container">

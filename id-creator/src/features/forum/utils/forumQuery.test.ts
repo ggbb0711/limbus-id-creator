@@ -1,5 +1,4 @@
-import { buildForumQuery, parseForumParams, parsePage, parseSort, tagKeyOf, toSearchParams } from 'features/forum/utils/forumQuery'
-import { TagList } from 'features/post'
+import { buildForumQuery, parseForumParams, parseSort, toSearchParams } from 'features/forum/utils/forumQuery'
 
 describe('parseSort', () => {
     it.each([
@@ -11,18 +10,6 @@ describe('parseSort', () => {
         ['nope', 'Latest'],
     ])('%p -> %s', (value, sort) => {
         expect(parseSort(value)).toBe(sort)
-    })
-})
-
-describe('tagKeyOf', () => {
-    it('finds the key for a tag', () => {
-        const [key, tag] = Object.entries(TagList)[0]
-        expect(tagKeyOf(tag)).toBe(key)
-    })
-
-    it('returns undefined for a missing or unknown tag', () => {
-        expect(tagKeyOf(undefined)).toBeUndefined()
-        expect(tagKeyOf({ tagName: 'not a tag', icon: '' })).toBeUndefined()
     })
 })
 
@@ -44,18 +31,12 @@ describe('buildForumQuery', () => {
     it('resets the page unless one is given', () => {
         expect(buildForumQuery('page=3&q=x', { q: 'y' })).toBe('q=y')
         expect(buildForumQuery('', { page: 2 })).toBe('page=2')
+        expect(buildForumQuery('page=3&q=x', { page: 5 })).toBe('page=5&q=x')
+        expect(buildForumQuery('q=x', { page: 0 })).toBe('q=x')
     })
 
     it('encodes special characters', () => {
         expect(buildForumQuery('', { q: 'a&b #c' })).toBe('q=a%26b+%23c')
-    })
-})
-
-describe('parsePage', () => {
-    it.each([
-        [null, 0], ['0', 0], ['3', 3], ['1.5', 0], ['-1', 0], ['abc', 0], ['', 0], ['1e3', 0], ['99999999999999999999', 0],
-    ])('%p -> %d', (value, page) => {
-        expect(parsePage(value)).toBe(page)
     })
 })
 

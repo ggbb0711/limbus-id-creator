@@ -74,6 +74,26 @@ describe('ForumPage URL state', () => {
         expect(mockHistory.map(entry => entry.mode)).toEqual(['push', 'replace'])
     })
 
+    it('updates the url once after a burst of typing', () => {
+        setup()
+        const input = screen.getByLabelText('Post name:')
+        fireEvent.change(input, { target: { value: 'a' } })
+        act(() => { jest.advanceTimersByTime(appConfig.timing.searchDebounceMs - 1) })
+        fireEvent.change(input, { target: { value: 'ab' } })
+        act(() => { jest.advanceTimersByTime(appConfig.timing.searchDebounceMs) })
+        expect(mockHistory).toEqual([{ mode: 'replace', url: '/forum?q=ab' }])
+    })
+
+    it('does not write a stale search back after the url changes elsewhere', () => {
+        setup('?q=old')
+        fireEvent.change(screen.getByLabelText('Post name:'), { target: { value: 'typing' } })
+        act(() => { mockNavigate('push', '/forum?q=other') })
+        expect((screen.getByLabelText('Post name:') as HTMLInputElement).value).toBe('other')
+        act(() => { jest.advanceTimersByTime(appConfig.timing.searchDebounceMs * 2) })
+        expect(new URLSearchParams(window.location.search).get('q')).toBe('other')
+        expect(mockHistory).toEqual([{ mode: 'push', url: '/forum?q=other' }])
+    })
+
     it('ignores prototype tag keys from the URL', () => {
         setup('?tag=constructor&tag=Faust&page=1.5')
         expect(mockUsePaginatedPosts).toHaveBeenLastCalledWith(0, expect.objectContaining({ tag: ['Faust'] }), undefined)

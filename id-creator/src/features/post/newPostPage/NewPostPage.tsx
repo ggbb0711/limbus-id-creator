@@ -10,7 +10,7 @@ import { ITag } from "features/post/utils/TagList";
 import { ChosenSave, POST_SAVE_KINDS, PostSaveKind, SAVE_MODE_BY_KIND, addChosenSave, buildUploadTags, validateNewPost } from "features/post/utils/newPost";
 import { SearchSaveInput } from "features/cardCreator";
 import CloseIcon from "assets/icons/CloseIcon";
-import Editor from 'react-simple-wysiwyg';
+import RichTextEditor from "features/post/components/richTextEditor/RichTextEditor";
 import { useRouter } from "next/navigation";
 import { useAddAlert } from "hooks/useAddAlert";
 import { useAuth } from "hooks/useAuth";
@@ -106,8 +106,8 @@ export default function NewPostPage(): ReactElement {
                 </div>
             </div>
             <div className="post-input-container">
-                <p id="description-label">Description:</p>
-                <Editor className="input post-description-input" name="description" id="description" aria-labelledby="description-label" value={description} onChange={(e) => setDescription(e.target.value)}/>
+                <p>Description:</p>
+                <RichTextEditor className="post-description-input" id="description" label="Description" value={description} onChange={setDescription} toolbar/>
             </div>
             <BusyButton busy={isPosting} busyText="Posting..." onClick={handleCreatePost}>Post</BusyButton>
         </div> :

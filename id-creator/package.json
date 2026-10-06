@@ -19,6 +19,7 @@
     "browser-image-compression": "^2.0.2",
     "colord": "^2.10.0",
     "dexie": "^4.2.0",
+    "dexie-react-hooks": "^4.4.0",
     "filesize": "^11.0.25",
     "isomorphic-dompurify": "^4.5.0",
     "modern-screenshot": "^4.6.8",
@@ -32,11 +33,11 @@
     "react-paginate": "^8.2.0",
     "react-redux": "^9.2.0",
     "react-share": "^5.3.0",
-    "react-simple-wysiwyg": "^3.1.1",
     "react-uuid": "^2.0.0",
     "react-zoom-pan-pinch": "^3.6.1",
     "server-only": "^0.0.1",
-    "tippy.js": "^6.3.7"
+    "tippy.js": "^6.3.7",
+    "zod": "^4.6.5"
   },
   "scripts": {
     "dev": "next dev",

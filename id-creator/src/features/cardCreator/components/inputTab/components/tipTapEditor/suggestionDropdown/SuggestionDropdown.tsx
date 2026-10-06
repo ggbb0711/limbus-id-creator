@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react"
 import "./SuggestionDropdown.css"
-import { sanitizeCardHtml } from "utils/sanitizeHtml"
+import { sanitizeCardHtml } from "utils/htmlUtils"
 
 export interface SuggestionItem {
     keyword: string

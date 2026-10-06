@@ -1,7 +1,10 @@
 import { parsePage, withPage } from './parsePage'
 
 describe('parsePage', () => {
-    it.each([[undefined, 0], ['4', 4], ['1.5', 0], ['-2', 0], ['x', 0]])('%p -> %d', (value, page) => {
+    it.each([
+        [undefined, 0], [null, 0], ['', 0], ['0', 0], ['3', 3], ['4', 4], ['1.5', 0], ['-1', 0], ['-2', 0],
+        ['x', 0], ['abc', 0], ['1e3', 0], ['99999999999999999999', 0],
+    ])('%p -> %d', (value, page) => {
         expect(parsePage(value)).toBe(page)
     })
 })

@@ -1,7 +1,8 @@
 'use client'
-import React, { CSSProperties, KeyboardEvent, ReactElement, useEffect, useId, useRef, useState } from "react";
+import React, { CSSProperties, KeyboardEvent, ReactElement, useId, useRef, useState } from "react";
 import "./DropDown.css"
 import ArrowDownIcon from "assets/icons/ArrowDownIcon";
+import { useClickOutside } from "hooks/useClickOutside";
 
 export interface DropDownOption<T> {
     value: T
@@ -25,14 +26,7 @@ export default function DropDown<T = string>({ options, value, onChange, disable
     const [activeIndex, setActiveIndex] = useState(selectedIndex)
     const selected = options[selectedIndex]
 
-    useEffect(() => {
-        if (!isOpen) return
-        function onPointerDown(event: MouseEvent) {
-            if (!containerRef.current?.contains(event.target as Node)) setIsOpen(false)
-        }
-        document.addEventListener("mousedown", onPointerDown)
-        return () => document.removeEventListener("mousedown", onPointerDown)
-    }, [isOpen])
+    useClickOutside([containerRef], isOpen, () => setIsOpen(false))
 
     function open() {
         setActiveIndex(selectedIndex)

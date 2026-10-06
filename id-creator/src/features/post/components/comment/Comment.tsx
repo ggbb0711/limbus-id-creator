@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useRef, useEffect } from "react"
 import Image from "next/image"
-import { Editor, EditorProvider } from "react-simple-wysiwyg"
+import RichTextEditor from "features/post/components/richTextEditor/RichTextEditor"
 import { IComment } from "features/post/types/IComment"
 import { commentKey } from "features/post/utils/comments"
 import "./Comment.css";
@@ -10,7 +10,7 @@ import Spinner from "components/ui/spinner/Spinner";
 import formatDisplayDate from "utils/formatDisplayDate";
 import BusyButton from "components/ui/busyButton/BusyButton";
 import AuthorBadge from "features/post/components/authorBadge/AuthorBadge";
-import { sanitizePostHtml } from "utils/sanitizeHtml"
+import { sanitizePostHtml } from "utils/htmlUtils"
 
 function Comment({ comment }: { comment: IComment }) {
     return <div className="post-comment-container post-page-element-container">
@@ -89,9 +89,7 @@ export function PostCommentInput({ authorIcon, authorName, createComment }: Post
             <Image className="post-author-icon-small" src={authorIcon} alt="" width={32} height={32} />
             <p className="post-author-name">{authorName}</p>
         </div>
-        <EditorProvider>
-            <Editor className="input comment-input" name="comment" id="comment" aria-label="Write a comment" value={commentValue} onChange={(e) => setCommentValue(e.target.value)}/>
-        </EditorProvider>
+        <RichTextEditor className="comment-input" id="comment" label="Write a comment" value={commentValue} onChange={setCommentValue}/>
         <BusyButton busy={isPosting} busyText="Posting..." onClick={postComment}>Post</BusyButton>
     </div>
 }

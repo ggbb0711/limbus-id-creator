@@ -22,7 +22,7 @@ export default function Toolbar({ editor }: ToolbarProps) {
         },
     })
 
-    if (!editor) return null
+    if (!editor || !state) return null
 
     return (
         <div className="tiptap-toolbar">

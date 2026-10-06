@@ -4,10 +4,12 @@ import { createOffenseSkill } from 'features/cardCreator/types/skills/offenseSki
 import { CARD_PREVIEW_LABEL, SaveImageError, prepareCloudSaveForm } from './prepareCloudSave'
 import { describeImageTarget } from './cloudSaveForm'
 
-jest.mock('browser-image-compression', () => jest.fn())
+jest.mock('browser-image-compression', () => Object.assign(jest.fn(), {
+    getFilefromDataUrl: jest.fn(async (data: string) => new File([data], 'f')),
+    getDataUrlFromFile: jest.fn(),
+}))
 jest.mock('features/cardCreator/utils/image/TurnRefToImg', () => ({ __esModule: true, default: jest.fn(async () => 'data:image/png;base64,AAAA') }))
 jest.mock('features/cardCreator/utils/image/getImageDimensions', () => ({ __esModule: true, default: jest.fn(async () => ({ width: 900, height: 600 })) }))
-jest.mock('features/cardCreator/utils/image/base64ToFile', () => ({ __esModule: true, default: jest.fn((data: string) => new File([data], 'f')) }))
 
 const compress = jest.mocked(imageCompression)
 const IMAGE = 'data:image/png;base64,iVBORw0KGgo='
@@ -52,6 +54,20 @@ describe('prepareCloudSaveForm', () => {
         expect(error).toBeInstanceOf(SaveImageError)
         expect(error.assets.sort()).toEqual(['Skill 3 image', 'Splash art'])
         expect(error.message).toMatch(/^Couldn't process: /)
+    })
+
+    it('names an image whose data url cannot be decoded', async () => {
+        const broken = 'data:image/png;base64,BROKEN'
+        jest.mocked(imageCompression.getFilefromDataUrl).mockImplementation(async (data: string) => {
+            if (data === broken) throw new TypeError('bad data url')
+            return new File([data], 'f')
+        })
+        compress.mockImplementation(async () => new File(['x'], 'c.webp'))
+        const file = saveFile()
+        file.saveInfo.splashArt = broken
+        const error = await prepareCloudSaveForm(file, ref).catch((e: unknown) => e) as SaveImageError
+        expect(error).toBeInstanceOf(SaveImageError)
+        expect(error.assets).toEqual(['Splash art'])
     })
 
     it('reports a failed card preview', async () => {

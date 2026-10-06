@@ -1,5 +1,5 @@
 import { baseStatusEffect } from 'features/cardCreator/utils/keywords/BaseStatusEffect'
-import { sanitizeCardHtml } from 'utils/sanitizeHtml'
+import { sanitizeCardHtml } from 'utils/htmlUtils'
 
 function structure(html: string): string[] {
     const template = document.createElement('template')

@@ -1,5 +1,5 @@
 import React, { ReactElement, ReactNode } from "react"
-import { SOCIAL_CARD_COLORS, SOCIAL_CARD_SIZE } from "utils/socialCard"
+import { SOCIAL_CARD_COLORS, SOCIAL_CARD_SIZE } from "./socialCardUtils"
 
 const colors = SOCIAL_CARD_COLORS
 

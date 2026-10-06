@@ -4,7 +4,7 @@ import DeleteIcon from "assets/icons/DeleteIcon"
 import { useAddAlert } from "hooks/useAddAlert";
 import { reportError } from "utils/reportError"
 import UploadImgBtn from "features/cardCreator/components/inputTab/components/uploadImgBtn/UploadImgBtn"
-import { compressAndReadImage } from "features/cardCreator/utils/image/CompressAndReadImage"
+import { compressAndReadImage } from "features/cardCreator/utils/image/compressImage"
 
 interface ImageUploadFieldProps {
     id: string

@@ -7,7 +7,7 @@ import ConfirmDialog from "components/ui/confirmDialog/ConfirmDialog";
 import getApiErrorMessage from "api/getApiErrorMessage";
 import { useApiErrorAlert } from "hooks/useApiErrorAlert";
 import { reportError } from "utils/reportError";
-import PopUpMenu from "components/ui/popUpMenu/PopUpMenu";
+import SaveNameDialog from "../saveNameDialog/SaveNameDialog";
 import "./SaveCloudMenu.css";
 import "../SettingMenu.css";
 import { CardInfo } from "features/cardCreator/types/CardInfo";
@@ -28,6 +28,8 @@ import {
 } from "features/cardCreator/api/SaveInfoApi";
 import formatDisplayDate from "utils/formatDisplayDate";
 import BusyButton from "components/ui/busyButton/BusyButton";
+import { useDebouncedValue } from "hooks/useDebouncedValue";
+import { appConfig } from "config/env.client";
 
 function SaveCloudTab({saveName,saveDate,previewUrl,deleteSave,loadSave,overwriteSave}:{saveName:string,saveDate:string,previewUrl:string,deleteSave:()=>void,loadSave:()=>void,overwriteSave:()=>void}):ReactElement{
     return <div className="save-cloud-tab">
@@ -62,7 +64,7 @@ export default function SaveCloudMenu():ReactElement{
     const [isCreating,setIsCreating] = useState(false)
     const [namePopup,setNamePopup] = useState(false)
     const [searchSaveName,setSearchSaveName] = useState("")
-    const [saveName,setSaveName] = useState("New save file")
+    const debouncedSearchName = useDebouncedValue(searchSaveName, appConfig.timing.searchDebounceMs)
     const {user: loginUser} = useAuth()
     const addAlert = useAddAlert()
     const cardDomRef = useCardDomRef()
@@ -73,7 +75,7 @@ export default function SaveCloudMenu():ReactElement{
     const cardData = useAppSelector(editor.selectInfo)
 
     const { data: saveList = [], isFetching: isLoadingSaveList, error: saveListError } = useGetSaveListQuery(
-        { userId: loginUser?.id ?? "", searchName: searchSaveName, saveMode },
+        { userId: loginUser?.id ?? "", searchName: debouncedSearchName, saveMode },
         { skip: !loginUser }
     )
     useApiErrorAlert(saveListError, "Couldn't load your cloud saves")
@@ -110,7 +112,7 @@ export default function SaveCloudMenu():ReactElement{
         }
     }
 
-    function createNewSaveFile() {
+    function createNewSaveFile(saveName: string) {
         return runSave("Waiting for save image to load...", async () => {
             try {
                 const form = await prepareCloudSaveForm(createSaveFile(cardData, saveName), cardDomRef)
@@ -169,24 +171,8 @@ export default function SaveCloudMenu():ReactElement{
     }
 
     return <div className="save-cloud-container">
-        <div>
-            <PopUpMenu open={namePopup} label="Name the new save" onClose={()=>setNamePopup(false)}>
-                <div className="save-cloud-name-popup">
-                    <label htmlFor="newCloudSaveName">Enter the name of the new save:</label>
-                    <input className="input save-cloud-name-input" name="newCloudSaveName" id="newCloudSaveName" type="text" placeholder="Save name"
-                    value={saveName}
-                    onChange={(e)=>{
-                        setSaveName(e.target.value)
-                    }}/>
-                    <button className="main-button create-new-save-btn" onClick={()=>{
-                        createNewSaveFile()
-                        setNamePopup(false)
-                    }}>
-                        Create
-                    </button>
-                </div>
-            </PopUpMenu>
-        </div>
+        <SaveNameDialog open={namePopup} title="Name the new save" submitLabel="Create" initialName="New save file"
+            onSubmit={createNewSaveFile} onClose={()=>setNamePopup(false)}/>
         <div >
             <label htmlFor="searchCloudSaveName">Search: </label>
             <input className="input save-cloud-name-input" name="searchCloudSaveName" id="searchCloudSaveName" type="text" placeholder="Save name" value={searchSaveName} onChange={(e)=>setSearchSaveName(e.target.value)}/>

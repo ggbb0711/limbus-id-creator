@@ -1,5 +1,6 @@
 'use client'
 import React, { ReactElement, useEffect, useState } from "react";
+import { copyToClipboard } from "utils/copyToClipboard";
 
 export default function CopyButton({ text, label }: { text: string, label: string }): ReactElement {
     const [copied, setCopied] = useState(false)
@@ -11,12 +12,7 @@ export default function CopyButton({ text, label }: { text: string, label: strin
     }, [copied])
 
     async function copy() {
-        try {
-            await navigator.clipboard.writeText(text)
-            setCopied(true)
-        } catch {
-            setCopied(false)
-        }
+        setCopied((await copyToClipboard(text)).ok)
     }
 
     return <button type="button" className="main-button copy-button" onClick={copy} aria-label={copied ? `${label} copied` : label}>

@@ -1,5 +1,6 @@
-import { SinRecord, createSinRecord, SIN_KEYS } from "features/cardCreator/constants"
-import { ICardInfoBase, ISplashArtTranslation } from "features/cardCreator/types/ICardInfoBase"
+import { z } from "zod"
+import { EGO_LEVELS, SinRecord, createSinRecord, SIN_KEYS } from "features/cardCreator/constants"
+import { ICardInfoBase } from "features/cardCreator/types/ICardInfoBase"
 import { IEgoInfo, createEgoInfo } from "features/cardCreator/types/IEgoInfo"
 import { IIdInfo, createIdInfo } from "features/cardCreator/types/IIdInfo"
 import { ISaveFile } from "features/cardCreator/types/ISaveFile"
@@ -31,53 +32,79 @@ export function migrateSkills(raw: unknown): SkillDetail[] {
         .map(skill => getSkillData(skill.type).migrate(withoutIndex(skill) as Partial<SkillDetail>))
 }
 
-function migrateSinRecord(raw: unknown, fallback: SinRecord): SinRecord {
-    if (!isRecord(raw)) return fallback
-    return Object.fromEntries(SIN_KEYS.map(key => [key, typeof raw[key] === "number" ? raw[key] : fallback[key]])) as SinRecord
-}
+const text = (fallback: string) => z.string().catch(fallback)
 
-function migrateBase<T extends ICardInfoBase>(raw: Raw, defaults: T): T {
-    const translation = isRecord(raw.splashArtTranslation) ? raw.splashArtTranslation : {}
-    return {
-        ...defaults,
-        ...raw,
-        splashArtTranslation: { ...defaults.splashArtTranslation, ...translation } as ISplashArtTranslation,
-        sinnerIcon: fixAssetPath(raw.sinnerIcon, defaults.sinnerIcon),
-        skillDetails: Array.isArray(raw.skillDetails) ? migrateSkills(raw.skillDetails) : defaults.skillDetails,
-        localSaveId: 1,
-        schemaVersion: CURRENT_SCHEMA_VERSION,
-    }
+const num = (fallback: number) => z.number().catch(fallback)
+
+const assetPath = (fallback: string) => z.unknown().optional().transform(path => fixAssetPath(path, fallback))
+
+const sinRecord = (fallback: SinRecord) =>
+    z.object(Object.fromEntries(SIN_KEYS.map(key => [key, num(fallback[key])])) as Record<keyof SinRecord, ReturnType<typeof num>>).catch(fallback)
+
+const baseShape = (defaults: ICardInfoBase) => ({
+    title: text(defaults.title),
+    name: text(defaults.name),
+    splashArt: text(defaults.splashArt),
+    splashArtScale: num(defaults.splashArtScale),
+    splashArtTranslation: z.object({
+        x: num(defaults.splashArtTranslation.x),
+        y: num(defaults.splashArtTranslation.y),
+    }).catch(defaults.splashArtTranslation),
+    sinnerColor: text(defaults.sinnerColor),
+    sinnerIcon: assetPath(defaults.sinnerIcon),
+    skillDetails: z.array(z.unknown()).transform(migrateSkills).catch(defaults.skillDetails),
+})
+
+const versioned = { localSaveId: 1, schemaVersion: CURRENT_SCHEMA_VERSION } as const
+
+function parseOrDefaults<T>(schema: z.ZodType<T>, raw: unknown): T {
+    const result = schema.safeParse(raw)
+    return result.success ? result.data : schema.parse({})
 }
 
 export function migrateIdInfo(raw: unknown): IIdInfo {
-    const source = isRecord(raw) ? raw : {}
     const defaults = createIdInfo()
-    return {
-        ...migrateBase(source, defaults),
-        traits: Array.isArray(source.traits) ? source.traits.filter((trait): trait is string => typeof trait === "string") : [],
-        rarity: fixAssetPath(source.rarity, defaults.rarity),
-    }
+    const schema = z.object({
+        ...baseShape(defaults),
+        traits: z.array(z.unknown()).transform(traits => traits.filter((trait): trait is string => typeof trait === "string")).catch([]),
+        hp: num(defaults.hp),
+        minSpeed: num(defaults.minSpeed),
+        maxSpeed: num(defaults.maxSpeed),
+        staggerResist: text(defaults.staggerResist),
+        defenseLevel: num(defaults.defenseLevel),
+        slashResistant: num(defaults.slashResistant),
+        pierceResistant: num(defaults.pierceResistant),
+        bluntResistant: num(defaults.bluntResistant),
+        rarity: assetPath(defaults.rarity),
+    })
+    return { ...parseOrDefaults(schema, raw), ...versioned }
 }
 
 export function migrateEgoInfo(raw: unknown): IEgoInfo {
-    const source = isRecord(raw) ? raw : {}
     const defaults = createEgoInfo()
-    return {
-        ...migrateBase(source, defaults),
-        sinCost: migrateSinRecord(source.sinCost, createSinRecord(0)),
-        sinResistant: migrateSinRecord(source.sinResistant, createSinRecord(1)),
-    }
+    const schema = z.object({
+        ...baseShape(defaults),
+        sanityCost: num(defaults.sanityCost),
+        sinResistant: sinRecord(createSinRecord(1)),
+        sinCost: sinRecord(createSinRecord(0)),
+        egoLevel: z.enum(EGO_LEVELS).catch(defaults.egoLevel),
+    })
+    return { ...parseOrDefaults(schema, raw), ...versioned }
 }
 
+const optionalText = z.string().optional().catch(undefined)
+
+const saveFileSchema = z.object({
+    id: text(""),
+    name: optionalText,
+    saveName: optionalText,
+    saveTime: text(""),
+    updateTime: text(""),
+    previewImg: text(""),
+    saveInfo: z.unknown().optional(),
+}).transform(({ name, saveName, ...rest }) => ({ ...rest, name: name ?? saveName ?? "Untitled" }))
+
 export function migrateSaveFile<T>(raw: unknown, migrateInfo: (info: unknown) => T): ISaveFile<T> {
-    const source = isRecord(raw) ? raw : {}
-    const name = typeof source.name === "string" ? source.name : typeof source.saveName === "string" ? source.saveName : "Untitled"
-    return {
-        id: typeof source.id === "string" ? source.id : "",
-        name,
-        saveTime: typeof source.saveTime === "string" ? source.saveTime : "",
-        updateTime: typeof source.updateTime === "string" ? source.updateTime : "",
-        previewImg: typeof source.previewImg === "string" ? source.previewImg : "",
-        saveInfo: migrateInfo(source.saveInfo),
-    }
+    const { saveInfo, ...file } = parseOrDefaults(saveFileSchema, raw)
+    return { ...file, saveInfo: migrateInfo(saveInfo) }
 }

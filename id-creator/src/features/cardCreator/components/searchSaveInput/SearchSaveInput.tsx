@@ -1,3 +1,4 @@
+'use client'
 import React, { useRef, useState } from "react";
 import { SaveMode } from "features/cardCreator/constants";
 import { ReactElement } from "react";

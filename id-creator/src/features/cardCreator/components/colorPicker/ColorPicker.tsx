@@ -1,4 +1,5 @@
-import { safeParseJSON } from "utils/safeParseJSON";
+import { z } from "zod";
+import { lenientArray, readJSON, writeJSON } from "utils/storage";
 import React, { ReactElement, useEffect, useRef } from "react";
 import { colord, extend } from "colord";
 import labPlugin from "colord/plugins/lab";
@@ -20,22 +21,11 @@ let colorisSetup:Promise<ColorisModule>|null = null
 let activeInput:HTMLInputElement|null = null
 let activePresets:ColorPresetGroup[] = NO_PRESETS
 
-function loadSavedColors():string[]{
-    try{
-        return safeParseJSON<string[]>(localStorage.getItem(SAVED_COLORS_KEY), [], saved =>
-            Array.isArray(saved) ? saved.filter((color):color is string=>typeof color==="string") : [])
-    }catch{
-        return []
-    }
-}
+const savedColorsSchema = lenientArray(z.string())
 
-function storeSavedColors(savedColors:string[]){
-    try{
-        localStorage.setItem(SAVED_COLORS_KEY,JSON.stringify(savedColors))
-    }catch{
-        return
-    }
-}
+const loadSavedColors = ():string[] => readJSON(SAVED_COLORS_KEY, savedColorsSchema, [])
+
+const storeSavedColors = (savedColors:string[]) => writeJSON(SAVED_COLORS_KEY, savedColors)
 
 function normalizeColor(text:string):string|null{
     const color = text.trim()

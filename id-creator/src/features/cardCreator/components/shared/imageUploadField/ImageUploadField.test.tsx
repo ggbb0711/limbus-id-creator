@@ -1,11 +1,11 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
-import { compressAndReadImage } from 'features/cardCreator/utils/image/CompressAndReadImage'
+import { compressAndReadImage } from 'features/cardCreator/utils/image/compressImage'
 import { reportError } from 'utils/reportError'
 import ImageUploadField from './ImageUploadField'
 
 const addAlert = jest.fn()
 jest.mock('hooks/useAddAlert', () => ({ useAddAlert: () => addAlert }))
-jest.mock('features/cardCreator/utils/image/CompressAndReadImage', () => ({ compressAndReadImage: jest.fn() }))
+jest.mock('features/cardCreator/utils/image/compressImage', () => ({ compressAndReadImage: jest.fn() }))
 jest.mock('utils/reportError', () => ({ reportError: jest.fn() }))
 
 const compress = jest.mocked(compressAndReadImage)

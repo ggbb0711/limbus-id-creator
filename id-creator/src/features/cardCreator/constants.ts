@@ -36,26 +36,30 @@ export interface SinnerOption extends IconOption {
     color: string
 }
 
-const sinner = (file: string, color: string): SinnerOption => ({
-    src: `/Images/sinner-icon/${file}_Icon.webp`,
-    alt: `${file}_Icon.webp`,
-    color: `var(--${color}-color)`,
-})
+export const SINNER_DEFINITIONS = [
+    { key: "Yi_Sang", tagName: "Yi Sang", label: "Yi Sang", colorVar: "--Yi-Sang-color" },
+    { key: "Faust", tagName: "Faust", label: "Faust", colorVar: "--Faust-color" },
+    { key: "Don_Quixote", tagName: "Don Quixote", label: "Don Quixote", colorVar: "--Don-color" },
+    { key: "Ryoshu", tagName: "Ryoshu", label: "Ryōshū", colorVar: "--Ryōshū-color" },
+    { key: "Meursault", tagName: "Meursault", label: "Meursault", colorVar: "--Meursault-color" },
+    { key: "Hong_Lu", tagName: "Hong Lu", label: "Hong Lu", colorVar: "--Hong-Lu-color" },
+    { key: "Heathcliff", tagName: "Heathcliff", label: "Heathcliff", colorVar: "--Heathcliff-color" },
+    { key: "Ishmael", tagName: "Ishmael", label: "Ishmael", colorVar: "--Ishmael-color" },
+    { key: "Sinclair", tagName: "Sinclair", label: "Sinclair", colorVar: "--Sinclair-color" },
+    { key: "Rodion", tagName: "Rodion", label: "Rodion", colorVar: "--Rodya-color" },
+    { key: "Outis", tagName: "Outis", label: "Outis", colorVar: "--Outis-color" },
+    { key: "Gregor", tagName: "Gregor", label: "Gregor", colorVar: "--Gregor-color" },
+] as const
 
-export const SINNERS: readonly SinnerOption[] = [
-    sinner("Yi_Sang", "Yi-Sang"),
-    sinner("Faust", "Faust"),
-    sinner("Don_Quixote", "Don"),
-    sinner("Ryoshu", "Ryōshū"),
-    sinner("Meursault", "Meursault"),
-    sinner("Hong_Lu", "Hong-Lu"),
-    sinner("Heathcliff", "Heathcliff"),
-    sinner("Ishmael", "Ishmael"),
-    sinner("Sinclair", "Sinclair"),
-    sinner("Rodion", "Rodya"),
-    sinner("Outis", "Outis"),
-    sinner("Gregor", "Gregor"),
-]
+export type SinnerKey = typeof SINNER_DEFINITIONS[number]["key"]
+
+export const sinnerIconSrc = (key: SinnerKey) => `/Images/sinner-icon/${key}_Icon.webp`
+
+export const SINNERS: readonly SinnerOption[] = SINNER_DEFINITIONS.map(({ key, colorVar }) => ({
+    src: sinnerIconSrc(key),
+    alt: `${key}_Icon.webp`,
+    color: `var(${colorVar})`,
+}))
 
 export const RARITIES: readonly IconOption[] = [1, 2, 3].map(rank => ({
     src: `/Images/rarity/IDNumber${rank}.webp`,

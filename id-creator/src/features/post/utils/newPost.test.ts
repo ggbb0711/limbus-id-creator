@@ -15,6 +15,18 @@ describe('validateNewPost', () => {
         expect(validateNewPost({ title: 'ok', saves: [save('a'), save('b'), save('c')] }, limits)).toMatch(/images/)
     })
 
+    it('accepts the exact limits', () => {
+        expect(validateNewPost({ title: 'x'.repeat(10), saves: [save('a'), save('b')] }, limits)).toBeNull()
+    })
+
+    it('reports the title before the images', () => {
+        expect(validateNewPost({ title: '', saves: [] }, limits)).toMatch(/Post name length/)
+    })
+
+    it('measures the trimmed title', () => {
+        expect(validateNewPost({ title: '  ' + 'x'.repeat(10) + '  ', saves: [save('a')] }, limits)).toBeNull()
+    })
+
     it('accepts a valid post', () => {
         expect(validateNewPost({ title: ' ok ', saves: [save('a')] }, limits)).toBeNull()
     })

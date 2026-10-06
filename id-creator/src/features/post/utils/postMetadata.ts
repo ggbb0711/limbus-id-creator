@@ -3,7 +3,7 @@ import { baseOpenGraph, siteUrl } from "config/siteMetadata"
 import { IPost } from "features/post/types/IPost"
 import { getTag } from "features/post/utils/TagList"
 import { parseServerDate } from "utils/formatDisplayDate"
-import stripHtml from "utils/stripHtml"
+import { stripHtml } from "utils/htmlUtils"
 
 export const postPath = (postId: string) => `/post/${encodeURIComponent(postId)}`
 

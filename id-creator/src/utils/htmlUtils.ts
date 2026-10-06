@@ -34,3 +34,14 @@ const sanitizeWith = (config: Config) => (html: string | null | undefined): stri
 export const sanitizePostHtml = sanitizeWith(POST_CONFIG)
 
 export const sanitizeCardHtml = sanitizeWith(CARD_CONFIG)
+
+const TEXT_NODE = 3
+
+const textNodes = (node: Node): string[] =>
+    node.nodeType === TEXT_NODE ? [node.nodeValue ?? ""] : Array.from(node.childNodes).flatMap(textNodes)
+
+export const stripHtml = (html: string): string =>
+    textNodes(DOMPurify.sanitize(html, { RETURN_DOM: true, FORBID_TAGS: ["style"] }))
+        .join(" ")
+        .replace(/\s+/g, " ")
+        .trim()

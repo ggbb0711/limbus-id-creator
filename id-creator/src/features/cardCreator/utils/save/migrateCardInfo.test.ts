@@ -78,6 +78,45 @@ describe('migrateIdInfo', () => {
     it('keeps an existing empty skill list', () => {
         expect(migrateIdInfo({ skillDetails: [] }).skillDetails).toEqual([])
     })
+
+    it('falls back for fields with the wrong type', () => {
+        const info = migrateIdInfo({ title: 5, hp: '120', staggerResist: null, splashArtScale: Infinity, slashResistant: 2 })
+        const defaults = createIdInfo()
+        expect(info.title).toBe(defaults.title)
+        expect(info.hp).toBe(defaults.hp)
+        expect(info.staggerResist).toBe(defaults.staggerResist)
+        expect(info.splashArtScale).toBe(defaults.splashArtScale)
+        expect(info.slashResistant).toBe(2)
+    })
+
+    it('keeps valid fields', () => {
+        const info = migrateIdInfo({ title: 'Title', name: 'Name', hp: 120, minSpeed: 2, maxSpeed: 5, staggerResist: '60%', sinnerColor: '#fff' })
+        expect(info).toMatchObject({ title: 'Title', name: 'Name', hp: 120, minSpeed: 2, maxSpeed: 5, staggerResist: '60%', sinnerColor: '#fff' })
+    })
+
+    it('drops unknown fields', () => {
+        expect(migrateIdInfo({ title: 'T', bogus: 1 })).not.toHaveProperty('bogus')
+    })
+
+    it.each([[[]], ['text'], [42], [undefined]])('returns defaults for non-object input %p', raw => {
+        const info = migrateIdInfo(raw)
+        expect(info.rarity).toBe(createIdInfo().rarity)
+        expect(info.traits).toEqual([])
+        expect(info.schemaVersion).toBe(CURRENT_SCHEMA_VERSION)
+    })
+
+    it('uses the default translation for a non-object or bad coordinates', () => {
+        expect(migrateIdInfo({ splashArtTranslation: [1, 2] }).splashArtTranslation).toEqual({ x: 0, y: 0 })
+        expect(migrateIdInfo({ splashArtTranslation: { x: 'a', y: 3 } }).splashArtTranslation).toEqual({ x: 0, y: 3 })
+    })
+
+    it('uses the default skills when skillDetails is not an array', () => {
+        expect(migrateIdInfo({ skillDetails: 'x' }).skillDetails).toHaveLength(createIdInfo().skillDetails.length)
+    })
+
+    it('overrides a stored schemaVersion', () => {
+        expect(migrateIdInfo({ schemaVersion: 0 }).schemaVersion).toBe(CURRENT_SCHEMA_VERSION)
+    })
 })
 
 describe('migrateEgoInfo', () => {
@@ -91,6 +130,24 @@ describe('migrateEgoInfo', () => {
         const info = migrateEgoInfo({})
         expect(info.sinCost).toEqual(createEgoInfo().sinCost)
         expect(info.sinResistant).toEqual(createEgoInfo().sinResistant)
+    })
+
+    it('uses default records when they are arrays', () => {
+        expect(migrateEgoInfo({ sinCost: [1, 2] }).sinCost).toEqual(createEgoInfo().sinCost)
+    })
+
+    it('keeps a valid ego level and falls back for an unknown one', () => {
+        expect(migrateEgoInfo({ egoLevel: 'HE' }).egoLevel).toBe('HE')
+        expect(migrateEgoInfo({ egoLevel: 'GOD' }).egoLevel).toBe(createEgoInfo().egoLevel)
+    })
+
+    it('falls back for a non-numeric sanity cost', () => {
+        expect(migrateEgoInfo({ sanityCost: '3' }).sanityCost).toBe(0)
+        expect(migrateEgoInfo({ sanityCost: 3 }).sanityCost).toBe(3)
+    })
+
+    it('fixes legacy png paths for the sinner icon', () => {
+        expect(migrateEgoInfo({ sinnerIcon: 'Images/sinner-icon/Faust.png' }).sinnerIcon).toBe('/Images/sinner-icon/Faust.webp')
     })
 })
 
@@ -110,5 +167,24 @@ describe('migrateSaveFile', () => {
         expect(migrateSaveFile(null, () => 'info')).toEqual({
             id: '', name: 'Untitled', saveTime: '', updateTime: '', previewImg: '', saveInfo: 'info',
         })
+    })
+
+    it('uses saveName when name has the wrong type', () => {
+        expect(migrateSaveFile({ name: 5, saveName: 'Old' }, migrateIdInfo).name).toBe('Old')
+    })
+
+    it('blanks fields with the wrong type', () => {
+        const file = migrateSaveFile({ id: 3, saveTime: {}, updateTime: null, previewImg: null, name: 'n' }, () => 'info')
+        expect(file).toEqual({ id: '', name: 'n', saveTime: '', updateTime: '', previewImg: '', saveInfo: 'info' })
+    })
+
+    it('passes the raw saveInfo to the migrator', () => {
+        const migrate = jest.fn(() => 'info')
+        migrateSaveFile({ saveInfo: { title: 'x' } }, migrate)
+        expect(migrate).toHaveBeenCalledWith({ title: 'x' })
+    })
+
+    it('handles array input', () => {
+        expect(migrateSaveFile([], () => 'info').name).toBe('Untitled')
     })
 })

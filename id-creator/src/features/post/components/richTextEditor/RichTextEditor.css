@@ -1,0 +1,34 @@
+.rich-text-editor{
+    width: 100%;
+    padding: 0;
+    border-color: var(--brown-pale);
+}
+
+.rich-text-editor-content{
+    height: 150px;
+    overflow-y: auto;
+    padding: 4px 8px;
+    outline: none;
+}
+
+.rich-text-toolbar{
+    display: flex;
+    gap: 2px;
+    padding: 2px;
+    border-bottom: 1px solid var(--brown-pale);
+}
+
+.rich-text-toolbar-btn{
+    min-width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 4px;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+}
+
+.rich-text-toolbar-btn:hover,
+.rich-text-toolbar-btn.is-active{
+    background: var(--brown-pale);
+}

@@ -2,7 +2,7 @@ import React, { ReactElement } from "react"
 import { SocialCardFrame, SocialCardImage } from "components/socialCard/SocialCard"
 import { IUserProfile } from "features/user/types/IUserProfile"
 import formatDisplayDate from "utils/formatDisplayDate"
-import { SOCIAL_CARD_COLORS, truncateText } from "utils/socialCard"
+import { SOCIAL_CARD_COLORS, truncateText } from "components/socialCard/socialCardUtils"
 
 interface UserSocialCardProps {
     user: Pick<IUserProfile, "userName" | "createdAt">

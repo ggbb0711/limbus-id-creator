@@ -1,4 +1,5 @@
 import { KeyboardEvent, MouseEvent, RefObject, useEffect, useId, useState } from "react"
+import { useClickOutside } from "./useClickOutside"
 
 export function cycleIndex(index: number, length: number, direction: 1 | -1): number {
     if (length <= 0) return 0
@@ -19,14 +20,7 @@ export function useCombobox<T>({ items, onSelect, containerRef }: UseComboboxOpt
     const optionId = (index: number) => `${listId}-option-${index}`
     const showList = isOpen && items.length > 0
 
-    useEffect(() => {
-        if (!isOpen) return
-        function onPointerDown(event: globalThis.MouseEvent) {
-            if (!containerRef.current?.contains(event.target as Node)) setIsOpen(false)
-        }
-        document.addEventListener("mousedown", onPointerDown)
-        return () => document.removeEventListener("mousedown", onPointerDown)
-    }, [isOpen, containerRef])
+    useClickOutside([containerRef], isOpen, () => setIsOpen(false))
 
     useEffect(() => {
         if (!showList) return

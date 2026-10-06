@@ -32,13 +32,6 @@
     margin-bottom: 4px;
 }
 
-.save-cloud-name-popup{
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    width: 300px;
-}
-
 .save-cloud-name-input{
     width: 100%;
     border-color: var(--red-brown);

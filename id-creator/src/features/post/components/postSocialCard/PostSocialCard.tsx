@@ -3,7 +3,7 @@ import { SocialCardChips, SocialCardFrame, SocialCardImage } from "components/so
 import { IPost } from "features/post/types/IPost"
 import { getTag } from "features/post/utils/TagList"
 import formatDisplayDate from "utils/formatDisplayDate"
-import { SOCIAL_CARD_COLORS, truncateText } from "utils/socialCard"
+import { SOCIAL_CARD_COLORS, truncateText } from "components/socialCard/socialCardUtils"
 
 interface PostSocialCardProps {
     post: IPost

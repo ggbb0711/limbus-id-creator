@@ -7,7 +7,18 @@ const keywords = { burn: '<span>Burn</span>', 'r&d': '<span>R&amp;D</span>' }
 describe('replaceKeywordsAsNodes', () => {
     it('turns a bracketed keyword into a status node', () => {
         expect(replaceKeywordsAsNodes('<p>Inflict [Burn]</p>', keywords))
-            .toBe('<p>Inflict <span data-status-effect="<span>Burn</span>"><span>Burn</span></span></p>')
+            .toBe('<p>Inflict <span data-status-effect="&lt;span&gt;Burn&lt;/span&gt;"><span>Burn</span></span></p>')
+    })
+
+    it('is idempotent on its own output', () => {
+        const once = replaceKeywordsAsNodes('<p>Inflict [Burn] and [Burn]</p>', keywords)
+        expect(replaceKeywordsAsNodes(once, keywords)).toBe(once)
+    })
+
+    it('round-trips the html through the attribute', () => {
+        const container = document.createElement('div')
+        container.innerHTML = replaceKeywordsAsNodes('[Burn]', keywords)
+        expect(container.querySelector('[data-status-effect]')?.getAttribute('data-status-effect')).toBe('<span>Burn</span>')
     })
 
     it('leaves unknown keywords and existing nodes alone', () => {
