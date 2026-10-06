@@ -1,6 +1,6 @@
 import { createEgoInfo } from 'features/cardCreator/types/IEgoInfo'
 import { createIdInfo } from 'features/cardCreator/types/IIdInfo'
-import { CURRENT_SCHEMA_VERSION, fixAssetPath, migrateCardInfo, migrateEgoInfo, migrateIdInfo, migrateSaveFile, migrateSkills } from './migrateCardInfo'
+import { CURRENT_SCHEMA_VERSION, fixAssetPath, migrateEgoInfo, migrateIdInfo, migrateSaveFile, migrateSkills } from './migrateCardInfo'
 
 describe('fixAssetPath', () => {
     it.each([
@@ -91,13 +91,6 @@ describe('migrateEgoInfo', () => {
         const info = migrateEgoInfo({})
         expect(info.sinCost).toEqual(createEgoInfo().sinCost)
         expect(info.sinResistant).toEqual(createEgoInfo().sinResistant)
-    })
-})
-
-describe('migrateCardInfo', () => {
-    it('dispatches on mode', () => {
-        expect(migrateCardInfo('id', {})).toHaveProperty('rarity')
-        expect(migrateCardInfo('ego', {})).toHaveProperty('sinCost')
     })
 })
 

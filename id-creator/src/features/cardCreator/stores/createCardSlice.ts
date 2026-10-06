@@ -1,4 +1,4 @@
-import { PayloadAction } from "@reduxjs/toolkit"
+import { PayloadAction, UnknownAction } from "@reduxjs/toolkit"
 import { ICardInfoBase } from "features/cardCreator/types/ICardInfoBase"
 import { SkillDetail } from "features/cardCreator/types/SkillDetail"
 import { reorderSkills } from "features/cardCreator/utils/card/reorderSkills"
@@ -20,6 +20,20 @@ export interface FieldUpdate<T> {
 }
 
 export const createCardState = <T>(value: T): CardState<T> => ({ value, loadId: 0 })
+
+export interface SkillActions {
+    addSkill(skill: SkillDetail): UnknownAction
+    updateSkill(payload: { index: number, skill: SkillDetail }): UnknownAction
+    deleteSkill(inputId: string): UnknownAction
+    moveSkill(payload: { fromId: string, toId: string }): UnknownAction
+}
+
+export interface CardSliceActions<T> extends SkillActions {
+    loadInfo(info: T): UnknownAction
+    setInfo(info: T): UnknownAction
+    resetInfo(): UnknownAction
+    updateField<K extends CardField<T>>(field: K, value: T[K]): UnknownAction
+}
 
 export function createCardReducers<T extends ICardInfoBase>(createDefault: () => T, { maxSkills }: CardLimits) {
     return {

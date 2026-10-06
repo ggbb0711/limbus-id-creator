@@ -1,17 +1,19 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { makeStore } from 'stores/AppStore'
-import CardModeContext, { CardMode } from 'features/cardCreator/contexts/CardModeContext'
+import CardEditorContext from 'features/cardCreator/editors/CardEditorContext'
+import { CARD_EDITORS } from 'features/cardCreator/editors/cardEditors'
+import { CardKind } from 'features/cardCreator/editors/CardEditorDefinition'
 import { SINNERS } from 'features/cardCreator/constants'
 import SinnerIconPicker from './SinnerIconPicker'
 
-function setup(mode: CardMode) {
+function setup(kind: CardKind) {
     const store = makeStore()
     const view = render(
         <Provider store={store}>
-            <CardModeContext.Provider value={mode}>
+            <CardEditorContext.Provider value={CARD_EDITORS[kind]}>
                 <SinnerIconPicker/>
-            </CardModeContext.Provider>
+            </CardEditorContext.Provider>
         </Provider>
     )
     return { store, ...view }

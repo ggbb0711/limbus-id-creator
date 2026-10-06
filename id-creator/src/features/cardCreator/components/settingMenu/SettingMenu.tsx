@@ -1,5 +1,4 @@
 import React from "react";
-import { SaveMode } from "features/cardCreator/constants";
 import "./SettingMenu.css"
 import CloseIcon from "assets/icons/CloseIcon";
 import CustomKeywordMenu from "./customKeywordMenu/CustomKeywordMenu";
@@ -10,7 +9,7 @@ import { closeSettingMenu, setSettingDisplayMode } from "features/cardCreator/st
 import IconButton from "components/ui/iconButton/IconButton";
 import Dialog from "components/ui/dialog/Dialog";
 
-export default function SettingMenu({saveMode}:{saveMode: SaveMode}){
+export default function SettingMenu(){
     const isActive = useAppSelector(state => state.settingMenu.isSettingMenuActive)
     const displayMode = useAppSelector(state => state.settingMenu.settingMenuDisplayMode)
     const dispatch = useAppDispatch()
@@ -19,9 +18,9 @@ export default function SettingMenu({saveMode}:{saveMode: SaveMode}){
 
     const displaySettings = ()=>{
         if(displayMode==="Local")
-            return <SaveLocalMenu saveMode={saveMode} close={close}/>
+            return <SaveLocalMenu close={close}/>
         else if(displayMode==="Cloud")
-            return <SaveCloudMenu saveMode={saveMode}/>
+            return <SaveCloudMenu/>
         else if(displayMode==="Custom keywords")
             return <CustomKeywordMenu/>
     }

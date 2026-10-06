@@ -3,23 +3,21 @@ import React, { useMemo, useState } from "react";
 import "../SettingMenu.css"
 import { createSaveFile } from "features/cardCreator/utils/save/createSaveFile";
 import { sortSavesByTimeDesc } from "features/cardCreator/utils/save/sortSaves";
-import { SaveMode } from "features/cardCreator/constants";
 import useSaveLocal from "features/cardCreator/hooks/useSaveLocal";
 import PopUpMenu from "components/ui/popUpMenu/PopUpMenu";
 import EditIcon from "assets/icons/EditIcon";
 import { useAppSelector, useAppDispatch } from "stores/AppStore";
-import { toCardMode } from "features/cardCreator/contexts/CardModeContext";
-import { loadCard } from "features/cardCreator/stores/cardActions";
-import { selectCard } from "features/cardCreator/hooks/useCardInfo";
+import { useCardEditor } from "features/cardCreator/editors/CardEditorContext";
 import formatDisplayDate from "utils/formatDisplayDate";
 
 
-const SaveLocalMenu=({saveMode, close}:{saveMode: SaveMode, close: ()=>void})=>{
-    const cardMode = toCardMode(saveMode)
-    const cardData = useAppSelector(state => selectCard(state, cardMode))
+const SaveLocalMenu=({close}:{close: ()=>void})=>{
+    const editor = useCardEditor()
+    const { saveMode } = editor
+    const cardData = useAppSelector(editor.selectInfo)
     const dispatch = useAppDispatch()
 
-    const {saveData,isLoading,deleteSave,createSave,changeSaveName,loadSave,overwriteSave} = useSaveLocal(saveMode)
+    const {saveData,isLoading,deleteSave,createSave,changeSaveName,loadSave,overwriteSave} = useSaveLocal(editor)
     const [namePopup,setNamePopup] = useState(false)
     const [popupMode,setPopupMode] = useState<"create"|"overwrite">("create")
     const [nameChangingSaveId,setNameChangingSaveId] = useState<string|null>(null)
@@ -101,7 +99,7 @@ const SaveLocalMenu=({saveMode, close}:{saveMode: SaveMode, close: ()=>void})=>{
                             <button className="main-button" onClick={async ()=>{
                                 const save = await loadSave(data.id)
                                 if(!save) return
-                                dispatch(loadCard(cardMode, save.saveInfo))
+                                dispatch(editor.load(save.saveInfo))
                                 close()
                             }}>
                                 Load

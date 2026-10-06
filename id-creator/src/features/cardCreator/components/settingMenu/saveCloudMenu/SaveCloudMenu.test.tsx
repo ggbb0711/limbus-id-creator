@@ -2,6 +2,8 @@ import { act, fireEvent, render, screen } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { makeStore } from 'stores/AppStore'
 import SaveCloudMenu from './SaveCloudMenu'
+import CardEditorContext from 'features/cardCreator/editors/CardEditorContext'
+import { idEditor } from 'features/cardCreator/editors/idEditor'
 
 const mockDelete = jest.fn()
 const mockUpdate = jest.fn()
@@ -23,7 +25,7 @@ jest.mock('features/cardCreator/api/SaveInfoApi', () => ({
 
 function setup() {
     const store = makeStore()
-    render(<Provider store={store}><SaveCloudMenu saveMode="ID"/></Provider>)
+    render(<Provider store={store}><CardEditorContext.Provider value={idEditor}><SaveCloudMenu/></CardEditorContext.Provider></Provider>)
     return store
 }
 

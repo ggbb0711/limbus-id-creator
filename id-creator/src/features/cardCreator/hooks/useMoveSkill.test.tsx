@@ -2,14 +2,15 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import { act, renderHook } from '@testing-library/react'
 import { makeStore } from 'stores/AppStore'
-import CardModeContext from 'features/cardCreator/contexts/CardModeContext'
+import CardEditorContext from 'features/cardCreator/editors/CardEditorContext'
+import { egoEditor } from 'features/cardCreator/editors/egoEditor'
 import { useMoveSkill } from './useMoveSkill'
 
 function setup() {
     const store = makeStore()
     const changeActiveTab = jest.fn()
     const wrapper = ({ children }: { children: React.ReactNode }) =>
-        <Provider store={store}><CardModeContext.Provider value="ego">{children}</CardModeContext.Provider></Provider>
+        <Provider store={store}><CardEditorContext.Provider value={egoEditor}>{children}</CardEditorContext.Provider></Provider>
     const { result } = renderHook(() => useMoveSkill(changeActiveTab), { wrapper })
     const ids = () => store.getState().egoInfo.value.skillDetails.map(skill => skill.inputId)
     return { store, changeActiveTab, result, ids }

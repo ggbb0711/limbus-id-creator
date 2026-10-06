@@ -4,34 +4,30 @@ import 'features/cardCreator/styles/EditorPage.css'
 import DragAndDroppableSkillPreviewLayer from 'features/cardCreator/components/card/components/dragAndDroppableSkill/DragAndDroppableSkillPreviewLayer';
 import CardMakerFooter from 'features/cardCreator/components/cardMakerFooter/CardMakerFooter';
 import SettingMenu from 'features/cardCreator/components/settingMenu/SettingMenu';
-import { IdCard } from 'features/cardCreator/components/card/IdCard';
-import { EgoCard } from 'features/cardCreator/components/card/EgoCard';
+import CardPreview from 'features/cardCreator/components/card/CardPreview';
 import InputTabContainer from 'features/cardCreator/components/inputTab/inputTabContainer/InputTabContainer';
 import ResetMenu from 'features/cardCreator/components/resetMenu/ResetMenu';
 import { useCardDomRef } from 'features/cardCreator/contexts/CardDomRefContext';
-import CardModeContext, { CardMode, toSaveMode } from 'features/cardCreator/contexts/CardModeContext';
-import { resetCard } from 'features/cardCreator/stores/cardActions';
+import CardEditorContext from 'features/cardCreator/editors/CardEditorContext';
+import { CardEditorDefinition } from 'features/cardCreator/editors/CardEditorDefinition';
 import { usePersistCurrentCard } from 'features/cardCreator/hooks/usePersistCurrentCard';
 import { useAppDispatch } from 'stores/AppStore';
 import SectionErrorBoundary from "components/errorBoundary/SectionErrorBoundary";
 
-const CARDS: Record<CardMode, typeof IdCard> = { id: IdCard, ego: EgoCard }
-
-export default function CardEditorPage({ mode }: { mode: CardMode }): ReactElement {
+export default function CardEditor({ editor }: { editor: CardEditorDefinition }): ReactElement {
     const dispatch = useAppDispatch()
     const domRef = useCardDomRef()
     const [isResetMenuActive, setResetMenuActive] = useState(false)
     const [activeTab, setActiveTab] = useState(-1)
-    const Card = CARDS[mode]
 
-    usePersistCurrentCard(mode)
+    usePersistCurrentCard(editor)
 
     function changeActiveTab(i: number) {
         setActiveTab(current => (current === i ? -2 : i))
     }
 
-    return <CardModeContext.Provider value={mode}>
-        <SettingMenu saveMode={toSaveMode(mode)}/>
+    return <CardEditorContext.Provider value={editor}>
+        <SettingMenu/>
         <DragAndDroppableSkillPreviewLayer/>
         <div className={`editor-container`}>
             <SectionErrorBoundary context="inputTabs" label="editor panel">
@@ -40,13 +36,13 @@ export default function CardEditorPage({ mode }: { mode: CardMode }): ReactEleme
                     activeTab={activeTab}
                     changeActiveTab={changeActiveTab} />
             </SectionErrorBoundary>
-            <ResetMenu isActive={isResetMenuActive} setIsActive={setResetMenuActive} confirmFn={() => dispatch(resetCard(mode))} />
+            <ResetMenu isActive={isResetMenuActive} setIsActive={setResetMenuActive} confirmFn={() => dispatch(editor.reset())} />
             <div className='preview-container'>
                 <SectionErrorBoundary context="cardPreview" label="card preview">
-                    <Card ref={domRef} changeActiveTab={setActiveTab}/>
+                    <CardPreview ref={domRef} changeActiveTab={setActiveTab}/>
                 </SectionErrorBoundary>
             </div>
         </div>
         <CardMakerFooter/>
-    </CardModeContext.Provider>
+    </CardEditorContext.Provider>
 }

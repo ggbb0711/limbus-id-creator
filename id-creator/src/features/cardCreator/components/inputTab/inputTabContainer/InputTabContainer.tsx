@@ -3,21 +3,14 @@ import React, { ReactElement, useState, useRef, useCallback, useEffect } from "r
 import "./InputTabContainer.css"
 import { getSkillView } from "features/cardCreator/skills/SkillRegistry";
 import { clampPanelWidth, parseSavedWidth } from "features/cardCreator/utils/layout/panelWidth";
-import InputIdInfoStatPage from "../inputStatPage/inputIdInfoStatPage/InputIdInfoStatPage";
-import InputEgoInfoStatPage from "../inputStatPage/inputEgoInfoStatPage/InputEgoInfoStatPage";
+import InfoStatPage from "../inputStatPage/InfoStatPage";
 import InputTabSide from "../inputTabSide/InputTabSide";
 import { useAddAlert } from "hooks/useAddAlert";
 import { useAppDispatch } from "stores/AppStore";
-import { CardMode, useCardMode } from "features/cardCreator/contexts/CardModeContext";
 import { useCardActions, useCardSelector } from "features/cardCreator/hooks/useCardInfo";
 import { SkillDetail } from "features/cardCreator/types/SkillDetail";
 
 const STORAGE_KEY = "inputPanelWidth"
-
-const STAT_PAGES: Record<CardMode, typeof InputIdInfoStatPage> = {
-    id: InputIdInfoStatPage,
-    ego: InputEgoInfoStatPage,
-}
 
 function getSavedWidth(): number {
     return parseSavedWidth(localStorage.getItem(STORAGE_KEY))
@@ -31,12 +24,10 @@ export default function InputTabContainer({
         resetBtnHandler:()=>void,
         activeTab:number,
         changeActiveTab:(i:number)=>void}):ReactElement{
-    const mode = useCardMode()
     const dispatch = useAppDispatch()
     const { addSkill } = useCardActions()
     const skillDetails = useCardSelector(info => info.skillDetails)
     const sinnerIcon = useCardSelector(info => info.sinnerIcon)
-    const StatPage = STAT_PAGES[mode]
     const addAlert = useAddAlert()
 
     const [panelWidth, setPanelWidth] = useState(getSavedWidth)
@@ -111,7 +102,7 @@ export default function InputTabContainer({
         activeTab={activeTab} addTab={addTab} resetBtnHandler={resetBtnHandler}></InputTabSide>
         {isPanelOpen && <>
             {activeTab === -1
-                ? <StatPage collapsePage={()=>changeActiveTab(-2)}/>
+                ? <InfoStatPage collapsePage={()=>changeActiveTab(-2)}/>
                 : renderSkillPage(skillDetails[activeTab], activeTab)}
             {!isMobile && <div className="input-tab-resize-handle" onMouseDown={handleMouseDown}></div>}
         </>}

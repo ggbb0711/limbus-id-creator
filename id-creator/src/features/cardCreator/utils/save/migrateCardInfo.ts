@@ -1,6 +1,4 @@
 import { SinRecord, createSinRecord, SIN_KEYS } from "features/cardCreator/constants"
-import { CardMode } from "features/cardCreator/contexts/CardModeContext"
-import { CardInfo } from "features/cardCreator/types/CardInfo"
 import { ICardInfoBase, ISplashArtTranslation } from "features/cardCreator/types/ICardInfoBase"
 import { IEgoInfo, createEgoInfo } from "features/cardCreator/types/IEgoInfo"
 import { IIdInfo, createIdInfo } from "features/cardCreator/types/IIdInfo"
@@ -69,13 +67,6 @@ export function migrateEgoInfo(raw: unknown): IEgoInfo {
         sinCost: migrateSinRecord(source.sinCost, createSinRecord(0)),
         sinResistant: migrateSinRecord(source.sinResistant, createSinRecord(1)),
     }
-}
-
-export function migrateCardInfo(mode: "id", raw: unknown): IIdInfo
-export function migrateCardInfo(mode: "ego", raw: unknown): IEgoInfo
-export function migrateCardInfo(mode: CardMode, raw: unknown): CardInfo
-export function migrateCardInfo(mode: CardMode, raw: unknown): CardInfo {
-    return mode === "id" ? migrateIdInfo(raw) : migrateEgoInfo(raw)
 }
 
 export function migrateSaveFile<T>(raw: unknown, migrateInfo: (info: unknown) => T): ISaveFile<T> {

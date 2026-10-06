@@ -1,25 +1,24 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
-import { SaveMode } from "features/cardCreator/constants"
-import { toCardMode } from "features/cardCreator/contexts/CardModeContext"
+import { CardEditorDefinition } from "features/cardCreator/editors/CardEditorDefinition"
 import { CardInfo } from "features/cardCreator/types/CardInfo"
 import { ISaveFile } from "features/cardCreator/types/ISaveFile"
 import { savesTable } from "features/cardCreator/utils/save/indexDB"
-import { migrateCardInfo, migrateSaveFile } from "features/cardCreator/utils/save/migrateCardInfo"
+import { migrateSaveFile } from "features/cardCreator/utils/save/migrateCardInfo"
 import formatDateForBackend from "features/cardCreator/utils/save/formatDateForBackend"
 import { safeDb } from "features/cardCreator/utils/save/safeDb"
 import { useAddAlert } from "hooks/useAddAlert";
 
 export type LocalSave = ISaveFile<CardInfo>
 
-export default function useSaveLocal(saveMode: SaveMode) {
+export default function useSaveLocal(editor: CardEditorDefinition) {
+    const { saveMode } = editor
     const table = useMemo(() => savesTable(saveMode), [saveMode])
-    const cardMode = toCardMode(saveMode)
     const [saveData, setSaveData] = useState<LocalSave[]>([])
     const [isLoading, setIsLoading] = useState(false)
     const addAlert = useAddAlert()
     const migrate = useCallback(
-        (raw: unknown): LocalSave => migrateSaveFile(raw, info => migrateCardInfo(cardMode, info)),
-        [cardMode]
+        (raw: unknown): LocalSave => migrateSaveFile(raw, editor.migrate),
+        [editor]
     )
 
     const run = useCallback(async <T,>(operation: () => Promise<T>, context: string, failureMessage: string) => {

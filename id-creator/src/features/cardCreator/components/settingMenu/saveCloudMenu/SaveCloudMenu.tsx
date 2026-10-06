@@ -7,7 +7,6 @@ import ConfirmDialog from "components/ui/confirmDialog/ConfirmDialog";
 import getApiErrorMessage from "api/getApiErrorMessage";
 import { useApiErrorAlert } from "hooks/useApiErrorAlert";
 import { reportError } from "utils/reportError";
-import { SaveMode } from "features/cardCreator/constants";
 import PopUpMenu from "components/ui/popUpMenu/PopUpMenu";
 import "./SaveCloudMenu.css";
 import "../SettingMenu.css";
@@ -16,9 +15,7 @@ import { useAddAlert } from "hooks/useAddAlert";
 import { useCardDomRef } from "features/cardCreator/contexts/CardDomRefContext";
 import { useAuth } from "hooks/useAuth";
 import { useAppSelector, useAppDispatch } from "stores/AppStore";
-import { loadCard } from "features/cardCreator/stores/cardActions";
-import { selectCard } from "features/cardCreator/hooks/useCardInfo";
-import { toCardMode } from "features/cardCreator/contexts/CardModeContext";
+import { useCardEditor } from "features/cardCreator/editors/CardEditorContext";
 import { closeSettingMenu } from "features/cardCreator/stores/SettingMenuSlice";
 import Spinner from "components/ui/spinner/Spinner";
 import LoginPromptButton from "components/loginMenu/LoginPromptButton";
@@ -60,7 +57,7 @@ interface PendingAction {
     save: Pick<ISaveFile<CardInfo>, "id" | "name">
 }
 
-export default function SaveCloudMenu({saveMode}:{saveMode:SaveMode}):ReactElement{
+export default function SaveCloudMenu():ReactElement{
     const [createSaveBtnLoadMsg,setCreateSaveBtnLoadMsg] = useState("")
     const [isCreating,setIsCreating] = useState(false)
     const [namePopup,setNamePopup] = useState(false)
@@ -71,8 +68,9 @@ export default function SaveCloudMenu({saveMode}:{saveMode:SaveMode}):ReactEleme
     const cardDomRef = useCardDomRef()
     const dispatch = useAppDispatch()
 
-    const cardMode = toCardMode(saveMode)
-    const cardData = useAppSelector(state => selectCard(state, cardMode))
+    const editor = useCardEditor()
+    const { saveMode } = editor
+    const cardData = useAppSelector(editor.selectInfo)
 
     const { data: saveList = [], isFetching: isLoadingSaveList, error: saveListError } = useGetSaveListQuery(
         { userId: loginUser?.id ?? "", searchName: searchSaveName, saveMode },
@@ -150,7 +148,7 @@ export default function SaveCloudMenu({saveMode}:{saveMode:SaveMode}):ReactEleme
     async function loadSave(saveId: string) {
         try {
             const result = await triggerGetSave({ saveId, saveMode }).unwrap()
-            dispatch(loadCard(cardMode, result.saveInfo))
+            dispatch(editor.load(result.saveInfo))
             dispatch(closeSettingMenu())
         } catch (error) {
             addAlert("Failure", getApiErrorMessage(error, "Couldn't load the save"))

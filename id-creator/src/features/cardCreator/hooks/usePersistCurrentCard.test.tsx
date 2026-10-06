@@ -8,6 +8,8 @@ import { createEgoInfo } from 'features/cardCreator/types/IEgoInfo'
 import { createIdInfo } from 'features/cardCreator/types/IIdInfo'
 import { indexDB } from 'features/cardCreator/utils/save/indexDB'
 import { usePersistCurrentCard } from './usePersistCurrentCard'
+import { CARD_EDITORS } from 'features/cardCreator/editors/cardEditors'
+import { CardKind } from 'features/cardCreator/editors/CardEditorDefinition'
 
 jest.mock('@sentry/nextjs', () => ({ captureException: jest.fn() }))
 jest.mock('config/env.client', () => {
@@ -15,10 +17,10 @@ jest.mock('config/env.client', () => {
     return { ...actual, appConfig: { ...actual.appConfig, timing: { ...actual.appConfig.timing, autosaveDebounceMs: 20 } } }
 })
 
-const setup = (mode: 'id' | 'ego') => {
+const setup = (kind: CardKind) => {
     const store = makeStore()
     const wrapper = ({ children }: { children: React.ReactNode }) => <Provider store={store}>{children}</Provider>
-    const hook = renderHook(() => usePersistCurrentCard(mode), { wrapper })
+    const hook = renderHook(() => usePersistCurrentCard(CARD_EDITORS[kind]), { wrapper })
     return { store, ...hook }
 }
 

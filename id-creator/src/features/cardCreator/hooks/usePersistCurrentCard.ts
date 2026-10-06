@@ -1,17 +1,15 @@
 import { useEffect, useState } from "react"
 import { appConfig } from "config/env.client"
-import { CardMode, toSaveMode } from "features/cardCreator/contexts/CardModeContext"
-import { selectCard } from "features/cardCreator/hooks/useCardInfo"
-import { loadCard } from "features/cardCreator/stores/cardActions"
+import { CardEditorDefinition } from "features/cardCreator/editors/CardEditorDefinition"
 import { setSettingMenuSaveMode } from "features/cardCreator/stores/SettingMenuSlice"
 import { CURRENT_CARD_KEY, currentCardTable } from "features/cardCreator/utils/save/indexDB"
 import { safeDb } from "features/cardCreator/utils/save/safeDb"
 import { useAppDispatch, useAppSelector } from "stores/AppStore"
 
-export function usePersistCurrentCard(mode: CardMode): boolean {
+export function usePersistCurrentCard(editor: CardEditorDefinition): boolean {
     const dispatch = useAppDispatch()
-    const value = useAppSelector(state => selectCard(state, mode))
-    const saveMode = toSaveMode(mode)
+    const value = useAppSelector(editor.selectInfo)
+    const { saveMode } = editor
     const [isRestored, setIsRestored] = useState(false)
 
     useEffect(() => {
@@ -19,14 +17,14 @@ export function usePersistCurrentCard(mode: CardMode): boolean {
         setIsRestored(false)
         safeDb(() => currentCardTable(saveMode).get(CURRENT_CARD_KEY), "restoreCurrentCard").then(result => {
             if (cancelled) return
-            if (result.ok && result.data) dispatch(loadCard(mode, result.data))
+            if (result.ok && result.data) dispatch(editor.load(result.data))
             dispatch(setSettingMenuSaveMode(saveMode))
             setIsRestored(true)
         })
         return () => {
             cancelled = true
         }
-    }, [dispatch, mode, saveMode])
+    }, [dispatch, editor, saveMode])
 
     useEffect(() => {
         if (!isRestored) return
