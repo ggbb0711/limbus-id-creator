@@ -8,8 +8,9 @@ import EditIcon from "assets/icons/EditIcon";
 import CheckIcon from "assets/icons/CheckIcon";
 import { IUserProfile } from "features/user/types/IUserProfile";
 import "./UserProfile.css";
-import useAlert from "hooks/useAlert";
+import { useAddAlert } from "hooks/useAddAlert";
 import { useUpdateUserMutation } from "features/user/api/UserApi";
+import BusyButton from "components/ui/busyButton/BusyButton";
 
 const MAX_USERNAME_LENGTH = appConfig.limits.user.maxUsernameLength
 
@@ -18,7 +19,7 @@ export function UserProfile({userProfile,userId,owned}:{userProfile:IUserProfile
     const [isChangeName,setIsChangeName] = useState(false)
     const [nameLenErr,setNameLenErr] = useState(false)
     const [name,setName] = useState(userName)
-    const {addAlert} = useAlert()
+    const addAlert = useAddAlert()
     const [userError,setUserErr] = useState("")
 
     const [updateUser, {isLoading: isChangingName}] = useUpdateUserMutation()
@@ -57,7 +58,7 @@ export function UserProfile({userProfile,userId,owned}:{userProfile:IUserProfile
 
         return <div className="center-element warning-message">
             {isChangeName?
-                <button className={`main-button ${isChangingName?"active":""} center-element user-name-edit`} onClick={()=>{
+                <BusyButton busy={isChangingName} className="main-button center-element user-name-edit" onClick={()=>{
                     if(name.length<=MAX_USERNAME_LENGTH&&name.length>0){
                         handleChangeName()
                     }
@@ -66,9 +67,9 @@ export function UserProfile({userProfile,userId,owned}:{userProfile:IUserProfile
                         setNameLenErr(true)
                     }
                 }}>
-                    <p>{isChangingName?"Editting":"Confirm"}</p>
+                    <p>{isChangingName?"Editing":"Confirm"}</p>
                     <CheckIcon/>
-                </button>:
+                </BusyButton>:
                 <button className={"main-button center-element user-name-edit"} onClick={()=>setIsChangeName(!isChangeName)}>
                     <p>Edit</p>
                     <EditIcon/>
@@ -83,16 +84,11 @@ export function UserProfile({userProfile,userId,owned}:{userProfile:IUserProfile
         <div className="user-profile-img-container">
             <Image className="user-personal-icon" src={userIcon} alt="user-icon" width={80} height={80} />
             {owned &&
-                <button className={`main-button ${isChangingProfile ? "active" : ""} center-element input-profile-img-button`}>
-                    {isChangingProfile?
-                        <p>Editing...</p>:
-                        <>
-                            <input className="input-profile-img" type="file" name="input-profile-img"  accept="image/png, image/jpeg" id="input-profile-img" onChange={handleChangeProfileImg}/>
-                            <p>Edit Profile</p>
-                            <EditIcon/>
-                        </>
-                    }
-                </button>
+                <BusyButton busy={isChangingProfile} busyText={<p>Editing...</p>} className="main-button center-element input-profile-img-button">
+                    <input className="input-profile-img" type="file" name="input-profile-img"  accept="image/png, image/jpeg" id="input-profile-img" onChange={handleChangeProfileImg}/>
+                    <p>Edit Profile</p>
+                    <EditIcon/>
+                </BusyButton>
             }
         </div>
         <div className="user-name-container">

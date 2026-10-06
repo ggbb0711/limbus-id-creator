@@ -1,23 +1,18 @@
 'use client'
-import { useEffect, useRef } from "react"
+import { useEffect } from "react"
 import { appConfig } from "config/env.client"
 import getApiErrorMessage from "api/getApiErrorMessage"
-import useAlert from "hooks/useAlert"
+import { useAddAlert } from "hooks/useAddAlert";
 import { GetPostsFilter, useGetPostsQuery } from "features/post/api/PostApi"
 
 export function usePaginatedPosts(page: number, filter: GetPostsFilter = {}) {
-    const { addAlert } = useAlert()
-    const addAlertRef = useRef(addAlert)
+    const addAlert = useAddAlert()
     const pageSize = appConfig.paging.postsPerPage
     const { data, error, isLoading, isFetching } = useGetPostsQuery({ ...filter, page, limit: pageSize })
 
     useEffect(() => {
-        addAlertRef.current = addAlert
-    })
-
-    useEffect(() => {
-        if (error) addAlertRef.current("Failure", getApiErrorMessage(error))
-    }, [error])
+        if (error) addAlert("Failure", getApiErrorMessage(error))
+    }, [error, addAlert])
 
     return {
         postList: data?.list ?? [],

@@ -3,6 +3,8 @@ import { clientEnv } from './env.client'
 
 export const siteUrl = clientEnv.siteUrl
 
+export const THEME_COLOR = '#1a1210'
+
 const title = 'Limbus Company ID Creator - Custom Card Maker'
 const description =
     'Create custom Limbus Company Identity and E.G.O cards with our fan-made character creator. Design, customize, and share your own characters with the community.'
@@ -28,4 +30,20 @@ export const siteMetadata: Metadata = {
         description,
         images: ['/Images/SiteLogo.webp'],
     },
+}
+
+interface PageMetadataInput {
+    title: string
+    description: string
+    path: string
+}
+
+export function pageMetadata({ title, description, path }: PageMetadataInput): Metadata {
+    return {
+        title,
+        description,
+        alternates: { canonical: path },
+        openGraph: { ...siteMetadata.openGraph, title, description, url: path },
+        twitter: { ...siteMetadata.twitter, title, description },
+    }
 }

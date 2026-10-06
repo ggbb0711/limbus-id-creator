@@ -6,7 +6,7 @@ import { clampPanelWidth, parseSavedWidth } from "features/cardCreator/utils/lay
 import InputIdInfoStatPage from "../inputStatPage/inputIdInfoStatPage/InputIdInfoStatPage";
 import InputEgoInfoStatPage from "../inputStatPage/inputEgoInfoStatPage/InputEgoInfoStatPage";
 import InputTabSide from "../inputTabSide/InputTabSide";
-import useAlert from "hooks/useAlert";
+import { useAddAlert } from "hooks/useAddAlert";
 import { useAppDispatch } from "stores/AppStore";
 import { CardMode, useCardMode } from "features/cardCreator/contexts/CardModeContext";
 import { useCardActions, useCardSelector } from "features/cardCreator/hooks/useCardInfo";
@@ -37,7 +37,7 @@ export default function InputTabContainer({
     const skillDetails = useCardSelector(info => info.skillDetails)
     const sinnerIcon = useCardSelector(info => info.sinnerIcon)
     const StatPage = STAT_PAGES[mode]
-    const {addAlert} = useAlert()
+    const addAlert = useAddAlert()
 
     const [panelWidth, setPanelWidth] = useState(getSavedWidth)
     const [isMobile, setIsMobile] = useState(() => window.matchMedia("(max-width: 768px)").matches)

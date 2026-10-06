@@ -7,11 +7,21 @@ import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { PaginatedPost, PostSortOption, TagInput, TagList, TagsContainer, usePaginatedPosts } from "features/post";
 import "./ForumPage.css"
-import DropDown from "components/ui/dropDown/DropDown";
+import DropDown, { DropDownOption } from "components/ui/dropDown/DropDown";
 import { useAuth } from "hooks/useAuth";
 import { ForumQueryUpdate, buildForumQuery, parseSort, tagKeyOf } from "features/forum/utils/forumQuery";
 import LoginPromptButton from "components/loginMenu/LoginPromptButton";
 
+
+const SORT_LABELS: Record<PostSortOption, string> = {
+    Latest: "Latest",
+    Earliest: "Earliest",
+    MostViewed: "Most Viewed",
+    MostCommented: "Most Commented",
+    Title: "Title",
+}
+
+const SORT_OPTIONS: DropDownOption<PostSortOption>[] = (Object.keys(SORT_LABELS) as PostSortOption[]).map(value => ({ value, el: <div>{SORT_LABELS[value]}</div> }))
 
 export default function ForumPage():ReactElement{
     const router = useRouter()
@@ -72,30 +82,7 @@ export default function ForumPage():ReactElement{
             <div className="center-element">
                 <p>Sorted by: </p>
                 <div className="forum-sorted-by">
-                    <DropDown<PostSortOption> dropDownEl={{
-                        Latest:{
-                            el: <div>Latest</div>,
-                            value: "Latest"
-                        },
-                        Earliest:{
-                            el: <div>Earliest</div>,
-                            value: "Earliest"
-                        },
-                        MostViewed:{
-                            el: <div>Most Viewed</div>,
-                            value: "MostViewed"
-                        },
-                        MostCommented:{
-                            el: <div>Most Commented</div>,
-                            value: "MostCommented"
-                        },
-                        Title:{
-                            el: <div>Title</div>,
-                            value: "Title"
-                        },
-                    }}
-                    propVal={sortedBy}
-                    cb={(s)=>updateQuery({ sort: s })}/>
+                    <DropDown<PostSortOption> options={SORT_OPTIONS} value={sortedBy} onChange={(s)=>updateQuery({ sort: s })} label="Sort posts by"/>
                 </div>
             </div>
             <div className="forum-new-post-container">

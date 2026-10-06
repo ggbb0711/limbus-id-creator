@@ -4,7 +4,7 @@ import { reportError } from 'utils/reportError'
 import ImageUploadField from './ImageUploadField'
 
 const addAlert = jest.fn()
-jest.mock('hooks/useAlert', () => ({ __esModule: true, default: () => ({ alertArr: [], addAlert }) }))
+jest.mock('hooks/useAddAlert', () => ({ useAddAlert: () => addAlert }))
 jest.mock('features/cardCreator/utils/image/CompressAndReadImage', () => ({ compressAndReadImage: jest.fn() }))
 jest.mock('utils/reportError', () => ({ reportError: jest.fn() }))
 

@@ -4,7 +4,7 @@ import React, { useState, useCallback } from "react";
 import { ReactElement } from "react";
 import Post from "features/post/components/post/Post";
 import { CommentContainer, PostCommentInput } from "features/post/components/comment/Comment";
-import useAlert from "hooks/useAlert";
+import { useAddAlert } from "hooks/useAddAlert";
 import { useAuth } from "hooks/useAuth";
 import { useGetPostQuery } from "features/post/api/PostApi";
 import { IPost } from "features/post/types/IPost";
@@ -14,7 +14,7 @@ import LoginPromptButton from "components/loginMenu/LoginPromptButton";
 
 export default function PostPage({initialPost}:{initialPost:IPost}):ReactElement{
     const postId = initialPost.id
-    const {addAlert} = useAlert()
+    const addAlert = useAddAlert()
     const {user: loginUser, isInitializing} = useAuth()
     const [commentPage, setCommentPage] = useState(0)
 

@@ -59,10 +59,8 @@ const SaveLocalMenu=({saveMode, close}:{saveMode: SaveMode, close: ()=>void})=>{
     )
 
     return<>
-        <div className={`${namePopup?"":"hidden"}`}>
-            <PopUpMenu setIsActive={()=>{
-                    closePopup()
-                }}>
+        <div>
+            <PopUpMenu open={namePopup} label={popupMode==="overwrite"?"Rename the save":"Name the new save"} onClose={closePopup}>
                 <div className="save-cloud-name-popup">
                     <label htmlFor="saveName">Enter the name of the new save:</label>
                     <input className="input save-cloud-name-input" name="saveName" id="saveName" type="text" placeholder="Save name"

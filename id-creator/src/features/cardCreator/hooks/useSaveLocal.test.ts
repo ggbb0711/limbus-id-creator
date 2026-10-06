@@ -5,7 +5,7 @@ import { indexDB } from 'features/cardCreator/utils/save/indexDB'
 import useSaveLocal, { LocalSave } from './useSaveLocal'
 
 const addAlert = jest.fn()
-jest.mock('hooks/useAlert', () => ({ __esModule: true, default: () => ({ alertArr: [], addAlert }) }))
+jest.mock('hooks/useAddAlert', () => ({ useAddAlert: () => addAlert }))
 jest.mock('@sentry/nextjs', () => ({ captureException: jest.fn() }))
 
 const makeSave = (id: string, name = id): LocalSave => ({

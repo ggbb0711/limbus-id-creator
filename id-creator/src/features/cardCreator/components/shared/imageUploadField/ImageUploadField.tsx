@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from "react"
 import { filesize } from "filesize"
 import DeleteIcon from "assets/icons/DeleteIcon"
-import useAlert from "hooks/useAlert"
+import { useAddAlert } from "hooks/useAddAlert";
 import { reportError } from "utils/reportError"
 import UploadImgBtn from "features/cardCreator/components/inputTab/components/uploadImgBtn/UploadImgBtn"
 import { compressAndReadImage } from "features/cardCreator/utils/image/CompressAndReadImage"
@@ -16,7 +16,7 @@ interface ImageUploadFieldProps {
 }
 
 export default function ImageUploadField({ id, buttonText, maxSize, value, onChange, previewClassName }: ImageUploadFieldProps): ReactElement {
-    const { addAlert } = useAlert()
+    const addAlert = useAddAlert()
     const [isProcessing, setIsProcessing] = useState(false)
 
     async function handleFile(file: File) {

@@ -7,7 +7,7 @@ import "../InputStatPage.css"
 import DropDown from "components/ui/dropDown/DropDown";
 import ArrowDownIcon from "assets/icons/ArrowDownIcon";
 import AccordionSection from "components/ui/accordionSection/AccordionSection";
-import { EgoLevelDropDown } from "../egoLevelDropDown/EgoLevelDropDown";
+import { EGO_LEVEL_OPTIONS } from "../egoLevelDropDown/EgoLevelDropDown";
 import SinnerIconPicker from "../sinnerIconPicker/SinnerIconPicker";
 import SinnerSplashArtRepositionInput from "../sinnerSplashArtRepositionInput/SinnerSplashArtRepositionInput";
 import ImageUploadField from "features/cardCreator/components/shared/imageUploadField/ImageUploadField";
@@ -17,6 +17,7 @@ import { IEgoInfo } from "features/cardCreator/types/IEgoInfo";
 import { useInfoForm } from "features/cardCreator/hooks/useInfoForm";
 import ColorPicker from "features/cardCreator/components/colorPicker/ColorPicker";
 import { STAT_PAGE_COLOR_GROUPS } from "features/cardCreator/components/colorPicker/ColorPresets";
+import IconButton from "components/ui/iconButton/IconButton";
 
 export default function InputEgoInfoStatPage({ collapsePage }: { collapsePage: () => void }): ReactElement {
     const { register, setValue, watch, registerNumber } = useInfoForm<IEgoInfo>()
@@ -26,12 +27,13 @@ export default function InputEgoInfoStatPage({ collapsePage }: { collapsePage: (
     const splashArtScale = watch("splashArtScale")
     const splashArtTranslation = watch("splashArtTranslation")
     const sinResistant = watch("sinResistant")
+    const egoLevel = watch("egoLevel")
 
     return <div className="input-page input-stat-page">
         <div className="input-page-icon-container">
-            <div className="collasp-icon" onClick={collapsePage}>
+            <IconButton className="collasp-icon" label="Collapse the input page" onClick={collapsePage}>
                 <ArrowDownIcon/>
-            </div>
+            </IconButton>
         </div>
         <AccordionSection title="Ego General Info">
             <div className="sinner-icon-input-container">
@@ -46,9 +48,9 @@ export default function InputEgoInfoStatPage({ collapsePage }: { collapsePage: (
             </div>
             {splashArt &&
                 <div className="input-group-container">
-                    <p className="center-element">Delete the splash art? <span className="material-symbols-outlined delete-splash-art-btn" onClick={() => setValue("splashArt", "")}>
+                    <p className="center-element">Delete the splash art? <IconButton className="material-symbols-outlined delete-splash-art-btn" label="Delete the splash art" onClick={() => setValue("splashArt", "")}>
                         delete
-                    </span></p>
+                    </IconButton></p>
                     <p style={{ textAlign: "center" }}>Control the position of the splash art by dragging and zooming on this circle:</p>
                     <SinnerSplashArtRepositionInput scale={splashArtScale} translation={splashArtTranslation} onChange={(value) => {
                         setValue("splashArtScale", value.scale)
@@ -74,7 +76,7 @@ export default function InputEgoInfoStatPage({ collapsePage }: { collapsePage: (
             <div className="input-group-container">
                 <div className="input-container">
                     <label className="input-label">Ego level:</label>
-                    <DropDown dropDownEl={EgoLevelDropDown} cb={(newVal) => setValue("egoLevel", newVal)}/>
+                    <DropDown options={EGO_LEVEL_OPTIONS} value={egoLevel} onChange={(newVal) => setValue("egoLevel", newVal)} label="Ego level"/>
                 </div>
             </div>
             <div className="input-group-container">

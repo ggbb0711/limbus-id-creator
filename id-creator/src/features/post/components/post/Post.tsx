@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ReactElement } from "react";
 import { IPost } from "features/post/types/IPost";
 import { TagList } from "features/post/utils/TagList";
@@ -17,31 +17,39 @@ import formatDisplayDate from "utils/formatDisplayDate";
 import "./Post.css";
 import "../shared/Style.css"
 import Spinner from "components/ui/spinner/Spinner";
+import IconButton from "components/ui/iconButton/IconButton";
+import { useDialog } from "components/ui/dialog/useDialog";
 
 function ViewImagePopUp({images,index=0,isActive,closeFn}:{images:string[],index:number,isActive:boolean,closeFn:()=>void}){
     const [currChoice,setCurrChoice] = useState(index)
     
+    const containerRef = useRef<HTMLDivElement>(null)
+
     useEffect(()=>{setCurrChoice(index)},[index])
 
+    function close(){
+        setCurrChoice(index)
+        closeFn()
+    }
+
+    useDialog(isActive, close, containerRef)
+
     return <>
-        {isActive?<div className="image-pop-up-container">
+        {isActive?<div className="image-pop-up-container" ref={containerRef} role="dialog" aria-modal="true" aria-label="Image viewer" tabIndex={-1}>
             <TransformWrapper minScale={0.05} maxScale={3} limitToBounds={false} doubleClick={{disabled:true}}>
                 <TransformComponent wrapperStyle={{width:"100%",height:"100%"}}>
                     {images.map((image,i)=><img key={i} src={image} alt="view-img" className={`image-pop-up ${i!=currChoice?"hidden":""}`} />)}
                 </TransformComponent>
             </TransformWrapper>
-            <div className="image-pop-up-close" onClick={()=>{
-                    setCurrChoice(index)
-                    closeFn()
-                }}>
-            <CloseIcon/>
-            </div>
-            {currChoice>0?<div className="image-pop-up-arrow left" onClick={()=>setCurrChoice(currChoice-1)}>
+            <IconButton className="image-pop-up-close" label="Close image viewer" onClick={close}>
+                <CloseIcon/>
+            </IconButton>
+            {currChoice>0&&<IconButton className="image-pop-up-arrow left" label="Previous image" onClick={()=>setCurrChoice(currChoice-1)}>
                 <ArrowDownIcon/>
-            </div>:<></>}
-            {currChoice<images.length-1?<div className="image-pop-up-arrow right" onClick={()=>setCurrChoice(currChoice+1)}>
+            </IconButton>}
+            {currChoice<images.length-1&&<IconButton className="image-pop-up-arrow right" label="Next image" onClick={()=>setCurrChoice(currChoice+1)}>
                 <ArrowUpIcon/>
-            </div>:<></>}
+            </IconButton>}
         </div>
         :<></>}
     </>
@@ -52,20 +60,18 @@ function PostCarousel({postImages}:{postImages:string[]}){
     const [isViewModeActive,setIsViewModeActive] = useState(false)
     
     return <div className="post-carousel-container">
-        {currImg>0?<div className="post-carousel-arrow left" onClick={()=>setCurrImg(currImg-1)}>
+        {currImg>0&&<IconButton className="post-carousel-arrow left" label="Previous image" onClick={()=>setCurrImg(currImg-1)}>
             <ArrowDownIcon/>
-        </div>
-        :<></>}
+        </IconButton>}
         {postImages.map((image,i)=><Image key={i} className={`post-img ${i!=currImg?"hidden":""}`} src={image} alt="card-img" fill sizes="(max-width: 1200px) 100vw, 1200px" quality={90} preload={i===0} style={{objectFit:"contain"}} onClick={()=>{
                 setIsViewModeActive(true)
             }}/>)}
         <ViewImagePopUp images={postImages} index={currImg} isActive={isViewModeActive} closeFn={()=>{
                 setIsViewModeActive(false)
             }}/>
-        {currImg<postImages.length-1?<div className="post-carousel-arrow right" onClick={()=>setCurrImg(currImg+1)}>
+        {currImg<postImages.length-1&&<IconButton className="post-carousel-arrow right" label="Next image" onClick={()=>setCurrImg(currImg+1)}>
             <ArrowUpIcon/>
-        </div>
-        :<></>}
+        </IconButton>}
         
     </div>
 }

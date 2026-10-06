@@ -8,6 +8,7 @@ import SettingIcon from "assets/icons/SettingIcon";
 import DeleteIcon from "assets/icons/DeleteIcon";
 import ColorPicker from "features/cardCreator/components/colorPicker/ColorPicker";
 import { loadCustomKeywords, saveCustomKeywords } from "features/cardCreator/utils/keywords/customKeywordStorage";
+import IconButton from "components/ui/iconButton/IconButton";
 
 function CustomKeywordTab({keyword,changeKeyword,deleteKeyword}:{keyword:ICustomKeyword,changeKeyword:(id:string,newKeyword:string,newColor:string)=>void,deleteKeyword:(id:string)=>void}){
     const [isEditMode,setIsEditMode] = useState(false)
@@ -17,19 +18,19 @@ function CustomKeywordTab({keyword,changeKeyword,deleteKeyword}:{keyword:ICustom
     return <div className="custom-keyword-tab">
         <div className="custom-keyword-tab-icons">
             {isEditMode?
-            <span className="custom-keyword-tab-setting-icon" onClick={()=>{
+            <IconButton className="custom-keyword-tab-setting-icon" label={`Save ${keyword.keyword}`} onClick={()=>{
                     setIsEditMode(false)
                     changeKeyword(keyword.customKeywordID,edittingKeyword,edittingKeywordColor)
                 }}>
                 <CheckIcon width="14px" height="14px"/>
-            </span>:
-            <span className="custom-keyword-tab-setting-icon" onClick={()=>setIsEditMode(true)}>
+            </IconButton>:
+            <IconButton className="custom-keyword-tab-setting-icon" label={`Edit ${keyword.keyword}`} onClick={()=>setIsEditMode(true)}>
                 <SettingIcon width="14px" height="14px"/>
-            </span>}
-            
-            <span className="custom-keyword-tab-delete-icon" onClick={()=>deleteKeyword(keyword.customKeywordID)}>
+            </IconButton>}
+
+            <IconButton className="custom-keyword-tab-delete-icon" label={`Delete ${keyword.keyword}`} onClick={()=>deleteKeyword(keyword.customKeywordID)}>
                 <DeleteIcon width="14px" height="14px"/>
-            </span>
+            </IconButton>
         </div>
         <div className="center-element">
             <input type="text" style={{color:edittingKeywordColor}} value={edittingKeyword} 

@@ -21,6 +21,7 @@ import { IIdInfo } from "features/cardCreator/types/IIdInfo";
 import { useInfoForm } from "features/cardCreator/hooks/useInfoForm";
 import ColorPicker from "features/cardCreator/components/colorPicker/ColorPicker";
 import { STAT_PAGE_COLOR_GROUPS } from "features/cardCreator/components/colorPicker/ColorPresets";
+import IconButton from "components/ui/iconButton/IconButton";
 
 const resistField = (damageType: DamageType) => `${damageType.toLowerCase()}Resistant` as "slashResistant" | "pierceResistant" | "bluntResistant"
 
@@ -48,9 +49,9 @@ export default function InputIdInfoStatPage({ collapsePage }: { collapsePage: ()
 
     return <div className="input-page input-stat-page">
         <div className="input-page-icon-container">
-            <div className="collasp-icon" onClick={collapsePage}>
+            <IconButton className="collasp-icon" label="Collapse the input page" onClick={collapsePage}>
                 <ArrowDownIcon/>
-            </div>
+            </IconButton>
         </div>
         <AccordionSection title="Sinner General Info">
             <div className="sinner-icon-input-container">

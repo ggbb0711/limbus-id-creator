@@ -18,16 +18,12 @@ const UiSlice = createSlice({
         closeLoginMenu(state) {
             state.isLoginMenuActive = false
         },
-        toggleLoginMenu(state) {
-            state.isLoginMenuActive = !state.isLoginMenuActive
-        },
     },
 })
 
 export const {
     openLoginMenu,
     closeLoginMenu,
-    toggleLoginMenu,
 } = UiSlice.actions
 
 export const UiReducer = UiSlice.reducer

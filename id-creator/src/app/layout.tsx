@@ -3,7 +3,7 @@ import type { Metadata, Viewport } from "next";
 import "styles/reset.css";
 import "styles/style.css";
 import { mikodacs, rubik } from "styles/fonts";
-import { siteMetadata } from "config/siteMetadata";
+import { THEME_COLOR, siteMetadata } from "config/siteMetadata";
 import { GoogleAnalytics } from '@next/third-parties/google'
 import Providers from "./providers";
 import { clientEnv } from "config/env.client";
@@ -11,7 +11,7 @@ import { clientEnv } from "config/env.client";
 export const metadata: Metadata = siteMetadata
 
 export const viewport: Viewport = {
-  themeColor: "#000000",
+  themeColor: THEME_COLOR,
 }
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

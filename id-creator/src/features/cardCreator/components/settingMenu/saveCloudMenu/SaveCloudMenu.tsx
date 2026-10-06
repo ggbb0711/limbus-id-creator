@@ -13,7 +13,7 @@ import "./SaveCloudMenu.css";
 import "../SettingMenu.css";
 import { CardInfo } from "features/cardCreator/types/CardInfo";
 import * as Sentry from "@sentry/nextjs"
-import useAlert from "hooks/useAlert";
+import { useAddAlert } from "hooks/useAddAlert";
 import formatDateForBackend from "features/cardCreator/utils/save/formatDateForBackend";
 import { useCardDomRef } from "features/cardCreator/contexts/CardDomRefContext";
 import { useAuth } from "hooks/useAuth";
@@ -32,6 +32,7 @@ import {
     useDeleteSaveMutation,
 } from "features/cardCreator/api/SaveInfoApi";
 import formatDisplayDate from "utils/formatDisplayDate";
+import BusyButton from "components/ui/busyButton/BusyButton";
 
 function SaveCloudTab({saveName,saveDate,previewUrl,deleteSave,loadSave,overwriteSave}:{saveName:string,saveDate:string,previewUrl:string,deleteSave:()=>void,loadSave:()=>void,overwriteSave:()=>void}):ReactElement{
     return <div className="save-cloud-tab">
@@ -63,7 +64,7 @@ export default function SaveCloudMenu({saveMode}:{saveMode:SaveMode}):ReactEleme
     const [searchSaveName,setSearchSaveName] = useState("")
     const [saveName,setSaveName] = useState("New save file")
     const {user: loginUser} = useAuth()
-    const {addAlert} = useAlert()
+    const addAlert = useAddAlert()
     const cardDomRef = useCardDomRef()
     const dispatch = useAppDispatch()
 
@@ -184,13 +185,12 @@ export default function SaveCloudMenu({saveMode}:{saveMode:SaveMode}):ReactEleme
 
     const loadCreateNewSaveButton = ()=>{
         if(!loginUser) return <LoginPromptButton className="main-button create-new-save-btn"/>
-        if(isCreating) return <button className="main-button active create-new-save-btn">{createSaveBtnLoadMsg}</button>
-        return <button className="main-button create-new-save-btn" onClick={()=>setNamePopup(true)}>Create a new save</button>
+        return <BusyButton busy={isCreating} busyText={createSaveBtnLoadMsg} className="main-button create-new-save-btn" onClick={()=>setNamePopup(true)}>Create a new save</BusyButton>
     }
 
     return <div className="save-cloud-container">
-        <div className={`${namePopup?"":"hidden"}`}>
-            <PopUpMenu setIsActive={()=>setNamePopup(false)}>
+        <div>
+            <PopUpMenu open={namePopup} label="Name the new save" onClose={()=>setNamePopup(false)}>
                 <div className="save-cloud-name-popup">
                     <label htmlFor="newCloudSaveName">Enter the name of the new save:</label>
                     <input className="input save-cloud-name-input" name="newCloudSaveName" id="newCloudSaveName" type="text" placeholder="Save name"

@@ -9,6 +9,8 @@
 }
 
 .card-maker-footer-component{
+    background-color: transparent;
+    border: none;
     border-left: 1px solid var(--brown-pale);
     padding: 3px 5px;
     cursor: pointer;

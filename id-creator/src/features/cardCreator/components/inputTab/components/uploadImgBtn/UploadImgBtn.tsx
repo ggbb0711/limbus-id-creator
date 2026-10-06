@@ -2,7 +2,7 @@ import React from "react";
 import { ReactElement } from "react";
 import "./UploadImgBtn.css"
 import UploadFileIcon from "assets/icons/UploadFileIcon";
-import useAlert from "hooks/useAlert";
+import { useAddAlert } from "hooks/useAddAlert";
 
 interface UploadImgBtnProps {
     onFile: (file: File) => void
@@ -15,7 +15,7 @@ interface UploadImgBtnProps {
 }
 
 export default function UploadImgBtn({ onFile, name, id, btnTxt, btnClass, maxSize, disabled = false }: UploadImgBtnProps): ReactElement {
-    const { addAlert } = useAlert()
+    const addAlert = useAddAlert()
 
     return (
         <button className={`upload-img-btn main-button fill-button-component ${btnClass ?? ""}`} disabled={disabled}>

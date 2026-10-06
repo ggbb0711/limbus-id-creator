@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { SaveMode } from "features/cardCreator/constants"
 import { toCardMode } from "features/cardCreator/contexts/CardModeContext"
 import { CardInfo } from "features/cardCreator/types/CardInfo"
@@ -7,7 +7,7 @@ import { savesTable } from "features/cardCreator/utils/save/indexDB"
 import { migrateCardInfo, migrateSaveFile } from "features/cardCreator/utils/save/migrateCardInfo"
 import formatDateForBackend from "features/cardCreator/utils/save/formatDateForBackend"
 import { safeDb } from "features/cardCreator/utils/save/safeDb"
-import useAlert from "hooks/useAlert"
+import { useAddAlert } from "hooks/useAddAlert";
 
 export type LocalSave = ISaveFile<CardInfo>
 
@@ -16,13 +16,7 @@ export default function useSaveLocal(saveMode: SaveMode) {
     const cardMode = toCardMode(saveMode)
     const [saveData, setSaveData] = useState<LocalSave[]>([])
     const [isLoading, setIsLoading] = useState(false)
-    const { addAlert } = useAlert()
-    const addAlertRef = useRef(addAlert)
-
-    useEffect(() => {
-        addAlertRef.current = addAlert
-    })
-
+    const addAlert = useAddAlert()
     const migrate = useCallback(
         (raw: unknown): LocalSave => migrateSaveFile(raw, info => migrateCardInfo(cardMode, info)),
         [cardMode]
@@ -32,21 +26,21 @@ export default function useSaveLocal(saveMode: SaveMode) {
         setIsLoading(true)
         const result = await safeDb(operation, context)
         setIsLoading(false)
-        if (!result.ok) addAlertRef.current("Failure", failureMessage)
+        if (!result.ok) addAlert("Failure", failureMessage)
         return result
-    }, [])
+    }, [addAlert])
 
     useEffect(() => {
         let cancelled = false
         safeDb(() => table.toArray(), "loadLocalSaves").then(result => {
             if (cancelled) return
             if (result.ok) setSaveData(result.data.map(migrate))
-            else addAlertRef.current("Failure", "Could not read your local saves")
+            else addAlert("Failure", "Could not read your local saves")
         })
         return () => {
             cancelled = true
         }
-    }, [table, migrate])
+    }, [table, migrate, addAlert])
 
     const createSave = useCallback(async (save: LocalSave) => {
         const result = await run(() => table.add(save), "createLocalSave", "Could not create the save")

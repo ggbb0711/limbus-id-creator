@@ -11,11 +11,13 @@ import { SearchSaveInput } from "features/cardCreator";
 import CloseIcon from "assets/icons/CloseIcon";
 import Editor from 'react-simple-wysiwyg';
 import { useRouter } from "next/navigation";
-import useAlert from "hooks/useAlert";
+import { useAddAlert } from "hooks/useAddAlert";
 import { useAuth } from "hooks/useAuth";
 import { useCreatePostMutation } from "features/post/api/PostApi";
 import getApiErrorMessage from "api/getApiErrorMessage";
 import LoginPromptButton from "components/loginMenu/LoginPromptButton";
+import IconButton from "components/ui/iconButton/IconButton";
+import BusyButton from "components/ui/busyButton/BusyButton";
 
 interface IChoosenSave{
     PreviewUrl:string,
@@ -30,7 +32,7 @@ export default function NewPostPage():ReactElement{
     const [saveMode,setSaveMode] = useState("Identity")
     const [description,setDescription] = useState("")
     const {user: loginUser} = useAuth()
-    const {addAlert} = useAlert()
+    const addAlert = useAddAlert()
     const router = useRouter()
 
     const [createPost, {isLoading: isPosting}] = useCreatePostMutation()
@@ -108,9 +110,9 @@ export default function NewPostPage():ReactElement{
                 </div>
                 <div className="choosen-save-container">
                     {choosenSave.map((save,i)=><div key={i} className="choosen-save-img-container">
-                        <div className="remove-btn" onClick={()=>removeSave(i)}>
+                        <IconButton className="remove-btn" label="Remove image" onClick={()=>removeSave(i)}>
                             <CloseIcon/>
-                        </div>
+                        </IconButton>
                         <img src={save.PreviewUrl} className="choosen-save-img" alt="preview-img" />
                     </div>)}
                 </div>
@@ -119,7 +121,7 @@ export default function NewPostPage():ReactElement{
                 <label htmlFor="description">Description:</label>
                 <Editor className="input post-description-input" name="description" id="description" value={description} onChange={(e)=>setDescription(e.target.value)}/>
             </div>
-            <button className={`main-button ${isPosting ? "active" : ""}`} onClick={handleCreatePost}>{isPosting?"Posting...":"Post"}</button>
+            <BusyButton busy={isPosting} busyText="Posting..." onClick={handleCreatePost}>Post</BusyButton>
         </div>:
             <div className="page-content">
                 Please login to post

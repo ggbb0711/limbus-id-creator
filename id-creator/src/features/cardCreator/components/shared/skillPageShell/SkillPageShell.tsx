@@ -6,6 +6,7 @@ import ConfirmDialog from "components/ui/confirmDialog/ConfirmDialog"
 import ChangeInputType from "features/cardCreator/components/inputTab/components/changeInputType/ChangeInputType"
 import { SKILL_DATA } from "features/cardCreator/skills/skillData"
 import { SkillType } from "features/cardCreator/types/SkillTypes"
+import IconButton from "components/ui/iconButton/IconButton"
 
 interface SkillPageShellProps {
     type: SkillType
@@ -22,9 +23,9 @@ export default function SkillPageShell({ type, className = "", style, collapsePa
 
     return <div className={`input-page ${className}`} style={style}>
         <div className="input-page-icon-container">
-            <div className="collasp-icon" onClick={collapsePage}>
+            <IconButton className="collasp-icon" label="Collapse the input page" onClick={collapsePage}>
                 <ArrowDownIcon/>
-            </div>
+            </IconButton>
         </div>
         <div className="input-group-container">
             <label className="input-label">Change skill:</label>

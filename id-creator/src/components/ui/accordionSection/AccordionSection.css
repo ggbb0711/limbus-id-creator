@@ -3,6 +3,12 @@
 }
 
 .accordion-header {
+    width: 100%;
+    background: none;
+    border: none;
+    color: inherit;
+    font: inherit;
+    text-align: left;
     display: flex;
     justify-content: space-between;
     align-items: center;

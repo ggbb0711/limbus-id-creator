@@ -2,7 +2,7 @@ import { fireEvent, render } from '@testing-library/react'
 import UploadImgBtn from './UploadImgBtn'
 
 const addAlert = jest.fn()
-jest.mock('hooks/useAlert', () => ({ __esModule: true, default: () => ({ alertArr: [], addAlert }) }))
+jest.mock('hooks/useAddAlert', () => ({ useAddAlert: () => addAlert }))
 
 function setup(maxSize = 100) {
     const onFile = jest.fn()

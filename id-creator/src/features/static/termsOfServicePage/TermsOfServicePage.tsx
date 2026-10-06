@@ -1,3 +1,6 @@
+import React from "react";
+import { SITE_LINKS } from "config/siteLinks";
+import LegalSection, { ContactEmailLink, ExternalLink } from "features/static/components/legalSection/LegalSection";
 
 export default function TermsOfServicePage() {
     return (
@@ -6,92 +9,59 @@ export default function TermsOfServicePage() {
                 <h1 className="page-title">Terms of Service</h1>
                 <p className="legal-effective-date">Last updated: February 6, 2026</p>
 
-                <div className="legal-section">
-                    <h2 className="legal-section-title">Acceptance of Terms</h2>
-                    <p className="legal-text">
-                        By accessing or using Limbus ID Creator, you agree to be bound by these Terms of Service.
-                        If you do not agree to these terms, please do not use the service.
-                    </p>
-                </div>
+                <LegalSection title="Acceptance of Terms">
+                    By accessing or using Limbus ID Creator, you agree to be bound by these Terms of Service.
+                    If you do not agree to these terms, please do not use the service.
+                </LegalSection>
 
-                <div className="legal-section">
-                    <h2 className="legal-section-title">Fan-Made Project Disclaimer</h2>
-                    <p className="legal-text">
-                        Limbus ID Creator is an unofficial fan-made project and is not affiliated with, endorsed by, or
-                        connected to Project Moon in any way. All game-related assets, names, and trademarks belong to their
-                        respective owners. This project operates in accordance with{" "}
-                        <a
-                            href="https://x.com/ProjMoonStudio/status/1629085462236397573?lang=en"
-                            className="legal-link"
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            Project Moon&apos;s Fan Content Policy
-                        </a>.
-                    </p>
-                </div>
+                <LegalSection title="Fan-Made Project Disclaimer">
+                    Limbus ID Creator is an unofficial fan-made project and is not affiliated with, endorsed by, or
+                    connected to Project Moon in any way. All game-related assets, names, and trademarks belong to their
+                    respective owners. This project operates in accordance with{" "}
+                    <ExternalLink href={SITE_LINKS.fanContentPolicy}>Project Moon&apos;s Fan Content Policy</ExternalLink>.
+                </LegalSection>
 
-                <div className="legal-section">
-                    <h2 className="legal-section-title">User-Generated Content</h2>
-                    <p className="legal-text">
-                        You retain ownership of the original content you create using our tools. By sharing content on the
-                        platform, you grant us a non-exclusive license to display it on the site. You are responsible for
-                        ensuring your content does not infringe on the rights of others.
-                    </p>
-                </div>
+                <LegalSection title="User-Generated Content">
+                    You retain ownership of the original content you create using our tools. By sharing content on the
+                    platform, you grant us a non-exclusive license to display it on the site. You are responsible for
+                    ensuring your content does not infringe on the rights of others.
+                </LegalSection>
 
-                <div className="legal-section">
-                    <h2 className="legal-section-title">Acceptable Use</h2>
-                    <p className="legal-text">You agree not to:</p>
-                    <ul className="legal-list">
-                        <li>Use the service for any unlawful purpose</li>
-                        <li>Upload content that is offensive, harmful, or infringes on intellectual property rights</li>
-                        <li>Attempt to disrupt or interfere with the service&apos;s operation</li>
-                        <li>Impersonate other users or misrepresent your identity</li>
-                        <li>Use automated tools to scrape or abuse the service</li>
-                    </ul>
-                </div>
+                <LegalSection title="Acceptable Use" items={[
+                    "Use the service for any unlawful purpose",
+                    "Upload content that is offensive, harmful, or infringes on intellectual property rights",
+                    "Attempt to disrupt or interfere with the service's operation",
+                    "Impersonate other users or misrepresent your identity",
+                    "Use automated tools to scrape or abuse the service",
+                ]}>
+                    You agree not to:
+                </LegalSection>
 
-                <div className="legal-section">
-                    <h2 className="legal-section-title">Intellectual Property</h2>
-                    <p className="legal-text">
-                        The site&apos;s original code, design, and non-game-related content are the property of Limbus ID Creator.
-                        Game-related assets remain the property of Project Moon and their respective owners.
-                    </p>
-                </div>
+                <LegalSection title="Intellectual Property">
+                    The site&apos;s original code, design, and non-game-related content are the property of Limbus ID Creator.
+                    Game-related assets remain the property of Project Moon and their respective owners.
+                </LegalSection>
 
-                <div className="legal-section">
-                    <h2 className="legal-section-title">Account Termination</h2>
-                    <p className="legal-text">
-                        We reserve the right to suspend or terminate accounts that violate these terms or engage in behavior
-                        that is harmful to the community or the service.
-                    </p>
-                </div>
+                <LegalSection title="Account Termination">
+                    We reserve the right to suspend or terminate accounts that violate these terms or engage in behavior
+                    that is harmful to the community or the service.
+                </LegalSection>
 
-                <div className="legal-section">
-                    <h2 className="legal-section-title">Limitation of Liability</h2>
-                    <p className="legal-text">
-                        Limbus ID Creator is provided &quot;as is&quot; without warranties of any kind. We are not liable for any
-                        damages arising from your use of the service, including but not limited to loss of data or
-                        interruption of service.
-                    </p>
-                </div>
+                <LegalSection title="Limitation of Liability">
+                    Limbus ID Creator is provided &quot;as is&quot; without warranties of any kind. We are not liable for any
+                    damages arising from your use of the service, including but not limited to loss of data or
+                    interruption of service.
+                </LegalSection>
 
-                <div className="legal-section">
-                    <h2 className="legal-section-title">Changes to Terms</h2>
-                    <p className="legal-text">
-                        We may update these Terms of Service from time to time. Continued use of the service after changes
-                        are posted constitutes acceptance of the updated terms.
-                    </p>
-                </div>
+                <LegalSection title="Changes to Terms">
+                    We may update these Terms of Service from time to time. Continued use of the service after changes
+                    are posted constitutes acceptance of the updated terms.
+                </LegalSection>
 
-                <div className="legal-section">
-                    <h2 className="legal-section-title">Contact</h2>
-                    <p className="legal-text">
-                        If you have questions about these Terms of Service, please contact us at{" "}
-                        <a href="mailto:johnidmaker@gmail.com" className="legal-link">johnidmaker@gmail.com</a>.
-                    </p>
-                </div>
+                <LegalSection title="Contact">
+                    If you have questions about these Terms of Service, please contact us at{" "}
+                    <ContactEmailLink email={SITE_LINKS.contactEmail}/>.
+                </LegalSection>
             </div>
         </div>
     );

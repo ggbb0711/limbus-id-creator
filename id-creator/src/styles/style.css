@@ -294,3 +294,24 @@ button{
     75%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 100%)}
     100% {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 0)}
 }
+:where(.icon-button){
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+[role="dialog"]:focus,[role="alertdialog"]:focus{
+    outline: none;
+}
+
+.copy-button{
+    min-width: auto;
+    padding: 2px 8px;
+    font-size: 12px;
+}

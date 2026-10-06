@@ -4,7 +4,7 @@ import { useGetPostsQuery } from 'features/post/api/PostApi'
 import { usePaginatedPosts } from './usePaginatedPosts'
 
 const addAlert = jest.fn()
-jest.mock('hooks/useAlert', () => ({ __esModule: true, default: () => ({ alertArr: [], addAlert }) }))
+jest.mock('hooks/useAddAlert', () => ({ useAddAlert: () => addAlert }))
 jest.mock('features/post/api/PostApi', () => ({ useGetPostsQuery: jest.fn() }))
 
 const query = jest.mocked(useGetPostsQuery)

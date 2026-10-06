@@ -1,8 +1,8 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import uuid from 'react-uuid';
+import { Dispatch, createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit'
+import { appConfig } from 'config/env.client'
 import { AlertStatus, IAlert } from 'types/IAlert'
 
-const initialState : {value: IAlert[]} = {value: []}; 
+const initialState: { value: IAlert[] } = { value: [] }
 
 const AlertSlice = createSlice({
     name: "alert",
@@ -10,17 +10,22 @@ const AlertSlice = createSlice({
     reducers: {
         addAlertReducer: {
             reducer: (state, action: PayloadAction<IAlert>) => {
-                state.value.push(action.payload);
+                state.value.push(action.payload)
             },
             prepare: (status: AlertStatus, msg: string) => {
-                return { payload: { status, msg, alertId: uuid() } };
+                return { payload: { status, msg, alertId: nanoid() } }
             }
         },
-        removeAlertReducer: (state, actionPayload: PayloadAction<string>) =>{
-            state.value = state.value.filter(alert => alert.alertId !== actionPayload.payload);
+        removeAlertReducer: (state, action: PayloadAction<string>) => {
+            state.value = state.value.filter(alert => alert.alertId !== action.payload)
         }
     }
 })
 
-export const { addAlertReducer, removeAlertReducer } = AlertSlice.actions;
-export const AlertReducer = AlertSlice.reducer;
+export const { addAlertReducer, removeAlertReducer } = AlertSlice.actions
+export const AlertReducer = AlertSlice.reducer
+
+export const showAlert = (status: AlertStatus, msg: string) => (dispatch: Dispatch) => {
+    const { alertId } = dispatch(addAlertReducer(status, msg)).payload
+    setTimeout(() => dispatch(removeAlertReducer(alertId)), appConfig.timing.alertMs)
+}
