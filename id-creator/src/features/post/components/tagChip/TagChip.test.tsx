@@ -3,9 +3,9 @@ import TagChip from './TagChip'
 
 describe('TagChip', () => {
     it('renders the icon and name', () => {
-        render(<TagChip tag={{ icon: '/Images/sinner-icon/Faust_Icon.webp', tagName: 'Faust' }} className="chip" iconClassName="chip-img" iconSize={12}/>)
+        const { container } = render(<TagChip tag={{ icon: '/Images/sinner-icon/Faust_Icon.webp', tagName: 'Faust' }} className="chip" iconClassName="chip-img" iconSize={12}/>)
         expect(screen.getByText('Faust')).toBeInTheDocument()
-        expect(screen.getByAltText('Faust_icon')).toHaveClass('chip-img')
+        expect(container.querySelector('img')).toHaveClass('chip-img')
     })
 
     it('skips the icon when there is none and renders children', () => {

@@ -1,4 +1,4 @@
-import { buildForumQuery, parseSort, tagKeyOf } from 'features/forum/utils/forumQuery'
+import { buildForumQuery, parseForumParams, parsePage, parseSort, tagKeyOf, toSearchParams } from 'features/forum/utils/forumQuery'
 import { TagList } from 'features/post'
 
 describe('parseSort', () => {
@@ -48,5 +48,38 @@ describe('buildForumQuery', () => {
 
     it('encodes special characters', () => {
         expect(buildForumQuery('', { q: 'a&b #c' })).toBe('q=a%26b+%23c')
+    })
+})
+
+describe('parsePage', () => {
+    it.each([
+        [null, 0], ['0', 0], ['3', 3], ['1.5', 0], ['-1', 0], ['abc', 0], ['', 0], ['1e3', 0], ['99999999999999999999', 0],
+    ])('%p -> %d', (value, page) => {
+        expect(parsePage(value)).toBe(page)
+    })
+})
+
+describe('parseForumParams', () => {
+    it('drops prototype keys and unknown tags', () => {
+        const params = new URLSearchParams('tag=constructor&tag=toString&tag=__proto__&tag=Faust&tag=nope')
+        expect(parseForumParams(params).tagKeys).toEqual(['Faust'])
+    })
+
+    it('removes duplicate tags', () => {
+        expect(parseForumParams(new URLSearchParams('tag=Faust&tag=Faust&tag=Burn')).tagKeys).toEqual(['Faust', 'Burn'])
+    })
+
+    it('reads search, sort and page with safe defaults', () => {
+        expect(parseForumParams(new URLSearchParams('q=hi&sort=bogus&page=1.5'))).toEqual({ q: 'hi', tagKeys: [], sort: 'Latest', page: 0 })
+        expect(parseForumParams(new URLSearchParams('sort=Title&page=2'))).toMatchObject({ sort: 'Title', page: 2 })
+    })
+})
+
+describe('toSearchParams', () => {
+    it('turns a Next searchParams record into URLSearchParams', () => {
+        const params = toSearchParams({ q: 'a b', tag: ['Faust', 'Burn'], page: undefined })
+        expect(params.get('q')).toBe('a b')
+        expect(params.getAll('tag')).toEqual(['Faust', 'Burn'])
+        expect(params.has('page')).toBe(false)
     })
 })

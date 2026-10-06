@@ -3,21 +3,11 @@ import IResponse from "types/IResponse";
 import { IPost } from "features/post/types/IPost";
 import { IPostDisplayCard } from "features/post/types/IPostDisplayCard";
 import { toPostDisplayCard } from "features/post/utils/toPostDisplayCard";
-import { PostSortOption } from "features/post/types/PostSortOptions";
+import { GetPostsFilter, GetPostsParams, buildPostsQuery } from "features/post/api/buildPostsQuery";
 
-export interface GetPostsFilter {
-    title?: string
-    tag?: string[]
-    sortedBy?: PostSortOption
-    userId?: string
-}
+export type { GetPostsFilter }
 
-interface IGetPostsParams extends GetPostsFilter {
-    page: number
-    limit: number
-}
-
-interface IGetPostsResponse<T> {
+export interface IGetPostsResponse<T> {
     list: T[]
     total: number
 }
@@ -36,18 +26,8 @@ interface ICreatePostBody {
 
 export const PostApi = BaseApi.injectEndpoints({
     endpoints: (builder) => ({
-        getPosts: builder.query<IGetPostsResponse<IPostDisplayCard>, IGetPostsParams>({
-            query: ({ title = '', tag = [], sortedBy = "Latest", page, limit, userId }) => {
-                const params = new URLSearchParams({
-                    Title: title,
-                    SortedBy: sortedBy,
-                    page: page.toString(),
-                    limit: limit.toString(),
-                })
-                tag.forEach(t => params.append('Tag', t))
-                if (userId) params.append('UserId', userId)
-                return `/Post?${params.toString()}`
-            },
+        getPosts: builder.query<IGetPostsResponse<IPostDisplayCard>, GetPostsParams>({
+            query: (params) => `/Post?${buildPostsQuery(params)}`,
             transformResponse: transformPostsResponse,
             providesTags: ['Posts'],
         }),

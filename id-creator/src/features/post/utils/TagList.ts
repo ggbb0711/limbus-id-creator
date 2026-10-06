@@ -4,11 +4,7 @@ export interface ITag{
     tagName:string
 }
 
-export interface ITagList{
-    [key:string]:ITag
-}
-
-export const TagList:ITagList={
+export const TagList={
     "Yi_Sang":{
         icon:"/Images/sinner-icon/Yi_Sang_Icon.webp",
         tagName:"Yi Sang"
@@ -93,4 +89,20 @@ export const TagList:ITagList={
         icon:"",
         tagName: "Ego"
     }
+} as const satisfies Record<string, ITag>
+
+export type TagKey = keyof typeof TagList
+
+export const TAG_KEYS = Object.keys(TagList) as TagKey[]
+
+export const isTagKey = (key: unknown): key is TagKey => typeof key === "string" && Object.hasOwn(TagList, key)
+
+export const getTag = (key: string): ITag | undefined => (isTagKey(key) ? TagList[key] : undefined)
+
+export const tagKeyOf = (tag: ITag | undefined): TagKey | undefined =>
+    tag ? TAG_KEYS.find(key => TagList[key].tagName === tag.tagName) : undefined
+
+export const filterTags = (text: string): ITag[] => {
+    const search = text.trim().replaceAll(" ", "_").toLowerCase()
+    return TAG_KEYS.filter(key => key.toLowerCase().includes(search)).map(key => TagList[key])
 }

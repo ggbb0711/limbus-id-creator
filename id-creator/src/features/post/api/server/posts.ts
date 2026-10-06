@@ -2,9 +2,14 @@ import 'server-only'
 import { cache } from 'react'
 import { apiGet } from 'api/server/serverFetch'
 import { IPost } from 'features/post/types/IPost'
+import { IPostDisplayCard } from 'features/post/types/IPostDisplayCard'
+import { toPostDisplayCard } from 'features/post/utils/toPostDisplayCard'
+import { GetPostsParams, buildPostsQuery } from 'features/post/api/buildPostsQuery'
+import { Result, fail, ok } from 'utils/result'
+import { reportError } from 'utils/reportError'
 
-interface IPostList {
-    list: IPost[]
+export interface PostPage {
+    list: IPostDisplayCard[]
     total: number
 }
 
@@ -15,13 +20,16 @@ export const getPost = cache((postId: string) =>
     apiGet<IPost>(`/Post/${encodeURIComponent(postId)}`),
 )
 
-export const getLatestPosts = cache(async (limit: number): Promise<IPostList | null> => {
-    const params = new URLSearchParams({ Title: '', SortedBy: 'Latest', page: '0', limit: String(limit) })
+const fetchPostPage = cache(async (query: string): Promise<Result<PostPage>> => {
     try {
-        return await apiGet<IPostList>(`/Post?${params}`)
-    } catch (err) {
-        // Lists are prerendered at build time; don't fail the build when the backend is unreachable.
-        console.error('getLatestPosts failed', err)
-        return null
+        const data = await apiGet<{ list: IPost[], total: number }>(`/Post?${query}`)
+        return ok({ list: (data?.list ?? []).map(toPostDisplayCard), total: data?.total ?? 0 })
+    } catch (error) {
+        reportError(error, { context: 'getPosts', extra: { query } })
+        return fail(error)
     }
 })
+
+export const getPosts = (params: GetPostsParams) => fetchPostPage(buildPostsQuery(params))
+
+export const getLatestPosts = (limit: number) => getPosts({ page: 0, limit, sortedBy: 'Latest' })

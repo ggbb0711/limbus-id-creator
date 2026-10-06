@@ -25,7 +25,7 @@ export default function UserPage({initialUser}:{initialUser:IUserProfile}):React
     const { data: user = initialUser, isLoading: isFetchingUser } = useGetUserQuery(userId)
     const owned = !!loginUser && loginUser.id === user.id
 
-    const { postList, maxCount, pageSize, isLoading: isLoadingPosts } = usePaginatedPosts(currPage, { userId })
+    const { postList, maxCount, pageSize, isLoading: isLoadingPosts, error: postsError, refetch: refetchPosts } = usePaginatedPosts(currPage, { userId })
 
     async function logout(){
         try {
@@ -57,7 +57,9 @@ export default function UserPage({initialUser}:{initialUser:IUserProfile}):React
                         pageLimit={pageSize}
                         postList={postList}
                         fetchPost={setCurrPage}
-                        isLoading={isLoadingPosts}/>
+                        isLoading={isLoadingPosts}
+                        error={postsError}
+                        onRetry={refetchPosts}/>
                 </div>
             </>
         :<p>User not found</p>}

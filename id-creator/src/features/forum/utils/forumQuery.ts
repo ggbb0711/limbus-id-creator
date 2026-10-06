@@ -1,4 +1,6 @@
-import { ITag, PostSortOption, TagList, isPostSortOption } from "features/post"
+import { PostSortOption, TagKey, isPostSortOption, isTagKey } from "features/post"
+
+export { tagKeyOf } from "features/post"
 
 export interface ForumQueryUpdate {
     q?: string
@@ -7,10 +9,40 @@ export interface ForumQueryUpdate {
     page?: number
 }
 
+export interface ForumParams {
+    q: string
+    tagKeys: TagKey[]
+    sort: PostSortOption
+    page: number
+}
+
+type ParamSource = { get(name: string): string | null, getAll(name: string): string[] }
+
 export const parseSort = (value: string | null): PostSortOption => (isPostSortOption(value) ? value : "Latest")
 
-export const tagKeyOf = (tag: ITag | undefined): string | undefined =>
-    tag ? Object.keys(TagList).find(key => TagList[key].tagName === tag.tagName) : undefined
+export function parsePage(value: string | null): number {
+    if (!value || !/^\d+$/.test(value)) return 0
+    const page = Number(value)
+    return Number.isSafeInteger(page) ? page : 0
+}
+
+export function parseForumParams(params: ParamSource): ForumParams {
+    return {
+        q: params.get("q") ?? "",
+        tagKeys: [...new Set(params.getAll("tag").filter(isTagKey))],
+        sort: parseSort(params.get("sort")),
+        page: parsePage(params.get("page")),
+    }
+}
+
+export function toSearchParams(record: Record<string, string | string[] | undefined>): URLSearchParams {
+    const params = new URLSearchParams()
+    Object.entries(record).forEach(([key, value]) => {
+        if (Array.isArray(value)) value.forEach(v => params.append(key, v))
+        else if (value !== undefined) params.set(key, value)
+    })
+    return params
+}
 
 export function buildForumQuery(current: URLSearchParams | string, next: ForumQueryUpdate): string {
     const params = new URLSearchParams(current)

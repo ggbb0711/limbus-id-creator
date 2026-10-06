@@ -1,102 +1,47 @@
 'use client'
-import useKeyPress from "hooks/useKeyPress";
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { ReactElement } from "react";
-import { ITag, TagList } from "features/post/utils/TagList";
+import React, { ReactElement, useMemo, useRef, useState } from "react";
+import { ITag, filterTags } from "features/post/utils/TagList";
 import "./TagInput.css"
 import TagChip from "features/post/components/tagChip/TagChip";
+import { useCombobox } from "hooks/useCombobox";
 
-export default function TagInput({completeFn,maxTag,selectedCount,customClass="",id}:{completeFn:(keyword:ITag)=>void,maxTag:number,selectedCount:number,customClass?:string,id:string}):ReactElement{
-    const [text,setText] = useState("")
-    const [tagList,setTagList] = useState<ITag[]>([])
-    const [currChoice,setCurrChoice] = useState(0)
-    const [isActive,setIsActive] = useState(false)
-    const tagInputRef = useRef(null)
-    const enterKeyPress=useKeyPress("Enter",tagInputRef)
-    const arrowUpKeyPress = useKeyPress("ArrowUp",tagInputRef)
-    const arrowDownKeyPress = useKeyPress("ArrowDown",tagInputRef)
-    const tabDownKeyPress = useKeyPress("Tab",tagInputRef)
-    const selectRef = useRef<HTMLDivElement>(null)
+interface TagInputProps {
+    completeFn: (tag: ITag) => void
+    maxTag: number
+    selectedCount: number
+    customClass?: string
+    id: string
+}
+
+export default function TagInput({ completeFn, maxTag, selectedCount, customClass = "", id }: TagInputProps): ReactElement {
+    const [text, setText] = useState("")
+    const tags = useMemo(() => filterTags(text), [text])
     const containerRef = useRef<HTMLDivElement>(null)
+    const combobox = useCombobox({
+        containerRef,
+        items: tags,
+        onSelect: (tag: ITag) => {
+            if (selectedCount >= maxTag) return
+            completeFn(tag)
+            setText("")
+        },
+    })
 
-    const handleKeyDown=useCallback((e:React.KeyboardEvent<HTMLInputElement>)=>{
-        if((isActive&&(e.key==="Enter"||e.key==="ArrowUp"||e.key==="ArrowDown"||e.key==="Tab"))){
-            e.preventDefault()
-        }
-    },[tagList])
-
-    const chooseOption = useCallback((choice:ITag|undefined)=>{
-        if(!choice || selectedCount>=maxTag) return
-        completeFn(choice)
-        setCurrChoice(0)
-        setTagList(Object.keys(TagList).map(key=>TagList[key]))
-        setText("")
-        setIsActive(false)
-    },[completeFn,selectedCount,maxTag,setCurrChoice,setTagList,setText])
-
-    const scrollToView = ()=>{
-        const selected = selectRef?.current?.querySelector(".found-tag.active")
-        if(selected){
-            selected?.scrollIntoView({
-                block: 'nearest', 
-                inline: 'start' 
-            });
-        } 
-    }
-
-    useEffect(()=>{
-        const search = text.trim().replaceAll(" ","_").toLowerCase()
-        const foundTag = Object.keys(TagList).filter(tag=>tag.toLowerCase().includes(search)).map(tag=>TagList[tag])
-        setTagList(foundTag)
-        setCurrChoice(0)
-    },[text])
-
-
-    useEffect(()=>{
-        if((enterKeyPress)&&isActive) chooseOption(tagList[currChoice])
-    },[enterKeyPress])
-
-    useEffect(()=>{
-        if((arrowDownKeyPress||tabDownKeyPress)&&isActive) setCurrChoice((currChoice+1>tagList.length-1)?0:currChoice+1)
-    },[arrowDownKeyPress,tabDownKeyPress])
-
-    useEffect(()=>{
-        if(arrowUpKeyPress&&isActive) setCurrChoice((currChoice-1<0)?tagList.length-1:currChoice-1)
-    },[arrowUpKeyPress])
-
-    useEffect(()=>{
-
-        function handleClickOutside(event: MouseEvent) {
-            if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-                setIsActive(false)
-            }
-        }
-    
-        document.addEventListener('mousedown', handleClickOutside);
-    
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    },[containerRef])
-    
     return <div ref={containerRef} className="tag-input-container">
-        <input ref={tagInputRef} type="text" id={id} className={`tag-input ${customClass}`} placeholder="Add tag" value={text} 
-            onFocus={()=>{
-                setIsActive(true)
-            }} 
-            onKeyDown={handleKeyDown} 
-            onChange={(e)=>{
+        <input type="text" id={id} className={`tag-input ${customClass}`} placeholder="Add tag" value={text}
+            {...combobox.inputProps}
+            onChange={(e) => {
                 setText(e.target.value)
-                setIsActive(true)
-            }} 
-            autoComplete={"off"}/>
-            <div className="found-tag-outer-container">
-                <div className="found-tag-container" ref={selectRef}>
-                    {isActive&&tagList.map((tag:ITag,i)=>{
-                        scrollToView()
-                        return <TagChip key={i} tag={tag} className={`found-tag center-element ${currChoice===i?"active":""}`} iconClassName="status-icon" iconSize={15} onClick={()=>chooseOption(tag)}/>
-                    })}
-                </div>
+                combobox.open()
+            }}
+            autoComplete="off"/>
+        <div className="found-tag-outer-container">
+            <div className="found-tag-container" {...combobox.listProps}>
+                {combobox.isOpen && tags.map((tag, i) =>
+                    <TagChip key={tag.tagName} tag={tag} className={`found-tag center-element ${combobox.activeIndex === i ? "active" : ""}`}
+                        iconClassName="status-icon" iconSize={15} {...combobox.getOptionProps(i)}/>
+                )}
             </div>
-    </div> 
+        </div>
+    </div>
 }

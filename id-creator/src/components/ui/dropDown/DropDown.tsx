@@ -77,7 +77,7 @@ export default function DropDown<T = string>({ options, value, onChange, disable
     return (
         <div className="drop-down-container" ref={containerRef}>
             {disabled && <div className="disabled-block"></div>}
-            <button type="button" className="curr-el" disabled={disabled} aria-label={label} aria-haspopup="listbox" aria-expanded={isOpen} aria-controls={listId}
+            <button type="button" className="curr-el" disabled={disabled} role="combobox" aria-label={label} aria-haspopup="listbox" aria-expanded={isOpen} aria-controls={listId}
                 aria-activedescendant={isOpen ? `${listId}-${activeIndex}` : undefined}
                 onClick={() => isOpen ? setIsOpen(false) : open()} onKeyDown={onKeyDown}>
                 {selected?.el}

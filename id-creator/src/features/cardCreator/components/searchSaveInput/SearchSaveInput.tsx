@@ -1,113 +1,48 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { SaveMode } from "features/cardCreator/constants";
 import { ReactElement } from "react";
 import "./SearchSaveInput.css"
-import useKeyPress from "hooks/useKeyPress";
+import { useCombobox } from "hooks/useCombobox";
 import { useGetSaveListQuery } from "features/cardCreator/api/SaveInfoApi";
 import formatDisplayDate from "utils/formatDisplayDate";
 
-export default function SearchSaveInput({userId,saveMode,chooseSave}:{userId:string,saveMode:SaveMode,chooseSave:(saveUrl:string)=>void}):ReactElement{
-    const [searchName,setSearchName] = useState("")
-    const [currChoice,setCurrChoice] = useState(0)
-    const [isActive,setIsActive] = useState(false)
-    const searchSaveInputRef = useRef(null)
-    const enterKeyPress=useKeyPress("Enter",searchSaveInputRef)
-    const arrowUpKeyPress = useKeyPress("ArrowUp",searchSaveInputRef)
-    const arrowDownKeyPress = useKeyPress("ArrowDown",searchSaveInputRef)
-    const tabDownKeyPress = useKeyPress("Tab",searchSaveInputRef)
-    const selectRef = useRef<HTMLDivElement>(null)
-    const containerRef = useRef<HTMLDivElement>(null)
+export default function SearchSaveInput({ userId, saveMode, chooseSave }: { userId: string, saveMode: SaveMode, chooseSave: (saveUrl: string) => void }): ReactElement {
+    const [searchName, setSearchName] = useState("")
 
     const { data: saveList = [] } = useGetSaveListQuery(
         { userId, searchName, saveMode },
         { skip: !userId }
     )
 
-    const handleKeyDown=(e:React.KeyboardEvent<HTMLInputElement>)=>{
-        if((isActive&&(e.key==="Enter"||e.key==="ArrowUp"||e.key==="ArrowDown"||e.key==="Tab"))){
-            e.preventDefault()
-        }
-    }
-
-    const scrollToView = ()=>{
-        const selected = selectRef?.current?.querySelector(".post-save-found-tab.active")
-        if(selected){
-            selected?.scrollIntoView({
-                block: 'nearest',
-                inline: 'start'
-            });
-        }
-    }
-
-    useEffect(()=>{
-        setCurrChoice(0)
-    },[searchName])
-
-    useEffect(()=>{
-        if((enterKeyPress)&&isActive) {
-            if(saveList[currChoice]?.previewImg){
-                chooseSave(saveList[currChoice].previewImg)
-            }
-            setIsActive(false)
+    const containerRef = useRef<HTMLDivElement>(null)
+    const combobox = useCombobox({
+        containerRef,
+        items: saveList,
+        onSelect: (save) => {
+            if (save.previewImg) chooseSave(save.previewImg)
             setSearchName("")
-        }
-    },[enterKeyPress])
-
-    useEffect(()=>{
-        if((arrowDownKeyPress||tabDownKeyPress)&&isActive){
-            setCurrChoice((currChoice+1>saveList.length-1)?0:currChoice+1)
-        }
-    },[arrowDownKeyPress,tabDownKeyPress])
-
-    useEffect(()=>{
-        if(arrowUpKeyPress&&isActive) {
-            setCurrChoice((currChoice-1<0)?saveList.length-1:currChoice-1)
-        }
-    },[arrowUpKeyPress])
-
-    useEffect(()=>{
-
-        function handleClickOutside(event: MouseEvent) {
-            if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-                setIsActive(false)
-            }
-        }
-
-        document.addEventListener('mousedown', handleClickOutside);
-
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    },[containerRef])
+        },
+    })
 
     return <div className="post-save-mode-input-container" ref={containerRef}>
-        <input ref={searchSaveInputRef} type="text" className="input post-save-input" placeholder="ID/EGO name" value={searchName}
-            onFocus={()=>{
-                setIsActive(true)
-            }}
-            onKeyDown={handleKeyDown}
-            onChange={(e)=>{
+        <input type="text" className="input post-save-input" placeholder="ID/EGO name" aria-label="Search your saves" value={searchName}
+            {...combobox.inputProps}
+            onChange={(e) => {
                 setSearchName(e.target.value)
-                setIsActive(true)
+                combobox.open()
             }}
             autoComplete="off"/>
         <div className="post-save-found-outer-container">
-            <div ref={selectRef} className="post-save-found-container">
-                {isActive&&<>{saveList.map((save,i)=>{
-                    scrollToView()
-                    return <div key={save.id} className={`center-element post-save-found-tab ${currChoice===i?"active":""}`} onClick={()=>{
-                        if(save.previewImg) chooseSave(save.previewImg)
-                        setSearchName("")
-                        setIsActive(false)
-                    }}>
-                        <img src={save.previewImg} className="search-save-preview-img" alt="preview-img" />
+            <div className="post-save-found-container" {...combobox.listProps}>
+                {combobox.isOpen && saveList.map((save, i) =>
+                    <div key={save.id} className={`center-element post-save-found-tab ${combobox.activeIndex === i ? "active" : ""}`} {...combobox.getOptionProps(i)}>
+                        <img src={save.previewImg} className="search-save-preview-img" alt="" />
                         <div>
                             <p>Updated: {formatDisplayDate(save.saveTime, { withTime: true })}</p>
                             <p>{save.name}</p>
                         </div>
                     </div>
-                })}</>}
-
+                )}
             </div>
         </div>
     </div>

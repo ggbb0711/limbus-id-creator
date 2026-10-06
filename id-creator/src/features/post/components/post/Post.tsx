@@ -2,12 +2,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { ReactElement } from "react";
 import { IPost } from "features/post/types/IPost";
-import { TagList } from "features/post/utils/TagList";
+import { getTag } from "features/post/utils/TagList";
 import TagChip from "features/post/components/tagChip/TagChip";
-import Link from "next/link";
 import Image from "next/image";
-import ViewIcon from "assets/icons/ViewIcon";
-import CommentIcon from "assets/icons/CommentIcon";
 import ArrowDownIcon from "assets/icons/ArrowDownIcon";
 import ArrowUpIcon from "assets/icons/ArrowUpIcon";
 import CloseIcon from "assets/icons/CloseIcon";
@@ -19,6 +16,8 @@ import "../shared/Style.css"
 import Spinner from "components/ui/spinner/Spinner";
 import IconButton from "components/ui/iconButton/IconButton";
 import { useDialog } from "components/ui/dialog/useDialog";
+import AuthorBadge from "features/post/components/authorBadge/AuthorBadge";
+import PostStats from "features/post/components/postStats/PostStats";
 
 function ViewImagePopUp({images,index=0,isActive,closeFn}:{images:string[],index:number,isActive:boolean,closeFn:()=>void}){
     const [currChoice,setCurrChoice] = useState(index)
@@ -84,16 +83,11 @@ export default function Post({post,isLoading}:{post:IPost|null,isLoading:boolean
             <div className="post-author-container">
                 <div className="center-element">
                     {isLoading?<UserProfileLoading/>:
-                    <Link href={"/user/"+post.userId}>
-                        <Image className="post-author-icon" src={post.userIcon} alt={post.userName+" avatar"} width={80} height={80} />
-                    </Link>}
-                    <Link href={"/user/"+post.userId}>
-                        <p className="post-author-name">{post.userName}</p>
-                    </Link>
+                    <AuthorBadge userId={post.userId} userName={post.userName} userIcon={post.userIcon} size={80} iconClassName="post-author-icon"/>}
                 </div>
             </div>
             <div className="center-element">
-                {post.tags.map((tag,i)=><TagChip key={i} tag={TagList[tag]} className="card-tag center-element" iconClassName="card-tag-img" iconSize={10}/>)}
+                {post.tags.map((tag)=><TagChip key={tag} tag={getTag(tag)} className="card-tag center-element" iconClassName="card-tag-img" iconSize={10}/>)}
             </div>
             {isLoading?<div className="post-img-loader">
                 <Spinner/>
@@ -101,14 +95,7 @@ export default function Post({post,isLoading}:{post:IPost|null,isLoading:boolean
             <div className="description-txt" dangerouslySetInnerHTML={{__html:post.description}}>
             </div>
             <div className="center-element">
-                <div className="card-tag center-element">
-                    <ViewIcon width={16} height={16}/>
-                    {post.viewCount}
-                </div>
-                <div className="card-tag center-element">
-                    <CommentIcon width={16} height={16}/>
-                    {post.commentCount}
-                </div>
+                <PostStats viewCount={post.viewCount} commentCount={post.commentCount} itemClassName="card-tag center-element" iconSize={16}/>
             </div>
         </>}
     </div>

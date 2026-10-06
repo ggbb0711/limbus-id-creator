@@ -10,7 +10,7 @@ const options: DropDownOption<string>[] = [
 function setup(value?: string) {
     const onChange = jest.fn()
     render(<><DropDown options={options} value={value} onChange={onChange} label="Pick"/><p>outside</p></>)
-    return { onChange, trigger: screen.getByRole('button', { name: 'Pick' }) }
+    return { onChange, trigger: screen.getByRole('combobox', { name: 'Pick' }) }
 }
 
 describe('DropDown', () => {
@@ -68,6 +68,6 @@ describe('DropDown', () => {
     it('cannot open when disabled', () => {
         const onChange = jest.fn()
         render(<DropDown options={options} onChange={onChange} disabled label="Pick"/>)
-        expect(screen.getByRole('button', { name: 'Pick' })).toBeDisabled()
+        expect(screen.getByRole('combobox', { name: 'Pick' })).toBeDisabled()
     })
 })

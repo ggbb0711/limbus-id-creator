@@ -1,14 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import "./HomePage.css"
-import { IPost, PostDisplayCard, toPostDisplayCard } from "features/post";
+import { IPostDisplayCard, PostDisplayCard } from "features/post";
 import siteLogo from "assets/images/SiteLogo.webp";
 import { SITE_LINKS } from "config/siteLinks";
 import { NAV_LINKS } from "config/navLinks";
 
-export default function HomePage({ latestPosts }: { latestPosts: IPost[] }){
-    const cards = latestPosts.map(toPostDisplayCard)
-
+export default function HomePage({ latestPosts }: { latestPosts: IPostDisplayCard[] | null }){
     return <div className="page-container home-page-container">
         <div className="page-content home-page-content">
             <Image src={siteLogo} alt="Limbus ID Creator logo" className="hero-site-logo" sizes="(max-width: 900px) 100vw, 850px" preload/>
@@ -23,8 +21,10 @@ export default function HomePage({ latestPosts }: { latestPosts: IPost[] }){
                 <Link href="/forum" className="latest-posts-view-all">View all</Link>
             </div>
             <div className="post-display-list">
-                {cards.length>0?
-                    cards.map((post)=><PostDisplayCard key={post.id} {...post}/>)
+                {latestPosts === null ?
+                    <p className="latest-posts-empty" role="alert">Latest posts are unavailable right now. Please try again later.</p>
+                    : latestPosts.length > 0 ?
+                    latestPosts.map((post)=><PostDisplayCard key={post.id} {...post}/>)
                     :
                     <p className="latest-posts-empty">No posts yet. Be the first to share your creation!</p>
                 }

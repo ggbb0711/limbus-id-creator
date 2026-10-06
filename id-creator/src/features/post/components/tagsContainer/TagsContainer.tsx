@@ -9,7 +9,7 @@ import IconButton from "components/ui/iconButton/IconButton";
 export default function TagsContainer({tags,customClass="",deleteTag}:{tags:ITag[],customClass?:string,deleteTag:(i:number)=>void}):ReactElement{
     return <div className={`tags-container  ${customClass}`}>
         
-        {tags.map((tag:ITag,i)=><TagChip key={i} tag={tag} className="keyword-tag" iconClassName="status-icon" iconSize={15}>
+        {tags.map((tag:ITag,i)=><TagChip key={tag.tagName} tag={tag} className="keyword-tag" iconClassName="status-icon" iconSize={15}>
             <IconButton className="tag-close-icon" label={`Remove ${tag?.tagName ?? "tag"}`} onClick={()=>deleteTag(i)}><CloseIcon/></IconButton>
         </TagChip>)}
     </div>
