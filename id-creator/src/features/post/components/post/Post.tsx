@@ -9,6 +9,7 @@ import LivePostStats from "./LivePostStats";
 import ShareMenu from "features/post/components/shareMenu/ShareMenu";
 import "./Post.css";
 import "../shared/Style.css"
+import SectionErrorBoundary from "components/errorBoundary/SectionErrorBoundary";
 
 export default function Post({ post }: { post: IPost }): ReactElement {
     return <article className="post-container post-page-element-container">
@@ -22,7 +23,9 @@ export default function Post({ post }: { post: IPost }): ReactElement {
         <div className="center-element">
             {post.tags.map(tag => <TagChip key={tag} tag={getTag(tag)} className="card-tag center-element" iconClassName="card-tag-img" iconSize={10}/>)}
         </div>
-        <PostCarousel images={post.imagesAttach} title={post.title}/>
+        <SectionErrorBoundary context="postCarousel" label="post images">
+            <PostCarousel images={post.imagesAttach} title={post.title}/>
+        </SectionErrorBoundary>
         <div className="description-txt" dangerouslySetInnerHTML={{ __html: post.description }}></div>
         <div className="center-element">
             <LivePostStats initialPost={post}/>

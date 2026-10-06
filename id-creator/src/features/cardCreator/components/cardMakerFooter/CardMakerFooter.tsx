@@ -8,6 +8,7 @@ import { useCardDomRef } from "features/cardCreator/contexts/CardDomRefContext";
 import { useAppDispatch } from "stores/AppStore";
 import { openSettingMenu } from "features/cardCreator/stores/SettingMenuSlice";
 import BusyButton from "components/ui/busyButton/BusyButton";
+import { reportError } from "utils/reportError";
 
 export default function CardMakerFooter(){
     const dispatch = useAppDispatch()
@@ -25,7 +26,7 @@ export default function CardMakerFooter(){
             DownloadImg(imgUrl,"Custom")
             addAlert("Success","Download started")
         } catch (err) {
-            console.log(err)
+            reportError(err, { context: "downloadCard" })
             addAlert("Failure","ERROR: Missing asset detected. Please look for and update the missing asset.")
         } finally {
             setIsLoading(false)

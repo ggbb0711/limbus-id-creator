@@ -17,6 +17,11 @@ describe('toError', () => {
         expect(toError({ code: 5 }).message).toBe('{"code":5}')
     })
 
+    it('names RTK Query error objects by status', () => {
+        expect(toError({ status: 500, data: {} }).message).toBe('API error 500')
+        expect(toError({ status: 'FETCH_ERROR', error: 'TypeError: Failed to fetch' }).message).toBe('API error FETCH_ERROR: TypeError: Failed to fetch')
+    })
+
     it('falls back to String for unserialisable values', () => {
         const circular: Record<string, unknown> = {}
         circular.self = circular

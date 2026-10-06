@@ -31,7 +31,6 @@ function LoginMenuDialog(): ReactElement {
                 addAlert("Success", "Logged in")
                 closeLoginMenu()
             } catch (error) {
-                reportError(error, { context: "login" })
                 addAlert("Failure", getApiErrorMessage(error, "Login failed"))
             }
         },

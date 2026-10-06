@@ -53,12 +53,25 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
             }
         }
 
-        return result
+        return rejectUnsuccessful(result)
     }
+
+type QueryResult = Awaited<ReturnType<typeof rawBaseQuery>>
+
+export function rejectUnsuccessful(result: QueryResult): QueryResult {
+    const body = result.data as Partial<IResponse<unknown>> | undefined
+    if (result.error || !body || typeof body !== 'object' || body.success !== false) return result
+    return {
+        error: { status: 'CUSTOM_ERROR', error: body.message || 'Request failed', data: body },
+        meta: result.meta,
+    }
+}
+
+export { baseQueryWithReauth, refreshSession }
 
 export const BaseApi = createApi({
     reducerPath: 'api',
     baseQuery: baseQueryWithReauth,
-    tagTypes: ['Post', 'Posts', 'Comment', 'User', 'SaveIDInfo', 'SaveEGOInfo', 'Auth'],
+    tagTypes: ['Post', 'Posts', 'Comment', 'User', 'SaveIDInfo', 'SaveEGOInfo'],
     endpoints: ()=>({}),
 });

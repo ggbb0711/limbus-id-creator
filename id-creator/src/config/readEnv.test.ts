@@ -1,4 +1,4 @@
-import { __resetEnvWarnings, readInt, readNumber, readString } from './readEnv'
+import { __resetEnvWarnings, readInt, readNumber, readRequiredString, readString } from './readEnv'
 
 describe('readNumber / readInt', () => {
     let warn: jest.SpyInstance
@@ -50,5 +50,25 @@ describe('readString', () => {
         expect(readString(undefined, 'default')).toBe('default')
         expect(readString('', 'default')).toBe('')
         expect(readString(' value ', 'default')).toBe('value')
+    })
+})
+
+describe('readRequiredString', () => {
+    beforeEach(() => __resetEnvWarnings())
+
+    it('returns the trimmed value without warning', () => {
+        const warn = jest.spyOn(console, 'warn').mockImplementation(() => {})
+        expect(readRequiredString(' https://api ', 'NEXT_PUBLIC_SERVER_URL')).toBe('https://api')
+        expect(warn).not.toHaveBeenCalled()
+        warn.mockRestore()
+    })
+
+    it('warns once when the value is missing or blank', () => {
+        const warn = jest.spyOn(console, 'warn').mockImplementation(() => {})
+        expect(readRequiredString(undefined, 'NEXT_PUBLIC_SERVER_URL')).toBe('')
+        expect(readRequiredString('  ', 'NEXT_PUBLIC_SERVER_URL')).toBe('')
+        expect(warn).toHaveBeenCalledTimes(1)
+        expect(warn.mock.calls[0][0]).toContain('NEXT_PUBLIC_SERVER_URL')
+        warn.mockRestore()
     })
 })

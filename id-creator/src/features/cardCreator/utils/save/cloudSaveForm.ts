@@ -65,3 +65,14 @@ export function buildSaveFormData<T>(saveData: ISaveFile<T>, thumbnail: Blob, fi
     form.append("SaveData", JSON.stringify(saveData))
     return form
 }
+
+export function describeImageTarget(target: Base64Target): string {
+    switch (target.kind) {
+        case "sinnerIcon":
+            return "Sinner icon"
+        case "splashArt":
+            return "Splash art"
+        case "skill":
+            return `Skill ${target.index + 1} image`
+    }
+}

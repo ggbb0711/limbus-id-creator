@@ -13,6 +13,7 @@ import CardModeContext, { CardMode, toSaveMode } from 'features/cardCreator/cont
 import { resetCard } from 'features/cardCreator/stores/cardActions';
 import { usePersistCurrentCard } from 'features/cardCreator/hooks/usePersistCurrentCard';
 import { useAppDispatch } from 'stores/AppStore';
+import SectionErrorBoundary from "components/errorBoundary/SectionErrorBoundary";
 
 const CARDS: Record<CardMode, typeof IdCard> = { id: IdCard, ego: EgoCard }
 
@@ -33,13 +34,17 @@ export default function CardEditorPage({ mode }: { mode: CardMode }): ReactEleme
         <SettingMenu saveMode={toSaveMode(mode)}/>
         <DragAndDroppableSkillPreviewLayer/>
         <div className={`editor-container`}>
-            <InputTabContainer
-                resetBtnHandler={() => setResetMenuActive(active => !active)}
-                activeTab={activeTab}
-                changeActiveTab={changeActiveTab} />
+            <SectionErrorBoundary context="inputTabs" label="editor panel">
+                <InputTabContainer
+                    resetBtnHandler={() => setResetMenuActive(active => !active)}
+                    activeTab={activeTab}
+                    changeActiveTab={changeActiveTab} />
+            </SectionErrorBoundary>
             <ResetMenu isActive={isResetMenuActive} setIsActive={setResetMenuActive} confirmFn={() => dispatch(resetCard(mode))} />
             <div className='preview-container'>
-                <Card ref={domRef} changeActiveTab={setActiveTab}/>
+                <SectionErrorBoundary context="cardPreview" label="card preview">
+                    <Card ref={domRef} changeActiveTab={setActiveTab}/>
+                </SectionErrorBoundary>
             </div>
         </div>
         <CardMakerFooter/>

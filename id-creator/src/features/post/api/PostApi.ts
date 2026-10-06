@@ -5,6 +5,7 @@ import { toPostDisplayCard } from "features/post/utils/toPostDisplayCard";
 import { buildPostsQuery } from "features/post/api/buildPostsQuery";
 import { GetPostsParams, ICreatePostBody } from "features/post/types/PostRequests";
 import { IPostList } from "features/post/types/IPostList";
+import { unwrapData } from "api/unwrapData";
 
 
 export const transformPostsResponse = (response: IResponse<IPostList<IPost>>): IPostList => ({
@@ -22,7 +23,7 @@ export const PostApi = BaseApi.injectEndpoints({
 
         getPost: builder.query<IPost, string>({
             query: (postId) => `/Post/${encodeURIComponent(postId)}`,
-            transformResponse: (response: IResponse<IPost>) => response.data,
+            transformResponse: unwrapData<IPost>,
             providesTags: (result, error, postId) => [{ type: 'Post', id: postId }],
         }),
 
@@ -30,10 +31,9 @@ export const PostApi = BaseApi.injectEndpoints({
             query: (body) => ({
                 url: '/Post',
                 method: 'POST',
-                headers: { 'Content-type': 'application/json' },
                 body,
             }),
-            transformResponse: (response: IResponse<IPost>) => response.data,
+            transformResponse: unwrapData<IPost>,
             invalidatesTags: ['Posts'],
         }),
     }),

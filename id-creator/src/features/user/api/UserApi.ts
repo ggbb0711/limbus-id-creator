@@ -1,8 +1,8 @@
 import { BaseApi } from "api/BaseApi";
-import IResponse from "types/IResponse";
 import { IUserProfile } from "features/user/types/IUserProfile";
 import type { RootState } from "stores/AppStore";
 import { updateSessionUser } from "stores/slices/AuthSlice";
+import { unwrapData } from "api/unwrapData";
 
 export const sessionUserUpdate = (sessionUser: { id: string } | null, userId: string, profile: IUserProfile) =>
     sessionUser?.id === userId ? updateSessionUser({ userName: profile.userName, userIcon: profile.userIcon }) : null
@@ -17,7 +17,7 @@ const UserApi = BaseApi.injectEndpoints({
     endpoints: (builder) => ({
         getUser: builder.query<IUserProfile, string>({
             query: (userId) => `/User/${encodeURIComponent(userId)}`,
-            transformResponse: (response: IResponse<IUserProfile>) => response.data,
+            transformResponse: unwrapData<IUserProfile>,
             providesTags: (result, error, userId) => [{ type: 'User', id: userId }],
         }),
 
@@ -32,7 +32,7 @@ const UserApi = BaseApi.injectEndpoints({
                     body: form,
                 }
             },
-            transformResponse: (response: IResponse<IUserProfile>) => response.data,
+            transformResponse: unwrapData<IUserProfile>,
             invalidatesTags: (result, error, { userId }) => [{ type: 'User', id: userId }],
             async onQueryStarted({ userId }, { dispatch, queryFulfilled, getState }) {
                 try {

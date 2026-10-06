@@ -19,16 +19,19 @@ const CommentApi = BaseApi.injectEndpoints({
             query: (body) => ({
                 url: '/Comment',
                 method: 'POST',
-                headers: { 'Content-type': 'application/json' },
                 body,
             }),
             transformResponse: (response: IResponse<IComment>) => ({ ...response.data, created: toWallClock(response.data.created) }),
             async onQueryStarted({ postId }, { dispatch, queryFulfilled }) {
-                const { data } = await queryFulfilled
-                dispatch(CommentApi.util.updateQueryData('getComments', { postId, page: 0, limit: 0 }, draft => appendCreatedComment(draft, data)))
-                dispatch(PostApi.util.updateQueryData('getPost', postId, draft => {
-                    draft.commentCount += 1
-                }))
+                try {
+                    const { data } = await queryFulfilled
+                    dispatch(CommentApi.util.updateQueryData('getComments', { postId, page: 0, limit: 0 }, draft => appendCreatedComment(draft, data)))
+                    dispatch(PostApi.util.updateQueryData('getPost', postId, draft => {
+                        draft.commentCount += 1
+                    }))
+                } catch {
+                    return
+                }
             },
         }),
     }),

@@ -6,10 +6,10 @@ interface NumberOptions {
 
 const warned = new Set<string>()
 
-function warnOnce(name: string, raw: string | undefined, fallback: number) {
+function warnOnce(name: string, raw: string | undefined, fallback: number | string) {
     if (process.env.NODE_ENV === "production" || warned.has(name)) return
     warned.add(name)
-    console.warn(`[config] ${name}=${JSON.stringify(raw)} is missing or invalid, using default ${fallback}`)
+    console.warn(`[config] ${name}=${JSON.stringify(raw)} is missing or invalid, using default ${JSON.stringify(fallback)}`)
 }
 
 export function readNumber(raw: string | undefined, name: string, fallback: number, { min = -Infinity, max = Infinity, integer = false }: NumberOptions = {}): number {
@@ -30,5 +30,11 @@ export const readInt = (raw: string | undefined, name: string, fallback: number,
 
 export const readString = (raw: string | undefined, fallback: string): string =>
     raw === undefined ? fallback : raw.trim()
+
+export function readRequiredString(raw: string | undefined, name: string): string {
+    const value = raw?.trim() ?? ""
+    if (!value) warnOnce(name, raw, "")
+    return value
+}
 
 export const __resetEnvWarnings = () => warned.clear()

@@ -1,20 +1,18 @@
-import { appConfig } from "config/env.client";
 import React, { useState } from "react";
 import { ReactElement } from "react";
 import { ISaveFile } from "features/cardCreator/types/ISaveFile";
 import { createSaveFile } from "features/cardCreator/utils/save/createSaveFile";
-import { buildSaveFormData, collectBase64Images } from "features/cardCreator/utils/save/cloudSaveForm";
+import { SaveImageError, prepareCloudSaveForm } from "features/cardCreator/utils/save/prepareCloudSave";
+import ConfirmDialog from "components/ui/confirmDialog/ConfirmDialog";
+import getApiErrorMessage from "api/getApiErrorMessage";
+import { useApiErrorAlert } from "hooks/useApiErrorAlert";
+import { reportError } from "utils/reportError";
 import { SaveMode } from "features/cardCreator/constants";
 import PopUpMenu from "components/ui/popUpMenu/PopUpMenu";
-import imageCompression from 'browser-image-compression';
-import getImageDimensions from "features/cardCreator/utils/image/getImageDimensions";
-import base64ToFile from "features/cardCreator/utils/image/base64ToFile";
 import "./SaveCloudMenu.css";
 import "../SettingMenu.css";
 import { CardInfo } from "features/cardCreator/types/CardInfo";
-import * as Sentry from "@sentry/nextjs"
 import { useAddAlert } from "hooks/useAddAlert";
-import formatDateForBackend from "features/cardCreator/utils/save/formatDateForBackend";
 import { useCardDomRef } from "features/cardCreator/contexts/CardDomRefContext";
 import { useAuth } from "hooks/useAuth";
 import { useAppSelector, useAppDispatch } from "stores/AppStore";
@@ -57,6 +55,11 @@ function SaveCloudTab({saveName,saveDate,previewUrl,deleteSave,loadSave,overwrit
     </div>
 }
 
+interface PendingAction {
+    kind: "delete" | "overwrite"
+    save: Pick<ISaveFile<CardInfo>, "id" | "name">
+}
+
 export default function SaveCloudMenu({saveMode}:{saveMode:SaveMode}):ReactElement{
     const [createSaveBtnLoadMsg,setCreateSaveBtnLoadMsg] = useState("")
     const [isCreating,setIsCreating] = useState(false)
@@ -71,10 +74,12 @@ export default function SaveCloudMenu({saveMode}:{saveMode:SaveMode}):ReactEleme
     const cardMode = toCardMode(saveMode)
     const cardData = useAppSelector(state => selectCard(state, cardMode))
 
-    const { data: saveList = [], isFetching: isLoadingSaveList } = useGetSaveListQuery(
+    const { data: saveList = [], isFetching: isLoadingSaveList, error: saveListError } = useGetSaveListQuery(
         { userId: loginUser?.id ?? "", searchName: searchSaveName, saveMode },
         { skip: !loginUser }
     )
+    useApiErrorAlert(saveListError, "Couldn't load your cloud saves")
+    const [pendingAction, setPendingAction] = useState<PendingAction | null>(null)
 
     const [triggerGetSave, { isFetching: isLoadingSave }] = useLazyGetSaveQuery()
     const [createSaveMutation] = useCreateSaveMutation()
@@ -83,104 +88,81 @@ export default function SaveCloudMenu({saveMode}:{saveMode:SaveMode}):ReactEleme
 
     const isLoadingSaveData = isLoadingSaveList || isLoadingSave || isDeleting || isCreating
 
-    async function createForm(saveFileData: ISaveFile<CardInfo>, domRef: React.RefObject<HTMLDivElement | null>): Promise<FormData> {
-        const { default: TurnRefToImg } = await import("features/cardCreator/utils/image/TurnRefToImg")
-        const saveData = { ...saveFileData, saveTime: formatDateForBackend(new Date()) }
-        const { images, stripped } = collectBase64Images(saveData.saveInfo)
-
-        const compressToWebP = (file: File, maxWidthOrHeight?: number) => imageCompression(file, {
-            maxSizeMB: appConfig.image.compressMaxSizeMB,
-            useWebWorker: true,
-            fileType: "image/webp",
-            initialQuality: appConfig.image.webpQuality,
-            ...(maxWidthOrHeight ? { maxWidthOrHeight } : {}),
-        })
-
-        const [screenshot, ...compressed] = await Promise.all([
-            TurnRefToImg(domRef),
-            ...images.map(image => compressToWebP(base64ToFile(image.dataUrl, "new file"))),
-        ])
-
-        const thumbnailFile = base64ToFile(screenshot, "new file")
-        const { width } = await getImageDimensions(thumbnailFile)
-        const thumbnail = await compressToWebP(thumbnailFile, Math.max(appConfig.image.compressMinDimension, Math.floor(width * (2/3))))
-
-        const files = images.map((image, i) => ({ target: image.target, file: compressed[i] }))
-        return buildSaveFormData({ ...saveData, saveInfo: stripped }, thumbnail, files)
+    function reportSaveFailure(error: unknown, context: string, fallback: string) {
+        if (error instanceof SaveImageError) {
+            reportError(error, { context, extra: { assets: error.assets, causes: error.causes.map(cause => String(cause)), saveMode } })
+            addAlert("Failure", `${error.message}. Please check or replace these images.`)
+            return
+        }
+        addAlert("Failure", getApiErrorMessage(error, fallback))
     }
 
-    async function createNewSaveFile(){
+    async function runSave(message: string, save: () => Promise<void>) {
+        if (!cardDomRef.current) {
+            addAlert("Failure", "ERROR: Cannot find reference for the id/ego sheet")
+            return
+        }
+        setIsCreating(true)
+        setCreateSaveBtnLoadMsg(message)
         try {
-            setIsCreating(true)
-            setCreateSaveBtnLoadMsg("Waiting for save image to load...")
-            const saveFileData = createSaveFile(cardData, saveName)
-            const imgDomRef = cardDomRef;
-            if(!imgDomRef.current){
-                addAlert("Failure","ERROR: Cannot find reference for the id/ego sheet");
-                return;
-            }
-            let form;
-            try {
-                form = await createForm(saveFileData, imgDomRef);
-            } catch (error) {
-                Sentry.captureException({ saveFileData, error })
-                addAlert("Failure","ERROR: Missing asset detected. Please look for and update the missing asset.");
-                return;
-            }
-            setCreateSaveBtnLoadMsg("Creating new save")
-            await createSaveMutation({ saveMode, form }).unwrap()
-            addAlert("Success","Save created successfully")
-        } catch (error) {
-            console.log(error)
-            addAlert("Failure","Something went wrong with the server")
+            await save()
         } finally {
             setIsCreating(false)
             setCreateSaveBtnLoadMsg("")
         }
     }
 
-    async function deleteSave(saveId: string){
+    function createNewSaveFile() {
+        return runSave("Waiting for save image to load...", async () => {
+            try {
+                const form = await prepareCloudSaveForm(createSaveFile(cardData, saveName), cardDomRef)
+                setCreateSaveBtnLoadMsg("Creating new save")
+                await createSaveMutation({ saveMode, form }).unwrap()
+                addAlert("Success", "Save created successfully")
+            } catch (error) {
+                reportSaveFailure(error, "cloudSave.create", "Couldn't create the save")
+            }
+        })
+    }
+
+    function overwriteSave(saveId: string, existingName: string) {
+        return runSave("Waiting for save image to load...", async () => {
+            try {
+                const form = await prepareCloudSaveForm({ ...createSaveFile(cardData, existingName), id: saveId }, cardDomRef)
+                setCreateSaveBtnLoadMsg("Overwriting save...")
+                await updateSaveMutation({ saveMode, form }).unwrap()
+                addAlert("Success", "Save updated successfully")
+            } catch (error) {
+                reportSaveFailure(error, "cloudSave.overwrite", "Couldn't overwrite the save")
+            }
+        })
+    }
+
+    async function deleteSave(saveId: string) {
         try {
             await deleteSaveMutation({ saveMode, saveId }).unwrap()
-            addAlert("Success","Deleted")
+            addAlert("Success", "Deleted")
         } catch (error) {
-            console.log(error)
-            addAlert("Failure","Something went wrong with the server")
+            addAlert("Failure", getApiErrorMessage(error, "Couldn't delete the save"))
         }
     }
 
-    async function loadSave(saveId: string){
+    async function loadSave(saveId: string) {
         try {
             const result = await triggerGetSave({ saveId, saveMode }).unwrap()
             dispatch(loadCard(cardMode, result.saveInfo))
             dispatch(closeSettingMenu())
-        } catch(error){
-            console.log(error)
-            addAlert("Failure","Something went wrong with the server")
+        } catch (error) {
+            addAlert("Failure", getApiErrorMessage(error, "Couldn't load the save"))
         }
     }
 
-    async function overwriteSave(saveId: string, existingName: string){
-        try {
-            setIsCreating(true)
-            setCreateSaveBtnLoadMsg("Waiting for save image to load...")
-            const saveFileData = { ...createSaveFile(cardData, existingName), id: saveId }
-            const imgDomRef = cardDomRef;
-            if(!imgDomRef.current){
-                addAlert("Failure","ERROR: Cannot find reference for the id/ego sheet");
-                return;
-            }
-            const form = await createForm(saveFileData, imgDomRef)
-            setCreateSaveBtnLoadMsg("Overwriting save...")
-            await updateSaveMutation({ saveMode, form }).unwrap()
-            addAlert("Success","Save updated successfully")
-        } catch (error) {
-            console.log(error)
-            addAlert("Failure","Something went wrong with the server")
-        } finally {
-            setIsCreating(false)
-            setCreateSaveBtnLoadMsg("")
-        }
+    function confirmAction() {
+        if (!pendingAction) return
+        const { kind, save } = pendingAction
+        setPendingAction(null)
+        if (kind === "delete") deleteSave(save.id)
+        else overwriteSave(save.id, save.name)
     }
 
     const loadCreateNewSaveButton = ()=>{
@@ -216,7 +198,7 @@ export default function SaveCloudMenu({saveMode}:{saveMode:SaveMode}):ReactEleme
             <div className="save-menu-list">
                 {loginUser?<>
                     {saveList.map(save=><SaveCloudTab key={save.id} saveDate={save.saveTime} saveName={save.name} previewUrl={save.previewImg ?? ""}
-                                    deleteSave={()=>deleteSave(save.id)} loadSave={()=>loadSave(save.id)} overwriteSave={()=>overwriteSave(save.id, save.name)}/>)}
+                                    deleteSave={()=>setPendingAction({ kind: "delete", save })} loadSave={()=>loadSave(save.id)} overwriteSave={()=>setPendingAction({ kind: "overwrite", save })}/>)}
                 </>:
                     <div className="save-cloud-login-remainder">
                         <p>Please login to save to the cloud</p>
@@ -226,5 +208,12 @@ export default function SaveCloudMenu({saveMode}:{saveMode:SaveMode}):ReactEleme
             </div>
         </div>
         {loadCreateNewSaveButton()}
+        {pendingAction && <ConfirmDialog
+            message={pendingAction.kind === "delete"
+                ? `Delete the cloud save "${pendingAction.save.name}"? This can't be undone.`
+                : `Overwrite the cloud save "${pendingAction.save.name}" with the current card?`}
+            onConfirm={confirmAction}
+            onCancel={() => setPendingAction(null)}
+        />}
     </div>
 }

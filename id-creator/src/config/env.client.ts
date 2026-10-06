@@ -1,8 +1,8 @@
-import { readInt, readNumber, readString } from "./readEnv"
+import { readInt, readNumber, readRequiredString, readString } from "./readEnv"
 
 export const clientEnv = {
-    serverUrl: process.env.NEXT_PUBLIC_SERVER_URL ?? "",
-    googleClientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ?? "",
+    serverUrl: readRequiredString(process.env.NEXT_PUBLIC_SERVER_URL, "NEXT_PUBLIC_SERVER_URL"),
+    googleClientId: readRequiredString(process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID, "NEXT_PUBLIC_GOOGLE_CLIENT_ID"),
     sentryDsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
     siteUrl: readString(process.env.NEXT_PUBLIC_SITE_URL, "https://limbus-company-id-creator.com"),
     gaId: readString(process.env.NEXT_PUBLIC_GA_ID, "G-DRPHJ20BKN"),

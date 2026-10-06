@@ -7,6 +7,7 @@ import { EgoInfoReducer } from 'features/cardCreator/stores/EgoInfoSlice'
 import { SettingMenuReducer } from 'features/cardCreator/stores/SettingMenuSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { BaseApi } from 'api/BaseApi'
+import { rtkQueryErrorReporter } from 'api/errorMiddleware'
 
 export const makeStore = () => configureStore({
     reducer: {
@@ -18,7 +19,7 @@ export const makeStore = () => configureStore({
         settingMenu: SettingMenuReducer,
         [BaseApi.reducerPath]: BaseApi.reducer,
     },
-    middleware: (getDefault) => getDefault().concat(BaseApi.middleware),
+    middleware: (getDefault) => getDefault().concat(BaseApi.middleware, rtkQueryErrorReporter),
 })
 
 export type AppStore = ReturnType<typeof makeStore>

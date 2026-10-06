@@ -64,3 +64,16 @@
 .error-boundary-contact-method span {
     color: var(--white-neutral-weak);
 }
+
+.section-error{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px;
+    border: 1px solid var(--brown-pale);
+    background-color: var(--post-background);
+    color: var(--white-skin-color);
+    text-align: center;
+}

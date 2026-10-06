@@ -1,6 +1,6 @@
-import { BaseApi } from "./BaseApi";
-import IResponse from "types/IResponse";
-import { AuthResponseDTO, UserSessionProfileDTO } from "types/auth/IAuthResponse";
+import { BaseApi, refreshSession } from "./BaseApi";
+import { unwrapData } from "./unwrapData";
+import { AuthResponseDTO } from "types/auth/IAuthResponse";
 import { setCredentials, clearCredentials } from "stores/slices/AuthSlice";
 import type { Dispatch } from "@reduxjs/toolkit";
 
@@ -20,31 +20,18 @@ export const AuthApi = BaseApi.injectEndpoints({
                 },
                 body: code,
             }),
-            transformResponse: (response: IResponse<AuthResponseDTO>) => response.data,
+            transformResponse: unwrapData<AuthResponseDTO>,
             async onQueryStarted(_, { dispatch, queryFulfilled }){
-                const { data } = await queryFulfilled;
-                dispatch(setCredentials({ accessToken: data.accessToken, user: data.userSessionProfile }));
-            }
-        }),
-        refresh: builder.mutation<AuthResponseDTO,void>({
-            query: ()=>({
-                url: '/Auth/refresh',
-                method: "POST",
-            }),
-            transformResponse: (response: IResponse<AuthResponseDTO>) => response.data,
-            async onQueryStarted(_, { dispatch, queryFulfilled }){
-                try{
+                try {
                     const { data } = await queryFulfilled;
                     dispatch(setCredentials({ accessToken: data.accessToken, user: data.userSessionProfile }));
-                }
-                catch{
-                    dispatch(clearCredentials());
+                } catch {
+                    return
                 }
             }
         }),
-        getAuthStatus: builder.query<UserSessionProfileDTO,void>({
-            query: ()=>'/Auth/status',
-            transformResponse: (response: IResponse<UserSessionProfileDTO>) => response.data,
+        refresh: builder.mutation<boolean,void>({
+            queryFn: async (_arg, api, extraOptions) => ({ data: await refreshSession(api, extraOptions) }),
         }),
         logOut: builder.mutation<void,void>({
             query: ()=>({
@@ -55,6 +42,9 @@ export const AuthApi = BaseApi.injectEndpoints({
                 try{
                     await queryFulfilled;
                 }
+                catch{
+                    return
+                }
                 finally{
                     endSession(dispatch);
                 }
@@ -63,4 +53,4 @@ export const AuthApi = BaseApi.injectEndpoints({
     })
 })
 
-export const {useLoginWithGoogleMutation,useRefreshMutation,useGetAuthStatusQuery,useLogOutMutation} = AuthApi
+export const {useLoginWithGoogleMutation,useRefreshMutation,useLogOutMutation} = AuthApi
