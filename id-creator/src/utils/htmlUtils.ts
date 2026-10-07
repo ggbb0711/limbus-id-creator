@@ -1,4 +1,5 @@
-import DOMPurify, { type Config } from "isomorphic-dompurify"
+import sanitizeHtml, { type IOptions, type Transformer } from "sanitize-html"
+import { convert } from "html-to-text"
 
 const RICH_TEXT_TAGS = [
     "p", "div", "br", "span", "b", "strong", "i", "em", "u", "s", "strike",
@@ -8,40 +9,44 @@ const RICH_TEXT_TAGS = [
 
 const RICH_TEXT_ATTRIBUTES = ["href", "src", "alt", "title", "class", "style", "target", "rel"]
 
-const SAFE_URI = /^(?:(?:https?|mailto):|data:image\/(?:png|jpe?g|webp|gif);base64,|[^a-z]|[a-z+.-]+(?:[^a-z+.:-]|$))/i
+const CARD_ATTRIBUTES = ["contenteditable", "data-status-effect", "data-custom-coin-effect", "width", "height"]
 
-const POST_CONFIG: Config = {
-    ALLOWED_TAGS: RICH_TEXT_TAGS,
-    ALLOWED_ATTR: RICH_TEXT_ATTRIBUTES,
-    ALLOWED_URI_REGEXP: SAFE_URI,
-    ALLOW_DATA_ATTR: false,
+const SAFE_DATA_IMAGE = /^data:image\/(?:png|jpe?g|webp|gif);base64,/i
+
+const secureAttributes: Transformer = (tagName, attribs) => {
+    const next = { ...attribs }
+    if (next.target === "_blank") next.rel = "noopener noreferrer"
+    else delete next.target
+    if (tagName === "img" && next.src?.trim().toLowerCase().startsWith("data:") && !SAFE_DATA_IMAGE.test(next.src.trim())) delete next.src
+    return { tagName, attribs: next }
 }
 
-const CARD_CONFIG: Config = {
-    ...POST_CONFIG,
-    ALLOWED_ATTR: [...RICH_TEXT_ATTRIBUTES, "contenteditable", "data-status-effect", "data-custom-coin-effect", "width", "height"],
+const POST_OPTIONS: IOptions = {
+    allowedTags: RICH_TEXT_TAGS,
+    allowedAttributes: { "*": RICH_TEXT_ATTRIBUTES },
+    allowedSchemes: ["http", "https", "mailto"],
+    allowedSchemesByTag: { img: ["http", "https", "data"] },
+    parseStyleAttributes: false,
+    transformTags: { "*": secureAttributes },
 }
 
-DOMPurify.addHook("afterSanitizeAttributes", node => {
-    if (!node.hasAttribute("target")) return
-    if (node.getAttribute("target") === "_blank") node.setAttribute("rel", "noopener noreferrer")
-    else node.removeAttribute("target")
-})
+const CARD_OPTIONS: IOptions = {
+    ...POST_OPTIONS,
+    allowedAttributes: { "*": [...RICH_TEXT_ATTRIBUTES, ...CARD_ATTRIBUTES] },
+}
 
-const sanitizeWith = (config: Config) => (html: string | null | undefined): string =>
-    html ? String(DOMPurify.sanitize(html, config)) : ""
+const sanitizeWith = (options: IOptions) => (html: string | null | undefined): string =>
+    html ? sanitizeHtml(html, options) : ""
 
-export const sanitizePostHtml = sanitizeWith(POST_CONFIG)
+export const sanitizePostHtml = sanitizeWith(POST_OPTIONS)
 
-export const sanitizeCardHtml = sanitizeWith(CARD_CONFIG)
-
-const TEXT_NODE = 3
-
-const textNodes = (node: Node): string[] =>
-    node.nodeType === TEXT_NODE ? [node.nodeValue ?? ""] : Array.from(node.childNodes).flatMap(textNodes)
+export const sanitizeCardHtml = sanitizeWith(CARD_OPTIONS)
 
 export const stripHtml = (html: string): string =>
-    textNodes(DOMPurify.sanitize(html, { RETURN_DOM: true, FORBID_TAGS: ["style"] }))
-        .join(" ")
-        .replace(/\s+/g, " ")
-        .trim()
+    convert(html, {
+        wordwrap: false,
+        selectors: [
+            { selector: "a", options: { ignoreHref: true } },
+            { selector: "img", format: "skip" },
+        ],
+    }).replace(/\s+/g, " ").trim()

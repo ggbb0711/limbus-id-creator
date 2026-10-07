@@ -8,6 +8,12 @@ const parse = (html: string) => {
 
 const PNG = 'data:image/png;base64,iVBORw0KGgo='
 
+const normalize = (html: string) => {
+    const template = document.createElement('template')
+    template.innerHTML = html
+    return template.innerHTML
+}
+
 describe('sanitizePostHtml', () => {
     it.each([
         ['<p>Hi<script>alert(1)</script></p>', 'script'],
@@ -70,12 +76,58 @@ describe('sanitizePostHtml', () => {
     it.each([null, undefined, ''])('returns an empty string for %p', (value) => {
         expect(sanitizePostHtml(value)).toBe('')
     })
+
+    it.each([
+        'data:text/html;base64,PHNjcmlwdD4=',
+        'data:image/svg+xml;base64,PHN2Zz4=',
+        'javascript:alert(1)',
+    ])('drops unsafe image source %s', (src) => {
+        const img = parse(sanitizePostHtml(`<img src="${src}">`)).querySelector('img')
+        expect(img?.getAttribute('src')).toBeFalsy()
+    })
+
+    it.each(['image/jpeg', 'image/jpg', 'image/webp', 'image/gif'])('keeps %s base64 images', (type) => {
+        const src = `data:${type};base64,AAAA`
+        expect(parse(sanitizePostHtml(`<img src="${src}">`)).querySelector('img')?.getAttribute('src')).toBe(src)
+    })
+
+    it('keeps the text of disallowed tags but not of script or style', () => {
+        const fragment = parse(sanitizePostHtml('<section>kept</section><script>bad()</script><style>p{}</style>'))
+        expect(fragment.textContent).toBe('kept')
+        expect(fragment.querySelector('section')).toBeNull()
+    })
+
+    it('keeps class, title and alt attributes', () => {
+        const fragment = parse(sanitizePostHtml('<p class="c" title="t">x</p><img src="/a.webp" alt="a">'))
+        expect(fragment.querySelector('p')?.getAttribute('class')).toBe('c')
+        expect(fragment.querySelector('p')?.getAttribute('title')).toBe('t')
+        expect(fragment.querySelector('img')?.getAttribute('alt')).toBe('a')
+    })
+
+    it('does not keep image sizes in posts', () => {
+        expect(parse(sanitizePostHtml('<img src="/a.webp" width="40">')).querySelector('img')?.hasAttribute('width')).toBe(false)
+    })
+
+    it('keeps mailto, relative and anchor links', () => {
+        const links = Array.from(parse(sanitizePostHtml('<a href="mailto:a@b.c">m</a><a href="post/1">r</a><a href="#top">h</a>')).querySelectorAll('a'))
+        expect(links.map(link => link.getAttribute('href'))).toEqual(['mailto:a@b.c', 'post/1', '#top'])
+    })
+
+    it('removes html comments', () => {
+        expect(sanitizePostHtml('<p>a<!-- secret -->b</p>')).not.toContain('secret')
+    })
+
+    it('escapes stray angle brackets in text', () => {
+        const fragment = parse(sanitizePostHtml('<p>1 &lt; 2 &amp;&amp; 3 &gt; 2</p>'))
+        expect(fragment.querySelector('p')?.textContent).toBe('1 < 2 && 3 > 2')
+        expect(fragment.querySelector('p')?.children).toHaveLength(0)
+    })
 })
 
 describe('sanitizeCardHtml', () => {
     it('keeps the attributes status-effect markup needs', () => {
         const html = '<span class="center-element" contenteditable="false" data-custom-coin-effect="coin-effect-1-custom-burn" style="color:red;"><img class="status-icon" src="/Images/status-effect/Burn.webp" alt="burn">Burn</span>'
-        expect(sanitizeCardHtml(html)).toBe(html)
+        expect(normalize(sanitizeCardHtml(html))).toBe(normalize(html))
     })
 
     it('keeps data-status-effect but strips handlers inside it', () => {
@@ -89,6 +141,14 @@ describe('sanitizeCardHtml', () => {
     it('keeps TipTap image sizes', () => {
         const img = parse(sanitizeCardHtml(`<img src="${PNG}" width="40" height="40">`)).querySelector('img')
         expect(img?.getAttribute('width')).toBe('40')
+    })
+
+    it('drops unsafe sources and handlers in card markup too', () => {
+        const fragment = parse(sanitizeCardHtml('<img src="javascript:alert(1)" onload="x()"><a href="javascript:x()" target="_blank">a</a>'))
+        expect(fragment.querySelector('img')?.getAttribute('src')).toBeFalsy()
+        expect(fragment.querySelector('[onload]')).toBeNull()
+        expect(fragment.querySelector('a')?.getAttribute('href')).toBeFalsy()
+        expect(fragment.querySelector('a')?.getAttribute('rel')).toBe('noopener noreferrer')
     })
 
     it('does not allow arbitrary data attributes', () => {
@@ -122,7 +182,19 @@ describe('stripHtml', () => {
     })
 
     it('handles comments and unclosed tags', () => {
-        expect(stripHtml('<!-- hidden --><p>text<b>bold')).toBe('text bold')
+        expect(stripHtml('<!-- hidden --><p>text <b>bold')).toBe('text bold')
+    })
+
+    it('does not split words around inline formatting', () => {
+        expect(stripHtml('<p>Inflict Bur<b>n</b> and <u>Sink</u>ing</p>')).toBe('Inflict Burn and Sinking')
+    })
+
+    it('leaves out link targets and images', () => {
+        expect(stripHtml('<p>See <a href="https://example.com">this guide</a><img src="/a.webp" alt="pic"></p>')).toBe('See this guide')
+    })
+
+    it('separates lines written with divs and line breaks', () => {
+        expect(stripHtml('<div>line one</div><div>line two<br>line three</div>')).toBe('line one line two line three')
     })
 
     it('returns plain text unchanged apart from whitespace', () => {
