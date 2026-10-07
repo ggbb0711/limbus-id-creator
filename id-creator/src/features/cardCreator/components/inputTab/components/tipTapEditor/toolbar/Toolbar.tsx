@@ -1,7 +1,7 @@
 import React from "react"
 import { Editor, useEditorState } from "@tiptap/react"
 import "./Toolbar.css"
-import ColorPicker from "components/colorPicker/ColorPicker";
+import ColorPicker from "features/cardCreator/components/colorPicker/ColorPicker";
 
 interface ToolbarProps {
     editor: Editor | null
@@ -22,7 +22,7 @@ export default function Toolbar({ editor }: ToolbarProps) {
         },
     })
 
-    if (!editor) return null
+    if (!editor || !state) return null
 
     return (
         <div className="tiptap-toolbar">

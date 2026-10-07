@@ -4,8 +4,10 @@ import { UiReducer } from './slices/UiSlice'
 import { AuthReducer } from './slices/AuthSlice'
 import { IdInfoReducer } from 'features/cardCreator/stores/IdInfoSlice'
 import { EgoInfoReducer } from 'features/cardCreator/stores/EgoInfoSlice'
+import { SettingMenuReducer } from 'features/cardCreator/stores/SettingMenuSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { BaseApi } from 'api/BaseApi'
+import { rtkQueryErrorReporter } from 'api/errorMiddleware'
 
 export const makeStore = () => configureStore({
     reducer: {
@@ -14,9 +16,10 @@ export const makeStore = () => configureStore({
         auth: AuthReducer,
         idInfo: IdInfoReducer,
         egoInfo: EgoInfoReducer,
+        settingMenu: SettingMenuReducer,
         [BaseApi.reducerPath]: BaseApi.reducer,
     },
-    middleware: (getDefault) => getDefault().concat(BaseApi.middleware),
+    middleware: (getDefault) => getDefault().concat(BaseApi.middleware, rtkQueryErrorReporter),
 })
 
 export type AppStore = ReturnType<typeof makeStore>

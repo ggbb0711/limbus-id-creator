@@ -1,3 +1,4 @@
+import { getResistTier } from "features/cardCreator/utils/card/getResistTier";
 import React from "react";
 import { ReactElement } from "react";
 import "./SinnerStats.css"
@@ -15,21 +16,6 @@ interface SinnerStatsProps {
 }
 
 export default function SinnerStats({minSpeed, maxSpeed, hp, staggerResist, defenseLevel, slashResistant, pierceResistant, bluntResistant, sinnerColor}: SinnerStatsProps):ReactElement{
-
-    function changeResistantColor(value:number):string{
-        if(value<1) return "var(--Endure)"
-        if(value>=1.5) return "var(--Fatal)"
-
-        return"var(--Normal)"
-    }
-
-    function changeResistantText(value:number):string{
-        if(value<=0.5) return "Ineff"
-        if(value<1) return "Endure"
-        if(value>=1.5) return "Weak"
-        if(value>=2.0) return "Fatal"
-        return "Normal"
-    }
 
     function generateSinnerStatsBorder(){
         const borderText = []
@@ -75,8 +61,8 @@ export default function SinnerStats({minSpeed, maxSpeed, hp, staggerResist, defe
                     <div className="stat-container-slot">
                         <img className="stat-icon" src="/Images/attack/attackt_Slash.webp" alt="attackt_slash" />
                         <div className="stat-content">
-                            <div style={{color:changeResistantColor(slashResistant)}}>
-                            <p>{changeResistantText(slashResistant)}</p>
+                            <div style={{color:getResistTier(slashResistant).color}}>
+                            <p>{getResistTier(slashResistant).label}</p>
                             <p>[x{slashResistant}]</p>
                             </div>
                         </div>
@@ -84,8 +70,8 @@ export default function SinnerStats({minSpeed, maxSpeed, hp, staggerResist, defe
                     <div className="stat-container-slot">
                         <img className="stat-icon" src="/Images/attack/attackt_Pierce.webp" alt="attackt_pierce" />
                         <div className="stat-content">
-                            <div style={{color:changeResistantColor(pierceResistant)}}>
-                                <p>{changeResistantText(pierceResistant)}</p>
+                            <div style={{color:getResistTier(pierceResistant).color}}>
+                                <p>{getResistTier(pierceResistant).label}</p>
                                 <p>[x{pierceResistant}]</p>
                             </div>
                         </div>
@@ -93,8 +79,8 @@ export default function SinnerStats({minSpeed, maxSpeed, hp, staggerResist, defe
                     <div className="stat-container-slot">
                         <img className="stat-icon" src="/Images/attack/attackt_Blunt.webp" alt="attackt_blunt" />
                         <div className="stat-content">
-                            <div style={{color:changeResistantColor(bluntResistant)}}>
-                                <p>{changeResistantText(bluntResistant)}</p>
+                            <div style={{color:getResistTier(bluntResistant).color}}>
+                                <p>{getResistTier(bluntResistant).label}</p>
                                 <p>[x{bluntResistant}]</p>
                             </div>
                         </div>

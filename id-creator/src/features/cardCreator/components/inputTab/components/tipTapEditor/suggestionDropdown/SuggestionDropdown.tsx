@@ -1,5 +1,6 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react"
 import "./SuggestionDropdown.css"
+import { sanitizeCardHtml } from "utils/htmlUtils"
 
 export interface SuggestionItem {
     keyword: string
@@ -57,7 +58,7 @@ const SuggestionDropdown = forwardRef<SuggestionDropdownRef, SuggestionDropdownP
                         key={item.keyword}
                         onClick={() => command(item)}
                     >
-                        <div dangerouslySetInnerHTML={{ __html: item.html }} />
+                        <div dangerouslySetInnerHTML={{ __html: sanitizeCardHtml(item.html) }} />
                     </div>
                 ))}
             </div>

@@ -1,76 +1,42 @@
+import { appConfig } from "config/env.client";
 import { ICustomEffect } from "features/cardCreator/types/skills/customEffect/ICustomEffect";
-import React, { useState } from "react";
-import { ReactElement } from "react";
+import React, { ReactElement } from "react";
 import "../InputPage.css"
-import DeleteIcon from "assets/icons/DeleteIcon";
-import ArrowDownIcon from "assets/icons/ArrowDownIcon";
-import AccordionSection from "components/accordionSection/AccordionSection";
-import ConfirmDialog from "components/confirmDialog/ConfirmDialog";
-import ChangeInputType from "../components/changeInputType/ChangeInputType";
-import TipTapEditor from "../components/tipTapEditor/TipTapEditor";
-import UploadImgBtn from "../components/uploadImgBtn/UploadImgBtn";
-import { compressAndReadImage } from "features/cardCreator/utils/CompressAndReadImage";
+import AccordionSection from "components/ui/accordionSection/AccordionSection";
+import SkillPageShell from "features/cardCreator/components/shared/skillPageShell/SkillPageShell";
+import ImageUploadField from "features/cardCreator/components/shared/imageUploadField/ImageUploadField";
+import EffectEditorField from "features/cardCreator/components/shared/effectEditorField/EffectEditorField";
 import { useSkillForm } from "features/cardCreator/hooks/useSkillForm";
-import ColorPicker from "components/colorPicker/ColorPicker";
-import { CUSTOM_EFFECT_COLOR_GROUPS } from "components/colorPicker/ColorPresets";
+import ColorPicker from "features/cardCreator/components/colorPicker/ColorPicker";
+import { CUSTOM_EFFECT_COLOR_GROUPS } from "features/cardCreator/components/colorPicker/ColorPresets";
 
-export default function InputCustomEffectPage({
-    index,
-    collaspPage}:{
-        index:number,
-        collaspPage:()=>void}):ReactElement{
-
+export default function InputCustomEffectPage({ index, collapsePage }: { index: number, collapsePage: () => void }): ReactElement {
     const { register, setValue, watch, deleteSkill, changeSkillType, keyWordList } = useSkillForm<ICustomEffect>(index)
-    const [showConfirm, setShowConfirm] = useState(false)
-
+    const inputId = watch("inputId")
     const effectColor = watch("effectColor")
     const customImg = watch("customImg")
     const type = watch("type")
     const effect = watch("effect")
 
-    return <div className="input-page">
-        <div className="input-page-icon-container">
-            <div className="collasp-icon" onClick={collaspPage}>
-                <ArrowDownIcon></ArrowDownIcon>
-            </div>
-        </div>
-        <div className="input-group-container">
-            <label className="input-label">Change skill:</label>
-            <ChangeInputType changeSkillType={changeSkillType} type={type}/>
-        </div>
-
+    return <SkillPageShell type={type} collapsePage={collapsePage} onChangeType={changeSkillType} onDelete={deleteSkill}>
         <AccordionSection title="Effect Style">
             <div className="input-group-container">
                 <div className="input-container">
-                    <label className="input-label" htmlFor="custom-effect-img-input">Custom image: </label>
-                    {customImg &&
-                        <div className="input-group-container">
-                            <div className="input-container center-element">
-                                <img className="status-icon" src={customImg} alt="custom-status-img" />
-                                <button className="main-button" onClick={()=>setValue("customImg","")}>
-                                    <p className="center-element delete-txt"><DeleteIcon/> Delete</p>
-                                </button>
-                            </div>
-                        </div>
-                    }
-                    <UploadImgBtn name="custom-effect-img-input" id="custom-effect-img-input" onFileInputChange={async(e)=>{
-                        if(e.currentTarget.files && e.currentTarget.files.length>0){
-                            const url = await compressAndReadImage(e.currentTarget.files[0])
-                            setValue("customImg",url)
-                        }
-                    }} btnTxt={"Upload custom img (<= 100kb)"} maxSize={100000}/>
+                    <label className="input-label" htmlFor={`custom-effect-img-input_${inputId}`}>Custom image: </label>
+                    <ImageUploadField id={`custom-effect-img-input_${inputId}`} buttonText="Upload custom img" maxSize={appConfig.limits.upload.skillImage}
+                        value={customImg} onChange={(url) => setValue("customImg", url)} previewClassName="status-icon"/>
                 </div>
             </div>
             <div className="input-group-container">
                 <div className="input-container">
-                    <label htmlFor="effectColor" className="input-label">Choose the effect color: </label>
-                    <ColorPicker presets={CUSTOM_EFFECT_COLOR_GROUPS} id="effectColor" value={effectColor} onChange={(color)=>setValue("effectColor",color)}/>
+                    <label htmlFor={`effectColor_${inputId}`} className="input-label">Choose the effect color: </label>
+                    <ColorPicker presets={CUSTOM_EFFECT_COLOR_GROUPS} id={`effectColor_${inputId}`} value={effectColor} onChange={(color) => setValue("effectColor", color)}/>
                 </div>
             </div>
             <div className="input-group-container">
                 <div className="input-container">
-                    <label htmlFor="isCoinType" className="input-label">Use as custom coin type: </label>
-                    <input type="checkbox" id="isCoinType" {...register("isCoinType")}/>
+                    <label htmlFor={`isCoinType_${inputId}`} className="input-label">Use as custom coin type: </label>
+                    <input type="checkbox" id={`isCoinType_${inputId}`} {...register("isCoinType")}/>
                     <p className="effect-guide">
                         When enable, you can use custom coin with the syntax [coin_1_effect_name] through [coin_9_effect_name] and it will render the coin with the custom images.
                     </p>
@@ -80,30 +46,12 @@ export default function InputCustomEffectPage({
         <AccordionSection title="Effect Info">
             <div className="input-group-container">
                 <div className="input-container">
-                    <label className="input-label" htmlFor="name">Effect name:</label>
-                    <input className="input block" style={{color:effectColor}} type="text" id="name" {...register("name")} />
+                    <label className="input-label" htmlFor={`name_${inputId}`}>Effect name:</label>
+                    <input className="input block" style={{ color: effectColor }} type="text" id={`name_${inputId}`} {...register("name")} />
                 </div>
             </div>
-            <div className="input-group-container">
-                <div className="input-container">
-                    <label className="input-label" htmlFor="effect">Effect description:</label>
-                    <p className="effect-guide">To enter a status effect/coin effect/attack effect, put them in square bracket with underscore instead of spacebar like [sinking_deluge]/[coin_1]/[heads_hit] -{">"}
-                        <span contentEditable={false} style={{color:"var(--Debuff-color)",textDecoration:"underline"}}><img className='status-icon' src='/Images/status-effect/Sinking_Deluge.webp' alt='sinking_deluge_icon' />Sinking Deluge</span>/
-                        <span contentEditable={false}><img className='status-icon' src='/Images/status-effect/Coin_Effect_1.webp' alt='coin-effect-1' /></span>/
-                        <span contentEditable={false} style={{color:'#c7ff94'}}>[Heads Hit]</span>
-                    </p>
-                    <TipTapEditor inputId={"effect"} content={effect} changeHandler={(html)=>setValue("effect",html)} matchList={keyWordList}/>
-                </div>
-            </div>
+            <EffectEditorField label="Effect description:" inputId={`effect_${inputId}`} content={effect}
+                onChange={(html) => setValue("effect", html)} matchList={keyWordList}/>
         </AccordionSection>
-
-        <button className="main-button delete-skill-button" onClick={()=>setShowConfirm(true)}>
-            <DeleteIcon/> Delete the skill
-        </button>
-        {showConfirm && <ConfirmDialog
-            message="Are you sure you want to delete this Custom effect?"
-            onConfirm={()=>{setShowConfirm(false); deleteSkill()}}
-            onCancel={()=>setShowConfirm(false)}
-        />}
-    </div>
+    </SkillPageShell>
 }

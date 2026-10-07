@@ -1,12 +1,11 @@
+import { appConfig } from "config/env.client";
 import AddIcon from "assets/icons/AddIcon";
 import React, { useState } from "react";
 import "./InputTabSide.css"
 import ResetIcon from "assets/icons/ResetIcon";
-import { IOffenseSkill, OffenseSkill } from "features/cardCreator/types/skills/offenseSkill/IOffenseSkill";
-import { DefenseSkill, IDefenseSkill } from "features/cardCreator/types/skills/defenseSkill/IDefenseSkill";
-import { CustomEffect, ICustomEffect } from "features/cardCreator/types/skills/customEffect/ICustomEffect";
-import { IMentalEffect, MentalEffect } from "features/cardCreator/types/skills/mentalEffect/IMentalEffect";
-import { IPassiveSkill, PassiveSkill } from "features/cardCreator/types/skills/passiveSkill/IPassiveSkill";
+import { SkillDetail, isActiveSkill } from "features/cardCreator/types/SkillDetail";
+import { SKILL_TYPES } from "features/cardCreator/types/SkillTypes";
+import { SKILL_DATA, getSkillData } from "features/cardCreator/skills/skillData";
 
 export default function InputTabSide({sinnerIcon,
     skillDetails,
@@ -14,38 +13,17 @@ export default function InputTabSide({sinnerIcon,
     activeTab,
     addTab,
     resetBtnHandler}:{sinnerIcon:string,
-        skillDetails:(IOffenseSkill|IDefenseSkill|IPassiveSkill|ICustomEffect|IMentalEffect|never)[],changeTab:(newTab:number)=>void,
+        skillDetails:SkillDetail[],changeTab:(newTab:number)=>void,
         activeTab:number,
-        addTab:(skill:IOffenseSkill|IDefenseSkill|IPassiveSkill|ICustomEffect|IMentalEffect)=>void,
+        addTab:(skill:SkillDetail)=>void,
         resetBtnHandler:()=>void}
     ){
     
     const [isAdding,setIsAdding] = useState(false)
 
-    function convertTabIcon(type:string):string{
-        switch (type){
-            case "OffenseSkill":{
-                return "/Images/stat/stat_attack.webp"
-            }
-            case "DefenseSkill":{
-                return "/Images/stat/stat_defense.webp"
-            }
-            case "PassiveSkill":{
-                return "/Images/status-effect/Aggro.webp"
-            }
-            case "CustomEffect":{
-                return "/Images/status-effect/Discard.webp"
-            }
-            case "MentalEffect":{
-                return "/Images/Sanity.webp"
-            }
-        }
-        return ""
-    }
-
     return <ul className="input-tab-side-container">
         <li className="input-tab-side icon-side" onClick={()=>{
-            if(skillDetails.length<40) setIsAdding(!isAdding)
+            if(skillDetails.length<appConfig.limits.card.maxSkills) setIsAdding(!isAdding)
         }}>
             <AddIcon/>
         </li>
@@ -56,16 +34,12 @@ export default function InputTabSide({sinnerIcon,
                 }}>
                 <img src={sinnerIcon} alt="" crossOrigin="anonymous" />
             </li>
-            {skillDetails.map((skill:IOffenseSkill|IDefenseSkill|IPassiveSkill|ICustomEffect|IMentalEffect|never,i:number)=>{
-                let tabIcon = convertTabIcon(skill.type)
-                
-                if(skill.type==="CustomEffect"){
-                    if((skill as ICustomEffect).customImg)tabIcon=(skill as ICustomEffect).customImg
-                }
+            {skillDetails.map((skill,i)=>{
+                const tabIcon = getSkillData(skill.type).tabIcon(skill)
 
                 return <li className={`input-tab-side ${activeTab===i?"active":""}`} key={skill.inputId} 
                 onClick={()=>changeTab(i)} style={{
-                        background:`var(--${skill.type==="DefenseSkill"||skill.type==="OffenseSkill"?(skill as IOffenseSkill|IDefenseSkill).skillAffinity:"None"}-input-page)`
+                        background:`var(--${isActiveSkill(skill)?skill.skillAffinity:"None"}-input-page)`
                     }}>
                     <img src={tabIcon} alt="" crossOrigin="anonymous"/>
                 </li>
@@ -77,41 +51,16 @@ export default function InputTabSide({sinnerIcon,
             <ResetIcon/>
         </li>
         {isAdding?<ul className="input-tab-side-add-option-container">
-            <li className="input-tab-side-add-option"
-                onClick={()=>{
-                    addTab(new OffenseSkill())
-                    setIsAdding(false)
-                }}>
-                Add offense skill <img src="/Images/stat/stat_attack.webp" alt="attk_icon" />
-            </li>
-            <li className="input-tab-side-add-option"
-                onClick={()=>{
-                    addTab(new DefenseSkill())
-                    setIsAdding(false)
-                }}>
-                Add defense skill <img src="/Images/stat/stat_defense.webp" alt="defense_icon" />
-            </li>
-            <li className="input-tab-side-add-option"
-                onClick={()=>{
-                    addTab(new PassiveSkill())
-                    setIsAdding(false)
-                }}>
-                Add passive skill <img src="/Images/status-effect/Aggro.webp" alt="passive_icon" />
-            </li>
-            <li className="input-tab-side-add-option"
-                onClick={()=>{
-                    addTab(new CustomEffect())
-                    setIsAdding(false)
-                }}>
-                Add custom effect <img src="/Images/status-effect/Discard.webp" alt="custom_icon" />
-            </li>
-            <li className="input-tab-side-add-option"
-                onClick={()=>{
-                    addTab(new MentalEffect())
-                    setIsAdding(false)
-                }}>
-                    Add mental effect <img src="/Images/Sanity.webp" alt="mental_icon" />
-            </li>
+            {SKILL_TYPES.map(type=>{
+                const data = SKILL_DATA[type]
+                return <li className="input-tab-side-add-option" key={type}
+                    onClick={()=>{
+                        addTab(data.create())
+                        setIsAdding(false)
+                    }}>
+                    {data.addLabel} <img src={data.icon} alt={data.iconAlt} />
+                </li>
+            })}
         </ul>:<></>}
     </ul>
 }

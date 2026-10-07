@@ -40,8 +40,10 @@
     --Outis-color: #325339;
     --Gregor-color: #69350b;
     --Fatal:red;
-    --Endure:#9B9899;
+    --Weak: #db7c77;
     --Normal:#DABD97;
+    --Endure:#cccccc;
+    --Ineff: #808080;
     --title-color:#A16840;
 
     --Id-card-width:1440px;
@@ -277,11 +279,6 @@ button{
 
 
 
-/* Style for the wysiwyg simple editor */
-.rsw-ce{
-    height: 150px;
-    overflow-y: auto;
-}
 
 @keyframes rotate {
     100%   {transform: rotate(360deg)}
@@ -293,4 +290,37 @@ button{
     50%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)}
     75%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 100%)}
     100% {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 0)}
+}
+:where(.icon-button){
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+[role="dialog"]:focus,[role="alertdialog"]:focus{
+    outline: none;
+}
+
+.copy-button{
+    min-width: auto;
+    padding: 2px 8px;
+    font-size: 12px;
+}
+
+.visually-hidden{
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }

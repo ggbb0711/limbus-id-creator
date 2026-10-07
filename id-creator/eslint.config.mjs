@@ -3,7 +3,30 @@ import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
 import checkFile from "eslint-plugin-check-file";
 
+const FEATURES = ["cardCreator", "forum", "home", "post", "static", "user"];
+
+const featureBoundaries = FEATURES.map((feature) => ({
+  files: [`src/features/${feature}/**/*.{ts,tsx}`],
+  rules: {
+    "no-restricted-imports": ["error", {
+      patterns: [{
+        regex: `^features/(?!${feature}/)[^/]+/.+`,
+        message: "Import another feature through its index (features/<name>), not its internals.",
+      }],
+    }],
+  },
+}));
+
 export default defineConfig([
+  ...featureBoundaries,
+  {
+    files: ["src/{api,types,components,hooks,utils,config}/**/*.{ts,tsx}", "src/stores/slices/**/*.{ts,tsx}"],
+    rules: {
+      "no-restricted-imports": ["error", {
+        patterns: [{ regex: "^features/", message: "Shared code must not depend on a feature." }],
+      }],
+    },
+  },
   // Includes react, react-hooks, @next/next and typescript-eslint rules
   ...nextVitals,
   ...nextTs,
@@ -52,6 +75,12 @@ export default defineConfig([
     files: ["**/hooks/use*.{ts,tsx,js,jsx}"],
     rules: {
       "check-file/filename-naming-convention": "off",
+    },
+  },
+  {
+    files: ["src/components/socialCard/**", "src/features/*/components/*SocialCard/**"],
+    rules: {
+      "@next/next/no-img-element": "off",
     },
   },
   // The card is captured by modern-screenshot, which needs plain <img> (no lazy loading / srcset)

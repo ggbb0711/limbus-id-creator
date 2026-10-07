@@ -16,6 +16,10 @@
     width: 100%;
 }
 
+.hamburger-icon-container{
+    display: none;
+}
+
 .hamburger-icon-container .hamburger-icon,.hamburger-icon-container .hamburger-icon-active{
     cursor: pointer;
     width: 35px;
@@ -32,6 +36,10 @@
 @media screen and (max-width: 900px) {
     .site-header-content.center-element{
         display: none;
+    }
+
+    .hamburger-icon-container{
+        display: inline-flex;
     }
 
     .hamburger-icon-container .hamburger-icon{

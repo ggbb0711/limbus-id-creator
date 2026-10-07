@@ -14,22 +14,7 @@ import StatusEffectNode from "./extensions/StatusEffectNode"
 import SuggestionDropdown, { SuggestionDropdownRef } from "./suggestionDropdown/SuggestionDropdown"
 import Toolbar from "./toolbar/Toolbar"
 import "./TipTapEditor.css"
-
-function replaceKeyWordAsNodes(str: string, keyWord: { [key: string]: string }): string {
-    return str.replace(
-        /<span\s+data-status-effect[^>]*>[\s\S]*?<\/span>\s*<\/span>|<[^>]*>|(\[([^ ]+)\])/g,
-        (match, bracket, key) => {
-            if (!bracket) return match
-            const lowerKey = key.toLowerCase().replace(/&amp;/g, "&")
-            const selectedWord = keyWord[lowerKey]
-            if (selectedWord) {
-                const escaped = selectedWord.replace(/"/g, "&quot;")
-                return `<span data-status-effect="${escaped}">${selectedWord}</span>`
-            }
-            return match
-        }
-    )
-}
+import { filterKeywordSuggestions, replaceKeywordsAsNodes } from "features/cardCreator/utils/keywords/keywords"
 
 interface TipTapEditorProps {
     inputId: string
@@ -44,6 +29,8 @@ export default function TipTapEditor({ inputId, content, changeHandler, matchLis
 
     const changeHandlerRef = useRef(changeHandler)
     changeHandlerRef.current = changeHandler
+
+    const inputIdRef = useRef(inputId)
 
     const editor = useEditor({
         extensions: [
@@ -67,14 +54,7 @@ export default function TipTapEditor({ inputId, content, changeHandler, matchLis
                 suggestion: {
                     char: "[",
                     allowSpaces: false,
-                    items: ({ query }) => {
-                        const list = matchListRef.current
-                        const lowerQuery = query.toLowerCase()
-                        return Object.keys(list)
-                            .filter((key) => key.toLowerCase().startsWith(lowerQuery))
-                            .slice(0, 10)
-                            .map((key) => ({ keyword: key, html: list[key] }))
-                    },
+                    items: ({ query }) => filterKeywordSuggestions(matchListRef.current, query),
                     command: ({ editor: cmdEditor, range, props: itemProps }) => {
                         cmdEditor
                             .chain()
@@ -150,6 +130,7 @@ export default function TipTapEditor({ inputId, content, changeHandler, matchLis
         ],
         content,
         editorProps: {
+            attributes: () => ({ id: inputIdRef.current }),
             handlePaste: (view, event) => {
                 event.preventDefault()
                 const text = event.clipboardData?.getData("text/plain") ?? ""
@@ -159,7 +140,7 @@ export default function TipTapEditor({ inputId, content, changeHandler, matchLis
         },
         onUpdate: ({ editor }) => {
             let html = editor.getHTML()
-            const processedForEditor = replaceKeyWordAsNodes(html, matchListRef.current)
+            const processedForEditor = replaceKeywordsAsNodes(html, matchListRef.current)
             if (processedForEditor !== html) {
                 const { from } = editor.state.selection
                 editor.commands.setContent(processedForEditor, { emitUpdate: false })
@@ -173,6 +154,7 @@ export default function TipTapEditor({ inputId, content, changeHandler, matchLis
     })
 
     useEffect(() => {
+        inputIdRef.current = inputId
         if (editor && !editor.isDestroyed) {
             editor.commands.setContent(content, { emitUpdate: false })
         }

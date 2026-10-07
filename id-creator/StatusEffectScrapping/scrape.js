@@ -80,7 +80,7 @@ async function scrape (){
                 downloadUrl: url.href,
                 nameKey, 
                 type: statusEffectType.toLowerCase(),
-                value: `<span class='center-element' contenteditable='false' style='color:var(--${statusEffectType}-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/${transformedImgName}.webp' alt='${encodeURIComponent(nameKey)}_icon' />${statusEffectName}</span>`,
+                value: `<span class='center-element' contenteditable='false' style='color:var(--${statusEffectType}-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/${transformedImgName}.webp' alt='${encodeURIComponent(nameKey).replace(/'/g, "&#39;")}_icon' />${statusEffectName}</span>`,
             }
         })
     }))

@@ -1,8 +1,9 @@
 import React from "react";
 import { ReactElement } from "react";
 import "./DamageTypeInput.css"
+import { DamageType } from "features/cardCreator/constants";
 
-export default function DamageTypeInput({onChangeDamageType,activeDamageType,disabled}:{onChangeDamageType:(damageType:string)=>void,activeDamageType:string,disabled?:boolean}):ReactElement{
+export default function DamageTypeInput({onChangeDamageType,activeDamageType,disabled}:{onChangeDamageType:(damageType:DamageType)=>void,activeDamageType:DamageType,disabled?:boolean}):ReactElement{
     return <div className="damage-type-input-container">
         {disabled?<div className="disabled"></div>:<></>}
         <img src="/Images/attack/attackt_Blunt.webp" alt="damage-Blunt-icon" className={`damage-type-input-option ${activeDamageType==="Blunt"?"active":""}`} onClick={()=>onChangeDamageType("Blunt")} />

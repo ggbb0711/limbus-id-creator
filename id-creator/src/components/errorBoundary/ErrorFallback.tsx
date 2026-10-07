@@ -1,5 +1,5 @@
 import React from "react";
-import DiscordIcon from "assets/icons/DiscordIcon";
+import ContactMethods from "components/contactMethods/ContactMethods";
 import "./ErrorBoundary.css";
 
 export default function ErrorFallback({ onRetry }: { onRetry?: () => void }) {
@@ -10,19 +10,8 @@ export default function ErrorFallback({ onRetry }: { onRetry?: () => void }) {
                 <p className="error-boundary-message">
                     An unexpected error occurred. Please try refreshing the page. If the issue persists, contact me:
                 </p>
-                <div className="error-boundary-contact-methods">
-                    <div className="error-boundary-contact-method">
-                        <span className="error-boundary-contact-method-icon">✉</span>
-                        <a href="mailto:johnidmaker@gmail.com">johnidmaker@gmail.com</a>
-                    </div>
-                    <div className="error-boundary-contact-method">
-                        <span className="error-boundary-contact-method-icon">
-                            <DiscordIcon />
-                        </span>
-                        <span>_johnlimbusmaker</span>
-                    </div>
-                </div>
-                {onRetry && <button className="main-button" onClick={onRetry}>Try again</button>}
+                <ContactMethods classPrefix="error-boundary-contact"/>
+                {onRetry && <button type="button" className="main-button" onClick={onRetry}>Try again</button>}
             </div>
         </div>
     );

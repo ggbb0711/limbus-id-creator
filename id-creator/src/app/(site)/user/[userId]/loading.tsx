@@ -1,5 +1,5 @@
 import React from "react";
-import UserProfileLoading from "components/userProfileLoading/UserProfileLoading";
+import UserProfileLoading from "features/user/components/userProfileLoading/UserProfileLoading";
 
 export default function Loading() {
     return <div className="page-container">

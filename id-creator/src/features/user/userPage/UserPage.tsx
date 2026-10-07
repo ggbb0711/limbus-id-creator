@@ -1,80 +1,69 @@
 'use client'
-import React, { useEffect, useState } from "react";
+import React, { useCallback } from "react";
 import { ReactElement } from "react";
-import { useRouter } from "next/navigation";
-import PaginatedPost from "components/paginatedPost/PaginatedPost";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { PaginatedPost, usePaginatedPosts } from "features/post";
 import { UserProfile } from "features/user/components/userProfile/UserProfile";
-import UserProfileLoading from "components/userProfileLoading/UserProfileLoading";
 import "./User.css"
-import useAlert from "hooks/useAlert";
+import { useAddAlert } from "hooks/useAddAlert";
 import { useLogOutMutation } from "api/AuthApi";
-import { useGetPostsQuery } from "api/PostAPI";
-import getApiErrorMessage from "utils/getApiErrorMessage";
-import { useGetUserQuery } from "api/UserApi";
+import getApiErrorMessage from "api/getApiErrorMessage";
+import { useGetUserQuery } from "features/user/api/UserApi";
 import { useAuth } from "hooks/useAuth";
-import { IUserProfile } from "types/api/oAuth/IUserProfile";
+import { IUserProfile } from "features/user/types/IUserProfile";
 import formatDisplayDate from "utils/formatDisplayDate";
+import { parsePage, withPage } from "utils/parsePage";
+import BusyButton from "components/ui/busyButton/BusyButton";
 
-export default function UserPage({initialUser}:{initialUser:IUserProfile}):ReactElement{
-    const [currPage,setCurrPage] = useState(0)
-    const [ logOut, {isLoading: isLoggingOut} ] = useLogOutMutation();
-    const userId = initialUser.id
-    const {user: loginUser} = useAuth()
-    const {addAlert} = useAlert()
+export default function UserPage({ initialUser }: { initialUser: Omit<IUserProfile,"userEmail"> }): ReactElement {
     const router = useRouter()
+    const pathname = usePathname()
+    const searchParams = useSearchParams()
+    const currPage = parsePage(searchParams.get("page"))
+    const [logOut, { isLoading: isLoggingOut }] = useLogOutMutation()
+    const userId = initialUser.id
+    const { user: loginUser } = useAuth()
+    const addAlert = useAddAlert()
 
-    const { data: user = initialUser, isLoading: isFetchingUser } = useGetUserQuery(userId)
+    const { data: user = initialUser, isFetching: isRefreshingUser } = useGetUserQuery(userId)
     const owned = !!loginUser && loginUser.id === user.id
 
-    const { data: postsData, isLoading: isLoadingPosts, error: postsError } = useGetPostsQuery({
-        page: currPage,
-        limit: 10,
-        userId,
-    })
+    const { postList, maxCount, pageSize, isLoading: isLoadingPosts, error: postsError, refetch: refetchPosts } = usePaginatedPosts(currPage, { userId })
 
-    const postList = postsData?.list.map((p) => ({
-        ...p,
-        cardImg: p.imagesAttach[0]
-    })) ?? []
-    const maxCount = postsData?.total ?? 0
+    const changePage = useCallback((page: number) => {
+        const query = withPage(window.location.search, page)
+        router.push(query ? `${pathname}?${query}` : pathname, { scroll: false })
+    }, [pathname, router])
 
-    useEffect(() => {
-        if (postsError) addAlert("Failure", getApiErrorMessage(postsError))
-    }, [postsError])
-
-    async function logout(){
+    async function logout() {
         try {
             await logOut().unwrap()
-            addAlert("Success","Logout successful")
+            addAlert("Success", "Logout successful")
             router.push("/forum")
-        } catch {
-            addAlert("Failure","Something went wrong with the server")
+        } catch (error) {
+            addAlert("Failure", getApiErrorMessage(error))
         }
     }
 
     return <div className="page-container">
-        {user?
-            <>
-                <div className="page-content">
-
-                    <div className="user-container">
-                        <p className="user-meta-txt">Created at: {formatDisplayDate(user.createdAt)}</p>
-                        {isFetchingUser?<UserProfileLoading/>:<UserProfile userProfile={user} userId={userId} owned={owned} />}
-                        <div className="user-log-out-container">
-                            {owned && <button className={isLoggingOut?"main-button active":"main-button"} onClick={logout}>{isLoggingOut?"Logging out...":"Logout"}</button>}
-                        </div>
-                    </div>
-
+        <div className="page-content">
+            <div className="user-container" aria-busy={isRefreshingUser}>
+                <p className="user-meta-txt">Created at: {formatDisplayDate(user.createdAt)}</p>
+                <UserProfile userProfile={user} owned={owned}/>
+                <div className="user-log-out-container">
+                    {owned && <BusyButton busy={isLoggingOut} busyText="Logging out..." onClick={logout}>Logout</BusyButton>}
                 </div>
-                <div className="page-content">
-                    <PaginatedPost currPage={currPage}
-                        maxCount={maxCount}
-                        pageLimit={10}
-                        postList={postList}
-                        fetchPost={setCurrPage}
-                        isLoading={isLoadingPosts}/>
-                </div>
-            </>
-        :<p>User not found</p>}
+            </div>
+        </div>
+        <div className="page-content">
+            <PaginatedPost currPage={currPage}
+                maxCount={maxCount}
+                pageLimit={pageSize}
+                postList={postList}
+                fetchPost={changePage}
+                isLoading={isLoadingPosts}
+                error={postsError}
+                onRetry={refetchPosts}/>
+        </div>
     </div>
 }

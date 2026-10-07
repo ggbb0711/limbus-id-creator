@@ -1,16 +1,7 @@
 
-import { ICustomEffect } from "features/cardCreator/types/skills/customEffect/ICustomEffect";
-import { IDefenseSkill } from "features/cardCreator/types/skills/defenseSkill/IDefenseSkill";
-import { IMentalEffect } from "features/cardCreator/types/skills/mentalEffect/IMentalEffect";
-import { IOffenseSkill } from "features/cardCreator/types/skills/offenseSkill/IOffenseSkill";
-import { IPassiveSkill } from "features/cardCreator/types/skills/passiveSkill/IPassiveSkill";
 import React, { CSSProperties } from "react";
 import { useDragLayer, XYCoord } from "react-dnd";
-import CustomSinnerEffect from "../../sections/customSinnerEffect/CustomSinnerEffect";
-import DefenseSinnerSkill from "../../sections/defenseSinnerSkill/DefenseSinnerSkill";
-import MentalSinnerEffect from "../../sections/mentalSinnerEffect/MentalSinnerEffect";
-import OffenseSinnerSkill from "../../sections/offenseSinnerSkill/OffenseSinnerSkill";
-import PassiveSinnerSkill from "../../sections/passiveSinnerSkill/PassiveSinnerSkill";
+import SkillCardSection from "../skillCardSection/SkillCardSection";
 
 
 export default function DragAndDroppableSkillPreviewLayer(){
@@ -32,17 +23,6 @@ export default function DragAndDroppableSkillPreviewLayer(){
         return null;
       }
 
-      const printPreviewSkill = (skill: IOffenseSkill | IDefenseSkill | IPassiveSkill | ICustomEffect | IMentalEffect)=>{
-        const skillType = {
-            OffenseSkill: <OffenseSinnerSkill offenseSkill={skill as IOffenseSkill} />,
-            DefenseSkill: <DefenseSinnerSkill defenseSkill={skill as IDefenseSkill} />,
-            PassiveSkill: <PassiveSinnerSkill passiveSkill={skill as IPassiveSkill} />,
-            CustomEffect: <CustomSinnerEffect customEffect={skill as ICustomEffect} />,
-            MentalEffect: <MentalSinnerEffect mentalEffect={skill as ICustomEffect} />
-        }
-        return skillType[skill.type]
-      }
-    
       return (
         <div style={layerStyles}>
           <div
@@ -54,7 +34,7 @@ export default function DragAndDroppableSkillPreviewLayer(){
               item.skillHeight
             )}
           >
-            {printPreviewSkill(item.skill)}
+            <SkillCardSection skill={item.skill}/>
           </div>
         </div>
       );
@@ -100,7 +80,7 @@ const layerStyles: CSSProperties = {
       opacity:0.85,
       width: skillWidth,
       height: skillHeight,
-      ["font-family"]:`var(--font-rubik), sans-serif`
+      fontFamily:`var(--font-rubik), sans-serif`
     };
   }
   

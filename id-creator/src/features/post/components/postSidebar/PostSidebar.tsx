@@ -1,19 +1,19 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useId } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { IPost } from "types/iPost/IPost";
+import { IPostDisplayCard } from "features/post/types/IPostDisplayCard";
 import "./PostSidebar.css";
 
-interface IPostSidebarSection {
+interface PostSidebarSectionProps {
     title: string
     viewAllHref: string
-    posts: IPost[]
+    posts: IPostDisplayCard[]
 }
 
-function SidebarPost({ post }: { post: IPost }): ReactElement {
+function SidebarPost({ post }: { post: IPostDisplayCard }): ReactElement {
     return <li>
         <Link href={"/post/" + post.id} className="post-sidebar-item">
-            {post.imagesAttach[0] && <Image className="post-sidebar-thumb" src={post.imagesAttach[0]} alt={post.title} width={96} height={67} sizes="96px" />}
+            {post.cardImg && <Image className="post-sidebar-thumb" src={post.cardImg} alt={post.title} width={96} height={67} sizes="96px" />}
             <div className="post-sidebar-item-txt">
                 <p className="post-sidebar-item-title">{post.title}</p>
                 <p className="post-sidebar-item-meta">by {post.userName}</p>
@@ -22,23 +22,32 @@ function SidebarPost({ post }: { post: IPost }): ReactElement {
     </li>
 }
 
-export default function PostSidebar({ post, authorPosts, latestPosts }: { post: IPost, authorPosts: IPost[], latestPosts: IPost[] }): ReactElement {
-    const sections: IPostSidebarSection[] = [
-        { title: `More from ${post.userName}`, viewAllHref: "/user/" + post.userId, posts: authorPosts },
+function PostSidebarSection({ title, viewAllHref, posts }: PostSidebarSectionProps): ReactElement {
+    const titleId = useId()
+    return <section className="post-sidebar-section" aria-labelledby={titleId}>
+        <div className="post-sidebar-header">
+            <h2 id={titleId} className="post-sidebar-title">{title}</h2>
+            <Link href={viewAllHref} className="post-sidebar-view-all">View all</Link>
+        </div>
+        <ul className="post-sidebar-list">
+            {posts.map((post) => <SidebarPost key={post.id} post={post} />)}
+        </ul>
+    </section>
+}
+
+interface PostSidebarProps {
+    author: { userId: string, userName: string }
+    authorPosts: IPostDisplayCard[]
+    latestPosts: IPostDisplayCard[]
+}
+
+export default function PostSidebar({ author, authorPosts, latestPosts }: PostSidebarProps): ReactElement {
+    const sections: PostSidebarSectionProps[] = [
+        { title: `More from ${author.userName}`, viewAllHref: "/user/" + author.userId, posts: authorPosts },
         { title: "Latest IDs & E.G.Os", viewAllHref: "/forum", posts: latestPosts },
     ]
 
     return <aside className="post-sidebar">
-        {sections.filter((s) => s.posts.length > 0).map((section) => (
-            <section key={section.title} className="post-sidebar-section">
-                <div className="post-sidebar-header">
-                    <h2 className="post-sidebar-title">{section.title}</h2>
-                    <Link href={section.viewAllHref} className="post-sidebar-view-all">View all</Link>
-                </div>
-                <ul className="post-sidebar-list">
-                    {section.posts.map((p) => <SidebarPost key={p.id} post={p} />)}
-                </ul>
-            </section>
-        ))}
+        {sections.filter((section) => section.posts.length > 0).map((section) => <PostSidebarSection key={section.title} {...section} />)}
     </aside>
 }

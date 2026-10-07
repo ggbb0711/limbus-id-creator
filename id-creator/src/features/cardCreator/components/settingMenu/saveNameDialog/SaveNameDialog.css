@@ -1,0 +1,11 @@
+.save-name-dialog{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 300px;
+}
+
+.save-name-dialog-input{
+    width: 100%;
+    border-color: var(--red-brown);
+}

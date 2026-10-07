@@ -1,9 +1,7 @@
-import { ReactNode } from "react";
+import React from "react";
 import Link from "next/link";
-
-function ExternalLink({ href, children }: { href: string, children: ReactNode }) {
-    return <a href={href} className="legal-link" target="_blank" rel="noreferrer">{children}</a>
-}
+import { SITE_LINKS } from "config/siteLinks";
+import LegalSection, { ContactEmailLink, ExternalLink } from "features/static/components/legalSection/LegalSection";
 
 export default function PrivacyPolicyPage() {
     return (
@@ -107,20 +105,17 @@ export default function PrivacyPolicyPage() {
                     </p>
                 </div>
 
-                <div className="legal-section">
-                    <h2 className="legal-section-title">Data Retention</h2>
-                    <p className="legal-text">
-                        We keep your account information and content until you ask us to delete it or your account is removed for
-                        breaking our Terms of Service. Analytics, advertising and error data are kept according to each
-                        provider&apos;s own retention settings.
-                    </p>
-                </div>
+                <LegalSection title="Data Retention">
+                    We keep your account information and content until you ask us to delete it or your account is removed for
+                    breaking our Terms of Service. Analytics, advertising and error data are kept according to each
+                    provider&apos;s own retention settings.
+                </LegalSection>
 
                 <div className="legal-section">
                     <h2 className="legal-section-title">Your Rights</h2>
                     <p className="legal-text">
                         You can ask to access, correct or delete your personal information by emailing{" "}
-                        <a href="mailto:johnidmaker@gmail.com" className="legal-link">johnidmaker@gmail.com</a> from the email
+                        <ContactEmailLink email={SITE_LINKS.contactEmail}/> from the email
                         address linked to your account. Deleting your account removes your profile, posts, comments and cloud saves.
                         We will respond within 30 days.
                     </p>
@@ -131,46 +126,31 @@ export default function PrivacyPolicyPage() {
                     </p>
                 </div>
 
-                <div className="legal-section">
-                    <h2 className="legal-section-title">Children</h2>
-                    <p className="legal-text">
-                        The site is not directed at children under 13, and you must be at least 13 years old to create an account.
-                        If we learn that a child under 13 has created an account, we will delete it. If you believe this has
-                        happened, please contact us.
-                    </p>
-                </div>
+                <LegalSection title="Children">
+                    The site is not directed at children under 13, and you must be at least 13 years old to create an account.
+                    If we learn that a child under 13 has created an account, we will delete it. If you believe this has
+                    happened, please contact us.
+                </LegalSection>
 
-                <div className="legal-section">
-                    <h2 className="legal-section-title">Security</h2>
-                    <p className="legal-text">
-                        We use HTTPS, httpOnly session cookies and access controls to protect your information. No method of
-                        transmission or storage is completely secure, so we cannot guarantee absolute security.
-                    </p>
-                </div>
+                <LegalSection title="Security">
+                    We use HTTPS, httpOnly session cookies and access controls to protect your information. No method of
+                    transmission or storage is completely secure, so we cannot guarantee absolute security.
+                </LegalSection>
 
-                <div className="legal-section">
-                    <h2 className="legal-section-title">International Users</h2>
-                    <p className="legal-text">
-                        Our service providers may process your information in countries other than the one you live in, including
-                        the United States. By using the site, you understand that your information may be transferred to those countries.
-                    </p>
-                </div>
+                <LegalSection title="International Users">
+                    Our service providers may process your information in countries other than the one you live in, including
+                    the United States. By using the site, you understand that your information may be transferred to those countries.
+                </LegalSection>
 
-                <div className="legal-section">
-                    <h2 className="legal-section-title">Changes to This Policy</h2>
-                    <p className="legal-text">
-                        We may update this policy from time to time. The date at the top of this page shows when it was last
-                        changed. Continuing to use the site after an update means you accept the updated policy.
-                    </p>
-                </div>
+                <LegalSection title="Changes to This Policy">
+                    We may update this policy from time to time. The date at the top of this page shows when it was last
+                    changed. Continuing to use the site after an update means you accept the updated policy.
+                </LegalSection>
 
-                <div className="legal-section">
-                    <h2 className="legal-section-title">Contact</h2>
-                    <p className="legal-text">
-                        If you have questions about this Privacy Policy, please contact us at{" "}
-                        <a href="mailto:johnidmaker@gmail.com" className="legal-link">johnidmaker@gmail.com</a>.
-                    </p>
-                </div>
+                <LegalSection title="Contact">
+                    If you have questions about this Privacy Policy, please contact us at{" "}
+                    <ContactEmailLink email={SITE_LINKS.contactEmail}/>.
+                </LegalSection>
             </div>
         </div>
     );

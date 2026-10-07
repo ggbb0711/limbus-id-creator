@@ -1,14 +1,13 @@
-import IUID from "types/IUID";
-import uuid from "react-uuid";
-import { IType } from "../../IType";
-import { SkillTypes } from "../../SkillTypes";
+import uuid from "react-uuid"
+import { ISkillBase } from "../../ISkillBase"
 
-export interface IMentalEffect extends IType,IUID{
-    effect:string
+export interface IMentalEffect extends ISkillBase<"MentalEffect"> {
+    effect: string
 }
 
-export class MentalEffect implements IMentalEffect,IUID{
-    inputId: string = uuid()
-    effect: string = "";
-    type = SkillTypes.MentalEffect;
-}
+export const createMentalEffect = (overrides: Partial<Omit<IMentalEffect, "type">> = {}): IMentalEffect => ({
+    inputId: uuid(),
+    effect: "",
+    ...overrides,
+    type: "MentalEffect",
+})

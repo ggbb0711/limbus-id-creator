@@ -1,37 +1,18 @@
-import { IActiveSkill } from "features/cardCreator/types/skills/activeSkill/IActiveSkill";
-import IUID from "types/IUID";
-import uuid from "react-uuid";
-import { IType } from "../../IType";
-import { SkillTypes } from "../../SkillTypes";
+import uuid from "react-uuid"
+import { DefenseType } from "features/cardCreator/constants"
+import { IActiveSkill, createActiveSkillDefaults } from "../activeSkill/IActiveSkill"
 
-export interface IDefenseSkill extends IActiveSkill,IType,IUID{
-    defenseType:string,
-    damageType:string,
-    skillAmt: number,
-    skillLevel:number,
-    atkWeight: number,
-    showDefenseIcon: boolean,
+export interface IDefenseSkill extends IActiveSkill<"DefenseSkill"> {
+    defenseType: DefenseType
+    showDefenseIcon: boolean
 }
 
-export class DefenseSkill implements IDefenseSkill, IUID{
-    skillLevel: number=0;
-    skillAmt: number=1;
-    atkWeight: number=1;
-    inputId: string=uuid();
-    defenseType: string = "Block";
-    damageType: string = "Slash";//For counter skill
-    name: string = "";
-    skillAffinity: string = "Wrath";
-    basePower: number = 0;
-    coinNo: number = 1;
-    coinPow: number = 0;
-    skillImage: string = "";
-    skillEffect: string="";
-    skillLabel: string = "Defense";
-    skillFrame: string = "1"
-    showDefenseIcon: boolean = true;
-    type = SkillTypes.DefenseSkill;
-    public constructor(name?:string){
-        this.name=(name)?name:""
-    }
-}
+export const createDefenseSkill = (overrides: Partial<Omit<IDefenseSkill, "type">> = {}): IDefenseSkill => ({
+    ...createActiveSkillDefaults(),
+    skillLabel: "Defense",
+    defenseType: "Block",
+    showDefenseIcon: true,
+    inputId: uuid(),
+    ...overrides,
+    type: "DefenseSkill",
+})

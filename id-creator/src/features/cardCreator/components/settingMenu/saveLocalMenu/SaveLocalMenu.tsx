@@ -1,138 +1,103 @@
-import React, { useEffect, useState } from "react";
+import { appConfig } from "config/env.client";
+import React, { useMemo, useState } from "react";
 import "../SettingMenu.css"
-import { SaveFile } from "types/ISaveFile";
-import useSaveLocal from "features/cardCreator/hooks/useSaveLocal";
-import uuid from "react-uuid";
-import PopUpMenu from "components/popUpMenu/PopUpMenu";
+import { createSaveFile } from "features/cardCreator/utils/save/createSaveFile";
+import { sortSavesByTimeDesc } from "features/cardCreator/utils/save/sortSaves";
+import useSaveLocal, { LocalSave } from "features/cardCreator/hooks/useSaveLocal";
 import EditIcon from "assets/icons/EditIcon";
-import { IEgoInfo } from "features/cardCreator/types/IEgoInfo";
-import { IIdInfo } from "features/cardCreator/types/IIdInfo";
-import { clientEnv } from "config/env.client";
-import formatDateForBackend from "utils/formatDateForBackend";
+import IconButton from "components/ui/iconButton/IconButton";
+import ConfirmDialog from "components/ui/confirmDialog/ConfirmDialog";
 import { useAppSelector, useAppDispatch } from "stores/AppStore";
-import { setIdInfo } from "features/cardCreator/stores/IdInfoSlice";
-import { setEgoInfo } from "features/cardCreator/stores/EgoInfoSlice";
+import { useCardEditor } from "features/cardCreator/editors/CardEditorContext";
+import formatDisplayDate from "utils/formatDisplayDate";
+import SaveNameDialog from "../saveNameDialog/SaveNameDialog";
 
+type NameDialog = { kind: "create" } | { kind: "rename", save: LocalSave }
 
-const SaveLocalMenu=({saveMode, close}:{saveMode: "ID" | "EGO", close: ()=>void})=>{
-    const localSaveName = saveMode === "ID" ? "IdLocalSaves" : "EgoLocalSaves"
-    const idInfoValue = useAppSelector(state => state.idInfo.value)
-    const egoInfoValue = useAppSelector(state => state.egoInfo.value)
+interface PendingAction {
+    kind: "delete" | "overwrite"
+    save: LocalSave
+}
+
+const defaultSaveName = () => "Save "+new Date().toISOString()
+
+const SaveLocalMenu=({close}:{close: ()=>void})=>{
+    const editor = useCardEditor()
+    const cardData = useAppSelector(editor.selectInfo)
     const dispatch = useAppDispatch()
-    const cardData = saveMode === "ID" ? idInfoValue : egoInfoValue
 
-    const {saveData,isLoading,deleteSave,createSave,changeSaveName,loadSave,overwriteSave} = useSaveLocal<IIdInfo|IEgoInfo>(localSaveName)
-    const [namePopup,setNamePopup] = useState(false)
-    const [popupMode,setPopupMode] = useState<"create"|"overwrite">("create")
-    const [nameChangingSaveId,setNameChangingSaveId] = useState<string|null>(null)
-    const [newSaveName,setNewSaveName] = useState("Save "+new Date().toISOString())
+    const {saveData,isLoading,deleteSave,createSave,changeSaveName,loadSave,overwriteSave} = useSaveLocal(editor)
+    const [nameDialog,setNameDialog] = useState<NameDialog|null>(null)
+    const [pendingAction,setPendingAction] = useState<PendingAction|null>(null)
+    const isFull = saveData.length>=appConfig.limits.card.localSaveMaxLen
 
-    const openPopup = (newSaveName?:string)=>{
-        setNamePopup(true)
-        setNewSaveName(newSaveName || "Save "+new Date().toISOString())
+    const submitName = (name:string)=>{
+        if(nameDialog?.kind==="rename") changeSaveName(nameDialog.save.id,name)
+        else createSave(createSaveFile(cardData,name))
     }
 
-    const closePopup = () => {
-        setNamePopup(false)
-        setPopupMode("create")
+    const confirmAction = ()=>{
+        if(!pendingAction) return
+        const {kind,save} = pendingAction
+        setPendingAction(null)
+        if(kind==="delete") deleteSave(save.id)
+        else overwriteSave(save.id,cardData)
     }
 
-    const createNewSave = ()=>{
-        if(!isLoading){
-            if(saveData.length<clientEnv.localSaveMaxLen){
-                openPopup()
-            }
-        }
+    const load = async (id:string)=>{
+        const save = await loadSave(id)
+        if(!save) return
+        dispatch(editor.load(save.saveInfo))
+        close()
     }
 
-    const saveSubmit = ()=>{
-        if(popupMode==="overwrite"){
-            if(nameChangingSaveId) changeSaveName(nameChangingSaveId,newSaveName)
-        }
-        else{
-            const saveFile = new SaveFile(cardData, newSaveName)
-            saveFile.id = uuid()
-            saveFile.name = newSaveName
-            const createdDate = formatDateForBackend(new Date())
-            createSave({...saveFile, updateTime:createdDate, saveTime: createdDate})
-        }
-        closePopup()
-    }
-
-    //Some of the save can have the same id
-    //This is to create new save for some
-    //of the save with same id
-    useEffect(()=>{
-        saveData.map(save=>{
-            if(saveData.some(s=>s.id===save.id)||!save.id) save.id = uuid()
-            return save
-        })
-    },[localSaveName])
+    const sortedSaves = useMemo(
+        ()=>sortSavesByTimeDesc(saveData),
+        [saveData]
+    )
 
     return<>
-        <div className={`${namePopup?"":"hidden"}`}>
-            <PopUpMenu setIsActive={()=>{
-                    closePopup()
-                }}>
-                <div className="save-cloud-name-popup">
-                    <label htmlFor="saveName">Enter the name of the new save:</label>
-                    <input className="input save-cloud-name-input" name="saveName" id="saveName" type="text" placeholder="Save name"
-                    value={newSaveName}
-                    onChange={(e)=>{
-                        setNewSaveName(e.target.value)
-                    }}/>
-                    <button className="main-button create-new-save-btn" onClick={saveSubmit}>{popupMode==="overwrite"?"Update":"Create"}</button>
-                </div>
-            </PopUpMenu>
-        </div>
+        <SaveNameDialog open={nameDialog!==null}
+            title={nameDialog?.kind==="rename"?"Rename the save":"Name the new save"}
+            submitLabel={nameDialog?.kind==="rename"?"Update":"Create"}
+            initialName={nameDialog?.kind==="rename"?nameDialog.save.name:defaultSaveName()}
+            onSubmit={submitName}
+            onClose={()=>setNameDialog(null)}/>
         <div className="save-menu-list local">
-            {saveData.length>0?<>
-                {saveData.sort((a,b)=>{
-                    const prevDate = new Date(a.saveTime)
-                    const nextDate = new Date(b.saveTime)
-
-                    return prevDate < nextDate ? 1 : -1
-                }).map((data)=>
-                    <div className={`save-tab center-element-vertically`} key={data.id}>
-                        {data.previewImg?<img className="save-preview-img" src={data.previewImg} alt="preview-save" />:<></>}
-                        <p className="created-time">Last updated: {data.updateTime}</p>
-                        <p className="created-time">Created: {data.saveTime}</p>
-                        <div className="center-element save-tab-input-container">
-                            <p>{data.name}</p>
-                            <div onClick={()=>{
-                                setPopupMode("overwrite")
-                                setNameChangingSaveId(data.id)
-                                openPopup(data.name)
-                            }}>
-                                <EditIcon/>
-                            </div>
-                        </div>
-                        <div className="center-element">
-                            <button className="main-button" onClick={()=>deleteSave(data.id)}>
-                                Delete
-                            </button>
-                            <button className="main-button" onClick={()=>{
-                                overwriteSave(data.id, cardData)
-                            }}>
-                                Overwrite
-                            </button>
-                            <button className="main-button" onClick={async ()=>{
-                                const save = await loadSave(data.id)
-                                if(save){
-                                    if(saveMode === "ID") dispatch(setIdInfo(save.saveInfo as IIdInfo))
-                                    else dispatch(setEgoInfo(save.saveInfo as IEgoInfo))
-                                }
-                                close()
-                            }}>
-                                Load
-                            </button>
-                        </div>
+            {sortedSaves.map((data)=>
+                <div className={`save-tab center-element-vertically`} key={data.id}>
+                    {data.previewImg?<img className="save-preview-img" src={data.previewImg} alt="preview-save" />:<></>}
+                    <p className="created-time">Last updated: {formatDisplayDate(data.updateTime, { withTime: true })}</p>
+                    <p className="created-time">Created: {formatDisplayDate(data.saveTime, { withTime: true })}</p>
+                    <div className="center-element save-tab-input-container">
+                        <p>{data.name}</p>
+                        <IconButton label={`Rename ${data.name}`} onClick={()=>setNameDialog({kind:"rename",save:data})}>
+                            <EditIcon/>
+                        </IconButton>
                     </div>
-                )}
-            </>:<p style={{fontFamily:"var(--font-mikodacs), var(--font-rubik), sans-serif"}}></p>}
+                    <div className="center-element">
+                        <button className="main-button" onClick={()=>setPendingAction({kind:"delete",save:data})}>
+                            Delete
+                        </button>
+                        <button className="main-button" onClick={()=>setPendingAction({kind:"overwrite",save:data})}>
+                            Overwrite
+                        </button>
+                        <button className="main-button" onClick={()=>load(data.id)}>
+                            Load
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
-        <p>Current local save: {saveData.length}/{clientEnv.localSaveMaxLen}</p>
-        <button className="main-button create-new-save-btn" onClick={createNewSave}>{isLoading?"Loading...":"Create a new save"}</button>
+        <p>Current local save: {saveData.length}/{appConfig.limits.card.localSaveMaxLen}</p>
+        <button className="main-button create-new-save-btn" disabled={isLoading||isFull} onClick={()=>setNameDialog({kind:"create"})}>{isLoading?"Loading...":"Create a new save"}</button>
+        {pendingAction && <ConfirmDialog
+            message={pendingAction.kind==="delete"
+                ? `Delete the local save "${pendingAction.save.name}"? This can't be undone.`
+                : `Overwrite the local save "${pendingAction.save.name}" with the current card?`}
+            onConfirm={confirmAction}
+            onCancel={()=>setPendingAction(null)}
+        />}
     </>
 }
 

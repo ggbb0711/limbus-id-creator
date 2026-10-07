@@ -1,100 +1,106 @@
 'use client'
-import React, { useState } from "react";
+import { appConfig } from "config/env.client";
+import { filesize } from "filesize";
+import React, { ChangeEvent, useState } from "react";
 import Image from "next/image";
 import { ReactElement } from "react";
 import EditIcon from "assets/icons/EditIcon";
 import CheckIcon from "assets/icons/CheckIcon";
-import { IUserProfile } from "types/api/oAuth/IUserProfile";
+import CloseIcon from "assets/icons/CloseIcon";
+import { IUserProfile } from "features/user/types/IUserProfile";
+import { validateUsername } from "features/user/utils/validateUsername";
 import "./UserProfile.css";
-import useAlert from "hooks/useAlert";
-import { useUpdateUserMutation } from "api/UserApi";
+import { useAddAlert } from "hooks/useAddAlert";
+import { useUpdateUserMutation } from "features/user/api/UserApi";
+import getApiErrorMessage from "api/getApiErrorMessage";
+import BusyButton from "components/ui/busyButton/BusyButton";
 
-export function UserProfile({userProfile,userId,owned}:{userProfile:IUserProfile,userId:string,owned:boolean}):ReactElement{
-    const {userName,userIcon} = userProfile
-    const [isChangeName,setIsChangeName] = useState(false)
-    const [nameLenErr,setNameLenErr] = useState(false)
-    const [name,setName] = useState(userName)
-    const {addAlert} = useAlert()
-    const [userError,setUserErr] = useState("")
+const MAX_USERNAME_LENGTH = appConfig.limits.user.maxUsernameLength
+const MAX_ICON_BYTES = appConfig.limits.upload.userIcon
 
-    const [updateUser, {isLoading: isChangingName}] = useUpdateUserMutation()
-    const [updateUserIcon, {isLoading: isChangingProfile}] = useUpdateUserMutation()
+function UserNameEditor({ userProfile, onDone }: { userProfile: Omit<IUserProfile, "userEmail">, onDone: () => void }): ReactElement {
+    const [name, setName] = useState(userProfile.userName)
+    const [error, setError] = useState<string | null>(null)
+    const addAlert = useAddAlert()
+    const [updateUser, { isLoading: isSaving }] = useUpdateUserMutation()
 
-    async function handleChangeName(){
-        if(!name||isChangingName) return
+    async function save() {
+        const invalid = validateUsername(name, MAX_USERNAME_LENGTH)
+        if (invalid) return setError(invalid)
         try {
-            await updateUser({ userId, name }).unwrap()
-            addAlert("Success","Name changed")
-            setIsChangeName(false)
-        } catch {
-            addAlert("Failure","Can't change name")
+            await updateUser({ userId: userProfile.id, name: name.trim() }).unwrap()
+            addAlert("Success", "Name changed")
+            onDone()
+        } catch (updateError) {
+            addAlert("Failure", getApiErrorMessage(updateError, "Can't change name"))
         }
     }
 
-    async function handleChangeProfileImg(e:React.ChangeEvent<HTMLInputElement>){
-        if (!e.currentTarget.files || !e.currentTarget.files[0]) {
-            addAlert("Failure", "No file selected")
+    return <>
+        <div className="center-element warning-message">
+            <BusyButton busy={isSaving} busyText={<><p>Saving...</p><CheckIcon/></>} className="main-button center-element user-name-edit" onClick={save}>
+                <p>Confirm</p>
+                <CheckIcon/>
+            </BusyButton>
+            <button type="button" className="main-button center-element user-name-edit" onClick={onDone} disabled={isSaving}>
+                <p>Cancel</p>
+                <CloseIcon/>
+            </button>
+            {error && <p role="alert">({error})</p>}
+        </div>
+        <input className="input user-name" type="text" name="name" id="name" aria-label="Username" aria-invalid={!!error}
+            maxLength={MAX_USERNAME_LENGTH} value={name} onChange={(e) => {
+                setName(e.target.value)
+                setError(null)
+            }}/>
+    </>
+}
+
+export function UserProfile({ userProfile, owned }: { userProfile: Omit<IUserProfile,"userEmail">, owned: boolean }): ReactElement {
+    const { userName, userIcon } = userProfile
+    const [isEditingName, setIsEditingName] = useState(false)
+    const addAlert = useAddAlert()
+    const [updateUserIcon, { isLoading: isChangingIcon }] = useUpdateUserMutation()
+
+    async function handleChangeProfileImg(e: ChangeEvent<HTMLInputElement>) {
+        const file = e.currentTarget.files?.[0]
+        e.currentTarget.value = ""
+        if (!file) return
+        if (file.size > MAX_ICON_BYTES) {
+            addAlert("Failure", `Profile pictures must be ${filesize(MAX_ICON_BYTES)} or smaller`)
             return
         }
         try {
-            await updateUserIcon({ userId, name, iconFile: e.currentTarget.files[0] }).unwrap()
-            addAlert("Success","Profile changed")
-        } catch {
-            addAlert("Failure","Can't change profile")
+            await updateUserIcon({ userId: userProfile.id, name: userName, iconFile: file }).unwrap()
+            addAlert("Success", "Profile changed")
+        } catch (updateError) {
+            addAlert("Failure", getApiErrorMessage(updateError, "Can't change profile"))
         }
     }
 
-    const printProfileEditButton = ()=>{
-        if (!owned) return <></>
-
-        return <div className="center-element warning-message">
-            {isChangeName?
-                <button className={`main-button ${isChangingName?"active":""} center-element user-name-edit`} onClick={()=>{
-                    if(name.length<=65&&name.length>0){
-                        handleChangeName()
-                    }
-                    else{
-                        setUserErr("(Username must have at least one character and less than or equal to 64 characters)")
-                        setNameLenErr(true)
-                    }
-                }}>
-                    <p>{isChangingName?"Editting":"Confirm"}</p>
-                    <CheckIcon/>
-                </button>:
-                <button className={"main-button center-element user-name-edit"} onClick={()=>setIsChangeName(!isChangeName)}>
-                    <p>Edit</p>
-                    <EditIcon/>
-                </button>
-            }
-            <p>{nameLenErr?userError:""}</p>
-        </div>
-    }
-
     return <div className="user-personal-container center-element">
-
         <div className="user-profile-img-container">
-            <Image className="user-personal-icon" src={userIcon} alt="user-icon" width={80} height={80} />
+            <Image className="user-personal-icon" src={userIcon} alt={`${userName}'s avatar`} width={80} height={80} />
             {owned &&
-                <button className={`main-button ${isChangingProfile && "active"} center-element input-profile-img-button`}>
-                    {isChangingProfile?
-                        <p>Editing...</p>:
-                        <>
-                            <input className="input-profile-img" type="file" name="input-profile-img"  accept="image/png, image/jpeg" id="input-profile-img" onChange={handleChangeProfileImg}/>
-                            <p>Edit Profile</p>
-                            <EditIcon/>
-                        </>
-                    }
-                </button>
+                <label className={`main-button center-element input-profile-img-button ${isChangingIcon ? "active" : ""}`} aria-busy={isChangingIcon}>
+                    <input className="visually-hidden" type="file" name="input-profile-img" accept="image/png, image/jpeg" id="input-profile-img"
+                        disabled={isChangingIcon} onChange={handleChangeProfileImg}/>
+                    {isChangingIcon ? <p>Saving...</p> : <><p>Edit profile picture</p><EditIcon/></>}
+                </label>
             }
         </div>
         <div className="user-name-container">
-            {printProfileEditButton()}
-            {isChangeName?<input className="input user-name" type="text" name="name" id="name" value={name} onChange={(e)=>{
-                setName(e.target.value)
-                setNameLenErr(false)
-            }}/>
-            :<p className="user-name">{userName}</p>}
+            {owned && isEditingName ?
+                <UserNameEditor key={userName} userProfile={userProfile} onDone={() => setIsEditingName(false)}/> :
+                <>
+                    {owned && <div className="center-element warning-message">
+                        <button type="button" className="main-button center-element user-name-edit" onClick={() => setIsEditingName(true)}>
+                            <p>Edit</p>
+                            <EditIcon/>
+                        </button>
+                    </div>}
+                    <p className="user-name">{userName}</p>
+                </>}
         </div>
-
     </div>
 }

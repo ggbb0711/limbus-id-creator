@@ -1,0 +1,122 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  changes:
+    name: Detect changes
+    runs-on: ubuntu-latest
+    outputs:
+      frontend: ${{ github.event_name == 'workflow_dispatch' || steps.filter.outputs.frontend == 'true' }}
+      backend: ${{ github.event_name == 'workflow_dispatch' || steps.filter.outputs.backend == 'true' }}
+    steps:
+      - name: Filter paths
+        id: filter
+        if: github.event_name == 'pull_request'
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            frontend:
+              - "id-creator/**"
+              - ".github/workflows/ci.yml"
+            backend:
+              - "id-creator-server/**"
+              - ".github/workflows/ci.yml"
+
+  frontend:
+    name: Frontend
+    needs: changes
+    if: needs.changes.outputs.frontend == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: id-creator
+    env:
+      NEXT_TELEMETRY_DISABLED: 1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: id-creator/package-lock.json
+
+      - name: Cache Next.js build
+        uses: actions/cache@v4
+        with:
+          path: id-creator/.next/cache
+          key: nextjs-${{ runner.os }}-${{ hashFiles('id-creator/package-lock.json') }}-${{ hashFiles('id-creator/src/**') }}
+          restore-keys: |
+            nextjs-${{ runner.os }}-${{ hashFiles('id-creator/package-lock.json') }}-
+
+      - name: Install
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Test
+        run: npm test -- --ci
+
+      - name: Build
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SERVER_URL: http://localhost:5000
+          NEXT_PUBLIC_GOOGLE_CLIENT_ID: ci-placeholder
+          API_URL: http://127.0.0.1:9
+
+  backend:
+    name: Backend
+    needs: changes
+    if: needs.changes.outputs.backend == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      - name: Restore
+        run: dotnet restore id-creator-server/id-creator-server.slnx
+
+      - name: Build
+        run: dotnet build id-creator-server/id-creator-server.slnx --no-restore --configuration Release
+
+      - name: Test
+        run: dotnet test id-creator-server/id-creator-server.slnx --no-build --configuration Release
+
+  ci-passed:
+    name: CI passed
+    needs: [changes, frontend, backend]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check results
+        run: |
+          echo "changes=${{ needs.changes.result }} frontend=${{ needs.frontend.result }} backend=${{ needs.backend.result }}"
+          if [[ "${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}" == "true" ]]; then
+            echo "A required job failed or was cancelled."
+            exit 1
+          fi

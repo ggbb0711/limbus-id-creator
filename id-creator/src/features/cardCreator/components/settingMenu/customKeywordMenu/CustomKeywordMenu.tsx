@@ -1,3 +1,4 @@
+import { appConfig } from "config/env.client";
 import React, { useCallback, useEffect, useState } from "react";
 import "./CustomKeywordMenu.css"
 import { ICustomKeyword } from "features/cardCreator/types/ICustomKeyword";
@@ -5,7 +6,9 @@ import uuid from "react-uuid";
 import CheckIcon from "assets/icons/CheckIcon";
 import SettingIcon from "assets/icons/SettingIcon";
 import DeleteIcon from "assets/icons/DeleteIcon";
-import ColorPicker from "components/colorPicker/ColorPicker";
+import ColorPicker from "features/cardCreator/components/colorPicker/ColorPicker";
+import { loadCustomKeywords, saveCustomKeywords } from "features/cardCreator/utils/keywords/customKeywordStorage";
+import IconButton from "components/ui/iconButton/IconButton";
 
 function CustomKeywordTab({keyword,changeKeyword,deleteKeyword}:{keyword:ICustomKeyword,changeKeyword:(id:string,newKeyword:string,newColor:string)=>void,deleteKeyword:(id:string)=>void}){
     const [isEditMode,setIsEditMode] = useState(false)
@@ -15,19 +18,19 @@ function CustomKeywordTab({keyword,changeKeyword,deleteKeyword}:{keyword:ICustom
     return <div className="custom-keyword-tab">
         <div className="custom-keyword-tab-icons">
             {isEditMode?
-            <span className="custom-keyword-tab-setting-icon" onClick={()=>{
+            <IconButton className="custom-keyword-tab-setting-icon" label={`Save ${keyword.keyword}`} onClick={()=>{
                     setIsEditMode(false)
                     changeKeyword(keyword.customKeywordID,edittingKeyword,edittingKeywordColor)
                 }}>
                 <CheckIcon width="14px" height="14px"/>
-            </span>:
-            <span className="custom-keyword-tab-setting-icon" onClick={()=>setIsEditMode(true)}>
+            </IconButton>:
+            <IconButton className="custom-keyword-tab-setting-icon" label={`Edit ${keyword.keyword}`} onClick={()=>setIsEditMode(true)}>
                 <SettingIcon width="14px" height="14px"/>
-            </span>}
-            
-            <span className="custom-keyword-tab-delete-icon" onClick={()=>deleteKeyword(keyword.customKeywordID)}>
+            </IconButton>}
+
+            <IconButton className="custom-keyword-tab-delete-icon" label={`Delete ${keyword.keyword}`} onClick={()=>deleteKeyword(keyword.customKeywordID)}>
                 <DeleteIcon width="14px" height="14px"/>
-            </span>
+            </IconButton>
         </div>
         <div className="center-element">
             <input type="text" style={{color:edittingKeywordColor}} value={edittingKeyword} 
@@ -42,38 +45,28 @@ function CustomKeywordTab({keyword,changeKeyword,deleteKeyword}:{keyword:ICustom
 export default function CustomKeywordMenu(){
     const [newKeyword,setNewKeyword] = useState("")
     const [newKeywordColor,setNewKeywordColor] = useState("")
-    const [customKeywords,setCustomKeywords] = useState<ICustomKeyword[]>([])
+    const [customKeywords,setCustomKeywords] = useState<ICustomKeyword[]>(loadCustomKeywords)
 
     useEffect(()=>{
-        const customKeywordsString = localStorage.getItem("customKeywords")
-        if(!customKeywordsString) localStorage.setItem("customKeywords","[]")
-        else setCustomKeywords(JSON.parse(customKeywordsString))
-    },[])
-
-    useEffect(()=>{
-        localStorage.setItem("customKeywords",JSON.stringify(customKeywords))
-    },[JSON.stringify(customKeywords)])
+        saveCustomKeywords(customKeywords)
+    },[customKeywords])
 
     const changeKeyword = useCallback((id:string,newKeyword:string,newColor:string)=>{
-        setCustomKeywords(keywords=>keywords.map(keyword=>{
-            if(keyword.customKeywordID===id){
-                keyword.keyword=newKeyword
-                keyword.color=newColor
-            }
-            return keyword
-        }))
-    },[setCustomKeywords])
+        setCustomKeywords(keywords=>keywords.map(keyword=>
+            keyword.customKeywordID===id ? {...keyword, keyword:newKeyword, color:newColor} : keyword
+        ))
+    },[])
 
     const deleteKeyword = useCallback((id:string)=>{
         setCustomKeywords(keywords=>keywords.filter(keywords=>keywords.customKeywordID!==id))
-    },[setCustomKeywords])
+    },[])
 
 
 
     return <div className="custom-keyword-menu">
         <form onSubmit={(e)=>{
             e.preventDefault()
-            if(newKeyword&&customKeywords.length<20){
+            if(newKeyword&&customKeywords.length<appConfig.limits.card.maxCustomKeywords){
                 setCustomKeywords([{
                     customKeywordID: uuid(),
                     keyword:newKeyword,
@@ -99,6 +92,6 @@ export default function CustomKeywordMenu(){
                 </React.Fragment>
             )}
         </div>
-        <p>Custom keywords: {customKeywords.length}/20</p>
+        <p>Custom keywords: {customKeywords.length}/{appConfig.limits.card.maxCustomKeywords}</p>
     </div>
 }

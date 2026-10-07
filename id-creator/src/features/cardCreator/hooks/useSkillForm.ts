@@ -1,86 +1,48 @@
-import { useEffect, useCallback } from 'react'
-import { useForm, UseFormReturn, Path, UseFormRegisterReturn, FieldErrors } from 'react-hook-form'
-import { useCardMode } from 'features/cardCreator/contexts/CardModeContext'
-import { useAppDispatch, useAppSelector } from 'stores/AppStore'
+import { useEffect } from 'react'
+import { useForm, UseFormReturn, FieldErrors, DefaultValues } from 'react-hook-form'
+import { useAppDispatch } from 'stores/AppStore'
 import { useStatusEffect } from './useStatusEffect'
-import { deleteIdInfoSkill, updateIdInfoSkill, changeIdInfoSkillType } from 'features/cardCreator/stores/IdInfoSlice'
-import { deleteEgoInfoSkill, updateEgoInfoSkill, changeEgoInfoSkillType } from 'features/cardCreator/stores/EgoInfoSlice'
+import { useCardActions, useCardSelector } from './useCardInfo'
+import { RegisterNumber, useNumberRegister } from './useNumberRegister'
 import { SkillDetail } from 'features/cardCreator/types/SkillDetail'
-import { OffenseSkill } from 'features/cardCreator/types/skills/offenseSkill/IOffenseSkill'
-import { DefenseSkill } from 'features/cardCreator/types/skills/defenseSkill/IDefenseSkill'
-import { PassiveSkill } from 'features/cardCreator/types/skills/passiveSkill/IPassiveSkill'
-import { CustomEffect } from 'features/cardCreator/types/skills/customEffect/ICustomEffect'
-import { MentalEffect } from 'features/cardCreator/types/skills/mentalEffect/IMentalEffect'
-
-function createSkillByType(newType: string): SkillDetail {
-    switch (newType) {
-        case "OffenseSkill": return new OffenseSkill()
-        case "DefenseSkill": return new DefenseSkill()
-        case "PassiveSkill": return new PassiveSkill()
-        case "CustomEffect": return new CustomEffect()
-        case "MentalEffect": return new MentalEffect()
-        default: return new OffenseSkill()
-    }
-}
+import { SkillType } from 'features/cardCreator/types/SkillTypes'
+import { getSkillData } from 'features/cardCreator/skills/skillData'
 
 interface UseSkillFormReturn<T extends SkillDetail> extends UseFormReturn<T> {
     deleteSkill: () => void
-    changeSkillType: (newType: string) => void
-    registerNumber: (name: Path<T>) => UseFormRegisterReturn
+    changeSkillType: (newType: SkillType) => void
+    registerNumber: RegisterNumber<T>
     errors: FieldErrors<T>
     skill: T
     keyWordList: { [key: string]: string }
 }
 
 export function useSkillForm<T extends SkillDetail>(index: number): UseSkillFormReturn<T> {
-    const mode = useCardMode()
     const dispatch = useAppDispatch()
+    const { updateSkill, deleteSkill: deleteSkillAction } = useCardActions()
 
-    const skill = useAppSelector(state =>
-        mode === "id" ? state.idInfo.value.skillDetails[index] : state.egoInfo.value.skillDetails[index]
-    ) as T
+    const skill = useCardSelector(info => info.skillDetails[index]) as T
 
     const keyWordList = useStatusEffect()
 
-    const form = useForm<T>({ defaultValues: structuredClone(skill) as any, mode: "onChange" })
+    const form = useForm<T>({ defaultValues: structuredClone(skill) as DefaultValues<T>, mode: "onChange" })
 
-    useEffect(() => { form.reset(structuredClone(skill) as any) }, [skill.inputId])
+    useEffect(() => { form.reset(structuredClone(skill) as DefaultValues<T>) }, [skill.inputId])
 
     useEffect(() => {
         const sub = form.watch((values) => {
-            const action = mode === "id" ? updateIdInfoSkill : updateEgoInfoSkill
-            dispatch(action({ index, skill: structuredClone(values) as SkillDetail }))
+            dispatch(updateSkill({ index, skill: structuredClone(values) as SkillDetail }))
         })
         return () => sub.unsubscribe()
-    }, [form.watch, index, mode])
+    }, [form.watch, index, updateSkill, dispatch])
 
-    const deleteSkill = () => dispatch(
-        mode === "id" ? deleteIdInfoSkill(skill.inputId) : deleteEgoInfoSkill(skill.inputId)
-    )
+    const deleteSkill = () => dispatch(deleteSkillAction(skill.inputId))
 
-    const changeSkillType = (newType: string) => {
-        const newSkill = createSkillByType(newType)
-        dispatch(
-            mode === "id"
-                ? changeIdInfoSkillType({ index, skill: newSkill })
-                : changeEgoInfoSkillType({ index, skill: newSkill })
-        )
+    const changeSkillType = (newType: SkillType) => {
+        dispatch(updateSkill({ index, skill: getSkillData(newType).create() }))
     }
 
-    const registerNumber = useCallback((name: Path<T>) => {
-        const reg = form.register(name, {
-            valueAsNumber: true,
-        } as any)
-        return {
-            ...reg,
-            onBlur: async (e: any) => {
-                await reg.onBlur(e)
-                if (isNaN(e.target.valueAsNumber) || e.target.value === '') {
-                    form.setValue(name, 0 as any)
-                }
-            }
-        }
-    }, [form.register, form.setValue])
+    const registerNumber = useNumberRegister(form)
 
     const { errors } = form.formState
 

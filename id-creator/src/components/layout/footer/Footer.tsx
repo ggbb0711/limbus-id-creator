@@ -2,6 +2,7 @@ import React from "react";
 import { ReactElement } from "react";
 import Link from "next/link";
 import "./Footer.css";
+import { SITE_LINKS } from "config/siteLinks";
 
 export default function Footer(): ReactElement {
     return (
@@ -20,7 +21,7 @@ export default function Footer(): ReactElement {
                     <br />
                     For more information:{" "}
                     <a
-                        href="https://x.com/ProjMoonStudio/status/1629085462236397573?lang=en"
+                        href={SITE_LINKS.fanContentPolicy}
                         target="_blank"
                         rel="noreferrer"
                     >

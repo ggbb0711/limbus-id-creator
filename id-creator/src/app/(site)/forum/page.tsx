@@ -2,7 +2,10 @@ import React, { Suspense } from "react";
 import type { Metadata } from "next";
 import ForumPage from "features/forum/forumPage/ForumPage";
 import ForumIntro from "features/forum/forumIntro/ForumIntro";
-import { getLatestPosts } from "api/server/posts";
+import { parseForumParams, toSearchParams } from "features/forum/utils/forumQuery";
+import { GetPostsParams, TagList, buildPostsQuery } from "features/post";
+import { getPosts } from "features/post/api/server/posts";
+import { appConfig } from "config/env.client";
 import ForumLoading from "./loading";
 
 export const metadata: Metadata = {
@@ -12,9 +15,16 @@ export const metadata: Metadata = {
 }
 
 export default async function Page({ searchParams }: PageProps<"/forum">) {
-    const params = await searchParams
-    const isDefaultQuery = Object.keys(params).length === 0
-    const initialPosts = isDefaultQuery ? await getLatestPosts(10) : null
+    const { q, tagKeys, sort, page } = parseForumParams(toSearchParams(await searchParams))
+    const params: GetPostsParams = {
+        title: q,
+        tag: tagKeys.map(key => TagList[key].tagName),
+        sortedBy: sort,
+        page,
+        limit: appConfig.paging.postsPerPage,
+    }
+    const result = await getPosts(params)
+    const initialPosts = result.ok ? { query: buildPostsQuery(params), data: result.data } : undefined
 
     return <>
         <ForumIntro />

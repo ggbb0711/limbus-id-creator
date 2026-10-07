@@ -6,16 +6,17 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import "./Header.css"
 import KofiIcon from "assets/icons/KofiIcon";
-import SideBar from "components/sideBar/SideBar";
-import { useLoginMenu } from "hooks/useLoginMenu";
+import SideBar, { SIDE_BAR_ID } from "components/layout/sideBar/SideBar";
+import { SITE_LINKS } from "config/siteLinks";
 import { useAuth } from "hooks/useAuth";
 import siteLogo from "assets/images/SiteLogo.webp";
 import hamburgerIcon from "assets/images/HamburgerIcon.webp";
 import hamburgerIconActive from "assets/images/HamburgerIconActive.webp";
+import LoginPromptButton from "components/loginMenu/LoginPromptButton";
+import { NAV_LINKS } from "config/navLinks";
 
 export default function Header():ReactElement{
     const [isSideBarActive,setActiveSideBar] = useState(false)
-    const {setIsLoginMenuActive} = useLoginMenu()
     const {user: loginUser, isInitializing} = useAuth()
     const pathname = usePathname()
 
@@ -23,23 +24,20 @@ export default function Header():ReactElement{
 
     return <>
         <nav className="site-header">
-            <div className="hamburger-icon-container" onClick={()=>setActiveSideBar(!isSideBarActive)}>
-                <Image src={hamburgerIconActive} alt="Open menu" className="hamburger-icon-active" width={35} height={35}/>
-                <Image src={hamburgerIcon} alt="Open menu" className="hamburger-icon" width={35} height={35}/>
-            </div>
+            <button type="button" className="icon-button hamburger-icon-container" aria-label="Open menu" aria-expanded={isSideBarActive} aria-controls={SIDE_BAR_ID} onClick={()=>setActiveSideBar(!isSideBarActive)}>
+                <Image src={hamburgerIconActive} alt="" className="hamburger-icon-active" width={35} height={35}/>
+                <Image src={hamburgerIcon} alt="" className="hamburger-icon" width={35} height={35}/>
+            </button>
             <div className="site-header-content center-element">
                 <Link href="/">
-                    <Image src={siteLogo} alt="Limbus ID Creator" className="site-logo" sizes="160px" preload/>
+                    <Image src={siteLogo} alt="Limbus ID Creator" className="site-logo" sizes="160px"/>
                 </Link>
-                <Link href="/creator/identity" className={navClass("/creator/identity")}>Create Id</Link>
-                <Link href="/creator/ego" className={navClass("/creator/ego")}>Create Ego</Link>
-                <Link href="/forum" className={navClass("/forum")}>Forum</Link>
-                <Link href="/blog" className={navClass("/blog")}>Blog</Link>
+                {NAV_LINKS.map(link => <Link key={link.href} href={link.href} className={navClass(link.href)}>{link.label}</Link>)}
                 {isInitializing?<></>:loginUser?
                     <Link href={"/user/"+loginUser.id} className="main-button">My account</Link>:
-                    <button className="main-button nav-button" onClick={()=>setIsLoginMenuActive(true)}>Login</button>}
+                    <LoginPromptButton className="main-button nav-button"/>}
                 {loginUser&&<Link href="/new-post" className="main-button">Post</Link>}
-                <a href="https://ko-fi.com/johnlimbusidmaker" target="_blank" rel="noreferrer" className="main-button center-element">
+                <a href={SITE_LINKS.kofi} target="_blank" rel="noreferrer" className="main-button center-element">
                     <KofiIcon width="16px" height="16px"/>
                     <p>Support me</p>
                 </a>

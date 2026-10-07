@@ -1,37 +1,20 @@
+import { appConfig } from "config/env.client";
 import React, { ReactElement, useState, useRef, useCallback, useEffect } from "react";
 import "./InputTabContainer.css"
-import { IOffenseSkill } from "features/cardCreator/types/skills/offenseSkill/IOffenseSkill";
-import { ICustomEffect } from "features/cardCreator/types/skills/customEffect/ICustomEffect";
-import { IDefenseSkill } from "features/cardCreator/types/skills/defenseSkill/IDefenseSkill";
-import { IMentalEffect } from "features/cardCreator/types/skills/mentalEffect/IMentalEffect";
-import { IPassiveSkill } from "features/cardCreator/types/skills/passiveSkill/IPassiveSkill";
-import InputCustomEffectPage from "../inputCustomEffectPage/InputCustomEffectPage";
-import InputDefenseSkillPage from "../inputDefenseSkillPage/InputDefenseSkillPage";
-import InputMentalEffect from "../inputMentalEffect/InputMentalEffect";
-import InputOffenseSkillPage from "../inputOffenseSkillPage/InputOffenseSkillPage";
-import InputPassivePage from "../inputPassivePage/InputPassivePage";
-import InputIdInfoStatPage from "../inputStatPage/inputIdInfoStatPage/InputIdInfoStatPage";
-import InputEgoInfoStatPage from "../inputStatPage/inputEgoInfoStatPage/InputEgoInfoStatPage";
+import { getSkillView } from "features/cardCreator/skills/SkillRegistry";
+import { clampPanelWidth, parseSavedWidth } from "features/cardCreator/utils/layout/panelWidth";
+import InfoStatPage from "../inputStatPage/InfoStatPage";
 import InputTabSide from "../inputTabSide/InputTabSide";
-import useAlert from "hooks/useAlert";
-import { useAppSelector, useAppDispatch } from "stores/AppStore";
-import { addIdInfoSkill } from "features/cardCreator/stores/IdInfoSlice";
-import { addEgoInfoSkill } from "features/cardCreator/stores/EgoInfoSlice";
-import { useCardMode } from "features/cardCreator/contexts/CardModeContext";
+import { useAddAlert } from "hooks/useAddAlert";
+import { readStorage, writeStorage } from "utils/storage";
+import { useAppDispatch } from "stores/AppStore";
+import { useCardActions, useCardSelector } from "features/cardCreator/hooks/useCardInfo";
 import { SkillDetail } from "features/cardCreator/types/SkillDetail";
 
-const MIN_CLOSE_WIDTH = 240
-const MAX_WIDTH = 700
-const DEFAULT_WIDTH = 400
 const STORAGE_KEY = "inputPanelWidth"
 
 function getSavedWidth(): number {
-    const saved = localStorage.getItem(STORAGE_KEY)
-    if (saved) {
-        const num = Number(saved)
-        if (num >= MIN_CLOSE_WIDTH && num <= MAX_WIDTH) return num
-    }
-    return DEFAULT_WIDTH
+    return parseSavedWidth(readStorage(STORAGE_KEY))
 }
 
 export default function InputTabContainer({
@@ -42,15 +25,11 @@ export default function InputTabContainer({
         resetBtnHandler:()=>void,
         activeTab:number,
         changeActiveTab:(i:number)=>void}):ReactElement{
-    const mode = useCardMode()
     const dispatch = useAppDispatch()
-    const skillDetails = useAppSelector(state =>
-        mode === "id" ? state.idInfo.value.skillDetails : state.egoInfo.value.skillDetails
-    )
-    const sinnerIcon = useAppSelector(state =>
-        mode === "id" ? state.idInfo.value.sinnerIcon : state.egoInfo.value.sinnerIcon
-    )
-    const {addAlert} = useAlert()
+    const { addSkill } = useCardActions()
+    const skillDetails = useCardSelector(info => info.skillDetails)
+    const sinnerIcon = useCardSelector(info => info.sinnerIcon)
+    const addAlert = useAddAlert()
 
     const [panelWidth, setPanelWidth] = useState(getSavedWidth)
     const [isMobile, setIsMobile] = useState(() => window.matchMedia("(max-width: 768px)").matches)
@@ -78,16 +57,16 @@ export default function InputTabContainer({
             if (!isDragging.current || !containerRef.current) return
             const containerRect = containerRef.current.getBoundingClientRect()
             const newWidth = e.clientX - containerRect.left
-            if (newWidth < MIN_CLOSE_WIDTH) {
+            const resize = clampPanelWidth(newWidth)
+            if (resize.kind === "close") {
                 isDragging.current = false
                 document.body.style.cursor = ""
                 document.body.style.userSelect = ""
                 changeActiveTab(-2)
                 return
             }
-            const clamped = Math.min(newWidth, MAX_WIDTH)
-            setPanelWidth(clamped)
-            localStorage.setItem(STORAGE_KEY, String(clamped))
+            setPanelWidth(resize.width)
+            writeStorage(STORAGE_KEY, String(resize.width))
         }
 
         const handleMouseUp = () => {
@@ -106,26 +85,15 @@ export default function InputTabContainer({
         }
     }, [changeActiveTab])
 
-    function addTab(skill: IOffenseSkill|IDefenseSkill|IPassiveSkill|ICustomEffect|IMentalEffect){
-        if(skillDetails.length>=40) addAlert("Failure","There can only be 40 or less skill/effects")
-        else dispatch(mode === "id" ? addIdInfoSkill(skill as SkillDetail) : addEgoInfoSkill(skill as SkillDetail))
+    function addTab(skill: SkillDetail){
+        if(skillDetails.length>=appConfig.limits.card.maxSkills) addAlert("Failure",`There can only be ${appConfig.limits.card.maxSkills} or fewer skills/effects`)
+        else dispatch(addSkill(skill))
     }
 
-    function renderSkillPage(skill: IOffenseSkill|IDefenseSkill|IPassiveSkill|ICustomEffect|IMentalEffect|never, index: number){
+    function renderSkillPage(skill: SkillDetail | undefined, index: number){
         if(!skill) return;
-        const shared = { index, collaspPage: () => changeActiveTab(-2) }
-        switch(skill.type){
-            case "OffenseSkill":
-                return <InputOffenseSkillPage {...shared} />
-            case "DefenseSkill":
-                return <InputDefenseSkillPage {...shared} />
-            case "PassiveSkill":
-                return <InputPassivePage {...shared} />
-            case "CustomEffect":
-                return <InputCustomEffectPage {...shared} />
-            case "MentalEffect":
-                return <InputMentalEffect {...shared} />
-        }
+        const { InputPage } = getSkillView(skill.type)
+        return <InputPage key={skill.inputId} index={index} collapsePage={() => changeActiveTab(-2)} />
     }
 
     const containerStyle = isPanelOpen && !isMobile ? { width: panelWidth + "px" } : undefined
@@ -135,7 +103,7 @@ export default function InputTabContainer({
         activeTab={activeTab} addTab={addTab} resetBtnHandler={resetBtnHandler}></InputTabSide>
         {isPanelOpen && <>
             {activeTab === -1
-                ? (mode === "id" ? <InputIdInfoStatPage collaspPage={()=>changeActiveTab(-2)}/> : <InputEgoInfoStatPage collaspPage={()=>changeActiveTab(-2)}/>)
+                ? <InfoStatPage collapsePage={()=>changeActiveTab(-2)}/>
                 : renderSkillPage(skillDetails[activeTab], activeTab)}
             {!isMobile && <div className="input-tab-resize-handle" onMouseDown={handleMouseDown}></div>}
         </>}
