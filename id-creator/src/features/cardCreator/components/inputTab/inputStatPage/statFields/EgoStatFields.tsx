@@ -27,6 +27,6 @@ export function EgoStatsSection({ form, registerNumber }: StatFieldsProps<IEgoIn
         <SinNumberInputs<IEgoInfo> field="sinCost" registerNumber={registerNumber} idSuffix="cost"/>
         <p className="input-label">Sin resistant:</p>
         <SinNumberInputs<IEgoInfo> field="sinResistant" registerNumber={registerNumber} idSuffix="resistant"
-            colorFor={(key) => getResistTier(sinResistant?.[key], "sin").color}/>
+            colorFor={(key) => getResistTier(sinResistant?.[key]).color}/>
     </AccordionSection>
 }

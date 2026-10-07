@@ -40,8 +40,10 @@
     --Outis-color: #325339;
     --Gregor-color: #69350b;
     --Fatal:red;
-    --Endure:#9B9899;
+    --Weak: #db7c77;
     --Normal:#DABD97;
+    --Endure:#cccccc;
+    --Ineff: #808080;
     --title-color:#A16840;
 
     --Id-card-width:1440px;

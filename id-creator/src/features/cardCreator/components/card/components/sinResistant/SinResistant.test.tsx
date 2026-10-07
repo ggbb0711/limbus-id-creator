@@ -9,7 +9,7 @@ describe('SinResistant', () => {
         render(<SinResistant sinResistant={{ ...createSinRecord(1), pride: 2 }}/>)
         expect(screen.getByAltText('Pride-resistant-icon')).toHaveAttribute('src', '/Images/sin-affinity/affinity_Pride_big.webp')
         expect(screen.getByText('[x2]')).toBeInTheDocument()
-        expect(screen.getAllByText(getResistTier(1, 'sin').label)).toHaveLength(6)
+        expect(screen.getAllByText(getResistTier(1).label)).toHaveLength(6)
     })
 })
 

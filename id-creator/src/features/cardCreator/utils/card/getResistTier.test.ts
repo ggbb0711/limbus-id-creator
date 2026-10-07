@@ -11,7 +11,7 @@ describe('getResistTier', () => {
         [2, 'Fatal', 'var(--Fatal)'],
         [3, 'Fatal', 'var(--Fatal)'],
     ])('damage %p is %s', (value, label, color) => {
-        expect(getResistTier(value, 'damage')).toEqual({ label, color })
+        expect(getResistTier(value)).toEqual({ label, color })
     })
 
     it.each([
@@ -21,6 +21,6 @@ describe('getResistTier', () => {
         [1.99, 'Normal', 'var(--Normal)'],
         [2, 'Fatal', 'var(--Fatal)'],
     ])('sin %p is %s', (value, label, color) => {
-        expect(getResistTier(value, 'sin')).toEqual({ label, color })
+        expect(getResistTier(value)).toEqual({ label, color })
     })
 })

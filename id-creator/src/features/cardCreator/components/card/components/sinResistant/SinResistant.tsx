@@ -8,7 +8,7 @@ import { assetPaths } from "features/cardCreator/utils/card/assetPaths";
 export default function SinResistant({ sinResistant }: { sinResistant: SinRecord }): ReactElement {
     return <div className="sin-resistant-container">
         <SinValueList values={sinResistant} render={(sin, value) => {
-            const tier = getResistTier(value, "sin")
+            const tier = getResistTier(value)
             return <div className="sin-resistant" style={{ color: tier.color }}>
                 <img src={assetPaths.affinityBig(sin)} alt={`${sin}-resistant-icon`} />
                 <div>

@@ -61,8 +61,8 @@ export default function SinnerStats({minSpeed, maxSpeed, hp, staggerResist, defe
                     <div className="stat-container-slot">
                         <img className="stat-icon" src="/Images/attack/attackt_Slash.webp" alt="attackt_slash" />
                         <div className="stat-content">
-                            <div style={{color:getResistTier(slashResistant,"damage").color}}>
-                            <p>{getResistTier(slashResistant,"damage").label}</p>
+                            <div style={{color:getResistTier(slashResistant).color}}>
+                            <p>{getResistTier(slashResistant).label}</p>
                             <p>[x{slashResistant}]</p>
                             </div>
                         </div>
@@ -70,8 +70,8 @@ export default function SinnerStats({minSpeed, maxSpeed, hp, staggerResist, defe
                     <div className="stat-container-slot">
                         <img className="stat-icon" src="/Images/attack/attackt_Pierce.webp" alt="attackt_pierce" />
                         <div className="stat-content">
-                            <div style={{color:getResistTier(pierceResistant,"damage").color}}>
-                                <p>{getResistTier(pierceResistant,"damage").label}</p>
+                            <div style={{color:getResistTier(pierceResistant).color}}>
+                                <p>{getResistTier(pierceResistant).label}</p>
                                 <p>[x{pierceResistant}]</p>
                             </div>
                         </div>
@@ -79,8 +79,8 @@ export default function SinnerStats({minSpeed, maxSpeed, hp, staggerResist, defe
                     <div className="stat-container-slot">
                         <img className="stat-icon" src="/Images/attack/attackt_Blunt.webp" alt="attackt_blunt" />
                         <div className="stat-content">
-                            <div style={{color:getResistTier(bluntResistant,"damage").color}}>
-                                <p>{getResistTier(bluntResistant,"damage").label}</p>
+                            <div style={{color:getResistTier(bluntResistant).color}}>
+                                <p>{getResistTier(bluntResistant).label}</p>
                                 <p>[x{bluntResistant}]</p>
                             </div>
                         </div>

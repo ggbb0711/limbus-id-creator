@@ -84,7 +84,7 @@ export function IdStatsSection({ form, registerNumber }: StatFieldsProps<IIdInfo
         </div>
         {DAMAGE_TYPES.map(damageType => {
             const field = resistField(damageType)
-            const tier = getResistTier(watch(field), "damage")
+            const tier = getResistTier(watch(field))
             return <div className="input-group-container" key={damageType}>
                 <NumberField<IIdInfo> name={field} registerNumber={registerNumber} inputClassName="stat-page-input-border" style={{ color: tier.color }}
                     label={<>
