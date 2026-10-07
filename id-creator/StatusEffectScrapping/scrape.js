@@ -18,7 +18,7 @@ const stealth = require('puppeteer-extra-plugin-stealth');
 chromium.use(stealth());
 
 async function loadingOldStatusData(){
-    const baseUrl = "../src/Features/CardCreator/Utils/BaseStatusEffects/Statuses"
+    const baseUrl = "../src/features/cardCreator/utils/baseStatusEffects/statuses"
     const statusArray = await Promise.all([
         fs.readFile(`${baseUrl}/buff.json`,'utf-8'),
         fs.readFile(`${baseUrl}/debuff.json`,'utf-8'),

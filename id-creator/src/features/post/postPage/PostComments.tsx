@@ -8,17 +8,20 @@ import { useCreateCommentMutation, useGetCommentsQuery } from "features/post/api
 import getApiErrorMessage from "api/getApiErrorMessage";
 import LoginPromptButton from "components/loginMenu/LoginPromptButton";
 import { stripHtml } from "utils/htmlUtils";
+import { IComment } from "features/post/types/IComment";
+import { toCommentPage } from "features/post/utils/comments";
 
-export default function PostComments({ postId }: { postId: string }): ReactElement {
+export default function PostComments({ postId, initialComments = [] }: { postId: string, initialComments?: IComment[] }): ReactElement {
     const addAlert = useAddAlert()
     const { user: loginUser, isInitializing } = useAuth()
     const [commentPage, setCommentPage] = useState(0)
 
-    const { data, isFetching, error, refetch } = useGetCommentsQuery({
+    const { data: fetched, isFetching, error, refetch } = useGetCommentsQuery({
         postId,
         page: commentPage,
         limit: appConfig.paging.commentsPerPage,
     })
+    const data = fetched ?? (initialComments.length > 0 ? toCommentPage(initialComments, appConfig.paging.commentsPerPage) : undefined)
     const [createComment] = useCreateCommentMutation()
 
     const loadMoreComments = useCallback(() => setCommentPage(prev => prev + 1), [])

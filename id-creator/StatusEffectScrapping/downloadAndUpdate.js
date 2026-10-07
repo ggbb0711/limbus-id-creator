@@ -2,7 +2,7 @@ const fs = require("fs/promises")
 const axios = require('axios')
 const sharp = require('sharp')
 
-const baseStatusUrl = "../src/Features/CardCreator/Utils/BaseStatusEffects/Statuses"
+const baseStatusUrl = "../src/features/cardCreator/utils/baseStatusEffects/statuses"
 const baseDownloadUrlFolder = "../public/Images/status-effect"
 
 

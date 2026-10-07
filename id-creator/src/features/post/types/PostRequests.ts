@@ -5,6 +5,7 @@ export interface GetPostsFilter {
     tag?: string[]
     sortedBy?: PostSortOption
     userId?: string
+    excludeIds?: string[]
 }
 
 export interface GetPostsParams extends GetPostsFilter {

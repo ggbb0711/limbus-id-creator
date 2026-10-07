@@ -21,8 +21,12 @@ export default function Post({ post }: { post: IPost }): ReactElement {
                 <AuthorBadge userId={post.userId} userName={post.userName} userIcon={post.userIcon} size={80} iconClassName="post-author-icon"/>
             </div>
         </div>
-        <div className="center-element">
-            {post.tags.map(tag => <TagChip key={tag} tag={getTag(tag)} className="card-tag center-element" iconClassName="card-tag-img" iconSize={10}/>)}
+        <div className="center-element post-tag-list">
+            {post.tags.map(tag => {
+                const known = getTag(tag)
+                return <TagChip key={tag} tag={known} href={known ? `/forum?tag=${encodeURIComponent(tag)}` : undefined}
+                    className={`card-tag center-element ${known ? "card-tag-link" : ""}`} iconClassName="card-tag-img" iconSize={10}/>
+            })}
         </div>
         <SectionErrorBoundary context="postCarousel" label="post images">
             <PostCarousel images={post.imagesAttach} title={post.title}/>

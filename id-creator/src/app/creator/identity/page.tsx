@@ -1,4 +1,3 @@
-import React from "react";
 import type { Metadata } from "next";
 import { IdCreator } from "features/cardCreator/pages/CreatorClient";
 

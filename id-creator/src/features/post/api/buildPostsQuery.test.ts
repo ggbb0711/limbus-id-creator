@@ -15,6 +15,11 @@ describe('buildPostsQuery', () => {
         expect(new URLSearchParams(buildPostsQuery({ page: 0, limit: 5, userId: 'u1' })).get('UserId')).toBe('u1')
     })
 
+    it('repeats ExcludeIds and omits it when empty', () => {
+        expect(buildPostsQuery({ page: 0, limit: 5, excludeIds: [] })).not.toContain('ExcludeIds')
+        expect(new URLSearchParams(buildPostsQuery({ page: 0, limit: 5, excludeIds: ['a', 'b'] })).getAll('ExcludeIds')).toEqual(['a', 'b'])
+    })
+
     it('encodes special characters in the title', () => {
         const query = buildPostsQuery({ page: 0, limit: 5, title: 'a&b#c d' })
         expect(query).toContain('Title=a%26b%23c+d')

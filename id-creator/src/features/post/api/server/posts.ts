@@ -30,3 +30,9 @@ const fetchPostPage = cache(async (query: string): Promise<Result<IPostList>> =>
 export const getPosts = (params: GetPostsParams) => fetchPostPage(buildPostsQuery(params))
 
 export const getLatestPosts = (limit: number) => getPosts({ page: 0, limit, sortedBy: 'Latest' })
+
+export const getPostsByUser = (userId: string, limit: number, excludeIds: string[] = []) =>
+    getPosts({ page: 0, limit, sortedBy: 'Latest', userId, excludeIds })
+
+export const getLatestPostsExcluding = (limit: number, excludeIds: string[]) =>
+    getPosts({ page: 0, limit, sortedBy: 'Latest', excludeIds })
