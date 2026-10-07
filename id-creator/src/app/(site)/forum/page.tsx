@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import type { Metadata } from "next";
 import ForumPage from "features/forum/forumPage/ForumPage";
 import ForumIntro from "features/forum/forumIntro/ForumIntro";
-import ForumPostsFallback from "features/forum/forumPage/ForumPostsFallback";
+import ForumPostsFallback from "./ForumPostsFallback";
 import { parseForumParams } from "features/forum/utils/forumQuery";
 import { GetPostsParams, TagList, buildPostsQuery } from "features/post";
 import { getPosts } from "features/post/api/server/posts";
