@@ -2,6 +2,9 @@
   "name": "id-creator",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=22.22.2"
+  },
   "dependencies": {
     "@melloware/coloris": "^0.25.0",
     "@next/third-parties": "^16.3.6",
