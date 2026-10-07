@@ -10,7 +10,6 @@ const config: Config = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   moduleNameMapper: {
     ...Object.fromEntries(aliases.map(a => [`^${a}/(.*)$`, `<rootDir>/src/${a}/$1`])),
-    '^isomorphic-dompurify$': '<rootDir>/node_modules/isomorphic-dompurify/dist/browser.js',
   },
   testPathIgnorePatterns: ['/node_modules/', '/.next/', '/StatusEffectScrapping/'],
   modulePathIgnorePatterns: ['<rootDir>/StatusEffectScrapping/'],
