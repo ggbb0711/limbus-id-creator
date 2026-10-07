@@ -2,11 +2,14 @@ import React, { Suspense } from "react";
 import type { Metadata } from "next";
 import ForumPage from "features/forum/forumPage/ForumPage";
 import ForumIntro from "features/forum/forumIntro/ForumIntro";
-import { parseForumParams, toSearchParams } from "features/forum/utils/forumQuery";
+import ForumPostsFallback from "features/forum/forumPage/ForumPostsFallback";
+import { parseForumParams } from "features/forum/utils/forumQuery";
 import { GetPostsParams, TagList, buildPostsQuery } from "features/post";
 import { getPosts } from "features/post/api/server/posts";
 import { appConfig } from "config/env.client";
 import ForumLoading from "./loading";
+
+export const revalidate = 60
 
 export const metadata: Metadata = {
     title: "Forum",
@@ -14,8 +17,8 @@ export const metadata: Metadata = {
     alternates: { canonical: "/forum" },
 }
 
-export default async function Page({ searchParams }: PageProps<"/forum">) {
-    const { q, tagKeys, sort, page } = parseForumParams(toSearchParams(await searchParams))
+export default async function Page() {
+    const { q, tagKeys, sort, page } = parseForumParams(new URLSearchParams())
     const params: GetPostsParams = {
         title: q,
         tag: tagKeys.map(key => TagList[key].tagName),
@@ -28,6 +31,8 @@ export default async function Page({ searchParams }: PageProps<"/forum">) {
 
     return <>
         <ForumIntro />
-        <Suspense fallback={<ForumLoading />}><ForumPage initialPosts={initialPosts} /></Suspense>
+        <Suspense fallback={initialPosts ? <ForumPostsFallback posts={initialPosts.data.list} /> : <ForumLoading />}>
+            <ForumPage initialPosts={initialPosts} />
+        </Suspense>
     </>
 }

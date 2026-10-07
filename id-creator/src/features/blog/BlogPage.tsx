@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import "./Blog.css";
-import { IBlogPostMeta } from "./posts";
+import type { IBlogPostMeta } from "./posts";
 import BlogTags from "./BlogTags";
 import { BlogTag } from "./blogTags";
 import formatDisplayDate from "utils/formatDisplayDate";

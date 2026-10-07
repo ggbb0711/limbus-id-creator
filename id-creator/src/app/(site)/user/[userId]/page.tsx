@@ -4,6 +4,12 @@ import { getUser } from "features/user/api/server/users";
 import UserPage from "features/user/userPage/UserPage";
 import { userMetadata } from "features/user/utils/userMetadata";
 
+export const revalidate = 60
+
+export function generateStaticParams() {
+    return []
+}
+
 export async function generateMetadata({ params }: PageProps<"/user/[userId]">): Promise<Metadata> {
     const { userId } = await params
     const user = await getUser(userId)

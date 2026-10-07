@@ -6,6 +6,10 @@ export const size = SOCIAL_CARD_SIZE
 export const contentType = SOCIAL_CARD_CONTENT_TYPE
 export const revalidate = 3600
 
+export function generateStaticParams() {
+    return []
+}
+
 export default async function Image({ params }: { params: Promise<{ postId: string }> }) {
     const { postId } = await params
     return renderPostSocialImage(postId)

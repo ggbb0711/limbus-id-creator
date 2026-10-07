@@ -1,8 +1,8 @@
-import React from "react";
+import React, { Suspense } from "react";
 import type { Metadata } from "next";
 import BlogPage from "features/blog/BlogPage";
+import FilteredBlogPage from "features/blog/FilteredBlogPage";
 import { getAllPosts, getAllTags } from "features/blog/posts";
-import { isBlogTag } from "features/blog/blogTags";
 import { pageMetadata } from "config/siteMetadata";
 
 export const metadata: Metadata = pageMetadata({
@@ -11,7 +11,10 @@ export const metadata: Metadata = pageMetadata({
     path: "/blog",
 })
 
-export default async function Page({ searchParams }: PageProps<"/blog">) {
-    const { tag } = await searchParams
-    return <BlogPage posts={getAllPosts()} tags={getAllTags()} activeTag={isBlogTag(tag) ? tag : undefined} />
+export default function Page() {
+    const posts = getAllPosts()
+    const tags = getAllTags()
+    return <Suspense fallback={<BlogPage posts={posts} tags={tags} />}>
+        <FilteredBlogPage posts={posts} tags={tags} />
+    </Suspense>
 }

@@ -10,6 +10,12 @@ import { appConfig } from "config/env.client";
 
 const POSTS_PER_SIDEBAR_SECTION = 4
 
+export const revalidate = 60
+
+export function generateStaticParams() {
+    return []
+}
+
 export async function generateMetadata({ params }: PageProps<"/post/[postId]">): Promise<Metadata> {
     const { postId } = await params
     const post = await getPost(postId)
