@@ -8,7 +8,7 @@ import getApiErrorMessage from "api/getApiErrorMessage";
 import { useApiErrorAlert } from "hooks/useApiErrorAlert";
 import { reportError } from "utils/reportError";
 import "./SaveCloudMenu.css";
-import "../SettingMenu.css";
+import "./SettingMenu.css";
 import { CardInfo } from "features/cardCreator/types/CardInfo";
 import { useAddAlert } from "hooks/useAddAlert";
 import { useCardDomRef } from "features/cardCreator/contexts/CardDomRefContext";
