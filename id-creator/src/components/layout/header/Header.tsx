@@ -6,7 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import "./Header.css"
 import KofiIcon from "assets/icons/KofiIcon";
-import SideBar, { SIDE_BAR_ID } from "components/layout/sideBar/SideBar";
+import SideBar, { SIDE_BAR_ID } from "components/layout/header/SideBar";
 import { SITE_LINKS } from "config/siteLinks";
 import { useAuth } from "hooks/useAuth";
 import siteLogo from "assets/images/SiteLogo.webp";

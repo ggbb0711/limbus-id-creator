@@ -1,6 +1,6 @@
 import { appConfig } from "config/env.client";
 import AddIcon from "assets/icons/AddIcon";
-import React, { useState } from "react";
+import { useState } from "react";
 import "./InputTabSide.css"
 import ResetIcon from "assets/icons/ResetIcon";
 import { SkillDetail, isActiveSkill } from "features/cardCreator/types/SkillDetail";

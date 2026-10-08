@@ -1,9 +1,8 @@
-import React from "react";
 import "./SettingMenu.css"
 import CloseIcon from "assets/icons/CloseIcon";
-import CustomKeywordMenu from "./customKeywordMenu/CustomKeywordMenu";
-import SaveCloudMenu from "./saveCloudMenu/SaveCloudMenu";
-import { SaveLocalMenu } from "./saveLocalMenu/SaveLocalMenu";
+import CustomKeywordMenu from "./CustomKeywordMenu";
+import SaveCloudMenu from "./SaveCloudMenu";
+import { SaveLocalMenu } from "./SaveLocalMenu";
 import { useAppSelector, useAppDispatch } from "stores/AppStore";
 import { closeSettingMenu, setSettingDisplayMode } from "features/cardCreator/stores/SettingMenuSlice";
 import IconButton from "components/ui/iconButton/IconButton";

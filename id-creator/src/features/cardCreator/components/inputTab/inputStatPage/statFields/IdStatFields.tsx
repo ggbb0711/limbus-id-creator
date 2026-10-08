@@ -6,7 +6,7 @@ import AddIcon from "assets/icons/AddIcon";
 import AccordionSection from "components/ui/accordionSection/AccordionSection";
 import TraitInput from "./TraitInput";
 import SinnerRarityIconInput from "../sinnerRarityInput/SinnerRarityInput";
-import NumberField from "features/cardCreator/components/shared/numberField/NumberField";
+import NumberField from "features/cardCreator/components/shared/NumberField";
 import { DAMAGE_TYPES, DamageType } from "features/cardCreator/constants";
 import { getResistTier } from "features/cardCreator/utils/card/getResistTier";
 import { IIdInfo } from "features/cardCreator/types/IIdInfo";

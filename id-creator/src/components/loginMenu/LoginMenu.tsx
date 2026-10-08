@@ -1,5 +1,5 @@
 'use client'
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import "./LoginMenu.css"
 import { GoogleOAuthProvider, NonOAuthError, useGoogleLogin, useGoogleOAuth } from "@react-oauth/google";
 import GoogleIcon from "assets/icons/GoogleIcon";

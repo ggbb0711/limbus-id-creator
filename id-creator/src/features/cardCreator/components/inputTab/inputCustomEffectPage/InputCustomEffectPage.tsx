@@ -3,9 +3,9 @@ import { ICustomEffect } from "features/cardCreator/types/skills/customEffect/IC
 import React, { ReactElement } from "react";
 import "../InputPage.css"
 import AccordionSection from "components/ui/accordionSection/AccordionSection";
-import SkillPageShell from "features/cardCreator/components/shared/skillPageShell/SkillPageShell";
-import ImageUploadField from "features/cardCreator/components/shared/imageUploadField/ImageUploadField";
-import EffectEditorField from "features/cardCreator/components/shared/effectEditorField/EffectEditorField";
+import SkillPageShell from "features/cardCreator/components/shared/SkillPageShell";
+import ImageUploadField from "features/cardCreator/components/shared/ImageUploadField";
+import EffectEditorField from "features/cardCreator/components/shared/EffectEditorField";
 import { useSkillForm } from "features/cardCreator/hooks/useSkillForm";
 import ColorPicker from "features/cardCreator/components/colorPicker/ColorPicker";
 import { CUSTOM_EFFECT_COLOR_GROUPS } from "features/cardCreator/components/colorPicker/ColorPresets";
