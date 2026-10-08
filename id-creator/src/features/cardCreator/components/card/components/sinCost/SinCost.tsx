@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import "./SinCost.css"
 import { SinRecord } from "features/cardCreator/constants";
-import { SinValueList } from "features/cardCreator/components/shared/sinNumberInputs/SinNumberInputs";
+import { SinValueList } from "features/cardCreator/components/shared/SinNumberInputs";
 import { assetPaths } from "features/cardCreator/utils/card/assetPaths";
 
 const textColor = (cost: number) => cost > 0 ? "#EBC9A8" : "#8E8A82"

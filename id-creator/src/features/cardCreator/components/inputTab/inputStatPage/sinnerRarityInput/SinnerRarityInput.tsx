@@ -4,7 +4,7 @@ import "./RarityIconInput.css"
 import { useAppSelector, useAppDispatch } from "stores/AppStore";
 import { RARITIES } from "features/cardCreator/constants";
 import { idInfoSlice } from "features/cardCreator/stores/IdInfoSlice";
-import IconOptionPicker from "features/cardCreator/components/shared/iconOptionPicker/IconOptionPicker";
+import IconOptionPicker from "features/cardCreator/components/shared/IconOptionPicker";
 
 export default function SinnerRarityIconInput(): ReactElement {
     const currentRarity = useAppSelector(state => state.idInfo.value.rarity)

@@ -1,6 +1,6 @@
 import { appConfig } from "config/env.client";
 import { useMemo, useState } from "react";
-import "../SettingMenu.css"
+import "./SettingMenu.css"
 import { createSaveFile } from "features/cardCreator/utils/save/createSaveFile";
 import { sortSavesByTimeDesc } from "features/cardCreator/utils/save/sortSaves";
 import useSaveLocal, { LocalSave } from "features/cardCreator/hooks/useSaveLocal";

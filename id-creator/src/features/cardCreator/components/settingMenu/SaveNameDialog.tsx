@@ -1,7 +1,7 @@
 import { SubmitEvent, ReactElement, useId, useState } from "react";
 import PopUpMenu from "components/ui/popUpMenu/PopUpMenu";
 import "./SaveNameDialog.css"
-import "../SettingMenu.css"
+import "./SettingMenu.css"
 
 interface SaveNameDialogProps {
     open: boolean

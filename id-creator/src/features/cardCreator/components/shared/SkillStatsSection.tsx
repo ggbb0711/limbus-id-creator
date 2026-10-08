@@ -3,7 +3,7 @@ import { FieldErrors, Path } from "react-hook-form"
 import AccordionSection from "components/ui/accordionSection/AccordionSection"
 import { RegisterNumber } from "features/cardCreator/hooks/useNumberRegister"
 import { IActiveSkill } from "features/cardCreator/types/skills/activeSkill/IActiveSkill"
-import NumberField from "../numberField/NumberField"
+import NumberField from "./NumberField"
 
 type StatField = keyof Pick<IActiveSkill, "basePower" | "coinPow" | "coinNo" | "skillLevel" | "atkWeight" | "skillAmt">
 
