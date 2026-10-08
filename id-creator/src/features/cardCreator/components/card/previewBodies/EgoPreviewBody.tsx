@@ -11,7 +11,8 @@ export default function EgoPreviewBody({ info, skills }: PreviewBodyProps<IEgoIn
         {info.splashArt &&
             <div className="ego-splash-art-container">
                 <SplashArt variant="ego" splashArt={info.splashArt} splashArtScale={info.splashArtScale} splashArtTranslation={info.splashArtTranslation}/>
-            </div>}
+            </div>
+        }
         <div className="content-container">
             <div>
                 <EgoHeader title={info.title} name={info.name} egoLevel={info.egoLevel} sanityCost={info.sanityCost} sinnerColor={info.sinnerColor}/>

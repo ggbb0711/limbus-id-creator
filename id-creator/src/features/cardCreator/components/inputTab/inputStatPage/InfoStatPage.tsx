@@ -7,7 +7,7 @@ import AccordionSection from "components/ui/accordionSection/AccordionSection";
 import IconButton from "components/ui/iconButton/IconButton";
 import SinnerIconPicker from "./sinnerIconPicker/SinnerIconPicker";
 import SinnerSplashArtRepositionInput from "./sinnerSplashArtRepositionInput/SinnerSplashArtRepositionInput";
-import ImageUploadField from "features/cardCreator/components/shared/imageUploadField/ImageUploadField";
+import ImageUploadField from "features/cardCreator/components/shared/ImageUploadField";
 import ColorPicker from "features/cardCreator/components/colorPicker/ColorPicker";
 import { STAT_PAGE_COLOR_GROUPS } from "features/cardCreator/components/colorPicker/ColorPresets";
 import { useInfoForm } from "features/cardCreator/hooks/useInfoForm";

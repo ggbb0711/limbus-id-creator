@@ -2,7 +2,7 @@ import { getResistTier } from "features/cardCreator/utils/card/getResistTier";
 import React, { ReactElement } from "react";
 import "./SinResistant.css"
 import { SinRecord } from "features/cardCreator/constants";
-import { SinValueList } from "features/cardCreator/components/shared/sinNumberInputs/SinNumberInputs";
+import { SinValueList } from "features/cardCreator/components/shared/SinNumberInputs";
 import { assetPaths } from "features/cardCreator/utils/card/assetPaths";
 
 export default function SinResistant({ sinResistant }: { sinResistant: SinRecord }): ReactElement {

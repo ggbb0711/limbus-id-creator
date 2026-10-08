@@ -1,4 +1,4 @@
-import React, { FormEvent, ReactElement, useId, useState } from "react";
+import { SubmitEvent, ReactElement, useId, useState } from "react";
 import PopUpMenu from "components/ui/popUpMenu/PopUpMenu";
 import "./SaveNameDialog.css"
 import "../SettingMenu.css"
@@ -17,7 +17,7 @@ function SaveNameForm({ submitLabel, initialName, onSubmit, onClose }: Omit<Save
     const [name, setName] = useState(initialName)
     const trimmed = name.trim()
 
-    function submit(event: FormEvent) {
+    function submit(event: SubmitEvent) {
         event.preventDefault()
         if (!trimmed) return
         onSubmit(trimmed)

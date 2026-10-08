@@ -1,4 +1,3 @@
-import React from 'react'
 import { act, fireEvent, render, screen, within } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { makeStore } from 'stores/AppStore'

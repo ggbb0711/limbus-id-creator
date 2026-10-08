@@ -1,5 +1,5 @@
 import { appConfig } from "config/env.client";
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import "../SettingMenu.css"
 import { createSaveFile } from "features/cardCreator/utils/save/createSaveFile";
 import { sortSavesByTimeDesc } from "features/cardCreator/utils/save/sortSaves";
@@ -10,7 +10,7 @@ import ConfirmDialog from "components/ui/confirmDialog/ConfirmDialog";
 import { useAppSelector, useAppDispatch } from "stores/AppStore";
 import { useCardEditor } from "features/cardCreator/editors/CardEditorContext";
 import formatDisplayDate from "utils/formatDisplayDate";
-import SaveNameDialog from "../saveNameDialog/SaveNameDialog";
+import SaveNameDialog from "./SaveNameDialog";
 
 type NameDialog = { kind: "create" } | { kind: "rename", save: LocalSave }
 

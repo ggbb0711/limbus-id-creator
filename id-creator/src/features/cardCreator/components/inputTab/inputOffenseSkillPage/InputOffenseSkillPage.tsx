@@ -6,10 +6,10 @@ import AccordionSection from "components/ui/accordionSection/AccordionSection";
 import DamageTypeInput from "../components/damageTypeInput/DamageTypeInput";
 import SinAffinityInput from "../components/sinAffinityInput/SinAffinityInput";
 import SkillFrameInput from "../components/skillFrameInput/SkillFrameInput";
-import SkillPageShell from "features/cardCreator/components/shared/skillPageShell/SkillPageShell";
-import SkillStatsSection from "features/cardCreator/components/shared/skillStatsSection/SkillStatsSection";
-import ImageUploadField from "features/cardCreator/components/shared/imageUploadField/ImageUploadField";
-import EffectEditorField from "features/cardCreator/components/shared/effectEditorField/EffectEditorField";
+import SkillPageShell from "features/cardCreator/components/shared/SkillPageShell";
+import SkillStatsSection from "features/cardCreator/components/shared/SkillStatsSection";
+import ImageUploadField from "features/cardCreator/components/shared/ImageUploadField";
+import EffectEditorField from "features/cardCreator/components/shared/EffectEditorField";
 import { useSkillForm } from "features/cardCreator/hooks/useSkillForm";
 
 export default function InputOffenseSkillPage({ index, collapsePage }: { index: number, collapsePage: () => void }): ReactElement {

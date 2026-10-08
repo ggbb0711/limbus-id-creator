@@ -3,9 +3,9 @@ import React, { ReactElement } from "react";
 import "../InputPage.css"
 import "../inputStatPage/InputStatPage.css"
 import AccordionSection from "components/ui/accordionSection/AccordionSection";
-import SkillPageShell from "features/cardCreator/components/shared/skillPageShell/SkillPageShell";
-import SinNumberInputs from "features/cardCreator/components/shared/sinNumberInputs/SinNumberInputs";
-import EffectEditorField from "features/cardCreator/components/shared/effectEditorField/EffectEditorField";
+import SkillPageShell from "features/cardCreator/components/shared/SkillPageShell";
+import SinNumberInputs from "features/cardCreator/components/shared/SinNumberInputs";
+import EffectEditorField from "features/cardCreator/components/shared/EffectEditorField";
 import { useSkillForm } from "features/cardCreator/hooks/useSkillForm";
 
 export default function InputPassivePage({ index, collapsePage }: { index: number, collapsePage: () => void }): ReactElement {

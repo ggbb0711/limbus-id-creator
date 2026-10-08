@@ -4,7 +4,7 @@ import "./SinnerEgoIconInput.css"
 import { SINNERS } from "features/cardCreator/constants";
 import { useCardEditor } from "features/cardCreator/editors/CardEditorContext";
 import { useCardSelector } from "features/cardCreator/hooks/useCardInfo";
-import IconOptionPicker from "features/cardCreator/components/shared/iconOptionPicker/IconOptionPicker";
+import IconOptionPicker from "features/cardCreator/components/shared/IconOptionPicker";
 import { useAppDispatch } from "stores/AppStore";
 
 export default function SinnerIconPicker(): ReactElement {
