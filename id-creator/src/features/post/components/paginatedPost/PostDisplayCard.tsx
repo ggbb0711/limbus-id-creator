@@ -14,7 +14,7 @@ const MAX_CARD_TAGS = 3
 
 export function PostDisplayCard({ id, title, cardImg, userIcon, userName, userId, created, tags, viewCount, commentCount }: IPostDisplayCard) {
     return <div className="post-display-card">
-        <Link href={"/post/" + id} tabIndex={-1} aria-hidden="true">
+        <Link prefetch={false} href={"/post/" + id} tabIndex={-1} aria-hidden="true">
             <div className="post-display-card-img-container">
                 <Image className="post-display-card-img" src={cardImg} alt="" width={1440} height={1000} sizes="(max-width: 940px) 100vw, 580px" quality={90} />
             </div>
@@ -26,14 +26,14 @@ export function PostDisplayCard({ id, title, cardImg, userIcon, userName, userId
                 {tags.length > MAX_CARD_TAGS && <p className="post-display-meta-txt">({tags.length - MAX_CARD_TAGS} more)</p>}
             </div>
             <div className="center-element">
-                <Link href={"/user/" + userId} tabIndex={-1} aria-hidden="true">
+                <Link prefetch={false} href={"/user/" + userId} tabIndex={-1} aria-hidden="true">
                     <Image className="post-display-card-footer-author-icon" src={userIcon} alt="" width={40} height={40} />
                 </Link>
                 <div className="post-display-card-footer-description">
-                    <Link href={"/post/" + id} className="post-display-card-title">
+                    <Link prefetch={false} href={"/post/" + id} className="post-display-card-title">
                         <p>{title}</p>
                     </Link>
-                    <Link href={"/user/" + userId}>
+                    <Link prefetch={false} href={"/user/" + userId}>
                         <p className="post-display-card-footer-author-name">{userName}</p>
                     </Link>
                 </div>

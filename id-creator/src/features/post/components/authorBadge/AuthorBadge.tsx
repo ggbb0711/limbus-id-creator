@@ -12,7 +12,7 @@ interface AuthorBadgeProps {
 }
 
 export default function AuthorBadge({ userId, userName, userIcon, size, iconClassName }: AuthorBadgeProps): ReactElement {
-    return <Link href={`/user/${userId}`} className="center-element">
+    return <Link prefetch={false} href={`/user/${userId}`} className="center-element">
         <Image className={iconClassName} src={userIcon} alt="" width={size} height={size} />
         <span className="post-author-name">{userName}</span>
     </Link>

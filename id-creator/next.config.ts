@@ -11,12 +11,7 @@ const nextConfig: NextConfig = {
     '/**': ['./src/content/blog/**/*'],
   },
   images: {
-    qualities: [75, 90],
-    remotePatterns: [
-      { protocol: 'https', hostname: 'limbus-id-creator.s3.us-east-1.amazonaws.com' },
-      { protocol: 'https', hostname: 'res.cloudinary.com' },
-      { protocol: 'https', hostname: 'lh3.googleusercontent.com' },
-    ],
+    unoptimized: true,
   },
   async headers() {
     return [
@@ -27,10 +22,6 @@ const nextConfig: NextConfig = {
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
         ],
-      },
-      {
-        source: '/Images/:path*',
-        headers: [{ key: 'Cache-Control', value: 'public, max-age=604800, stale-while-revalidate=86400' }],
       },
     ]
   },

@@ -12,7 +12,7 @@ interface PostSidebarSectionProps {
 
 function SidebarPost({ post }: { post: IPostDisplayCard }): ReactElement {
     return <li>
-        <Link href={"/post/" + post.id} className="post-sidebar-item">
+        <Link prefetch={false} href={"/post/" + post.id} className="post-sidebar-item">
             {post.cardImg && <Image className="post-sidebar-thumb" src={post.cardImg} alt={post.title} width={96} height={67} sizes="96px" />}
             <div className="post-sidebar-item-txt">
                 <p className="post-sidebar-item-title">{post.title}</p>
@@ -27,7 +27,7 @@ function PostSidebarSection({ title, viewAllHref, posts }: PostSidebarSectionPro
     return <section className="post-sidebar-section" aria-labelledby={titleId}>
         <div className="post-sidebar-header">
             <h2 id={titleId} className="post-sidebar-title">{title}</h2>
-            <Link href={viewAllHref} className="post-sidebar-view-all">View all</Link>
+            <Link prefetch={false} href={viewAllHref} className="post-sidebar-view-all">View all</Link>
         </div>
         <ul className="post-sidebar-list">
             {posts.map((post) => <SidebarPost key={post.id} post={post} />)}
