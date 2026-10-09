@@ -18,6 +18,6 @@ export default function TagChip({ tag, href, className, iconClassName, iconSize,
         <p>{tag?.tagName}</p>
         {children}
     </>
-    if (href) return <Link href={href} className={className}>{content}</Link>
+    if (href) return <Link prefetch={false} href={href} className={className}>{content}</Link>
     return <div {...props} className={className}>{content}</div>
 }
