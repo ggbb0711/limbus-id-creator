@@ -51,6 +51,7 @@
     position: absolute;
     cursor: pointer;
     top: 45%;
+    z-index: 10;
 }
 
 .post-carousel-arrow.left{
@@ -68,6 +69,7 @@
     width: 100vw;
     height: 100vh;
     top: 0px;
+    left: 0px;
 }
 
 .image-pop-up{
@@ -81,18 +83,18 @@
     fill: white;
     cursor: pointer;
     padding: 4px;
-    rotate: 90deg;
     position: absolute;
     top: 45%;
-    transform: scale(1.2);
+    transform: scale(1.2) rotate3d(0, 0, 1, 90deg);
+    border: 1px white solid;
 }
 
 .image-pop-up-arrow.left{
-    left: 15px;
+    left: 25px;
 }
 
 .image-pop-up-arrow.right{
-    right: 15px;
+    right: 25px;
 }
 
 .image-pop-up-close{
