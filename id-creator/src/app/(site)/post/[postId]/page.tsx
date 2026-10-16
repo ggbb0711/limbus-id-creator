@@ -7,6 +7,9 @@ import PostPage from "features/post/postPage/PostPage";
 import PostSidebar from "features/post/components/postSidebar/PostSidebar";
 import { postMetadata } from "features/post/utils/postMetadata";
 import { appConfig } from "config/env.client";
+import { isUnavailable } from "api/server/serverFetch";
+import UnavailablePage from "components/unavailablePage/UnavailablePage";
+import { getUnavailableContent } from "components/unavailablePage/unavailableContent";
 
 const POSTS_PER_SIDEBAR_SECTION = 4
 
@@ -20,6 +23,7 @@ export async function generateMetadata({ params }: PageProps<"/post/[postId]">):
     const { postId } = await params
     const post = await getPost(postId)
     if (!post) return { title: "Post not found" }
+    if (isUnavailable(post)) return { title: getUnavailableContent(post.code).title, robots: { index: false } }
     return postMetadata(post)
 }
 
@@ -27,6 +31,7 @@ export default async function Page({ params }: PageProps<"/post/[postId]">) {
     const { postId } = await params
     const post = await getPost(postId)
     if (!post) notFound()
+    if (isUnavailable(post)) return <UnavailablePage code={post.code}/>
 
     const [initialComments, byAuthor] = await Promise.all([
         getFirstComments(postId, appConfig.paging.commentsPerPage),

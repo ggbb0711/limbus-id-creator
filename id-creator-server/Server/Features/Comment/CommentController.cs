@@ -28,7 +28,7 @@ namespace Server.Features.Comment
         {
             var sub = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
             if (!Guid.TryParse(sub, out var userId))
-                throw new UnauthorizedException("Invalid access token");
+                throw new UnauthorizedException(ApiErrors.InvalidAccessToken);
             var comment = mapper.Map<CommentModel>(commentRequestDTO);
             comment.UserId = userId;
             var createdComment = await commentService.CreateComment(comment);

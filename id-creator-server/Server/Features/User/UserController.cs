@@ -24,7 +24,9 @@ namespace Server.Features.User
         public async Task<ActionResult<ApiResponse<UserProfileResponseDTO>>> FindUser(Guid id)
         {
             var foundUser = await userService.GetUserById(id)
-                ?? throw new NotFoundException("Cannot find user.");
+                ?? throw new NotFoundException(ApiErrors.UserNotFound);
+            if (foundUser.IsBanned())
+                throw new GoneException(ApiErrors.UserBanned);
             
             var profile = mapper.Map<UserProfileResponseDTO>(foundUser);
             if(User.Identity?.IsAuthenticated == true)
@@ -46,12 +48,12 @@ namespace Server.Features.User
         [FromForm] UpdateUserProfileDTO updateUserProfileDTO)
         {
             var authResult = await authorizationService.AuthorizeAsync(User, new OwnedResource(id), "SameUser");
-            if (!authResult.Succeeded) throw new ForbiddenException("You are not logged in as this user");
+            if (!authResult.Succeeded) throw new ForbiddenException(ApiErrors.NotSameUser);
 
             var updatedUser = await userService.UpdateUser(id, updateUserProfileDTO);
 
             return updatedUser == null
-                ? throw new NotFoundException("User does not exist")
+                ? throw new NotFoundException(ApiErrors.UserNotFound)
                 : (ActionResult<ApiResponse<UserProfileResponseDTO>>)Ok(ApiResponse<UserProfileResponseDTO>.Ok(mapper.Map<UserProfileResponseDTO>(updatedUser)));
         }
     }

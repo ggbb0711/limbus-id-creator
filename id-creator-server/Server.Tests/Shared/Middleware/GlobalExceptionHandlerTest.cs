@@ -86,7 +86,7 @@ namespace Server.Tests.Shared.Middleware
             Assert.Equal("application/json; charset=utf-8", httpContext.Response.ContentType);
 
             var body = await ReadBodyAsync(httpContext);
-            Assert.Equivalent(ApiResponse<object>.Fail("Something went wrong with the server"), body);
+            Assert.Equivalent(ApiResponse<object>.Fail(ApiErrors.InternalError.Message, ApiErrors.InternalError.Code), body);
 
             logger.Verify(
                 l => l.Log(

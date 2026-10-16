@@ -22,7 +22,7 @@ namespace Server.Features.User.Service
                 Filter = u => u.UserEmail == googlePayload.Email
             })).FirstOrDefault();
 
-            if(user != null && (!user.IsActive || user.IsRemoved)) return null;
+            if(user != null && user.IsBanned()) return null;
 
             if(user ==null)
             {

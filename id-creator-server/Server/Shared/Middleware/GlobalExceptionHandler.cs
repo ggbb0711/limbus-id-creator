@@ -31,7 +31,7 @@ namespace Server.Shared.Middleware
             httpContext.Response.ContentType = "application/json";
             httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             await httpContext.Response.WriteAsJsonAsync(
-                ApiResponse<object>.Fail("Something went wrong with the server"), cancellationToken);
+                ApiResponse<object>.Fail(ApiErrors.InternalError.Message, ApiErrors.InternalError.Code), cancellationToken);
 
             return true;
         }

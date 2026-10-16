@@ -31,10 +31,10 @@ namespace Server.Features.SaveInfo
             [FromQuery] bool includeSkill=false)
         {
             var searchResult = await _savedInfoService.FindSavedInfoById(SaveId, includeSkill)
-                ?? throw new NotFoundException("Save does not exist");
+                ?? throw new NotFoundException(ApiErrors.SaveNotFound);
 
             var authResult = await _authorizationService.AuthorizeAsync(User, new OwnedResource(searchResult.UserId), "SameUser");
-            if (!authResult.Succeeded) throw new ForbiddenException("You do not own this resource.");
+            if (!authResult.Succeeded) throw new ForbiddenException(ApiErrors.ResourceNotOwned);
 
             return Ok(ApiResponse<SaveInfoResponseDTO<SavedEgoRequestDTO>>.Ok(
                 _mapper.Map<SaveInfoResponseDTO<SavedEgoRequestDTO>>(searchResult)));
@@ -49,7 +49,7 @@ namespace Server.Features.SaveInfo
             [FromQuery] int limit = 10)
         {
             var authResult = await _authorizationService.AuthorizeAsync(User, new OwnedResource(userId), "SameUser");
-            if (!authResult.Succeeded) throw new ForbiddenException("You do not own this resource.");
+            if (!authResult.Succeeded) throw new ForbiddenException(ApiErrors.ResourceNotOwned);
 
             var option = new SearchSaveParams()
             {
@@ -70,13 +70,13 @@ namespace Server.Features.SaveInfo
         public async Task<ActionResult<ApiResponse<SaveInfoResponseDTO<SavedEgoRequestDTO>>>> DeleteIDSave([FromBody] Guid SaveId)
         {
             var searchSave = await _savedInfoService.FindSavedInfoById(SaveId)
-                ?? throw new NotFoundException("Save does not exist");
+                ?? throw new NotFoundException(ApiErrors.SaveNotFound);
 
             var authResult = await _authorizationService.AuthorizeAsync(User, new OwnedResource(searchSave.UserId), "SameUser");
-            if (!authResult.Succeeded) throw new ForbiddenException("You do not own this resource.");
+            if (!authResult.Succeeded) throw new ForbiddenException(ApiErrors.ResourceNotOwned);
 
             var deletedSave = await _savedInfoService.DeleteSavedInfo(SaveId)
-                ?? throw new NotFoundException("Save does not exist");
+                ?? throw new NotFoundException(ApiErrors.SaveNotFound);
 
             return Ok(ApiResponse<SaveInfoResponseDTO<SavedEgoRequestDTO>>.Ok(
                 _mapper.Map<SaveInfoResponseDTO<SavedEgoRequestDTO>>(deletedSave), "Deletion successful"));
@@ -93,7 +93,7 @@ namespace Server.Features.SaveInfo
         {
             var sub = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
             if (!Guid.TryParse(sub, out var userId))
-                throw new UnauthorizedException("Invalid access token");
+                throw new UnauthorizedException(ApiErrors.InvalidAccessToken);
 
             var saveEGOInfo = _mapper.Map<SavedEGOInfo>(SaveData);
             saveEGOInfo.UserId = userId;
@@ -115,18 +115,18 @@ namespace Server.Features.SaveInfo
         {
             var sub = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
             if (!Guid.TryParse(sub, out var userId))
-                throw new UnauthorizedException("Invalid access token");
+                throw new UnauthorizedException(ApiErrors.InvalidAccessToken);
 
             var saveEGOInfo = _mapper.Map<SavedEGOInfo>(SaveData);
             saveEGOInfo.UserId = userId;
 
             var updatingSave = await _savedInfoService.FindSavedInfoById(saveEGOInfo.Id)
-                ?? throw new NotFoundException("Save does not exist");
+                ?? throw new NotFoundException(ApiErrors.SaveNotFound);
 
             var authResult = await _authorizationService.AuthorizeAsync(User, new OwnedResource(updatingSave.UserId), "SameUser");
-            if (!authResult.Succeeded) throw new ForbiddenException("You do not own this resource.");
+            if (!authResult.Succeeded) throw new ForbiddenException(ApiErrors.ResourceNotOwned);
 
-            var newSavedInfo = await _savedInfoService.UpdateSavedInfo(saveEGOInfo, files) ?? throw new NotFoundException("Cannot update save");
+            var newSavedInfo = await _savedInfoService.UpdateSavedInfo(saveEGOInfo, files) ?? throw new NotFoundException(ApiErrors.SaveUpdateFailed);
 
             return Ok(ApiResponse<SaveInfoResponseDTO<SavedEgoRequestDTO>>.Ok(
                 _mapper.Map<SaveInfoResponseDTO<SavedEgoRequestDTO>>(newSavedInfo), "Save has been updated"));

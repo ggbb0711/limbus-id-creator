@@ -162,6 +162,21 @@ namespace Server.Tests.Features.Auth
             await Assert.ThrowsAsync<UnauthorizedException>(() => controller.Status());
         }
 
+        [Theory]
+        [InlineData(false, false)]
+        [InlineData(true, true)]
+        public async Task Status_ThrowsUnauthorizedException_WhenUserBanned(bool isActive, bool isRemoved)
+        {
+            var userId = Guid.NewGuid();
+            var (oauth, userService, sessionService, cookieService, jwtService, mapper) = CreateMocks();
+            userService.Setup(s => s.GetUserById(userId))
+                .ReturnsAsync(new UserModel { Id = userId, IsActive = isActive, IsRemoved = isRemoved });
+
+            var controller = CreateController(oauth, userService, sessionService, cookieService, jwtService, mapper, userId);
+
+            await Assert.ThrowsAsync<UnauthorizedException>(() => controller.Status());
+        }
+
         [Fact]
         public async Task Status_ReturnsMappedProfile_WhenFound()
         {
@@ -193,7 +208,7 @@ namespace Server.Tests.Features.Auth
         }
 
         [Fact]
-        public async Task Google_ThrowsUnauthorizedAccessException_WhenLoginReturnsNull()
+        public async Task Google_ThrowsForbiddenExceptionWithBannedCode_WhenLoginReturnsNull()
         {
             var payload = new GoogleJsonWebSignature.Payload { Email = "user@example.com" };
             var (oauth, userService, sessionService, cookieService, jwtService, mapper) = CreateMocks();
@@ -202,7 +217,9 @@ namespace Server.Tests.Features.Auth
 
             var controller = CreateController(oauth, userService, sessionService, cookieService, jwtService, mapper);
 
-            await Assert.ThrowsAsync<UnauthorizedAccessException>(() => controller.Google("code"));
+            var exception = await Assert.ThrowsAsync<ForbiddenException>(() => controller.Google("code"));
+            Assert.Equal(ApiErrors.UserBanned.Code, exception.ErrorCode);
+            Assert.Equal(ApiErrors.UserBanned.Message, exception.Message);
         }
 
         [Fact]

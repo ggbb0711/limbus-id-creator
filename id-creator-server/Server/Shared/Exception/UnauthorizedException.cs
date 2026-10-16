@@ -2,6 +2,6 @@ using System.Net;
 
 namespace Server.Shared.Exception
 {
-    public class UnauthorizedException(string message) :
-    ApiException(message, HttpStatusCode.Unauthorized);
+    public class UnauthorizedException(ErrorInfo error) :
+    ApiException(error.Message, HttpStatusCode.Unauthorized, error.Code);
 }

@@ -79,7 +79,7 @@ builder.Services.Configure<ApiBehaviorOptions>(options=>
         var kvp = context.ModelState
             .First(kvp => kvp.Value?.Errors.Count>0);
         var message = string.Join(" ", kvp.Value!.Errors.Select(e=>e.ErrorMessage));
-        throw new Server.Shared.Exception.ValidationException("Validation failed: "+message);
+        throw new Server.Shared.Exception.ValidationException($"{Server.Shared.Exception.ApiErrors.ValidationFailed.Message}: {message}");
     };
 });
 

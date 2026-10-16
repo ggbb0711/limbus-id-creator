@@ -1,7 +1,7 @@
 import { isRejectedWithValue, type Middleware } from "@reduxjs/toolkit"
 import { reportError } from "utils/reportError"
 
-const EXPECTED_STATUSES = new Set<unknown>([401, 404])
+const EXPECTED_STATUSES = new Set<unknown>([401, 404, 410])
 
 interface RejectedApiAction {
     payload: unknown
