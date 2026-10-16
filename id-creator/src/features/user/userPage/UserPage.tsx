@@ -32,8 +32,8 @@ export default function UserPage({ initialUser }: { initialUser: Omit<IUserProfi
 
     const changePage = useCallback((page: number) => {
         const query = withPage(window.location.search, page)
-        router.push(query ? `${pathname}?${query}` : pathname, { scroll: false })
-    }, [pathname, router])
+        window.history.pushState(null, "", query ? `${pathname}?${query}` : pathname)
+    }, [pathname])
 
     async function logout() {
         try {

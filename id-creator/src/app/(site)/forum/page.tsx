@@ -9,7 +9,7 @@ import { getPosts } from "features/post/api/server/posts";
 import { appConfig } from "config/env.client";
 import ForumLoading from "./loading";
 
-export const revalidate = 60
+export const revalidate = 600
 
 export const metadata: Metadata = {
     title: "Forum",

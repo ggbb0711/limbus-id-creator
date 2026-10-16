@@ -7,10 +7,11 @@ import ForumPage from './ForumPage'
 
 const mockListeners = new Set<() => void>()
 const mockHistory: { mode: 'push' | 'replace', url: string }[] = []
+const realReplaceState = window.history.replaceState.bind(window.history)
 
 function mockNavigate(mode: 'push' | 'replace', url: string) {
     mockHistory.push({ mode, url })
-    window.history.replaceState(null, '', url)
+    realReplaceState(null, '', url)
     mockListeners.forEach(listener => listener())
 }
 
@@ -18,10 +19,6 @@ jest.mock('next/navigation', () => {
     const { useEffect, useReducer } = jest.requireActual<typeof import('react')>('react')
     return {
         usePathname: () => '/forum',
-        useRouter: () => ({
-            push: (url: string) => mockNavigate('push', url),
-            replace: (url: string) => mockNavigate('replace', url),
-        }),
         useSearchParams: () => {
             const [, rerender] = useReducer((n: number) => n + 1, 0)
             useEffect(() => {
@@ -39,7 +36,7 @@ jest.mock('features/post/hooks/usePaginatedPosts', () => ({
 }))
 
 function setup(search = '') {
-    window.history.replaceState(null, '', `/forum${search}`)
+    realReplaceState(null, '', `/forum${search}`)
     render(<Provider store={makeStore()}><ForumPage/></Provider>)
 }
 
@@ -49,10 +46,15 @@ describe('ForumPage URL state', () => {
     beforeEach(() => {
         jest.useFakeTimers()
         mockHistory.length = 0
+        jest.spyOn(window.history, 'pushState').mockImplementation((_data, _unused, url) => mockNavigate('push', String(url)))
+        jest.spyOn(window.history, 'replaceState').mockImplementation((_data, _unused, url) => mockNavigate('replace', String(url)))
         mockUsePaginatedPosts.mockReturnValue({ postList: [], maxCount: 0, pageSize: 10, isLoading: false, error: undefined, refetch: jest.fn() })
     })
 
-    afterEach(() => jest.useRealTimers())
+    afterEach(() => {
+        jest.useRealTimers()
+        jest.restoreAllMocks()
+    })
 
     it('keeps a sort change made while the search is debouncing', () => {
         setup()
