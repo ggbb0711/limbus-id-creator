@@ -31,6 +31,7 @@ namespace Server.Shared.Model
         public DateTime CreatedAt{get; set;} = DateTime.Now;
         public bool IsActive { get; set; } = true;
         public bool IsRemoved { get; set; } = false;
+        public bool IsBanned() => !IsActive || IsRemoved;
         public ICollection<Comment>? Comments { get; set;} = [];
         public ICollection<Post> Posts {get; set;} = [];
     }

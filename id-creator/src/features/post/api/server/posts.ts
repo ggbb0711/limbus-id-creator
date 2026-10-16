@@ -1,6 +1,6 @@
 import 'server-only'
 import { cache } from 'react'
-import { apiGet } from 'api/server/serverFetch'
+import { apiGet, apiGetOrUnavailable } from 'api/server/serverFetch'
 import { IPost } from 'features/post/types/IPost'
 import { IPostList } from 'features/post/types/IPostList'
 import { toPostDisplayCard } from 'features/post/utils/toPostDisplayCard'
@@ -14,7 +14,7 @@ import { reportError } from 'utils/reportError'
 // Note: the backend logs a view on GET /Post/{id}; the client still requests the post itself
 // (features/post/postPage/PostPage) so views keep being counted per user.
 export const getPost = cache((postId: string) =>
-    apiGet<IPost>(`/Post/${encodeURIComponent(postId)}`),
+    apiGetOrUnavailable<IPost>(`/Post/${encodeURIComponent(postId)}`),
 )
 
 const fetchPostPage = cache(async (query: string): Promise<Result<IPostList>> => {

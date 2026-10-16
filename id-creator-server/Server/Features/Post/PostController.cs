@@ -28,7 +28,7 @@ namespace Server.Features.Post
         {
             var sub = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
             if (!Guid.TryParse(sub, out var userId))
-                throw new UnauthorizedException("Invalid access token");
+                throw new UnauthorizedException(ApiErrors.InvalidAccessToken);
             var post = mapper.Map<PostModel>(newPost);
             post.UserId = userId;
             var addedPost = await postService.CreatePost(post);
@@ -42,7 +42,11 @@ namespace Server.Features.Post
             _ = Guid.TryParse(sub, out var userId);
             
             var foundPost = await postService.GetPostById(postId)
-                ?? throw new NotFoundException("Post does not exist");
+                ?? throw new NotFoundException(ApiErrors.PostNotFound);
+            if (foundPost.IsHidden())
+                throw new GoneException(ApiErrors.PostRemoved);
+            if (foundPost.User?.IsBanned() == true)
+                throw new GoneException(ApiErrors.PostAuthorBanned);
             var postResponse = mapper.Map<PostResponseDTO>(foundPost);
             postResponse.ViewCount = await postViewService.LogView(new PostView()
             {

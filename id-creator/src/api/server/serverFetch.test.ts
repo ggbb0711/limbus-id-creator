@@ -4,7 +4,7 @@ jest.mock('config/env.server', () => ({
     serverConfig: { apiRevalidateSeconds: 60, apiTimeoutMs: 50 },
 }))
 
-import { ApiError, apiGet } from './serverFetch'
+import { ApiError, apiGet, apiGetOrUnavailable, isUnavailable } from './serverFetch'
 
 const respond = (status: number, body: unknown) => ({ status, ok: status >= 200 && status < 300, json: async () => body })
 
@@ -58,5 +58,31 @@ describe('apiGet', () => {
             init.signal.addEventListener('abort', () => reject(init.signal.reason))
         }))
         await expect(apiGet('/Post', { timeoutMs: 10 })).rejects.toBeDefined()
+    })
+})
+
+describe('apiGetOrUnavailable', () => {
+    const fetchMock = jest.fn()
+
+    beforeAll(() => {
+        Object.defineProperty(globalThis, 'fetch', { configurable: true, writable: true, value: fetchMock })
+    })
+
+    beforeEach(() => fetchMock.mockReset())
+
+    it('returns an unavailable marker with the error code on 410', async () => {
+        fetchMock.mockResolvedValue(respond(410, { success: false, message: 'removed', errorCode: 'POST_REMOVED', data: null }))
+        const result = await apiGetOrUnavailable('/Post/p')
+        expect(result).toEqual({ unavailable: true, code: 'POST_REMOVED' })
+        expect(isUnavailable(result)).toBe(true)
+    })
+
+    it('behaves like apiGet otherwise', async () => {
+        fetchMock.mockResolvedValueOnce(respond(200, { success: true, data: { id: 'p' }, message: '' }))
+        const result = await apiGetOrUnavailable('/Post/p')
+        expect(result).toEqual({ id: 'p' })
+        expect(isUnavailable(result)).toBe(false)
+        fetchMock.mockResolvedValueOnce(respond(404, {}))
+        await expect(apiGetOrUnavailable('/Post/missing')).resolves.toBeNull()
     })
 })

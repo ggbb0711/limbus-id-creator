@@ -12,12 +12,16 @@ jest.mock('features/post/api/server/comments', () => ({ getFirstComments: jest.f
 jest.mock('features/post/postPage/PostPage', () => () => null)
 jest.mock('features/post/components/postSidebar/PostSidebar', () => () => null)
 
+import UnavailablePage from 'components/unavailablePage/UnavailablePage'
 import Page, { generateMetadata, generateStaticParams, revalidate } from './page'
 
 const params = (postId: string) => ({ params: Promise.resolve({ postId }) }) as never
 
 describe('post page', () => {
-    beforeEach(() => jest.mocked(getPost).mockReset())
+    beforeEach(() => {
+        jest.mocked(getPost).mockReset()
+        jest.mocked(notFound).mockClear()
+    })
 
     it('is rendered on demand and cached', () => {
         expect(generateStaticParams()).toEqual([])
@@ -33,5 +37,31 @@ describe('post page', () => {
     it('titles a missing post as not found', async () => {
         jest.mocked(getPost).mockResolvedValue(null)
         await expect(generateMetadata(params('missing'))).resolves.toEqual({ title: 'Post not found' })
+    })
+
+    it('renders the unavailable page for POST_REMOVED', async () => {
+        jest.mocked(getPost).mockResolvedValue({ unavailable: true, code: 'POST_REMOVED' })
+        const element = await Page(params('gone'))
+        expect(element.type).toBe(UnavailablePage)
+        expect(element.props).toEqual({ code: 'POST_REMOVED' })
+        expect(notFound).not.toHaveBeenCalled()
+    })
+
+    it('titles POST_REMOVED as Post removed and keeps it out of search', async () => {
+        jest.mocked(getPost).mockResolvedValue({ unavailable: true, code: 'POST_REMOVED' })
+        await expect(generateMetadata(params('gone'))).resolves.toEqual({ title: 'Post removed', robots: { index: false } })
+    })
+
+    it('renders the unavailable page for POST_AUTHOR_BANNED', async () => {
+        jest.mocked(getPost).mockResolvedValue({ unavailable: true, code: 'POST_AUTHOR_BANNED' })
+        const element = await Page(params('gone'))
+        expect(element.type).toBe(UnavailablePage)
+        expect(element.props).toEqual({ code: 'POST_AUTHOR_BANNED' })
+        expect(notFound).not.toHaveBeenCalled()
+    })
+
+    it('titles POST_AUTHOR_BANNED as Post unavailable and keeps it out of search', async () => {
+        jest.mocked(getPost).mockResolvedValue({ unavailable: true, code: 'POST_AUTHOR_BANNED' })
+        await expect(generateMetadata(params('gone'))).resolves.toEqual({ title: 'Post unavailable', robots: { index: false } })
     })
 })

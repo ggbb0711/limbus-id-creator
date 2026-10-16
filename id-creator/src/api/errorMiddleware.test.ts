@@ -25,10 +25,11 @@ describe('rtkQueryErrorReporter', () => {
         expect(reportError).toHaveBeenCalledWith({ status: 500, data: {} }, { context: 'api:failing' })
     })
 
-    it('does not report 401 or 404', async () => {
+    it('does not report 401, 404 or 410', async () => {
         const store = makeTestStore()
         await store.dispatch(TestApi.endpoints.failing.initiate(401))
         await store.dispatch(TestApi.endpoints.failing.initiate(404))
+        await store.dispatch(TestApi.endpoints.failing.initiate(410))
         expect(reportError).not.toHaveBeenCalled()
     })
 
@@ -40,6 +41,7 @@ describe('rtkQueryErrorReporter', () => {
     it('decides by status', () => {
         expect(shouldReportApiError({ status: 'CUSTOM_ERROR' })).toBe(true)
         expect(shouldReportApiError({ status: 401 })).toBe(false)
+        expect(shouldReportApiError({ status: 410 })).toBe(false)
         expect(shouldReportApiError(undefined)).toBe(true)
     })
 })

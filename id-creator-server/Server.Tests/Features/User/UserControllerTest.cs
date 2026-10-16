@@ -47,6 +47,25 @@ namespace Server.Tests.Features.User
             await Assert.ThrowsAsync<NotFoundException>(() => controller.FindUser(id));
         }
 
+        [Theory]
+        [InlineData(false, false)]
+        [InlineData(true, true)]
+        public async Task FindUser_ThrowsGoneExceptionWithBannedCode_WhenUserBanned(bool isActive, bool isRemoved)
+        {
+            var id = Guid.NewGuid();
+            var userService = new Mock<IUserService>();
+            var authorizationService = new Mock<IAuthorizationService>();
+            var mapper = new Mock<IMapper>();
+            userService.Setup(s => s.GetUserById(id))
+                .ReturnsAsync(new UserModel { Id = id, IsActive = isActive, IsRemoved = isRemoved });
+
+            var controller = CreateController(userService, authorizationService, mapper);
+
+            var exception = await Assert.ThrowsAsync<GoneException>(() => controller.FindUser(id));
+            Assert.Equal(ApiErrors.UserBanned.Code, exception.ErrorCode);
+            mapper.Verify(m => m.Map<UserProfileResponseDTO>(It.IsAny<UserModel>()), Times.Never);
+        }
+
         [Fact]
         public async Task FindUser_OwnedStaysFalse_WhenAnonymous()
         {

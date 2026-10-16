@@ -13,6 +13,7 @@ using Server.Shared.Exception;
 using Server.Shared.Http;
 using Server.Shared.Model;
 using PostModel = Server.Shared.Model.Post;
+using UserModel = Server.Shared.Model.User;
 
 namespace Server.Tests.Features.Post
 {
@@ -151,6 +152,44 @@ namespace Server.Tests.Features.Post
 
             postViewService.Verify(s => s.LogView(It.IsAny<PostView>()), Times.Never);
             commentService.Verify(s => s.GetCommentCount(It.IsAny<Guid>()), Times.Never);
+        }
+
+        [Theory]
+        [InlineData(true, true)]
+        [InlineData(false, false)]
+        public async Task GetPost_ThrowsGoneExceptionWithRemovedCode_WhenPostHidden(bool isRemoved, bool isActive)
+        {
+            var postId = Guid.NewGuid();
+            var foundPost = new PostModel { Id = postId, IsRemoved = isRemoved, IsActive = isActive };
+            var postService = new Mock<IPostService>();
+            var postViewService = new Mock<IPostViewService>();
+            var commentService = new Mock<ICommentService>();
+            var mapper = new Mock<IMapper>();
+            postService.Setup(s => s.GetPostById(postId)).ReturnsAsync(foundPost);
+
+            var controller = CreateController(postService, postViewService, commentService, mapper);
+
+            var exception = await Assert.ThrowsAsync<GoneException>(() => controller.GetPost(postId));
+            Assert.Equal(ApiErrors.PostRemoved.Code, exception.ErrorCode);
+            postViewService.Verify(s => s.LogView(It.IsAny<PostView>()), Times.Never);
+        }
+
+        [Fact]
+        public async Task GetPost_ThrowsGoneExceptionWithAuthorBannedCode_WhenAuthorBanned()
+        {
+            var postId = Guid.NewGuid();
+            var foundPost = new PostModel { Id = postId, User = new UserModel { IsActive = false } };
+            var postService = new Mock<IPostService>();
+            var postViewService = new Mock<IPostViewService>();
+            var commentService = new Mock<ICommentService>();
+            var mapper = new Mock<IMapper>();
+            postService.Setup(s => s.GetPostById(postId)).ReturnsAsync(foundPost);
+
+            var controller = CreateController(postService, postViewService, commentService, mapper);
+
+            var exception = await Assert.ThrowsAsync<GoneException>(() => controller.GetPost(postId));
+            Assert.Equal(ApiErrors.PostAuthorBanned.Code, exception.ErrorCode);
+            postViewService.Verify(s => s.LogView(It.IsAny<PostView>()), Times.Never);
         }
 
         [Fact]

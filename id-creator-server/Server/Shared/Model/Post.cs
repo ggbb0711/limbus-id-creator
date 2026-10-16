@@ -34,6 +34,7 @@ namespace Server.Shared.Model
         public int ViewCount { get; set; } = 0;
         public bool IsActive { get; set; } = true;
         public bool IsRemoved { get; set; } = false;
+        public bool IsHidden() => !IsActive || IsRemoved;
 
         [ForeignKey(nameof(User))]
         public Guid UserId { get; set; }

@@ -58,7 +58,7 @@ namespace Server.Tests.Features.SaveInfo
             var controller = new SaveEGOInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
 
             var ex = await Assert.ThrowsAsync<NotFoundException>(() => controller.GetSavedInfo(saveId, false));
-            Assert.Equal("Save does not exist", ex.Message);
+            Assert.Equal(ApiErrors.SaveNotFound.Code, ex.ErrorCode);
             authMock.Verify(a => a.AuthorizeAsync(It.IsAny<ClaimsPrincipal>(), It.IsAny<object>(), It.IsAny<string>()), Times.Never);
         }
 
@@ -79,7 +79,7 @@ namespace Server.Tests.Features.SaveInfo
             var controller = new SaveEGOInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
 
             var ex = await Assert.ThrowsAsync<ForbiddenException>(() => controller.GetSavedInfo(entry.Id, false));
-            Assert.Equal("You do not own this resource.", ex.Message);
+            Assert.Equal(ApiErrors.ResourceNotOwned.Code, ex.ErrorCode);
         }
 
         [Fact]
@@ -141,7 +141,7 @@ namespace Server.Tests.Features.SaveInfo
             var controller = new SaveEGOInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
 
             var ex = await Assert.ThrowsAsync<ForbiddenException>(() => controller.GetSavedInfos(Guid.NewGuid(), "", 0, 10));
-            Assert.Equal("You do not own this resource.", ex.Message);
+            Assert.Equal(ApiErrors.ResourceNotOwned.Code, ex.ErrorCode);
             serviceMock.Verify(s => s.FindSavedInfos(It.IsAny<SearchSaveParams>()), Times.Never);
         }
 
@@ -215,7 +215,7 @@ namespace Server.Tests.Features.SaveInfo
             var controller = new SaveEGOInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
 
             var ex = await Assert.ThrowsAsync<NotFoundException>(() => controller.DeleteIDSave(saveId));
-            Assert.Equal("Save does not exist", ex.Message);
+            Assert.Equal(ApiErrors.SaveNotFound.Code, ex.ErrorCode);
             serviceMock.Verify(s => s.DeleteSavedInfo(It.IsAny<Guid>()), Times.Never);
         }
 
@@ -236,7 +236,7 @@ namespace Server.Tests.Features.SaveInfo
             var controller = new SaveEGOInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
 
             var ex = await Assert.ThrowsAsync<ForbiddenException>(() => controller.DeleteIDSave(entry.Id));
-            Assert.Equal("You do not own this resource.", ex.Message);
+            Assert.Equal(ApiErrors.ResourceNotOwned.Code, ex.ErrorCode);
             serviceMock.Verify(s => s.DeleteSavedInfo(It.IsAny<Guid>()), Times.Never);
         }
 
@@ -258,7 +258,7 @@ namespace Server.Tests.Features.SaveInfo
             var controller = new SaveEGOInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
 
             var ex = await Assert.ThrowsAsync<NotFoundException>(() => controller.DeleteIDSave(entry.Id));
-            Assert.Equal("Save does not exist", ex.Message);
+            Assert.Equal(ApiErrors.SaveNotFound.Code, ex.ErrorCode);
         }
 
         [Fact]
@@ -301,7 +301,7 @@ namespace Server.Tests.Features.SaveInfo
 
             var ex = await Assert.ThrowsAsync<UnauthorizedException>(() =>
                 controller.CreateNewEGOSave(new SaveInfoFilesRequestDTO(), CreateRequestDto()));
-            Assert.Equal("Invalid access token", ex.Message);
+            Assert.Equal(ApiErrors.InvalidAccessToken.Code, ex.ErrorCode);
             serviceMock.Verify(s => s.CreateSavedInfo(It.IsAny<SavedEGOInfo>(), It.IsAny<SaveInfoFilesRequestDTO>()), Times.Never);
         }
 
@@ -317,7 +317,7 @@ namespace Server.Tests.Features.SaveInfo
 
             var ex = await Assert.ThrowsAsync<UnauthorizedException>(() =>
                 controller.CreateNewEGOSave(new SaveInfoFilesRequestDTO(), CreateRequestDto()));
-            Assert.Equal("Invalid access token", ex.Message);
+            Assert.Equal(ApiErrors.InvalidAccessToken.Code, ex.ErrorCode);
             serviceMock.Verify(s => s.CreateSavedInfo(It.IsAny<SavedEGOInfo>(), It.IsAny<SaveInfoFilesRequestDTO>()), Times.Never);
         }
 
@@ -365,7 +365,7 @@ namespace Server.Tests.Features.SaveInfo
 
             var ex = await Assert.ThrowsAsync<UnauthorizedException>(() =>
                 controller.UpdateSave(new SaveInfoFilesRequestDTO(), CreateRequestDto()));
-            Assert.Equal("Invalid access token", ex.Message);
+            Assert.Equal(ApiErrors.InvalidAccessToken.Code, ex.ErrorCode);
             serviceMock.Verify(s => s.UpdateSavedInfo(It.IsAny<SavedEGOInfo>(), It.IsAny<SaveInfoFilesRequestDTO>()), Times.Never);
         }
 
@@ -381,7 +381,7 @@ namespace Server.Tests.Features.SaveInfo
 
             var ex = await Assert.ThrowsAsync<UnauthorizedException>(() =>
                 controller.UpdateSave(new SaveInfoFilesRequestDTO(), CreateRequestDto()));
-            Assert.Equal("Invalid access token", ex.Message);
+            Assert.Equal(ApiErrors.InvalidAccessToken.Code, ex.ErrorCode);
             serviceMock.Verify(s => s.UpdateSavedInfo(It.IsAny<SavedEGOInfo>(), It.IsAny<SaveInfoFilesRequestDTO>()), Times.Never);
         }
 
@@ -406,7 +406,7 @@ namespace Server.Tests.Features.SaveInfo
 
             var ex = await Assert.ThrowsAsync<NotFoundException>(() =>
                 controller.UpdateSave(new SaveInfoFilesRequestDTO(), request));
-            Assert.Equal("Save does not exist", ex.Message);
+            Assert.Equal(ApiErrors.SaveNotFound.Code, ex.ErrorCode);
             serviceMock.Verify(s => s.UpdateSavedInfo(It.IsAny<SavedEGOInfo>(), It.IsAny<SaveInfoFilesRequestDTO>()), Times.Never);
         }
 
@@ -438,7 +438,7 @@ namespace Server.Tests.Features.SaveInfo
 
             var ex = await Assert.ThrowsAsync<ForbiddenException>(() =>
                 controller.UpdateSave(new SaveInfoFilesRequestDTO(), request));
-            Assert.Equal("You do not own this resource.", ex.Message);
+            Assert.Equal(ApiErrors.ResourceNotOwned.Code, ex.ErrorCode);
 
             var ownedResource = Assert.IsType<OwnedResource>(authorizedResource);
             Assert.Equal(foundEntity.UserId, ownedResource.UserId);
@@ -470,7 +470,7 @@ namespace Server.Tests.Features.SaveInfo
             controller.ControllerContext.HttpContext = new DefaultHttpContext { User = CreatePrincipal(userId.ToString()) };
 
             var ex = await Assert.ThrowsAsync<NotFoundException>(() => controller.UpdateSave(files, request));
-            Assert.Equal("Cannot update save", ex.Message);
+            Assert.Equal(ApiErrors.SaveUpdateFailed.Code, ex.ErrorCode);
         }
 
         [Fact]
