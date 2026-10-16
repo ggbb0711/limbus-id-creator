@@ -20,7 +20,7 @@ const staticRoutes: { path: string, changeFrequency: MetadataRoute.Sitemap[numbe
 ]
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const result = await getLatestPosts(serverConfig.sitemapPostCount)
+    const result = await getLatestPosts(serverConfig.sitemapPostCount, serverConfig.apiRevalidateSeconds)
     const posts = result.ok ? result.data.list : []
     return [
         ...staticRoutes.map(({ path, changeFrequency, priority }) => ({ url: `${siteUrl}${path}`, changeFrequency, priority })),

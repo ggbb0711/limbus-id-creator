@@ -7,7 +7,7 @@ import { isUnavailable } from "api/server/serverFetch";
 import UnavailablePage from "components/unavailablePage/UnavailablePage";
 import { getUnavailableContent } from "components/unavailablePage/unavailableContent";
 
-export const revalidate = 60
+export const revalidate = 3600
 
 export function generateStaticParams() {
     return []

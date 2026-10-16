@@ -25,7 +25,7 @@ describe('post page', () => {
 
     it('is rendered on demand and cached', () => {
         expect(generateStaticParams()).toEqual([])
-        expect(revalidate).toBe(60)
+        expect(revalidate).toBe(3600)
     })
 
     it('calls notFound for a missing post', async () => {

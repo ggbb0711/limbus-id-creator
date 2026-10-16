@@ -4,7 +4,7 @@ import { appConfig } from "config/env.client";
 import { useCallback, useEffect, useState } from "react";
 import { ReactElement } from "react";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { InitialPostPage, PaginatedPost, PostSortOption, TagInput, TagList, TagsContainer, tagKeyOf, usePaginatedPosts } from "features/post";
 import "./ForumPage.css"
 import DropDown, { DropDownOption } from "components/ui/dropDown/DropDown";
@@ -26,7 +26,6 @@ const SORT_OPTIONS: DropDownOption<PostSortOption>[] = (Object.keys(SORT_LABELS)
 type HistoryMode = "push" | "replace"
 
 export default function ForumPage({ initialPosts }: { initialPosts?: InitialPostPage }): ReactElement {
-    const router = useRouter()
     const pathname = usePathname()
     const searchParams = useSearchParams()
     const { q: urlSearch, tagKeys, sort: sortedBy, page: currPage } = parseForumParams(searchParams)
@@ -44,9 +43,9 @@ export default function ForumPage({ initialPosts }: { initialPosts?: InitialPost
     const updateQuery = useCallback((next: ForumQueryUpdate, mode: HistoryMode = "push") => {
         const query = buildForumQuery(window.location.search, next)
         const url = query ? `${pathname}?${query}` : pathname
-        if (mode === "push") router.push(url, { scroll: false })
-        else router.replace(url, { scroll: false })
-    }, [pathname, router])
+        if (mode === "push") window.history.pushState(null, "", url)
+        else window.history.replaceState(null, "", url)
+    }, [pathname])
 
     const debouncedSearch = useDebouncedValue(searchPostName, appConfig.timing.searchDebounceMs)
 

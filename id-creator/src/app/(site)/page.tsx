@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     alternates: { canonical: "/" },
 }
 
-export const revalidate = 60
+export const revalidate = 600
 
 export default async function Page() {
     const result = await getLatestPosts(serverConfig.homeLatestPosts)

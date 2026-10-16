@@ -28,7 +28,7 @@ describe('forum page', () => {
     })
 
     it('is statically cached and revalidated', () => {
-        expect(revalidate).toBe(60)
+        expect(revalidate).toBe(600)
     })
 
     it('fetches only the default listing on the server', async () => {
