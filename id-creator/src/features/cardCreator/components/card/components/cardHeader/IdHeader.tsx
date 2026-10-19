@@ -1,12 +1,13 @@
 import React, { ReactElement } from "react";
 import "./CardHeader.css"
+import { TraitTagValue } from "features/cardCreator/types/IIdInfo";
 
 interface IdHeaderProps {
     title: string
     name: string
     sinnerColor: string
     rarity: string
-    traits: string[]
+    traits: TraitTagValue[]
 }
 
 export default function IdHeader({title, name, sinnerColor, rarity, traits}: IdHeaderProps):ReactElement{
@@ -19,7 +20,7 @@ export default function IdHeader({title, name, sinnerColor, rarity, traits}: IdH
                 {traits.length > 0 && (
                     <div className="traits-container">
                         {traits.map((trait, i) => (
-                            <span key={i} className="trait-badge">{trait}</span>
+                            <span key={i} className={`trait-badge ${trait.crossed?"crossed":""}`}>{trait.value}</span>
                         ))}
                     </div>
                 )}

@@ -3,8 +3,13 @@ import { createDefenseSkill } from "./skills/defenseSkill/IDefenseSkill"
 import { createOffenseSkill } from "./skills/offenseSkill/IOffenseSkill"
 import { createPassiveSkill } from "./skills/passiveSkill/IPassiveSkill"
 
+export interface TraitTagValue {
+    value: string
+    crossed: boolean
+}
+
 export interface IIdInfo extends ICardInfoBase {
-    traits: string[]
+    traits: TraitTagValue[]
     hp: number
     minSpeed: number
     maxSpeed: number

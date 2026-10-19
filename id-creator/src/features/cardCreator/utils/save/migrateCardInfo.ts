@@ -2,12 +2,12 @@ import { z } from "zod"
 import { EGO_LEVELS, SinRecord, createSinRecord, SIN_KEYS } from "features/cardCreator/constants"
 import { ICardInfoBase } from "features/cardCreator/types/ICardInfoBase"
 import { IEgoInfo, createEgoInfo } from "features/cardCreator/types/IEgoInfo"
-import { IIdInfo, createIdInfo } from "features/cardCreator/types/IIdInfo"
+import { IIdInfo, TraitTagValue, createIdInfo } from "features/cardCreator/types/IIdInfo"
 import { ISaveFile } from "features/cardCreator/types/ISaveFile"
 import { SkillDetail } from "features/cardCreator/types/SkillDetail"
 import { getSkillData, isKnownSkillType } from "features/cardCreator/skills/skillData"
 
-export const CURRENT_SCHEMA_VERSION = 2
+export const CURRENT_SCHEMA_VERSION = 3
 
 type Raw = Record<string, unknown>
 
@@ -23,6 +23,15 @@ function withoutIndex(skill: Raw): Raw {
     const copy = { ...skill }
     delete copy.index
     return copy
+}
+
+export function migrateTraits(raw: unknown): TraitTagValue[] {
+    if (!Array.isArray(raw)) return []
+    return raw.flatMap((trait): TraitTagValue[] => {
+        if (typeof trait === "string") return [{ value: trait, crossed: false }]
+        if (isRecord(trait) && typeof trait.value === "string") return [{ value: trait.value, crossed: trait.crossed === true }]
+        return []
+    })
 }
 
 export function migrateSkills(raw: unknown): SkillDetail[] {
@@ -66,7 +75,7 @@ export function migrateIdInfo(raw: unknown): IIdInfo {
     const defaults = createIdInfo()
     const schema = z.object({
         ...baseShape(defaults),
-        traits: z.array(z.unknown()).transform(traits => traits.filter((trait): trait is string => typeof trait === "string")).catch([]),
+        traits: z.array(z.unknown()).transform(migrateTraits).catch([]),
         hp: num(defaults.hp),
         minSpeed: num(defaults.minSpeed),
         maxSpeed: num(defaults.maxSpeed),

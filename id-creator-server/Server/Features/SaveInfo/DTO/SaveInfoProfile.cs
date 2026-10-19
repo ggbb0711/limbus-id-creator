@@ -64,6 +64,7 @@ namespace Server.Features.SaveInfo.DTO
             CreateMap<SavedIDRequestDTO, SavedId>()
                 .ForMember(d => d.SplashArt, opt => opt.MapFrom(s => new ImageObj { Id = Guid.NewGuid(), Url = s.SplashArt }))
                 .ForMember(d => d.SinnerIcon, opt => opt.MapFrom(s => new ImageObj { Id = Guid.NewGuid(), Url = s.SinnerIcon }))
+                .ForMember(d => d.Traits, opt => opt.MapFrom(s => s.Traits.Select(TraitCodec.Encode).ToList()))
                 .ForMember(d => d.Id, opt => opt.Ignore())
                 .ForMember(d => d.SavedSkillId, opt => opt.Ignore())
                 .ForMember(d => d.Skill, opt => opt.Ignore())
@@ -77,6 +78,7 @@ namespace Server.Features.SaveInfo.DTO
                 .ReverseMap()
                     .ForMember(d => d.SplashArt, opt => opt.MapFrom(s => s.SplashArt.Url))
                     .ForMember(d => d.SinnerIcon, opt => opt.MapFrom(s => s.SinnerIcon.Url))
+                    .ForMember(d => d.Traits, opt => opt.MapFrom(s => s.Traits.Select(TraitCodec.Decode).ToList()))
                     .ForMember(d => d.SkillDetails, opt => opt.MapFrom((s,_,_,ctx) => MapSkillRequest(s.Skill, ctx.Mapper)));
 
             CreateMap<SavedEGOInfo,SaveInfoResponseDTO<SavedEgoRequestDTO>>()

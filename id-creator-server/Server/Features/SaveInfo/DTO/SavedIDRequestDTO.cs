@@ -22,7 +22,7 @@ namespace Server.Features.SaveInfo.DTO
         public double PierceResistant { get; set; }
         public double BluntResistant { get; set; }
         public string Rarity { get; set; } = "";
-        public List<string> Traits { get; set; } = [];
+        public List<TraitTagDTO> Traits { get; set; } = [];
         public required List<SkillRequestBase> SkillDetails { get; set; }
     }
 
