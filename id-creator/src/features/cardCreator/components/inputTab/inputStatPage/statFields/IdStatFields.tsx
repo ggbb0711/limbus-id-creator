@@ -1,7 +1,7 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useRef } from "react";
 import "./IdStatFields.css"
 import { appConfig } from "config/env.client";
-import { canAddTag } from "utils/canAddTag";
+import { ReactTagsAPI } from "react-tag-autocomplete";
 import AddIcon from "assets/icons/AddIcon";
 import AccordionSection from "components/ui/accordionSection/AccordionSection";
 import TraitInput from "./TraitInput";
@@ -20,16 +20,8 @@ const StatLabel = ({ icon, alt, text }: { icon: string, alt: string, text: strin
 export function IdGeneralFields({ form }: StatFieldsProps<IIdInfo>): ReactElement {
     const { setValue, watch } = form
     const traits = watch("traits") ?? []
-    const [traitInput, setTraitInput] = useState("")
+    const traitInputRef = useRef<ReactTagsAPI>(null)
     const maxTraits = appConfig.limits.card.maxTraits
-
-    function handleAddTrait() {
-        const trimmed = traitInput.trim()
-        if (canAddTag(traits, trimmed, maxTraits)) {
-            setValue("traits", [...traits, trimmed])
-            setTraitInput("")
-        }
-    }
 
     return <>
         <div>
@@ -38,19 +30,17 @@ export function IdGeneralFields({ form }: StatFieldsProps<IIdInfo>): ReactElemen
         </div>
         <div className="input-group-container">
             <div className="input-container">
-                <label className="input-label" htmlFor="traits">Traits: ({traits.length}/{maxTraits})</label>
+                <label className="input-label" htmlFor="traits-input">Traits: ({traits.length}/{maxTraits})</label>
                 <div className="trait-input-row">
                     <TraitInput
+                        id="traits"
+                        apiRef={traitInputRef}
                         value={traits}
                         onChange={(newTags) => setValue("traits", newTags)}
                         maxTags={maxTraits}
-                        inputValue={traitInput}
-                        onChangeInput={setTraitInput}
-                        inputProps={{ placeholder: "Add trait...", id: "traits" }}
-                        className="input stat-page-input-border trait-input"
-                        tagClassName="trait-tab"
+                        placeholder="Add trait..."
                     />
-                    <button type="button" className="main-button trait-add-btn" onClick={handleAddTrait} disabled={traits.length >= maxTraits} aria-label="Add trait">
+                    <button type="button" className="main-button trait-add-btn" onClick={() => traitInputRef.current?.select()} disabled={traits.length >= maxTraits} aria-label="Add trait">
                         <AddIcon/>
                     </button>
                 </div>

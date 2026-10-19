@@ -62,6 +62,7 @@ builder.Services.AddControllers(options=>
     .AddJsonOptions(options=>{
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
         options.JsonSerializerOptions.Converters.Add(new SkillRequestBaseSystemTextJsonConverter());
+        options.JsonSerializerOptions.Converters.Add(new TraitTagSystemTextJsonConverter());
     });
 builder.Services.AddSwaggerGen();
 if(env.Mode.Equals("Published")) builder.Services.AddDbContext<ServerDbContext>(options =>options.UseNpgsql(

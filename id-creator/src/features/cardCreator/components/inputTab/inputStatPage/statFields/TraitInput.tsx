@@ -1,45 +1,74 @@
+import React, { ReactElement, Ref } from "react";
+import { ClassNames, ReactTags, ReactTagsAPI, Tag } from "react-tag-autocomplete";
 import { canAddTag } from "utils/canAddTag";
-import React, { KeyboardEvent, ReactElement, useRef } from "react";
+import { TraitTagValue } from "features/cardCreator/types/IIdInfo";
+import TraitTag from "./TraitTag";
 
-// Replaces react-tagsinput (React <= 18 only) with the same DOM, so the existing trait styles still apply.
-// Enter/Tab adds the typed trait, Backspace on an empty input removes the last one.
-export default function TraitInput({value,onChange,inputValue,onChangeInput,maxTags,className,tagClassName,inputProps}:{
-    value:string[],
-    onChange:(tags:string[])=>void,
-    inputValue:string,
-    onChangeInput:(value:string)=>void,
-    maxTags:number,
-    className?:string,
-    tagClassName?:string,
-    inputProps?:React.InputHTMLAttributes<HTMLInputElement>,
+const classNames: ClassNames = {
+    root: "input stat-page-input-border trait-input",
+    rootIsActive: "is-active",
+    rootIsDisabled: "is-disabled",
+    rootIsInvalid: "is-invalid",
+    label: "visually-hidden",
+    tagList: "trait-tag-list",
+    tagListItem: "trait-tag-list-item",
+    tag: "trait-tab",
+    tagName: "trait-tab-name",
+    comboBox: "trait-combobox",
+    input: "trait-text-input",
+    listBox: "trait-listbox",
+    option: "trait-listbox-option",
+    optionIsActive: "is-active",
+    highlight: "trait-listbox-highlight",
+}
+
+export default function TraitInput({id,value,onChange,maxTags,placeholder,apiRef}:{
+    id: string,
+    value: TraitTagValue[],
+    onChange: (tags: TraitTagValue[]) => void,
+    maxTags: number,
+    placeholder?: string,
+    apiRef?: Ref<ReactTagsAPI>,
 }):ReactElement{
-    const inputRef = useRef<HTMLInputElement>(null)
+    const selected: Tag[] = value.map(trait => ({ value: trait.value, label: trait.value }))
 
-    function addTag():boolean{
-        const tag = inputValue.trim()
-        if(!canAddTag(value, tag, maxTags)) return false
-        onChange([...value, tag])
-        onChangeInput("")
-        return true
+    function handleValidate(text: string){
+        return canAddTag(value.map(trait => trait.value), text.trim(), maxTags)
     }
 
-    function handleKeyDown(e:KeyboardEvent<HTMLInputElement>){
-        if(e.key === "Enter" || e.key === "Tab"){
-            const added = addTag()
-            if(added || e.key === "Enter") e.preventDefault()
-        }
-        else if(e.key === "Backspace" && inputValue === "" && value.length > 0){
-            e.preventDefault()
-            onChange(value.slice(0, -1))
-        }
+    function handleAdd(tag: Tag){
+        const trimmed = tag.label.trim()
+        if(!handleValidate(trimmed)) return
+        onChange([...value, { value: trimmed, crossed: false }])
     }
 
-    return <div className={className} onClick={(e)=>{
-        if(e.target === e.currentTarget || (e.target as HTMLElement).parentElement === e.currentTarget) inputRef.current?.focus()
-    }}>
-        <span>
-            {value.map((tag)=><span key={tag} className={tagClassName}>{tag}</span>)}
-            <input ref={inputRef} type="text" value={inputValue} onChange={(e)=>onChangeInput(e.target.value)} onKeyDown={handleKeyDown} {...inputProps}/>
-        </span>
-    </div>
+    function handleDelete(index: number){
+        onChange(value.filter((_, i) => i !== index))
+    }
+
+    function toggleCrossed(traitValue: string){
+        onChange(value.map(trait => trait.value === traitValue ? { ...trait, crossed: !trait.crossed } : trait))
+    }
+
+    return <ReactTags
+        ref={apiRef}
+        id={id}
+        labelText="Traits"
+        selected={selected}
+        suggestions={[]}
+        allowNew
+        activateFirstOption
+        delimiterKeys={["Enter"]}
+        onAdd={handleAdd}
+        onDelete={handleDelete}
+        onValidate={handleValidate}
+        placeholderText={placeholder}
+        renderListBox={()=><></>}
+        classNames={classNames}
+        renderTag={({ tag, classNames, onClick, "aria-disabled": disabled }) => {
+            const trait = value.find(t => t.value === tag.label) ?? { value: tag.label, crossed: false }
+            return <TraitTag className={classNames.tag} trait={trait} disabled={disabled === true}
+                updateCrossedTag={() => toggleCrossed(trait.value)} removeTag={onClick}/>
+        }}
+    />
 }

@@ -44,6 +44,11 @@ namespace Server.Tests.Features.SaveInfo.DTO
                     SplashArt = SplashArtUrl,
                     SplashArtTranslation = new SplashArtTranslationObj(),
                     SinnerIcon = SinnerIconUrl,
+                    Traits =
+                    [
+                        new TraitTagDTO { Value = "Plain" },
+                        new TraitTagDTO { Value = "Gone", Crossed = true },
+                    ],
                     SkillDetails =
                     [
                         new RequestPassiveSkill { InputId = _passiveInputId, Index = 0, Type = SkillType.PassiveSkill },
@@ -64,6 +69,18 @@ namespace Server.Tests.Features.SaveInfo.DTO
             expected.Id = actual.Id;
             expected.LastUpdated = actual.LastUpdated;
             expected.Status = actual.Status;
+        }
+
+        [Fact]
+        public void ForwardMap_EncodesTraits_AsStrings() =>
+            Assert.Equal(["""{"value":"Plain","crossed":false}""", """{"value":"Gone","crossed":true}"""], _entity.Saved.Traits);
+
+        [Fact]
+        public void RoundTrip_RestoresTraits_WithCrossedState()
+        {
+            Assert.Collection(_response.SaveInfo.Traits,
+                t => { Assert.Equal("Plain", t.Value); Assert.False(t.Crossed); },
+                t => { Assert.Equal("Gone", t.Value); Assert.True(t.Crossed); });
         }
 
         [Fact]

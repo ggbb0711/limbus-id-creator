@@ -62,8 +62,12 @@ describe('migrateIdInfo', () => {
         expect(info.rarity).toBe('/Images/rarity/3.webp')
     })
 
-    it('keeps only string traits and handles undefined', () => {
-        expect(migrateIdInfo({ traits: ['a', 3, null, 'b'] }).traits).toEqual(['a', 'b'])
+    it('converts string traits to objects, keeps valid objects and handles undefined', () => {
+        expect(migrateIdInfo({ traits: ['a', 3, null, { value: 'b', crossed: true }, { value: 5 }, { value: 'c' }] }).traits).toEqual([
+            { value: 'a', crossed: false },
+            { value: 'b', crossed: true },
+            { value: 'c', crossed: false },
+        ])
         expect(migrateIdInfo({ traits: undefined }).traits).toEqual([])
     })
 
