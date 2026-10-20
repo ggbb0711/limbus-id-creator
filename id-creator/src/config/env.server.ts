@@ -7,7 +7,6 @@ function required(name: string): string {
     return value
 }
 
-// Server-only values. Importing this from a client component fails the build.
 export const serverEnv = {
     get apiUrl() { return required("API_URL") },
 }

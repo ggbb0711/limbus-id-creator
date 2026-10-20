@@ -54,7 +54,7 @@ export default function TipTapEditor({ inputId, content, changeHandler, matchLis
                 suggestion: {
                     char: "[",
                     allowSpaces: false,
-                    items: ({ query }) => filterKeywordSuggestions(matchListRef.current, query),
+                    items: ({ query }) => filterKeywordSuggestions(matchListRef.current, query, 100),
                     command: ({ editor: cmdEditor, range, props: itemProps }) => {
                         cmdEditor
                             .chain()
