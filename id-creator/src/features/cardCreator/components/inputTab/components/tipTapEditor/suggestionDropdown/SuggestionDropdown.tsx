@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react"
+import React, { forwardRef, ReactElement, useEffect, useImperativeHandle, useRef, useState } from "react"
 import "./SuggestionDropdown.css"
 import { sanitizeCardHtml } from "utils/htmlUtils"
 
@@ -19,9 +19,19 @@ interface SuggestionDropdownProps {
 const SuggestionDropdown = forwardRef<SuggestionDropdownRef, SuggestionDropdownProps>(
     ({ items, command }, ref) => {
         const [selectedIndex, setSelectedIndex] = useState(0)
+        const suggestionRefs = useRef<HTMLDivElement[]>([]);
+        
+        
+        function addToRefs(el: HTMLDivElement){
+            if (el && !suggestionRefs.current.includes(el)) {
+                suggestionRefs.current.push(el)
+            }
+        }
+
 
         useEffect(() => {
             setSelectedIndex(0)
+            suggestionRefs.current = []
         }, [items])
 
         useImperativeHandle(ref, () => ({
@@ -48,6 +58,14 @@ const SuggestionDropdown = forwardRef<SuggestionDropdownRef, SuggestionDropdownP
             },
         }))
 
+        useEffect(()=>{
+            suggestionRefs.current[selectedIndex]?.scrollIntoView({
+                block: "end",
+                inline: "nearest",
+                behavior: "smooth"
+            });
+        },[selectedIndex])
+
         if (items.length === 0) return null
 
         return (
@@ -57,6 +75,7 @@ const SuggestionDropdown = forwardRef<SuggestionDropdownRef, SuggestionDropdownP
                         className={`textcomplete-item ${i === selectedIndex ? "active" : ""}`}
                         key={item.keyword}
                         onClick={() => command(item)}
+                        ref={addToRefs}
                     >
                         <div dangerouslySetInnerHTML={{ __html: sanitizeCardHtml(item.html) }} />
                     </div>
