@@ -83,7 +83,7 @@ smartadserver.com, 3554, RESELLER
 pubmatic.com, 156439, RESELLER, 5d62403b186f2ace
 connectad.io, 456, RESELLER, 85ac85a30c93b3e5
 appnexus.com, 15941, RESELLER
-google.com, pub-3944954862316283, RESELLER, f08c47fec0942fa0   #AdEx
+google.com, pub-3944954862316283, RESELLER, f08c47fec0942fa0
 onetag.com, 79c98b8469ef0a0-OB, DIRECT
 rhythmone.com, 32202710, DIRECT, a670c89d4a324e47 #RhythmOne EB
 google.com, pub-3944954862316283, DIRECT, f08c47fec0942fa0 #AdEx
