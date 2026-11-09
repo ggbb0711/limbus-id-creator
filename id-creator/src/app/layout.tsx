@@ -27,17 +27,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {/* Admaven snippet */}
           {/* <script data-cfasync="false" src="//dv5vwlgir0hsc.cloudfront.net/?lwvvd=1732986"></script> */}
           {/* Monetag meta tag */}
-          <meta name="monetag" content="93a55208fb9a8bc1ddb5420e86df1eed"></meta>
-          {/* Monetag In-page push */}
-          <script>
-            {`(function(s){s.dataset.zone='12225460',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))`}
-          </script>
-          <script>
-            {`(function(s){s.dataset.zone='12225459',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))`}
-          </script>
+          {/* <meta name="monetag" content="93a55208fb9a8bc1ddb5420e86df1eed"></meta> */}
         </head>
         <body>
           <Providers>{children}</Providers>
+          {/* Infolink tag */}
+          <script type="text/javascript"> {`var infolinks_pid = 3449465; var infolinks_wsid = 0;`} </script> 
+          <script type="text/javascript" src="//resources.infolinks.com/js/infolinks_main.js"></script>
         </body>
         {clientEnv.gaId && <GoogleAnalytics gaId={clientEnv.gaId}/>}
       </html>
