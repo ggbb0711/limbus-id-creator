@@ -28,6 +28,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {/* <script data-cfasync="false" src="//dv5vwlgir0hsc.cloudfront.net/?lwvvd=1732986"></script> */}
           {/* Monetag meta tag */}
           {/* <meta name="monetag" content="93a55208fb9a8bc1ddb5420e86df1eed"></meta> */}
+          {/* Ad cash library tag */}
+          <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
+          <script type="text/javascript">
+              {`aclib.runAutoTag({
+                  zoneId: 'bi5pw7jcgq',
+              });`}
+          </script>
         </head>
         <body>
           <Providers>{children}</Providers>
