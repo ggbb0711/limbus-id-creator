@@ -31,8 +31,19 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {/* Ad cash library tag */}
           <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
           <script type="text/javascript">
-              {`aclib.runAutoTag({
-                  zoneId: 'bi5pw7jcgq',
+              {`aclib.runInPagePush({
+                  zoneId: '12431794',
+                  maxAds: 1,
+              });`}
+          </script>
+          <script type="text/javascript">
+              {`aclib.runInterstitial({
+                  zoneId: '12431806',
+              });`}
+          </script>
+          <script type="text/javascript">
+              {`aclib.runVideoSlider({
+                  zoneId: '12431902',
               });`}
           </script>
         </head>

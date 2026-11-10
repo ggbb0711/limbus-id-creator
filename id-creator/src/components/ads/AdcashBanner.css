@@ -1,0 +1,26 @@
+.ad-slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin: 16px auto;
+    max-width: 100%;
+}
+
+.ad-slot-label {
+    font-family: var(--font-rubik), sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--white-neutral-weak);
+}
+
+.ad-slot-container {
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.ad-slot-sticky {
+    position: sticky;
+    top: 16px;
+}

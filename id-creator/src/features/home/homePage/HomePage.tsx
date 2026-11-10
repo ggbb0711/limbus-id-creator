@@ -6,6 +6,8 @@ import { IPostDisplayCard, PostDisplayCard } from "features/post";
 import siteLogo from "assets/images/SiteLogo.webp";
 import { SITE_LINKS } from "config/siteLinks";
 import { NAV_LINKS } from "config/navLinks";
+import AdcashBanner from "components/ads/AdcashBanner";
+import { AD_PLACEMENTS } from "components/ads/adPlacements";
 
 const editorTips: { title: string, text: ReactNode, href: string }[] = [
     {
@@ -49,6 +51,7 @@ export default function HomePage({ latestPosts }: { latestPosts: IPostDisplayCar
                 {NAV_LINKS.map(link => <Link key={link.href} href={link.href} className="main-button nav-button">{link.label}</Link>)}
             </div>
         </div>
+        <AdcashBanner variants={AD_PLACEMENTS.homeLeaderboard}/>
         <div className="page-content latest-posts-section">
             <div className="latest-posts-header">
                 <h2 className="page-title">Latest Posts</h2>
