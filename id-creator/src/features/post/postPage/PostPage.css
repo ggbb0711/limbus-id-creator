@@ -45,4 +45,12 @@
             "comments sidebar";
         align-items: start;
     }
+
+    .post-page-sidebar{
+        align-self: stretch;
+    }
+
+    .post-page-sidebar > .post-sidebar{
+        height: 100%;
+    }
 }

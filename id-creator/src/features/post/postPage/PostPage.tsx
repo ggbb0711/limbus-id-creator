@@ -4,6 +4,8 @@ import { IPost } from "features/post/types/IPost";
 import { IComment } from "features/post/types/IComment";
 import PostComments from "./PostComments";
 import SectionErrorBoundary from "components/errorBoundary/SectionErrorBoundary";
+import AdcashBanner from "components/ads/AdcashBanner";
+import { AD_PLACEMENTS } from "components/ads/adPlacements";
 import "./PostPage.css";
 
 interface PostPageProps {
@@ -16,6 +18,7 @@ export default function PostPage({ initialPost, initialComments, sidebar }: Post
     return <div className="post-page-layout">
         <div className="page-content post-page-post">
             <Post post={initialPost}/>
+            <AdcashBanner variants={AD_PLACEMENTS.postBelowContent}/>
         </div>
         {sidebar && <div className="post-page-sidebar">{sidebar}</div>}
         <div className="post-page-comments">

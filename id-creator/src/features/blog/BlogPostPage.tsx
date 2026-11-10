@@ -6,6 +6,8 @@ import BlogTags from "./BlogTags";
 import BlogToc from "./BlogToc";
 import Markdown from "./Markdown";
 import formatDisplayDate from "utils/formatDisplayDate";
+import AdcashBanner from "components/ads/AdcashBanner";
+import { AD_PLACEMENTS } from "components/ads/adPlacements";
 
 export default function BlogPostPage({ post, headings, otherPosts }: { post: IBlogPost, headings: IBlogHeading[], otherPosts: IBlogPostMeta[] }) {
     return (
@@ -20,6 +22,7 @@ export default function BlogPostPage({ post, headings, otherPosts }: { post: IBl
                 {headings.length > 0 && <BlogToc headings={headings} />}
                 <article className="blog-post-body">
                     <Markdown content={post.content} />
+                    <AdcashBanner variants={AD_PLACEMENTS.blogPostEnd}/>
                     {otherPosts.length > 0 && <aside className="blog-more-posts">
                         <h2 className="blog-more-posts-title">More posts</h2>
                         <ul>

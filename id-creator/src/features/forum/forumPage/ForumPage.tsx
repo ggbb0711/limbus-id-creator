@@ -8,6 +8,8 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { InitialPostPage, PaginatedPost, PostSortOption, TagInput, TagList, TagsContainer, tagKeyOf, usePaginatedPosts } from "features/post";
 import "./ForumPage.css"
 import DropDown, { DropDownOption } from "components/ui/dropDown/DropDown";
+import AdcashBanner from "components/ads/AdcashBanner";
+import { AD_PLACEMENTS } from "components/ads/adPlacements";
 import { useAuth } from "hooks/useAuth";
 import { useDebouncedValue } from "hooks/useDebouncedValue";
 import { ForumQueryUpdate, buildForumQuery, parseForumParams } from "features/forum/utils/forumQuery";
@@ -86,6 +88,7 @@ export default function ForumPage({ initialPosts }: { initialPosts?: InitialPost
                     <LoginPromptButton>Login to post</LoginPromptButton>
                 }
             </div>
+            <AdcashBanner variants={AD_PLACEMENTS.forumLeaderboard}/>
             <PaginatedPost currPage={currPage}
                 maxCount={maxCount}
                 pageLimit={pageSize}

@@ -5,6 +5,8 @@ import type { IBlogPostMeta } from "./posts";
 import BlogTags from "./BlogTags";
 import { BlogTag } from "./blogTags";
 import formatDisplayDate from "utils/formatDisplayDate";
+import AdcashBanner from "components/ads/AdcashBanner";
+import { AD_PLACEMENTS } from "components/ads/adPlacements";
 
 export default function BlogPage({ posts, tags, activeTag }: { posts: IBlogPostMeta[], tags: BlogTag[], activeTag?: BlogTag }) {
     const shownPosts = activeTag ? posts.filter((p) => p.tags.includes(activeTag)) : posts
@@ -34,6 +36,7 @@ export default function BlogPage({ posts, tags, activeTag }: { posts: IBlogPostM
                         </article>
                     ))}
                 </div>
+                <AdcashBanner variants={AD_PLACEMENTS.blogIndexEnd}/>
             </div>
         </div>
     );
