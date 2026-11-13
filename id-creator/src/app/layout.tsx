@@ -21,7 +21,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {/* Google site verification */}
           {clientEnv.googleSiteVerification && <meta name="google-site-verification" content={clientEnv.googleSiteVerification} />}
           {/* Adsense snippets */}
-          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8788213017462869" crossOrigin="anonymous"></script>
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2161757435040376" crossOrigin="anonymous"></script>
           {/* Mediavine */}
           {/* <script type="text/javascript" async={true} data-noptimize="1" data-cfasync="false" src="//scripts.mediavine.com/tags/43dced82-5ca9-4c31-bf67-e780146fe518.js"></script> */}
           {/* Admaven snippet */}
@@ -29,7 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {/* Monetag meta tag */}
           {/* <meta name="monetag" content="93a55208fb9a8bc1ddb5420e86df1eed"></meta> */}
           {/* Ad cash library tag */}
-          <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
+          {/* <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
           <script type="text/javascript">
               {`aclib.runInPagePush({
                   zoneId: '12431794',
@@ -45,7 +45,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               {`aclib.runVideoSlider({
                   zoneId: '12431902',
               });`}
-          </script>
+          </script> */}
         </head>
         <body>
           <Providers>{children}</Providers>

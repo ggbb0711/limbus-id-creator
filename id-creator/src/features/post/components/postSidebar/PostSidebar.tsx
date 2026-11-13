@@ -2,8 +2,6 @@ import React, { ReactElement, useId } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { IPostDisplayCard } from "features/post/types/IPostDisplayCard";
-import AdcashBanner from "components/ads/AdcashBanner";
-import { AD_PLACEMENTS } from "components/ads/adPlacements";
 import "./PostSidebar.css";
 
 interface PostSidebarSectionProps {
@@ -50,8 +48,6 @@ export default function PostSidebar({ author, authorPosts, latestPosts }: PostSi
     ]
 
     return <aside className="post-sidebar">
-        <AdcashBanner variants={AD_PLACEMENTS.postSidebarRectangle}/>
         {sections.filter((section) => section.posts.length > 0).map((section) => <PostSidebarSection key={section.title} {...section} />)}
-        <AdcashBanner variants={AD_PLACEMENTS.postSidebarSkyscraper} className="ad-slot-sticky"/>
     </aside>
 }
