@@ -1,0 +1,129 @@
+.card-summary{
+    background-color: black;
+    color: white;
+    font-family: var(--font-rubik), sans-serif;
+    border: 1px solid var(--brown-pale);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-summary-header{
+    position: relative;
+    border-left: 6px solid;
+    padding-left: 12px;
+    height: 160px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.card-summary-header > .header-container{
+    position: relative;
+    z-index: 1;
+}
+
+.card-summary-splash-art{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    pointer-events: none;
+    mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 40%, black 100%);
+}
+
+.card-summary-sinner-icon{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    translate: 0 -50%;
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.card-summary .name-field,
+.card-summary .title-field{
+    min-width: 0;
+}
+
+.card-summary-stats{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+}
+
+.card-summary .sinner-stats-border{
+    display: none;
+}
+
+.card-summary-stats.ego{
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-summary .sin-cost-container{
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    height: auto;
+}
+
+.card-summary .sin-cost:not(:last-child),
+.card-summary .cost-txt{
+    margin-bottom: 0;
+}
+
+.card-summary .sin-resistant-container{
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.card-summary .sinner-stats{
+    position: static;
+    transform: none;
+    width: 100%;
+    max-width: 520px;
+    left: auto;
+    bottom: auto;
+}
+
+.card-summary-skill-list{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 500px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.card-summary .skill-section-container{
+    min-width: 0;
+    max-width: 100%;
+}
+
+.card-summary .skill-section-container:hover{
+    border-color: transparent;
+    cursor: default;
+}
+
+@media (max-width: 600px){
+    .card-summary{
+        padding: 12px;
+    }
+
+    .card-summary .name-field{
+        font-size: 32px;
+    }
+}

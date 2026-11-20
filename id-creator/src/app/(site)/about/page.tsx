@@ -1,3 +1,4 @@
+import AdsenseScript from "components/ads/AdsenseScript";
 import React from "react";
 import type { Metadata } from "next";
 import AboutPage from "features/static/aboutPage/AboutPage";
@@ -10,5 +11,8 @@ export const metadata: Metadata = pageMetadata({
 })
 
 export default function Page() {
-    return <AboutPage />
+    return <>
+        <AdsenseScript/>
+        <AboutPage />
+    </>
 }

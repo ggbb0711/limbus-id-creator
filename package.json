@@ -6,10 +6,16 @@
     "frontend:install": "npm install --prefix id-creator",
     "frontend:start": "npm start --prefix id-creator",
     "frontend:dev": "npm run dev --prefix id-creator",
+    "frontend:test": "npm test --prefix id-creator",
+    "frontend:lint": "npm run lint --prefix id-creator",
+    "frontend:lint:fix": "npm run lint:fix --prefix id-creator",
 
     "backend:install": "cd id-creator-server/Server && dotnet restore",
     "backend:start": "cd id-creator-server/Server && dotnet run",
     "backend:dev": "cd id-creator-server/Server && dotnet watch",
+    "backend:test": "cd id-creator-server && dotnet test Server.Tests",
+    "backend:lint": "cd id-creator-server && dotnet format id-creator-server.slnx --verify-no-changes",
+    "backend:lint:fix": "cd id-creator-server && dotnet format id-creator-server.slnx",
 
     "db:start": "cd id-creator-server/Server && docker compose -f up -d",
     "db:stop": "cd id-creator-server/Server && docker compose -f down",
@@ -19,6 +25,9 @@
 
     "install": "npm run frontend:install && npm run backend:install",
     "setup": "npm run db:start && npm run infra:start && npm run db:migrate",
-    "start": "npm run frontend:start & npm run backend:start"
+    "start": "npm run frontend:start & npm run backend:start",
+    "test": "npm run frontend:test && npm run backend:test",
+    "lint": "npm run frontend:lint && npm run backend:lint",
+    "lint:fix": "npm run frontend:lint:fix && npm run backend:lint:fix"
   }
 }

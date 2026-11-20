@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { siteUrl } from "config/siteMetadata";
-import { getLatestPosts } from "features/post/api/server/posts";
+import { getLatestPostsWithDetails } from "features/post/api/server/posts";
+import { isThinPost } from "features/post/utils/isThinPost";
 import { getAllPosts } from "features/blog/posts";
 import { serverConfig } from "config/env.server";
 import { parseServerDate } from "utils/formatDisplayDate";
@@ -20,8 +21,8 @@ const staticRoutes: { path: string, changeFrequency: MetadataRoute.Sitemap[numbe
 ]
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const result = await getLatestPosts(serverConfig.sitemapPostCount, serverConfig.apiRevalidateSeconds)
-    const posts = result.ok ? result.data.list : []
+    const result = await getLatestPostsWithDetails(serverConfig.sitemapPostCount, serverConfig.apiRevalidateSeconds)
+    const posts = result.ok ? result.data.filter(post => !isThinPost(post)) : []
     return [
         ...staticRoutes.map(({ path, changeFrequency, priority }) => ({ url: `${siteUrl}${path}`, changeFrequency, priority })),
         ...getAllPosts().map((article) => ({ url: `${siteUrl}/blog/${article.slug}`, lastModified: article.published, changeFrequency: "monthly" as const, priority: 0.7 })),

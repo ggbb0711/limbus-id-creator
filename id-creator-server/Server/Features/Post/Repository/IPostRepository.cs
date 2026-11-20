@@ -7,5 +7,6 @@ namespace Server.Features.Post.Repository
     public interface IPostRepository : IRepository<PostModel>
     {
         int GetPostCount(SearchPostOption option);
+        Task<IReadOnlyCollection<Guid>> GetPostIdsWithCards(IReadOnlyCollection<Guid> postIds);
     }
 }

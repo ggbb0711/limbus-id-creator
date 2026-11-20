@@ -1,0 +1,28 @@
+.tabs-list{
+    display: flex;
+    gap: 8px;
+    border-bottom: 1px solid var(--brown-pale);
+    margin-bottom: 12px;
+}
+
+.tabs-trigger{
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: inherit;
+    font: inherit;
+    font-weight: bold;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.tabs-trigger[data-state="active"]{
+    border-bottom-color: #EAC69C;
+    color: #EAC69C;
+}
+
+.tabs-trigger:focus-visible,
+.tabs-panel:focus-visible{
+    outline: 2px solid #EAC69C;
+    outline-offset: 2px;
+}

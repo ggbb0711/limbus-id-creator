@@ -21,13 +21,15 @@ namespace Server.Tests.Features.Post
     {
         private static PostController CreateController(
             Mock<IPostService> postService, Mock<IPostViewService> postViewService,
-            Mock<ICommentService> commentService, Mock<IMapper> mapper, Guid? userId = null)
+            Mock<ICommentService> commentService, Mock<IMapper> mapper, Guid? userId = null,
+            Mock<IPostCardBuilder>? cardBuilder = null)
         {
             var identity = userId.HasValue
                 ? new ClaimsIdentity([new Claim(JwtRegisteredClaimNames.Sub, userId.Value.ToString())])
                 : new ClaimsIdentity();
 
-            return new PostController(postService.Object, postViewService.Object, commentService.Object, mapper.Object)
+            return new PostController(postService.Object, postViewService.Object, commentService.Object,
+                (cardBuilder ?? new Mock<IPostCardBuilder>()).Object, mapper.Object)
             {
                 ControllerContext = new ControllerContext
                 {
@@ -37,10 +39,19 @@ namespace Server.Tests.Features.Post
         }
 
         [Fact]
-        public async Task CreateNewPost_MapsAndCreatesPost_WhenAuthenticated()
+        public async Task CreateNewPost_BuildsCardsAndImagesFromSaves_WhenAuthenticated()
         {
             var userId = Guid.NewGuid();
-            var dto = new PostRequestDTO { Title = "New Post" };
+            var dto = new PostRequestDTO
+            {
+                Title = "New Post",
+                Cards = [new PostCardRequestDTO { SaveId = Guid.NewGuid(), Kind = PostCardKind.Identity }, new PostCardRequestDTO { SaveId = Guid.NewGuid(), Kind = PostCardKind.Ego }],
+            };
+            var cards = new List<PostCard>
+            {
+                new() { Position = 0, Kind = PostCardKind.Identity, ImageUrl = "https://img/id.png" },
+                new() { Position = 1, Kind = PostCardKind.Ego, ImageUrl = "https://img/ego.png" },
+            };
             var mappedPost = new PostModel();
             var addedPost = new PostModel { Id = Guid.NewGuid() };
             var responseDto = new PostResponseDTO { Id = addedPost.Id };
@@ -49,18 +60,64 @@ namespace Server.Tests.Features.Post
             var postViewService = new Mock<IPostViewService>();
             var commentService = new Mock<ICommentService>();
             var mapper = new Mock<IMapper>();
+            var cardBuilder = new Mock<IPostCardBuilder>();
             mapper.Setup(m => m.Map<PostModel>(dto)).Returns(mappedPost);
+            cardBuilder.Setup(b => b.BuildAsync(userId, dto.Cards)).ReturnsAsync(cards);
             postService.Setup(s => s.CreatePost(mappedPost)).ReturnsAsync(addedPost);
             mapper.Setup(m => m.Map<PostResponseDTO>(addedPost)).Returns(responseDto);
 
-            var controller = CreateController(postService, postViewService, commentService, mapper, userId);
+            var controller = CreateController(postService, postViewService, commentService, mapper, userId, cardBuilder);
 
             var result = await controller.CreateNewPost(dto);
 
             Assert.Equal(userId, mappedPost.UserId);
+            Assert.Same(cards, mappedPost.Cards);
+            Assert.Equal(["https://img/id.png", "https://img/ego.png"], mappedPost.ImageAttaches.Select(i => i.Url));
             var okResult = Assert.IsType<OkObjectResult>(result.Result);
             Assert.Equivalent(ApiResponse<PostResponseDTO>.Ok(responseDto, "Post created successfully"), okResult.Value);
             postService.Verify(s => s.CreatePost(mappedPost), Times.Once);
+        }
+
+        [Fact]
+        public async Task CreateNewPost_DoesNotCreatePost_WhenCardBuilderRejectsASave()
+        {
+            var userId = Guid.NewGuid();
+            var dto = new PostRequestDTO { Title = "New Post", Cards = [new PostCardRequestDTO { SaveId = Guid.NewGuid() }] };
+            var postService = new Mock<IPostService>();
+            var mapper = new Mock<IMapper>();
+            var cardBuilder = new Mock<IPostCardBuilder>();
+            mapper.Setup(m => m.Map<PostModel>(dto)).Returns(new PostModel());
+            cardBuilder.Setup(b => b.BuildAsync(userId, dto.Cards)).ThrowsAsync(new ConflictException(ApiErrors.SaveImagesPending));
+
+            var controller = CreateController(postService, new Mock<IPostViewService>(), new Mock<ICommentService>(), mapper, userId, cardBuilder);
+
+            await Assert.ThrowsAsync<ConflictException>(() => controller.CreateNewPost(dto));
+            postService.Verify(s => s.CreatePost(It.IsAny<PostModel>()), Times.Never);
+        }
+
+        [Fact]
+        public async Task GetPost_ReturnsCardsOrderedByPosition()
+        {
+            var postId = Guid.NewGuid();
+            var second = new PostCard { Position = 1, ImageUrl = "b" };
+            var first = new PostCard { Position = 0, ImageUrl = "a" };
+            var foundPost = new PostModel { Id = postId, Cards = [second, first] };
+            var mappedCards = new List<PostCardResponseDTO> { new() { ImageUrl = "a" }, new() { ImageUrl = "b" } };
+
+            var postService = new Mock<IPostService>();
+            var mapper = new Mock<IMapper>();
+            postService.Setup(s => s.GetPostById(postId)).ReturnsAsync(foundPost);
+            mapper.Setup(m => m.Map<PostResponseDTO>(foundPost)).Returns(new PostResponseDTO { Id = postId });
+            mapper.Setup(m => m.Map<List<PostCardResponseDTO>>(It.Is<List<PostCard>>(l => l.SequenceEqual(new[] { first, second }))))
+                .Returns(mappedCards);
+
+            var controller = CreateController(postService, new Mock<IPostViewService>(), new Mock<ICommentService>(), mapper);
+
+            var result = await controller.GetPost(postId);
+
+            var okResult = Assert.IsType<OkObjectResult>(result.Result);
+            var response = Assert.IsType<ApiResponse<PostResponseDTO>>(okResult.Value);
+            Assert.Same(mappedCards, response.Data!.Cards);
         }
 
         [Fact]
@@ -202,6 +259,7 @@ namespace Server.Tests.Features.Post
             var mapper = new Mock<IMapper>();
             postService.Setup(s => s.FindPosts(option)).ReturnsAsync([]);
             postService.Setup(s => s.GetPostCount(option)).Returns(5);
+            postService.Setup(s => s.GetPostIdsWithCards(It.IsAny<IReadOnlyCollection<Guid>>())).ReturnsAsync([]);
 
             var controller = CreateController(postService, postViewService, commentService, mapper);
 
@@ -214,7 +272,7 @@ namespace Server.Tests.Features.Post
         }
 
         [Fact]
-        public async Task GetPosts_PopulatesViewAndCommentCounts_ForEachPost()
+        public async Task GetPosts_PopulatesViewCommentCountsAndHasCards_ForEachPost()
         {
             var option = new SearchPostOption();
             var post1 = new PostModel { Id = Guid.NewGuid() };
@@ -234,6 +292,8 @@ namespace Server.Tests.Features.Post
             postViewService.Setup(s => s.GetViewCount(post2.Id)).Returns(20);
             commentService.Setup(s => s.GetCommentCount(post1.Id)).Returns(3);
             commentService.Setup(s => s.GetCommentCount(post2.Id)).Returns(4);
+            postService.Setup(s => s.GetPostIdsWithCards(It.Is<IReadOnlyCollection<Guid>>(ids => ids.SequenceEqual(new[] { post1.Id, post2.Id }))))
+                .ReturnsAsync([post2.Id]);
 
             var controller = CreateController(postService, postViewService, commentService, mapper);
 
@@ -245,9 +305,11 @@ namespace Server.Tests.Features.Post
             var first = Assert.Single(response.Data.List, p => p.Id == post1.Id);
             Assert.Equal(10, first.ViewCount);
             Assert.Equal(3, first.CommentCount);
+            Assert.False(first.HasCards);
             var second = Assert.Single(response.Data.List, p => p.Id == post2.Id);
             Assert.Equal(20, second.ViewCount);
             Assert.Equal(4, second.CommentCount);
+            Assert.True(second.HasCards);
         }
     }
 }

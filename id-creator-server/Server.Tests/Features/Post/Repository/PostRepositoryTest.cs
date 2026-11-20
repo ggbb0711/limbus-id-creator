@@ -63,5 +63,26 @@ namespace Server.Tests.Features.Post.Repository
 
             Assert.Equal(2, result);
         }
+
+        [Fact]
+        public async Task GetPostIdsWithCards_ReturnsEachRequestedPostThatHasCardsOnce()
+        {
+            var db = MockDatabase.CreateDbConnection();
+            var withCards = new PostModel { Id = Guid.NewGuid(), Title = "With" };
+            var withoutCards = new PostModel { Id = Guid.NewGuid(), Title = "Without" };
+            var notRequested = new PostModel { Id = Guid.NewGuid(), Title = "Other" };
+            db.Post.AddRange(withCards, withoutCards, notRequested);
+            db.PostCard.AddRange(
+                new PostCard { Id = Guid.NewGuid(), PostId = withCards.Id, Position = 0 },
+                new PostCard { Id = Guid.NewGuid(), PostId = withCards.Id, Position = 1 },
+                new PostCard { Id = Guid.NewGuid(), PostId = notRequested.Id, Position = 0 });
+            await db.SaveChangesAsync();
+
+            var repo = new PostRepository(db);
+
+            var ids = await repo.GetPostIdsWithCards([withCards.Id, withoutCards.Id]);
+
+            Assert.Equal([withCards.Id], ids);
+        }
     }
 }

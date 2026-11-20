@@ -19,5 +19,12 @@ namespace Server.Features.Post.Repository
 
             return query.Count();
         }
+
+        public async Task<IReadOnlyCollection<Guid>> GetPostIdsWithCards(IReadOnlyCollection<Guid> postIds) =>
+            await _ctx.PostCard
+                .Where(c => postIds.Contains(c.PostId))
+                .Select(c => c.PostId)
+                .Distinct()
+                .ToListAsync();
     }
 }

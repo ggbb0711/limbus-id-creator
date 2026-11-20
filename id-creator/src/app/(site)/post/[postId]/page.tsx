@@ -1,3 +1,5 @@
+import { isThinPost } from "features/post/utils/isThinPost";
+import AdsenseScript from "components/ads/AdsenseScript";
 import React from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -25,6 +27,7 @@ export async function generateMetadata({ params }: PageProps<"/post/[postId]">):
     const post = await getPost(postId)
     if (!post) return { title: "Post not found" }
     if (isUnavailable(post)) return { title: getUnavailableContent(post.code).title, robots: { index: false } }
+    if (isThinPost(post)) return { ...postMetadata(post), robots: { index: false } }
     return postMetadata(post)
 }
 
@@ -42,9 +45,12 @@ export default async function Page({ params }: PageProps<"/post/[postId]">) {
     const latest = await getLatestPostsExcluding(POSTS_PER_SIDEBAR_SECTION, [post.id, ...authorPosts.map(p => p.id)], serverConfig.apiRevalidateSeconds)
     const latestPosts = latest.ok ? latest.data.list : []
 
-    return <PostPage
-        initialPost={post}
-        initialComments={initialComments}
-        sidebar={<PostSidebar author={post} authorPosts={authorPosts} latestPosts={latestPosts}/>}
-    />
+    return <>
+        {!isThinPost(post) && <AdsenseScript/>}
+        <PostPage
+            initialPost={post}
+            initialComments={initialComments}
+            sidebar={<PostSidebar author={post} authorPosts={authorPosts} latestPosts={latestPosts}/>}
+        />
+    </>
 }

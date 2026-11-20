@@ -17,7 +17,7 @@ namespace Server.Features.Post
 {
     [Route("API/[controller]")]
     [EnableCors("AllowOrigin")]
-    public class PostController(IPostService postService,IPostViewService postViewService, ICommentService commentService, IMapper mapper):Controller
+    public class PostController(IPostService postService,IPostViewService postViewService, ICommentService commentService, IPostCardBuilder postCardBuilder, IMapper mapper):Controller
     {
 
         [HttpPost("")]
@@ -31,6 +31,9 @@ namespace Server.Features.Post
                 throw new UnauthorizedException(ApiErrors.InvalidAccessToken);
             var post = mapper.Map<PostModel>(newPost);
             post.UserId = userId;
+            var cards = await postCardBuilder.BuildAsync(userId, newPost.Cards);
+            post.Cards = cards;
+            post.ImageAttaches = [.. cards.Select(c => new ImageObj { Url = c.ImageUrl })];
             var addedPost = await postService.CreatePost(post);
             return Ok(ApiResponse<PostResponseDTO>.Ok(mapper.Map<PostResponseDTO>(addedPost),"Post created successfully"));
         }
@@ -48,6 +51,8 @@ namespace Server.Features.Post
             if (foundPost.User?.IsBanned() == true)
                 throw new GoneException(ApiErrors.PostAuthorBanned);
             var postResponse = mapper.Map<PostResponseDTO>(foundPost);
+            postResponse.Cards = mapper.Map<List<PostCardResponseDTO>>(foundPost.Cards.OrderBy(c => c.Position).ToList());
+            postResponse.HasCards = foundPost.Cards.Count > 0;
             postResponse.ViewCount = await postViewService.LogView(new PostView()
             {
                 PostId = postResponse.Id,
@@ -61,6 +66,7 @@ namespace Server.Features.Post
         public async Task<ActionResult<PostListResponseDTO>> GetPosts([FromQuery] SearchPostOption option)
         {
             var foundPost = await postService.FindPosts(option);
+            var withCards = await postService.GetPostIdsWithCards([.. foundPost.Select(p => p.Id)]);
             var postListResponse = new PostListResponseDTO()
             {
                 List = [.. foundPost.Select(p=>
@@ -68,6 +74,7 @@ namespace Server.Features.Post
                     var postResponse = mapper.Map<PostResponseDTO>(p);
                     postResponse.ViewCount = postViewService.GetViewCount(postResponse.Id);
                     postResponse.CommentCount = commentService.GetCommentCount(postResponse.Id);
+                    postResponse.HasCards = withCards.Contains(postResponse.Id);
                     return postResponse;
                 })],
                 Total = postService.GetPostCount(option)

@@ -1,0 +1,26 @@
+.post-card-details{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.post-card-details-nav{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.post-card-details-arrow{
+    border-radius: 100%;
+    background-color: black;
+    fill: white;
+    padding: 4px;
+    rotate: 90deg;
+    cursor: pointer;
+}
+
+.post-card-details-arrow:disabled{
+    opacity: 0.3;
+    cursor: default;
+}

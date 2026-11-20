@@ -12,5 +12,6 @@ namespace Server.Features.Post.Service
         public Task<List<PostModel>> FindPosts(SearchPostOption option);
         public Task<PostModel> CreatePost (PostModel newPost);
         public int GetPostCount(SearchPostOption option);
+        public Task<IReadOnlyCollection<Guid>> GetPostIdsWithCards(IReadOnlyCollection<Guid> postIds);
     }
 }

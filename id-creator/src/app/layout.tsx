@@ -20,8 +20,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <head>
           {/* Google site verification */}
           {clientEnv.googleSiteVerification && <meta name="google-site-verification" content={clientEnv.googleSiteVerification} />}
-          {/* Adsense snippets */}
-          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2161757435040376" crossOrigin="anonymous"></script>
           {/* Mediavine */}
           {/* <script type="text/javascript" async={true} data-noptimize="1" data-cfasync="false" src="//scripts.mediavine.com/tags/43dced82-5ca9-4c31-bf67-e780146fe518.js"></script> */}
           {/* Admaven snippet */}
@@ -49,9 +47,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </head>
         <body>
           <Providers>{children}</Providers>
-          {/* Infolink tag */}
-          <script type="text/javascript"> {`var infolinks_pid = 3449465; var infolinks_wsid = 0;`} </script> 
-          <script type="text/javascript" src="//resources.infolinks.com/js/infolinks_main.js"></script>
         </body>
         {clientEnv.gaId && <GoogleAnalytics gaId={clientEnv.gaId}/>}
       </html>

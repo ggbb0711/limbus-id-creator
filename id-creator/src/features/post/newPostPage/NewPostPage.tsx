@@ -7,7 +7,7 @@ import "./NewPostPage.css";
 import TagInput from "features/post/components/tagInput/TagInput";
 import TagsContainer from "features/post/components/tagsContainer/TagsContainer";
 import { ITag } from "features/post/utils/TagList";
-import { ChosenSave, POST_SAVE_KINDS, PostSaveKind, SAVE_MODE_BY_KIND, addChosenSave, buildUploadTags, validateNewPost } from "features/post/utils/newPost";
+import { ChosenSave, POST_SAVE_KINDS, PostSaveKind, SAVE_MODE_BY_KIND, addChosenSave, buildUploadTags, isSameSave, validateNewPost } from "features/post/utils/newPost";
 import { SearchSaveInput } from "features/cardCreator";
 import CloseIcon from "assets/icons/CloseIcon";
 import RichTextEditor from "features/post/components/richTextEditor/RichTextEditor";
@@ -47,7 +47,7 @@ export default function NewPostPage(): ReactElement {
             const result = await createPost({
                 title: postName.trim(),
                 description,
-                imagesAttach: chosenSaves.map(save => save.previewUrl),
+                cards: chosenSaves.map(save => ({ saveId: save.saveId, kind: save.kind })),
                 tags: uploadTags.tags,
             }).unwrap()
             router.push(`/post/${encodeURIComponent(result.id)}`)
@@ -56,12 +56,12 @@ export default function NewPostPage(): ReactElement {
         }
     }
 
-    function chooseSave(previewUrl: string) {
-        setChosenSaves(saves => addChosenSave(saves, { previewUrl, kind: saveKind }, maxImages))
+    function chooseSave({ id, previewUrl }: { id: string, previewUrl: string }) {
+        setChosenSaves(saves => addChosenSave(saves, { saveId: id, previewUrl, kind: saveKind }, maxImages))
     }
 
-    function removeSave(previewUrl: string) {
-        setChosenSaves(saves => saves.filter(save => save.previewUrl !== previewUrl))
+    function removeSave(removed: ChosenSave) {
+        setChosenSaves(saves => saves.filter(save => !isSameSave(save, removed)))
     }
 
     if (isInitializing) return <div className="page-container post-page">
@@ -97,8 +97,8 @@ export default function NewPostPage(): ReactElement {
                     <SearchSaveInput userId={loginUser.id} saveMode={SAVE_MODE_BY_KIND[saveKind]} chooseSave={chooseSave} inputId={SAVE_SEARCH_ID}/>
                 </div>
                 <div className="choosen-save-container">
-                    {chosenSaves.map((save, i) => <div key={save.previewUrl} className="choosen-save-img-container">
-                        <IconButton className="remove-btn" label={`Remove image ${i + 1}`} onClick={() => removeSave(save.previewUrl)}>
+                    {chosenSaves.map((save, i) => <div key={`${save.kind}-${save.saveId}`} className="choosen-save-img-container">
+                        <IconButton className="remove-btn" label={`Remove image ${i + 1}`} onClick={() => removeSave(save)}>
                             <CloseIcon/>
                         </IconButton>
                         <img src={save.previewUrl} className="choosen-save-img" alt={`Chosen ${save.kind} ${i + 1}`} />

@@ -1,3 +1,4 @@
+import AdsenseScript from "components/ads/AdsenseScript";
 import React, { Suspense } from "react";
 import type { Metadata } from "next";
 import ForumPage from "features/forum/forumPage/ForumPage";
@@ -30,6 +31,7 @@ export default async function Page() {
     const initialPosts = result.ok ? { query: buildPostsQuery(params), data: result.data } : undefined
 
     return <>
+        <AdsenseScript/>
         <ForumIntro />
         <Suspense fallback={initialPosts ? <ForumPostsFallback posts={initialPosts.data.list} /> : <ForumLoading />}>
             <ForumPage initialPosts={initialPosts} />

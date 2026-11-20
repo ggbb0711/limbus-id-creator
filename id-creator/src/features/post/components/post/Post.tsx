@@ -5,6 +5,9 @@ import TagChip from "features/post/components/tagChip/TagChip";
 import AuthorBadge from "features/post/components/authorBadge/AuthorBadge";
 import formatDisplayDate from "utils/formatDisplayDate";
 import PostCarousel from "./PostCarousel";
+import PostCardsView from "features/post/components/postCardDetails/PostCardsView";
+import { CardSummary } from "features/cardCreator";
+import { matchCardsToImages, toPostCards } from "features/post/utils/postCards";
 import LivePostStats from "./LivePostStats";
 import ShareMenu from "features/post/components/shareMenu/ShareMenu";
 import "./Post.css";
@@ -13,9 +16,11 @@ import SectionErrorBoundary from "components/errorBoundary/SectionErrorBoundary"
 import { sanitizePostHtml } from "utils/htmlUtils";
 
 export default function Post({ post }: { post: IPost }): ReactElement {
+    const summaries = matchCardsToImages(post.imagesAttach, toPostCards(post))
+        .map((card, i) => card && <CardSummary key={i} card={card}/>)
     return <article className="post-container post-page-element-container">
         <h1 className="post-title">{post.title}</h1>
-        <p className="post-date">Posted: {formatDisplayDate(post.created)}</p>
+        <p className="post-date">Posted: {formatDisplayDate(post.created)}{post.updated && <> · Edited: {formatDisplayDate(post.updated)}</>}</p>
         <div className="post-author-container">
             <div className="center-element">
                 <AuthorBadge userId={post.userId} userName={post.userName} userIcon={post.userIcon} size={80} iconClassName="post-author-icon"/>
@@ -29,7 +34,9 @@ export default function Post({ post }: { post: IPost }): ReactElement {
             })}
         </div>
         <SectionErrorBoundary context="postCarousel" label="post images">
-            <PostCarousel images={post.imagesAttach} title={post.title}/>
+            {summaries.some(Boolean)
+                ? <PostCardsView images={post.imagesAttach} title={post.title} summaries={summaries}/>
+                : <PostCarousel images={post.imagesAttach} title={post.title}/>}
         </SectionErrorBoundary>
         <div className="description-txt" dangerouslySetInnerHTML={{ __html: sanitizePostHtml(post.description) }}></div>
         <div className="center-element">

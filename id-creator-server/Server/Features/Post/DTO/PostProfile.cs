@@ -1,5 +1,6 @@
 
 
+using System.Text.Json;
 using AutoMapper;
 using Server.Shared.Model;
 
@@ -10,11 +11,8 @@ namespace Server.Features.Post.DTO
         public PostProfile()
         {
             CreateMap<PostRequestDTO,PostModel>()
-                .ForMember(dest=>dest.ImageAttaches, opt=>opt.MapFrom(p=>p.ImagesAttach.Select(i=>
-                    new ImageObj()
-                    {
-                        Url = i,
-                    })))
+                .ForMember(dest=>dest.ImageAttaches, opt=>opt.Ignore())
+                .ForMember(dest=>dest.Cards, opt=>opt.Ignore())
                 .ForMember(dest=>dest.Tags, opt=> opt.MapFrom(p=>p.Tags.Select(t=>
                     new Tag()
                     {
@@ -25,7 +23,12 @@ namespace Server.Features.Post.DTO
                 .ForMember(dest=>dest.ImagesAttach, opt=>opt.MapFrom(p=>p.ImageAttaches.Select(i=>i.Url)))
                 .ForMember(dest=>dest.UserIcon, opt=>opt.MapFrom(p=>p.User.UserIcon.Url))
                 .ForMember(dest=>dest.UserName, opt=>opt.MapFrom(p=>p.User.UserName))
-                .ForMember(dest=>dest.Tags, opt=> opt.MapFrom(p=>p.Tags.Select(t=>t.TagName.Replace(" ","_"))));
+                .ForMember(dest=>dest.Tags, opt=> opt.MapFrom(p=>p.Tags.Select(t=>t.TagName.Replace(" ","_"))))
+                .ForMember(dest=>dest.Cards, opt=>opt.Ignore())
+                .ForMember(dest=>dest.HasCards, opt=>opt.Ignore());
+
+            CreateMap<PostCard,PostCardResponseDTO>()
+                .ForMember(dest=>dest.SaveInfo, opt=>opt.MapFrom(c=>JsonSerializer.Deserialize<JsonElement>(c.SaveInfo, (JsonSerializerOptions?)null)));
         }
     }
 }

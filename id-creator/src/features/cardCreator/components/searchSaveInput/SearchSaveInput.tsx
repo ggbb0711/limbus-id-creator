@@ -7,7 +7,7 @@ import { useCombobox } from "hooks/useCombobox";
 import { useGetSaveListQuery } from "features/cardCreator/api/SaveInfoApi";
 import formatDisplayDate from "utils/formatDisplayDate";
 
-export default function SearchSaveInput({ userId, saveMode, chooseSave, inputId }: { userId: string, saveMode: SaveMode, chooseSave: (saveUrl: string) => void, inputId?: string }): ReactElement {
+export default function SearchSaveInput({ userId, saveMode, chooseSave, inputId }: { userId: string, saveMode: SaveMode, chooseSave: (save: { id: string, previewUrl: string }) => void, inputId?: string }): ReactElement {
     const [searchName, setSearchName] = useState("")
 
     const { data: saveList = [] } = useGetSaveListQuery(
@@ -20,7 +20,7 @@ export default function SearchSaveInput({ userId, saveMode, chooseSave, inputId 
         containerRef,
         items: saveList,
         onSelect: (save) => {
-            if (save.previewImg) chooseSave(save.previewImg)
+            if (save.previewImg) chooseSave({ id: save.id, previewUrl: save.previewImg })
             setSearchName("")
         },
     })

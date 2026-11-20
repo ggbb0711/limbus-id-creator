@@ -1,6 +1,4 @@
-
 using FluentValidation;
-using Server.Features.Images;
 
 namespace Server.Features.Post.DTO
 {
@@ -8,7 +6,7 @@ namespace Server.Features.Post.DTO
     {
         public string Title { get; set; } = "";
         public string Description { get; set; } = "";
-        public List<string> ImagesAttach { get; set; } = [];
+        public List<PostCardRequestDTO> Cards { get; set; } = [];
         public List<string> Tags { get; set; } = [];
     }
 
@@ -20,25 +18,20 @@ namespace Server.Features.Post.DTO
                 .MaximumLength(199)
                 .NotEmpty()
                 .WithErrorCode("Title is required and must be < 200 characters long");
-            
-            RuleFor(p=>p.ImagesAttach)
-                .Must(images => images.Count >= 1 && images.Count <= 8)
+
+            RuleFor(p=>p.Cards)
+                .Must(cards => cards.Count >= 1 && cards.Count <= 8)
                 .WithMessage("Post must have between 1 and 8 images");
+
+            RuleForEach(p=>p.Cards).ChildRules(card =>
+            {
+                card.RuleFor(c=>c.SaveId).NotEmpty().WithMessage("Each image must come from a cloud save");
+                card.RuleFor(c=>c.Kind).IsInEnum().WithMessage("Each image must be an Identity or an Ego");
+            });
 
             RuleFor(p=>p.Tags)
                 .Must(tags => tags.Count < 22)
                 .WithMessage("Post cannot have more than 22 tags");
-            
-            RuleForEach(p=>p.ImagesAttach)
-                .Must(image => FileHelper.IsBase64DataUrl(image) || FileHelper.IsHttpUrl(image))
-                .WithMessage("Post images must be an uploaded image URL or a PNG base64 image");
-
-            RuleForEach(p=>p.ImagesAttach)
-                .MustAsync( async (tag, _) => 
-                {
-                    return await FileHelper.CheckUrlSize(tag, 7000000);
-                })
-                .WithMessage("Post images must be <= 7mb");
         }
     }
 }

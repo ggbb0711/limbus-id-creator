@@ -10,17 +10,25 @@ namespace Server.Features.SaveInfo.Repository
         where TPayload : class, ISavedPayload
     {
         public async Task<TEntry?> GetByIdAsyncIncludingSaved(Guid id) =>
-        await Set
-          .Include(e => e.ImageAttach)
-          .Include(e => e.Saved).ThenInclude(s => s.SplashArt)
-          .Include(e => e.Saved).ThenInclude(s => s.SinnerIcon)
-          .Include(e => e.Saved).ThenInclude(s => s.Skill).ThenInclude(sk => sk.OffenseSkills).ThenInclude(o => o.ImageAttach)
-          .Include(e => e.Saved).ThenInclude(s => s.Skill).ThenInclude(sk => sk.DefenseSkills).ThenInclude(d => d.ImageAttach)
-          .Include(e => e.Saved).ThenInclude(s => s.Skill).ThenInclude(sk => sk.PassiveSkills)
-          .Include(e => e.Saved).ThenInclude(s => s.Skill).ThenInclude(sk => sk.CustomEffects).ThenInclude(c => c.ImageAttach)
-          .Include(e => e.Saved).ThenInclude(s => s.Skill).ThenInclude(sk => sk.MentalEffects)
-          .AsSplitQuery()
-          .FirstOrDefaultAsync(e => e.Id == id);
+            await WithSaved().FirstOrDefaultAsync(e => e.Id == id);
+
+        public async Task<List<TEntry>> FindByImageUrlsIncludingSaved(Guid userId, IReadOnlyCollection<string> urls) =>
+            await WithSaved()
+                .Where(e => e.UserId == userId && urls.Contains(e.ImageAttach.Url))
+                .ToListAsync();
+
+        private IQueryable<TEntry> WithSaved() =>
+            Set
+                .Include(e => e.ImageAttach)
+                .Include(e => e.Saved).ThenInclude(s => s.SplashArt)
+                .Include(e => e.Saved).ThenInclude(s => s.SinnerIcon)
+                .Include(e => e.Saved).ThenInclude(s => s.Skill).ThenInclude(sk => sk.OffenseSkills).ThenInclude(o => o.ImageAttach)
+                .Include(e => e.Saved).ThenInclude(s => s.Skill).ThenInclude(sk => sk.DefenseSkills).ThenInclude(d => d.ImageAttach)
+                .Include(e => e.Saved).ThenInclude(s => s.Skill).ThenInclude(sk => sk.PassiveSkills)
+                .Include(e => e.Saved).ThenInclude(s => s.Skill).ThenInclude(sk => sk.CustomEffects).ThenInclude(c => c.ImageAttach)
+                .Include(e => e.Saved).ThenInclude(s => s.Skill).ThenInclude(sk => sk.MentalEffects)
+                .AsSplitQuery();
+
         public Task MergeSavedInfo(TEntry tracked, TEntry incoming)
         {
             tracked.Name = incoming.Name;

@@ -14,6 +14,7 @@ export const ERROR_MESSAGES = {
     POST_AUTHOR_BANNED: `The author of this post has been banned. ${CONTACT_ADMIN_MESSAGE}`,
     SAVE_NOT_FOUND: "This save does not exist.",
     SAVE_UPDATE_FAILED: "This save could not be updated.",
+    SAVE_IMAGES_PENDING: "Your save is still uploading, try again in a few seconds.",
     RESOURCE_NOT_OWNED: "You do not own this save.",
     VALIDATION_FAILED: null,
     INTERNAL_ERROR: "Something went wrong with the server",

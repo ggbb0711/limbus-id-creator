@@ -2,7 +2,7 @@ import { ChosenSave, addChosenSave, buildUploadTags, validateNewPost } from './n
 import { TagList } from './TagList'
 
 const limits = { maxTitleLength: 10, maxImages: 2, maxUserTags: 2 }
-const save = (previewUrl: string, kind: ChosenSave['kind'] = 'Identity'): ChosenSave => ({ previewUrl, kind })
+const save = (saveId: string, kind: ChosenSave['kind'] = 'Identity'): ChosenSave => ({ saveId, previewUrl: `https://cdn.test/${saveId}.png`, kind })
 
 describe('validateNewPost', () => {
     it('rejects a whitespace-only or too long title', () => {

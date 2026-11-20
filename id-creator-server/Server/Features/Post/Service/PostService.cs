@@ -1,4 +1,3 @@
-using System.Text.Json;
 using Microsoft.IdentityModel.Tokens;
 using Server.Features.Comment.Repository;
 using Server.Features.Post.Enum;
@@ -47,6 +46,9 @@ namespace Server.Features.Post.Service
         {
             return postRepository.GetPostCount(option);
         }
+
+        public Task<IReadOnlyCollection<Guid>> GetPostIdsWithCards(IReadOnlyCollection<Guid> postIds) =>
+            postRepository.GetPostIdsWithCards(postIds);
 
     }
 }

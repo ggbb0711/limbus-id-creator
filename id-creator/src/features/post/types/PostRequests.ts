@@ -16,6 +16,6 @@ export interface GetPostsParams extends GetPostsFilter {
 export interface ICreatePostBody {
     title: string
     description: string
-    imagesAttach: string[]
+    cards: { saveId: string, kind: "Identity" | "Ego" }[]
     tags: string[]
 }

@@ -9,6 +9,7 @@ namespace Server.Shared.Model
     {
         private ICollection<ImageObj>? _imageAttaches = new List<ImageObj>();
         private ICollection<Tag>? _tags = new List<Tag>();
+        private ICollection<PostCard>? _cards = new List<PostCard>();
         private User? _user;
         private ILazyLoader LazyLoader { get; set; } = null!;
 
@@ -23,6 +24,7 @@ namespace Server.Shared.Model
         public string Title { get; set; } = "";
         public string Description { get; set; } = "";
         public DateTime Created { get; set; } = DateTime.Now;
+        public DateTime? Updated { get; set; }
 
         public virtual ICollection<ImageObj> ImageAttaches
         {
@@ -42,6 +44,12 @@ namespace Server.Shared.Model
         {
             get => LazyLoader.Load(this, ref _user)!;
             set => _user = value;
+        }
+
+        public virtual ICollection<PostCard> Cards
+        {
+            get => LazyLoader.Load(this, ref _cards) ?? new List<PostCard>();
+            set => _cards = value;
         }
 
         public virtual ICollection<Tag> Tags

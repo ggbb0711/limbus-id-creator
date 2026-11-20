@@ -45,8 +45,9 @@ export function ViewImagePopUp({ images, title, carousel, onClose }: { images: s
     </div>
 }
 
-export default function PostCarousel({ images, title }: { images: string[], title: string }): ReactElement {
-    const carousel = useCarouselIndex(images.length)
+export default function PostCarousel({ images, title, carousel: sharedCarousel }: { images: string[], title: string, carousel?: CarouselIndex }): ReactElement {
+    const ownCarousel = useCarouselIndex(images.length)
+    const carousel = sharedCarousel ?? ownCarousel
     const [isViewing, setIsViewing] = useState(false)
 
     return <div className="post-carousel-container" aria-roledescription="carousel" aria-label={`${title} images`}>

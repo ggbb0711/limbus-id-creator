@@ -10,8 +10,11 @@ namespace Server.Features.Post.DTO
         public string UserName { get; set; } = "";
         public Guid UserId { get; set; }
         public DateTime Created { get; set; }
+        public DateTime? Updated { get; set; }
         public List<string> Tags { get; set; } = [];
         public int ViewCount { get; set; } = 0;
         public int CommentCount { get; set; } = 0;
+        public List<PostCardResponseDTO> Cards { get; set; } = [];
+        public bool HasCards { get; set; }
     }
 }

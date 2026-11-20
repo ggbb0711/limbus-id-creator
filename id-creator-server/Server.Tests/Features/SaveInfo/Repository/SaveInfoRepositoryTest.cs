@@ -132,5 +132,32 @@ namespace Server.Tests.Features.SaveInfo.Repository
             Assert.Equal("Old Effect", reloaded.Saved.Skill.MentalEffects.First().Effect);
         }
 
+
+        [Fact]
+        public async Task FindByImageUrlsIncludingSaved_ReturnsOnlyTheUsersSavesWithMatchingPreview()
+        {
+            var db = MockDatabase.CreateDbConnection();
+            var fixture = new Fixture();
+            var userId = Guid.NewGuid();
+
+            var match = MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "Match");
+            match.UserId = userId;
+            var otherUrl = MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "Other url");
+            otherUrl.UserId = userId;
+            var otherUser = MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "Other user");
+            otherUser.ImageAttach.Url = match.ImageAttach.Url;
+
+            db.SavedIDInfos.AddRange(match, otherUrl, otherUser);
+            await db.SaveChangesAsync();
+            db.ChangeTracker.Clear();
+
+            var repo = new SaveInfoRepository<SavedIDInfo, SavedId>(db);
+
+            var found = await repo.FindByImageUrlsIncludingSaved(userId, [match.ImageAttach.Url]);
+
+            var save = Assert.Single(found);
+            Assert.Equal(match.Id, save.Id);
+            Assert.Equal("Match", save.Saved.Skill.MentalEffects.Single().Effect);
+        }
     }
 }

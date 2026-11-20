@@ -19,6 +19,8 @@ namespace Server.Shared.Config
         public required string GoogleClientSecret { get; init; }
         public required string GoogleRedirectUri { get; init; }
         public required string GoogleClientId { get; init; }
+        public bool BackfillPostCards { get; init; }
+        public bool BackfillDryRun { get; init; } = true;
 
         public static EnvironmentVariables LoadFromEnvironment() => new()
         {
@@ -37,6 +39,8 @@ namespace Server.Shared.Config
             GoogleClientId = Require("GOOGLE_CLIENT_ID"),
             GoogleRedirectUri = Require("GOOGLE_REDIRECT_URI"),
             GoogleClientSecret = Require("GOOGLE_CLIENT_SECRET"),
+            BackfillPostCards = Environment.GetEnvironmentVariable("BACKFILL_POST_CARDS") == "true",
+            BackfillDryRun = Environment.GetEnvironmentVariable("BACKFILL_DRY_RUN") != "false",
             RabbitMq = new RabbitMqOptions
             {
                 Host = Environment.GetEnvironmentVariable("RABBITMQ_HOST") ?? "localhost",

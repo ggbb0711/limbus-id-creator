@@ -6,9 +6,12 @@ export const POST_SAVE_KINDS = ["Identity", "Ego"] as const
 export type PostSaveKind = typeof POST_SAVE_KINDS[number]
 
 export interface ChosenSave {
+    saveId: string
     previewUrl: string
     kind: PostSaveKind
 }
+
+export const isSameSave = (a: ChosenSave, b: ChosenSave) => a.saveId === b.saveId && a.kind === b.kind
 
 export const SAVE_MODE_BY_KIND: Record<PostSaveKind, SaveMode> = { Identity: "ID", Ego: "EGO" }
 
@@ -45,6 +48,6 @@ export function buildUploadTags(tags: readonly ITag[], saves: readonly ChosenSav
 }
 
 export function addChosenSave(saves: readonly ChosenSave[], save: ChosenSave, maxImages: number): readonly ChosenSave[] {
-    if (saves.length >= maxImages || saves.some(existing => existing.previewUrl === save.previewUrl)) return saves
+    if (saves.length >= maxImages || saves.some(existing => isSameSave(existing, save))) return saves
     return [...saves, save]
 }
