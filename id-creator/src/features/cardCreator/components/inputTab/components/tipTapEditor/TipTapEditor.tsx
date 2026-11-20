@@ -15,6 +15,7 @@ import SuggestionDropdown, { SuggestionDropdownRef } from "./suggestionDropdown/
 import Toolbar from "./toolbar/Toolbar"
 import "./TipTapEditor.css"
 import { filterKeywordSuggestions, replaceKeywordsAsNodes } from "features/cardCreator/utils/keywords/keywords"
+import { useStatusEffectPopup } from "features/cardCreator/contexts/StatusEffectPopupContext"
 
 interface TipTapEditorProps {
     inputId: string
@@ -31,6 +32,8 @@ export default function TipTapEditor({ inputId, content, changeHandler, matchLis
     changeHandlerRef.current = changeHandler
 
     const inputIdRef = useRef(inputId)
+
+    const { openFromElement, close: closeStatusEffectPopup } = useStatusEffectPopup()
 
     const editor = useEditor({
         extensions: [
@@ -172,7 +175,8 @@ export default function TipTapEditor({ inputId, content, changeHandler, matchLis
     return (
         <div className="tiptap-editor-wrapper">
             <Toolbar editor={editor} />
-            <EditorContent editor={editor} className="tiptap-editor-content" />
+            <EditorContent editor={editor} className="tiptap-editor-content"
+                onClick={e => openFromElement(e.target)} onKeyDown={closeStatusEffectPopup} />
         </div>
     )
 }

@@ -7,6 +7,8 @@ import { createEgoInfo } from 'features/cardCreator/types/IEgoInfo'
 import { createOffenseSkill } from 'features/cardCreator/types/skills/offenseSkill/IOffenseSkill'
 import { createPassiveSkill } from 'features/cardCreator/types/skills/passiveSkill/IPassiveSkill'
 import { createMentalEffect } from 'features/cardCreator/types/skills/mentalEffect/IMentalEffect'
+import { createCustomEffect } from 'features/cardCreator/types/skills/customEffect/ICustomEffect'
+import { customEffectHtml } from 'features/cardCreator/utils/keywords/keywords'
 
 const identity = () => createIdInfo({
     title: 'LCB Sinner',
@@ -68,4 +70,28 @@ describe('CardSummary', () => {
 
         expect(screen.getAllByRole('tab').map(tab => tab.textContent)).toEqual(['Skills'])
     })
+
+    it('opens the status effect popup for a custom effect with a description', async () => {
+        const user = userEvent.setup()
+        const fanatic = createCustomEffect({ name: 'Fanatic', effect: '<p>Skill Final Power +X</p>' })
+        const blank = createCustomEffect({ name: 'Blank', effect: '' })
+        const info = createIdInfo({
+            title: 'LCB Sinner',
+            name: 'Faust',
+            skillDetails: [
+                createOffenseSkill({ name: 'Slice', skillEffect: `<p><span data-status-effect="x">${customEffectHtml(fanatic)}</span> and <span data-status-effect="y">${customEffectHtml(blank)}</span></p>` }),
+                fanatic,
+                blank,
+            ],
+        })
+        const { container } = render(<CardSummary card={{ kind: 'Identity', info }}/>)
+        const [fanaticSpan, blankSpan] = Array.from(container.querySelectorAll('[role="tabpanel"] [data-status-effect]'))
+
+        await user.click(blankSpan)
+        expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+
+        await user.click(fanaticSpan)
+        expect(screen.getByRole('dialog', { name: 'Fanatic' })).toHaveTextContent('Skill Final Power +X')
+    })
 })
+

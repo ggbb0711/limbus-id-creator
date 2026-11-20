@@ -129,6 +129,7 @@ Routes only, kept thin. A `page.tsx` sets `metadata` / `revalidate`, fetches ser
 | Local save (IndexedDB / Dexie) | `features/cardCreator/utils/save/indexDB/`, `features/cardCreator/utils/save/`, `features/cardCreator/hooks/useSaveLocal.ts` |
 | Cloud save | `features/cardCreator/api/SaveInfoApi.ts`, `features/cardCreator/utils/save/cloudSaveForm.ts`, `features/cardCreator/utils/save/prepareCloudSave.ts` |
 | Status effects / keywords | `features/cardCreator/utils/keywords/` |
+| Status effect popup (click an effect in skill text) | `features/cardCreator/components/statusEffectPopup/` (Floating UI popup), `features/cardCreator/contexts/StatusEffectPopupContext.tsx` (`StatusEffectPopupProvider`, `useStatusEffectPopup`), `features/cardCreator/types/StatusEffectInfo.ts`. Provided in `pages/CardEditor.tsx` (wraps input tabs + preview) and `components/cardSummary/CardSummary.tsx`; clicks handled in `components/card/components/skillEffect/SkillEffect.tsx` and `components/inputTab/components/tipTapEditor/TipTapEditor.tsx` |
 | Posts, comments, new post | `features/post/` — `api/PostApi.ts`, `api/CommentApi.ts`, `api/server/posts.ts`, `newPostPage/`, `postPage/` |
 | Forum listing / search | `features/forum/` |
 | User profile | `features/user/` |

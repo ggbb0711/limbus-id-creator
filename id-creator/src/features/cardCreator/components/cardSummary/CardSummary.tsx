@@ -13,6 +13,7 @@ import { SkillDetail } from "features/cardCreator/types/SkillDetail";
 import { IIdInfo } from "features/cardCreator/types/IIdInfo";
 import { IEgoInfo } from "features/cardCreator/types/IEgoInfo";
 import Tabs, { Tab } from "components/ui/tabs/Tabs";
+import { StatusEffectPopupProvider } from "features/cardCreator/contexts/StatusEffectPopupContext";
 import "./CardSummary.css";
 
 function renderSkill(skill: SkillDetail): ReactElement {
@@ -75,8 +76,10 @@ export default function CardSummary({ card }: { card: SummaryCard }): ReactEleme
         .filter(group => group.skills.length > 0)
         .map(group => ({ id: group.id, label: group.label, panel: <div className="card-summary-skill-list">{group.skills.map(renderSkill)}</div> }))
 
-    return <section className="card-summary" aria-label={name}>
-        {card.kind === "Identity" ? <IdentityTop info={card.info}/> : <EgoTop info={card.info}/>}
-        {tabs.length > 0 && <Tabs className="card-summary-tabs" tabs={tabs} label={`${name} details`}/>}
-    </section>
+    return <StatusEffectPopupProvider skills={info.skillDetails}>
+        <section className="card-summary" aria-label={name}>
+            {card.kind === "Identity" ? <IdentityTop info={card.info}/> : <EgoTop info={card.info}/>}
+            {tabs.length > 0 && <Tabs className="card-summary-tabs" tabs={tabs} label={`${name} details`}/>}
+        </section>
+    </StatusEffectPopupProvider>
 }

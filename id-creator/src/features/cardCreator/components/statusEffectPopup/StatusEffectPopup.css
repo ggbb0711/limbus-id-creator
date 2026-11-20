@@ -1,0 +1,38 @@
+.status-effect-popup{
+    z-index: 1000;
+    max-width: 360px;
+    padding: 8px 12px;
+    background-color: rgba(0, 0, 0, 0.75);
+    border: 1px solid var(--brown-pale);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    color: white;
+    font-family: var(--font-rubik), sans-serif;
+    font-size: 16px;
+    line-height: 1.3;
+}
+
+.status-effect-popup-header{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+
+.status-effect-popup-icon{
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+}
+
+.status-effect-popup-name{
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.status-effect-popup-description{
+    white-space: break-spaces;
+}
+
+.status-effect-popup-description .status-icon{
+    vertical-align: middle;
+}
