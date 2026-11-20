@@ -34,7 +34,7 @@ export const PostApi = BaseApi.injectEndpoints({
                 body,
             }),
             transformResponse: unwrapData<IPost>,
-            invalidatesTags: ['Posts'],
+            invalidatesTags: ['Posts', 'SaveIDInfo', 'SaveEGOInfo'],
         }),
     }),
 })

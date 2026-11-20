@@ -13,5 +13,7 @@ namespace Server.Features.Post.Service
         public Task<PostModel> CreatePost (PostModel newPost);
         public int GetPostCount(SearchPostOption option);
         public Task<IReadOnlyCollection<Guid>> GetPostIdsWithCards(IReadOnlyCollection<Guid> postIds);
+        public Task<Dictionary<Guid, List<PostModel>>> FindPostsBySave(IReadOnlyCollection<Guid> saveIds);
+        public Task UnlinkSave(Guid saveId);
     }
 }

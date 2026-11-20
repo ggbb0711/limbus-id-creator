@@ -4,6 +4,8 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Server.Features.Post.DTO;
+using Server.Features.Post.Service;
 using Server.Features.SaveInfo.DTO;
 using Server.Features.SaveInfo.Repository;
 using Server.Features.SaveInfo.Service;
@@ -18,11 +20,12 @@ namespace Server.Features.SaveInfo
     [ApiController]
     [Route("API/[controller]")]
     [EnableCors("AllowOrigin")]
-    public class SaveEGOInfoController(ISavedInfoService<SavedEGOInfo, SavedEgo> savedInfoService, IAuthorizationService authorizationService, IMapper map): Controller
+    public class SaveEGOInfoController(ISavedInfoService<SavedEGOInfo, SavedEgo> savedInfoService, IPostService postService, IAuthorizationService authorizationService, IMapper map): Controller
     {
         private readonly ISavedInfoService<SavedEGOInfo, SavedEgo> _savedInfoService = savedInfoService;
         private readonly IAuthorizationService _authorizationService = authorizationService;
         private readonly IMapper _mapper = map;
+        private const int MaxPageSize = 100;
 
         [HttpGet("{SaveId}")]
         [EnableCors("AllowOrigin")]
@@ -43,7 +46,7 @@ namespace Server.Features.SaveInfo
         [HttpGet]
         [EnableCors("AllowOrigin")]
         [Authorize]
-        public async Task<ActionResult<ApiResponse<List<SaveInfoResponseDTO<SavedEgoRequestDTO>>>>> GetSavedInfos([FromQuery] Guid userId,
+        public async Task<ActionResult<ApiResponse<SaveListResponseDTO<SavedEgoRequestDTO>>>> GetSavedInfos([FromQuery] Guid userId,
             [FromQuery] string searchName = "",
             [FromQuery] int page = 0,
             [FromQuery] int limit = 10)
@@ -55,13 +58,20 @@ namespace Server.Features.SaveInfo
             {
                 Name = searchName,
                 UserId = userId,
-                Limit = limit,
-                Page = page
+                Limit = Math.Clamp(limit, 1, MaxPageSize),
+                Page = Math.Max(page, 0)
             };
             var searchResult = await _savedInfoService.FindSavedInfos(option);
             var response = searchResult.Select(_mapper.Map<SaveInfoResponseDTO<SavedEgoRequestDTO>>).ToList();
+            var postsBySave = await postService.FindPostsBySave([.. response.Select(s => s.Id)]);
+            foreach (var save in response)
+                save.LinkedPosts = _mapper.Map<List<LinkedPostDTO>>(postsBySave.GetValueOrDefault(save.Id) ?? []);
 
-            return Ok(ApiResponse<List<SaveInfoResponseDTO<SavedEgoRequestDTO>>>.Ok(response));
+            return Ok(ApiResponse<SaveListResponseDTO<SavedEgoRequestDTO>>.Ok(new SaveListResponseDTO<SavedEgoRequestDTO>
+            {
+                List = response,
+                Total = await _savedInfoService.CountSavedInfos(option),
+            }));
         }
 
         [HttpDelete]
@@ -77,6 +87,7 @@ namespace Server.Features.SaveInfo
 
             var deletedSave = await _savedInfoService.DeleteSavedInfo(SaveId)
                 ?? throw new NotFoundException(ApiErrors.SaveNotFound);
+            await postService.UnlinkSave(SaveId);
 
             return Ok(ApiResponse<SaveInfoResponseDTO<SavedEgoRequestDTO>>.Ok(
                 _mapper.Map<SaveInfoResponseDTO<SavedEgoRequestDTO>>(deletedSave), "Deletion successful"));

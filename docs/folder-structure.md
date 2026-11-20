@@ -145,7 +145,7 @@ Routes only, kept thin. A `page.tsx` sets `metadata` / `revalidate`, fetches ser
 | `config/env.client.ts` | `clientEnv` and `appConfig`: all app constants (limits, paging, timings, upload sizes) read from `NEXT_PUBLIC_*` with defaults |
 | `config/env.server.ts` | `serverEnv`, `serverConfig` (server-only: API URL, revalidate, timeouts) |
 | `config/` (other) | `readEnv.ts`, `siteMetadata.ts`, `navLinks.ts`, `siteLinks.ts` |
-| `components/ui/` | Generic UI primitives (dialog, dropDown, spinner, busyButton, tabs, …). Primitives may wrap Radix (`@radix-ui/*`, e.g. `tabs/Tabs.tsx`); wrap Radix here and import the wrapper from features, never Radix directly |
+| `components/ui/` | Generic UI primitives (dialog, dropDown, spinner, busyButton, tabs, pagination, …). Primitives may wrap Radix (`@radix-ui/*`, e.g. `tabs/Tabs.tsx`); wrap Radix here and import the wrapper from features, never Radix directly |
 | `components/layout/` | `SiteShell.tsx`, header, footer |
 | `components/` (other) | App-wide components (ads, alertPopUp, errorBoundary, …) |
 | `stores/` | `AppStore.ts`, `StoreProvider.tsx`, `slices/` (Alert, Auth, Ui) |

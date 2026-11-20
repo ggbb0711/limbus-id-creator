@@ -266,5 +266,40 @@ namespace Server.Tests.Shared.Repository
             Assert.NotNull(found.Saved);
             Assert.Equal(entry.Saved.Title, found.Saved.Title);
         }
+
+        [Fact]
+        public async Task CountAsync_CountsAllEntities_WithoutFilter()
+        {
+            var db = MockDatabase.CreateDbConnection();
+            var fixture = new Fixture();
+            var repo = new Repository<SavedIDInfo>(db);
+            await repo.AddBulkAsync([
+                MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "A"),
+                MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "B"),
+                MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "C"),
+            ]);
+            await repo.SaveChangeAsync();
+
+            Assert.Equal(3, await repo.CountAsync());
+        }
+
+        [Fact]
+        public async Task CountAsync_CountsOnlyMatchingEntities_WithFilter()
+        {
+            var db = MockDatabase.CreateDbConnection();
+            var fixture = new Fixture();
+            var repo = new Repository<SavedIDInfo>(db);
+            var userId = Guid.NewGuid();
+            var mine1 = MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "A");
+            var mine2 = MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "B");
+            var other = MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "C");
+            mine1.UserId = userId;
+            mine2.UserId = userId;
+            await repo.AddBulkAsync([mine1, mine2, other]);
+            await repo.SaveChangeAsync();
+
+            Assert.Equal(2, await repo.CountAsync(s => s.UserId == userId));
+            Assert.Equal(0, await repo.CountAsync(s => s.UserId == Guid.Empty && s.Name == "missing"));
+        }
     }
 }

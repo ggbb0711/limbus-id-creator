@@ -1,27 +1,9 @@
 'use client'
 import React, { ReactElement, ReactNode, useRef } from "react";
 import "./PaginatedPost.css"
-import ReactPaginate from "react-paginate";
+import { PaginationNav, pageCountOf } from "components/ui/pagination/Pagination";
 import { IPostDisplayCard } from "features/post/types/IPostDisplayCard";
 import { PostDisplayCard, PostListSkeleton } from "./PostDisplayCard";
-
-interface PaginationNavProps {
-    page: number
-    pageCount: number
-    onChange: (page: number) => void
-}
-
-export function PaginationNav({ page, pageCount, onChange }: PaginationNavProps): ReactElement {
-    return <ReactPaginate className="center-element paginated-bullet-point-container"
-        pageCount={pageCount}
-        forcePage={Math.min(page, Math.max(0, pageCount - 1))}
-        onPageChange={(e) => onChange(e.selected)}
-        pageClassName="paginated-bullet-point"
-        activeClassName="paginated-bullet-point active"
-        breakLabel={"..."}
-        previousLabel={<p className="paginated-bullet-point">PREV</p>}
-        nextLabel={<p className="paginated-bullet-point">NEXT</p>}/>
-}
 
 interface PaginatedPostProps {
     currPage: number
@@ -33,8 +15,6 @@ interface PaginatedPostProps {
     error?: unknown
     onRetry?: () => void
 }
-
-export const pageCountOf = (total: number, pageLimit: number) => Math.ceil(total / Math.max(1, pageLimit))
 
 function Message({ children }: { children: ReactNode }): ReactElement {
     return <div className="post-display-message">{children}</div>

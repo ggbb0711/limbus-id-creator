@@ -27,6 +27,8 @@ namespace Server.Features.Post.DTO
                 .ForMember(dest=>dest.Cards, opt=>opt.Ignore())
                 .ForMember(dest=>dest.HasCards, opt=>opt.Ignore());
 
+            CreateMap<PostModel,LinkedPostDTO>();
+
             CreateMap<PostCard,PostCardResponseDTO>()
                 .ForMember(dest=>dest.SaveInfo, opt=>opt.MapFrom(c=>JsonSerializer.Deserialize<JsonElement>(c.SaveInfo, (JsonSerializerOptions?)null)));
         }

@@ -307,5 +307,118 @@ namespace Server.Tests.Features.Post.Service
             Assert.Equal(2, result.Count);
             postRepository.Verify(r => r.GetPostCount(option), Times.AtLeastOnce);
         }
+
+        private static PostCard Card(PostModel post, Guid? saveId, int position = 0) => new()
+        {
+            Id = Guid.NewGuid(),
+            PostId = post.Id,
+            SaveId = saveId,
+            Position = position,
+        };
+
+        [Fact]
+        public async Task FindPosts_WithSaveIds_ReturnsOnlyPostsUsingThoseSaves()
+        {
+            var save = Guid.NewGuid();
+            var using1 = CreatePost("Uses save");
+            using1.Cards = [Card(using1, save)];
+            var other = CreatePost("Other save");
+            other.Cards = [Card(other, Guid.NewGuid())];
+            var noCards = CreatePost("No cards");
+            var postRepository = new Mock<IPostRepository>();
+            SetupFindAsync(postRepository, [using1, other, noCards]);
+
+            var service = new PostService(postRepository.Object, new Mock<ICommentRepository>().Object);
+            var result = await service.FindPosts(new SearchPostOption { SaveIds = [save] });
+
+            Assert.Equal([using1.Id], result.Select(p => p.Id));
+        }
+
+        [Fact]
+        public async Task FindPostsBySave_GroupsPostsPerSave_NewestFirst_SkippingHiddenPosts()
+        {
+            var saveA = Guid.NewGuid();
+            var saveB = Guid.NewGuid();
+            var older = CreatePost("Older", created: new DateTime(2026, 1, 1));
+            older.Cards = [Card(older, saveA)];
+            var newer = CreatePost("Newer", created: new DateTime(2026, 6, 1));
+            newer.Cards = [Card(newer, saveA, 0), Card(newer, saveB, 1)];
+            var removed = CreatePost("Removed", isRemoved: true);
+            removed.Cards = [Card(removed, saveA)];
+            var inactive = CreatePost("Inactive", isActive: false);
+            inactive.Cards = [Card(inactive, saveB)];
+            var postRepository = new Mock<IPostRepository>();
+            SetupFindAsync(postRepository, [older, newer, removed, inactive]);
+
+            var service = new PostService(postRepository.Object, new Mock<ICommentRepository>().Object);
+            var result = await service.FindPostsBySave([saveA, saveB]);
+
+            Assert.Equal(["Newer", "Older"], result[saveA].Select(p => p.Title));
+            Assert.Equal(["Newer"], result[saveB].Select(p => p.Title));
+        }
+
+        [Fact]
+        public async Task FindPostsBySave_ListsAPostOnce_WhenItUsesTheSameSaveTwice()
+        {
+            var save = Guid.NewGuid();
+            var post = CreatePost("Twice");
+            post.Cards = [Card(post, save, 0), Card(post, save, 1)];
+            var postRepository = new Mock<IPostRepository>();
+            SetupFindAsync(postRepository, [post]);
+
+            var service = new PostService(postRepository.Object, new Mock<ICommentRepository>().Object);
+            var result = await service.FindPostsBySave([save]);
+
+            Assert.Single(result[save]);
+        }
+
+        [Fact]
+        public async Task FindPostsBySave_ReturnsEmpty_WithoutQuerying_WhenNoSaveIds()
+        {
+            var postRepository = new Mock<IPostRepository>();
+
+            var service = new PostService(postRepository.Object, new Mock<ICommentRepository>().Object);
+            var result = await service.FindPostsBySave([]);
+
+            Assert.Empty(result);
+            postRepository.Verify(r => r.FindAsync(It.IsAny<RepositoryGetParams<PostModel>>()), Times.Never);
+        }
+
+        [Fact]
+        public async Task FindPostsBySave_LeavesOutSavesWithoutPosts()
+        {
+            var postRepository = new Mock<IPostRepository>();
+            SetupFindAsync(postRepository, []);
+
+            var service = new PostService(postRepository.Object, new Mock<ICommentRepository>().Object);
+            var result = await service.FindPostsBySave([Guid.NewGuid()]);
+
+            Assert.Empty(result);
+        }
+
+        [Fact]
+        public async Task UnlinkSave_ClearsOnlyThatSavesCards_IncludingOnRemovedPosts()
+        {
+            var save = Guid.NewGuid();
+            var otherSave = Guid.NewGuid();
+            var post = CreatePost("Live");
+            var linked = Card(post, save, 0);
+            var untouched = Card(post, otherSave, 1);
+            post.Cards = [linked, untouched];
+            var removed = CreatePost("Removed", isRemoved: true);
+            var removedLinked = Card(removed, save);
+            removed.Cards = [removedLinked];
+            var postRepository = new Mock<IPostRepository>();
+            SetupFindAsync(postRepository, [post, removed]);
+
+            var service = new PostService(postRepository.Object, new Mock<ICommentRepository>().Object);
+            await service.UnlinkSave(save);
+
+            Assert.Null(linked.SaveId);
+            Assert.Null(removedLinked.SaveId);
+            Assert.Equal(otherSave, untouched.SaveId);
+            Assert.Equal(2, post.Cards.Count);
+            postRepository.Verify(r => r.SaveChangeAsync(), Times.Once);
+        }
     }
 }

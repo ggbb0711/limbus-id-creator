@@ -17,10 +17,16 @@ jest.mock('features/cardCreator/utils/save/prepareCloudSave', () => {
     const actual = jest.requireActual('features/cardCreator/utils/save/prepareCloudSave')
     return { ...actual, prepareCloudSaveForm: (...args: unknown[]) => mockPrepare(...args) }
 })
+type ListArgs = { page: number, limit: number }
+type FakeSave = { id: string, name: string, saveTime: string, previewImg: string, linkedPosts?: { id: string, title: string }[] }
+const oneSave: FakeSave[] = [{ id: 's1', name: 'My save', saveTime: '2024-01-01T00:00:00', previewImg: '/p.webp' }]
+let mockSaves: FakeSave[] = oneSave
+
 jest.mock('features/cardCreator/api/SaveInfoApi', () => ({
-    useGetSaveListQuery: (...args: unknown[]) => {
-        mockListQuery(...args)
-        return { data: [{ id: 's1', name: 'My save', saveTime: '2024-01-01T00:00:00', previewImg: '/p.webp' }], isFetching: false, error: undefined }
+    useGetSaveListQuery: (args: ListArgs, options: unknown) => {
+        mockListQuery(args, options)
+        const start = args.page * args.limit
+        return { data: { list: mockSaves.slice(start, start + args.limit), total: mockSaves.length }, isFetching: false, error: undefined }
     },
     useLazyGetSaveQuery: () => [jest.fn(), { isFetching: false }],
     useCreateSaveMutation: () => [jest.fn()],
@@ -36,6 +42,8 @@ function setup() {
 
 describe('SaveCloudMenu', () => {
     beforeEach(() => {
+        mockSaves = oneSave
+        mockListQuery.mockClear()
         mockDelete.mockReset().mockReturnValue({ unwrap: () => Promise.resolve() })
         mockUpdate.mockReset().mockReturnValue({ unwrap: () => Promise.resolve() })
         mockPrepare.mockReset().mockResolvedValue(new FormData())
@@ -104,5 +112,91 @@ describe('SaveCloudMenu', () => {
         } finally {
             jest.useRealTimers()
         }
+    })
+
+    describe('pagination', () => {
+        const pageSize = appConfig.paging.cloudSavesPerPage
+        const makeSaves = (count: number): FakeSave[] => Array.from({ length: count }, (_, i) => ({
+            id: `s${i}`, name: `Save ${i}`, saveTime: '2024-01-01T00:00:00', previewImg: `/p${i}.webp`,
+        }))
+        const lastQueryArgs = () => mockListQuery.mock.calls.at(-1)![0] as ListArgs & { searchName: string }
+
+        it('hides the page nav when everything fits on one page', () => {
+            mockSaves = makeSaves(pageSize)
+            setup()
+            expect(screen.queryByRole('navigation', { name: 'Pagination' })).not.toBeInTheDocument()
+        })
+
+        it('requests one page at a time and moves to the next page', () => {
+            mockSaves = makeSaves(pageSize + 2)
+            setup()
+            expect(lastQueryArgs()).toMatchObject({ page: 0, limit: pageSize })
+            expect(screen.getAllByRole('button', { name: 'Load' })).toHaveLength(pageSize)
+
+            fireEvent.click(screen.getByRole('button', { name: 'Page 2' }))
+
+            expect(lastQueryArgs()).toMatchObject({ page: 1, limit: pageSize })
+            expect(screen.getAllByRole('button', { name: 'Load' })).toHaveLength(2)
+            expect(screen.getByText(`Save ${pageSize}`)).toBeInTheDocument()
+        })
+
+        it('goes back to the first page when the search changes', () => {
+            jest.useFakeTimers()
+            try {
+                mockSaves = makeSaves(pageSize * 2)
+                setup()
+                fireEvent.click(screen.getByRole('button', { name: 'Page 2' }))
+                expect(lastQueryArgs().page).toBe(1)
+
+                fireEvent.change(screen.getByLabelText('Search:'), { target: { value: 'Save' } })
+                act(() => { jest.advanceTimersByTime(appConfig.timing.searchDebounceMs) })
+
+                expect(lastQueryArgs()).toMatchObject({ searchName: 'Save', page: 0 })
+            } finally {
+                jest.useRealTimers()
+            }
+        })
+
+        it('steps back a page when the last page becomes empty', () => {
+            mockSaves = makeSaves(pageSize + 1)
+            const { rerender } = render(<Provider store={makeStore()}><CardEditorContext.Provider value={idEditor}><SaveCloudMenu/></CardEditorContext.Provider></Provider>)
+            fireEvent.click(screen.getByRole('button', { name: 'Page 2' }))
+            expect(lastQueryArgs().page).toBe(1)
+
+            mockSaves = makeSaves(pageSize)
+            rerender(<Provider store={makeStore()}><CardEditorContext.Provider value={idEditor}><SaveCloudMenu/></CardEditorContext.Provider></Provider>)
+
+            expect(lastQueryArgs().page).toBe(0)
+            expect(screen.queryByRole('navigation', { name: 'Pagination' })).not.toBeInTheDocument()
+        })
+    })
+
+    describe('posted in links', () => {
+        it('lists the posts that use a save', () => {
+            mockSaves = [{ ...oneSave[0], linkedPosts: [{ id: 'p1', title: 'My build' }, { id: 'p2', title: 'Team ideas' }] }]
+            setup()
+            fireEvent.click(screen.getByRole('button', { name: 'Posted in 2 posts' }))
+            const list = screen.getByRole('list', { name: 'Posts using My save' })
+            expect(list).toContainElement(screen.getByRole('link', { name: 'My build' }))
+            expect(screen.getByRole('link', { name: 'Team ideas' })).toHaveAttribute('href', '/post/p2')
+        })
+
+        it('shows nothing for a save without posts', () => {
+            setup()
+            expect(screen.queryByText(/Posted in/)).not.toBeInTheDocument()
+        })
+
+        it('warns before deleting a save that posts use', () => {
+            mockSaves = [{ ...oneSave[0], linkedPosts: [{ id: 'p1', title: 'My build' }, { id: 'p2', title: 'Team ideas' }] }]
+            setup()
+            fireEvent.click(screen.getByRole('button', { name: 'Delete' }))
+            expect(screen.getByRole('alertdialog')).toHaveTextContent('This save is used in 2 posts. The posts keep their copy of the card')
+        })
+
+        it('leaves the delete message alone for a save without posts', () => {
+            setup()
+            fireEvent.click(screen.getByRole('button', { name: 'Delete' }))
+            expect(screen.getByRole('alertdialog')).not.toHaveTextContent('This save is used in')
+        })
     })
 })

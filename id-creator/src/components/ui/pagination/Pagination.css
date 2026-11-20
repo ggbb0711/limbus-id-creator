@@ -1,0 +1,11 @@
+.paginated-bullet-point-container{
+    gap: 12px;
+}
+
+.paginated-bullet-point{
+    cursor: pointer;
+}
+
+.paginated-bullet-point.active,.paginated-bullet-point:hover{
+    color: var(--white-skin-color);
+}

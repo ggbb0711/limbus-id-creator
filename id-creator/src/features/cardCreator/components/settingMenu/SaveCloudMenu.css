@@ -135,3 +135,95 @@
     font-size: 12px;
     font-family: var(--font-mikodacs), var(--font-rubik), sans-serif;
 }
+.save-cloud-posted-in{
+    border-top: 1px dashed var(--red-brown);
+    margin-top: 4px;
+    text-align: left;
+}
+
+.save-cloud-posted-in .accordion-header{
+    padding: 4px 2px;
+    border-bottom: none;
+    color: var(--red-brown);
+}
+
+.save-cloud-posted-in .accordion-header:hover{
+    background-color: rgba(78, 10, 6, 0.08);
+}
+
+.save-cloud-posted-in .accordion-header:focus-visible{
+    outline: 2px solid var(--red-brown);
+    outline-offset: -2px;
+}
+
+.save-cloud-posted-in .accordion-title{
+    font-family: var(--font-mikodacs), var(--font-rubik), sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.save-cloud-posted-in .accordion-arrow{
+    fill: var(--red-brown);
+}
+
+.save-cloud-posted-in .accordion-arrow svg{
+    width: 14px;
+    height: 14px;
+}
+
+.save-cloud-posted-in .accordion-content{
+    gap: 0;
+}
+
+.save-cloud-posted-in .accordion-content::before{
+    height: 2px;
+}
+
+.save-cloud-posted-in-list{
+    width: 100%;
+    padding-bottom: 4px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    max-height: calc(3 * 1.4em);
+    line-height: 1.4em;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.save-cloud-posted-in-list:focus-visible{
+    outline: 2px solid var(--red-brown);
+    outline-offset: 1px;
+}
+
+.save-cloud-posted-in-list a{
+    color: var(--red-brown);
+    font-size: 12.5px;
+    text-decoration: underline;
+    overflow-wrap: anywhere;
+}
+
+.save-cloud-posted-in-list a:hover,
+.save-cloud-posted-in-list a:focus-visible{
+    color: black;
+}
+
+.save-cloud-pagination{
+    font-family: var(--font-mikodacs), var(--font-rubik), sans-serif;
+    font-size: 14px;
+    flex-wrap: wrap;
+    padding: 4px 0;
+}
+
+.save-cloud-pagination .paginated-bullet-point.active,
+.save-cloud-pagination .paginated-bullet-point:hover{
+    color: var(--red-brown);
+    font-weight: bold;
+}
+
+.save-cloud-pagination .disabled .paginated-bullet-point{
+    opacity: 0.4;
+    cursor: default;
+}

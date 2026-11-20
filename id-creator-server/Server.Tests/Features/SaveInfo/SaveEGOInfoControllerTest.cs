@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using Server.Features.Post.DTO;
+using Server.Features.Post.Service;
 using Server.Features.SaveInfo;
 using Server.Features.SaveInfo.DTO;
 using Server.Features.SaveInfo.Repository;
@@ -19,6 +21,16 @@ namespace Server.Tests.Features.SaveInfo
 {
     public class SaveEGOInfoControllerTest
     {
+        private readonly Mock<IPostService> _postServiceMock = CreatePostServiceMock();
+
+        private static Mock<IPostService> CreatePostServiceMock()
+        {
+            var mock = new Mock<IPostService>();
+            mock.Setup(p => p.FindPostsBySave(It.IsAny<IReadOnlyCollection<Guid>>()))
+                .ReturnsAsync(new Dictionary<Guid, List<global::Server.Shared.Model.Post>>());
+            return mock;
+        }
+
         private static ClaimsPrincipal CreatePrincipal(string? sub) =>
             new(new ClaimsIdentity(sub != null ? [new Claim(JwtRegisteredClaimNames.Sub, sub)] : []));
 
@@ -55,7 +67,7 @@ namespace Server.Tests.Features.SaveInfo
             var saveId = Guid.NewGuid();
             serviceMock.Setup(s => s.FindSavedInfoById(saveId, false)).ReturnsAsync((SavedEGOInfo?)null);
 
-            var controller = new SaveEGOInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
+            var controller = new SaveEGOInfoController(serviceMock.Object, _postServiceMock.Object, authMock.Object, mapperMock.Object);
 
             var ex = await Assert.ThrowsAsync<NotFoundException>(() => controller.GetSavedInfo(saveId, false));
             Assert.Equal(ApiErrors.SaveNotFound.Code, ex.ErrorCode);
@@ -76,7 +88,7 @@ namespace Server.Tests.Features.SaveInfo
             authMock.Setup(a => a.AuthorizeAsync(It.IsAny<ClaimsPrincipal>(), It.IsAny<object>(), "SameUser"))
                 .ReturnsAsync(AuthorizationResult.Failed());
 
-            var controller = new SaveEGOInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
+            var controller = new SaveEGOInfoController(serviceMock.Object, _postServiceMock.Object, authMock.Object, mapperMock.Object);
 
             var ex = await Assert.ThrowsAsync<ForbiddenException>(() => controller.GetSavedInfo(entry.Id, false));
             Assert.Equal(ApiErrors.ResourceNotOwned.Code, ex.ErrorCode);
@@ -98,7 +110,7 @@ namespace Server.Tests.Features.SaveInfo
                 .ReturnsAsync(AuthorizationResult.Success());
             mapperMock.Setup(m => m.Map<SaveInfoResponseDTO<SavedEgoRequestDTO>>(entry)).Returns(responseDto);
 
-            var controller = new SaveEGOInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
+            var controller = new SaveEGOInfoController(serviceMock.Object, _postServiceMock.Object, authMock.Object, mapperMock.Object);
 
             var result = await controller.GetSavedInfo(entry.Id, false);
 
@@ -121,7 +133,7 @@ namespace Server.Tests.Features.SaveInfo
                 .ReturnsAsync(AuthorizationResult.Success());
             mapperMock.Setup(m => m.Map<SaveInfoResponseDTO<SavedEgoRequestDTO>>(entry)).Returns(CreateResponseDto());
 
-            var controller = new SaveEGOInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
+            var controller = new SaveEGOInfoController(serviceMock.Object, _postServiceMock.Object, authMock.Object, mapperMock.Object);
 
             await controller.GetSavedInfo(entry.Id, includeSkill: true);
 
@@ -138,7 +150,7 @@ namespace Server.Tests.Features.SaveInfo
             authMock.Setup(a => a.AuthorizeAsync(It.IsAny<ClaimsPrincipal>(), It.IsAny<object>(), "SameUser"))
                 .ReturnsAsync(AuthorizationResult.Failed());
 
-            var controller = new SaveEGOInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
+            var controller = new SaveEGOInfoController(serviceMock.Object, _postServiceMock.Object, authMock.Object, mapperMock.Object);
 
             var ex = await Assert.ThrowsAsync<ForbiddenException>(() => controller.GetSavedInfos(Guid.NewGuid(), "", 0, 10));
             Assert.Equal(ApiErrors.ResourceNotOwned.Code, ex.ErrorCode);
@@ -162,7 +174,7 @@ namespace Server.Tests.Features.SaveInfo
                 .Callback<SearchSaveParams>(p => captured = p)
                 .ReturnsAsync([]);
 
-            var controller = new SaveEGOInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
+            var controller = new SaveEGOInfoController(serviceMock.Object, _postServiceMock.Object, authMock.Object, mapperMock.Object);
 
             await controller.GetSavedInfos(userId, "search text", 2, 5);
 
@@ -191,15 +203,100 @@ namespace Server.Tests.Features.SaveInfo
             serviceMock.Setup(s => s.FindSavedInfos(It.IsAny<SearchSaveParams>())).ReturnsAsync([entry1, entry2]);
             mapperMock.Setup(m => m.Map<SaveInfoResponseDTO<SavedEgoRequestDTO>>(entry1)).Returns(response1);
             mapperMock.Setup(m => m.Map<SaveInfoResponseDTO<SavedEgoRequestDTO>>(entry2)).Returns(response2);
+            mapperMock.Setup(m => m.Map<List<LinkedPostDTO>>(It.IsAny<object>())).Returns([]);
+            serviceMock.Setup(s => s.CountSavedInfos(It.IsAny<SearchSaveParams>())).ReturnsAsync(2);
 
-            var controller = new SaveEGOInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
+            var controller = new SaveEGOInfoController(serviceMock.Object, _postServiceMock.Object, authMock.Object, mapperMock.Object);
 
             var result = await controller.GetSavedInfos(Guid.NewGuid(), "", 0, 10);
 
             var okResult = Assert.IsType<OkObjectResult>(result.Result);
             Assert.Equivalent(
-                ApiResponse<List<SaveInfoResponseDTO<SavedEgoRequestDTO>>>.Ok([response1, response2]),
+                ApiResponse<SaveListResponseDTO<SavedEgoRequestDTO>>.Ok(new SaveListResponseDTO<SavedEgoRequestDTO> { List = [response1, response2], Total = 2 }),
                 okResult.Value);
+        }
+
+        [Fact]
+        public async Task GetSavedInfos_ReturnsTotalForTheWholeSearch_NotThePageSize()
+        {
+            var serviceMock = new Mock<ISavedInfoService<SavedEGOInfo, SavedEgo>>();
+            var authMock = new Mock<IAuthorizationService>();
+            var mapperMock = new Mock<IMapper>();
+
+            var fixture = new Fixture();
+            var entry = MockSaveData.CreateSavedEgoEntry(fixture, Guid.NewGuid(), "A");
+            authMock.Setup(a => a.AuthorizeAsync(It.IsAny<ClaimsPrincipal>(), It.IsAny<object>(), "SameUser"))
+                .ReturnsAsync(AuthorizationResult.Success());
+            serviceMock.Setup(s => s.FindSavedInfos(It.IsAny<SearchSaveParams>())).ReturnsAsync([entry]);
+            serviceMock.Setup(s => s.CountSavedInfos(It.IsAny<SearchSaveParams>())).ReturnsAsync(23);
+            mapperMock.Setup(m => m.Map<SaveInfoResponseDTO<SavedEgoRequestDTO>>(entry)).Returns(CreateResponseDto());
+            mapperMock.Setup(m => m.Map<List<LinkedPostDTO>>(It.IsAny<object>())).Returns([]);
+
+            var controller = new SaveEGOInfoController(serviceMock.Object, _postServiceMock.Object, authMock.Object, mapperMock.Object);
+
+            var result = await controller.GetSavedInfos(Guid.NewGuid(), "A", 2, 10);
+
+            var okResult = Assert.IsType<OkObjectResult>(result.Result);
+            var body = Assert.IsType<ApiResponse<SaveListResponseDTO<SavedEgoRequestDTO>>>(okResult.Value);
+            Assert.Equal(23, body.Data!.Total);
+            Assert.Single(body.Data.List);
+        }
+
+        [Theory]
+        [InlineData(1000, 3, 100, 3)]
+        [InlineData(0, 0, 1, 0)]
+        [InlineData(-5, -2, 1, 0)]
+        public async Task GetSavedInfos_ClampsLimitAndPage(int limit, int page, int expectedLimit, int expectedPage)
+        {
+            var serviceMock = new Mock<ISavedInfoService<SavedEGOInfo, SavedEgo>>();
+            var authMock = new Mock<IAuthorizationService>();
+            var mapperMock = new Mock<IMapper>();
+
+            authMock.Setup(a => a.AuthorizeAsync(It.IsAny<ClaimsPrincipal>(), It.IsAny<object>(), "SameUser"))
+                .ReturnsAsync(AuthorizationResult.Success());
+            SearchSaveParams? captured = null;
+            serviceMock.Setup(s => s.FindSavedInfos(It.IsAny<SearchSaveParams>()))
+                .Callback<SearchSaveParams>(p => captured = p)
+                .ReturnsAsync([]);
+
+            var controller = new SaveEGOInfoController(serviceMock.Object, _postServiceMock.Object, authMock.Object, mapperMock.Object);
+
+            await controller.GetSavedInfos(Guid.NewGuid(), "", page, limit);
+
+            Assert.NotNull(captured);
+            Assert.Equal(expectedLimit, captured.Limit);
+            Assert.Equal(expectedPage, captured.Page);
+        }
+
+        [Fact]
+        public async Task GetSavedInfos_FillsLinkedPostsForEachSaveOnThePage()
+        {
+            var serviceMock = new Mock<ISavedInfoService<SavedEGOInfo, SavedEgo>>();
+            var authMock = new Mock<IAuthorizationService>();
+            var mapperMock = new Mock<IMapper>();
+
+            var fixture = new Fixture();
+            var entry = MockSaveData.CreateSavedEgoEntry(fixture, Guid.NewGuid(), "A");
+            var response = CreateResponseDto();
+            response.Id = entry.Id;
+            var post = new global::Server.Shared.Model.Post { Id = Guid.NewGuid(), Title = "My build" };
+            var linked = new List<LinkedPostDTO> { new() { Id = post.Id, Title = post.Title } };
+
+            authMock.Setup(a => a.AuthorizeAsync(It.IsAny<ClaimsPrincipal>(), It.IsAny<object>(), "SameUser"))
+                .ReturnsAsync(AuthorizationResult.Success());
+            serviceMock.Setup(s => s.FindSavedInfos(It.IsAny<SearchSaveParams>())).ReturnsAsync([entry]);
+            mapperMock.Setup(m => m.Map<SaveInfoResponseDTO<SavedEgoRequestDTO>>(entry)).Returns(response);
+            _postServiceMock.Setup(p => p.FindPostsBySave(It.Is<IReadOnlyCollection<Guid>>(ids => ids.SequenceEqual(new[] { entry.Id }))))
+                .ReturnsAsync(new Dictionary<Guid, List<global::Server.Shared.Model.Post>> { [entry.Id] = [post] });
+            mapperMock.Setup(m => m.Map<List<LinkedPostDTO>>(It.Is<List<global::Server.Shared.Model.Post>>(l => l.Count == 1 && l[0] == post))).Returns(linked);
+
+            var controller = new SaveEGOInfoController(serviceMock.Object, _postServiceMock.Object, authMock.Object, mapperMock.Object);
+
+            var result = await controller.GetSavedInfos(Guid.NewGuid(), "", 0, 10);
+
+            var okResult = Assert.IsType<OkObjectResult>(result.Result);
+            var body = Assert.IsType<ApiResponse<SaveListResponseDTO<SavedEgoRequestDTO>>>(okResult.Value);
+            Assert.Equal(linked, body.Data!.List[0].LinkedPosts);
         }
 
         [Fact]
@@ -212,11 +309,12 @@ namespace Server.Tests.Features.SaveInfo
             var saveId = Guid.NewGuid();
             serviceMock.Setup(s => s.FindSavedInfoById(saveId, false)).ReturnsAsync((SavedEGOInfo?)null);
 
-            var controller = new SaveEGOInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
+            var controller = new SaveEGOInfoController(serviceMock.Object, _postServiceMock.Object, authMock.Object, mapperMock.Object);
 
             var ex = await Assert.ThrowsAsync<NotFoundException>(() => controller.DeleteIDSave(saveId));
             Assert.Equal(ApiErrors.SaveNotFound.Code, ex.ErrorCode);
             serviceMock.Verify(s => s.DeleteSavedInfo(It.IsAny<Guid>()), Times.Never);
+            _postServiceMock.Verify(p => p.UnlinkSave(It.IsAny<Guid>()), Times.Never);
         }
 
         [Fact]
@@ -233,11 +331,12 @@ namespace Server.Tests.Features.SaveInfo
             authMock.Setup(a => a.AuthorizeAsync(It.IsAny<ClaimsPrincipal>(), It.IsAny<object>(), "SameUser"))
                 .ReturnsAsync(AuthorizationResult.Failed());
 
-            var controller = new SaveEGOInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
+            var controller = new SaveEGOInfoController(serviceMock.Object, _postServiceMock.Object, authMock.Object, mapperMock.Object);
 
             var ex = await Assert.ThrowsAsync<ForbiddenException>(() => controller.DeleteIDSave(entry.Id));
             Assert.Equal(ApiErrors.ResourceNotOwned.Code, ex.ErrorCode);
             serviceMock.Verify(s => s.DeleteSavedInfo(It.IsAny<Guid>()), Times.Never);
+            _postServiceMock.Verify(p => p.UnlinkSave(It.IsAny<Guid>()), Times.Never);
         }
 
         [Fact]
@@ -255,10 +354,11 @@ namespace Server.Tests.Features.SaveInfo
                 .ReturnsAsync(AuthorizationResult.Success());
             serviceMock.Setup(s => s.DeleteSavedInfo(entry.Id)).ReturnsAsync((SavedEGOInfo?)null);
 
-            var controller = new SaveEGOInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
+            var controller = new SaveEGOInfoController(serviceMock.Object, _postServiceMock.Object, authMock.Object, mapperMock.Object);
 
             var ex = await Assert.ThrowsAsync<NotFoundException>(() => controller.DeleteIDSave(entry.Id));
             Assert.Equal(ApiErrors.SaveNotFound.Code, ex.ErrorCode);
+            _postServiceMock.Verify(p => p.UnlinkSave(It.IsAny<Guid>()), Times.Never);
         }
 
         [Fact]
@@ -278,11 +378,12 @@ namespace Server.Tests.Features.SaveInfo
             serviceMock.Setup(s => s.DeleteSavedInfo(entry.Id)).ReturnsAsync(entry);
             mapperMock.Setup(m => m.Map<SaveInfoResponseDTO<SavedEgoRequestDTO>>(entry)).Returns(responseDto);
 
-            var controller = new SaveEGOInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
+            var controller = new SaveEGOInfoController(serviceMock.Object, _postServiceMock.Object, authMock.Object, mapperMock.Object);
 
             var result = await controller.DeleteIDSave(entry.Id);
 
             serviceMock.Verify(s => s.DeleteSavedInfo(entry.Id), Times.Once);
+            _postServiceMock.Verify(p => p.UnlinkSave(entry.Id), Times.Once);
             var okResult = Assert.IsType<OkObjectResult>(result.Result);
             Assert.Equivalent(
                 ApiResponse<SaveInfoResponseDTO<SavedEgoRequestDTO>>.Ok(responseDto, "Deletion successful"),
@@ -296,7 +397,7 @@ namespace Server.Tests.Features.SaveInfo
             var authMock = new Mock<IAuthorizationService>();
             var mapperMock = new Mock<IMapper>();
 
-            var controller = new SaveEGOInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
+            var controller = new SaveEGOInfoController(serviceMock.Object, _postServiceMock.Object, authMock.Object, mapperMock.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext { User = CreatePrincipal(null) };
 
             var ex = await Assert.ThrowsAsync<UnauthorizedException>(() =>
@@ -312,7 +413,7 @@ namespace Server.Tests.Features.SaveInfo
             var authMock = new Mock<IAuthorizationService>();
             var mapperMock = new Mock<IMapper>();
 
-            var controller = new SaveEGOInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
+            var controller = new SaveEGOInfoController(serviceMock.Object, _postServiceMock.Object, authMock.Object, mapperMock.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext { User = CreatePrincipal("not-a-guid") };
 
             var ex = await Assert.ThrowsAsync<UnauthorizedException>(() =>
@@ -340,7 +441,7 @@ namespace Server.Tests.Features.SaveInfo
             serviceMock.Setup(s => s.CreateSavedInfo(mappedEntity, files)).ReturnsAsync(createdEntity);
             mapperMock.Setup(m => m.Map<SaveInfoResponseDTO<SavedEgoRequestDTO>>(createdEntity)).Returns(responseDto);
 
-            var controller = new SaveEGOInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
+            var controller = new SaveEGOInfoController(serviceMock.Object, _postServiceMock.Object, authMock.Object, mapperMock.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext { User = CreatePrincipal(userId.ToString()) };
 
             var result = await controller.CreateNewEGOSave(files, request);
@@ -360,7 +461,7 @@ namespace Server.Tests.Features.SaveInfo
             var authMock = new Mock<IAuthorizationService>();
             var mapperMock = new Mock<IMapper>();
 
-            var controller = new SaveEGOInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
+            var controller = new SaveEGOInfoController(serviceMock.Object, _postServiceMock.Object, authMock.Object, mapperMock.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext { User = CreatePrincipal(null) };
 
             var ex = await Assert.ThrowsAsync<UnauthorizedException>(() =>
@@ -376,7 +477,7 @@ namespace Server.Tests.Features.SaveInfo
             var authMock = new Mock<IAuthorizationService>();
             var mapperMock = new Mock<IMapper>();
 
-            var controller = new SaveEGOInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
+            var controller = new SaveEGOInfoController(serviceMock.Object, _postServiceMock.Object, authMock.Object, mapperMock.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext { User = CreatePrincipal("not-a-guid") };
 
             var ex = await Assert.ThrowsAsync<UnauthorizedException>(() =>
@@ -401,7 +502,7 @@ namespace Server.Tests.Features.SaveInfo
             mapperMock.Setup(m => m.Map<SavedEGOInfo>(request)).Returns(mappedEntity);
             serviceMock.Setup(s => s.FindSavedInfoById(mappedEntity.Id, false)).ReturnsAsync((SavedEGOInfo?)null);
 
-            var controller = new SaveEGOInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
+            var controller = new SaveEGOInfoController(serviceMock.Object, _postServiceMock.Object, authMock.Object, mapperMock.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext { User = CreatePrincipal(userId.ToString()) };
 
             var ex = await Assert.ThrowsAsync<NotFoundException>(() =>
@@ -433,7 +534,7 @@ namespace Server.Tests.Features.SaveInfo
                 .Callback<ClaimsPrincipal, object, string>((_, resource, _) => authorizedResource = resource)
                 .ReturnsAsync(AuthorizationResult.Failed());
 
-            var controller = new SaveEGOInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
+            var controller = new SaveEGOInfoController(serviceMock.Object, _postServiceMock.Object, authMock.Object, mapperMock.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext { User = CreatePrincipal(tokenUserId.ToString()) };
 
             var ex = await Assert.ThrowsAsync<ForbiddenException>(() =>
@@ -466,7 +567,7 @@ namespace Server.Tests.Features.SaveInfo
                 .ReturnsAsync(AuthorizationResult.Success());
             serviceMock.Setup(s => s.UpdateSavedInfo(mappedEntity, files)).ReturnsAsync((SavedEGOInfo?)null);
 
-            var controller = new SaveEGOInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
+            var controller = new SaveEGOInfoController(serviceMock.Object, _postServiceMock.Object, authMock.Object, mapperMock.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext { User = CreatePrincipal(userId.ToString()) };
 
             var ex = await Assert.ThrowsAsync<NotFoundException>(() => controller.UpdateSave(files, request));
@@ -497,7 +598,7 @@ namespace Server.Tests.Features.SaveInfo
             serviceMock.Setup(s => s.UpdateSavedInfo(mappedEntity, files)).ReturnsAsync(updatedEntity);
             mapperMock.Setup(m => m.Map<SaveInfoResponseDTO<SavedEgoRequestDTO>>(updatedEntity)).Returns(responseDto);
 
-            var controller = new SaveEGOInfoController(serviceMock.Object, authMock.Object, mapperMock.Object);
+            var controller = new SaveEGOInfoController(serviceMock.Object, _postServiceMock.Object, authMock.Object, mapperMock.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext { User = CreatePrincipal(userId.ToString()) };
 
             var result = await controller.UpdateSave(files, request);

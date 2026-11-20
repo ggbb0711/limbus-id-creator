@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { makeStore } from 'stores/AppStore'
-import PaginatedPost, { pageCountOf } from './PaginatedPost'
+import PaginatedPost from './PaginatedPost'
 import { IPostDisplayCard } from 'features/post/types/IPostDisplayCard'
 
 const card = (id: string): IPostDisplayCard => ({
@@ -47,11 +47,5 @@ describe('PaginatedPost', () => {
         expect(screen.getByText('Post a')).toBeInTheDocument()
         expect(screen.getAllByRole('navigation', { name: 'Pagination' })).toHaveLength(2)
         expect(screen.getAllByRole('button', { name: 'Share this post' })).toHaveLength(2)
-    })
-
-    it('counts pages safely', () => {
-        expect(pageCountOf(13, 6)).toBe(3)
-        expect(pageCountOf(0, 6)).toBe(0)
-        expect(pageCountOf(5, 0)).toBe(5)
     })
 })

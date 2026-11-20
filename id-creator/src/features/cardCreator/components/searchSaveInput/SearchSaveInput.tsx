@@ -10,10 +10,11 @@ import formatDisplayDate from "utils/formatDisplayDate";
 export default function SearchSaveInput({ userId, saveMode, chooseSave, inputId }: { userId: string, saveMode: SaveMode, chooseSave: (save: { id: string, previewUrl: string }) => void, inputId?: string }): ReactElement {
     const [searchName, setSearchName] = useState("")
 
-    const { data: saveList = [] } = useGetSaveListQuery(
+    const { data } = useGetSaveListQuery(
         { userId, searchName, saveMode },
         { skip: !userId }
     )
+    const saveList = data?.list ?? []
 
     const containerRef = useRef<HTMLDivElement>(null)
     const combobox = useCombobox({

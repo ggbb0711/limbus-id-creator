@@ -422,5 +422,32 @@ namespace Server.Tests.Features.SaveInfo.Service
 
             Assert.Equal(unmatchedNewSkillOriginalImageId, unmatchedNewSkill.ImageAttach.Id);
         }
+
+        [Fact]
+        public async Task ShouldCountSavedInfos_UsingTheSameNameAndUserFilterAsTheSearch()
+        {
+            var fixture = new Fixture();
+            var userId = Guid.NewGuid();
+            var matching = MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "Effect");
+            matching.UserId = userId;
+            matching.Name = "Blade Lineage Faust";
+            var wrongName = MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "Effect");
+            wrongName.UserId = userId;
+            wrongName.Name = "Gregor";
+            var wrongUser = MockSaveData.CreateSavedIdEntry(fixture, Guid.NewGuid(), "Effect");
+            wrongUser.Name = "Blade Lineage Faust";
+            var entries = new List<SavedIDInfo> { matching, wrongName, wrongUser };
+
+            var saveInfoRepository = new Mock<ISaveInfoRepository<SavedIDInfo, SavedId>>();
+            saveInfoRepository
+                .Setup(r => r.CountAsync(It.IsAny<System.Linq.Expressions.Expression<Func<SavedIDInfo, bool>>>()))
+                .Returns((System.Linq.Expressions.Expression<Func<SavedIDInfo, bool>> filter) =>
+                    Task.FromResult(entries.AsQueryable().Count(filter)));
+            var service = new SavedInfoService<SavedIDInfo, SavedId>(saveInfoRepository.Object, new Mock<ISavedSkillRepository>().Object);
+
+            var count = await service.CountSavedInfos(new SearchSaveParams { UserId = userId, Name = "Lineage", Page = 3, Limit = 1 });
+
+            Assert.Equal(1, count);
+        }
     }
 }
