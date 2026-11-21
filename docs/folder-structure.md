@@ -101,6 +101,10 @@ Use the tsconfig path aliases, never long relative paths: `api/*`, `assets/*`, `
 
 Routes only, kept thin. A `page.tsx` sets `metadata` / `revalidate`, fetches server data through `features/<x>/api/server/`, and renders a component from `features/`. No business logic here.
 
+Don't put a `loading.tsx` in or above a route whose `page.tsx` calls `notFound()`. It streams the page with HTTP 200 before `notFound()` runs, so missing items become soft 404s. `app/notFoundStatus.test.ts` enforces this.
+
+There are two 404 pages. `app/(site)/not-found.tsx` is shown when a page inside `(site)` calls `notFound()`; it renders only `NotFoundPage`, because the `(site)` layout already adds the header and footer. `app/not-found.tsx` is shown for URLs that match no route; it wraps `NotFoundPage` in `SiteShell` itself.
+
 | Path | Route |
 |---|---|
 | `app/(site)/` | Pages inside the site shell: `forum`, `post/[postId]`, `post/[postId]/edit`, `new-post`, `user/[userId]`, `blog`, `blog/[slug]`, `about`, `contact`, `privacy-policy`, `terms-of-service`, home `page.tsx` |
