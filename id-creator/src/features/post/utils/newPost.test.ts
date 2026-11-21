@@ -74,11 +74,12 @@ describe('chosenSaveKey', () => {
 })
 
 describe('chosenSavesFromPost', () => {
-    it('maps the post cards in position order', () => {
+    it('maps the cards in slide order and skips slides without a card', () => {
         const post = {
-            cards: [
-                { id: 'c2', position: 1, kind: 'Ego', imageUrl: 'two.png', saveId: 's2', saveInfo: {} },
-                { id: 'c1', position: 0, kind: 'Identity', imageUrl: 'one.png', saveId: null, saveInfo: {} },
+            slides: [
+                { imageUrl: 'one.png', card: { id: 'c1', position: 1, kind: 'Identity', imageUrl: 'one.png', saveId: null, saveInfo: {} } },
+                { imageUrl: 'plain.png', card: null },
+                { imageUrl: 'two.png', card: { id: 'c2', position: 0, kind: 'Ego', imageUrl: 'two.png', saveId: 's2', saveInfo: {} } },
             ],
         } as unknown as IPost
 

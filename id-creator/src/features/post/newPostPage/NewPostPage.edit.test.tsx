@@ -29,8 +29,9 @@ jest.mock('features/cardCreator', () => ({
         <button type="button" onClick={() => chooseSave({ id: 'picked', previewUrl: 'picked.png' })}>Pick save</button>,
 }))
 
-const post = (cards: IPost['cards']) => ({
-    id: 'p1', title: 'My post', description: 'Old text', userId: 'author', tags: ['Identity', 'Burn'], cards,
+const post = (cards: NonNullable<IPost['slides']>[number]['card'][]) => ({
+    id: 'p1', title: 'My post', description: 'Old text', userId: 'author', tags: ['Identity', 'Burn'],
+    slides: cards.map(card => ({ imageUrl: card?.imageUrl ?? '', card })),
     imagesAttach: [], created: '', viewCount: 0, commentCount: 0, userName: '', userIcon: '',
 }) as unknown as IPost
 

@@ -14,6 +14,7 @@ import { IIdInfo } from "features/cardCreator/types/IIdInfo";
 import { IEgoInfo } from "features/cardCreator/types/IEgoInfo";
 import Tabs, { Tab } from "components/ui/tabs/Tabs";
 import { StatusEffectPopupProvider } from "features/cardCreator/contexts/StatusEffectPopupContext";
+import SummarySplashArt from "./SummarySplashArt";
 import "./CardSummary.css";
 
 function renderSkill(skill: SkillDetail): ReactElement {
@@ -32,19 +33,19 @@ const TAB_GROUPS: { id: string, label: string, types: SkillDetail["type"][] }[] 
     { id: "effects", label: "Effects", types: ["CustomEffect", "MentalEffect"] },
 ]
 
-function SummaryHeader({ sinnerColor, sinnerIcon, splashArt, children }: { sinnerColor: string, sinnerIcon: string, splashArt: string, children: ReactNode }): ReactElement {
+function SummaryHeader({ sinnerColor, sinnerIcon, children }: { sinnerColor: string, sinnerIcon: string, children: ReactNode }): ReactElement {
     return <div className="card-summary-header" style={{ borderColor: sinnerColor }}>
-        {splashArt && <img className="card-summary-splash-art" src={splashArt} alt="" />}
-        {sinnerIcon && <img className="card-summary-sinner-icon" src={sinnerIcon} alt="" />}
         {children}
+        {sinnerIcon && <img className="card-summary-sinner-icon" src={sinnerIcon} alt="" />}
     </div>
 }
 
-function IdentityTop({ info }: { info: IIdInfo }): ReactElement {
+function IdentityTop({ info, name }: { info: IIdInfo, name: string }): ReactElement {
     return <>
-        <SummaryHeader sinnerColor={info.sinnerColor} sinnerIcon={info.sinnerIcon} splashArt={info.splashArt}>
+        <SummaryHeader sinnerColor={info.sinnerColor} sinnerIcon={info.sinnerIcon}>
             <IdHeader title={info.title} name={info.name} sinnerColor={info.sinnerColor} rarity={info.rarity} traits={info.traits ?? []}/>
         </SummaryHeader>
+        {info.splashArt && <SummarySplashArt kind="Identity" name={name} splashArt={info.splashArt} splashArtScale={info.splashArtScale} splashArtTranslation={info.splashArtTranslation}/>}
         <div className="card-summary-stats">
             <SinnerStats minSpeed={info.minSpeed} maxSpeed={info.maxSpeed} hp={info.hp} staggerResist={info.staggerResist} defenseLevel={info.defenseLevel}
                 slashResistant={info.slashResistant} pierceResistant={info.pierceResistant} bluntResistant={info.bluntResistant} sinnerColor={info.sinnerColor}/>
@@ -52,11 +53,12 @@ function IdentityTop({ info }: { info: IIdInfo }): ReactElement {
     </>
 }
 
-function EgoTop({ info }: { info: IEgoInfo }): ReactElement {
+function EgoTop({ info, name }: { info: IEgoInfo, name: string }): ReactElement {
     return <>
-        <SummaryHeader sinnerColor={info.sinnerColor} sinnerIcon={info.sinnerIcon} splashArt={info.splashArt}>
+        <SummaryHeader sinnerColor={info.sinnerColor} sinnerIcon={info.sinnerIcon}>
             <EgoHeader title={info.title} name={info.name} egoLevel={info.egoLevel} sanityCost={info.sanityCost} sinnerColor={info.sinnerColor}/>
         </SummaryHeader>
+        {info.splashArt && <SummarySplashArt kind="Ego" name={name} splashArt={info.splashArt} splashArtScale={info.splashArtScale} splashArtTranslation={info.splashArtTranslation}/>}
         <div className="card-summary-stats ego">
             <SinCost sinCost={info.sinCost}/>
             <SinResistant sinResistant={info.sinResistant}/>
@@ -78,7 +80,7 @@ export default function CardSummary({ card }: { card: SummaryCard }): ReactEleme
 
     return <StatusEffectPopupProvider skills={info.skillDetails}>
         <section className="card-summary" aria-label={name}>
-            {card.kind === "Identity" ? <IdentityTop info={card.info}/> : <EgoTop info={card.info}/>}
+            {card.kind === "Identity" ? <IdentityTop info={card.info} name={name}/> : <EgoTop info={card.info} name={name}/>}
             {tabs.length > 0 && <Tabs className="card-summary-tabs" tabs={tabs} label={`${name} details`}/>}
         </section>
     </StatusEffectPopupProvider>

@@ -12,6 +12,11 @@ export interface IPostCardSnapshot {
     saveInfo: unknown
 }
 
+export interface IPostSlide {
+    imageUrl: string
+    card?: IPostCardSnapshot | null
+}
+
 export interface IPost extends PostAuthor {
     id: string
     title: string
@@ -22,6 +27,6 @@ export interface IPost extends PostAuthor {
     commentCount: number
     created: string
     updated?: string | null
-    cards?: IPostCardSnapshot[]
+    slides?: IPostSlide[]
     hasCards?: boolean
 }

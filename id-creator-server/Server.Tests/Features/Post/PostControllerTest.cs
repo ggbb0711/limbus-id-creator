@@ -96,31 +96,6 @@ namespace Server.Tests.Features.Post
         }
 
         [Fact]
-        public async Task GetPost_ReturnsCardsOrderedByPosition()
-        {
-            var postId = Guid.NewGuid();
-            var second = new PostCard { Position = 1, ImageUrl = "b" };
-            var first = new PostCard { Position = 0, ImageUrl = "a" };
-            var foundPost = new PostModel { Id = postId, Cards = [second, first] };
-            var mappedCards = new List<PostCardResponseDTO> { new() { ImageUrl = "a" }, new() { ImageUrl = "b" } };
-
-            var postService = new Mock<IPostService>();
-            var mapper = new Mock<IMapper>();
-            postService.Setup(s => s.GetPostById(postId)).ReturnsAsync(foundPost);
-            mapper.Setup(m => m.Map<PostResponseDTO>(foundPost)).Returns(new PostResponseDTO { Id = postId });
-            mapper.Setup(m => m.Map<List<PostCardResponseDTO>>(It.Is<List<PostCard>>(l => l.SequenceEqual(new[] { first, second }))))
-                .Returns(mappedCards);
-
-            var controller = CreateController(postService, new Mock<IPostViewService>(), new Mock<ICommentService>(), mapper);
-
-            var result = await controller.GetPost(postId);
-
-            var okResult = Assert.IsType<OkObjectResult>(result.Result);
-            var response = Assert.IsType<ApiResponse<PostResponseDTO>>(okResult.Value);
-            Assert.Same(mappedCards, response.Data!.Cards);
-        }
-
-        [Fact]
         public async Task CreateNewPost_ThrowsUnauthorizedException_WhenSubClaimMissing()
         {
             var dto = new PostRequestDTO { Title = "New Post" };
@@ -277,23 +252,22 @@ namespace Server.Tests.Features.Post
             var option = new SearchPostOption();
             var post1 = new PostModel { Id = Guid.NewGuid() };
             var post2 = new PostModel { Id = Guid.NewGuid() };
-            var dto1 = new PostResponseDTO { Id = post1.Id };
-            var dto2 = new PostResponseDTO { Id = post2.Id };
 
             var postService = new Mock<IPostService>();
             var postViewService = new Mock<IPostViewService>();
             var commentService = new Mock<ICommentService>();
-            var mapper = new Mock<IMapper>();
             postService.Setup(s => s.FindPosts(option)).ReturnsAsync([post1, post2]);
             postService.Setup(s => s.GetPostCount(option)).Returns(2);
-            mapper.Setup(m => m.Map<PostResponseDTO>(post1)).Returns(dto1);
-            mapper.Setup(m => m.Map<PostResponseDTO>(post2)).Returns(dto2);
             postViewService.Setup(s => s.GetViewCount(post1.Id)).Returns(10);
             postViewService.Setup(s => s.GetViewCount(post2.Id)).Returns(20);
             commentService.Setup(s => s.GetCommentCount(post1.Id)).Returns(3);
             commentService.Setup(s => s.GetCommentCount(post2.Id)).Returns(4);
             postService.Setup(s => s.GetPostIdsWithCards(It.Is<IReadOnlyCollection<Guid>>(ids => ids.SequenceEqual(new[] { post1.Id, post2.Id }))))
                 .ReturnsAsync([post2.Id]);
+            var realMapper = new MapperConfiguration(cfg => cfg.AddProfile<PostProfile>()).CreateMapper();
+            var mapper = new Mock<IMapper>();
+            mapper.Setup(m => m.Map(It.IsAny<object>(), It.IsAny<Action<IMappingOperationOptions<object, PostListItemDTO>>>()))
+                .Returns((object source, Action<IMappingOperationOptions<object, PostListItemDTO>> opts) => realMapper.Map(source, opts));
 
             var controller = CreateController(postService, postViewService, commentService, mapper);
 
@@ -404,7 +378,6 @@ namespace Server.Tests.Features.Post
             var okResult = Assert.IsType<OkObjectResult>(result.Result);
             var response = Assert.IsType<ApiResponse<PostResponseDTO>>(okResult.Value);
             Assert.Equal("Title", response.Data!.Title);
-            Assert.True(response.Data.HasCards);
         }
 
         [Fact]

@@ -4,23 +4,77 @@
     gap: 12px;
 }
 
-.post-card-details-nav{
+.post-card-details-body{
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
+    align-items: stretch;
+    gap: 8px;
 }
 
-.post-card-details-arrow{
-    border-radius: 100%;
-    background-color: black;
+.post-card-details-content{
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.post-card-details-side{
+    width: 56px;
+    flex-shrink: 0;
+    align-self: stretch;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.35);
+    border: 1px solid var(--brown-pale);
+    border-radius: 4px;
     fill: white;
-    padding: 4px;
-    rotate: 90deg;
     cursor: pointer;
 }
 
-.post-card-details-arrow:disabled{
+.post-card-details-side:hover:not(:disabled){
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.post-card-details-side:disabled{
     opacity: 0.3;
     cursor: default;
+}
+
+.post-card-details-side:focus-visible{
+    outline: 2px solid white;
+    outline-offset: 2px;
+}
+
+.post-card-details-side-icon{
+    position: sticky;
+    top: calc(50vh - 20px);
+    display: flex;
+    rotate: 90deg;
+}
+
+.post-card-details-side-icon svg{
+    width: 40px;
+    height: 40px;
+}
+
+.post-card-details-counter{
+    text-align: center;
+    font-size: 18px;
+    margin: 0;
+}
+
+@media (max-width: 600px){
+    .post-card-details-side{
+        width: 36px;
+    }
+
+    .post-card-details-side-icon{
+        top: calc(50vh - 14px);
+    }
+
+    .post-card-details-side-icon svg{
+        width: 28px;
+        height: 28px;
+    }
 }

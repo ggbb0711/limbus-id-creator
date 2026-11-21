@@ -1,6 +1,6 @@
 namespace Server.Features.Post.DTO
 {
-    public class PostResponseDTO
+    public class PostListItemDTO
     {
         public Guid Id { get; set; }
         public string Title { get; set; } = "";
@@ -14,7 +14,17 @@ namespace Server.Features.Post.DTO
         public List<string> Tags { get; set; } = [];
         public int ViewCount { get; set; } = 0;
         public int CommentCount { get; set; } = 0;
-        public List<PostCardResponseDTO> Cards { get; set; } = [];
         public bool HasCards { get; set; }
+    }
+
+    public class PostSlideDTO
+    {
+        public string ImageUrl { get; set; } = "";
+        public PostCardResponseDTO? Card { get; set; }
+    }
+
+    public class PostResponseDTO : PostListItemDTO
+    {
+        public List<PostSlideDTO> Slides { get; set; } = [];
     }
 }

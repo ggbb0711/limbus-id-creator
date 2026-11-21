@@ -59,9 +59,9 @@ export function addChosenSave(saves: readonly ChosenSave[], save: ChosenSave, ma
 }
 
 export function chosenSavesFromPost(post: IPost): ChosenSave[] {
-    return [...(post.cards ?? [])]
-        .sort((a, b) => a.position - b.position)
-        .map(card => ({ cardId: card.id, saveId: card.saveId ?? null, kind: card.kind, previewUrl: card.imageUrl }))
+    return (post.slides ?? []).flatMap(({ card }) => card
+        ? [{ cardId: card.id, saveId: card.saveId ?? null, kind: card.kind, previewUrl: card.imageUrl }]
+        : [])
 }
 
 export const canUpdateSave = (save: ChosenSave) => save.cardId !== undefined && save.saveId !== null

@@ -22,6 +22,13 @@ const identity = () => createIdInfo({
 })
 
 describe('CardSummary', () => {
+    beforeAll(() => {
+        Object.defineProperty(window, 'ResizeObserver', {
+            writable: true,
+            value: class { observe() {} unobserve() {} disconnect() {} },
+        })
+    })
+
     it('shows the name, stats and every group of skills in the HTML', () => {
         const { container } = render(<CardSummary card={{ kind: 'Identity', info: identity() }}/>)
 
@@ -51,17 +58,50 @@ describe('CardSummary', () => {
         expect(within(panelOf('Passives')).getByText('Steady')).toBeInTheDocument()
     })
 
-    it('shows the splash art in the header', () => {
+    it('shows the identity splash art below the header', () => {
         const info = { ...identity(), splashArt: 'https://example.com/splash.webp' }
         const { container } = render(<CardSummary card={{ kind: 'Identity', info }}/>)
 
-        expect(container.querySelector('.card-summary-header .card-summary-splash-art')).toHaveAttribute('src', 'https://example.com/splash.webp')
+        expect(container.querySelector('.card-summary-splash-below .card-summary-splash-art')).toHaveAttribute('src', 'https://example.com/splash.webp')
+        expect(container.querySelector('.card-summary-header .card-summary-splash-art')).toBeNull()
+        expect(screen.getByText('Faust')).toBeInTheDocument()
     })
 
     it('leaves out the splash art when there is none', () => {
         const { container } = render(<CardSummary card={{ kind: 'Identity', info: identity() }}/>)
 
-        expect(container.querySelector('.card-summary-splash-art')).toBeNull()
+        expect(container.querySelector('.card-summary-splash-below')).toBeNull()
+        expect(screen.queryByRole('button', { name: 'View splash art' })).not.toBeInTheDocument()
+        expect(screen.getByText('Faust')).toBeInTheDocument()
+    })
+
+    it('shows the ego splash art in a circle framed like the editor', () => {
+        const info = createEgoInfo({ title: 'E.G.O', name: 'Faust', splashArt: 'https://example.com/ego.webp', splashArtScale: 1.5, splashArtTranslation: { x: 12, y: -8 } })
+        const { container } = render(<CardSummary card={{ kind: 'Ego', info }}/>)
+        const image = container.querySelector('.card-summary-ego-circle .egoSplashArtImg')
+
+        expect(image).toHaveAttribute('src', 'https://example.com/ego.webp')
+        expect((image!.parentElement as HTMLElement).style.transform).toBe('translate(12px, -8px) scale(1.5)')
+    })
+
+    it('leaves out the ego circle when there is no splash art', () => {
+        const info = createEgoInfo({ title: 'E.G.O', name: 'Faust' })
+        const { container } = render(<CardSummary card={{ kind: 'Ego', info }}/>)
+
+        expect(container.querySelector('.card-summary-ego-circle')).toBeNull()
+    })
+
+    it('opens the splash art in the image viewer and closes it', async () => {
+        const user = userEvent.setup()
+        const info = { ...identity(), splashArt: 'https://example.com/splash.webp' }
+        render(<CardSummary card={{ kind: 'Identity', info }}/>)
+
+        await user.click(screen.getByRole('button', { name: 'View splash art' }))
+        const dialog = screen.getByRole('dialog', { name: 'Image viewer' })
+        expect(dialog.querySelector('img.image-pop-up')).toHaveAttribute('src', 'https://example.com/splash.webp')
+
+        await user.click(screen.getByRole('button', { name: 'Close image viewer' }))
+        expect(screen.queryByRole('dialog', { name: 'Image viewer' })).not.toBeInTheDocument()
     })
 
     it('leaves out tabs with nothing in them', () => {

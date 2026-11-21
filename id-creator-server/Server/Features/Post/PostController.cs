@@ -32,7 +32,7 @@ namespace Server.Features.Post
             post.Cards = cards;
             post.ImageAttaches = [.. cards.Select(c => new ImageObj { Url = c.ImageUrl })];
             var addedPost = await postService.CreatePost(post);
-            return Ok(ApiResponse<PostResponseDTO>.Ok(mapper.Map<PostResponseDTO>(addedPost),"Post created successfully"));
+            return Ok(ApiResponse<PostResponseDTO>.Ok(mapper.Map<PostResponseDTO>(addedPost), "Post created successfully"));
         }
 
         [HttpGet("{PostId}")]
@@ -47,8 +47,6 @@ namespace Server.Features.Post
             if (foundPost.User?.IsBanned() == true)
                 throw new GoneException(ApiErrors.PostAuthorBanned);
             var postResponse = mapper.Map<PostResponseDTO>(foundPost);
-            postResponse.Cards = mapper.Map<List<PostCardResponseDTO>>(foundPost.Cards.OrderBy(c => c.Position).ToList());
-            postResponse.HasCards = foundPost.Cards.Count > 0;
             postResponse.ViewCount = await postViewService.LogView(new PostView()
             {
                 PostId = postResponse.Id,
@@ -80,8 +78,6 @@ namespace Server.Features.Post
             }
             var updated = await postService.UpdatePost(post, body.Description, body.Tags, cards);
             var response = mapper.Map<PostResponseDTO>(updated);
-            response.Cards = mapper.Map<List<PostCardResponseDTO>>(updated.Cards.OrderBy(c => c.Position).ToList());
-            response.HasCards = updated.Cards.Count > 0;
             return Ok(ApiResponse<PostResponseDTO>.Ok(response, "Post updated successfully"));
         }
 
@@ -115,10 +111,9 @@ namespace Server.Features.Post
             {
                 List = [.. foundPost.Select(p=>
                 {
-                    var postResponse = mapper.Map<PostResponseDTO>(p);
+                    var postResponse = mapper.Map<PostListItemDTO>(p, opt => opt.Items[PostProfile.PostIdsWithCards] = withCards);
                     postResponse.ViewCount = postViewService.GetViewCount(postResponse.Id);
                     postResponse.CommentCount = commentService.GetCommentCount(postResponse.Id);
-                    postResponse.HasCards = withCards.Contains(postResponse.Id);
                     return postResponse;
                 })],
                 Total = postService.GetPostCount(option)

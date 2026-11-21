@@ -3,8 +3,14 @@ import { render, screen } from '@testing-library/react'
 import Post from './Post'
 import { IPost } from 'features/post/types/IPost'
 
-jest.mock('./PostCarousel', () => ({ __esModule: true, default: () => <p>plain carousel</p> }))
-jest.mock('features/post/components/postCardDetails/PostCardsView', () => ({ __esModule: true, default: () => <p>card details</p> }))
+jest.mock('features/post/components/postCardDetails/PostCardsView', () => ({
+    __esModule: true,
+    default: ({ images, summaries }: { images: string[], summaries: unknown[] }) => <p>card details {images.join(',')} summaries {summaries.filter(Boolean).length}</p>,
+}))
+jest.mock('features/cardCreator', () => ({
+    ...jest.requireActual('features/cardCreator'),
+    CardSummary: () => null,
+}))
 jest.mock('./LivePostStats', () => ({ __esModule: true, default: () => null }))
 jest.mock('features/post/components/shareMenu/ShareMenu', () => ({ __esModule: true, default: () => null }))
 jest.mock('features/post/components/authorBadge/AuthorBadge', () => ({ __esModule: true, default: () => null }))
@@ -40,16 +46,30 @@ describe('Post owner actions', () => {
 })
 
 describe('Post card details', () => {
-    it('keeps the plain carousel when the post has no cards', () => {
-        render(<Post post={post([])}/>)
-        expect(screen.getByText('plain carousel')).toBeInTheDocument()
-        expect(screen.queryByText('card details')).not.toBeInTheDocument()
+    it('shows every slide image with a summary only where the slide has a card', () => {
+        const withSlides = { ...post([]), slides: [
+            { imageUrl: 'a', card: { id: 'c', position: 0, kind: 'Identity', imageUrl: 'a', saveInfo: { name: 'Faust' } } },
+            { imageUrl: 'b', card: null },
+        ] } as IPost
+        render(<Post post={withSlides}/>)
+        expect(screen.getByText('card details a,b summaries 1')).toBeInTheDocument()
     })
 
-    it('shows card details when an image has a card', () => {
-        const withCard = { ...post([]), imagesAttach: ['a'], cards: [{ position: 0, kind: 'Identity', imageUrl: 'a', saveInfo: { name: 'Faust' } }] } as IPost
-        render(<Post post={withCard}/>)
-        expect(screen.getByText('card details')).toBeInTheDocument()
+    it('builds a summary for identity and ego cards and skips cards without saved data', () => {
+        const card = (kind: string, saveInfo: unknown) => ({ id: kind, position: 0, kind, imageUrl: kind, saveInfo })
+        const withSlides = { ...post([]), slides: [
+            { imageUrl: 'a', card: card('Identity', { name: 'Faust' }) },
+            { imageUrl: 'b', card: card('Ego', { name: 'Ego', egoLevel: 'HE' }) },
+            { imageUrl: 'c', card: card('Identity', 'text') },
+            { imageUrl: 'd', card: card('Identity', null) },
+        ] } as IPost
+        render(<Post post={withSlides}/>)
+        expect(screen.getByText('card details a,b,c,d summaries 2')).toBeInTheDocument()
+    })
+
+    it('uses the same view for a post with only plain images', () => {
+        render(<Post post={{ ...post([]), slides: [{ imageUrl: 'a' }, { imageUrl: 'b' }] } as IPost}/>)
+        expect(screen.getByText('card details a,b summaries 0')).toBeInTheDocument()
     })
 
     it('shows when the post was edited', () => {

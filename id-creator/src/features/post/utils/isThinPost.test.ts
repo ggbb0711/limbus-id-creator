@@ -13,6 +13,10 @@ describe('isThinPost', () => {
 
     it('is not thin when the post has cards, even with no description', () => {
         expect(isThinPost({ description: '', hasCards: true })).toBe(false)
-        expect(isThinPost({ description: '', cards: [{ id: 'c1', position: 0, kind: 'Identity', imageUrl: 'a', saveInfo: {} }] })).toBe(false)
+        expect(isThinPost({ description: '', slides: [{ imageUrl: 'a', card: { id: 'c1', position: 0, kind: 'Identity', imageUrl: 'a', saveInfo: {} } }] })).toBe(false)
+    })
+
+    it('is thin when its slides are only plain images', () => {
+        expect(isThinPost({ description: '', slides: [{ imageUrl: 'a', card: null }] })).toBe(true)
     })
 })

@@ -14,40 +14,73 @@
 .card-summary-header{
     position: relative;
     border-left: 6px solid;
-    padding-left: 12px;
-    height: 160px;
+    padding: 12px;
     display: flex;
     align-items: center;
-    overflow: hidden;
+    justify-content: space-between;
+    gap: 12px;
 }
 
 .card-summary-header > .header-container{
-    position: relative;
-    z-index: 1;
-}
-
-.card-summary-splash-art{
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 20%;
-    pointer-events: none;
-    mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 40%, black 100%);
+    min-width: 0;
 }
 
 .card-summary-sinner-icon{
-    position: absolute;
-    right: 0;
-    top: 50%;
-    translate: 0 -50%;
-    width: 140px;
-    height: 140px;
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0;
     object-fit: contain;
     opacity: 0.3;
     pointer-events: none;
-    z-index: 1;
+}
+
+.card-summary-splash-below{
+    display: flex;
+    justify-content: center;
+}
+
+.card-summary-splash-button{
+    all: unset;
+    display: block;
+    width: 100%;
+    cursor: zoom-in;
+}
+
+.card-summary-splash-button.ego{
+    width: auto;
+}
+
+.card-summary-splash-button *{
+    cursor: zoom-in;
+}
+
+.card-summary-splash-button:focus-visible{
+    outline: 2px solid white;
+    outline-offset: 2px;
+}
+
+.card-summary-splash-art{
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 70vh;
+    object-fit: contain;
+    border: 1px solid var(--brown-pale);
+    box-sizing: border-box;
+}
+
+.card-summary-ego-circle{
+    --scale: 0.72;
+    display: block;
+    width: calc(500px * var(--scale));
+    height: calc(500px * var(--scale));
+    border-radius: 100%;
+    overflow: hidden;
+}
+
+.card-summary-ego-circle > .ego-splash-art{
+    transform: scale(var(--scale));
+    transform-origin: 0 0;
 }
 
 .card-summary .name-field,
@@ -125,5 +158,14 @@
 
     .card-summary .name-field{
         font-size: 32px;
+    }
+
+    .card-summary-ego-circle{
+        --scale: 0.52;
+    }
+
+    .card-summary-sinner-icon{
+        width: 48px;
+        height: 48px;
     }
 }

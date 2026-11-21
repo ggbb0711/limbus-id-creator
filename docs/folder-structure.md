@@ -51,7 +51,7 @@ Namespace matches the path: `Server.Features.<Feature>.<SubFolder>`.
 |---|---|
 | Login, Google OAuth, JWT, refresh, cookies, sessions | `Features/Auth/` — `AuthController.cs`, `Service/GoogleOAuthService.cs`, `Service/JwtTokenService.cs`, `Service/SessionService.cs`, `Service/CookieSessionService.cs`, `Repository/SessionRepository.cs`, `Background/DeleteExpiredSessionsBackgroundService.cs` |
 | Saving ID / EGO cards (cloud save) | `Features/SaveInfo/` — `SaveIDInfoController.cs`, `SaveEGOInfoController.cs`, generic `Service/SavedInfoService.cs` and `Repository/SaveInfoRepository.cs` (`<TInfo, TSave>`), skill DTOs in `DTO/Skills/`, polymorphic skill JSON in `JsonConverter/` |
-| Posts, post cards, post views, edit/delete post | `Features/Post/` — `PostController.cs` (create, get, list, `PUT` edit, `DELETE` soft delete via `IsRemoved`; author only), `DTO/PostUpdateRequestDTO.cs`, `Service/PostService.cs`, `Service/PostCardBuilder.cs`, `Service/PostViewService.cs`, `Repository/PostRepository.cs`, `Enum/PostSortOption.cs` |
+| Posts, post cards, post views, edit/delete post | `Features/Post/` — `PostController.cs` (create, get, list, `PUT` edit, `DELETE` soft delete via `IsRemoved`; author only), `DTO/PostUpdateRequestDTO.cs`, `Service/PostService.cs`, `Service/PostCardBuilder.cs`, `DTO/PostProfile.cs` (fills `Slides` via `MergeCardInfoAndImageUrl`, pairing each visible image with its card, and `HasCards` on `PostResponseDTO`; list items use `PostListItemDTO` with `HasCards` from the `PostProfile.PostIdsWithCards` mapping item), `Service/PostViewService.cs`, `Repository/PostRepository.cs`, `Enum/PostSortOption.cs` |
 | Comments | `Features/Comment/` |
 | Image upload / delete lifecycle | `Features/Images/` (service, repository, `Background/UploadImagesBackgroundService.cs`, `Background/DeleteImagesBackgroundService.cs`) + `Shared/CloudStorage/Service/AWSS3Service.cs` |
 | User profile | `Features/User/` |
@@ -134,6 +134,7 @@ There are two 404 pages. `app/(site)/not-found.tsx` is shown when a page inside 
 | Cloud save | `features/cardCreator/api/SaveInfoApi.ts`, `features/cardCreator/utils/save/cloudSaveForm.ts`, `features/cardCreator/utils/save/prepareCloudSave.ts` |
 | Status effects / keywords | `features/cardCreator/utils/keywords/` (`statusEffectClipboard.ts`: copy status effects as their names, paste them back into the skill editor as `[keyword]`) |
 | Status effect popup (click an effect in skill text) | `features/cardCreator/components/statusEffectPopup/` (Floating UI popup), `features/cardCreator/contexts/StatusEffectPopupContext.tsx` (`StatusEffectPopupProvider`, `useStatusEffectPopup`), `features/cardCreator/types/StatusEffectInfo.ts`. Provided in `pages/CardEditor.tsx` (wraps input tabs + preview) and `components/cardSummary/CardSummary.tsx`; clicks handled in `components/card/components/skillEffect/SkillEffect.tsx` and `components/inputTab/components/tipTapEditor/TipTapEditor.tsx` |
+| Card summary on the post page (header, splash art, stats, skill tabs) | `features/cardCreator/components/cardSummary/` — `CardSummary.tsx`, `SummarySplashArt.tsx` (splash art under the header; EGO reuses `SplashArt variant="ego"` in a scaled circle; click opens `components/ui/imageViewer/`) |
 | Posts, comments, new post, edit/delete post | `features/post/` — `api/PostApi.ts`, `api/CommentApi.ts`, `api/server/posts.ts`, `api/server/revalidatePost.ts` (server action that refreshes cached post/list pages), `newPostPage/` (create and edit form), `editPostPage/`, `components/postOwnerActions/` (author-only Edit/Delete), `postPage/` |
 | Forum listing / search | `features/forum/` |
 | User profile | `features/user/` |
@@ -149,11 +150,11 @@ There are two 404 pages. `app/(site)/not-found.tsx` is shown when a page inside 
 | `config/env.client.ts` | `clientEnv` and `appConfig`: all app constants (limits, paging, timings, upload sizes) read from `NEXT_PUBLIC_*` with defaults |
 | `config/env.server.ts` | `serverEnv`, `serverConfig` (server-only: API URL, revalidate, timeouts) |
 | `config/` (other) | `readEnv.ts`, `siteMetadata.ts`, `navLinks.ts`, `siteLinks.ts` |
-| `components/ui/` | Generic UI primitives (dialog, dropDown, spinner, busyButton, tabs, pagination, …). Primitives may wrap Radix (`@radix-ui/*`, e.g. `tabs/Tabs.tsx`); wrap Radix here and import the wrapper from features, never Radix directly |
+| `components/ui/` | Generic UI primitives (dialog, dropDown, spinner, busyButton, tabs, pagination, imageViewer, …). `imageViewer/ImageViewer.tsx` is the fullscreen zoom/pan image viewer used by the post carousel and the card summary splash art. Primitives may wrap Radix (`@radix-ui/*`, e.g. `tabs/Tabs.tsx`); wrap Radix here and import the wrapper from features, never Radix directly |
 | `components/layout/` | `SiteShell.tsx`, header, footer |
 | `components/` (other) | App-wide components (ads, alertPopUp, errorBoundary, …) |
 | `stores/` | `AppStore.ts`, `StoreProvider.tsx`, `slices/` (Alert, Auth, Ui) |
-| `hooks/`, `utils/`, `types/` | Shared hooks, helpers, types |
+| `hooks/`, `utils/`, `types/` | Shared hooks (e.g. `hooks/useCarouselIndex.ts`, used by the post carousel and the image viewer), helpers, types |
 | `styles/`, `assets/` | Global CSS, fonts, bundled icons/images |
 
 Env values live in `id-creator/.env` and are documented in `id-creator/.env.example`. Static public files (`ads.txt`, `Images/`) live in `id-creator/public/`.
