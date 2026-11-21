@@ -20,7 +20,8 @@ export const toKeywordKey = (name: string) => name.replace(/\s/g, "_").toLowerCa
 export function replaceKeywordsAsNodes(html: string, keywords: KeywordMap): string {
     return html.replace(STATUS_NODE_PATTERN, (match, bracket, key) => {
         if (!bracket) return match
-        const selected = keywords[key.toLowerCase().replace(/&amp;/g, "&")]
+        const name = key.replace(/&amp;/g, "&")
+        const selected = keywords[name.toLowerCase()] ?? keywords[name]
         return selected ? `<span data-status-effect="${escapeHtml(selected)}">${selected}</span>` : match
     })
 }

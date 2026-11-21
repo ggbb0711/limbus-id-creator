@@ -62,3 +62,69 @@ describe('StatusEffectPopupContext', () => {
         expect(result.current.openFromElement(document.body)).toBe(false)
     })
 })
+
+describe('StatusEffectPopupProvider copy', () => {
+    function selectText(text: Element) {
+        const selection = window.getSelection()!
+        selection.removeAllRanges()
+        const range = document.createRange()
+        range.selectNodeContents(text)
+        selection.addRange(range)
+    }
+
+    function copy(prevented = false) {
+        const setData = jest.fn()
+        const event = new Event('copy', { bubbles: true, cancelable: true })
+        Object.defineProperty(event, 'clipboardData', { value: { setData } })
+        if (prevented) event.preventDefault()
+        document.dispatchEvent(event)
+        return { setData, event }
+    }
+
+    afterEach(() => window.getSelection()!.removeAllRanges())
+
+    it('copies status effects as their names with the html', () => {
+        const { text } = renderWith(`<p>Gain ${statusSpan(customEffectHtml(fanatic))} now</p>`)
+        selectText(text)
+
+        const { setData, event } = copy()
+
+        expect(setData).toHaveBeenCalledWith('text/plain', 'Gain Fanatic now')
+        expect(setData).toHaveBeenCalledWith('text/html', expect.stringContaining('data-status-effect'))
+        expect(event.defaultPrevented).toBe(true)
+    })
+
+    it('leaves copying to the browser without a status effect', () => {
+        const { text } = renderWith('<p>plain</p>')
+        selectText(text)
+
+        const { setData, event } = copy()
+
+        expect(setData).not.toHaveBeenCalled()
+        expect(event.defaultPrevented).toBe(false)
+    })
+
+    it('leaves an empty selection alone', () => {
+        renderWith(`<p>${statusSpan(customEffectHtml(fanatic))}</p>`)
+
+        expect(copy().setData).not.toHaveBeenCalled()
+    })
+
+    it('skips copies another handler already took', () => {
+        const { text } = renderWith(`<p>${statusSpan(customEffectHtml(fanatic))}</p>`)
+        selectText(text)
+
+        expect(copy(true).setData).not.toHaveBeenCalled()
+    })
+
+    it('does not open the popup while text is selected', () => {
+        const { result, text } = renderWith(`<p>Gain ${statusSpan(customEffectHtml(fanatic))}</p>`)
+        selectText(text)
+
+        let opened = true
+        act(() => { opened = result.current.openFromElement(text.querySelector('[data-status-effect] span')) })
+
+        expect(opened).toBe(false)
+        expect(result.current.isOpen).toBe(false)
+    })
+})

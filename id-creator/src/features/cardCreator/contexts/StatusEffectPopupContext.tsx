@@ -1,8 +1,9 @@
 'use client'
-import React, { ReactElement, ReactNode, createContext, useCallback, useContext, useMemo, useState } from "react";
+import React, { ReactElement, ReactNode, createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { SkillDetail } from "features/cardCreator/types/SkillDetail";
 import { StatusEffectInfo, buildStatusEffectLookup } from "features/cardCreator/types/StatusEffectInfo";
 import { toKeywordKey } from "features/cardCreator/utils/keywords/keywords";
+import { selectionClipboard } from "features/cardCreator/utils/keywords/statusEffectClipboard";
 import StatusEffectPopup from "features/cardCreator/components/statusEffectPopup/StatusEffectPopup";
 
 export interface StatusEffectPopupState {
@@ -38,6 +39,7 @@ export function StatusEffectPopupProvider({ skills, children }: { skills: readon
 
     const openFromElement = useCallback((target: EventTarget | null) => {
         if (!(target instanceof Element)) return false
+        if (window.getSelection()?.isCollapsed === false) return false
         const anchor = target.closest("[data-status-effect]")
         if (!anchor) return false
         const info = statusEffectslookup[toKeywordKey(anchor.textContent?.trim() ?? "")]
@@ -45,6 +47,19 @@ export function StatusEffectPopupProvider({ skills, children }: { skills: readon
         setPopup({ current: info, anchor })
         return true
     }, [statusEffectslookup])
+
+    useEffect(() => {
+        const copyStatusEffects = (event: ClipboardEvent) => {
+            if (event.defaultPrevented || !event.clipboardData) return
+            const clipboard = selectionClipboard(window.getSelection())
+            if (!clipboard) return
+            event.clipboardData.setData("text/plain", clipboard.text)
+            event.clipboardData.setData("text/html", clipboard.html)
+            event.preventDefault()
+        }
+        document.addEventListener("copy", copyStatusEffects)
+        return () => document.removeEventListener("copy", copyStatusEffects)
+    }, [])
 
     const value = useMemo<StatusEffectPopupState>(() => ({
         current: popup?.current ?? null,

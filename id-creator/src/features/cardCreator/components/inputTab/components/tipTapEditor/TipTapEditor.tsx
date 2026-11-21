@@ -16,6 +16,17 @@ import Toolbar from "./toolbar/Toolbar"
 import "./TipTapEditor.css"
 import { filterKeywordSuggestions, replaceKeywordsAsNodes } from "features/cardCreator/utils/keywords/keywords"
 import { useStatusEffectPopup } from "features/cardCreator/contexts/StatusEffectPopupContext"
+import { containsStatusEffect, htmlToKeywordText } from "features/cardCreator/utils/keywords/statusEffectClipboard"
+
+function pastedText(clipboard: DataTransfer | null, matchList: { [key: string]: string }): string {
+    const html = clipboard?.getData("text/html") ?? ""
+    if (html) {
+        const template = document.createElement("template")
+        template.innerHTML = html
+        if (containsStatusEffect(template.content)) return htmlToKeywordText(html, matchList)
+    }
+    return clipboard?.getData("text/plain") ?? ""
+}
 
 interface TipTapEditorProps {
     inputId: string
@@ -136,8 +147,7 @@ export default function TipTapEditor({ inputId, content, changeHandler, matchLis
             attributes: () => ({ id: inputIdRef.current }),
             handlePaste: (view, event) => {
                 event.preventDefault()
-                const text = event.clipboardData?.getData("text/plain") ?? ""
-                view.dispatch(view.state.tr.insertText(text))
+                view.dispatch(view.state.tr.insertText(pastedText(event.clipboardData, matchListRef.current)))
                 return true
             },
         },

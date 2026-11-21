@@ -10,6 +10,10 @@ describe('replaceKeywordsAsNodes', () => {
             .toBe('<p>Inflict <span data-status-effect="&lt;span&gt;Burn&lt;/span&gt;"><span>Burn</span></span></p>')
     })
 
+    it('also matches a key that has capitals', () => {
+        expect(replaceKeywordsAsNodes('[Mixed_Key]', { Mixed_Key: '<span>Mixed</span>' })).toContain('data-status-effect')
+    })
+
     it('is idempotent on its own output', () => {
         const once = replaceKeywordsAsNodes('<p>Inflict [Burn] and [Burn]</p>', keywords)
         expect(replaceKeywordsAsNodes(once, keywords)).toBe(once)
