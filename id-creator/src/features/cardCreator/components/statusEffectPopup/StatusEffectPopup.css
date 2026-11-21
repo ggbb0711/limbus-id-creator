@@ -1,6 +1,7 @@
 .status-effect-popup{
     z-index: 1000;
     max-width: 360px;
+    max-height: 300px;
     padding: 8px 12px;
     background-color: rgba(0, 0, 0, 0.75);
     border: 1px solid var(--brown-pale);
@@ -9,6 +10,7 @@
     font-family: var(--font-rubik), sans-serif;
     font-size: 16px;
     line-height: 1.3;
+    overflow-y: auto;
 }
 
 .status-effect-popup-header{
