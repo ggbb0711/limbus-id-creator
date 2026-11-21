@@ -15,4 +15,15 @@ const config: Config = {
   modulePathIgnorePatterns: ['<rootDir>/StatusEffectScrapping/'],
 }
 
-export default createJestConfig(config)
+const ESM_PACKAGES = ['github-slugger']
+
+const jestConfig = async (): Promise<Config> => {
+  const base = await createJestConfig(config)()
+  return {
+    ...base,
+    transformIgnorePatterns: (base.transformIgnorePatterns ?? []).map(pattern =>
+      pattern.replace('(geist|', `(${ESM_PACKAGES.join('|')}|geist|`)),
+  }
+}
+
+export default jestConfig

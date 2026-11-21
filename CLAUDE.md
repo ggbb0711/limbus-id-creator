@@ -48,6 +48,7 @@ npm run db:migrate - migrate with the lattest EFCore database migration file
 - Always run lint and tests after applying changes
 - Assume we are on a linux system
 - When in plan mode, please also include in the plan all the tests you are going to make
+- No Emoji, comments, code, blog, or anywhere PERIOD.
 
 ### Docs:
 

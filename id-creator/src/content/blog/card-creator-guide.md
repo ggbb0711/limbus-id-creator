@@ -1,6 +1,6 @@
 ---
 title: Card Creator Guide
-description: A complete reference for the Identity and E.G.O creators, covering every input, each skill type, keywords and status effects, the color picker, custom keywords, and how saving works.
+description: A complete reference for the Identity and E.G.O creators, covering every input, each entry type, keywords, status effect popups, copying effect text, the color picker, custom keywords, and how saving works.
 published: 2026-09-30
 ---
 
@@ -36,9 +36,9 @@ Tab controls:
 | Traits | Up to 10 short keywords. Type one and press `+` (or Enter) to add it. |
 | Speed | A minimum and a maximum, shown as a range on the card. |
 | HP | The health value. |
-| Defense level | Defense level of the identity |
-| Stagger threshold | Stagger threshold of the identity, it's a free range text you can type whatever text you want. |
-| Slash / Pierce / Blunt resist | A multiplier. The label next to it updates as you type: **Ineff** at 0.5 or below, **Endure** below 1, **Weak** at 1.5 or above, **Normal** otherwise. |
+| Defense level | Shown next to the defense icon. |
+| Stagger threshold | Free text, so you can write one value or several, like `60% 30%`. |
+| Slash / Pierce / Blunt resist | A multiplier. The label updates as you type: **Ineff** at 0.5 or below, **Endure** below 1, **Weak** at 1.5 or above, **Normal** otherwise. |
 
 ### E.G.O stats
 
@@ -48,8 +48,8 @@ Tab controls:
 | Title / Name | The E.G.O's title and name. |
 | E.G.O level | ZAYIN, TETH, HE, WAW or ALEPH. Changes the level icon on the card. |
 | Sanity cost | The Sanity spent to use the E.G.O. |
-| Sin cost | Cost of the E.G.O skill. Sins left at 0 are not shown. |
-| Sin resistance | Resistance of the skill. |
+| Sin cost | One value per sin. Sins left at 0 are not shown. |
+| Sin resistance | One multiplier per sin. |
 
 A new E.G.O starts with three entries: **Awakening**, **Corrosion** and a **Passive**.
 
@@ -65,10 +65,10 @@ Every entry after the stats tab is one of five types. Switch between them with t
 | Sin affinity | One of the seven sins. Colors the skill and sets its sin icon. |
 | Skill frame | Frame style 1, 2 or 3, matching the game's skill tiers. |
 | Base power | The starting power of the skill. |
-| Coin power | Added per heads. Negative values are allowed. |
-| Coin number | How many coins the skill has. Each coin is drawn on the card. Coin keywords go up to coin 9. |
+| Coin power | Negative values are allowed. |
+| Coin number | Each coin is drawn on the card. Coin keywords go up to coin 9. |
 | Offense level | Shown next to the attack icon. |
-| Atk weight | The number of targets. |
+| Atk weight | A whole number, shown on the card. |
 | Amt | How many copies of the skill are in the deck, shown as `x3` and so on. |
 | Skill image | Upload a skill icon (max 100kb). |
 | Skill label | The small tag above the skill name, like `SKILL 1`. |
@@ -129,6 +129,8 @@ Keywords insert the game's colored, underlined terms with their icons, like **Bu
 
 An inserted keyword is a single block. Backspace deletes the whole keyword, and you can't edit the text inside it. To change it, delete it and insert another.
 
+The full list of built-in keywords, and advice on laying out skill text, is in [Keywords and Status Effects](/blog/keywords-and-status-effects).
+
 ### Keyword groups
 
 | Group | Examples | What it inserts |
@@ -149,6 +151,21 @@ Coins on the card follow the markers in that skill's description:
 - `[coin_N_your_effect]` draws coin *N* with your custom effect's icon and color. This works only when **Use as custom coin type** is on for that custom effect.
 
 *N* is the coin's position, from 1 to 9. Coins without a marker are normal coins.
+
+### Status effect popups
+
+Click a custom effect anywhere it appears, in a description box or on the card preview, and a small popup shows its icon, name and description. Press Esc or click outside to close it. The same popup works on post pages, so readers can look up your custom effects without leaving the post.
+
+A popup only opens for custom effects that have a description. Built-in status effects don't open one, and neither does an effect you haven't described yet. If you drag across an effect to select text, the popup stays closed so your selection isn't lost.
+
+### Copying effect text
+
+You can copy text that contains keywords from a description box, or from a card summary on a post page.
+
+- **Pasting outside the site** (Discord, a document, a note) gives plain text with each status effect written as its name, for example "Inflict 3 Burn". Icons are left out.
+- **Pasting into a description box** turns the effects back into keywords, with their color, underline and icon. This works for every built-in keyword, and for custom effects that exist on the card you're pasting into.
+- A custom effect from a different card pastes as its plain name. Add a custom effect with the same name to this card, and typing `[` with that name inserts the styled version.
+- Other formatting, like bold or colored text, is not kept when pasting into a description box.
 
 ## Custom keywords
 
@@ -180,10 +197,11 @@ Every change is saved to your browser as you work, and the card is restored the 
 
 **Setting/Saves → Local saves** stores named copies of your card in this browser.
 
-- Enter a name and create the save. The menu shows how many save slots you've used.
+- Enter a name and create the save. You have 10 slots per editor, and the menu shows how many you've used.
 - **Load** replaces the current card with the save.
 - **Overwrite** replaces the save with the current card.
 - **Delete** removes the save.
+- The pencil icon next to a save's name renames it.
 
 Local saves stay on this device and in this browser. Clearing your site data deletes them.
 
@@ -192,10 +210,18 @@ Local saves stay on this device and in this browser. Clearing your site data del
 **Setting/Saves → Cloud saves** stores your card on the server so you can open it on any device. You need to be logged in.
 
 - **Create a new save** uploads the card and a preview image of it. If an image on the card can't be loaded, the save fails with a "missing asset" error.
-- Search your saves by name.
+- Search your saves by name. The list shows 10 saves at a time, with page buttons underneath when you have more.
 - **Load**, **Overwrite** and **Delete** work the same way as for local saves.
 
-Cloud saves are also how you share cards: the forum's post form attaches the preview image of a cloud save. See [How to Share Your Creation](/blog/how-to-post-your-creation).
+Images on a new or overwritten save finish uploading in the background, which takes a few seconds. Posting the save before that finishes gives a "still uploading" message, so wait a moment and try again.
+
+Cloud saves are also how you share cards: a forum post is built from your cloud saves. See [How to Share Your Creation](/blog/how-to-post-your-creation).
+
+#### Posted in
+
+A cloud save that you've used in a post shows a collapsible **Posted in** list under its name, with a link to each post. Use it to find the posts you should update after changing the save.
+
+When you delete a save that is used in posts, the confirmation says how many. The posts keep their copy of the card and still display it, but they lose the link to the save, so you can no longer update those cards from it.
 
 ### Downloading
 
@@ -206,4 +232,5 @@ Cloud saves are also how you share cards: the forum's post form attaches the pre
 - If you start a new card from an old one, make a local save of the old one first. Reset can't be undone.
 - Keep splash art within the size limits by resizing it before upload. Oversized files are rejected.
 - If your coin markers don't show on the card, check that the coin number is correct and the skill has at least that many coins.
+- After overwriting a cloud save that's already posted, open the post's **Edit** page and press **Update** on that card. Posts don't change on their own.
 - Custom keywords are per browser, so if you work on two devices, add them on both.
