@@ -22,7 +22,7 @@ const CardPreview = forwardRef<HTMLDivElement, CardPreviewProps>(({ changeActive
     return (
         <CardZoomShell isDragging={isDragging}>
             <div className="Card" ref={ref}>
-                {info.sinnerIcon && <img className="sinner-icon-background" src={info.sinnerIcon} alt="sinner-icon" crossOrigin="anonymous" />}
+                {info.sinnerIcon && <img className="sinner-icon-background" src={info.sinnerIcon} alt="" crossOrigin="anonymous" />}
                 <div className="Card-container">
                     <PreviewBody info={info} skills={skills}/>
                 </div>

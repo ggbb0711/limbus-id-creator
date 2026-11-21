@@ -133,5 +133,26 @@ describe('CardSummary', () => {
         await user.click(fanaticSpan)
         expect(screen.getByRole('dialog', { name: 'Fanatic' })).toHaveTextContent('Skill Final Power +X')
     })
+
+    it('names the sinner icon and splash art after the card', () => {
+        render(<CardSummary card={{ kind: 'Identity', info: { ...identity(), splashArt: '/splash.webp' } }}/>)
+
+        expect(screen.getByAltText('LCB Sinner Faust sinner icon')).toBeInTheDocument()
+        expect(screen.getByAltText('LCB Sinner Faust splash art')).toHaveAttribute('src', '/splash.webp')
+    })
+
+    it('names the E.G.O splash art after the card', () => {
+        render(<CardSummary card={{ kind: 'Ego', info: createEgoInfo({ title: 'Fluid Sac', name: 'Heathcliff', splashArt: '/ego.webp' }) }}/>)
+
+        expect(screen.getByAltText('Fluid Sac Heathcliff splash art')).toHaveAttribute('src', '/ego.webp')
+    })
+
+    it('labels stats and sin icons in readable words', () => {
+        render(<CardSummary card={{ kind: 'Identity', info: identity() }}/>)
+
+        expect(screen.getByAltText('Speed')).toBeInTheDocument()
+        expect(screen.getByAltText('Slash resistance')).toBeInTheDocument()
+        expect(screen.getByAltText(/^Rarity \d$/)).toBeInTheDocument()
+    })
 })
 

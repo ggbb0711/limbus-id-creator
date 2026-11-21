@@ -33,19 +33,19 @@ export default function SinnerStats({minSpeed, maxSpeed, hp, staggerResist, defe
             <div className="sinner-stats-container">
                 <div className="stat-container">
                     <div className="stat-container-slot">
-                        <img className="stat-icon" src="/Images/stat/stat_speed.webp" alt="speed_icon" />
+                        <img className="stat-icon" src="/Images/stat/stat_speed.webp" alt="Speed" />
                         <div className="stat-content">
                             <p>{minSpeed} - {maxSpeed}</p>
                         </div>
                     </div>
                     <div className="stat-container-slot">
-                        <img className="stat-icon" src="/Images/stat/stat_hp.webp" alt="hp_icon" />
+                        <img className="stat-icon" src="/Images/stat/stat_hp.webp" alt="HP" />
                         <div className="stat-content">
                             <p>{hp}</p>
                         </div>
                     </div>
                     <div className="stat-container-slot">
-                        <img className="stat-icon" src="/Images/stat/stat_def.webp" alt="def_icon" />
+                        <img className="stat-icon" src="/Images/stat/stat_def.webp" alt="Defense level" />
                         <div className="stat-content">
                             <p>{defenseLevel}</p>
                         </div>
@@ -59,7 +59,7 @@ export default function SinnerStats({minSpeed, maxSpeed, hp, staggerResist, defe
                 </div>
                 <div className="stat-container">
                     <div className="stat-container-slot">
-                        <img className="stat-icon" src="/Images/attack/attackt_Slash.webp" alt="attackt_slash" />
+                        <img className="stat-icon" src="/Images/attack/attackt_Slash.webp" alt="Slash resistance" />
                         <div className="stat-content">
                             <div style={{color:getResistTier(slashResistant).color}}>
                             <p>{getResistTier(slashResistant).label}</p>
@@ -68,7 +68,7 @@ export default function SinnerStats({minSpeed, maxSpeed, hp, staggerResist, defe
                         </div>
                     </div>
                     <div className="stat-container-slot">
-                        <img className="stat-icon" src="/Images/attack/attackt_Pierce.webp" alt="attackt_pierce" />
+                        <img className="stat-icon" src="/Images/attack/attackt_Pierce.webp" alt="Pierce resistance" />
                         <div className="stat-content">
                             <div style={{color:getResistTier(pierceResistant).color}}>
                                 <p>{getResistTier(pierceResistant).label}</p>
@@ -77,7 +77,7 @@ export default function SinnerStats({minSpeed, maxSpeed, hp, staggerResist, defe
                         </div>
                     </div>
                     <div className="stat-container-slot">
-                        <img className="stat-icon" src="/Images/attack/attackt_Blunt.webp" alt="attackt_blunt" />
+                        <img className="stat-icon" src="/Images/attack/attackt_Blunt.webp" alt="Blunt resistance" />
                         <div className="stat-content">
                             <div style={{color:getResistTier(bluntResistant).color}}>
                                 <p>{getResistTier(bluntResistant).label}</p>

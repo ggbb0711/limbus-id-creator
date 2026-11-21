@@ -33,16 +33,16 @@ const TAB_GROUPS: { id: string, label: string, types: SkillDetail["type"][] }[] 
     { id: "effects", label: "Effects", types: ["CustomEffect", "MentalEffect"] },
 ]
 
-function SummaryHeader({ sinnerColor, sinnerIcon, children }: { sinnerColor: string, sinnerIcon: string, children: ReactNode }): ReactElement {
+function SummaryHeader({ name, sinnerColor, sinnerIcon, children }: { name: string, sinnerColor: string, sinnerIcon: string, children: ReactNode }): ReactElement {
     return <div className="card-summary-header" style={{ borderColor: sinnerColor }}>
         {children}
-        {sinnerIcon && <img className="card-summary-sinner-icon" src={sinnerIcon} alt="" />}
+        {sinnerIcon && <img className="card-summary-sinner-icon" src={sinnerIcon} alt={`${name} sinner icon`} />}
     </div>
 }
 
 function IdentityTop({ info, name }: { info: IIdInfo, name: string }): ReactElement {
     return <>
-        <SummaryHeader sinnerColor={info.sinnerColor} sinnerIcon={info.sinnerIcon}>
+        <SummaryHeader name={name} sinnerColor={info.sinnerColor} sinnerIcon={info.sinnerIcon}>
             <IdHeader title={info.title} name={info.name} sinnerColor={info.sinnerColor} rarity={info.rarity} traits={info.traits ?? []}/>
         </SummaryHeader>
         {info.splashArt && <SummarySplashArt kind="Identity" name={name} splashArt={info.splashArt} splashArtScale={info.splashArtScale} splashArtTranslation={info.splashArtTranslation}/>}
@@ -55,7 +55,7 @@ function IdentityTop({ info, name }: { info: IIdInfo, name: string }): ReactElem
 
 function EgoTop({ info, name }: { info: IEgoInfo, name: string }): ReactElement {
     return <>
-        <SummaryHeader sinnerColor={info.sinnerColor} sinnerIcon={info.sinnerIcon}>
+        <SummaryHeader name={name} sinnerColor={info.sinnerColor} sinnerIcon={info.sinnerIcon}>
             <EgoHeader title={info.title} name={info.name} egoLevel={info.egoLevel} sanityCost={info.sanityCost} sinnerColor={info.sinnerColor}/>
         </SummaryHeader>
         {info.splashArt && <SummarySplashArt kind="Ego" name={name} splashArt={info.splashArt} splashArtScale={info.splashArtScale} splashArtTranslation={info.splashArtTranslation}/>}
@@ -70,9 +70,14 @@ export type SummaryCard =
     | { kind: "Identity", info: IIdInfo }
     | { kind: "Ego", info: IEgoInfo }
 
+export const summaryCardName = ({ kind, info }: SummaryCard): string => [info.title, info.name].filter(Boolean).join(" ") || kind
+
+export const summaryCardAlt = (card: SummaryCard, author: string): string =>
+    `${summaryCardName(card)} custom ${card.kind === "Ego" ? "E.G.O" : "Identity"} card by ${author}`
+
 export default function CardSummary({ card }: { card: SummaryCard }): ReactElement {
     const { info } = card
-    const name = [info.title, info.name].filter(Boolean).join(" ") || card.kind
+    const name = summaryCardName(card)
     const tabs: Tab[] = TAB_GROUPS
         .map(group => ({ ...group, skills: info.skillDetails.filter(skill => group.types.includes(skill.type)) }))
         .filter(group => group.skills.length > 0)

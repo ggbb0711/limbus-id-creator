@@ -36,7 +36,7 @@ import { PaginationNav, pageCountOf } from "components/ui/pagination/Pagination"
 function SaveCloudTab({saveName,saveDate,previewUrl,linkedPosts,deleteSave,loadSave,overwriteSave}:{saveName:string,saveDate:string,previewUrl:string,linkedPosts:ILinkedPost[],deleteSave:()=>void,loadSave:()=>void,overwriteSave:()=>void}):ReactElement{
     return <div className="save-cloud-tab">
         <div className="center-element save-cloud-tab-content">
-            <img className="preview-img" src={previewUrl} alt="preview-img" />
+            <img className="preview-img" src={previewUrl} alt="Card preview" />
             <div style={{textAlign:"left"}}>
                 <p className="created-time">Updated: {formatDisplayDate(saveDate, { withTime: true })}</p>
                 <p>{saveName}</p>

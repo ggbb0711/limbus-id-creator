@@ -17,7 +17,7 @@ const CustomSinnerEffect = forwardRef<HTMLDivElement, { customEffect: ICustomEff
             <div className="skill-section">
                 <div>
                     <div style={{ color: effectColor }} className="cutom-effect-header">
-                        {customImg && <img className={`custom-img`} src={customImg} alt="custom_icon" crossOrigin="anonymous" />}
+                        {customImg && <img className={`custom-img`} src={customImg} alt="" crossOrigin="anonymous" />}
                         <p className="custom-effect-title">{name}</p>
                     </div>
                     <div>

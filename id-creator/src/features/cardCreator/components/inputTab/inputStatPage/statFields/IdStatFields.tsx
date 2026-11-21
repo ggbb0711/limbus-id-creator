@@ -14,8 +14,8 @@ import { StatFieldsProps } from "features/cardCreator/editors/CardEditorDefiniti
 
 const resistField = (damageType: DamageType) => `${damageType.toLowerCase()}Resistant` as "slashResistant" | "pierceResistant" | "bluntResistant"
 
-const StatLabel = ({ icon, alt, text }: { icon: string, alt: string, text: string }) =>
-    <><img className="stat-icon" src={icon} alt={alt} /> <span>{text}</span></>
+const StatLabel = ({ icon, text }: { icon: string, text: string }) =>
+    <><img className="stat-icon" src={icon} alt="" /> <span>{text}</span></>
 
 export function IdGeneralFields({ form }: StatFieldsProps<IIdInfo>): ReactElement {
     const { setValue, watch } = form
@@ -54,17 +54,17 @@ export function IdStatsSection({ form, registerNumber }: StatFieldsProps<IIdInfo
     return <AccordionSection title="Sinner Stats">
         <div className="input-group-container">
             <NumberField<IIdInfo> name="minSpeed" registerNumber={registerNumber} inputClassName="stat-page-input-border"
-                label={<StatLabel icon="/Images/stat/stat_speed.webp" alt="speed_icon" text="Speed from"/>}/>
+                label={<StatLabel icon="/Images/stat/stat_speed.webp" text="Speed from"/>}/>
             <NumberField<IIdInfo> name="maxSpeed" registerNumber={registerNumber} inputClassName="stat-page-input-border"
-                label={<StatLabel icon="/Images/stat/stat_speed.webp" alt="speed_icon" text="Speed to"/>}/>
+                label={<StatLabel icon="/Images/stat/stat_speed.webp" text="Speed to"/>}/>
         </div>
         <div className="input-group-container">
             <NumberField<IIdInfo> name="hp" registerNumber={registerNumber} inputClassName="stat-page-input-border"
-                label={<StatLabel icon="/Images/stat/stat_hp.webp" alt="hp_icon" text="Health"/>}/>
+                label={<StatLabel icon="/Images/stat/stat_hp.webp" text="Health"/>}/>
         </div>
         <div className="input-group-container">
             <NumberField<IIdInfo> name="defenseLevel" registerNumber={registerNumber} inputClassName="stat-page-input-border"
-                label={<StatLabel icon="/Images/stat/stat_def.webp" alt="def_icon" text="Defense"/>}/>
+                label={<StatLabel icon="/Images/stat/stat_def.webp" text="Defense"/>}/>
         </div>
         <div className="input-group-container">
             <div className="input-container">
@@ -78,7 +78,7 @@ export function IdStatsSection({ form, registerNumber }: StatFieldsProps<IIdInfo
             return <div className="input-group-container" key={damageType}>
                 <NumberField<IIdInfo> name={field} registerNumber={registerNumber} inputClassName="stat-page-input-border" style={{ color: tier.color }}
                     label={<>
-                        <img className="stat-icon" src={`/Images/attack/attackt_${damageType}.webp`} alt={`attackt_${damageType.toLowerCase()}`} />
+                        <img className="stat-icon" src={`/Images/attack/attackt_${damageType}.webp`} alt="" />
                         <span>{damageType} resist (<span style={{ color: tier.color }}>{tier.label}</span>):</span>
                     </>}/>
             </div>

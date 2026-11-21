@@ -16,7 +16,7 @@ function RequirementRow({ label, requirements }: { label: string, requirements: 
         <div className="passive-cost-container">
             {active.map(({ key, amount, iconName }) =>
                 <span className="center-element" key={key}>
-                    {amount} <img className="req-sin-icon" src={assetPaths.affinityBig(iconName)} alt={`${key}_icon`} />
+                    {amount} <img className="req-sin-icon" src={assetPaths.affinityBig(iconName)} alt={iconName} />
                 </span>)}
         </div>
     </div>

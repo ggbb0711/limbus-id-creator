@@ -5,7 +5,8 @@ import TagChip from "features/post/components/tagChip/TagChip";
 import AuthorBadge from "features/post/components/authorBadge/AuthorBadge";
 import formatDisplayDate from "utils/formatDisplayDate";
 import PostCardsView from "features/post/components/postCardDetails/PostCardsView";
-import { CardSummary, SummaryCard, migrateEgoInfo, migrateIdInfo } from "features/cardCreator";
+import { CardSummary, SummaryCard, migrateEgoInfo, migrateIdInfo, summaryCardAlt } from "features/cardCreator";
+import { imageAlt } from "components/ui/imageViewer/ImageViewer";
 import LivePostStats from "./LivePostStats";
 import ShareMenu from "features/post/components/shareMenu/ShareMenu";
 import PostOwnerActions from "features/post/components/postOwnerActions/PostOwnerActions";
@@ -25,10 +26,9 @@ function toSummaryCard(card: IPostCardSnapshot | null | undefined): SummaryCard 
 
 export default function Post({ post }: { post: IPost }): ReactElement {
     const slides = post.slides ?? []
-    const summaries = slides.map((slide, i) => {
-        const card = toSummaryCard(slide.card)
-        return card && <CardSummary key={i} card={card}/>
-    })
+    const cards = slides.map(slide => toSummaryCard(slide.card))
+    const summaries = cards.map((card, i) => card && <CardSummary key={i} card={card}/>)
+    const alts = cards.map((card, i) => card ? summaryCardAlt(card, post.userName) : imageAlt(post.title, i))
     return <article className="post-container post-page-element-container">
         <h1 className="post-title">{post.title}</h1>
         <p className="post-date">Posted: {formatDisplayDate(post.created)}{post.updated && <> · Edited: {formatDisplayDate(post.updated)}</>}</p>
@@ -45,7 +45,7 @@ export default function Post({ post }: { post: IPost }): ReactElement {
             })}
         </div>
         <SectionErrorBoundary context="postCarousel" label="post images">
-            <PostCardsView images={slides.map(slide => slide.imageUrl)} title={post.title} summaries={summaries}/>
+            <PostCardsView images={slides.map(slide => slide.imageUrl)} title={post.title} alts={alts} summaries={summaries}/>
         </SectionErrorBoundary>
         <div className="description-txt" dangerouslySetInnerHTML={{ __html: sanitizePostHtml(post.description) }}></div>
         <div className="center-element">

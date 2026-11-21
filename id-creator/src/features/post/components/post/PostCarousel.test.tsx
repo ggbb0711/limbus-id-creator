@@ -29,6 +29,17 @@ describe('PostCarousel', () => {
         expect(screen.queryByRole('button', { name: 'Next image' })).not.toBeInTheDocument()
     })
 
+    it('uses the given alt for each image in the carousel and the viewer', () => {
+        function WithAlts() {
+            const carousel = useCarouselIndex(2)
+            return <PostCarousel images={['/a.webp', '/b.webp']} title="T" alts={['First card', 'Second card']} carousel={carousel}/>
+        }
+        render(<WithAlts/>)
+        expect(screen.getByAltText('First card')).toBeInTheDocument()
+        fireEvent.click(screen.getByRole('button', { name: 'Open image 1 of 2' }))
+        expect(screen.getByRole('dialog', { name: 'Image viewer' }).querySelector('img.image-pop-up')).toHaveAttribute('alt', 'First card')
+    })
+
     it('shows the image picked by the shared carousel', () => {
         render(<Carousel images={images} title="T"/>)
         fireEvent.click(screen.getByRole('button', { name: 'outside next' }))

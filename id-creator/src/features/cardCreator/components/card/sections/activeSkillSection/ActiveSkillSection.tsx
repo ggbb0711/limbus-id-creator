@@ -14,8 +14,10 @@ interface ActiveSkillSectionProps {
     splash: ReactNode
 }
 
+export const skillImageAlt = (name: string) => name.trim() ? `${name.trim()} skill image` : "Skill image"
+
 export const SkillFrame = ({ skillAffinity, skillFrame }: { skillAffinity: string, skillFrame: string }): ReactElement =>
-    <img src={assetPaths.skillFrame(skillAffinity, skillFrame)} alt={skillAffinity + "Frame"} className={`sin-frame ${skillAffinity === "None" ? "none-affinity" : ""}`} />
+    <img src={assetPaths.skillFrame(skillAffinity, skillFrame)} alt="" className={`sin-frame ${skillAffinity === "None" ? "none-affinity" : ""}`} />
 
 const ActiveSkillSection = forwardRef<HTMLDivElement, ActiveSkillSectionProps>(({ skill, splash }, ref) => {
     const { name, skillAffinity, basePower, coinNo, coinPow, skillEffect, skillLabel, skillLevel, skillAmt, atkWeight } = skill
@@ -45,7 +47,7 @@ const ActiveSkillSection = forwardRef<HTMLDivElement, ActiveSkillSectionProps>((
                 </div>
                 <div>
                     <div className="sinner-skill-header">
-                        {skillAffinity !== "None" && <img className="sinner-skill-affinity-icon" src={assetPaths.affinityBig(skillAffinity)} alt={`sinner-skill-${skillAffinity}-icon`} />}
+                        {skillAffinity !== "None" && <img className="sinner-skill-affinity-icon" src={assetPaths.affinityBig(skillAffinity)} alt={`${skillAffinity} affinity`} />}
                         <div>
                             <CoinRow coinNo={coinNo} skillEffect={skillEffect} />
                             <div className="active-skill-title-container">

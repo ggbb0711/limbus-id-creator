@@ -32,5 +32,6 @@ describe('PostSidebar', () => {
     it('shows the card image when there is one', () => {
         render(<PostSidebar author={author} authorPosts={[card('a'), card('c', '')]} latestPosts={[]}/>)
         expect(screen.getAllByRole('img')).toHaveLength(1)
+        expect(screen.getByAltText('Post a card preview')).toHaveAttribute('src', expect.stringContaining('a.webp'))
     })
 })

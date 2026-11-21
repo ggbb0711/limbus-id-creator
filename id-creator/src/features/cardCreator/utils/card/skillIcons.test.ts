@@ -10,7 +10,7 @@ const publicFile = (src: string) => path.join(process.cwd(), 'public', src)
 describe('skill icons', () => {
     it('offense skills show their damage type and the attack level icon', () => {
         const skill = createOffenseSkill({ damageType: 'Pierce' })
-        expect(getSkillPowerIcon(skill)).toEqual({ src: '/Images/attack/attackt_Pierce.webp', alt: 'Pierce_icon' })
+        expect(getSkillPowerIcon(skill)).toEqual({ src: '/Images/attack/attackt_Pierce.webp', alt: 'Pierce damage' })
         expect(getSkillLevelIcon(skill).src).toBe('/Images/stat/stat_attack.webp')
     })
 

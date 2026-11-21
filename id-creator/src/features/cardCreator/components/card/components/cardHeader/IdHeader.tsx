@@ -10,6 +10,11 @@ interface IdHeaderProps {
     traits: TraitTagValue[]
 }
 
+const rarityAlt = (src: string) => {
+    const rank = src.match(/IDNumber(\d)/)?.[1]
+    return rank ? `Rarity ${rank}` : "Rarity"
+}
+
 export default function IdHeader({title, name, sinnerColor, rarity, traits}: IdHeaderProps):ReactElement{
     return(
         <div className="header-container">
@@ -29,7 +34,7 @@ export default function IdHeader({title, name, sinnerColor, rarity, traits}: IdH
                 <div className="name-field" style={{background:sinnerColor}}>
                     <p>{name}</p>
                 </div>
-                <img className="sinner-rarity-icon" src={rarity} alt="sinner-rarity-icon" />
+                <img className="sinner-rarity-icon" src={rarity} alt={rarityAlt(rarity)} />
             </div>
 
         </div>

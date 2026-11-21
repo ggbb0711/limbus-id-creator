@@ -22,7 +22,7 @@ export function CarouselArrows({ carousel, className }: { carousel: CarouselInde
     </>
 }
 
-export default function ImageViewer({ images, title, carousel, onClose }: { images: string[], title: string, carousel: CarouselIndex, onClose: () => void }): ReactElement {
+export default function ImageViewer({ images, title, alts, carousel, onClose }: { images: string[], title: string, alts?: string[], carousel: CarouselIndex, onClose: () => void }): ReactElement {
     const containerRef = useRef<HTMLDivElement>(null)
     useDialog(true, onClose, containerRef)
 
@@ -34,7 +34,7 @@ export default function ImageViewer({ images, title, carousel, onClose }: { imag
     return <div className="image-pop-up-container" ref={containerRef} role="dialog" aria-modal="true" aria-label="Image viewer" tabIndex={-1} onKeyDown={onKeyDown}>
         <TransformWrapper minScale={0.05} maxScale={3} limitToBounds={false} doubleClick={{ disabled: true }}>
             <TransformComponent wrapperStyle={{ width: "100%", height: "100%" }}>
-                <img src={images[carousel.index]} alt={imageAlt(title, carousel.index)} className="image-pop-up" />
+                <img src={images[carousel.index]} alt={alts?.[carousel.index] ?? imageAlt(title, carousel.index)} className="image-pop-up" />
             </TransformComponent>
         </TransformWrapper>
         <IconButton className="image-pop-up-close" label="Close image viewer" onClick={onClose}>

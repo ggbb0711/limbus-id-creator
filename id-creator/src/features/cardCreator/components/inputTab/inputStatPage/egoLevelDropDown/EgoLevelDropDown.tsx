@@ -8,6 +8,6 @@ const iconFor = (level: EgoLevel) => level === "UNDEFINED" ? "/Images/ego-level/
 export const EGO_LEVEL_OPTIONS: DropDownOption<EgoLevel>[] = EGO_LEVELS.map(level => ({
     value: level,
     el: <div>
-        <img className="ego-level-drop-down-icon" src={iconFor(level)} alt={`${level === "UNDEFINED" ? "UNDEF" : level}-level-drop-down`} />
+        <img className="ego-level-drop-down-icon" src={iconFor(level)} alt={`${level === "UNDEFINED" ? "Undefined" : level} E.G.O level`} />
     </div>,
 }))

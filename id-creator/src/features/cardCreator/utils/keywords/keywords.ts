@@ -37,14 +37,14 @@ export function filterKeywordSuggestions(keywords: KeywordMap, query: string, li
 const colorStyle = (color: string) => (color && isSafeCssColor(color) ? `color:${color.trim()};` : "")
 
 const customImage = (src: string) =>
-    src && isSafeImageUrl(src) ? `<img class='status-icon' src='${escapeHtml(src)}' alt='custom_icon' />` : ""
+    src && isSafeImageUrl(src) ? `<img class='status-icon' src='${escapeHtml(src)}' alt='' />` : ""
 
 export function customEffectHtml(effect: ICustomEffect): string {
     return sanitizeCardHtml(`<span class='center-element' contenteditable='false' style='${colorStyle(effect.effectColor)}text-decoration:underline;'>${customImage(effect.customImg)}${escapeHtml(effect.name)}</span>`)
 }
 
 export function customCoinEffectHtml(effect: ICustomEffect, statusKey: string, coinNo: number): string {
-    return sanitizeCardHtml(`<span class='center-element' contenteditable='false'><img class='status-icon' src='/Images/status-effect/Coin_Effect_${coinNo}.webp' alt='coin-effect-${coinNo}' /> <span class='center-element' contenteditable='false' data-custom-coin-effect='coin-effect-${coinNo}-custom-${escapeHtml(statusKey)}' style='${colorStyle(effect.effectColor)}text-decoration:underline;'>${customImage(effect.customImg)}${escapeHtml(effect.name)}</span></span>`)
+    return sanitizeCardHtml(`<span class='center-element' contenteditable='false'><img class='status-icon' src='/Images/status-effect/Coin_Effect_${coinNo}.webp' alt='Coin ${coinNo}' /> <span class='center-element' contenteditable='false' data-custom-coin-effect='coin-effect-${coinNo}-custom-${escapeHtml(statusKey)}' style='${colorStyle(effect.effectColor)}text-decoration:underline;'>${customImage(effect.customImg)}${escapeHtml(effect.name)}</span></span>`)
 }
 
 export function buildCustomEffectKeywords(skills: readonly SkillDetail[]): Record<string, string> {

@@ -13,7 +13,7 @@ interface PostSidebarSectionProps {
 function SidebarPost({ post }: { post: IPostDisplayCard }): ReactElement {
     return <li>
         <Link prefetch={false} href={"/post/" + post.id} className="post-sidebar-item">
-            {post.cardImg && <Image className="post-sidebar-thumb" src={post.cardImg} alt={post.title} width={96} height={67} sizes="96px" />}
+            {post.cardImg && <Image className="post-sidebar-thumb" src={post.cardImg} alt={`${post.title} card preview`} width={96} height={67} sizes="96px" />}
             <div className="post-sidebar-item-txt">
                 <p className="post-sidebar-item-title">{post.title}</p>
                 <p className="post-sidebar-item-meta">by {post.userName}</p>

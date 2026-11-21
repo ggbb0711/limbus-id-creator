@@ -20,7 +20,7 @@ export default function SinNumberInputs<T extends FieldValues>({ field, register
             const key = toSinKey(sin)
             const id = `${key}_${idSuffix}`
             return <div key={key} className={`input-container ${containerClassName}`}>
-                <label htmlFor={id}><img className="stat-icon" src={assetPaths.affinityBig(sin)} alt={`${sin}-input-icon`} /></label>
+                <label htmlFor={id}><img className="stat-icon" src={assetPaths.affinityBig(sin)} alt={sin} /></label>
                 <div className="resistant-content">
                     <input type="number" id={id} className="input stat-page-input-border input-number"
                         style={colorFor ? { color: colorFor(key) } : undefined}

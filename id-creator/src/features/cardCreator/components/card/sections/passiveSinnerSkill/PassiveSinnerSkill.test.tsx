@@ -11,14 +11,14 @@ function renderPassive(reqOwn: Partial<IPassiveSkill['reqOwn']>, reqRes: Partial
 describe('PassiveSinnerSkill requirements', () => {
     it('uses the capitalised icon file name that exists on disk', () => {
         renderPassive({ wrath: 1 })
-        expect(screen.getByAltText('wrath_icon')).toHaveAttribute('src', '/Images/sin-affinity/affinity_Wrath_big.webp')
+        expect(screen.getByAltText('Wrath')).toHaveAttribute('src', '/Images/sin-affinity/affinity_Wrath_big.webp')
     })
 
     it('only renders requirements of at least 1', () => {
         renderPassive({ wrath: 2, envy: 0 }, { gloom: 3 })
-        expect(screen.getByAltText('wrath_icon')).toBeInTheDocument()
-        expect(screen.getByAltText('gloom_icon')).toBeInTheDocument()
-        expect(screen.queryByAltText('envy_icon')).not.toBeInTheDocument()
+        expect(screen.getByAltText('Wrath')).toBeInTheDocument()
+        expect(screen.getByAltText('Gloom')).toBeInTheDocument()
+        expect(screen.queryByAltText('Envy')).not.toBeInTheDocument()
     })
 
     it('renders no requirement block when everything is 0', () => {

@@ -55,13 +55,13 @@ export type SinnerKey = typeof SINNER_DEFINITIONS[number]["key"]
 
 export const sinnerIconSrc = (key: SinnerKey) => `/Images/sinner-icon/${key}_Icon.webp`
 
-export const SINNERS: readonly SinnerOption[] = SINNER_DEFINITIONS.map(({ key, colorVar }) => ({
+export const SINNERS: readonly SinnerOption[] = SINNER_DEFINITIONS.map(({ key, label, colorVar }) => ({
     src: sinnerIconSrc(key),
-    alt: `${key}_Icon.webp`,
+    alt: label,
     color: `var(${colorVar})`,
 }))
 
 export const RARITIES: readonly IconOption[] = [1, 2, 3].map(rank => ({
     src: `/Images/rarity/IDNumber${rank}.webp`,
-    alt: `rarity-icon-${rank}.webp`,
+    alt: `Rarity ${rank}`,
 }))

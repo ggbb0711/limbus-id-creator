@@ -1,7 +1,7 @@
 export { default as SearchSaveInput } from "./components/searchSaveInput/SearchSaveInput"
 export type { SaveMode, SinnerKey } from "./constants"
 export { SINNER_DEFINITIONS, sinnerIconSrc } from "./constants"
-export { default as CardSummary } from "./components/cardSummary/CardSummary"
+export { default as CardSummary, summaryCardAlt } from "./components/cardSummary/CardSummary"
 export type { SummaryCard } from "./components/cardSummary/CardSummary"
 export type { IIdInfo } from "./types/IIdInfo"
 export type { IEgoInfo } from "./types/IEgoInfo"

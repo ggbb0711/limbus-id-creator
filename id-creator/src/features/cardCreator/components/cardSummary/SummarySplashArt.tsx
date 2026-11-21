@@ -21,9 +21,9 @@ export default function SummarySplashArt({ kind, name, splashArt, splashArtScale
         <button type="button" className={`card-summary-splash-button ${kind === "Ego" ? "ego" : ""}`} aria-label="View splash art" onClick={() => setIsViewing(true)}>
             {kind === "Ego"
                 ? <span className="card-summary-ego-circle">
-                    <SplashArt variant="ego" splashArt={splashArt} splashArtScale={splashArtScale} splashArtTranslation={splashArtTranslation}/>
+                    <SplashArt variant="ego" alt={`${name} splash art`} splashArt={splashArt} splashArtScale={splashArtScale} splashArtTranslation={splashArtTranslation}/>
                 </span>
-                : <img className="card-summary-splash-art" src={splashArt} alt=""/>}
+                : <img className="card-summary-splash-art" src={splashArt} alt={`${name} splash art`}/>}
         </button>
         {isViewing && <ImageViewer images={[splashArt]} title={`${name} splash art`} carousel={carousel} onClose={() => setIsViewing(false)}/>}
     </div>

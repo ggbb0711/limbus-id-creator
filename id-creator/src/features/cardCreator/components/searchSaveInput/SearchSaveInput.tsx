@@ -38,7 +38,7 @@ export default function SearchSaveInput({ userId, saveMode, chooseSave, inputId 
             <div className="post-save-found-container" {...combobox.listProps}>
                 {combobox.isOpen && saveList.map((save, i) =>
                     <div key={save.id} className={`center-element post-save-found-tab ${combobox.activeIndex === i ? "active" : ""}`} {...combobox.getOptionProps(i)}>
-                        <img src={save.previewImg} className="search-save-preview-img" alt="" />
+                        <img src={save.previewImg} className="search-save-preview-img" alt={`${save.name} preview`} />
                         <div>
                             <p>Updated: {formatDisplayDate(save.saveTime, { withTime: true })}</p>
                             <p>{save.name}</p>

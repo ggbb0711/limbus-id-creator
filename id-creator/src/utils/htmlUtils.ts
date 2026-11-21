@@ -30,9 +30,22 @@ const POST_OPTIONS: IOptions = {
     transformTags: { "*": secureAttributes },
 }
 
+const statusIconAlt = (src = ""): string => {
+    const coin = src.match(/\/Coin_Effect_(\d+)\.webp$/)
+    return coin ? `Coin ${coin[1]}` : ""
+}
+
+const secureCardAttributes: Transformer = (tagName, attribs) => {
+    const secured = secureAttributes(tagName, attribs)
+    const classes = secured.attribs.class?.split(/\s+/) ?? []
+    if (tagName !== "img" || !classes.includes("status-icon")) return secured
+    return { tagName, attribs: { ...secured.attribs, alt: statusIconAlt(secured.attribs.src) } }
+}
+
 const CARD_OPTIONS: IOptions = {
     ...POST_OPTIONS,
     allowedAttributes: { "*": [...RICH_TEXT_ATTRIBUTES, ...CARD_ATTRIBUTES] },
+    transformTags: { "*": secureCardAttributes },
 }
 
 const sanitizeWith = (options: IOptions) => (html: string | null | undefined): string =>

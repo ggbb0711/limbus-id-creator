@@ -10,7 +10,7 @@ export default function SinResistant({ sinResistant }: { sinResistant: SinRecord
         <SinValueList values={sinResistant} render={(sin, value) => {
             const tier = getResistTier(value)
             return <div className="sin-resistant" style={{ color: tier.color }}>
-                <img src={assetPaths.affinityBig(sin)} alt={`${sin}-resistant-icon`} />
+                <img src={assetPaths.affinityBig(sin)} alt={`${sin} resistance`} />
                 <div>
                     <p>{tier.label}</p>
                     <p>[x{value}]</p>
