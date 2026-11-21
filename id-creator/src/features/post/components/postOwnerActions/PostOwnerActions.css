@@ -1,0 +1,23 @@
+.post-owner-action{
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font: inherit;
+    color: inherit;
+    fill: currentColor;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.post-owner-action:hover{
+    border-color: var(--hover-border-color);
+}
+
+.post-owner-action.delete:hover{
+    border-color: red;
+}
+
+.post-owner-action:disabled{
+    opacity: 0.6;
+    cursor: progress;
+}

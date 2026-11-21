@@ -8,6 +8,10 @@ jest.mock('features/post/components/postCardDetails/PostCardsView', () => ({ __e
 jest.mock('./LivePostStats', () => ({ __esModule: true, default: () => null }))
 jest.mock('features/post/components/shareMenu/ShareMenu', () => ({ __esModule: true, default: () => null }))
 jest.mock('features/post/components/authorBadge/AuthorBadge', () => ({ __esModule: true, default: () => null }))
+jest.mock('features/post/components/postOwnerActions/PostOwnerActions', () => ({
+    __esModule: true,
+    default: ({ postId, userId }: { postId: string, userId: string }) => <p>owner actions {postId} {userId}</p>,
+}))
 
 const post = (tags: string[]) => ({
     id: 'p1', title: 'Title', description: '<p>Body</p>', created: '2024-01-01T00:00:00', userId: 'u', userName: 'n', userIcon: '/u.webp',
@@ -25,6 +29,13 @@ describe('Post tags', () => {
         const { container } = render(<Post post={post(['Unknown'])}/>)
         expect(screen.queryByRole('link')).not.toBeInTheDocument()
         expect(container.querySelector('.post-tag-list .card-tag')).toBeInTheDocument()
+    })
+})
+
+describe('Post owner actions', () => {
+    it('passes the post and author ids to the owner actions', () => {
+        render(<Post post={post([])}/>)
+        expect(screen.getByText('owner actions p1 u')).toBeInTheDocument()
     })
 })
 

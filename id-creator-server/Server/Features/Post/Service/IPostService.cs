@@ -1,3 +1,4 @@
+using Server.Shared.Model;
 
 
 
@@ -15,5 +16,7 @@ namespace Server.Features.Post.Service
         public Task<IReadOnlyCollection<Guid>> GetPostIdsWithCards(IReadOnlyCollection<Guid> postIds);
         public Task<Dictionary<Guid, List<PostModel>>> FindPostsBySave(IReadOnlyCollection<Guid> saveIds);
         public Task UnlinkSave(Guid saveId);
+        public Task<PostModel> UpdatePost(PostModel post, string description, IReadOnlyList<string> tags, IReadOnlyList<PostCard> cards);
+        public Task RemovePost(PostModel post);
     }
 }

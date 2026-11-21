@@ -4,6 +4,7 @@ import { PostAuthor } from "./PostAuthor"
 export type PostCardKind = "Identity" | "Ego"
 
 export interface IPostCardSnapshot {
+    id: string
     position: number
     kind: PostCardKind
     imageUrl: string

@@ -1,5 +1,3 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -102,9 +100,7 @@ namespace Server.Features.SaveInfo
             [FromForm] SaveInfoFilesRequestDTO files,
             [FromForm] SavedInfoRequestDTO<SavedEgoRequestDTO> SaveData)
         {
-            var sub = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
-            if (!Guid.TryParse(sub, out var userId))
-                throw new UnauthorizedException(ApiErrors.InvalidAccessToken);
+            var userId = User.GetRequiredUserId();
 
             var saveEGOInfo = _mapper.Map<SavedEGOInfo>(SaveData);
             saveEGOInfo.UserId = userId;
@@ -124,9 +120,7 @@ namespace Server.Features.SaveInfo
             [FromForm] SaveInfoFilesRequestDTO files,
             [FromForm] SavedInfoRequestDTO<SavedEgoRequestDTO> SaveData)
         {
-            var sub = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
-            if (!Guid.TryParse(sub, out var userId))
-                throw new UnauthorizedException(ApiErrors.InvalidAccessToken);
+            var userId = User.GetRequiredUserId();
 
             var saveEGOInfo = _mapper.Map<SavedEGOInfo>(SaveData);
             saveEGOInfo.UserId = userId;

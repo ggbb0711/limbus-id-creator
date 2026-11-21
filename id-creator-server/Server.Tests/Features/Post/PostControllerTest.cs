@@ -311,5 +311,173 @@ namespace Server.Tests.Features.Post
             Assert.Equal(4, second.CommentCount);
             Assert.True(second.HasCards);
         }
+
+        private static PostModel OwnedPost(Guid ownerId, params PostCard[] cards) =>
+            new() { Id = Guid.NewGuid(), UserId = ownerId, Title = "Title", Cards = [.. cards] };
+
+        private static PostController OwnerController(Mock<IPostService> postService, Guid userId, Mock<IPostCardBuilder>? cardBuilder = null, Mock<IMapper>? mapper = null) =>
+            CreateController(postService, new Mock<IPostViewService>(), new Mock<ICommentService>(), mapper ?? new Mock<IMapper>(), userId, cardBuilder);
+
+        [Fact]
+        public async Task UpdatePost_ThrowsUnauthorized_WhenSubClaimMissing()
+        {
+            var postService = new Mock<IPostService>();
+            var controller = CreateController(postService, new Mock<IPostViewService>(), new Mock<ICommentService>(), new Mock<IMapper>());
+
+            await Assert.ThrowsAsync<UnauthorizedException>(() => controller.UpdatePost(Guid.NewGuid(), new PostUpdateRequestDTO()));
+            postService.Verify(s => s.GetPostById(It.IsAny<Guid>()), Times.Never);
+        }
+
+        [Fact]
+        public async Task UpdatePost_ThrowsNotFound_WhenPostMissing()
+        {
+            var postService = new Mock<IPostService>();
+            postService.Setup(s => s.GetPostById(It.IsAny<Guid>())).ReturnsAsync((PostModel?)null);
+
+            await Assert.ThrowsAsync<NotFoundException>(() => OwnerController(postService, Guid.NewGuid()).UpdatePost(Guid.NewGuid(), new PostUpdateRequestDTO()));
+        }
+
+        [Fact]
+        public async Task UpdatePost_ThrowsGone_WhenPostHidden()
+        {
+            var userId = Guid.NewGuid();
+            var post = OwnedPost(userId);
+            post.IsRemoved = true;
+            var postService = new Mock<IPostService>();
+            postService.Setup(s => s.GetPostById(post.Id)).ReturnsAsync(post);
+
+            await Assert.ThrowsAsync<GoneException>(() => OwnerController(postService, userId).UpdatePost(post.Id, new PostUpdateRequestDTO()));
+        }
+
+        [Fact]
+        public async Task UpdatePost_ThrowsForbidden_WhenNotTheAuthor()
+        {
+            var post = OwnedPost(Guid.NewGuid());
+            var postService = new Mock<IPostService>();
+            postService.Setup(s => s.GetPostById(post.Id)).ReturnsAsync(post);
+
+            var exception = await Assert.ThrowsAsync<ForbiddenException>(() => OwnerController(postService, Guid.NewGuid()).UpdatePost(post.Id, new PostUpdateRequestDTO()));
+            Assert.Equal(ApiErrors.ResourceNotOwned.Code, exception.ErrorCode);
+            postService.Verify(s => s.UpdatePost(It.IsAny<PostModel>(), It.IsAny<string>(), It.IsAny<IReadOnlyList<string>>(), It.IsAny<IReadOnlyList<PostCard>>()), Times.Never);
+        }
+
+        [Fact]
+        public async Task UpdatePost_ThrowsBadRequest_WhenCardIdIsNotInThePost()
+        {
+            var userId = Guid.NewGuid();
+            var post = OwnedPost(userId, new PostCard { Id = Guid.NewGuid() });
+            var postService = new Mock<IPostService>();
+            postService.Setup(s => s.GetPostById(post.Id)).ReturnsAsync(post);
+            var body = new PostUpdateRequestDTO { Cards = [new PostCardUpdateDTO { CardId = Guid.NewGuid() }] };
+
+            var exception = await Assert.ThrowsAsync<BadRequestException>(() => OwnerController(postService, userId).UpdatePost(post.Id, body));
+            Assert.Equal(ApiErrors.PostCardNotFound.Code, exception.ErrorCode);
+        }
+
+        [Fact]
+        public async Task UpdatePost_KeepsExistingCardsAndBuildsNewOnesInRequestOrder()
+        {
+            var userId = Guid.NewGuid();
+            var kept = new PostCard { Id = Guid.NewGuid(), Position = 0, ImageUrl = "kept" };
+            var dropped = new PostCard { Id = Guid.NewGuid(), Position = 1, ImageUrl = "dropped" };
+            var post = OwnedPost(userId, kept, dropped);
+            var saveId = Guid.NewGuid();
+            var built = new PostCard { ImageUrl = "built" };
+            var body = new PostUpdateRequestDTO
+            {
+                Description = "New",
+                Tags = ["tag"],
+                Cards = [new PostCardUpdateDTO { SaveId = saveId, Kind = PostCardKind.Ego }, new PostCardUpdateDTO { CardId = kept.Id }],
+            };
+            var postService = new Mock<IPostService>();
+            var cardBuilder = new Mock<IPostCardBuilder>();
+            var mapper = new Mock<IMapper>();
+            postService.Setup(s => s.GetPostById(post.Id)).ReturnsAsync(post);
+            cardBuilder.Setup(b => b.BuildAsync(userId, It.Is<IReadOnlyList<PostCardRequestDTO>>(r => r.Single().SaveId == saveId && r.Single().Kind == PostCardKind.Ego)))
+                .ReturnsAsync([built]);
+            postService.Setup(s => s.UpdatePost(post, "New", body.Tags, It.IsAny<IReadOnlyList<PostCard>>())).ReturnsAsync(post);
+            mapper.Setup(m => m.Map<PostResponseDTO>(post)).Returns(new PostResponseDTO { Id = post.Id, Title = "Title" });
+
+            var result = await OwnerController(postService, userId, cardBuilder, mapper).UpdatePost(post.Id, body);
+
+            postService.Verify(s => s.UpdatePost(post, "New", body.Tags, It.Is<IReadOnlyList<PostCard>>(c => c.SequenceEqual(new[] { built, kept }))), Times.Once);
+            var okResult = Assert.IsType<OkObjectResult>(result.Result);
+            var response = Assert.IsType<ApiResponse<PostResponseDTO>>(okResult.Value);
+            Assert.Equal("Title", response.Data!.Title);
+            Assert.True(response.Data.HasCards);
+        }
+
+        [Fact]
+        public async Task UpdatePost_DoesNotSave_WhenCardBuilderRejectsASave()
+        {
+            var userId = Guid.NewGuid();
+            var post = OwnedPost(userId);
+            var postService = new Mock<IPostService>();
+            var cardBuilder = new Mock<IPostCardBuilder>();
+            postService.Setup(s => s.GetPostById(post.Id)).ReturnsAsync(post);
+            cardBuilder.Setup(b => b.BuildAsync(userId, It.IsAny<IReadOnlyList<PostCardRequestDTO>>())).ThrowsAsync(new ConflictException(ApiErrors.SaveImagesPending));
+            var body = new PostUpdateRequestDTO { Cards = [new PostCardUpdateDTO { SaveId = Guid.NewGuid(), Kind = PostCardKind.Identity }] };
+
+            await Assert.ThrowsAsync<ConflictException>(() => OwnerController(postService, userId, cardBuilder).UpdatePost(post.Id, body));
+            postService.Verify(s => s.UpdatePost(It.IsAny<PostModel>(), It.IsAny<string>(), It.IsAny<IReadOnlyList<string>>(), It.IsAny<IReadOnlyList<PostCard>>()), Times.Never);
+        }
+
+        [Fact]
+        public async Task DeletePost_SoftDeletes_WhenAuthor()
+        {
+            var userId = Guid.NewGuid();
+            var post = OwnedPost(userId);
+            var postService = new Mock<IPostService>();
+            postService.Setup(s => s.GetPostById(post.Id)).ReturnsAsync(post);
+
+            var result = await OwnerController(postService, userId).DeletePost(post.Id);
+
+            postService.Verify(s => s.RemovePost(post), Times.Once);
+            var okResult = Assert.IsType<OkObjectResult>(result.Result);
+            Assert.Equivalent(ApiResponse<Guid>.Ok(post.Id, "Post deleted successfully"), okResult.Value);
+        }
+
+        [Fact]
+        public async Task DeletePost_ThrowsUnauthorized_WhenSubClaimMissing()
+        {
+            var postService = new Mock<IPostService>();
+            var controller = CreateController(postService, new Mock<IPostViewService>(), new Mock<ICommentService>(), new Mock<IMapper>());
+
+            await Assert.ThrowsAsync<UnauthorizedException>(() => controller.DeletePost(Guid.NewGuid()));
+            postService.Verify(s => s.RemovePost(It.IsAny<PostModel>()), Times.Never);
+        }
+
+        [Fact]
+        public async Task DeletePost_ThrowsForbidden_WhenNotTheAuthor()
+        {
+            var post = OwnedPost(Guid.NewGuid());
+            var postService = new Mock<IPostService>();
+            postService.Setup(s => s.GetPostById(post.Id)).ReturnsAsync(post);
+
+            await Assert.ThrowsAsync<ForbiddenException>(() => OwnerController(postService, Guid.NewGuid()).DeletePost(post.Id));
+            postService.Verify(s => s.RemovePost(It.IsAny<PostModel>()), Times.Never);
+        }
+
+        [Fact]
+        public async Task DeletePost_ThrowsNotFound_WhenPostMissing()
+        {
+            var postService = new Mock<IPostService>();
+            postService.Setup(s => s.GetPostById(It.IsAny<Guid>())).ReturnsAsync((PostModel?)null);
+
+            await Assert.ThrowsAsync<NotFoundException>(() => OwnerController(postService, Guid.NewGuid()).DeletePost(Guid.NewGuid()));
+        }
+
+        [Fact]
+        public async Task DeletePost_ThrowsGone_WhenAlreadyRemoved()
+        {
+            var userId = Guid.NewGuid();
+            var post = OwnedPost(userId);
+            post.IsRemoved = true;
+            var postService = new Mock<IPostService>();
+            postService.Setup(s => s.GetPostById(post.Id)).ReturnsAsync(post);
+
+            await Assert.ThrowsAsync<GoneException>(() => OwnerController(postService, userId).DeletePost(post.Id));
+            postService.Verify(s => s.RemovePost(It.IsAny<PostModel>()), Times.Never);
+        }
     }
 }

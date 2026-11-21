@@ -11,6 +11,7 @@ namespace Server.Features.Post.DTO
 
     public class PostCardResponseDTO
     {
+        public Guid Id { get; set; }
         public int Position { get; set; }
         public PostCardKind Kind { get; set; }
         public string ImageUrl { get; set; } = "";

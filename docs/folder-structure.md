@@ -51,7 +51,7 @@ Namespace matches the path: `Server.Features.<Feature>.<SubFolder>`.
 |---|---|
 | Login, Google OAuth, JWT, refresh, cookies, sessions | `Features/Auth/` — `AuthController.cs`, `Service/GoogleOAuthService.cs`, `Service/JwtTokenService.cs`, `Service/SessionService.cs`, `Service/CookieSessionService.cs`, `Repository/SessionRepository.cs`, `Background/DeleteExpiredSessionsBackgroundService.cs` |
 | Saving ID / EGO cards (cloud save) | `Features/SaveInfo/` — `SaveIDInfoController.cs`, `SaveEGOInfoController.cs`, generic `Service/SavedInfoService.cs` and `Repository/SaveInfoRepository.cs` (`<TInfo, TSave>`), skill DTOs in `DTO/Skills/`, polymorphic skill JSON in `JsonConverter/` |
-| Posts, post cards, post views | `Features/Post/` — `PostController.cs`, `Service/PostService.cs`, `Service/PostCardBuilder.cs`, `Service/PostViewService.cs`, `Repository/PostRepository.cs`, `Enum/PostSortOption.cs` |
+| Posts, post cards, post views, edit/delete post | `Features/Post/` — `PostController.cs` (create, get, list, `PUT` edit, `DELETE` soft delete via `IsRemoved`; author only), `DTO/PostUpdateRequestDTO.cs`, `Service/PostService.cs`, `Service/PostCardBuilder.cs`, `Service/PostViewService.cs`, `Repository/PostRepository.cs`, `Enum/PostSortOption.cs` |
 | Comments | `Features/Comment/` |
 | Image upload / delete lifecycle | `Features/Images/` (service, repository, `Background/UploadImagesBackgroundService.cs`, `Background/DeleteImagesBackgroundService.cs`) + `Shared/CloudStorage/Service/AWSS3Service.cs` |
 | User profile | `Features/User/` |
@@ -69,7 +69,7 @@ Namespace matches the path: `Server.Features.<Feature>.<SubFolder>`.
 | `Http/` | `ApiResponse.cs` response envelope, `RepositoryGetParams.cs` |
 | `Middleware/` | `GlobalExceptionHandler.cs` and API exception handling |
 | `Filter/` | `ValidationFilter.cs` |
-| `Authorization/` | `SameUserRequirement.cs` (SameUser policy) |
+| `Authorization/` | `SameUserRequirement.cs` (SameUser policy), `ClaimsPrincipalExtensions.cs` (`User.GetRequiredUserId()` / `User.TryGetUserId(out id)` — read the logged-in user id from the JWT `sub` claim; use these instead of parsing claims in controllers) |
 | `ModelBinding/` | JSON-in-form-field model binder |
 | `CloudStorage/Service/` | S3 upload/delete (`IUploadService`, `IDeleteService`) |
 
@@ -103,7 +103,7 @@ Routes only, kept thin. A `page.tsx` sets `metadata` / `revalidate`, fetches ser
 
 | Path | Route |
 |---|---|
-| `app/(site)/` | Pages inside the site shell: `forum`, `post/[postId]`, `new-post`, `user/[userId]`, `blog`, `blog/[slug]`, `about`, `contact`, `privacy-policy`, `terms-of-service`, home `page.tsx` |
+| `app/(site)/` | Pages inside the site shell: `forum`, `post/[postId]`, `post/[postId]/edit`, `new-post`, `user/[userId]`, `blog`, `blog/[slug]`, `about`, `contact`, `privacy-policy`, `terms-of-service`, home `page.tsx` |
 | `app/creator/identity`, `app/creator/ego` | Card editor |
 | `app/layout.tsx`, `app/providers.tsx` | Root layout and client providers |
 | `app/sitemap.ts`, `app/robots.ts`, `app/manifest.ts` | SEO / PWA metadata |
@@ -130,7 +130,7 @@ Routes only, kept thin. A `page.tsx` sets `metadata` / `revalidate`, fetches ser
 | Cloud save | `features/cardCreator/api/SaveInfoApi.ts`, `features/cardCreator/utils/save/cloudSaveForm.ts`, `features/cardCreator/utils/save/prepareCloudSave.ts` |
 | Status effects / keywords | `features/cardCreator/utils/keywords/` |
 | Status effect popup (click an effect in skill text) | `features/cardCreator/components/statusEffectPopup/` (Floating UI popup), `features/cardCreator/contexts/StatusEffectPopupContext.tsx` (`StatusEffectPopupProvider`, `useStatusEffectPopup`), `features/cardCreator/types/StatusEffectInfo.ts`. Provided in `pages/CardEditor.tsx` (wraps input tabs + preview) and `components/cardSummary/CardSummary.tsx`; clicks handled in `components/card/components/skillEffect/SkillEffect.tsx` and `components/inputTab/components/tipTapEditor/TipTapEditor.tsx` |
-| Posts, comments, new post | `features/post/` — `api/PostApi.ts`, `api/CommentApi.ts`, `api/server/posts.ts`, `newPostPage/`, `postPage/` |
+| Posts, comments, new post, edit/delete post | `features/post/` — `api/PostApi.ts`, `api/CommentApi.ts`, `api/server/posts.ts`, `api/server/revalidatePost.ts` (server action that refreshes cached post/list pages), `newPostPage/` (create and edit form), `editPostPage/`, `components/postOwnerActions/` (author-only Edit/Delete), `postPage/` |
 | Forum listing / search | `features/forum/` |
 | User profile | `features/user/` |
 | Blog | `features/blog/`, markdown in `content/blog/` |

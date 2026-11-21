@@ -2,7 +2,7 @@ import { matchCardsToImages, toPostCards } from './postCards'
 import { IPostCardSnapshot } from 'features/post/types/IPost'
 
 const card = (overrides: Partial<IPostCardSnapshot>): IPostCardSnapshot => ({
-    position: 0, kind: 'Identity', imageUrl: 'https://cdn.test/a.png', saveInfo: { title: 'LCB', name: 'Faust' }, ...overrides,
+    id: 'card', position: 0, kind: 'Identity', imageUrl: 'https://cdn.test/a.png', saveInfo: { title: 'LCB', name: 'Faust' }, ...overrides,
 })
 
 describe('toPostCards', () => {

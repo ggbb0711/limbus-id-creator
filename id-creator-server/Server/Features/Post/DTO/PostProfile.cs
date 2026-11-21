@@ -2,6 +2,7 @@
 
 using System.Text.Json;
 using AutoMapper;
+using Server.Features.Images.Enum;
 using Server.Shared.Model;
 
 namespace Server.Features.Post.DTO
@@ -20,7 +21,7 @@ namespace Server.Features.Post.DTO
                     })));
 
             CreateMap<PostModel,PostResponseDTO>()
-                .ForMember(dest=>dest.ImagesAttach, opt=>opt.MapFrom(p=>p.ImageAttaches.Select(i=>i.Url)))
+                .ForMember(dest=>dest.ImagesAttach, opt=>opt.MapFrom(p=>p.ImageAttaches.Where(i=>i.Status != AssetStatus.Deleted).Select(i=>i.Url)))
                 .ForMember(dest=>dest.UserIcon, opt=>opt.MapFrom(p=>p.User.UserIcon.Url))
                 .ForMember(dest=>dest.UserName, opt=>opt.MapFrom(p=>p.User.UserName))
                 .ForMember(dest=>dest.Tags, opt=> opt.MapFrom(p=>p.Tags.Select(t=>t.TagName.Replace(" ","_"))))

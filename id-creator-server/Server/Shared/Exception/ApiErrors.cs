@@ -18,6 +18,7 @@ namespace Server.Shared.Exception
 
         public static readonly ErrorInfo PostNotFound = new("POST_NOT_FOUND", "Post does not exist");
         public static readonly ErrorInfo PostRemoved = new("POST_REMOVED", $"This post has been removed. {ContactAdmin}");
+        public static readonly ErrorInfo PostCardNotFound = new("POST_CARD_NOT_FOUND", "This ID/EGO is no longer part of the post. Reload the page and try again.");
         public static readonly ErrorInfo PostAuthorBanned = new("POST_AUTHOR_BANNED", $"The author of this post has been banned. {ContactAdmin}");
 
         public static readonly ErrorInfo SaveNotFound = new("SAVE_NOT_FOUND", "Save does not exist");

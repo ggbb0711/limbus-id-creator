@@ -2,7 +2,9 @@ using Microsoft.IdentityModel.Tokens;
 using Server.Features.Comment.Repository;
 using Server.Features.Post.Enum;
 using Server.Features.Post.Repository;
+using Server.Features.Images.Enum;
 using Server.Shared.Http;
+using Server.Shared.Model;
 
 namespace Server.Features.Post.Service
 {
@@ -73,6 +75,64 @@ namespace Server.Features.Post.Service
             foreach (var card in posts.SelectMany(p => p.Cards).Where(c => c.SaveId == saveId))
                 card.SaveId = null;
             await postRepository.SaveChangeAsync();
+        }
+
+        public async Task<PostModel> UpdatePost(PostModel post, string description, IReadOnlyList<string> tags, IReadOnlyList<PostCard> cards)
+        {
+            post.Description = description;
+            post.Updated = DateTime.Now;
+            ReplaceTags(post, tags);
+            ReplaceCards(post, cards);
+            ReplaceImages(post, cards);
+            await postRepository.SaveChangeAsync();
+            return post;
+        }
+
+        public async Task RemovePost(PostModel post)
+        {
+            post.IsRemoved = true;
+            await postRepository.SaveChangeAsync();
+        }
+
+        private static void ReplaceTags(PostModel post, IReadOnlyList<string> tags)
+        {
+            var wanted = tags.Distinct().ToList();
+            foreach (var tag in post.Tags.Where(t => !wanted.Contains(t.TagName)).ToList())
+                post.Tags.Remove(tag);
+            var existing = post.Tags.Select(t => t.TagName).ToHashSet();
+            foreach (var name in wanted.Where(name => !existing.Contains(name)))
+                post.Tags.Add(new Tag { Id = Guid.Empty, TagName = name });
+        }
+
+        private static void ReplaceCards(PostModel post, IReadOnlyList<PostCard> cards)
+        {
+            foreach (var card in post.Cards.Where(c => !cards.Contains(c)).ToList())
+                post.Cards.Remove(card);
+            for (var position = 0; position < cards.Count; position++)
+            {
+                cards[position].Position = position;
+                if (!post.Cards.Contains(cards[position])) post.Cards.Add(cards[position]);
+            }
+        }
+
+        private static void ReplaceImages(PostModel post, IReadOnlyList<PostCard> cards)
+        {
+            var images = post.ImageAttaches.Where(i => i.Status != AssetStatus.Deleted).ToList();
+            for (var i = 0; i < cards.Count; i++)
+            {
+                if (i < images.Count)
+                {
+                    if (images[i].Url == cards[i].ImageUrl) continue;
+                    images[i].Url = cards[i].ImageUrl;
+                    images[i].LastUpdated = DateTime.Now;
+                }
+                else
+                {
+                    post.ImageAttaches.Add(new ImageObj { Url = cards[i].ImageUrl });
+                }
+            }
+            foreach (var image in images.Skip(cards.Count))
+                post.ImageAttaches.Remove(image);
         }
 
         public Task<IReadOnlyCollection<Guid>> GetPostIdsWithCards(IReadOnlyCollection<Guid> postIds) =>

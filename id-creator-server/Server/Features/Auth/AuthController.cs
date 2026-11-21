@@ -1,5 +1,4 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
+using Server.Shared.Authorization;
 using AutoMapper;
 using Google.Apis.Auth;
 using Microsoft.AspNetCore.Authorization;
@@ -46,9 +45,7 @@ namespace Server.Features.Auth
         [Authorize]
         public async Task<ActionResult<ApiResponse<UserSessionProfileDTO>>> Status()
         {
-            var sub = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
-            if (!Guid.TryParse(sub, out var userId))
-                throw new UnauthorizedException(ApiErrors.InvalidAccessToken);
+            var userId = User.GetRequiredUserId();
 
             var user = await userService.GetUserById(userId)
                 ?? throw new UnauthorizedException(ApiErrors.AccountInactive);

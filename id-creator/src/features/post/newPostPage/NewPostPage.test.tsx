@@ -5,6 +5,7 @@ import NewPostPage from './NewPostPage'
 
 const mockAuth = { user: null as null | object, isInitializing: true }
 jest.mock('hooks/useAuth', () => ({ useAuth: () => mockAuth }))
+jest.mock('features/post/api/server/revalidatePost', () => ({ revalidatePost: jest.fn() }))
 jest.mock('next/navigation', () => ({ useRouter: () => ({ push: jest.fn() }) }))
 
 const renderPage = () => render(<Provider store={makeStore()}><NewPostPage/></Provider>)

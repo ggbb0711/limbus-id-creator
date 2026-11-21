@@ -10,6 +10,7 @@ import { CardSummary } from "features/cardCreator";
 import { matchCardsToImages, toPostCards } from "features/post/utils/postCards";
 import LivePostStats from "./LivePostStats";
 import ShareMenu from "features/post/components/shareMenu/ShareMenu";
+import PostOwnerActions from "features/post/components/postOwnerActions/PostOwnerActions";
 import "./Post.css";
 import "../shared/Style.css"
 import SectionErrorBoundary from "components/errorBoundary/SectionErrorBoundary";
@@ -42,6 +43,7 @@ export default function Post({ post }: { post: IPost }): ReactElement {
         <div className="center-element">
             <LivePostStats postId={post.id} viewCount={post.viewCount} commentCount={post.commentCount}/>
             <ShareMenu postId={post.id} title={post.title} triggerClassName="card-tag center-element" iconSize={16}/>
+            <PostOwnerActions postId={post.id} userId={post.userId} title={post.title} className="card-tag center-element"/>
         </div>
     </article>
 }
