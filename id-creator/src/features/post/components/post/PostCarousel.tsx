@@ -5,7 +5,7 @@ import ImageViewer, { imageAlt } from "components/ui/imageViewer/ImageViewer";
 import { CarouselIndex } from "hooks/useCarouselIndex";
 import "./Post.css";
 
-export default function PostCarousel({ images, title, alts, carousel }: { images: string[], title: string, alts?: string[], carousel: CarouselIndex }): ReactElement {
+export default function PostCarousel({ images, title, alts, carousel }: { images: string[], title: string, alts?: (string | undefined)[], carousel: CarouselIndex }): ReactElement {
     const [isViewing, setIsViewing] = useState(false)
 
     return <div className="post-carousel-container" aria-roledescription="carousel" aria-label={`${title} images`}>

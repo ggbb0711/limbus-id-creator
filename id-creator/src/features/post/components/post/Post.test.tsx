@@ -5,9 +5,9 @@ import { IPost } from 'features/post/types/IPost'
 
 jest.mock('features/post/components/postCardDetails/PostCardsView', () => ({
     __esModule: true,
-    default: ({ images, alts, summaries }: { images: string[], alts?: string[], summaries: unknown[] }) => <>
+    default: ({ images, alts, summaries }: { images: string[], alts?: (string | undefined)[], summaries: unknown[] }) => <>
         <p>card details {images.join(',')} summaries {summaries.filter(Boolean).length}</p>
-        <p>alts {alts?.join('|')}</p>
+        <p>alts {alts?.map(alt => alt ?? 'fallback').join('|')}</p>
     </>,
 }))
 jest.mock('features/cardCreator', () => ({
@@ -70,7 +70,7 @@ describe('Post card details', () => {
         expect(screen.getByText('card details a,b,c,d summaries 2')).toBeInTheDocument()
     })
 
-    it('describes each card image by its card name, kind and author and falls back to the post title', () => {
+    it('describes each card image by its card name, kind and author and leaves the rest to the carousel fallback', () => {
         const card = (kind: string, saveInfo: unknown) => ({ id: kind, position: 0, kind, imageUrl: kind, saveInfo })
         const withSlides = { ...post([]), slides: [
             { imageUrl: 'a', card: card('Identity', { title: 'LCB Sinner', name: 'Faust' }) },
@@ -78,7 +78,7 @@ describe('Post card details', () => {
             { imageUrl: 'c', card: null },
         ] } as IPost
         render(<Post post={withSlides}/>)
-        expect(screen.getByText('alts LCB Sinner Faust custom Identity card by n|Fluid Sac custom E.G.O card by n|Title – image 3')).toBeInTheDocument()
+        expect(screen.getByText('alts LCB Sinner Faust custom Identity card by n|Fluid Sac custom E.G.O card by n|fallback')).toBeInTheDocument()
     })
 
     it('uses the same view for a post with only plain images', () => {

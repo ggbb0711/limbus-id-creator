@@ -20,30 +20,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <head>
           {/* Google site verification */}
           {clientEnv.googleSiteVerification && <meta name="google-site-verification" content={clientEnv.googleSiteVerification} />}
-          {/* Mediavine */}
-          {/* <script type="text/javascript" async={true} data-noptimize="1" data-cfasync="false" src="//scripts.mediavine.com/tags/43dced82-5ca9-4c31-bf67-e780146fe518.js"></script> */}
-          {/* Admaven snippet */}
-          {/* <script data-cfasync="false" src="//dv5vwlgir0hsc.cloudfront.net/?lwvvd=1732986"></script> */}
-          {/* Monetag meta tag */}
-          {/* <meta name="monetag" content="93a55208fb9a8bc1ddb5420e86df1eed"></meta> */}
-          {/* Ad cash library tag */}
-          {/* <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
-          <script type="text/javascript">
-              {`aclib.runInPagePush({
-                  zoneId: '12431794',
-                  maxAds: 1,
-              });`}
-          </script>
-          <script type="text/javascript">
-              {`aclib.runInterstitial({
-                  zoneId: '12431806',
-              });`}
-          </script>
-          <script type="text/javascript">
-              {`aclib.runVideoSlider({
-                  zoneId: '12431902',
-              });`}
-          </script> */}
+          {/* Adsense snippets */}
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2161757435040376" crossOrigin="anonymous"></script>
         </head>
         <body>
           <Providers>{children}</Providers>

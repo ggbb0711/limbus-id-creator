@@ -7,7 +7,7 @@ import { useCarouselIndex } from "hooks/useCarouselIndex";
 import PostCarousel from "features/post/components/post/PostCarousel";
 import "./PostCardDetails.css";
 
-export default function PostCardsView({ images, title, alts, summaries }: { images: string[], title: string, alts?: string[], summaries: ReactNode[] }): ReactElement {
+export default function PostCardsView({ images, title, alts, summaries }: { images: string[], title: string, alts?: (string | undefined)[], summaries: ReactNode[] }): ReactElement {
     const carousel = useCarouselIndex(images.length)
     const canNavigate = images.length > 1
     const counter = (live: boolean) => <p className="post-card-details-counter" aria-live={live ? "polite" : undefined}>{carousel.index + 1} / {images.length}</p>

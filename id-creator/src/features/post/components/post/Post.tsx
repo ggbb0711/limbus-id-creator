@@ -6,7 +6,6 @@ import AuthorBadge from "features/post/components/authorBadge/AuthorBadge";
 import formatDisplayDate from "utils/formatDisplayDate";
 import PostCardsView from "features/post/components/postCardDetails/PostCardsView";
 import { CardSummary, SummaryCard, migrateEgoInfo, migrateIdInfo, summaryCardAlt } from "features/cardCreator";
-import { imageAlt } from "components/ui/imageViewer/ImageViewer";
 import LivePostStats from "./LivePostStats";
 import ShareMenu from "features/post/components/shareMenu/ShareMenu";
 import PostOwnerActions from "features/post/components/postOwnerActions/PostOwnerActions";
@@ -28,7 +27,7 @@ export default function Post({ post }: { post: IPost }): ReactElement {
     const slides = post.slides ?? []
     const cards = slides.map(slide => toSummaryCard(slide.card))
     const summaries = cards.map((card, i) => card && <CardSummary key={i} card={card}/>)
-    const alts = cards.map((card, i) => card ? summaryCardAlt(card, post.userName) : imageAlt(post.title, i))
+    const alts = cards.map(card => card ? summaryCardAlt(card, post.userName) : undefined)
     return <article className="post-container post-page-element-container">
         <h1 className="post-title">{post.title}</h1>
         <p className="post-date">Posted: {formatDisplayDate(post.created)}{post.updated && <> · Edited: {formatDisplayDate(post.updated)}</>}</p>

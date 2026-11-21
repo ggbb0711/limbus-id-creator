@@ -22,7 +22,7 @@ export function CarouselArrows({ carousel, className }: { carousel: CarouselInde
     </>
 }
 
-export default function ImageViewer({ images, title, alts, carousel, onClose }: { images: string[], title: string, alts?: string[], carousel: CarouselIndex, onClose: () => void }): ReactElement {
+export default function ImageViewer({ images, title, alts, carousel, onClose }: { images: string[], title: string, alts?: (string | undefined)[], carousel: CarouselIndex, onClose: () => void }): ReactElement {
     const containerRef = useRef<HTMLDivElement>(null)
     useDialog(true, onClose, containerRef)
 
