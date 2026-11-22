@@ -42,6 +42,15 @@ describe('CardSummary', () => {
         expect(container.querySelector('script')).toBeNull()
     })
 
+    it('shows the identity stats as one flat strip', () => {
+        const { container } = render(<CardSummary card={{ kind: 'Identity', info: identity() }}/>)
+        const stats = container.querySelector('.card-summary-stats .sinner-stats')
+        expect(stats).toBeInTheDocument()
+        expect(stats?.querySelectorAll('.stat-container')).toHaveLength(1)
+        expect(stats?.querySelectorAll('.stat-container-slot')).toHaveLength(7)
+        expect(stats).toHaveTextContent('Stagger Threshold')
+    })
+
     it('shows one tab per non-empty group and switches between them', async () => {
         const user = userEvent.setup()
         render(<CardSummary card={{ kind: 'Identity', info: identity() }}/>)

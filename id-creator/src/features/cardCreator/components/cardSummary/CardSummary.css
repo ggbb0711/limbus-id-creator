@@ -124,12 +124,14 @@
 }
 
 .card-summary .sinner-stats{
-    position: static;
-    transform: none;
-    width: 100%;
     max-width: 520px;
-    left: auto;
-    bottom: auto;
+    contain: none;
+}
+
+.card-summary .stat-container{
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0px;
 }
 
 .card-summary-skill-list{

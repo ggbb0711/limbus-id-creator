@@ -98,6 +98,11 @@ namespace Server.Shared.Database
                 .HasForeignKey<SavedSkill>("FK_SavedEgo_SavedSkill_key")
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<SavedId>().Property(s=>s.CardWidth).HasDefaultValue(1440);
+            modelBuilder.Entity<SavedId>().Property(s=>s.CardHeight).HasDefaultValue(1000);
+            modelBuilder.Entity<SavedEgo>().Property(s=>s.CardWidth).HasDefaultValue(1440);
+            modelBuilder.Entity<SavedEgo>().Property(s=>s.CardHeight).HasDefaultValue(1000);
+
             modelBuilder.Entity<Post>()
                 .HasMany(p=>p.Cards)
                 .WithOne(c=>c.Post)

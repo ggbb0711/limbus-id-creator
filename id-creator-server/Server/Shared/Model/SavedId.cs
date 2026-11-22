@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Server.Features.SaveInfo.Enum;
 using Server.Shared.Model.Interface;
 
 namespace Server.Shared.Model
@@ -47,6 +48,9 @@ namespace Server.Shared.Model
         public double MaxSpeed { get; set; }
         public string StaggerResist { get; set; } = "";
         public double DefenseLevel { get; set; }
+        public CardLayout CardLayout { get; set; } = CardLayout.Horizontal;
+        public int CardWidth { get; set; } = 1440;
+        public int CardHeight { get; set; } = 1000;
         public string SinnerColor { get; set; } = "";
 
         [Required]

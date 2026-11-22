@@ -17,12 +17,15 @@ const CardPreview = forwardRef<HTMLDivElement, CardPreviewProps>(({ changeActive
     const moveSkill = useMoveSkill(changeActiveTab)
     const { PreviewBody } = editor
 
-    const skills = <SkillDetailContainer moveSkill={moveSkill} skillDetails={info.skillDetails} draggingHandler={setIsDragging} changeActiveTab={changeActiveTab}/>
+    const isVertical = info.cardLayout === "Vertical"
+    const sizeStyle = isVertical ? { width: info.cardWidth } : { height: info.cardHeight }
+
+    const skills = <SkillDetailContainer moveSkill={moveSkill} skillDetails={info.skillDetails} draggingHandler={setIsDragging} changeActiveTab={changeActiveTab} layout={info.cardLayout} cardHeight={info.cardHeight}/>
 
     return (
         <CardZoomShell isDragging={isDragging}>
-            <div className="Card" ref={ref}>
-                {info.sinnerIcon && <img className="sinner-icon-background" src={info.sinnerIcon} alt="" crossOrigin="anonymous" />}
+            <div className={`Card ${isVertical ? "vertical" : "horizontal"}`} style={sizeStyle} ref={ref}>
+                {!isVertical && info.sinnerIcon && <img className="sinner-icon-background" src={info.sinnerIcon} alt="" crossOrigin="anonymous" />}
                 <div className="Card-container">
                     <PreviewBody info={info} skills={skills}/>
                 </div>

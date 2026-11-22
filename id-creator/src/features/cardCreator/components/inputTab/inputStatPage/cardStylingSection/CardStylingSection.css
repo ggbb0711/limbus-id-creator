@@ -1,0 +1,58 @@
+.card-layout-options{
+    display: flex;
+    width: fit-content;
+    border: 1px solid var(--Normal);
+}
+
+.card-layout-option{
+    position: relative;
+    cursor: pointer;
+}
+
+.card-layout-option input{
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.card-layout-option span{
+    display: block;
+    padding: 6px 16px;
+}
+
+.card-layout-option input:checked + span{
+    background-color: var(--Normal);
+    color: black;
+    -webkit-text-stroke: 0;
+}
+
+.card-layout-option input:focus-visible + span{
+    outline: 2px solid white;
+    outline-offset: 2px;
+}
+
+.card-size-slider{
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 4px 12px;
+    width: 100%;
+}
+
+.card-size-slider input{
+    grid-column: 1 / -1;
+    width: 100%;
+    accent-color: var(--Normal);
+}
+
+.card-size-slider.disabled{
+    opacity: 0.5;
+}
+
+.card-size-hint{
+    grid-column: 1 / -1;
+    font-size: 13px;
+    font-weight: normal;
+}

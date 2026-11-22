@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { EGO_LEVELS, SinRecord, createSinRecord, SIN_KEYS } from "features/cardCreator/constants"
+import { CARD_LAYOUTS, CARD_SIZE, EGO_LEVELS, SinRecord, createSinRecord, SIN_KEYS } from "features/cardCreator/constants"
 import { ICardInfoBase } from "features/cardCreator/types/ICardInfoBase"
 import { IEgoInfo, createEgoInfo } from "features/cardCreator/types/IEgoInfo"
 import { IIdInfo, TraitTagValue, createIdInfo } from "features/cardCreator/types/IIdInfo"
@@ -7,7 +7,7 @@ import { ISaveFile } from "features/cardCreator/types/ISaveFile"
 import { SkillDetail } from "features/cardCreator/types/SkillDetail"
 import { getSkillData, isKnownSkillType } from "features/cardCreator/skills/skillData"
 
-export const CURRENT_SCHEMA_VERSION = 3
+export const CURRENT_SCHEMA_VERSION = 4
 
 type Raw = Record<string, unknown>
 
@@ -45,6 +45,9 @@ const text = (fallback: string) => z.string().catch(fallback)
 
 const num = (fallback: number) => z.number().catch(fallback)
 
+const clamped = (fallback: number, range: { min: number, max: number }) =>
+    num(fallback).transform(value => Math.round(Math.min(range.max, Math.max(range.min, value))))
+
 const assetPath = (fallback: string) => z.unknown().optional().transform(path => fixAssetPath(path, fallback))
 
 const sinRecord = (fallback: SinRecord) =>
@@ -62,6 +65,9 @@ const baseShape = (defaults: ICardInfoBase) => ({
     sinnerColor: text(defaults.sinnerColor),
     sinnerIcon: assetPath(defaults.sinnerIcon),
     skillDetails: z.array(z.unknown()).transform(migrateSkills).catch(defaults.skillDetails),
+    cardLayout: z.enum(CARD_LAYOUTS).catch(defaults.cardLayout),
+    cardWidth: clamped(defaults.cardWidth, CARD_SIZE.width),
+    cardHeight: clamped(defaults.cardHeight, CARD_SIZE.height),
 })
 
 const versioned = { localSaveId: 1, schemaVersion: CURRENT_SCHEMA_VERSION } as const

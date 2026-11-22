@@ -22,9 +22,9 @@ beforeAll(() => {
     Object.defineProperty(window, 'ResizeObserver', { writable: true, value: class { observe() {} unobserve() {} disconnect() {} } })
 })
 
-function renderPreview(editor: CardEditorDefinition) {
+function renderPreview(editor: CardEditorDefinition, store = makeStore()) {
     return render(
-        <Provider store={makeStore()}>
+        <Provider store={store}>
             <CardEditorContext.Provider value={editor}>
                 <CardPreview changeActiveTab={jest.fn()}/>
             </CardEditorContext.Provider>
@@ -53,5 +53,29 @@ describe('CardPreview', () => {
         expect(container.querySelector('.sin-cost-container')).toBeInTheDocument()
         expect(container.querySelector('.sin-resistant-container')).toBeInTheDocument()
         expect(container.querySelector('.sinner-stats')).toBeNull()
+    })
+
+    it.each([idEditor, egoEditor])('sizes a horizontal card by its height for %s.kind', (editor) => {
+        const store = makeStore()
+        store.dispatch(editor.setInfo({ ...editor.selectInfo(store.getState()), cardHeight: 1200, cardWidth: 3000 }))
+        const { container } = renderPreview(editor, store)
+        const card = container.querySelector('.Card') as HTMLElement
+        expect(card).toHaveClass('horizontal')
+        expect(card.style.height).toBe('1200px')
+        expect(card.style.width).toBe('')
+        expect(container.querySelector('.skill-detail-container')).not.toHaveClass('vertical')
+    })
+
+    it.each([idEditor, egoEditor])('sizes a vertical card by its width and moves the sinner icon for %s.kind', (editor) => {
+        const store = makeStore()
+        store.dispatch(editor.setInfo({ ...editor.selectInfo(store.getState()), cardLayout: 'Vertical', cardHeight: 1200, cardWidth: 3000 }))
+        const { container } = renderPreview(editor, store)
+        const card = container.querySelector('.Card') as HTMLElement
+        expect(card).toHaveClass('vertical')
+        expect(card.style.width).toBe('3000px')
+        expect(card.style.height).toBe('')
+        expect(container.querySelector('.Card > .sinner-icon-background')).toBeNull()
+        expect(container.querySelector('.vertical-sinner-icon')).toBeInTheDocument()
+        expect(container.querySelector('.skill-detail-container')).toHaveClass('vertical')
     })
 })

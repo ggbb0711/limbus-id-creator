@@ -50,7 +50,7 @@ Namespace matches the path: `Server.Features.<Feature>.<SubFolder>`.
 | Need | Location |
 |---|---|
 | Login, Google OAuth, JWT, refresh, cookies, sessions | `Features/Auth/` — `AuthController.cs`, `Service/GoogleOAuthService.cs`, `Service/JwtTokenService.cs`, `Service/SessionService.cs`, `Service/CookieSessionService.cs`, `Repository/SessionRepository.cs`, `Background/DeleteExpiredSessionsBackgroundService.cs` |
-| Saving ID / EGO cards (cloud save) | `Features/SaveInfo/` — `SaveIDInfoController.cs`, `SaveEGOInfoController.cs`, generic `Service/SavedInfoService.cs` and `Repository/SaveInfoRepository.cs` (`<TInfo, TSave>`), skill DTOs in `DTO/Skills/`, polymorphic skill JSON in `JsonConverter/` |
+| Saving ID / EGO cards (cloud save) | `Features/SaveInfo/` — `SaveIDInfoController.cs`, `SaveEGOInfoController.cs`, generic `Service/SavedInfoService.cs` and `Repository/SaveInfoRepository.cs` (`<TInfo, TSave>`), skill DTOs in `DTO/Skills/`, polymorphic skill JSON in `JsonConverter/`. Card styling (`CardLayout` enum in `Enum/CardLayout.cs`, `CardWidth`, `CardHeight`) lives on `SavedId` / `SavedEgo` and the request DTOs; size limits are `CardStyleRules` in `DTO/SavedInfoRequestDTO.cs` |
 | Posts, post cards, post views, edit/delete post | `Features/Post/` — `PostController.cs` (create, get, list, `PUT` edit, `DELETE` soft delete via `IsRemoved`; author only), `DTO/PostUpdateRequestDTO.cs`, `Service/PostService.cs`, `Service/PostCardBuilder.cs`, `DTO/PostProfile.cs` (fills `Slides` via `MergeCardInfoAndImageUrl`, pairing each visible image with its card, and `HasCards` on `PostResponseDTO`; list items use `PostListItemDTO` with `HasCards` from the `PostProfile.PostIdsWithCards` mapping item), `Service/PostViewService.cs`, `Repository/PostRepository.cs`, `Enum/PostSortOption.cs` |
 | Comments | `Features/Comment/` |
 | Image upload / delete lifecycle | `Features/Images/` (service, repository, `Background/UploadImagesBackgroundService.cs`, `Background/DeleteImagesBackgroundService.cs`) + `Shared/CloudStorage/Service/AWSS3Service.cs` |
@@ -129,7 +129,7 @@ There are two 404 pages. `app/(site)/not-found.tsx` is shown when a page inside 
 
 | Need | Location |
 |---|---|
-| Card editor (ID / EGO) | `features/cardCreator/` — `pages/` (`CreatorClient.tsx`, `CardEditor.tsx`), `editors/` (`idEditor.ts`, `egoEditor.ts`), `components/inputTab/` (form), `components/card/` (preview), `skills/SkillRegistry.tsx`, `stores/` (`IdInfoSlice.ts`, `EgoInfoSlice.ts`) |
+| Card editor (ID / EGO) | `features/cardCreator/` — `pages/` (`CreatorClient.tsx`, `CardEditor.tsx`), `editors/` (`idEditor.ts`, `egoEditor.ts`), `components/inputTab/` (form; `inputStatPage/cardStylingSection/` holds the Card Styling accordion: horizontal/vertical layout and the width/height sliders), `components/card/` (preview; `previewBodies/` render the horizontal and vertical layouts), `skills/SkillRegistry.tsx`, `stores/` (`IdInfoSlice.ts`, `EgoInfoSlice.ts`) |
 | Local save (IndexedDB / Dexie) | `features/cardCreator/utils/save/indexDB/`, `features/cardCreator/utils/save/`, `features/cardCreator/hooks/useSaveLocal.ts` |
 | Cloud save | `features/cardCreator/api/SaveInfoApi.ts`, `features/cardCreator/utils/save/cloudSaveForm.ts`, `features/cardCreator/utils/save/prepareCloudSave.ts` |
 | Status effects / keywords | `features/cardCreator/utils/keywords/` (`statusEffectClipboard.ts`: copy status effects as their names, paste them back into the skill editor as `[keyword]`) |

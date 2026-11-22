@@ -35,11 +35,12 @@ export default function EgoHeader({title, name, egoLevel, sanityCost, sinnerColo
                 <div className="name-field" style={{background:sinnerColor}}>
                     <p>{name}</p>
                 </div>
-                <div className="center-element sanity-cost-container">
-                    <img className="sanity-cost-img" src="/Images/Sanity.webp" alt="" />
-                    <p>Sanity cost </p>
-                    <p className="sanity-cost">{sanityCost}</p>
-                </div>
+            </div>
+
+            <div className="center-element sanity-cost-container">
+                <img className="sanity-cost-img" src="/Images/Sanity.webp" alt="" />
+                <p>Sanity cost </p>
+                <p className="sanity-cost">{sanityCost}</p>
             </div>
         </div>
     )

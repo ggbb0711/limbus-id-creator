@@ -24,6 +24,14 @@ export type PassiveRequirement = typeof PASSIVE_REQUIREMENTS[number]
 
 export type SaveMode = "ID" | "EGO"
 
+export const CARD_LAYOUTS = ["Horizontal", "Vertical"] as const
+export type CardLayout = typeof CARD_LAYOUTS[number]
+
+export const CARD_SIZE = {
+    width: { min: 900, max: 3200, step: 10 },
+    height: { min: 700, max: 3000, step: 10 },
+} as const
+
 export const createSinRecord = (value: number): SinRecord =>
     Object.fromEntries(SIN_KEYS.map(key => [key, value])) as SinRecord
 

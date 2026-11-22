@@ -2,17 +2,21 @@ import React, { ReactElement, useCallback, useEffect, useRef, useState } from "r
 import { computeColumns } from "features/cardCreator/utils/layout/computeColumns";
 import "./SkillDetailContainer.css"
 import { SkillDetail } from "features/cardCreator/types/SkillDetail";
+import { CardLayout } from "features/cardCreator/constants";
 
 import DragAndDroppableSkill from "../dragAndDroppableSkill/DragAndDroppableSkill";
 import SkillCardSection from "../skillCardSection/SkillCardSection";
 
 
-export default function SkillDetailContainer({skillDetails,draggingHandler,changeActiveTab,moveSkill}:{
+export default function SkillDetailContainer({skillDetails,draggingHandler,changeActiveTab,moveSkill,layout="Horizontal",cardHeight}:{
         skillDetails:SkillDetail[],
         draggingHandler:(isDragging:boolean)=>void,
         changeActiveTab:(i:number)=>void,
-        moveSkill:(fromSkillID:string,toSkillID:string)=>void
+        moveSkill:(fromSkillID:string,toSkillID:string)=>void,
+        layout?:CardLayout,
+        cardHeight?:number
     }):ReactElement{
+    const isVertical = layout === "Vertical"
     const containerRef=useRef<HTMLDivElement>(null)    
     const [currentWidth,setCurrentWidth]=useState(700)
     
@@ -31,13 +35,20 @@ export default function SkillDetailContainer({skillDetails,draggingHandler,chang
 
     useEffect(()=>{
         const container = containerRef.current
-        if(!container) return
-        const heights = Array.from(container.children, child => (child as HTMLElement).clientHeight)
-        setCurrentWidth(computeColumns(heights, container.clientHeight).width)
-    },[skillDetails])
+        if(!container || isVertical) return
+        const measure = () => {
+            const heights = Array.from(container.children, child => (child as HTMLElement).clientHeight)
+            setCurrentWidth(computeColumns(heights, container.clientHeight).width)
+        }
+        measure()
+        const observer = new ResizeObserver(measure)
+        observer.observe(container)
+        Array.from(container.children).forEach(child => observer.observe(child))
+        return () => observer.disconnect()
+    },[skillDetails, isVertical, cardHeight])
 
     return(
-        <div className="skill-detail-container" ref={containerRef} style={{minWidth:Math.max(currentWidth,700)}}>
+        <div className={`skill-detail-container ${isVertical ? "vertical" : ""}`} ref={containerRef} style={isVertical ? undefined : {minWidth:Math.max(currentWidth,700)}}>
             {skillDetails.map((skill,i)=>
                 <div key={skill.inputId} onClick={()=>changeActiveTab(i)}>
                     {(printSinnerSkill(skill))}

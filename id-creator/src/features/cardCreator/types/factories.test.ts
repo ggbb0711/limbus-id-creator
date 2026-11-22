@@ -73,6 +73,10 @@ describe('card factories', () => {
         expect(info.egoLevel).toBe('ZAYIN')
     })
 
+    it.each([createIdInfo, createEgoInfo])('%p starts horizontal at the default card size', (create) => {
+        expect(create()).toMatchObject({ cardLayout: 'Horizontal', cardWidth: 1440, cardHeight: 1000 })
+    })
+
     it('applies overrides on top of the defaults', () => {
         expect(createIdInfo({ name: 'Faust', hp: 0 })).toMatchObject({ name: 'Faust', hp: 0, rarity: '/Images/rarity/IDNumber1.webp' })
     })

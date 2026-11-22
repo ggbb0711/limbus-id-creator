@@ -6,6 +6,7 @@ using Server.Features.Images.Enum;
 using Server.Features.Post.DTO;
 using Server.Features.Post.Service;
 using Server.Features.SaveInfo.DTO;
+using Server.Features.SaveInfo.Enum;
 using Server.Features.SaveInfo.Service;
 using Server.Shared.Exception;
 using Server.Shared.Model;
@@ -47,6 +48,38 @@ namespace Server.Tests.Features.Post.Service
             Assert.Contains(skills, s => s.GetProperty("type").GetString() == "OffenseSkill");
             Assert.Contains(skills, s => s.GetProperty("type").GetString() == "PassiveSkill");
             Assert.Contains(skills, s => s.GetProperty("type").GetString() == "MentalEffect");
+        }
+
+        [Fact]
+        public async Task BuildAsync_WritesCardStyle_WithLayoutAsText()
+        {
+            var userId = Guid.NewGuid();
+            var id = PostCardTestData.IdSave(_fixture, userId, "https://cdn.test/id-preview.png");
+            var ego = PostCardTestData.EgoSave(_fixture, userId, "https://cdn.test/ego-preview.png");
+            id.Saved.CardLayout = CardLayout.Vertical;
+            id.Saved.CardWidth = 1800;
+            id.Saved.CardHeight = 1200;
+            ego.Saved.CardLayout = CardLayout.Horizontal;
+            ego.Saved.CardWidth = 1440;
+            ego.Saved.CardHeight = 1100;
+            _idSaves.Setup(s => s.FindSavedInfoById(id.Id, true)).ReturnsAsync(id);
+            _egoSaves.Setup(s => s.FindSavedInfoById(ego.Id, true)).ReturnsAsync(ego);
+
+            var cards = await CreateBuilder().BuildAsync(userId,
+            [
+                new PostCardRequestDTO { SaveId = id.Id, Kind = PostCardKind.Identity },
+                new PostCardRequestDTO { SaveId = ego.Id, Kind = PostCardKind.Ego },
+            ]);
+
+            var idJson = JsonDocument.Parse(cards[0].SaveInfo).RootElement;
+            Assert.Equal("Vertical", idJson.GetProperty("cardLayout").GetString());
+            Assert.Equal(1800, idJson.GetProperty("cardWidth").GetInt32());
+            Assert.Equal(1200, idJson.GetProperty("cardHeight").GetInt32());
+
+            var egoJson = JsonDocument.Parse(cards[1].SaveInfo).RootElement;
+            Assert.Equal("Horizontal", egoJson.GetProperty("cardLayout").GetString());
+            Assert.Equal(1440, egoJson.GetProperty("cardWidth").GetInt32());
+            Assert.Equal(1100, egoJson.GetProperty("cardHeight").GetInt32());
         }
 
         [Fact]

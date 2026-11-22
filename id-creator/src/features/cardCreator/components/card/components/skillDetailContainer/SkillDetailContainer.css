@@ -13,3 +13,14 @@
 .skill-detail-container * {
     writing-mode: horizontal-tb;
 }
+
+
+.skill-detail-container.vertical{
+    writing-mode: horizontal-tb;
+    flex-direction: row;
+    height: auto;
+    max-height: none;
+    min-width: 0;
+    width: 100%;
+    gap: 28px 40px;
+}
