@@ -4,7 +4,8 @@
     contain: inline-size;
     font-weight: bold;
     font-family: var(--font-rubik), sans-serif;
-    color: white;
+    color: var(--Normal);
+    -webkit-text-stroke: .5px black;
 }
 
 .sinner-stats-border{
