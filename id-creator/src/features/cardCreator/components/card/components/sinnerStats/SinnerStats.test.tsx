@@ -35,4 +35,23 @@ describe('SinnerStats', () => {
         expect(border).toHaveStyle({ color: 'rgb(255, 149, 0)' })
         expect(border).toHaveAttribute('aria-hidden', 'true')
     })
+
+    it('tiles the warning text with an svg pattern that fills the whole strip', () => {
+        const { container } = render(<SinnerStats {...props}/>)
+        const svg = container.querySelector('.sinner-stats-border svg')
+        const fill = svg?.querySelector('rect')?.getAttribute('fill')
+        const id = fill?.match(/^url\(#(.+)\)$/)?.[1]
+        expect(id).toBeTruthy()
+        const pattern = svg?.querySelector(`pattern[id="${id}"]`)
+        expect(pattern).not.toBeNull()
+        expect(pattern).toHaveTextContent('WARNING ////')
+        expect(container.querySelectorAll('.sinner-stats-border span')).toHaveLength(0)
+    })
+
+    it('gives each instance its own pattern id', () => {
+        const { container } = render(<><SinnerStats {...props}/><SinnerStats {...props}/></>)
+        const ids = Array.from(container.querySelectorAll('pattern')).map(p => p.id)
+        expect(ids).toHaveLength(2)
+        expect(ids[0]).not.toBe(ids[1])
+    })
 })

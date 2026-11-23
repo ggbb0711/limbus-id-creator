@@ -48,7 +48,7 @@ export default function SkillDetailContainer({skillDetails,draggingHandler,chang
     },[skillDetails, isVertical, cardHeight])
 
     return(
-        <div className={`skill-detail-container ${isVertical ? "vertical" : ""}`} ref={containerRef} style={isVertical ? undefined : {minWidth:Math.max(currentWidth,700)}}>
+        <div className={`skill-detail-container ${isVertical ? "vertical" : ""}`} ref={containerRef} style={isVertical ? undefined : {width:Math.max(currentWidth,700)}}>
             {skillDetails.map((skill,i)=>
                 <div key={skill.inputId} onClick={()=>changeActiveTab(i)}>
                     {(printSinnerSkill(skill))}
