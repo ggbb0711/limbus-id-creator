@@ -153,6 +153,14 @@
     cursor: default;
 }
 
+.card-summary .custom-effect-container{
+    min-height: auto;
+}
+
+.card-summary .custom-effect-container.skill-section-container:hover{
+    border-color: #4d3737;
+}
+
 @media (max-width: 600px){
     .card-summary{
         padding: 12px;
