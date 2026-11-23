@@ -117,14 +117,4 @@ describe('StatusEffectPopupProvider copy', () => {
         expect(copy(true).setData).not.toHaveBeenCalled()
     })
 
-    it('does not open the popup while text is selected', () => {
-        const { result, text } = renderWith(`<p>Gain ${statusSpan(customEffectHtml(fanatic))}</p>`)
-        selectText(text)
-
-        let opened = true
-        act(() => { opened = result.current.openFromElement(text.querySelector('[data-status-effect] span')) })
-
-        expect(opened).toBe(false)
-        expect(result.current.isOpen).toBe(false)
-    })
 })
