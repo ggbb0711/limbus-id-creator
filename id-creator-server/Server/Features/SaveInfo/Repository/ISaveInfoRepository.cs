@@ -10,6 +10,5 @@ namespace Server.Features.SaveInfo.Repository
     {
         Task MergeSavedInfo(TEntry tracked, TEntry incoming);
         Task<TEntry?> GetByIdAsyncIncludingSaved(Guid id);
-        Task<List<TEntry>> FindByImageUrlsIncludingSaved(Guid userId, IReadOnlyCollection<string> urls);
     }
 }

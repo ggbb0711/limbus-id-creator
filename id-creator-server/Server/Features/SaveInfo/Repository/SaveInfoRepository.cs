@@ -12,11 +12,6 @@ namespace Server.Features.SaveInfo.Repository
         public async Task<TEntry?> GetByIdAsyncIncludingSaved(Guid id) =>
             await WithSaved().FirstOrDefaultAsync(e => e.Id == id);
 
-        public async Task<List<TEntry>> FindByImageUrlsIncludingSaved(Guid userId, IReadOnlyCollection<string> urls) =>
-            await WithSaved()
-                .Where(e => e.UserId == userId && urls.Contains(e.ImageAttach.Url))
-                .ToListAsync();
-
         private IQueryable<TEntry> WithSaved() =>
             Set
                 .Include(e => e.ImageAttach)
