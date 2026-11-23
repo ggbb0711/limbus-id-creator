@@ -6,7 +6,9 @@ jest.mock('next/navigation', () => ({ notFound: jest.fn(() => { throw new Error(
 jest.mock('features/user/api/server/users', () => ({ getUser: jest.fn() }))
 jest.mock('features/user/userPage/UserPage', () => () => null)
 
+import { Suspense } from 'react'
 import UnavailablePage from 'components/unavailablePage/UnavailablePage'
+import UserPage from 'features/user/userPage/UserPage'
 import Page, { generateMetadata, generateStaticParams, revalidate } from './page'
 
 const params = (userId: string) => ({ params: Promise.resolve({ userId }) }) as never
@@ -33,10 +35,13 @@ describe('user page', () => {
         await expect(generateMetadata(params('missing'))).resolves.toEqual({ title: 'User not found' })
     })
 
-    it('renders an existing user as not owned', async () => {
+    it('renders an existing user as not owned inside a Suspense boundary, since UserPage reads search params', async () => {
         jest.mocked(getUser).mockResolvedValue({ id: 'u1' } as never)
         const element = await Page(params('u1'))
-        expect(element.props).toEqual({ initialUser: { id: 'u1', owned: false } })
+        expect(element.type).toBe(Suspense)
+        expect(element.props.fallback).toBeTruthy()
+        expect(element.props.children.type).toBe(UserPage)
+        expect(element.props.children.props).toEqual({ initialUser: { id: 'u1', owned: false } })
     })
 
     it('renders the unavailable page for USER_BANNED', async () => {
