@@ -55,7 +55,7 @@ namespace Server.Tests.Features.SaveInfo.DTO
         [InlineData(900, true)]
         [InlineData(3200, true)]
         [InlineData(899, false)]
-        [InlineData(2401, false)]
+        [InlineData(3201, false)]
         public async Task Validate_ChecksWidthBounds(int width, bool valid)
         {
             var result = await Validator.ValidateAsync(CreateSave(width: width));
@@ -67,7 +67,7 @@ namespace Server.Tests.Features.SaveInfo.DTO
         [InlineData(700, true)]
         [InlineData(3000, true)]
         [InlineData(699, false)]
-        [InlineData(2001, false)]
+        [InlineData(3001, false)]
         public async Task Validate_ChecksHeightBounds(int height, bool valid)
         {
             var result = await Validator.ValidateAsync(CreateSave(height: height));
