@@ -11,9 +11,16 @@
 .sinner-stats-border{
     padding: 6px 8px;
     background-color: rgb(32,22,14);
-    white-space: nowrap;
     overflow: hidden;
-    font-size: 12px;
+    line-height: 0;
+}
+
+.sinner-stats-border svg{
+    display: block;
+}
+
+.sinner-stats-border text{
+    -webkit-text-stroke: 0;
 }
 
 .stat-container{

@@ -50,14 +50,19 @@ const container = (root: HTMLElement) => root.querySelector('.skill-detail-conta
 describe('SkillDetailContainer', () => {
     it('sizes the columns from the real container height', () => {
         const { container: root } = renderContainer()
-        expect(container(root).style.minWidth).toBe('1025px')
+        expect(container(root).style.width).toBe('1025px')
     })
 
     it('recalculates the columns when the container is resized', () => {
         const { container: root } = renderContainer()
         containerHeight = 1000
         act(() => observers[0].callback())
-        expect(container(root).style.minWidth).toBe('700px')
+        expect(container(root).style.width).toBe('700px')
+    })
+
+    it('sets an exact width instead of a min-width so the card can shrink', () => {
+        const { container: root } = renderContainer()
+        expect(container(root).style.minWidth).toBe('')
     })
 
     it('watches the container and every skill, and stops on unmount', () => {
@@ -73,6 +78,7 @@ describe('SkillDetailContainer', () => {
         const { container: root } = renderContainer('Vertical')
         expect(container(root)).toHaveClass('vertical')
         expect(container(root).style.minWidth).toBe('')
+        expect(container(root).style.width).toBe('')
         expect(observers).toHaveLength(0)
     })
 })

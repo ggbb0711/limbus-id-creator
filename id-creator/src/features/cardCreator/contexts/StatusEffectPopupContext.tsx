@@ -39,7 +39,6 @@ export function StatusEffectPopupProvider({ skills, children }: { skills: readon
 
     const openFromElement = useCallback((target: EventTarget | null) => {
         if (!(target instanceof Element)) return false
-        console.log("Pass?")
         const anchor = target.closest("[data-status-effect]")
         if (!anchor) return false
         const info = statusEffectslookup[toKeywordKey(anchor.textContent?.trim() ?? "")]

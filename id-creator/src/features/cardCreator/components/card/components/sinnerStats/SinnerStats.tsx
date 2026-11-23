@@ -1,5 +1,5 @@
 import { getResistTier } from "features/cardCreator/utils/card/getResistTier";
-import React from "react";
+import React, { useId } from "react";
 import { ReactElement } from "react";
 import "./SinnerStats.css"
 
@@ -15,7 +15,9 @@ interface SinnerStatsProps {
     sinnerColor: string
 }
 
-const BORDER_REPEAT = 30
+const BORDER_HEIGHT = 14
+const TEXT_WIDTH = 84
+const TILE_WIDTH = 96
 
 function ResistSlot({ icon, alt, value }: { icon: string, alt: string, value: number }): ReactElement {
     const tier = getResistTier(value)
@@ -29,10 +31,18 @@ function ResistSlot({ icon, alt, value }: { icon: string, alt: string, value: nu
 }
 
 export default function SinnerStats({minSpeed, maxSpeed, hp, staggerResist, defenseLevel, slashResistant, pierceResistant, bluntResistant, sinnerColor}: SinnerStatsProps):ReactElement{
+    const patternId = `warning-pattern-${useId().replace(/:/g, "")}`
     return(
         <div className="sinner-stats">
             <div className="sinner-stats-border" style={{color:sinnerColor}} aria-hidden="true">
-                {Array.from({ length: BORDER_REPEAT }, (_, i) => <span key={i}>WARNING //// </span>)}
+                <svg width="100%" height={BORDER_HEIGHT}>
+                    <defs>
+                        <pattern id={patternId} patternUnits="userSpaceOnUse" width={TILE_WIDTH} height={BORDER_HEIGHT}>
+                            <text x={0} y={11} fontSize={12} textLength={TEXT_WIDTH} lengthAdjust="spacingAndGlyphs" fill="currentColor" stroke="black" strokeWidth={0.5}>WARNING ////</text>
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill={`url(#${patternId})`} />
+                </svg>
             </div>
             <div className="stat-container">
                 <div className="stat-container-slot">
