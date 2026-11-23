@@ -29,6 +29,8 @@
     align-items: flex-end;
     gap: 16px;
     padding: 16px 10px 8px;
+    max-width: 1000px;
+    margin: auto;
 }
 
 .stat-container-slot{
