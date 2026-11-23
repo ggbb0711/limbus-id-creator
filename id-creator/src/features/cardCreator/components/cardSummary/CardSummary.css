@@ -9,6 +9,12 @@
     gap: 16px;
     position: relative;
     overflow: hidden;
+    scrollbar-width: none; 
+    -ms-overflow-style: none; 
+}
+
+.card-summary::-webkit-scrollbar{
+    display: none; 
 }
 
 .card-summary-header{
@@ -151,6 +157,14 @@
 .card-summary .skill-section-container:hover{
     border-color: transparent;
     cursor: default;
+}
+
+.card-summary .custom-effect-container{
+    min-height: auto;
+}
+
+.card-summary .custom-effect-container.skill-section-container:hover{
+    border-color: #4d3737;
 }
 
 @media (max-width: 600px){
