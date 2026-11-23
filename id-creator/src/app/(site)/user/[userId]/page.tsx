@@ -1,3 +1,4 @@
+import React, { Suspense } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getUser } from "features/user/api/server/users";
@@ -6,6 +7,7 @@ import { userMetadata } from "features/user/utils/userMetadata";
 import { isUnavailable } from "api/server/serverFetch";
 import UnavailablePage from "components/unavailablePage/UnavailablePage";
 import { getUnavailableContent } from "components/unavailablePage/unavailableContent";
+import UserProfileLoading from "features/user/components/userProfileLoading/UserProfileLoading";
 
 export const revalidate = 3600
 
@@ -26,5 +28,9 @@ export default async function Page({ params }: PageProps<"/user/[userId]">) {
     const user = await getUser(userId)
     if (!user) notFound()
     if (isUnavailable(user)) return <UnavailablePage code={user.code}/>
-    return <UserPage initialUser={{ ...user, owned: false }} />
+    return (
+        <Suspense fallback={<div className="page-container"><div className="page-content"><UserProfileLoading /></div></div>}>
+            <UserPage initialUser={{ ...user, owned: false }} />
+        </Suspense>
+    )
 }
