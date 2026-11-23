@@ -5,15 +5,15 @@ import { assetPaths } from "features/cardCreator/utils/card/assetPaths";
 function Coin({ effect }: { effect: CoinEffect }): ReactElement {
     switch (effect.type) {
         case "unbreakable":
-            return <img src={assetPaths.coin.unbreakable} alt="unbreakable_coin_icon" />
+            return <img src={assetPaths.coin.unbreakable} alt="Unbreakable coin" />
         case "excision":
-            return <img src={assetPaths.coin.excision} alt="excision_coin_icon" />
+            return <img src={assetPaths.coin.excision} alt="Excision coin" />
         case "custom":
             return effect.imageSrc
-                ? <img className="custom-coin-icon" src={effect.imageSrc} alt={`${effect.name}_coin_icon`} crossOrigin="anonymous" />
+                ? <img className="custom-coin-icon" src={effect.imageSrc} alt={`${effect.name} coin`} crossOrigin="anonymous" />
                 : <span className="custom-coin-fallback" style={{ color: effect.color }} title={effect.name}>{effect.name[0] ?? "?"}</span>
         default:
-            return <img src={assetPaths.coin.normal} alt="coin_icon" />
+            return <img src={assetPaths.coin.normal} alt="Coin" />
     }
 }
 

@@ -21,3 +21,7 @@
     display: inline;
     vertical-align: middle;
 }
+
+.tiptap-editor-content [data-status-effect]{
+    cursor: pointer;
+}

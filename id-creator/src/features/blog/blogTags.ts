@@ -5,6 +5,7 @@ export enum BlogTag {
 export const blogPostTags: Record<string, BlogTag[]> = {
     "card-creator-guide": [BlogTag.Guide],
     "how-to-post-your-creation": [BlogTag.Guide],
+    "keywords-and-status-effects": [BlogTag.Guide],
 }
 
 export function isBlogTag(value: unknown): value is BlogTag {

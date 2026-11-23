@@ -38,7 +38,7 @@ export const appConfig = Object.freeze({
     paging: Object.freeze({
         postsPerPage: readInt(process.env.NEXT_PUBLIC_POSTS_PER_PAGE, "NEXT_PUBLIC_POSTS_PER_PAGE", 10, { min: 1, max: 100 }),
         commentsPerPage: readInt(process.env.NEXT_PUBLIC_COMMENTS_PER_PAGE, "NEXT_PUBLIC_COMMENTS_PER_PAGE", 10, { min: 1, max: 100 }),
-        cloudSavesPerPage: readInt(process.env.NEXT_PUBLIC_CLOUD_SAVES_PER_PAGE, "NEXT_PUBLIC_CLOUD_SAVES_PER_PAGE", 50, { min: 1, max: 200 }),
+        cloudSavesPerPage: readInt(process.env.NEXT_PUBLIC_CLOUD_SAVES_PER_PAGE, "NEXT_PUBLIC_CLOUD_SAVES_PER_PAGE", 10, { min: 1, max: 200 }),
     }),
     timing: Object.freeze({
         alertMs: readInt(process.env.NEXT_PUBLIC_ALERT_MS, "NEXT_PUBLIC_ALERT_MS", 4000, { min: 1500 }),

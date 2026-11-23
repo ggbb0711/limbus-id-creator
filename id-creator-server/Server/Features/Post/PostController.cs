@@ -1,5 +1,4 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
+using Server.Shared.Authorization;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -17,7 +16,7 @@ namespace Server.Features.Post
 {
     [Route("API/[controller]")]
     [EnableCors("AllowOrigin")]
-    public class PostController(IPostService postService,IPostViewService postViewService, ICommentService commentService, IMapper mapper):Controller
+    public class PostController(IPostService postService,IPostViewService postViewService, ICommentService commentService, IPostCardBuilder postCardBuilder, IMapper mapper):Controller
     {
 
         [HttpPost("")]
@@ -26,20 +25,20 @@ namespace Server.Features.Post
         [ValidationFilter<PostRequestDTO>]
         public async Task<ActionResult<PostResponseDTO>> CreateNewPost([FromBody] PostRequestDTO newPost)
         {
-            var sub = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
-            if (!Guid.TryParse(sub, out var userId))
-                throw new UnauthorizedException(ApiErrors.InvalidAccessToken);
+            var userId = User.GetRequiredUserId();
             var post = mapper.Map<PostModel>(newPost);
             post.UserId = userId;
+            var cards = await postCardBuilder.BuildAsync(userId, newPost.Cards);
+            post.Cards = cards;
+            post.ImageAttaches = [.. cards.Select(c => new ImageObj { Url = c.ImageUrl })];
             var addedPost = await postService.CreatePost(post);
-            return Ok(ApiResponse<PostResponseDTO>.Ok(mapper.Map<PostResponseDTO>(addedPost),"Post created successfully"));
+            return Ok(ApiResponse<PostResponseDTO>.Ok(mapper.Map<PostResponseDTO>(addedPost), "Post created successfully"));
         }
 
         [HttpGet("{PostId}")]
         public async Task<ActionResult<PostResponseDTO>> GetPost(Guid postId)
         {
-            var sub = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
-            _ = Guid.TryParse(sub, out var userId);
+            User.TryGetUserId(out var userId);
             
             var foundPost = await postService.GetPostById(postId)
                 ?? throw new NotFoundException(ApiErrors.PostNotFound);
@@ -57,15 +56,62 @@ namespace Server.Features.Post
             return Ok(ApiResponse<PostResponseDTO>.Ok(postResponse));
         }
 
+        [HttpPut("{PostId}")]
+        [EnableCors("AllowOrigin")]
+        [Authorize]
+        [ValidationFilter<PostUpdateRequestDTO>]
+        public async Task<ActionResult<PostResponseDTO>> UpdatePost(Guid postId, [FromBody] PostUpdateRequestDTO body)
+        {
+            var userId = User.GetRequiredUserId();
+            var post = await FindOwnedPost(postId, userId);
+            var cards = new List<PostCard>();
+            foreach (var request in body.Cards)
+            {
+                if (request.CardId is Guid cardId)
+                {
+                    cards.Add(post.Cards.FirstOrDefault(c => c.Id == cardId)
+                        ?? throw new BadRequestException(ApiErrors.PostCardNotFound));
+                    continue;
+                }
+                var built = await postCardBuilder.BuildAsync(userId, [new PostCardRequestDTO { SaveId = request.SaveId!.Value, Kind = request.Kind!.Value }]);
+                cards.Add(built[0]);
+            }
+            var updated = await postService.UpdatePost(post, body.Description, body.Tags, cards);
+            var response = mapper.Map<PostResponseDTO>(updated);
+            return Ok(ApiResponse<PostResponseDTO>.Ok(response, "Post updated successfully"));
+        }
+
+        [HttpDelete("{PostId}")]
+        [EnableCors("AllowOrigin")]
+        [Authorize]
+        public async Task<ActionResult<ApiResponse<Guid>>> DeletePost(Guid postId)
+        {
+            var post = await FindOwnedPost(postId, User.GetRequiredUserId());
+            await postService.RemovePost(post);
+            return Ok(ApiResponse<Guid>.Ok(post.Id, "Post deleted successfully"));
+        }
+
+        private async Task<PostModel> FindOwnedPost(Guid postId, Guid userId)
+        {
+            var post = await postService.GetPostById(postId)
+                ?? throw new NotFoundException(ApiErrors.PostNotFound);
+            if (post.IsHidden())
+                throw new GoneException(ApiErrors.PostRemoved);
+            if (post.UserId != userId)
+                throw new ForbiddenException(ApiErrors.ResourceNotOwned);
+            return post;
+        }
+
         [HttpGet("")]
         public async Task<ActionResult<PostListResponseDTO>> GetPosts([FromQuery] SearchPostOption option)
         {
             var foundPost = await postService.FindPosts(option);
+            var withCards = await postService.GetPostIdsWithCards([.. foundPost.Select(p => p.Id)]);
             var postListResponse = new PostListResponseDTO()
             {
                 List = [.. foundPost.Select(p=>
                 {
-                    var postResponse = mapper.Map<PostResponseDTO>(p);
+                    var postResponse = mapper.Map<PostListItemDTO>(p, opt => opt.Items[PostProfile.PostIdsWithCards] = withCards);
                     postResponse.ViewCount = postViewService.GetViewCount(postResponse.Id);
                     postResponse.CommentCount = commentService.GetCommentCount(postResponse.Id);
                     return postResponse;

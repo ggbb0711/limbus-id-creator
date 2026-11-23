@@ -12,7 +12,30 @@ describe('static pages', () => {
 
     it('renders each about section with a heading', () => {
         render(<AboutPage/>)
-        expect(screen.getAllByRole('heading', { level: 2 }).map(h => h.textContent)).toEqual(['Creator Tools', 'Community', 'Disclaimer', 'Support'])
+        expect(screen.getAllByRole('heading', { level: 2 }).map(h => h.textContent)).toEqual([
+            'Creator Tools', 'Community', 'How the Site Is Run', 'Moderation', 'Your Data', 'Contact', 'Disclaimer', 'Support',
+        ])
+    })
+
+    it('shows the contact email and Discord handle', () => {
+        render(<AboutPage/>)
+        expect(screen.getByRole('link', { name: SITE_LINKS.contactEmail })).toHaveAttribute('href', `mailto:${SITE_LINKS.contactEmail}`)
+        expect(screen.getByText(SITE_LINKS.discordHandle)).toBeInTheDocument()
+    })
+
+    it.each([
+        ['Terms of Service', '/terms-of-service'],
+        ['Privacy Policy', '/privacy-policy'],
+        ['Card Creator Guide', '/blog/card-creator-guide'],
+        ['How to Share Your Creation', '/blog/how-to-post-your-creation'],
+    ])('links to the %s', (name, href) => {
+        render(<AboutPage/>)
+        expect(screen.getByRole('link', { name })).toHaveAttribute('href', href)
+    })
+
+    it('has at least 400 words of text', () => {
+        const { container } = render(<AboutPage/>)
+        expect((container.textContent ?? '').split(/\s+/).filter(Boolean).length).toBeGreaterThanOrEqual(400)
     })
 
     it('shows the contact email from the site links', () => {

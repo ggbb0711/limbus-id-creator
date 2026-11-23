@@ -16,7 +16,7 @@ export interface SkillData<K extends SkillType> {
     label: string
     addLabel: string
     icon: string
-    iconAlt: string
+    tabLabel: string
     create(): SkillOfType<K>
     migrate(raw: Partial<SkillOfType<K>>): SkillOfType<K>
     tabIcon(skill: SkillOfType<K>): string
@@ -29,7 +29,7 @@ export const SKILL_DATA = {
         label: "Offensive skill",
         addLabel: "Add offense skill",
         icon: "/Images/stat/stat_attack.webp",
-        iconAlt: "attk_icon",
+        tabLabel: "Offense skill",
         create: () => createOffenseSkill(),
         migrate: raw => createOffenseSkill({ ...raw, skillFrame: raw.skillFrame || "1" }),
         tabIcon: () => "/Images/stat/stat_attack.webp",
@@ -43,7 +43,7 @@ export const SKILL_DATA = {
         label: "Defense skill",
         addLabel: "Add defense skill",
         icon: "/Images/stat/stat_defense.webp",
-        iconAlt: "defense_icon",
+        tabLabel: "Defense skill",
         create: () => createDefenseSkill(),
         migrate: raw => createDefenseSkill({ ...raw, skillFrame: raw.skillFrame || "1" }),
         tabIcon: () => "/Images/stat/stat_defense.webp",
@@ -57,7 +57,7 @@ export const SKILL_DATA = {
         label: "Passive skill",
         addLabel: "Add passive skill",
         icon: "/Images/status-effect/Aggro.webp",
-        iconAlt: "passive_icon",
+        tabLabel: "Passive skill",
         create: () => createPassiveSkill(),
         migrate: raw => createPassiveSkill(raw),
         tabIcon: () => "/Images/status-effect/Aggro.webp",
@@ -67,7 +67,7 @@ export const SKILL_DATA = {
         label: "Custom effect",
         addLabel: "Add custom effect",
         icon: "/Images/status-effect/Discard.webp",
-        iconAlt: "custom_icon",
+        tabLabel: "Custom effect",
         create: () => createCustomEffect(),
         migrate: raw => createCustomEffect(raw),
         tabIcon: skill => skill.customImg || "/Images/status-effect/Discard.webp",
@@ -81,7 +81,7 @@ export const SKILL_DATA = {
         label: "Mental effect",
         addLabel: "Add mental effect",
         icon: "/Images/Sanity.webp",
-        iconAlt: "mental_icon",
+        tabLabel: "Mental effect",
         create: () => createMentalEffect(),
         migrate: raw => createMentalEffect(raw),
         tabIcon: () => "/Images/Sanity.webp",

@@ -192,3 +192,37 @@ describe('migrateSaveFile', () => {
         expect(migrateSaveFile([], () => 'info').name).toBe('Untitled')
     })
 })
+
+describe('card styling migration', () => {
+    it.each([migrateIdInfo, migrateEgoInfo])('gives old saves without styling fields the defaults (%p)', (migrate) => {
+        expect(migrate({ title: 'Old card' })).toMatchObject({ cardLayout: 'Horizontal', cardWidth: 1440, cardHeight: 1000 })
+    })
+
+    it.each([migrateIdInfo, migrateEgoInfo])('keeps valid styling values (%p)', (migrate) => {
+        expect(migrate({ cardLayout: 'Vertical', cardWidth: 1800, cardHeight: 1200 })).toMatchObject({ cardLayout: 'Vertical', cardWidth: 1800, cardHeight: 1200 })
+    })
+
+    it.each(['Diagonal', 3, null])('falls back to Horizontal for the layout %p', (cardLayout) => {
+        expect(migrateIdInfo({ cardLayout }).cardLayout).toBe('Horizontal')
+    })
+
+    it.each([
+        [100, 900],
+        [9000, 3200],
+        [1500, 1500],
+    ])('clamps card width %p to %p', (cardWidth, expected) => {
+        expect(migrateEgoInfo({ cardWidth }).cardWidth).toBe(expected)
+    })
+
+    it.each([
+        [100, 700],
+        [9000, 3000],
+        [1300, 1300],
+    ])('clamps card height %p to %p', (cardHeight, expected) => {
+        expect(migrateIdInfo({ cardHeight }).cardHeight).toBe(expected)
+    })
+
+    it('uses the defaults for sizes with the wrong type', () => {
+        expect(migrateIdInfo({ cardWidth: 'wide', cardHeight: NaN })).toMatchObject({ cardWidth: 1440, cardHeight: 1000 })
+    })
+})

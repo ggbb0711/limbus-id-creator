@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Server.Shared.Database;
 using Server.Shared.Http;
@@ -44,6 +45,11 @@ namespace Server.Shared.Repository
             query = query.Skip(param.Skip).Take(param.Take);
 
             return Task.FromResult(query.AsEnumerable());
+        }
+
+        public Task<int> CountAsync(Expression<Func<T, bool>>? filter = null)
+        {
+            return filter is null ? Set.CountAsync() : Set.CountAsync(filter);
         }
 
         public async Task<T?> GetByIdAsync(Guid id)

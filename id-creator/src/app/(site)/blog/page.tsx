@@ -1,3 +1,4 @@
+import AdsenseScript from "components/ads/AdsenseScript";
 import React, { Suspense } from "react";
 import type { Metadata } from "next";
 import BlogPage from "features/blog/BlogPage";
@@ -14,7 +15,10 @@ export const metadata: Metadata = pageMetadata({
 export default function Page() {
     const posts = getAllPosts()
     const tags = getAllTags()
-    return <Suspense fallback={<BlogPage posts={posts} tags={tags} />}>
-        <FilteredBlogPage posts={posts} tags={tags} />
-    </Suspense>
+    return <>
+        <AdsenseScript/>
+        <Suspense fallback={<BlogPage posts={posts} tags={tags} />}>
+            <FilteredBlogPage posts={posts} tags={tags} />
+        </Suspense>
+    </>
 }

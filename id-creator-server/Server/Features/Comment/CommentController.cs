@@ -1,7 +1,6 @@
+using Server.Shared.Authorization;
 
 
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -26,9 +25,7 @@ namespace Server.Features.Comment
         [ValidationFilter<CommentRequestDTO>]
         public async Task<ActionResult<CommentResponseDTO>> CreateComment([FromBody] CommentRequestDTO commentRequestDTO)
         {
-            var sub = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
-            if (!Guid.TryParse(sub, out var userId))
-                throw new UnauthorizedException(ApiErrors.InvalidAccessToken);
+            var userId = User.GetRequiredUserId();
             var comment = mapper.Map<CommentModel>(commentRequestDTO);
             comment.UserId = userId;
             var createdComment = await commentService.CreateComment(comment);

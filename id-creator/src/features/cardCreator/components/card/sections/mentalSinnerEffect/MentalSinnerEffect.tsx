@@ -13,7 +13,7 @@ const MentalSinnerEffect = forwardRef<HTMLDivElement, { mentalEffect: IMentalEff
             <p className="skill-label">SANITY</p>
             <div className="skill-section">
                 <div>
-                    <img className="sanity-img" src="/Images/Sanity.webp" alt="sanity-icon" />
+                    <img className="sanity-img" src="/Images/Sanity.webp" alt="Sanity" />
                 </div>
                 <div>
                     <div className="mental-skill-header">

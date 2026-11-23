@@ -1,3 +1,4 @@
+import AdsenseScript from "components/ads/AdsenseScript";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import BlogPostPage from "features/blog/BlogPostPage";
@@ -26,5 +27,8 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
     const post = getPost(slug)
     if (!post) notFound()
     const otherPosts = getAllPosts().filter((p) => p.slug !== slug)
-    return <BlogPostPage post={post} headings={getHeadings(post.content)} otherPosts={otherPosts} />
+    return <>
+        <AdsenseScript/>
+        <BlogPostPage post={post} headings={getHeadings(post.content)} otherPosts={otherPosts} />
+    </>
 }

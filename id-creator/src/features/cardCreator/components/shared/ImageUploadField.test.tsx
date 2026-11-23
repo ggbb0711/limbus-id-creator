@@ -52,13 +52,13 @@ describe('ImageUploadField', () => {
 
     it('shows a preview with a delete button when there is a value', () => {
         const { onChange } = setup('data:image/png;base64,xyz')
-        expect(screen.getByAltText('img-preview')).toHaveClass('preview')
+        expect(screen.getByAltText('img preview')).toHaveClass('preview')
         fireEvent.click(screen.getByText(/Delete/))
         expect(onChange).toHaveBeenCalledWith('')
     })
 
     it('hides the preview when empty', () => {
         setup()
-        expect(screen.queryByAltText('img-preview')).not.toBeInTheDocument()
+        expect(screen.queryByAltText('img preview')).not.toBeInTheDocument()
     })
 })

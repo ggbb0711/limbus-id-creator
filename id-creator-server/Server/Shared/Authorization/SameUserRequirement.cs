@@ -1,5 +1,3 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 namespace Server.Shared.Authorization
 {
@@ -23,8 +21,7 @@ namespace Server.Shared.Authorization
             IOwnedResource resource
         )
         {
-            var sub = context.User.FindFirstValue(JwtRegisteredClaimNames.Sub);
-            if(Guid.TryParse(sub, out var userId) && resource.UserId == userId)
+            if(context.User.TryGetUserId(out var userId) && resource.UserId == userId)
             {
                 context.Succeed(requirement);
             }

@@ -3,7 +3,7 @@ import IResponse from "types/IResponse";
 import { IPost } from "features/post/types/IPost";
 import { toPostDisplayCard } from "features/post/utils/toPostDisplayCard";
 import { buildPostsQuery } from "features/post/api/buildPostsQuery";
-import { GetPostsParams, ICreatePostBody } from "features/post/types/PostRequests";
+import { GetPostsParams, ICreatePostBody, IUpdatePostBody } from "features/post/types/PostRequests";
 import { IPostList } from "features/post/types/IPostList";
 import { unwrapData } from "api/unwrapData";
 
@@ -34,9 +34,28 @@ export const PostApi = BaseApi.injectEndpoints({
                 body,
             }),
             transformResponse: unwrapData<IPost>,
-            invalidatesTags: ['Posts'],
+            invalidatesTags: ['Posts', 'SaveIDInfo', 'SaveEGOInfo'],
+        }),
+
+        updatePost: builder.mutation<IPost, { id: string, body: IUpdatePostBody }>({
+            query: ({ id, body }) => ({
+                url: `/Post/${encodeURIComponent(id)}`,
+                method: 'PUT',
+                body,
+            }),
+            transformResponse: unwrapData<IPost>,
+            invalidatesTags: (result, error, { id }) => [{ type: 'Post', id }, 'Posts', 'SaveIDInfo', 'SaveEGOInfo'],
+        }),
+
+        deletePost: builder.mutation<string, string>({
+            query: (id) => ({
+                url: `/Post/${encodeURIComponent(id)}`,
+                method: 'DELETE',
+            }),
+            transformResponse: unwrapData<string>,
+            invalidatesTags: (result, error, id) => [{ type: 'Post', id }, 'Posts', 'SaveIDInfo', 'SaveEGOInfo'],
         }),
     }),
 })
 
-export const { useGetPostsQuery, useGetPostQuery, useCreatePostMutation } = PostApi
+export const { useGetPostsQuery, useGetPostQuery, useCreatePostMutation, useUpdatePostMutation, useDeletePostMutation } = PostApi

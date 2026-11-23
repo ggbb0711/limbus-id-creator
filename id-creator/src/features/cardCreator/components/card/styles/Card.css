@@ -7,13 +7,24 @@
     font-family: var(--font-rubik), sans-serif;   
 }
 
+.Card.vertical{
+    height: auto;
+}
+
 .Card-container{
     height: 100%;
     display: flex;
     box-sizing: border-box;
 }
 
+.Card.vertical .Card-container{
+    height: auto;
+    flex-direction: column;
+}
 
+.Card.vertical .Card-container > *{
+    flex-shrink: 0;
+}
 
 .ego-splash-art-container{
     height: 100%;
@@ -41,6 +52,22 @@
     flex-direction: column;
 }
 
+.skill-area{
+    flex: 1;
+    min-height: 0;
+    overflow-y: clip;
+}
+
+.ego-skill-area{
+    display: flex;
+    gap: 25px;
+}
+
+.content-container > .sin-resistant-container{
+    margin: auto auto 0px;
+    flex-shrink: 0;
+}
+
 .sinner-icon-background{
     position: absolute;
     width: 175px;
@@ -49,4 +76,76 @@
     top: calc(25% - 43.75px);
     opacity: 0.3;
     object-fit: contain;
+}
+
+.vertical-splash{
+    position: relative;
+    width: 100%;
+    aspect-ratio: 12 / 5;
+    overflow: hidden;
+    mask-image: linear-gradient(black 72%, transparent);
+}
+
+.vertical-splash .splashArt-container{
+    position: absolute;
+    inset: 0;
+    min-width: 0;
+}
+
+.vertical-header{
+    position: absolute;
+    top: 34px;
+    right: 44px;
+    z-index: 3;
+}
+
+.vertical-header-flow{
+    display: flex;
+    justify-content: flex-end;
+    padding: 40px 44px 48px;
+}
+
+.vertical-header-block{
+    position: relative;
+    isolation: isolate;
+}
+
+.vertical-header-block .header-container{
+    align-items: flex-end;
+}
+
+.vertical-sinner-icon{
+    position: absolute;
+    width: 170px;
+    height: 170px;
+    right: -36px;
+    top: -44px;
+    opacity: 0.35;
+    object-fit: contain;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.vertical-body{
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+    padding: 10px 44px 44px;
+}
+
+.ego-vertical-top{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding: 70px 0px 20px;
+}
+
+.ego-vertical-row{
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.ego-vertical-row .skill-detail-container{
+    flex: 1;
 }

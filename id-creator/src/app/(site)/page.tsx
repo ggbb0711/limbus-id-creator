@@ -1,3 +1,4 @@
+import AdsenseScript from "components/ads/AdsenseScript";
 import React from "react";
 import type { Metadata } from "next";
 import HomePage from "features/home/homePage/HomePage";
@@ -12,5 +13,8 @@ export const revalidate = 600
 
 export default async function Page() {
     const result = await getLatestPosts(serverConfig.homeLatestPosts)
-    return <HomePage latestPosts={result.ok ? result.data.list : null} />
+    return <>
+        <AdsenseScript/>
+        <HomePage latestPosts={result.ok ? result.data.list : null} />
+    </>
 }

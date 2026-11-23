@@ -1,7 +1,7 @@
 import { appConfig } from "config/env.client";
 import { BaseApi } from "api/BaseApi";
 import { SaveMode } from "features/cardCreator/constants";
-import { ISaveFile } from "features/cardCreator/types/ISaveFile";
+import { ISaveFile, ISaveList } from "features/cardCreator/types/ISaveFile";
 import { IIdInfo } from "features/cardCreator/types/IIdInfo";
 import { IEgoInfo } from "features/cardCreator/types/IEgoInfo";
 import { unwrapData } from "api/unwrapData";
@@ -15,10 +15,10 @@ function getSaveTag(saveMode: SaveMode): 'SaveIDInfo' | 'SaveEGOInfo' {
 
 const SaveInfoApi = BaseApi.injectEndpoints({
     endpoints: (builder) => ({
-        getSaveList: builder.query<ISaveFile<IIdInfo | IEgoInfo>[], { userId: string, searchName: string, saveMode: SaveMode, page?: number, limit?: number }>({
+        getSaveList: builder.query<ISaveList<IIdInfo | IEgoInfo>, { userId: string, searchName: string, saveMode: SaveMode, page?: number, limit?: number }>({
             query: ({ userId, searchName, saveMode, page = 0, limit = appConfig.paging.cloudSavesPerPage }) =>
                 `/${getSaveEndpoint(saveMode)}?${new URLSearchParams({ userId, searchName, page: String(page), limit: String(limit) })}`,
-            transformResponse: unwrapData<ISaveFile<IIdInfo | IEgoInfo>[]>,
+            transformResponse: unwrapData<ISaveList<IIdInfo | IEgoInfo>>,
             providesTags: (result, error, { saveMode }) => [getSaveTag(saveMode)],
         }),
         getSave: builder.query<ISaveFile<IIdInfo | IEgoInfo>, { saveId: string, saveMode: SaveMode }>({

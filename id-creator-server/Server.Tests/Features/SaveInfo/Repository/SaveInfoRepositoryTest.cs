@@ -131,6 +131,5 @@ namespace Server.Tests.Features.SaveInfo.Repository
             Assert.Single(reloaded.Saved.Skill.MentalEffects);
             Assert.Equal("Old Effect", reloaded.Saved.Skill.MentalEffects.First().Effect);
         }
-
     }
 }

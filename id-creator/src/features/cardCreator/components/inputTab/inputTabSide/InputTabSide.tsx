@@ -32,16 +32,17 @@ export default function InputTabSide({sinnerIcon,
                 style={{
                     background:'var(--None-input-page)'
                 }}>
-                <img src={sinnerIcon} alt="" crossOrigin="anonymous" />
+                <img src={sinnerIcon} alt="Card info" crossOrigin="anonymous" />
             </li>
             {skillDetails.map((skill,i)=>{
-                const tabIcon = getSkillData(skill.type).tabIcon(skill)
+                const skillData = getSkillData(skill.type)
+                const tabIcon = skillData.tabIcon(skill)
 
                 return <li className={`input-tab-side ${activeTab===i?"active":""}`} key={skill.inputId} 
                 onClick={()=>changeTab(i)} style={{
                         background:`var(--${isActiveSkill(skill)?skill.skillAffinity:"None"}-input-page)`
                     }}>
-                    <img src={tabIcon} alt="" crossOrigin="anonymous"/>
+                    <img src={tabIcon} alt={skillData.tabLabel} crossOrigin="anonymous"/>
                 </li>
             })}
         </ul>
@@ -58,7 +59,7 @@ export default function InputTabSide({sinnerIcon,
                         addTab(data.create())
                         setIsAdding(false)
                     }}>
-                    {data.addLabel} <img src={data.icon} alt={data.iconAlt} />
+                    {data.addLabel} <img src={data.icon} alt="" />
                 </li>
             })}
         </ul>:<></>}

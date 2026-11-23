@@ -16,7 +16,7 @@ export function PostDisplayCard({ id, title, cardImg, userIcon, userName, userId
     return <div className="post-display-card">
         <Link prefetch={false} href={"/post/" + id} tabIndex={-1} aria-hidden="true">
             <div className="post-display-card-img-container">
-                <Image className="post-display-card-img" src={cardImg} alt="" width={1440} height={1000} sizes="(max-width: 940px) 100vw, 580px" quality={90} />
+                <Image className="post-display-card-img" src={cardImg} alt={`${title}: Limbus Company custom card by ${userName}`} width={1440} height={1000} sizes="(max-width: 940px) 100vw, 580px" quality={90} />
             </div>
         </Link>
         <div className="post-display-card-footer">

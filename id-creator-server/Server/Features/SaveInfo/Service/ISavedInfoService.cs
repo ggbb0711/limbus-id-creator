@@ -11,6 +11,7 @@ namespace Server.Features.SaveInfo.Service
         Task<SaveEntry> CreateSavedInfo(SaveEntry newSave, SaveInfoFilesRequestDTO files);
         Task<SaveEntry?> FindSavedInfoById(Guid Id,bool includeSkill=false);
         Task<List<SaveEntry>> FindSavedInfos(SearchSaveParams option);
+        Task<int> CountSavedInfos(SearchSaveParams option);
         Task<SaveEntry?> UpdateSavedInfo(SaveEntry newSave, SaveInfoFilesRequestDTO files);
         Task<SaveEntry?> DeleteSavedInfo(Guid Id);
     }

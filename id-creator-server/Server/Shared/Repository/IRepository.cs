@@ -12,6 +12,7 @@ namespace Server.Shared.Repository
         Task<IEnumerable<T>> UpdateBulkAsync(IEnumerable<T> entities);
         Task RemoveAsync(T entity);
         Task<IEnumerable<T>> FindAsync(RepositoryGetParams<T> param);
+        Task<int> CountAsync(Expression<Func<T, bool>>? filter = null);
         Task SaveChangeAsync();
 
     }

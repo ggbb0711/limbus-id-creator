@@ -18,3 +18,7 @@
 .skill-effect span[contenteditable='false'] {
   white-space: nowrap;
 }
+
+.skill-effect.preview [data-status-effect]{
+  cursor: pointer;
+}

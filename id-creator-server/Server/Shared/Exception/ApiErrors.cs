@@ -18,10 +18,12 @@ namespace Server.Shared.Exception
 
         public static readonly ErrorInfo PostNotFound = new("POST_NOT_FOUND", "Post does not exist");
         public static readonly ErrorInfo PostRemoved = new("POST_REMOVED", $"This post has been removed. {ContactAdmin}");
+        public static readonly ErrorInfo PostCardNotFound = new("POST_CARD_NOT_FOUND", "This ID/EGO is no longer part of the post. Reload the page and try again.");
         public static readonly ErrorInfo PostAuthorBanned = new("POST_AUTHOR_BANNED", $"The author of this post has been banned. {ContactAdmin}");
 
         public static readonly ErrorInfo SaveNotFound = new("SAVE_NOT_FOUND", "Save does not exist");
         public static readonly ErrorInfo SaveUpdateFailed = new("SAVE_UPDATE_FAILED", "Cannot update save");
+        public static readonly ErrorInfo SaveImagesPending = new("SAVE_IMAGES_PENDING", "Your save is still uploading, try again in a few seconds.");
         public static readonly ErrorInfo ResourceNotOwned = new("RESOURCE_NOT_OWNED", "You do not own this resource.");
 
         public static readonly ErrorInfo ValidationFailed = new("VALIDATION_FAILED", "Validation failed");

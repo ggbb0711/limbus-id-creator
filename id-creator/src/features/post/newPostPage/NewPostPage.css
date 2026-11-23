@@ -43,3 +43,51 @@
 .remove-btn:hover{
     fill: red;
 }
+.post-input-hint{
+    margin: 0;
+    font-size: 0.85rem;
+    opacity: 0.75;
+}
+
+#post-name[readonly]{
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.choosen-save-img-container.replacing .choosen-save-img{
+    border-color: var(--hover-border-color);
+}
+
+.remove-btn:disabled{
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.remove-btn:disabled:hover{
+    fill: white;
+}
+
+.choosen-save-actions{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin-top: 4px;
+}
+
+.choosen-save-status{
+    font-size: 0.85rem;
+    color: var(--hover-border-color);
+}
+
+.choosen-save-status.muted{
+    color: inherit;
+    opacity: 0.7;
+}
+
+.choosen-save-buttons{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px;
+}

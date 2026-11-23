@@ -66,7 +66,7 @@ const SaveLocalMenu=({close}:{close: ()=>void})=>{
         <div className="save-menu-list local">
             {sortedSaves.map((data)=>
                 <div className={`save-tab center-element-vertically`} key={data.id}>
-                    {data.previewImg?<img className="save-preview-img" src={data.previewImg} alt="preview-save" />:<></>}
+                    {data.previewImg?<img className="save-preview-img" src={data.previewImg} alt="Card preview" />:<></>}
                     <p className="created-time">Last updated: {formatDisplayDate(data.updateTime, { withTime: true })}</p>
                     <p className="created-time">Created: {formatDisplayDate(data.saveTime, { withTime: true })}</p>
                     <div className="center-element save-tab-input-container">

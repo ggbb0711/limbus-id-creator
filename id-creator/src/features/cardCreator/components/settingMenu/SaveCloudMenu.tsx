@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ReactElement } from "react";
-import { ISaveFile } from "features/cardCreator/types/ISaveFile";
+import { ILinkedPost, ISaveFile } from "features/cardCreator/types/ISaveFile";
 import { createSaveFile } from "features/cardCreator/utils/save/createSaveFile";
 import { SaveImageError, prepareCloudSaveForm } from "features/cardCreator/utils/save/prepareCloudSave";
 import ConfirmDialog from "components/ui/confirmDialog/ConfirmDialog";
@@ -30,16 +30,19 @@ import BusyButton from "components/ui/busyButton/BusyButton";
 import { useDebouncedValue } from "hooks/useDebouncedValue";
 import { appConfig } from "config/env.client";
 import SaveNameDialog from "./SaveNameDialog";
+import LinkedPosts from "./LinkedPosts";
+import { PaginationNav, pageCountOf } from "components/ui/pagination/Pagination";
 
-function SaveCloudTab({saveName,saveDate,previewUrl,deleteSave,loadSave,overwriteSave}:{saveName:string,saveDate:string,previewUrl:string,deleteSave:()=>void,loadSave:()=>void,overwriteSave:()=>void}):ReactElement{
+function SaveCloudTab({saveName,saveDate,previewUrl,linkedPosts,deleteSave,loadSave,overwriteSave}:{saveName:string,saveDate:string,previewUrl:string,linkedPosts:ILinkedPost[],deleteSave:()=>void,loadSave:()=>void,overwriteSave:()=>void}):ReactElement{
     return <div className="save-cloud-tab">
         <div className="center-element save-cloud-tab-content">
-            <img className="preview-img" src={previewUrl} alt="preview-img" />
+            <img className="preview-img" src={previewUrl} alt="Card preview" />
             <div style={{textAlign:"left"}}>
                 <p className="created-time">Updated: {formatDisplayDate(saveDate, { withTime: true })}</p>
                 <p>{saveName}</p>
             </div>
         </div>
+        <LinkedPosts posts={linkedPosts} saveName={saveName}/>
         <div className="center-element save-cloud-tab-button-container">
             <button className="main-button" onClick={deleteSave}>
                 Delete
@@ -54,9 +57,16 @@ function SaveCloudTab({saveName,saveDate,previewUrl,deleteSave,loadSave,overwrit
     </div>
 }
 
+function deleteMessage(save: Pick<ISaveFile<CardInfo>, "name" | "linkedPosts">): string {
+    const base = `Delete the cloud save "${save.name}"? This can't be undone.`
+    const linkedCount = save.linkedPosts?.length ?? 0
+    if (linkedCount === 0) return base
+    return `${base} This save is used in ${linkedCount} post${linkedCount === 1 ? "" : "s"}. The posts keep their copy of the card, but you won't be able to update them from this save.`
+}
+
 interface PendingAction {
     kind: "delete" | "overwrite"
-    save: Pick<ISaveFile<CardInfo>, "id" | "name">
+    save: Pick<ISaveFile<CardInfo>, "id" | "name" | "linkedPosts">
 }
 
 export default function SaveCloudMenu():ReactElement{
@@ -74,10 +84,25 @@ export default function SaveCloudMenu():ReactElement{
     const { saveMode } = editor
     const cardData = useAppSelector(editor.selectInfo)
 
-    const { data: saveList = [], isFetching: isLoadingSaveList, error: saveListError } = useGetSaveListQuery(
-        { userId: loginUser?.id ?? "", searchName: debouncedSearchName, saveMode },
+    const pageSize = appConfig.paging.cloudSavesPerPage
+    const [requestedPage, setRequestedPage] = useState({ searchName: "", page: 0 })
+    const listRef = useRef<HTMLDivElement>(null)
+    const [knownTotal, setKnownTotal] = useState(0)
+    const pageCount = pageCountOf(knownTotal, pageSize)
+    const wantedPage = requestedPage.searchName === debouncedSearchName ? requestedPage.page : 0
+    const page = Math.min(wantedPage, Math.max(0, pageCount - 1))
+
+    const { data: saveListData, isFetching: isLoadingSaveList, error: saveListError } = useGetSaveListQuery(
+        { userId: loginUser?.id ?? "", searchName: debouncedSearchName, saveMode, page, limit: pageSize },
         { skip: !loginUser }
     )
+    const saveList = saveListData?.list ?? []
+    if (saveListData && saveListData.total !== knownTotal) setKnownTotal(saveListData.total)
+
+    function changePage(next: number) {
+        setRequestedPage({ searchName: debouncedSearchName, page: next })
+        listRef.current?.scrollTo?.({ top: 0 })
+    }
     useApiErrorAlert(saveListError, "Couldn't load your cloud saves")
     const [pendingAction, setPendingAction] = useState<PendingAction | null>(null)
 
@@ -177,11 +202,11 @@ export default function SaveCloudMenu():ReactElement{
             <label htmlFor="searchCloudSaveName">Search: </label>
             <input className="input save-cloud-name-input" name="searchCloudSaveName" id="searchCloudSaveName" type="text" placeholder="Save name" value={searchSaveName} onChange={(e)=>setSearchSaveName(e.target.value)}/>
         </div>
-        <div className="save-menu-list-container">
+        <div className="save-menu-list-container" ref={listRef}>
             {isLoadingSaveData?<div className="loading-cloud-tab"><Spinner/></div>:<></>}
             <div className="save-menu-list">
                 {loginUser?<>
-                    {saveList.map(save=><SaveCloudTab key={save.id} saveDate={save.saveTime} saveName={save.name} previewUrl={save.previewImg ?? ""}
+                    {saveList.map(save=><SaveCloudTab key={save.id} saveDate={save.saveTime} saveName={save.name} previewUrl={save.previewImg ?? ""} linkedPosts={save.linkedPosts ?? []}
                                     deleteSave={()=>setPendingAction({ kind: "delete", save })} loadSave={()=>loadSave(save.id)} overwriteSave={()=>setPendingAction({ kind: "overwrite", save })}/>)}
                 </>:
                     <div className="save-cloud-login-remainder">
@@ -191,10 +216,11 @@ export default function SaveCloudMenu():ReactElement{
                 }
             </div>
         </div>
+        {loginUser && pageCount > 1 && <PaginationNav compact className="save-cloud-pagination" page={page} pageCount={pageCount} onChange={changePage}/>}
         {loadCreateNewSaveButton()}
         {pendingAction && <ConfirmDialog
             message={pendingAction.kind === "delete"
-                ? `Delete the cloud save "${pendingAction.save.name}"? This can't be undone.`
+                ? deleteMessage(pendingAction.save)
                 : `Overwrite the cloud save "${pendingAction.save.name}" with the current card?`}
             onConfirm={confirmAction}
             onCancel={() => setPendingAction(null)}

@@ -1,24 +1,15 @@
-import { act, fireEvent, render, renderHook, screen } from '@testing-library/react'
+import React from 'react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import PostCarousel from './PostCarousel'
-import { useCarouselIndex } from 'features/post/hooks/useCarouselIndex'
+import { useCarouselIndex } from 'hooks/useCarouselIndex'
 
-describe('useCarouselIndex', () => {
-    it('stays inside the bounds', () => {
-        const { result } = renderHook(() => useCarouselIndex(3))
-        expect(result.current).toMatchObject({ index: 0, hasPrev: false, hasNext: true })
-        act(() => result.current.prev())
-        expect(result.current.index).toBe(0)
-        act(() => { result.current.next(); result.current.next(); result.current.next() })
-        expect(result.current).toMatchObject({ index: 2, hasPrev: true, hasNext: false })
-        act(() => result.current.set(10))
-        expect(result.current.index).toBe(2)
-    })
-
-    it('handles an empty list', () => {
-        const { result } = renderHook(() => useCarouselIndex(0))
-        expect(result.current).toMatchObject({ index: 0, hasPrev: false, hasNext: false })
-    })
-})
+function Carousel({ images, title }: { images: string[], title: string }) {
+    const carousel = useCarouselIndex(images.length)
+    return <>
+        <button type="button" onClick={carousel.next}>outside next</button>
+        <PostCarousel images={images} title={title} carousel={carousel}/>
+    </>
+}
 
 describe('PostCarousel', () => {
     beforeAll(() => {
@@ -30,27 +21,40 @@ describe('PostCarousel', () => {
 
     const images = ['/a.webp', '/b.webp', '/c.webp']
 
-    it('describes each image with the post title', () => {
-        render(<PostCarousel images={images} title="My card"/>)
+    it('describes each image with the post title and has no arrows of its own', () => {
+        render(<Carousel images={images} title="My card"/>)
         expect(screen.getByAltText('My card – image 1')).toBeInTheDocument()
         expect(screen.getByRole('button', { name: 'Open image 1 of 3' })).toBeInTheDocument()
+        expect(screen.queryByRole('button', { name: 'Previous image' })).not.toBeInTheDocument()
+        expect(screen.queryByRole('button', { name: 'Next image' })).not.toBeInTheDocument()
     })
 
-    it('moves with buttons', () => {
-        render(<PostCarousel images={images} title="T"/>)
-        expect(screen.queryByRole('button', { name: 'Previous image' })).not.toBeInTheDocument()
-        fireEvent.click(screen.getByRole('button', { name: 'Next image' }))
+    it('uses the given alt for each image in the carousel and the viewer', () => {
+        function WithAlts() {
+            const carousel = useCarouselIndex(2)
+            return <PostCarousel images={['/a.webp', '/b.webp']} title="T" alts={['First card', 'Second card']} carousel={carousel}/>
+        }
+        render(<WithAlts/>)
+        expect(screen.getByAltText('First card')).toBeInTheDocument()
+        fireEvent.click(screen.getByRole('button', { name: 'Open image 1 of 2' }))
+        expect(screen.getByRole('dialog', { name: 'Image viewer' }).querySelector('img.image-pop-up')).toHaveAttribute('alt', 'First card')
+    })
+
+    it('shows the image picked by the shared carousel', () => {
+        render(<Carousel images={images} title="T"/>)
+        fireEvent.click(screen.getByRole('button', { name: 'outside next' }))
         expect(screen.getByRole('button', { name: 'Open image 2 of 3' })).not.toHaveClass('hidden')
         expect(screen.getByRole('button', { name: 'Open image 1 of 3', hidden: true })).toHaveClass('hidden')
     })
 
     it('opens a viewer that navigates with arrows, closes with Escape and returns focus', () => {
-        render(<PostCarousel images={images} title="T"/>)
+        render(<Carousel images={images} title="T"/>)
         const trigger = screen.getByRole('button', { name: 'Open image 1 of 3' })
         trigger.focus()
         fireEvent.click(trigger)
         const dialog = screen.getByRole('dialog', { name: 'Image viewer' })
         expect(dialog).toHaveFocus()
+        expect(screen.getByRole('button', { name: 'Next image' })).toBeInTheDocument()
         fireEvent.keyDown(dialog, { key: 'ArrowRight' })
         expect(dialog.querySelector('img.image-pop-up')).toHaveAttribute('alt', 'T – image 2')
         fireEvent.keyDown(dialog, { key: 'ArrowLeft' })

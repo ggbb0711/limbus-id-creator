@@ -1,5 +1,3 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -31,8 +29,7 @@ namespace Server.Features.User
             var profile = mapper.Map<UserProfileResponseDTO>(foundUser);
             if(User.Identity?.IsAuthenticated == true)
             {
-                var sub = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
-                if(Guid.TryParse(sub, out var callerId) && callerId == profile.Id)
+                if(User.TryGetUserId(out var callerId) && callerId == profile.Id)
                     profile.Owned = true;
             }
 

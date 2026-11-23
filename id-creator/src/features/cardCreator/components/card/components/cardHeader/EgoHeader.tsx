@@ -27,7 +27,7 @@ export default function EgoHeader({title, name, egoLevel, sanityCost, sinnerColo
                 <div className="title-field" style={{background:sinnerColor}}>
                     <p>{title}</p>
                 </div>
-                <img className="ego-level-icon" src={egoLevelImg(egoLevel)} alt={`${egoLevel}-level-icon`} />
+                <img className="ego-level-icon" src={egoLevelImg(egoLevel)} alt={`${egoLevel} E.G.O level`} />
 
             </div>
 
@@ -35,11 +35,12 @@ export default function EgoHeader({title, name, egoLevel, sanityCost, sinnerColo
                 <div className="name-field" style={{background:sinnerColor}}>
                     <p>{name}</p>
                 </div>
-                <div className="center-element sanity-cost-container">
-                    <img className="sanity-cost-img" src="/Images/Sanity.webp" alt="sanity-cost-icon" />
-                    <p>Sanity cost </p>
-                    <p className="sanity-cost">{sanityCost}</p>
-                </div>
+            </div>
+
+            <div className="center-element sanity-cost-container">
+                <img className="sanity-cost-img" src="/Images/Sanity.webp" alt="" />
+                <p>Sanity cost </p>
+                <p className="sanity-cost">{sanityCost}</p>
             </div>
         </div>
     )

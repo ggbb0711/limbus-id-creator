@@ -83,11 +83,13 @@ namespace Server.Features.SaveInfo.DTO
 
             CreateMap<SavedEGOInfo,SaveInfoResponseDTO<SavedEgoRequestDTO>>()
                 .ForMember(dest=>dest.PreviewImg,opt=>opt.MapFrom(src=>src.ImageAttach.Url))
-                .ForMember(dest=>dest.SaveInfo,opt=>opt.MapFrom(src=>src.Saved));
+                .ForMember(dest=>dest.SaveInfo,opt=>opt.MapFrom(src=>src.Saved))
+                .ForMember(dest=>dest.LinkedPosts,opt=>opt.Ignore());
 
             CreateMap<SavedIDInfo,SaveInfoResponseDTO<SavedIDRequestDTO>>()
                 .ForMember(dest=>dest.PreviewImg,opt=>opt.MapFrom(src=>src.ImageAttach.Url))
-                .ForMember(dest=>dest.SaveInfo,opt=>opt.MapFrom(src=>src.Saved));
+                .ForMember(dest=>dest.SaveInfo,opt=>opt.MapFrom(src=>src.Saved))
+                .ForMember(dest=>dest.LinkedPosts,opt=>opt.Ignore());
 
             CreateMap<RequestOffenseSkill,OffenseSkill>()
                 .ForMember(dest=>dest.Id, opt=>opt.MapFrom(src=>src.InputId))

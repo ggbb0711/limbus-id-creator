@@ -9,22 +9,24 @@ export interface IconSource {
 
 type ActiveSkill = IOffenseSkill | IDefenseSkill
 
+export const defenseLabel = (defenseType: string) => defenseType.replace(/([a-z])([A-Z])/g, "$1 $2")
+
 export const isCounter = (defenseType: DefenseType) => defenseType === "Counter" || defenseType === "ClashableCounter"
 
 export const isAttackingSkill = (skill: ActiveSkill): boolean =>
     skill.type === "OffenseSkill" || isCounter(skill.defenseType)
 
 const attackIcon = (skill: ActiveSkill): IconSource =>
-    ({ src: `/Images/attack/attackt_${skill.damageType}.webp`, alt: `${skill.damageType}_icon` })
+    ({ src: `/Images/attack/attackt_${skill.damageType}.webp`, alt: `${skill.damageType} damage` })
 
 export function getSkillPowerIcon(skill: ActiveSkill): IconSource {
     if (skill.type === "OffenseSkill" || isCounter(skill.defenseType)) return attackIcon(skill)
     const defense = skill.defenseType === "ClashableGuard" ? "Block" : skill.defenseType
-    return { src: `/Images/defense/defense_${defense}.webp`, alt: `${defense}_icon` }
+    return { src: `/Images/defense/defense_${defense}.webp`, alt: `${defenseLabel(defense)} defense` }
 }
 
 export function getSkillLevelIcon(skill: ActiveSkill): IconSource {
     return isAttackingSkill(skill)
-        ? { src: "/Images/stat/stat_attack.webp", alt: "attack_icon" }
-        : { src: "/Images/stat/stat_defense.webp", alt: "defense_icon" }
+        ? { src: "/Images/stat/stat_attack.webp", alt: "Attack level" }
+        : { src: "/Images/stat/stat_defense.webp", alt: "Defense level" }
 }

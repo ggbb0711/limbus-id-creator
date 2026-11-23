@@ -1,5 +1,6 @@
 import { Node } from "@tiptap/core"
 import { sanitizeCardHtml } from "utils/htmlUtils"
+import { statusEffectNameFromHtml } from "features/cardCreator/utils/keywords/statusEffectClipboard"
 
 const StatusEffectNode = Node.create({
     name: "statusEffect",
@@ -32,6 +33,10 @@ const StatusEffectNode = Node.create({
                 },
             },
         ]
+    },
+
+    renderText({ node }) {
+        return statusEffectNameFromHtml(node.attrs.html)
     },
 
     renderHTML({ node }) {

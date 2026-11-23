@@ -24,6 +24,14 @@ export type PassiveRequirement = typeof PASSIVE_REQUIREMENTS[number]
 
 export type SaveMode = "ID" | "EGO"
 
+export const CARD_LAYOUTS = ["Horizontal", "Vertical"] as const
+export type CardLayout = typeof CARD_LAYOUTS[number]
+
+export const CARD_SIZE = {
+    width: { min: 900, max: 3200, step: 10 },
+    height: { min: 700, max: 3000, step: 10 },
+} as const
+
 export const createSinRecord = (value: number): SinRecord =>
     Object.fromEntries(SIN_KEYS.map(key => [key, value])) as SinRecord
 
@@ -55,13 +63,13 @@ export type SinnerKey = typeof SINNER_DEFINITIONS[number]["key"]
 
 export const sinnerIconSrc = (key: SinnerKey) => `/Images/sinner-icon/${key}_Icon.webp`
 
-export const SINNERS: readonly SinnerOption[] = SINNER_DEFINITIONS.map(({ key, colorVar }) => ({
+export const SINNERS: readonly SinnerOption[] = SINNER_DEFINITIONS.map(({ key, label, colorVar }) => ({
     src: sinnerIconSrc(key),
-    alt: `${key}_Icon.webp`,
+    alt: label,
     color: `var(${colorVar})`,
 }))
 
 export const RARITIES: readonly IconOption[] = [1, 2, 3].map(rank => ({
     src: `/Images/rarity/IDNumber${rank}.webp`,
-    alt: `rarity-icon-${rank}.webp`,
+    alt: `Rarity ${rank}`,
 }))

@@ -1,3 +1,4 @@
+using Server.Features.Post.DTO;
 
 
 namespace Server.Features.SaveInfo.DTO
@@ -9,5 +10,6 @@ namespace Server.Features.SaveInfo.DTO
         public DateTime SaveTime { get; set; }
         public required SaveType SaveInfo { get; set; }
         public string PreviewImg { get; set; } = "";
+        public List<LinkedPostDTO> LinkedPosts { get; set; } = [];
     }
 }

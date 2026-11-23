@@ -35,7 +35,7 @@ export default function ImageUploadField({ id, buttonText, maxSize, value, onCha
         {previewClassName && value &&
             <div className="input-group-container">
                 <div className="input-container center-element">
-                    <img className={previewClassName} src={value} alt={`${id}-preview`} />
+                    <img className={previewClassName} src={value} alt={`${buttonText.replace(/^Upload /, "")} preview`} />
                     <button className="main-button" onClick={() => onChange("")}>
                         <p className="center-element delete-txt"><DeleteIcon/> Delete</p>
                     </button>

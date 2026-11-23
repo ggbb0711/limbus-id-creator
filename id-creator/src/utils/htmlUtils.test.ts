@@ -126,8 +126,28 @@ describe('sanitizePostHtml', () => {
 
 describe('sanitizeCardHtml', () => {
     it('keeps the attributes status-effect markup needs', () => {
-        const html = '<span class="center-element" contenteditable="false" data-custom-coin-effect="coin-effect-1-custom-burn" style="color:red;"><img class="status-icon" src="/Images/status-effect/Burn.webp" alt="burn">Burn</span>'
+        const html = '<span class="center-element" contenteditable="false" data-custom-coin-effect="coin-effect-1-custom-burn" style="color:red;"><img class="status-icon" src="/Images/status-effect/Burn.webp" alt="">Burn</span>'
         expect(normalize(sanitizeCardHtml(html))).toBe(normalize(html))
+    })
+
+    it('empties the alt of a status icon that sits next to its name', () => {
+        const fragment = parse(sanitizeCardHtml('<span><img class="status-icon" src="/Images/status-effect/Burn.webp" alt="burn_icon">Burn</span>'))
+        expect(fragment.querySelector('img')?.getAttribute('alt')).toBe('')
+    })
+
+    it('names a coin effect icon by its coin number', () => {
+        const fragment = parse(sanitizeCardHtml("<span><img class='status-icon' src='/Images/status-effect/Coin_Effect_2.webp' alt='coin-effect-2' /></span>"))
+        expect(fragment.querySelector('img')?.getAttribute('alt')).toBe('Coin 2')
+    })
+
+    it('leaves the alt of other images alone', () => {
+        const fragment = parse(sanitizeCardHtml('<p><img src="/a.webp" alt="My art"></p>'))
+        expect(fragment.querySelector('img')?.getAttribute('alt')).toBe('My art')
+    })
+
+    it('does not touch status icon alts in post html', () => {
+        const fragment = parse(sanitizePostHtml('<p><img class="status-icon" src="/Images/status-effect/Burn.webp" alt="burn_icon"></p>'))
+        expect(fragment.querySelector('img')?.getAttribute('alt')).toBe('burn_icon')
     })
 
     it('keeps data-status-effect but strips handlers inside it', () => {

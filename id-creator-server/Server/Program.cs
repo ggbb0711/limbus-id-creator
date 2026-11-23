@@ -106,6 +106,7 @@ builder.Services.AddSingleton<IDeleteService,AWSS3Service>();
 builder.Services.AddSingleton<IAuthorizationHandler,SameUserAuthorizationHandler>();
 builder.Services.AddScoped<IImageObjService,ImageObjService>();
 builder.Services.AddScoped<IPostService,PostService>();
+builder.Services.AddScoped<IPostCardBuilder,PostCardBuilder>();
 builder.Services.AddScoped<ICommentService,CommentService>();
 builder.Services.AddScoped<IPostViewService,PostViewService>();
 builder.Services.AddHostedService<DeleteExpiredSessionsBackgroundService>();

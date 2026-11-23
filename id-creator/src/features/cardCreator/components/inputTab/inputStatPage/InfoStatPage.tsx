@@ -7,6 +7,7 @@ import AccordionSection from "components/ui/accordionSection/AccordionSection";
 import IconButton from "components/ui/iconButton/IconButton";
 import SinnerIconPicker from "./sinnerIconPicker/SinnerIconPicker";
 import SinnerSplashArtRepositionInput from "./sinnerSplashArtRepositionInput/SinnerSplashArtRepositionInput";
+import CardStylingSection from "./cardStylingSection/CardStylingSection";
 import ImageUploadField from "features/cardCreator/components/shared/ImageUploadField";
 import ColorPicker from "features/cardCreator/components/colorPicker/ColorPicker";
 import { STAT_PAGE_COLOR_GROUPS } from "features/cardCreator/components/colorPicker/ColorPresets";
@@ -74,5 +75,6 @@ export default function InfoStatPage({ collapsePage }: { collapsePage: () => voi
             {GeneralFields && <GeneralFields form={form} registerNumber={registerNumber}/>}
         </AccordionSection>
         <StatsSection form={form} registerNumber={registerNumber}/>
+        <CardStylingSection form={form}/>
     </div>
 }

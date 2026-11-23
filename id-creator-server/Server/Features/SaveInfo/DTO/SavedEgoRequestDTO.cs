@@ -3,6 +3,7 @@
 using FluentValidation;
 using Server.Features.Images;
 using Server.Features.SaveInfo.DTO.Skills;
+using Server.Features.SaveInfo.Enum;
 
 namespace Server.Features.SaveInfo.DTO
 {
@@ -19,6 +20,9 @@ namespace Server.Features.SaveInfo.DTO
         public string SinnerColor { get; set; } = "";
         public string SinnerIcon { get; set; } = "";
         public string EgoLevel { get; set; } = "";
+        public CardLayout CardLayout { get; set; } = CardLayout.Horizontal;
+        public int CardWidth { get; set; } = 1440;
+        public int CardHeight { get; set; } = 1000;
         public required List<SkillRequestBase> SkillDetails { get; set; }
 
         public class SinResistantObj
@@ -54,6 +58,15 @@ namespace Server.Features.SaveInfo.DTO
             RuleFor(s=>s.SinnerIcon)
                 .MustAsync(async (image,_)=>await FileHelper.CheckUrlSize(image, 100 * 1024))
                 .WithMessage("Sinner icon url size <= 100kb");
+
+            RuleFor(s => s.CardLayout).IsInEnum()
+                .WithMessage(CardStyleRules.LayoutMessage);
+
+            RuleFor(s => s.CardWidth).InclusiveBetween(CardStyleRules.MinWidth, CardStyleRules.MaxWidth)
+                .WithMessage(CardStyleRules.WidthMessage);
+
+            RuleFor(s => s.CardHeight).InclusiveBetween(CardStyleRules.MinHeight, CardStyleRules.MaxHeight)
+                .WithMessage(CardStyleRules.HeightMessage);
 
             RuleForEach(s => s.SkillDetails).SetInheritanceValidator(v =>
             {

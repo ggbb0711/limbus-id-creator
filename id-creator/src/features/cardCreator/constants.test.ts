@@ -20,7 +20,7 @@ describe('SINNERS', () => {
     it('keeps the icon paths, alt text and colors', () => {
         expect(SINNERS).toEqual(files.map((file, i) => ({
             src: `/Images/sinner-icon/${file}_Icon.webp`,
-            alt: `${file}_Icon.webp`,
+            alt: labels[i],
             color: `var(${colorVars[i]})`,
         })))
     })

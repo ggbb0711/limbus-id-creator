@@ -1,0 +1,209 @@
+# Folder structure
+
+A map of the repo for finding existing code and placing new code. Keep it in sync: any change that adds, moves, renames or deletes a folder, feature, service, controller, repository or background service must update this file in the same change.
+
+## Top level
+
+| Path | What |
+|---|---|
+| `id-creator/` | Next.js frontend |
+| `id-creator/StatusEffectScrapping/` | Standalone Node scraper for status effect data (`scrape.js`, `downloadAndUpdate.js`). Output feeds `id-creator/src/features/cardCreator/utils/keywords/` |
+| `id-creator-server/` | ASP.NET Core backend (`id-creator-server.slnx`) |
+| `id-creator-server/Server/` | Backend source |
+| `id-creator-server/Server.Tests/` | Backend xUnit tests |
+| `package.json` (root) | All run / test / lint scripts for both sides |
+| `docs/` | Project docs (this file) |
+
+---
+
+## Backend: `id-creator-server/Server`
+
+Organized as vertical slices: one folder per feature under `Features/`, cross-feature code under `Shared/`.
+
+### Entry point
+
+`Program.cs` holds everything that wires the app together:
+- DI registration for every repository, service and background service (`AddScoped<IX, X>`, `AddSingleton`, `AddHostedService`)
+- JWT auth, the `SameUser` authorization policy, CORS
+- JSON converters, model binder providers, exception handlers, middleware pipeline
+
+A new service or repository is not usable until it is registered here.
+
+### Feature folder layout
+
+Every feature in `Features/<Feature>/` follows the same shape (only the sub-folders it needs):
+
+| Path | Contents |
+|---|---|
+| `<Feature>Controller.cs` | HTTP endpoints |
+| `DTO/` | Request/response DTOs, FluentValidation validators (defined in the request DTO file, e.g. `Post/DTO/PostRequestDTO.cs`), AutoMapper `*Profile.cs` |
+| `Service/` | `I<X>Service.cs` interface + `<X>Service.cs` business logic |
+| `Repository/` | `I<X>Repository.cs` interface + implementation, `Search*Option.cs` / `Search*Params.cs` query objects |
+| `Background/` | `BackgroundService` classes (registered with `AddHostedService`) |
+| `Enum/` | Feature-local enums |
+| `JsonConverter/` | Feature-local System.Text.Json converters |
+
+Namespace matches the path: `Server.Features.<Feature>.<SubFolder>`.
+
+### Where to find things (backend)
+
+| Need | Location |
+|---|---|
+| Login, Google OAuth, JWT, refresh, cookies, sessions | `Features/Auth/` — `AuthController.cs`, `Service/GoogleOAuthService.cs`, `Service/JwtTokenService.cs`, `Service/SessionService.cs`, `Service/CookieSessionService.cs`, `Repository/SessionRepository.cs`, `Background/DeleteExpiredSessionsBackgroundService.cs` |
+| Saving ID / EGO cards (cloud save) | `Features/SaveInfo/` — `SaveIDInfoController.cs`, `SaveEGOInfoController.cs`, generic `Service/SavedInfoService.cs` and `Repository/SaveInfoRepository.cs` (`<TInfo, TSave>`), skill DTOs in `DTO/Skills/`, polymorphic skill JSON in `JsonConverter/`. Card styling (`CardLayout` enum in `Enum/CardLayout.cs`, `CardWidth`, `CardHeight`) lives on `SavedId` / `SavedEgo` and the request DTOs; size limits are `CardStyleRules` in `DTO/SavedInfoRequestDTO.cs` |
+| Posts, post cards, post views, edit/delete post | `Features/Post/` — `PostController.cs` (create, get, list, `PUT` edit, `DELETE` soft delete via `IsRemoved`; author only), `DTO/PostUpdateRequestDTO.cs`, `Service/PostService.cs`, `Service/PostCardBuilder.cs`, `DTO/PostProfile.cs` (fills `Slides` via `MergeCardInfoAndImageUrl`, pairing each visible image with its card, and `HasCards` on `PostResponseDTO`; list items use `PostListItemDTO` with `HasCards` from the `PostProfile.PostIdsWithCards` mapping item), `Service/PostViewService.cs`, `Repository/PostRepository.cs`, `Enum/PostSortOption.cs` |
+| Comments | `Features/Comment/` |
+| Image upload / delete lifecycle | `Features/Images/` (service, repository, `Background/UploadImagesBackgroundService.cs`, `Background/DeleteImagesBackgroundService.cs`) + `Shared/CloudStorage/Service/AWSS3Service.cs` |
+| User profile | `Features/User/` |
+
+### Shared (`Server/Shared`)
+
+| Path | Contents |
+|---|---|
+| `Config/EnvironmentVariables.cs` | Every backend env var. Values come from `Server/.env` (loaded by DotNetEnv). Add new vars here |
+| `Model/` | All EF Core entities (`Post.cs`, `User.cs`, `SavedIDInfo.cs`, …). `Model/Interface/` for shared entity interfaces |
+| `Database/ServerDbContext.cs` | `DbSet`s and entity relationships |
+| `Database/Interceptor/` | EF save interceptors (image cleanup) |
+| `Exception/ApiErrors.cs` | Error codes and messages (constants). Typed exceptions (`NotFoundException`, `ForbiddenException`, …) live beside it |
+| `Repository/Repository.cs` | Generic base repository (`IRepository`) |
+| `Http/` | `ApiResponse.cs` response envelope, `RepositoryGetParams.cs` |
+| `Middleware/` | `GlobalExceptionHandler.cs` and API exception handling |
+| `Filter/` | `ValidationFilter.cs` |
+| `Authorization/` | `SameUserRequirement.cs` (SameUser policy), `ClaimsPrincipalExtensions.cs` (`User.GetRequiredUserId()` / `User.TryGetUserId(out id)` — read the logged-in user id from the JWT `sub` claim; use these instead of parsing claims in controllers) |
+| `ModelBinding/` | JSON-in-form-field model binder |
+| `CloudStorage/Service/` | S3 upload/delete (`IUploadService`, `IDeleteService`) |
+
+### Other backend files
+
+| Path | Contents |
+|---|---|
+| `Migrations/` | EF Core migrations. Generated by `dotnet ef`; never hand-edit |
+| `appsettings*.json` | Logging only; app config is in env vars |
+| `docker-compose*.yml`, `rabbitmq/` | Local Postgres / RabbitMQ |
+| `dockerfile`, `Dockerfile.koyeb` | Deployment images |
+
+### Backend tests
+
+`Server.Tests/` mirrors `Server/` path for path. File name is `<ClassName>Test.cs`.
+Example: `Server/Features/Post/Service/PostService.cs` → `Server.Tests/Features/Post/Service/PostServiceTest.cs`.
+
+---
+
+## Frontend: `id-creator/src`
+
+Next.js App Router for routes, feature folders for everything else.
+
+### Imports
+
+Use the tsconfig path aliases, never long relative paths: `api/*`, `assets/*`, `components/*`, `config/*`, `features/*`, `hooks/*`, `stores/*`, `styles/*`, `types/*`, `utils/*`.
+
+### Routes: `app/`
+
+Routes only, kept thin. A `page.tsx` sets `metadata` / `revalidate`, fetches server data through `features/<x>/api/server/`, and renders a component from `features/`. No business logic here.
+
+Don't put a `loading.tsx` in or above a route whose `page.tsx` calls `notFound()`. It streams the page with HTTP 200 before `notFound()` runs, so missing items become soft 404s. `app/notFoundStatus.test.ts` enforces this.
+
+There are two 404 pages. `app/(site)/not-found.tsx` is shown when a page inside `(site)` calls `notFound()`; it renders only `NotFoundPage`, because the `(site)` layout already adds the header and footer. `app/not-found.tsx` is shown for URLs that match no route; it wraps `NotFoundPage` in `SiteShell` itself.
+
+| Path | Route |
+|---|---|
+| `app/(site)/` | Pages inside the site shell: `forum`, `post/[postId]`, `post/[postId]/edit`, `new-post`, `user/[userId]`, `blog`, `blog/[slug]`, `about`, `contact`, `privacy-policy`, `terms-of-service`, home `page.tsx` |
+| `app/creator/identity`, `app/creator/ego` | Card editor |
+| `app/layout.tsx`, `app/providers.tsx` | Root layout and client providers |
+| `app/sitemap.ts`, `app/robots.ts`, `app/manifest.ts` | SEO / PWA metadata |
+
+### Feature folder layout
+
+`features/<feature>/` contains only the sub-folders it needs:
+
+| Path | Contents |
+|---|---|
+| `api/` | Client RTK Query endpoints via `BaseApi.injectEndpoints` (e.g. `PostApi.ts`) |
+| `api/server/` | Server-only fetchers (`import 'server-only'`) using `api/server/serverFetch` |
+| `components/<name>/` | Feature components, one folder each (`.tsx` + `.css` + tests) |
+| `<name>Page/` | Page-level components rendered by `app/` routes (e.g. `postPage/`, `newPostPage/`) |
+| `hooks/`, `types/`, `utils/`, `stores/` | Feature-local hooks, types, helpers, Redux slices |
+| `index.ts` | Barrel of the feature's public exports |
+
+### Where to find things (frontend)
+
+| Need | Location |
+|---|---|
+| Card editor (ID / EGO) | `features/cardCreator/` — `pages/` (`CreatorClient.tsx`, `CardEditor.tsx`), `editors/` (`idEditor.ts`, `egoEditor.ts`), `components/inputTab/` (form; `inputStatPage/cardStylingSection/` holds the Card Styling accordion: horizontal/vertical layout and the width/height sliders), `components/card/` (preview; `previewBodies/` render the horizontal and vertical layouts), `skills/SkillRegistry.tsx`, `stores/` (`IdInfoSlice.ts`, `EgoInfoSlice.ts`) |
+| Local save (IndexedDB / Dexie) | `features/cardCreator/utils/save/indexDB/`, `features/cardCreator/utils/save/`, `features/cardCreator/hooks/useSaveLocal.ts` |
+| Cloud save | `features/cardCreator/api/SaveInfoApi.ts`, `features/cardCreator/utils/save/cloudSaveForm.ts`, `features/cardCreator/utils/save/prepareCloudSave.ts` |
+| Status effects / keywords | `features/cardCreator/utils/keywords/` (`statusEffectClipboard.ts`: copy status effects as their names, paste them back into the skill editor as `[keyword]`) |
+| Status effect popup (click an effect in skill text) | `features/cardCreator/components/statusEffectPopup/` (Floating UI popup), `features/cardCreator/contexts/StatusEffectPopupContext.tsx` (`StatusEffectPopupProvider`, `useStatusEffectPopup`), `features/cardCreator/types/StatusEffectInfo.ts`. Provided in `pages/CardEditor.tsx` (wraps input tabs + preview) and `components/cardSummary/CardSummary.tsx`; clicks handled in `components/card/components/skillEffect/SkillEffect.tsx` and `components/inputTab/components/tipTapEditor/TipTapEditor.tsx` |
+| Card summary on the post page (header, splash art, stats, skill tabs) | `features/cardCreator/components/cardSummary/` — `CardSummary.tsx`, `SummarySplashArt.tsx` (splash art under the header; EGO reuses `SplashArt variant="ego"` in a scaled circle; click opens `components/ui/imageViewer/`) |
+| Posts, comments, new post, edit/delete post | `features/post/` — `api/PostApi.ts`, `api/CommentApi.ts`, `api/server/posts.ts`, `api/server/revalidatePost.ts` (server action that refreshes cached post/list pages), `newPostPage/` (create and edit form), `editPostPage/`, `components/postOwnerActions/` (author-only Edit/Delete), `postPage/` |
+| Forum listing / search | `features/forum/` |
+| User profile | `features/user/` |
+| Blog | `features/blog/`, markdown in `content/blog/` |
+| About / contact / legal pages | `features/static/` |
+| Auth (client) | `api/AuthApi.ts`, `stores/slices/AuthSlice.ts`, `hooks/useAuth.ts`, `components/authBootstrap/`, `components/loginMenu/` |
+
+### Shared (cross-feature only)
+
+| Path | Contents |
+|---|---|
+| `api/` | `BaseApi.ts` (RTK Query base), `errorCodes.ts` (mirrors backend `ApiErrors`), `errorMiddleware.ts`, `getApiErrorMessage.ts`, `server/serverFetch.ts` |
+| `config/env.client.ts` | `clientEnv` and `appConfig`: all app constants (limits, paging, timings, upload sizes) read from `NEXT_PUBLIC_*` with defaults |
+| `config/env.server.ts` | `serverEnv`, `serverConfig` (server-only: API URL, revalidate, timeouts) |
+| `config/` (other) | `readEnv.ts`, `siteMetadata.ts`, `navLinks.ts`, `siteLinks.ts` |
+| `components/ui/` | Generic UI primitives (dialog, dropDown, spinner, busyButton, tabs, pagination, imageViewer, …). `imageViewer/ImageViewer.tsx` is the fullscreen zoom/pan image viewer used by the post carousel and the card summary splash art. Primitives may wrap Radix (`@radix-ui/*`, e.g. `tabs/Tabs.tsx`); wrap Radix here and import the wrapper from features, never Radix directly |
+| `components/layout/` | `SiteShell.tsx`, header, footer |
+| `components/` (other) | App-wide components (ads, alertPopUp, errorBoundary, …) |
+| `stores/` | `AppStore.ts`, `StoreProvider.tsx`, `slices/` (Alert, Auth, Ui) |
+| `hooks/`, `utils/`, `types/` | Shared hooks (e.g. `hooks/useCarouselIndex.ts`, used by the post carousel and the image viewer), helpers, types |
+| `styles/`, `assets/` | Global CSS, fonts, bundled icons/images |
+
+Env values live in `id-creator/.env` and are documented in `id-creator/.env.example`. Static public files (`ads.txt`, `Images/`) live in `id-creator/public/`.
+Frontend root config: `next.config.ts`, `netlify.toml`, `jest.config.ts`, `eslint.config.mjs`.
+
+### Frontend tests
+
+Co-located: `X.test.ts(x)` next to `X.ts(x)`.
+
+---
+
+## Rules: add, update, delete
+
+### Placement
+
+- Used by one feature → inside that feature folder.
+- Used by two or more features → the matching shared folder (`components/`, `hooks/`, `utils/`, `Shared/`, …).
+- Never put logic in `app/` (frontend) or in controllers beyond request/response handling (backend).
+
+### Add a backend feature
+
+1. Create `Features/<Name>/` with `<Name>Controller.cs`, `DTO/`, `Service/`, `Repository/` (plus `Background/`, `Enum/` if needed). Namespace `Server.Features.<Name>.<SubFolder>`.
+2. Interfaces next to implementations: `I<Name>Service.cs` / `<Name>Service.cs`, `I<Name>Repository.cs` / `<Name>Repository.cs`.
+3. New entity → `Shared/Model/<Entity>.cs` and a `DbSet` in `Shared/Database/ServerDbContext.cs`.
+4. Register every interface/implementation (and hosted service) in `Program.cs`.
+5. New error codes → `Shared/Exception/ApiErrors.cs` (and mirror in frontend `api/errorCodes.ts`).
+6. New env vars → `Shared/Config/EnvironmentVariables.cs`.
+7. Schema change → from `id-creator-server/Server` run `dotnet ef migrations add <Name>`, then `npm run db:migrate` from the repo root.
+8. Tests under `Server.Tests/Features/<Name>/…` mirroring the source paths.
+
+### Add a frontend feature
+
+1. Create `features/<name>/` with only the sub-folders needed (see layout above).
+2. Client endpoints → `features/<name>/api/<Name>Api.ts` via `BaseApi.injectEndpoints`. Server fetchers → `features/<name>/api/server/`.
+3. Route → `app/(site)/<route>/page.tsx` (or `app/creator/…`) that imports the page component from the feature.
+4. Export the feature's public API from `features/<name>/index.ts`.
+5. New constants → `appConfig` in `config/env.client.ts` (or `serverConfig` in `config/env.server.ts`), and add the env var to `id-creator/.env.example`.
+6. Co-located tests.
+
+### Update / move / rename
+
+1. Move the file or folder and its tests together (frontend co-located test, backend mirrored `Server.Tests/` path).
+2. Fix every reference: grep for the old path / namespace. Backend: update `namespace` and `using`s. Frontend: update alias imports and `index.ts` barrels.
+3. Update `Program.cs` registrations if a type was renamed.
+4. Update this file.
+
+### Delete
+
+1. Grep for references first; do not delete anything still used.
+2. Remove: DI registrations in `Program.cs`, `DbSet` in `ServerDbContext`, `index.ts` exports, `app/` routes, tests, unused `ApiErrors` / `errorCodes.ts` entries, unused env vars.
+3. Removed entity or column → add a migration (`dotnet ef migrations add Remove<Name>`).
+4. Update this file.

@@ -16,6 +16,9 @@ namespace Server.Tests.Features.SaveInfo.DTO
         private const double SanityCostValue = 45;
         private const double SinResistantWrathValue = 12.5;
         private const double SinCostWrathValue = 3;
+        private const CardLayout CardLayoutValue = CardLayout.Vertical;
+        private const int CardWidthValue = 1800;
+        private const int CardHeightValue = 1200;
 
         private readonly IMapper _mapper;
         private readonly SavedInfoRequestDTO<SavedEgoRequestDTO> _request;
@@ -41,6 +44,9 @@ namespace Server.Tests.Features.SaveInfo.DTO
                     SinCost = new SavedEgoRequestDTO.SinCostObj { Wrath = SinCostWrathValue },
                     SinnerIcon = SinnerIconUrl,
                     EgoLevel = EgoLevelValue,
+                    CardLayout = CardLayoutValue,
+                    CardWidth = CardWidthValue,
+                    CardHeight = CardHeightValue,
                     SkillDetails =
                     [
                         new RequestOffenseSkill { InputId = _offenseInputId, Index = 0, Type = SkillType.OffenseSkill, SkillImage = OffenseSkillImageUrl },
@@ -57,6 +63,22 @@ namespace Server.Tests.Features.SaveInfo.DTO
             expected.Id = actual.Id;
             expected.LastUpdated = actual.LastUpdated;
             expected.Status = actual.Status;
+        }
+
+        [Fact]
+        public void ForwardMap_CopiesCardStyle()
+        {
+            Assert.Equal(CardLayoutValue, _entity.Saved.CardLayout);
+            Assert.Equal(CardWidthValue, _entity.Saved.CardWidth);
+            Assert.Equal(CardHeightValue, _entity.Saved.CardHeight);
+        }
+
+        [Fact]
+        public void ReverseMap_RestoresCardStyle()
+        {
+            Assert.Equal(CardLayoutValue, _response.SaveInfo.CardLayout);
+            Assert.Equal(CardWidthValue, _response.SaveInfo.CardWidth);
+            Assert.Equal(CardHeightValue, _response.SaveInfo.CardHeight);
         }
 
         [Fact]
@@ -100,6 +122,9 @@ namespace Server.Tests.Features.SaveInfo.DTO
                     SinCostWrath = SinCostWrathValue,
                     SinnerIcon = new ImageObj { Url = SinnerIconUrl },
                     EgoLevel = EgoLevelValue,
+                    CardLayout = CardLayoutValue,
+                    CardWidth = CardWidthValue,
+                    CardHeight = CardHeightValue,
                     SavedSkillId = _request.Id,
                     Skill = new SavedSkill
                     {
@@ -147,6 +172,9 @@ namespace Server.Tests.Features.SaveInfo.DTO
                     SinCost = new SavedEgoRequestDTO.SinCostObj { Wrath = SinCostWrathValue },
                     SinnerIcon = SinnerIconUrl,
                     EgoLevel = EgoLevelValue,
+                    CardLayout = CardLayoutValue,
+                    CardWidth = CardWidthValue,
+                    CardHeight = CardHeightValue,
                     SkillDetails =
                     [
                         new RequestOffenseSkill { InputId = _offenseInputId, Index = 0, Type = SkillType.OffenseSkill, SkillImage = OffenseSkillImageUrl },

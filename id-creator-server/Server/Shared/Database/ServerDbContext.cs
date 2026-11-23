@@ -98,6 +98,17 @@ namespace Server.Shared.Database
                 .HasForeignKey<SavedSkill>("FK_SavedEgo_SavedSkill_key")
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<SavedId>().Property(s=>s.CardWidth).HasDefaultValue(1440);
+            modelBuilder.Entity<SavedId>().Property(s=>s.CardHeight).HasDefaultValue(1000);
+            modelBuilder.Entity<SavedEgo>().Property(s=>s.CardWidth).HasDefaultValue(1440);
+            modelBuilder.Entity<SavedEgo>().Property(s=>s.CardHeight).HasDefaultValue(1000);
+
+            modelBuilder.Entity<Post>()
+                .HasMany(p=>p.Cards)
+                .WithOne(c=>c.Post)
+                .HasForeignKey(c=>c.PostId)
+                .OnDelete(DeleteBehavior.Cascade);
+
         }
         public DbSet<User> Users { get; set; }
         public DbSet<SavedSkill> SavedSkill { get; set; }
@@ -113,6 +124,7 @@ namespace Server.Shared.Database
         public DbSet<Comment> Comment { get; set; }
         public DbSet<Tag> Tag { get; set; }
         public DbSet<Post> Post { get; set; }
+        public DbSet<PostCard> PostCard { get; set; }
         public DbSet<PostView> PostView { get; set; }
         public DbSet<Session> Session { get; set; }
         public DbSet<ImageObj> ImageObjs { get; set; }

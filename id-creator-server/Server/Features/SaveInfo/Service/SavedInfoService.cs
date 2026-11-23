@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Server.Features.Images;
 using Server.Features.SaveInfo.DTO;
 using Server.Features.SaveInfo.Repository;
@@ -41,11 +42,16 @@ namespace Server.Features.SaveInfo.Service
             return await _saveRepository.GetByIdAsync(Id);
         }
 
+        private static Expression<Func<TEntry, bool>> Matches(SearchSaveParams option) =>
+            s => s.Name.Contains(option.Name) && s.UserId == option.UserId;
+
+        public Task<int> CountSavedInfos(SearchSaveParams option) => _saveRepository.CountAsync(Matches(option));
+
         public async Task<List<TEntry>> FindSavedInfos(SearchSaveParams option)
         {
             return [.. await _saveRepository.FindAsync(new RepositoryGetParams<TEntry>()
             {
-                Filter = s => s.Name.Contains(option.Name) && s.UserId == option.UserId,
+                Filter = Matches(option),
                 OrderBy = q => q.OrderByDescending(s=>s.SaveTime),
                 Skip = option.Page * option.Limit,
                 Take = option.Limit,

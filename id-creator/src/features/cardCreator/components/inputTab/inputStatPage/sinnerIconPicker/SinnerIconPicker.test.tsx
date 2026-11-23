@@ -23,21 +23,21 @@ describe('SinnerIconPicker', () => {
     it('renders all 12 sinners and marks the current one active', () => {
         const { container } = setup('id')
         expect(container.querySelectorAll('img.sinner-icon')).toHaveLength(12)
-        expect(screen.getByAltText('Yi_Sang_Icon.webp')).toHaveClass('active')
+        expect(screen.getByAltText('Yi Sang')).toHaveClass('active')
     })
 
     it('updates the icon and colour of the id card', () => {
         const { store } = setup('id')
-        const faust = SINNERS.find(s => s.alt === 'Faust_Icon.webp')
-        fireEvent.click(screen.getByAltText('Faust_Icon.webp'))
+        const faust = SINNERS.find(s => s.alt === 'Faust')
+        fireEvent.click(screen.getByAltText('Faust'))
         expect(store.getState().idInfo.value).toMatchObject({ sinnerIcon: faust?.src, sinnerColor: 'var(--Faust-color)' })
-        expect(screen.getByAltText('Faust_Icon.webp')).toHaveClass('active')
+        expect(screen.getByAltText('Faust')).toHaveClass('active')
     })
 
     it('uses the ego class prefix and slice in ego mode', () => {
         const { store, container } = setup('ego')
         expect(container.querySelector('.sinner-ego-icon-container')).toBeInTheDocument()
-        fireEvent.click(screen.getByAltText('Gregor_Icon.webp'))
+        fireEvent.click(screen.getByAltText('Gregor'))
         expect(store.getState().egoInfo.value.sinnerColor).toBe('var(--Gregor-color)')
         expect(store.getState().idInfo.value.sinnerColor).toBe('var(--Yi-Sang-color)')
     })

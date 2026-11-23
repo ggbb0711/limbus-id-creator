@@ -11,12 +11,14 @@ import { useCardDomRef } from 'features/cardCreator/contexts/CardDomRefContext';
 import CardEditorContext from 'features/cardCreator/editors/CardEditorContext';
 import { CardEditorDefinition } from 'features/cardCreator/editors/CardEditorDefinition';
 import { usePersistCurrentCard } from 'features/cardCreator/hooks/usePersistCurrentCard';
-import { useAppDispatch } from 'stores/AppStore';
+import { useAppDispatch, useAppSelector } from 'stores/AppStore';
+import { StatusEffectPopupProvider } from 'features/cardCreator/contexts/StatusEffectPopupContext';
 import SectionErrorBoundary from "components/errorBoundary/SectionErrorBoundary";
 
 export default function CardEditor({ editor }: { editor: CardEditorDefinition }): ReactElement {
     const dispatch = useAppDispatch()
     const domRef = useCardDomRef()
+    const skillDetails = useAppSelector(state => editor.selectInfo(state).skillDetails)
     const [isResetMenuActive, setResetMenuActive] = useState(false)
     const [activeTab, setActiveTab] = useState(-1)
 
@@ -29,20 +31,22 @@ export default function CardEditor({ editor }: { editor: CardEditorDefinition })
     return <CardEditorContext.Provider value={editor}>
         <SettingMenu/>
         <DragAndDroppableSkillPreviewLayer/>
-        <div className={`editor-container`}>
-            <SectionErrorBoundary context="inputTabs" label="editor panel">
-                <InputTabContainer
-                    resetBtnHandler={() => setResetMenuActive(active => !active)}
-                    activeTab={activeTab}
-                    changeActiveTab={changeActiveTab} />
-            </SectionErrorBoundary>
-            <ResetMenu isActive={isResetMenuActive} setIsActive={setResetMenuActive} confirmFn={() => dispatch(editor.reset())} />
-            <div className='preview-container'>
-                <SectionErrorBoundary context="cardPreview" label="card preview">
-                    <CardPreview ref={domRef} changeActiveTab={setActiveTab}/>
+        <StatusEffectPopupProvider skills={skillDetails}>
+            <div className={`editor-container`}>
+                <SectionErrorBoundary context="inputTabs" label="editor panel">
+                    <InputTabContainer
+                        resetBtnHandler={() => setResetMenuActive(active => !active)}
+                        activeTab={activeTab}
+                        changeActiveTab={changeActiveTab} />
                 </SectionErrorBoundary>
+                <ResetMenu isActive={isResetMenuActive} setIsActive={setResetMenuActive} confirmFn={() => dispatch(editor.reset())} />
+                <div className='preview-container'>
+                    <SectionErrorBoundary context="cardPreview" label="card preview">
+                        <CardPreview ref={domRef} changeActiveTab={setActiveTab}/>
+                    </SectionErrorBoundary>
+                </div>
             </div>
-        </div>
+        </StatusEffectPopupProvider>
         <CardMakerFooter/>
     </CardEditorContext.Provider>
 }

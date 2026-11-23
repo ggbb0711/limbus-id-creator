@@ -11,7 +11,7 @@ export default function SinCost({ sinCost }: { sinCost: SinRecord }): ReactEleme
         <p className="cost-txt">COST</p>
         <SinValueList values={sinCost} render={(sin, cost) =>
             <div className="center-element sin-cost" style={{ color: textColor(cost) }}>
-                <img src={assetPaths.affinityBig(sin)} alt={`${sin}-cost-icon`} />
+                <img src={assetPaths.affinityBig(sin)} alt={`${sin} cost`} />
                 <p>{cost}</p>
             </div>
         }/>

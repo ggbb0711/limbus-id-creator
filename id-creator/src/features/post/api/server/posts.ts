@@ -25,6 +25,17 @@ const fetchPostPage = cache(async (query: string, revalidate: number): Promise<R
     }
 })
 
+export const getLatestPostsWithDetails = cache(async (limit: number, revalidate: number): Promise<Result<IPost[]>> => {
+    const query = buildPostsQuery({ page: 0, limit, sortedBy: 'Latest' })
+    try {
+        const data = await apiGet<IPostList<IPost>>(`/Post?${query}`, { revalidate })
+        return ok(data?.list ?? [])
+    } catch (error) {
+        reportError(error, { context: 'getLatestPostsWithDetails', extra: { query } })
+        return fail(error)
+    }
+})
+
 export const getPosts = (params: GetPostsParams, revalidate = serverConfig.listRevalidateSeconds) =>
     fetchPostPage(buildPostsQuery(params), revalidate)
 

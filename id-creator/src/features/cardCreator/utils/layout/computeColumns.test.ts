@@ -14,7 +14,12 @@ describe('computeColumns', () => {
     })
 
     it('gives an item taller than the container its own column', () => {
-        expect(computeColumns([100, 2000, 100], 1000).columns).toBe(3)
+        expect(computeColumns([100, 3000, 100], 1000).columns).toBe(3)
+    })
+
+    it('keeps an item taller than the container in the first column when it comes first', () => {
+        expect(computeColumns([3000], 1000).columns).toBe(1)
+        expect(computeColumns([3000, 100], 1000).columns).toBe(2)
     })
 
     it('accepts custom sizes', () => {

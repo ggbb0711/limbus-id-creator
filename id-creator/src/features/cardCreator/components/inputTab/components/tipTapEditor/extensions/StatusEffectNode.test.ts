@@ -37,4 +37,12 @@ describe('StatusEffectNode', () => {
         expect(nodes[0]).toContain('src="/Images/status-effect/Burn.webp"')
         expect(nodes[0]).toContain('contenteditable="false"')
     })
+
+    it('copies as its name in plain text', () => {
+        const status = "<span class='center-element' contenteditable='false' style='color:red;'><img class='status-icon' src='/Images/status-effect/Burn.webp' alt='burn' />Burn</span>"
+        const editor = new Editor({ extensions: [Document, Paragraph, Text, StatusEffectNode], content: `<p>Inflict 3 ${status} now</p>` })
+
+        expect(editor.getText()).toBe('Inflict 3 Burn now')
+        editor.destroy()
+    })
 })

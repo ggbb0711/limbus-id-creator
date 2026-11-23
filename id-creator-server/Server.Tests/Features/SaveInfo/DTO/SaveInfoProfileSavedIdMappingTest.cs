@@ -17,6 +17,9 @@ namespace Server.Tests.Features.SaveInfo.DTO
         private const string MentalEffectText = "Mental Effect Text";
         private const string TitleValue = "My Build";
         private const double HPValue = 123.5;
+        private const CardLayout CardLayoutValue = CardLayout.Vertical;
+        private const int CardWidthValue = 1800;
+        private const int CardHeightValue = 1200;
 
         private readonly IMapper _mapper;
         private readonly SavedInfoRequestDTO<SavedIDRequestDTO> _request;
@@ -41,6 +44,9 @@ namespace Server.Tests.Features.SaveInfo.DTO
                 {
                     Title = TitleValue,
                     HP = HPValue,
+                    CardLayout = CardLayoutValue,
+                    CardWidth = CardWidthValue,
+                    CardHeight = CardHeightValue,
                     SplashArt = SplashArtUrl,
                     SplashArtTranslation = new SplashArtTranslationObj(),
                     SinnerIcon = SinnerIconUrl,
@@ -69,6 +75,22 @@ namespace Server.Tests.Features.SaveInfo.DTO
             expected.Id = actual.Id;
             expected.LastUpdated = actual.LastUpdated;
             expected.Status = actual.Status;
+        }
+
+        [Fact]
+        public void ForwardMap_CopiesCardStyle()
+        {
+            Assert.Equal(CardLayoutValue, _entity.Saved.CardLayout);
+            Assert.Equal(CardWidthValue, _entity.Saved.CardWidth);
+            Assert.Equal(CardHeightValue, _entity.Saved.CardHeight);
+        }
+
+        [Fact]
+        public void ReverseMap_RestoresCardStyle()
+        {
+            Assert.Equal(CardLayoutValue, _response.SaveInfo.CardLayout);
+            Assert.Equal(CardWidthValue, _response.SaveInfo.CardWidth);
+            Assert.Equal(CardHeightValue, _response.SaveInfo.CardHeight);
         }
 
         [Fact]
@@ -132,6 +154,9 @@ namespace Server.Tests.Features.SaveInfo.DTO
                     Id = _request.Id,
                     Title = TitleValue,
                     HP = HPValue,
+                    CardLayout = CardLayoutValue,
+                    CardWidth = CardWidthValue,
+                    CardHeight = CardHeightValue,
                     SplashArt = new ImageObj { Url = SplashArtUrl },
                     SinnerIcon = new ImageObj { Url = SinnerIconUrl },
                     SavedSkillId = _request.Id,
@@ -213,6 +238,9 @@ namespace Server.Tests.Features.SaveInfo.DTO
                 {
                     Title = TitleValue,
                     HP = HPValue,
+                    CardLayout = CardLayoutValue,
+                    CardWidth = CardWidthValue,
+                    CardHeight = CardHeightValue,
                     SplashArt = SplashArtUrl,
                     SplashArtTranslation = new SplashArtTranslationObj(),
                     SinnerIcon = SinnerIconUrl,

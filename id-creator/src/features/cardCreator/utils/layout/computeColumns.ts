@@ -13,12 +13,11 @@ export function computeColumns(heights: readonly number[], containerHeight: numb
     let columns = 1
     let columnHeight = 0
     for (const height of heights) {
-        columnHeight += height
-        if (columnHeight > containerHeight - tolerance) {
+        if (columnHeight > 0 && columnHeight + height > containerHeight - tolerance) {
             columns++
-            columnHeight = height
+            columnHeight = 0
         }
-        columnHeight += gap
+        columnHeight += height + gap
     }
     return { columns, width: columns * columnWidth + (columns - 1) * gap }
 }

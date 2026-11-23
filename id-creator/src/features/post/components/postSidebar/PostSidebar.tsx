@@ -2,8 +2,6 @@ import React, { ReactElement, useId } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { IPostDisplayCard } from "features/post/types/IPostDisplayCard";
-import AdcashBanner from "components/ads/AdcashBanner";
-import { AD_PLACEMENTS } from "components/ads/adPlacements";
 import "./PostSidebar.css";
 
 interface PostSidebarSectionProps {
@@ -15,7 +13,7 @@ interface PostSidebarSectionProps {
 function SidebarPost({ post }: { post: IPostDisplayCard }): ReactElement {
     return <li>
         <Link prefetch={false} href={"/post/" + post.id} className="post-sidebar-item">
-            {post.cardImg && <Image className="post-sidebar-thumb" src={post.cardImg} alt={post.title} width={96} height={67} sizes="96px" />}
+            {post.cardImg && <Image className="post-sidebar-thumb" src={post.cardImg} alt={`${post.title} card preview`} width={96} height={67} sizes="96px" />}
             <div className="post-sidebar-item-txt">
                 <p className="post-sidebar-item-title">{post.title}</p>
                 <p className="post-sidebar-item-meta">by {post.userName}</p>
@@ -50,8 +48,6 @@ export default function PostSidebar({ author, authorPosts, latestPosts }: PostSi
     ]
 
     return <aside className="post-sidebar">
-        <AdcashBanner variants={AD_PLACEMENTS.postSidebarRectangle}/>
         {sections.filter((section) => section.posts.length > 0).map((section) => <PostSidebarSection key={section.title} {...section} />)}
-        <AdcashBanner variants={AD_PLACEMENTS.postSidebarSkyscraper} className="ad-slot-sticky"/>
     </aside>
 }

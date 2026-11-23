@@ -20,7 +20,8 @@ export const toKeywordKey = (name: string) => name.replace(/\s/g, "_").toLowerCa
 export function replaceKeywordsAsNodes(html: string, keywords: KeywordMap): string {
     return html.replace(STATUS_NODE_PATTERN, (match, bracket, key) => {
         if (!bracket) return match
-        const selected = keywords[key.toLowerCase().replace(/&amp;/g, "&")]
+        const name = key.replace(/&amp;/g, "&")
+        const selected = keywords[name.toLowerCase()] ?? keywords[name]
         return selected ? `<span data-status-effect="${escapeHtml(selected)}">${selected}</span>` : match
     })
 }
@@ -36,14 +37,14 @@ export function filterKeywordSuggestions(keywords: KeywordMap, query: string, li
 const colorStyle = (color: string) => (color && isSafeCssColor(color) ? `color:${color.trim()};` : "")
 
 const customImage = (src: string) =>
-    src && isSafeImageUrl(src) ? `<img class='status-icon' src='${escapeHtml(src)}' alt='custom_icon' />` : ""
+    src && isSafeImageUrl(src) ? `<img class='status-icon' src='${escapeHtml(src)}' alt='' />` : ""
 
 export function customEffectHtml(effect: ICustomEffect): string {
     return sanitizeCardHtml(`<span class='center-element' contenteditable='false' style='${colorStyle(effect.effectColor)}text-decoration:underline;'>${customImage(effect.customImg)}${escapeHtml(effect.name)}</span>`)
 }
 
 export function customCoinEffectHtml(effect: ICustomEffect, statusKey: string, coinNo: number): string {
-    return sanitizeCardHtml(`<span class='center-element' contenteditable='false'><img class='status-icon' src='/Images/status-effect/Coin_Effect_${coinNo}.webp' alt='coin-effect-${coinNo}' /> <span class='center-element' contenteditable='false' data-custom-coin-effect='coin-effect-${coinNo}-custom-${escapeHtml(statusKey)}' style='${colorStyle(effect.effectColor)}text-decoration:underline;'>${customImage(effect.customImg)}${escapeHtml(effect.name)}</span></span>`)
+    return sanitizeCardHtml(`<span class='center-element' contenteditable='false'><img class='status-icon' src='/Images/status-effect/Coin_Effect_${coinNo}.webp' alt='Coin ${coinNo}' /> <span class='center-element' contenteditable='false' data-custom-coin-effect='coin-effect-${coinNo}-custom-${escapeHtml(statusKey)}' style='${colorStyle(effect.effectColor)}text-decoration:underline;'>${customImage(effect.customImg)}${escapeHtml(effect.name)}</span></span>`)
 }
 
 export function buildCustomEffectKeywords(skills: readonly SkillDetail[]): Record<string, string> {

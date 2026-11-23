@@ -13,9 +13,17 @@ export interface GetPostsParams extends GetPostsFilter {
     limit: number
 }
 
+export type PostCardUpdate = { cardId: string } | { saveId: string, kind: "Identity" | "Ego" }
+
+export interface IUpdatePostBody {
+    description: string
+    cards: PostCardUpdate[]
+    tags: string[]
+}
+
 export interface ICreatePostBody {
     title: string
     description: string
-    imagesAttach: string[]
+    cards: { saveId: string, kind: "Identity" | "Ego" }[]
     tags: string[]
 }

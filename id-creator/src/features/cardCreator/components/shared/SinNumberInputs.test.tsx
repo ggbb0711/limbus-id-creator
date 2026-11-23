@@ -22,7 +22,7 @@ describe('SinNumberInputs', () => {
     it('uses capitalised icon file names', () => {
         render(<Harness/>)
         SIN_AFFINITIES.forEach(sin => {
-            expect(screen.getByAltText(`${sin}-input-icon`)).toHaveAttribute('src', `/Images/sin-affinity/affinity_${sin}_big.webp`)
+            expect(screen.getByAltText(sin)).toHaveAttribute('src', `/Images/sin-affinity/affinity_${sin}_big.webp`)
         })
     })
 
