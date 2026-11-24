@@ -64,4 +64,10 @@ docs/folder-structure.md
 
 docs/coding-standard.md
 
-- Read this when u try to implement/review the codebase
+- Read this when u try to change/review the codebase
+
+#### Prototype feature:
+
+docs/prototype-feature
+
+- Read this whenever you make a new feature, or implement something specifically ui related
