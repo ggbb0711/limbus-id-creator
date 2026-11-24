@@ -59,3 +59,9 @@ docs/folder-structure.md
 - Please read this doc before adding or changing anything in the project to understand its folder structure.
 
 - Whenever the folder structure changes (folder added/moved/renamed/deleted, layout convention changed) or a new feature/service/controller/repository/background service is added or removed, update docs/folder-structure.md in the same change
+
+#### Coding standard:
+
+docs/coding-standard.md
+
+- Read this when u try to implement/review the codebase
