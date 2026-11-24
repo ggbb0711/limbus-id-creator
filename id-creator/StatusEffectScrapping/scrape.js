@@ -13,12 +13,13 @@
 const { chromium } = require('playwright-extra');
 const fs = require('fs/promises')
 const stealth = require('puppeteer-extra-plugin-stealth');
+const { STATUSES_DIR } = require('./constants')
 
 
 chromium.use(stealth());
 
 async function loadingOldStatusData(){
-    const baseUrl = "../src/features/cardCreator/utils/baseStatusEffects/statuses"
+    const baseUrl = STATUSES_DIR
     const statusArray = await Promise.all([
         fs.readFile(`${baseUrl}/buff.json`,'utf-8'),
         fs.readFile(`${baseUrl}/debuff.json`,'utf-8'),
@@ -55,6 +56,18 @@ async function scrape (){
     });
 
     const statusEffectSpans = (await page.$$eval("div.ext-bigtable-wrapper tr > td:first-child > span.advanced-tooltip.tooltips-init-complete", spans=>{
+        const toDescription = (cell)=>{
+            if(!cell) return ""
+            const clone = cell.cloneNode(true)
+            clone.querySelectorAll("img").forEach(img=>img.remove())
+            clone.querySelectorAll("br").forEach(br=>br.replaceWith("\n"))
+            clone.querySelectorAll("li").forEach(li=>li.prepend("\n"))
+            return clone.textContent
+                .split("\n")
+                .map(line=>line.replace(/\s+/g, " ").trim())
+                .filter(Boolean)
+                .join("\n")
+        }
         return spans
         .filter(span=>span.querySelector("span")) //Filter empty name
         .map(span=>{
@@ -67,12 +80,12 @@ async function scrape (){
             const imgSrc = span.querySelector("img").getAttribute("src")
             const url = new URL(imgSrc, "https://limbuscompany.wiki.gg")
             const imgName = url.pathname.split("/").pop()
-            const transformedImgName = (imgName
+            const transformedImgName = decodeURIComponent(imgName
                 .replace(/^\d+px-/, "") //Filter out the px prefix
                 .replace(/\.[^.]+$/, "")) //Filter out the extension
             
             const statusEffectNameSpan = span.querySelector("span")
-            const statusEffectName = statusEffectNameSpan.textContent;
+            const statusEffectName = statusEffectNameSpan.textContent.trim();
             const nameKey = statusEffectName.toLowerCase().replaceAll(" ","_")
             const statusEffectType = statusMap[statusEffectNameSpan.getAttribute("style").match(/color:\s*(#[0-9a-fA-F]{3,8})/)[1]]
             return {
@@ -80,7 +93,13 @@ async function scrape (){
                 downloadUrl: url.href,
                 nameKey, 
                 type: statusEffectType.toLowerCase(),
-                value: `<span class='center-element' contenteditable='false' style='color:var(--${statusEffectType}-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/${transformedImgName}.webp' alt='' />${statusEffectName}</span>`,
+                value: {
+                    key: nameKey,
+                    name: statusEffectName,
+                    image: `/Images/status-effect/${transformedImgName}.webp`,
+                    color: `var(--${statusEffectType}-color)`,
+                    description: toDescription(span.closest("td").nextElementSibling),
+                },
             }
         })
     }))

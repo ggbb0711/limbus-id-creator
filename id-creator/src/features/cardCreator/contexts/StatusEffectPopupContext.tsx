@@ -1,9 +1,10 @@
 'use client'
 import React, { ReactElement, ReactNode, createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { SkillDetail } from "features/cardCreator/types/SkillDetail";
-import { StatusEffectInfo, buildStatusEffectLookup } from "features/cardCreator/types/StatusEffectInfo";
+import { StatusEffectInfo, buildStatusEffectLookup, hasDescription } from "features/cardCreator/types/StatusEffectInfo";
+import { baseStatusEffect, baseStatusEffectInfoOf } from "features/cardCreator/utils/keywords/BaseStatusEffect";
 import { toKeywordKey } from "features/cardCreator/utils/keywords/keywords";
-import { selectionClipboard } from "features/cardCreator/utils/keywords/statusEffectClipboard";
+import { keywordKeyFinder, selectionClipboard } from "features/cardCreator/utils/keywords/statusEffectClipboard";
 import StatusEffectPopup from "features/cardCreator/components/statusEffectPopup/StatusEffectPopup";
 
 export interface StatusEffectPopupState {
@@ -24,6 +25,15 @@ const statusEffectPopupState: StatusEffectPopupState = {
     openFromElement: () => false,
 }
 
+let findBaseKey: ((el: Element) => string | null) | null = null
+
+function baseStatusEffectInfoAt(anchor: Element): StatusEffectInfo | undefined {
+    findBaseKey ??= keywordKeyFinder(baseStatusEffect)
+    const key = findBaseKey(anchor)
+    const info = key ? baseStatusEffectInfoOf(key) : undefined
+    return info && hasDescription(info) ? info : undefined
+}
+
 const StatusEffectPopupContext = createContext<StatusEffectPopupState>(statusEffectPopupState)
 
 export function useStatusEffectPopup(): StatusEffectPopupState {
@@ -41,7 +51,7 @@ export function StatusEffectPopupProvider({ skills, children }: { skills: readon
         if (!(target instanceof Element)) return false
         const anchor = target.closest("[data-status-effect]")
         if (!anchor) return false
-        const info = statusEffectslookup[toKeywordKey(anchor.textContent?.trim() ?? "")]
+        const info = statusEffectslookup[toKeywordKey(anchor.textContent?.trim() ?? "")] ?? baseStatusEffectInfoAt(anchor)
         if (!info) return false
         setPopup({ current: info, anchor })
         return true

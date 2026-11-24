@@ -1,4 +1,5 @@
 import { ICustomKeyword } from "features/cardCreator/types/ICustomKeyword"
+import type { StatusEffectInfo } from "features/cardCreator/types/StatusEffectInfo"
 import { SkillDetail, isSkillType } from "features/cardCreator/types/SkillDetail"
 import { ICustomEffect } from "features/cardCreator/types/skills/customEffect/ICustomEffect"
 import { escapeHtml, isSafeCssColor, isSafeImageUrl } from "features/cardCreator/utils/keywords/escapeHtml"
@@ -34,17 +35,50 @@ export function filterKeywordSuggestions(keywords: KeywordMap, query: string, li
         .map(key => ({ keyword: key, html: keywords[key] }))
 }
 
-const colorStyle = (color: string) => (color && isSafeCssColor(color) ? `color:${color.trim()};` : "")
+const colorDeclaration = (color: string) => (color && isSafeCssColor(color) ? `color:${color.trim()}` : "")
+
+const colorStyle = (color: string) => (colorDeclaration(color) ? `${colorDeclaration(color)};` : "")
 
 const customImage = (src: string) =>
     src && isSafeImageUrl(src) ? `<img class='status-icon' src='${escapeHtml(src)}' alt='' />` : ""
 
+type StatusEffectLook = Pick<StatusEffectInfo, "name" | "image" | "color">
+
+const coinEffectAttribute = (coinEffectId?: string) =>
+    coinEffectId ? ` data-custom-coin-effect='${escapeHtml(coinEffectId)}'` : ""
+
+export function statusEffectHtml(info: StatusEffectLook, coinEffectId?: string): string {
+    return sanitizeCardHtml(`<span class='center-element' contenteditable='false'${coinEffectAttribute(coinEffectId)} style='${colorStyle(info.color)}text-decoration:underline;'>${customImage(info.image)}${escapeHtml(info.name)}</span>`)
+}
+
+const labelHtml = (name: string, style: string): string =>
+    sanitizeCardHtml(`<span class='center-element' contenteditable='false' style='${style}'>${escapeHtml(name)}</span>`)
+
+export function triggerHtml(info: Pick<StatusEffectInfo, "name" | "color">): string {
+    return labelHtml(info.name, colorDeclaration(info.color))
+}
+
+export function coinIconHtml(coinNo: number, coinEffectId?: string): string {
+    return `<img class='status-icon' src='/Images/status-effect/Coin_Effect_${coinNo}.webp' alt='Coin ${coinNo}'${coinEffectAttribute(coinEffectId)} />`
+}
+
+export function coinHtml(coinNo: number): string {
+    return sanitizeCardHtml(`<span class='center-element' contenteditable='false'>${coinIconHtml(coinNo)}</span>`)
+}
+
+export function coinEffectHtml(coinIcon: string, statusEffect: string): string {
+    return sanitizeCardHtml(`<span class='center-element' contenteditable='false'>${coinIcon} ${statusEffect}</span>`)
+}
+
+const customEffectLook = (effect: ICustomEffect): StatusEffectLook =>
+    ({ name: effect.name, image: effect.customImg, color: effect.effectColor })
+
 export function customEffectHtml(effect: ICustomEffect): string {
-    return sanitizeCardHtml(`<span class='center-element' contenteditable='false' style='${colorStyle(effect.effectColor)}text-decoration:underline;'>${customImage(effect.customImg)}${escapeHtml(effect.name)}</span>`)
+    return statusEffectHtml(customEffectLook(effect))
 }
 
 export function customCoinEffectHtml(effect: ICustomEffect, statusKey: string, coinNo: number): string {
-    return sanitizeCardHtml(`<span class='center-element' contenteditable='false'><img class='status-icon' src='/Images/status-effect/Coin_Effect_${coinNo}.webp' alt='Coin ${coinNo}' /> <span class='center-element' contenteditable='false' data-custom-coin-effect='coin-effect-${coinNo}-custom-${escapeHtml(statusKey)}' style='${colorStyle(effect.effectColor)}text-decoration:underline;'>${customImage(effect.customImg)}${escapeHtml(effect.name)}</span></span>`)
+    return coinEffectHtml(coinIconHtml(coinNo), statusEffectHtml(customEffectLook(effect), `coin-effect-${coinNo}-custom-${statusKey}`))
 }
 
 export function buildCustomEffectKeywords(skills: readonly SkillDetail[]): Record<string, string> {
@@ -64,6 +98,6 @@ export function buildCustomEffectKeywords(skills: readonly SkillDetail[]): Recor
 export function buildLocalKeywords(keywords: readonly ICustomKeyword[]): Record<string, string> {
     return Object.fromEntries(keywords.map(keyword => [
         toKeywordKey(keyword.keyword),
-        sanitizeCardHtml(`<span class='center-element' contenteditable='false' style='${colorStyle(keyword.color)}'>${escapeHtml(keyword.keyword)}</span>`),
+        labelHtml(keyword.keyword, colorStyle(keyword.color)),
     ]))
 }

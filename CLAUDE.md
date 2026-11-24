@@ -6,7 +6,7 @@ id-creator-server(backend, ASP.NET Core)
     /Server(source code)
     /Server.Tests(tests)
 
-Before searching for or creating files, read docs/folder-structure.md. It maps where every feature, service, config and constant lives and the exact steps to add, update or delete features and folders.
+Before searching for or creating files, read docs/folder-structure.md. It maps where every feature, service, config and constant lives and the exact steps to add, update or delete features and folders. Also if there is a plan.md, please read it, and delete it once u completed the task
 
 
 # Commands:

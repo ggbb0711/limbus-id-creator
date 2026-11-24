@@ -1,246 +1,1710 @@
 {
-  "attack_power_up": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Attack_Power_Up.webp' alt='' />Attack Power Up</span>",
-  "clash_power_up": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Clash_Power_Up.webp' alt='' />Clash Power Up</span>",
-  "slash_dmg_up": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Slash_DMG_Up.webp' alt='' />Slash DMG Up</span>",
-  "pierce_dmg_up": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Pierce_DMG_Up.webp' alt='' />Pierce DMG Up</span>",
-  "blunt_dmg_up": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Blunt_DMG_Up.webp' alt='' />Blunt DMG Up</span>",
-  "wrath_dmg_up": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Wrath_DMG_Up.webp' alt='' />Wrath DMG Up</span>",
-  "lust_dmg_up": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Lust_DMG_Up.webp' alt='' />Lust DMG Up</span>",
-  "sloth_dmg_up": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Sloth_DMG_Up.webp' alt='' />Sloth DMG Up</span>",
-  "gluttony_dmg_up": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Gluttony_DMG_Up.webp' alt='' />Gluttony DMG Up</span>",
-  "gloom_dmg_up": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Gloom_DMG_Up.webp' alt='' />Gloom DMG Up</span>",
-  "pride_dmg_up": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Pride_DMG_Up.webp' alt='' />Pride DMG Up</span>",
-  "envy_dmg_up": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Envy_DMG_Up.webp' alt='' />Envy DMG Up</span>",
-  "slash_power_up": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Slash_Power_Up.webp' alt='' />Slash Power Up</span>",
-  "pierce_power_up": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Pierce_Power_Up.webp' alt='' />Pierce Power Up</span>",
-  "blunt_power_up": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Blunt_Power_Up.webp' alt='' />Blunt Power Up</span>",
-  "wrath_power_up": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Wrath_Power_Up.webp' alt='' />Wrath Power Up</span>",
-  "lust_power_up": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Lust_Power_Up.webp' alt='' />Lust Power Up</span>",
-  "sloth_power_up": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Sloth_Power_Up.webp' alt='' />Sloth Power Up</span>",
-  "gluttony_power_up": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Gluttony_Power_Up.webp' alt='' />Gluttony Power Up</span>",
-  "gloom_power_up": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Gloom_Power_Up.webp' alt='' />Gloom Power Up</span>",
-  "pride_power_up": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Pride_Power_Up.webp' alt='' />Pride Power Up</span>",
-  "envy_power_up": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Envy_Power_Up.webp' alt='' />Envy Power Up</span>",
-  "slash_protection": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Slash_Protection.webp' alt='' />Slash Protection</span>",
-  "pierce_protection": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Pierce_Protection.webp' alt='' />Pierce Protection</span>",
-  "blunt_protection": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Blunt_Protection.webp' alt='' />Blunt Protection</span>",
-  "wrath_protection": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Wrath_Protection.webp' alt='' />Wrath Protection</span>",
-  "lust_protection": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Lust_Protection.webp' alt='' />Lust Protection</span>",
-  "sloth_protection": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Sloth_Protection.webp' alt=''/>Sloth Protection</span>",
-  "gluttony_protection": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Gluttony_Protection.webp' alt='' />Gluttony Protection</span>",
-  "gloom_protection": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Gloom_Protection.webp' alt='' />Gloom Protection</span>",
-  "pride_protection": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Pride_Protection.webp' alt='' />Pride Protection</span>",
-  "envy_protection": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Envy_Protection.webp' alt='' />Envy Protection</span>",
-  "defense_power_up": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Defense_Power_Up.webp' alt='' />Defense Power Up</span>",
-  "offense_level_up": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Offense_Level_Up.webp' alt='' />Offense Level Up</span>",
-  "defense_level_up": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Defense_Level_Up.webp' alt='' />Defense Level Up</span>",
-  "damage_up": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Damage_Up.webp' alt='' />Damage Up</span>",
-  "protection": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Protection.webp' alt='' />Protection</span>",
-  "rupture_protection": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Rupture_Protection.webp' alt='' />Rupture Protection</span>",
-  "bleed_resistance": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Bleed_Resistance.webp' alt='' />Bleed Resistance</span>",
-  "plus_coin_boost": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Plus_Coin_Boost.webp' alt='' />Plus Coin Boost</span>",
-  "minus_coin_drop": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Minus_Coin_Drop.webp' alt='' />Minus Coin Drop</span>",
-  "haste": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Haste.webp' alt='' />Haste</span>",
-  "poise": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Poise.webp' alt='' />Poise</span>",
-  "charge": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Charge.webp' alt='' />Charge</span>",
-  "load": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Load.webp' alt='' />Load</span>",
-  "red_eyes": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Red_Eyes.webp' alt='' />Red Eyes</span>",
-  "penitence": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Penitence.webp' alt='' />Penitence</span>",
-  "e.g.o_resource_amp": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/E.G.O_Resource_Amp.webp' alt='' />E.G.O Resource Amp</span>",
-  "fanatic": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Fanatic.webp' alt='' />Fanatic</span>",
-  "appetite": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Appetite.webp' alt='' />Appetite</span>",
-  "defensive_stance": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Defensive_Stance.webp' alt='' />Defensive Stance</span>",
-  "charge_barrier": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Charge_Barrier.webp' alt='' />Charge Barrier</span>",
-  "unjust_enrichment": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Unjust_Enrichment.webp' alt='' />Unjust Enrichment</span>",
-  "assist_attack": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Assist_Attack.webp' alt='' />Assist Attack</span>",
-  "heated_gas_harpoon": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Heated_Gas_Harpoon.webp' alt='' />Heated Gas Harpoon</span>",
-  "overheated_gas_harpoon": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Overheated_Gas_Harpoon.webp' alt='' />Overheated Gas Harpoon</span>",
-  "sword_of_the_homeland_-_rending": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Sword_of_the_Homeland_-_Rending.webp' alt='' />Sword of the Homeland - Rending</span>",
-  "sword_of_the_homeland_-_penetrating": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Sword_of_the_Homeland_-_Penetrating.webp' alt='' />Sword of the Homeland - Penetrating</span>",
-  "swordplay_of_the_homeland": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Swordplay_of_the_Homeland.webp' alt='' />Swordplay of the Homeland</span>",
-  "remembrance": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Remembrance.webp' alt='' />Remembrance</span>",
-  "borrowed_time": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Borrowed_Time.webp' alt='' />Borrowed Time</span>",
-  "erudition": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Erudition.webp' alt='' />Erudition</span>",
-  "tremor_-_clockwinding": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Tremor_-_Clockwinding.webp' alt='' />Tremor - Clockwinding</span>",
-  "blood-tinged_scissorblades": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Blood-tinged_Scissorblades.webp' alt='' />Blood-tinged Scissorblades</span>",
-  "gaze_of_contempt": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Gaze_of_Contempt.webp' alt='' />Gaze of Contempt</span>",
-  "coffin": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Coffin.webp' alt='' />Coffin</span>",
-  "wild_hunt": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Wild_Hunt.webp' alt='' />Wild Hunt</span>",
-  "dullahan": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Dullahan.webp' alt='' />Dullahan</span>",
-  "hardblood": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Hardblood.webp' alt='' />Hardblood</span>",
-  "shimmering【bloodfiend】": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Shmimering_BloodFiend.webp' alt='' />Shimmering [BloodFiend]</span>",
-  "blooming_thorn": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Blooming_Thorn.webp' alt='' />Blooming Thorn</span>",
-  "festive_fever": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Festive_Fever.webp' alt='' />Festive Fever</span>",
-  "bloodied_hand": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Bloodied_Hand.webp' alt='' />Bloodied Hand</span>",
-  "ailing_heart": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Ailing_Heart.webp' alt='' />Ailing Heart</span>",
-  "concentration_-_sniper": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Concentration-Sniper.webp' alt='' />Concentration - Sniper</span>",
-  "nebulizer_β": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Nebulizer_β.webp' alt='' />Nebulizer β</span>",
-  "nebulizer_α": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Nebulizer_α.webp' alt='' />Nebulizer α</span>",
-  "deep_inhale": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Deep_Inhale.webp' alt='' />Deep Inhale</span>",
-  "strider【mao】": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Strider_-Mao-.webp' alt='' />Strider [Mao]</span>",
-  "strider【wu】": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Strider_-Wu-.webp' alt='' />Strider [Wu]</span>",
-  "linebreaker": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Linebreaker.webp' alt='' />Linebreaker</span>",
-  "commanding_cry": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Commanding_Cry.webp' alt='' />Commanding Cry</span>",
-  "cumulus_wall": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Cumulus_Wall.webp' alt='' />Cumulus Wall</span>",
-  "battle_ready": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Battle_Ready.webp' alt='' />Battle Ready</span>",
-  "dark_cloud_blade": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Dark_Cloud_Blade.webp' alt='' />Dark Cloud Blade</span>",
-  "serpent_arm": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Serpent_Arm.webp' alt='' />Serpent Arm</span>",
-  "assist_[援]": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Assist_-援-.webp' alt='' />Assist [援]</span>",
-  "overheat": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Overheat.webp' alt='' />Overheat</span>",
-  "unrelenting_spirit_[剛氣]": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Unrelenting_Spirit_-剛氣-.webp' alt='' />Unrelenting Spirit [剛氣]</span>",
-  "unrelenting_spirit_-_shin_[剛氣-心]": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Unrelenting_Spirit_-_Shin_-剛氣-心-.webp' alt='' />Unrelenting Spirit - Shin [剛氣-心]</span>",
-  "scorch_propellant_ammo": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Scorch_Propellant_Ammo.webp' alt='' />Scorch Propellant Ammo</span>",
-  "fell_bullet": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Fell_Bullet.webp' alt='' />Fell Bullet</span>",
-  "deep_tears": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Deep_Tears.webp' alt='' />Deep Tears</span>",
-  "piercing_sword": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Piercing_Sword.webp' alt='' />Piercing Sword</span>",
-  "protecting_sword": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Protecting_Sword.webp' alt='' />Protecting Sword</span>",
-  "tear-sharpened": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Tear-sharpened.webp' alt='' />Tear-sharpened</span>",
-  "blessing": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Blessing.webp' alt='' />Blessing</span>",
-  "despair": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Despair.webp' alt='' />Despair</span>",
-  "love/hate": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Love-Hate.webp' alt='' />Love-Hate</span>",
-  "magical_girl's_chant": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Magical_Girl&#39;s_Chant.webp' alt='' />Magical Girl's Chant</span>",
-  "here_comes_magical_girl!": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Here_Comes_Magical_Girl!.webp' alt='' />Here Comes Magical Girl!</span>",
-  "magical_arcana": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Magical_Arcana.webp' alt='' />Magical Arcana</span>",
-  "violent_collections": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Violent_Collections.webp' alt='' />Violent Collections</span>",
-  "accumulated_past": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Accumulated_Past.webp' alt='' />Accumulated Past</span>",
-  "leash-holder_of_all_heishou": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Leash-holder_of_All_Heishou.webp' alt='' />Leash Holder of All Heishou</span>",
-  "life_from_death_[死中求活]": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Life_from_Death_-死中求活-.webp' alt='' />Life from Death [死中求活]</span>",
-  "heishou_bolus_contamination_[黑獸丸染]": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Heishou_Bolus_Contamination_-黑獸丸染-.webp' alt='' />Heishou Bolus Contamination [黑獸丸染]</span>",
-  "tarnished_blood": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Tarnished_Blood.webp' alt='' />Tarnished Blood</span>",
-  "unrelenting_storm": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Unrelenting_Storm.webp' alt='' />Unrelenting Storm</span>",
-  "flower-burying_pin_[埋花針]": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Flower-burying_Pin_-埋花針-.webp' alt='' />Flower Burying Pin [埋花針]</span>",
-  "denial_[不許]": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Denial_-不許-.webp' alt='' />Denial [不許]</span>",
-  "flower-burying_wedge_[埋花櫼]": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Flower-burying_Wedge_-埋花櫼-.webp' alt='' />Flower Burying Wedge [埋花櫼]</span>",
-  "man_in_scabbard": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Man_in_Scabbard.webp' alt='' />Man in Scabbard</span>",
-  "hardened_shell-barrier": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Hardened_Shell-Barrier.webp' alt='' />Hardened Shell-Barrier</span>",
-  "thunderer": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Thunderer.webp' alt='' />Thunderer</span>",
-  "higher_thunderer": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Higher_Thunderer.webp' alt='' />Higher Thunderer</span>",
-  "target_aim": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Target_Aim.webp' alt='' />Target Aim</span>",
-  "ready_to_loose": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Ready_to_Loose.webp' alt='' />Ready to Loose</span>",
-  "focused_performance": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Focused_Performance.webp' alt='' />Focused Performance</span>",
-  "hardblood_armor": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Hardblood_Armor.webp' alt='' />Hardblood Armor</span>",
-  "bright_[光]": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Bright_-光-.webp' alt='' />Bright [光]</span>",
-  "bloodflame_[血炎]": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Bloodflame_-血炎-.webp' alt='' />Bloodflame [血炎]</span>",
-  "battleblood_instinct": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Battleblood_Instinct.webp' alt='' />Battleblood Instinct</span>",
-  "burgeoning_of_horns_[發角]": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Burgeoning_of_Horns_-發角-.webp' alt='' />Burgeoning of Horns [發角]</span>",
-  "protector's_stance": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Protector&#39;s_Stance.webp' alt='' />Protector's Stance</span>",
-  "entangled_life_[羅生]": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Entangled_Life_-羅生-.webp' alt='' />Entangled Life [羅生]</span>",
-  "grace_of_the_prescript": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Grace_of_the_Prescript.webp' alt='' />Grace of the Prescript</span>",
-  "the_udjat_[vanguard]": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/The_Udjat_-Vanguard-.webp' alt='' />The Udjat [Vanguard]</span>",
-  "unlock": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Unlock.webp' alt='' />Unlock</span>",
-  "unlock_-_i": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Unlock.webp' alt='' />Unlock - I</span>",
-  "unlock_-_ii": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Unlock_-_II.webp' alt='' />Unlock - II</span>",
-  "unlock_-_iii": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Unlock_-_III.webp' alt='' />Unlock - III</span>",
-  "shin_(心)_-_procuration": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Shin_(心)_-_Procuration.webp' alt='' />Shin (心) - Procuration</span>",
-  "faith_beyond_question": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Faith_Beyond_Question.webp' alt='' />Faith Beyond Question</span>",
-  "the_middle_-_grudge": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/The_Middle_-_Grudge_(Ishmael).webp' alt='' />The Middle - Grudge</span>",
-  "thermal_blades": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Thermal_Blades.webp' alt='' />Thermal Blades</span>",
-  "the_middle_styled_augmentation_tattoos": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/The_Middle_Styled_Augmentation_Tattoos_(Ishmael).webp' alt='' />The Middle Styled Augmentation Tattoos</span>",
-  "hp_healing_boost": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/HP_Healing_Boost.webp' alt='' />HP Healing Boost</span>",
-  "crit_dmg_up": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Crit_DMG_Up.webp' alt='' />Crit DMG Up</span>",
-  "guardians_of_the_forest": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Guardians_of_the_Forest.webp' alt='' />Guardians of the Forest</span>",
-  "before_the_king_in_binds": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Before_the_King_in_Binds.webp' alt='' />Before the King in Binds</span>",
-  "indulgence_in_prescripts": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Indulgence_in_Prescripts.webp' alt='' />Indulgence in Prescripts</span>",
-  "sizzling_wound": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Sizzling_Wound.webp' alt='' />Sizzling Wound</span>",
-  "wound-casing_mask": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Wound-casing_Mask.webp' alt='' />Wound-casing Mask</span>",
-  "desire_for_acknowledgement_sated": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Desire_for_Acknowledgement_Sated.webp' alt='' />Desire for Acknowledgement Sated</span>",
-  "shin_(心)_-_fate": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Shin_(心)_-_Fate.webp' alt='' />Shin (心) - Fate</span>",
-  "loyalty_pheromone": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Loyalty_Pheromone.webp' alt='' />Loyalty Pheromone</span>",
-  "high-voltage_exoskeleton": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/High-voltage_Exoskeleton.webp' alt='' />High-voltage Exoskeleton</span>",
-  "self-charge": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Self-charge.webp' alt='' />Self-charge</span>",
-  "when_boring_a_20-inch_hole_with_a_lance...": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/When_boring_a_20-inch_hole_with_a_lance....webp' alt='' />When boring a 20-inch hole with a lance...</span>",
-  "when_caving_in_the_back_of_the_skull_with_a_hammer...": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/When_caving_in_the_back_of_the_skull_with_a_hammer....webp' alt='' />When caving in the back of the skull with a hammer...</span>",
-  "when_cleaving_through_the_shoulder_and_the_skull_with_a_bastard_sword...": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/When_cleaving_through_the_shoulder_and_the_skull_with_a_bastard_sword....webp' alt='' />When cleaving through the shoulder and the skull with a bastard sword...</span>",
-  "when_hacking_through_the_ribs_with_a_hatchet...": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/When_hacking_through_the_ribs_with_a_hatchet....webp' alt='' />When hacking through the ribs with a hatchet...</span>",
-  "when_lacerating_through_space_itself_with_a_scythe,_like_a_certain_someone...": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/When_lacerating_through_space_itself_with_a_scythe,_like_a_certain_someone....webp' alt='' />When lacerating through space itself with a scythe, like a certain someone...</span>",
-  "when_penetrating_the_lungs_with_a_stiletto...": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/When_penetrating_the_lungs_with_a_stiletto....webp' alt='' />When penetrating the lungs with a stiletto...</span>",
-  "when_punching_10_or_more_holes_in_the_torso_with_a_rapier...": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/When_punching_10_or_more_holes_in_the_torso_with_a_rapier....webp' alt='' />When punching 10 or more holes in the torso with a rapier...</span>",
-  "when_rending_the_body_with_a_great_sword...": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/When_rending_the_body_with_a_greatsword....webp' alt='' />When rending the body with a greatsword...</span>",
-  "when_ripping_the_flesh_to_ten_thousand_strips_with_a_whip...": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/When_ripping_the_flesh_to_ten_thousand_strips_with_a_whip....webp' alt='' />When ripping the flesh to ten thousand strips with a whip...</span>",
-  "artwork:_fascia": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Artwork_-_Fascia.webp' alt='' />Artwork: Fascia</span>",
-  "artwork:_tibia": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Artwork_-_Tibia.webp' alt='' />Artwork: Tibia</span>",
-  "corpus_ingredient": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Corpus_Ingredient.webp' alt='' />Corpus Ingredient</span>",
-  "iron_maiden": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Iron_Maiden.webp' alt='' />Iron Maiden</span>",
-  "somatic_frisson-inspiring_melody": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Somatic_Frisson-inspiring_Melody.webp' alt='' />Somatic Frisson-inspiring Melody</span>",
-  "the_self_unbound_-_flow_state": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/The_Self_Unbound_-_Flow_State.webp' alt='' />The Self Unbound - Flow State</span>",
-  "petals": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Petals.webp' alt='' />Petals</span>",
-  "moonlit_azure_blade": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Moonlit_Azure_Blade.webp' alt='' />Moonlit Azure Blade</span>",
-  "power_up": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Power_Up.webp' alt='' />Power Up</span>",
-  "base_power_up": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Base_Power_Up.webp' alt='' />Base Power Up</span>",
-  "weak-resist_dmg_boost": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Weak-resist_DMG_Boost.webp' alt='' />Weak-resist DMG Boost</span>",
-  "sword_of_the_homeland_-_the_true_essence": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Sword_of_the_Homeland_-_The_True_Essence.webp' alt='' />Sword of the Homeland - The True Essence</span>",
-  "scarlet_moth": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Scarlet_Moth.webp' alt='' />Scarlet Moth</span>",
-  "i_got_praised!": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/I_Got_Praised%21_%28Ishmael%29.webp' alt='' />I Got Praised!</span>",
-  "gebura's_blade": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Gebura%27s_Blade.webp' alt='' />Gebura's Blade</span>",
-  "liferender": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Liferender.webp' alt='' />Liferender</span>",
-  "entanglement": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Afterimage_Entanglement.webp' alt='' />Entanglement</span>",
-  "string_severance_[絕緣]": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/String_Severance_-%E7%B5%95%E7%B7%A3-.webp' alt='' />String Severance [絕緣]</span>",
-  "shin_(心)_-_dihui_star_[地慧星]": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Shin_%28%E5%BF%83%29.webp' alt='' />Shin (心) - Dihui Star [地慧星]</span>",
-  "tiantui_star_[天退星]": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Unrelenting_Spirit_-%E5%89%9B%E6%B0%A3-.webp' alt='' />Tiantui Star [天退星]</span>",
-  "shin_(心)_-_tiantui_star_[天退星]": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Unrelenting_Spirit_-_Shin_-%E5%89%9B%E6%B0%A3-%E5%BF%83-.webp' alt='' />Shin (心) - Tiantui Star [天退星]</span>",
-  "le_fauvisme_-_masque_de_chien": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Le_Fauvisme_-_Masque_de_Chien.webp' alt='' />Le Fauvisme - Masque de Chien</span>",
-  "imperfections_addressed": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Imperfections_Addressed.webp' alt='' />Imperfections Addressed</span>",
-  "drink_to_the_fallen": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Drink_to_the_Fallen.webp' alt='' />Drink to the Fallen</span>",
-  "resentment": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Resentment.webp' alt='' />Resentment</span>",
-  "resentful_scabbard": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Resentful_Scabbard_%28Meursault%29.webp' alt='' />Resentful Scabbard</span>",
-  "growing_resentment": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Growing_Resentment_%28Meursault%29.webp' alt='' />Growing Resentment</span>",
-  "prisoner_transport_arrangements": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Prisoner_Transport_Arrangements_%28Hong_Lu%29.webp' alt='' />Prisoner Transport Arrangements</span>",
-  "concentration【sniper】": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Concentration-Sniper-.webp' alt='' />Concentration【Sniper】</span>",
-  "book_of_vengeance_[heathcliff]": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Book_of_Vengeance.webp' alt='' />Book of Vengeance [Heathcliff]</span>",
-  "vengeance_tattoo": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Vengeance_Tattoo.webp' alt='' />Vengeance Tattoo</span>",
-  "dokkaebi_arms": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Dokkaebi_Arms.webp' alt='' />Dokkaebi Arms</span>",
-  "bearing_of_a_salsu": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Bearing_of_a_Salsu.webp' alt='' />Bearing of a Salsu</span>",
-  "mook_workshop_-_ye_[銳]_type_ii_bladedraw_/_thrust_force:_dokkaebi_fire": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Mook_Workshop_-_Ye_-%E9%8A%B3-_Type_II_Bladedraw_-_Thrust_Force_-_Dokkaebi_Fire.webp' alt='' />Mook Workshop - Ye [銳] Type II Bladedraw / Thrust Force: Dokkaebi Fire</span>",
-  "le_fauvisme_-_masque_de_loup": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Le_Fauvisme_-_Masque_de_Loup.webp' alt='' />Le Fauvisme - Masque de Loup</span>",
-  "l'hommage": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/L%27Hommage.webp' alt='' />L'Hommage</span>",
-  "book_of_vengeance_[sinclair]": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Book_of_Vengeance.webp' alt='' />Book of Vengeance [Sinclair]</span>",
-  "the_middle_-_vengeance_tattoo_[great_sister]": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/The_Middle_Styled_Augmentation_Tattoos_%28Ishmael%29.webp' alt='' />The Middle - Vengeance Tattoo [Great Sister]</span>",
-  "ridiculous_grit": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Ridiculous_Grit_%28Outis%29.webp' alt='' />Ridiculous Grit</span>",
-  "check_this_out,_kiddo!": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Check_This_Out%2C_Kiddo%21_%28Outis%29.webp' alt='' />Check This Out, Kiddo!</span>",
-  "avenging_my_family": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Avenging_My_Family.webp' alt='' />Avenging My Family</span>",
-  "pheromone": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Pheromone.webp' alt='' />Pheromone</span>",
-  "hardblood_cast": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Hardblood_Cast.webp' alt='' />Hardblood Cast</span>",
-  "spark_of_inspiration": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Spark_of_Inspiration.webp' alt='' />Spark of Inspiration</span>",
-  "exquisite_aesthetics": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Exquisite_Aesthetics.webp' alt='' />Exquisite Aesthetics</span>",
-  "beauty_of_the_physique": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Beauty_of_the_Physique.webp' alt='' />Beauty of the Physique</span>",
-  "charm_of_the_beastly": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Charm_of_the_Beastly.webp' alt='' />Charm of the Beastly</span>",
-  "tremor_-_distribution": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Tremor_-_Distribution.webp' alt='' />Tremor - Distribution</span>",
-  "microprecision_time_acceleration": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Microprecision_Time_Acceleration.webp' alt='' />Microprecision Time Acceleration</span>",
-  "glimpse_of_precognition": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Glimpse_of_Precognition.webp' alt='' />Glimpse of Precognition</span>",
-  "emergency_barrier_battery": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Emergency_Barrier_Battery.webp' alt='' />Emergency Barrier Battery</span>",
-  "near-light_superbattery": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Near-light_Superbattery.webp' alt='' />Near-light Superbattery</span>",
-  "sword_of_the_homeland_-_striking": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Sword_of_the_Homeland_-_Striking.webp' alt='' />Sword of the Homeland - Striking</span>",
-  "desperado": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Desperado.webp' alt='' />Desperado</span>",
-  "trauma_shield": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Trauma_Shield.webp' alt='' />Trauma Shield</span>",
-  "dhyāna": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Dhy%C4%81na.webp' alt='' />Dhyāna</span>",
-  "firepower": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Firepower.webp' alt='' />Firepower</span>",
-  "backup_candy": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Backup_Candy.webp' alt='' />Backup Candy</span>",
-  "hunger": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Hunger_%28Kkomi%29.webp' alt='' />Hunger</span>",
-  "incandescent_indulgence": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Indulged.webp' alt='' />Incandescent Indulgence</span>",
-  "maturing_textbook": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Maturing_Textbook.webp' alt='' />Maturing Textbook</span>",
-  "eye_of_precognition": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Eye_of_Precognition_%28Rodion%29.webp' alt='' />Eye of Precognition</span>",
-  "eye_of_precognition_-_overheat": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Eye_of_Precognition_-_Overheat_%28Rodion%29.webp' alt='' />Eye of Precognition - Overheat</span>",
-  "accelerating_future": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Accelerating_Future_%28Rodion%29.webp' alt='' />Accelerating Future</span>",
-  "shin_(心)_-_disgrace": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Shin_%28%E5%BF%83%29.webp' alt='' />Shin (心) - Disgrace</span>",
-  "high_noon": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/High_Noon.webp' alt='' />High Noon</span>",
-  "loneliness_at_high_noon": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Loneliness_at_High_Noon.webp' alt='' />Loneliness at High Noon</span>",
-  "dawnherald": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Dawnherald.webp' alt='' />Dawnherald</span>",
-  "dawn_office": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Dawn_Office.webp' alt='' />Dawn Office</span>",
-  "from_dawnbreak_to_sunset": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/From_Dawnbreak_to_Sunset.webp' alt='' />From Dawnbreak to Sunset</span>",
-  "blazing_sunset": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Blazing_Sunset.webp' alt='' />Blazing Sunset</span>",
-  "dimensional_castaway": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Dimensional_Castaway.webp' alt='' />Dimensional Castaway</span>",
-  "quadricolor_dimensions": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Quadricolor_Dimensions.webp' alt='' />Quadricolor Dimensions</span>",
-  "battle_instinct": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Battle_Instinct.webp' alt='' />Battle Instinct</span>",
-  "light_of_daybreak": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Light_of_Daybreak.webp' alt='' />Light of Daybreak</span>",
-  "witnessed_-_eastern_cinq": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Witnessed_-_Eastern_Cinq.webp' alt='' />Witnessed - Eastern Cinq</span>",
-  "preservation": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Preservation.webp' alt='' />Preservation</span>",
-  "pulsation": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Pulsation.webp' alt='' />Pulsation</span>",
-  "le_noir:_gabardine_overcoat": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Le_Noir_Gabardine_Overcoat.webp' alt='' />Le Noir: Gabardine Overcoat</span>",
-  "armure_éveillée": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Armure_%C3%89veill%C3%A9e.webp' alt='' />Armure Éveillée</span>",
-  "black_wings": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Black_Wings.webp' alt='' />Black Wings</span>",
-  "inertia_of_drifting": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Inertia_of_Drifting.webp' alt='' />Inertia of Drifting</span>",
-  "blossom_scissors": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Blossom_Scissors.webp' alt='' />Blossom Scissors</span>",
-  "second_is_welcome-snipping": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Second_is_Welcome-snipping.webp' alt='' />Second is Welcome-snipping</span>",
-  "blessing_of_the_obsidian_god_(Don_Quixote)": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Blessing_of_the_Obsidian_God_(Don_Quixote).webp' alt='' />Blessing of the Obsidian God (Don Quixote)</span>",
-  "sanctum_of_conservation": "<span class='center-element' contenteditable='false' style='color:var(--Buff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Sanctum_of_Conservation.webp' alt='' />Sanctum of Conservation</span>"
+  "attack_power_up": {
+    "key": "attack_power_up",
+    "name": "Attack Power Up",
+    "image": "/Images/status-effect/Attack_Power_Up.webp",
+    "color": "var(--Buff-color)",
+    "description": "Attack skills gain Final Power by the effect’s Count for one turn."
+  },
+  "clash_power_up": {
+    "key": "clash_power_up",
+    "name": "Clash Power Up",
+    "image": "/Images/status-effect/Clash_Power_Up.webp",
+    "color": "var(--Buff-color)",
+    "description": "Gain Clash Power by the effect's Count for one turn."
+  },
+  "slash_dmg_up": {
+    "key": "slash_dmg_up",
+    "name": "Slash DMG Up",
+    "image": "/Images/status-effect/Slash_DMG_Up.webp",
+    "color": "var(--Buff-color)",
+    "description": "Deal 10% more damage with Slash skills per Count for one turn. (Max 10)"
+  },
+  "pierce_dmg_up": {
+    "key": "pierce_dmg_up",
+    "name": "Pierce DMG Up",
+    "image": "/Images/status-effect/Pierce_DMG_Up.webp",
+    "color": "var(--Buff-color)",
+    "description": "Deal 10% more damage with Pierce skills per Count for one turn. (Max 10)"
+  },
+  "blunt_dmg_up": {
+    "key": "blunt_dmg_up",
+    "name": "Blunt DMG Up",
+    "image": "/Images/status-effect/Blunt_DMG_Up.webp",
+    "color": "var(--Buff-color)",
+    "description": "Deal 10% more damage with Blunt skills based on the effect's Count for one turn. (Max 10)"
+  },
+  "wrath_dmg_up": {
+    "key": "wrath_dmg_up",
+    "name": "Wrath DMG Up",
+    "image": "/Images/status-effect/Wrath_DMG_Up.webp",
+    "color": "var(--Buff-color)",
+    "description": "Deal 10% more damage with Wrath skills per Count for one turn. (Max 10)"
+  },
+  "lust_dmg_up": {
+    "key": "lust_dmg_up",
+    "name": "Lust DMG Up",
+    "image": "/Images/status-effect/Lust_DMG_Up.webp",
+    "color": "var(--Buff-color)",
+    "description": "Deal 10% more damage with Lust skills per Count for one turn. (Max 10)"
+  },
+  "sloth_dmg_up": {
+    "key": "sloth_dmg_up",
+    "name": "Sloth DMG Up",
+    "image": "/Images/status-effect/Sloth_DMG_Up.webp",
+    "color": "var(--Buff-color)",
+    "description": "Deal 10% more damage with Sloth skills per Count for one turn. (Max 10)"
+  },
+  "gluttony_dmg_up": {
+    "key": "gluttony_dmg_up",
+    "name": "Gluttony DMG Up",
+    "image": "/Images/status-effect/Gluttony_DMG_Up.webp",
+    "color": "var(--Buff-color)",
+    "description": "Deal 10% more damage with Gluttony skills per Count for one turn. (Max 10)"
+  },
+  "gloom_dmg_up": {
+    "key": "gloom_dmg_up",
+    "name": "Gloom DMG Up",
+    "image": "/Images/status-effect/Gloom_DMG_Up.webp",
+    "color": "var(--Buff-color)",
+    "description": "Deal 10% more damage with Gloom skills per Count for one turn. (Max 10)"
+  },
+  "pride_dmg_up": {
+    "key": "pride_dmg_up",
+    "name": "Pride DMG Up",
+    "image": "/Images/status-effect/Pride_DMG_Up.webp",
+    "color": "var(--Buff-color)",
+    "description": "Deal 10% more damage with Pride skills per Count for one turn. (Max 10)"
+  },
+  "envy_dmg_up": {
+    "key": "envy_dmg_up",
+    "name": "Envy DMG Up",
+    "image": "/Images/status-effect/Envy_DMG_Up.webp",
+    "color": "var(--Buff-color)",
+    "description": "Deal 10% more damage with Envy skills per Count for one turn. (Max 10)"
+  },
+  "slash_power_up": {
+    "key": "slash_power_up",
+    "name": "Slash Power Up",
+    "image": "/Images/status-effect/Slash_Power_Up.webp",
+    "color": "var(--Buff-color)",
+    "description": "Slash skills gain final Power by the effect's Count for one turn"
+  },
+  "pierce_power_up": {
+    "key": "pierce_power_up",
+    "name": "Pierce Power Up",
+    "image": "/Images/status-effect/Pierce_Power_Up.webp",
+    "color": "var(--Buff-color)",
+    "description": "Pierce skills gain final Power by the effect's Count for one turn"
+  },
+  "blunt_power_up": {
+    "key": "blunt_power_up",
+    "name": "Blunt Power Up",
+    "image": "/Images/status-effect/Blunt_Power_Up.webp",
+    "color": "var(--Buff-color)",
+    "description": "Blunt skills gain final Power by the effect's Count for one turn."
+  },
+  "wrath_power_up": {
+    "key": "wrath_power_up",
+    "name": "Wrath Power Up",
+    "image": "/Images/status-effect/Wrath_Power_Up.webp",
+    "color": "var(--Buff-color)",
+    "description": "Wrath skills gain final Power by the effect's Count for one turn."
+  },
+  "lust_power_up": {
+    "key": "lust_power_up",
+    "name": "Lust Power Up",
+    "image": "/Images/status-effect/Lust_Power_Up.webp",
+    "color": "var(--Buff-color)",
+    "description": "Lust skills gain final Power by the effect's Count for one turn."
+  },
+  "sloth_power_up": {
+    "key": "sloth_power_up",
+    "name": "Sloth Power Up",
+    "image": "/Images/status-effect/Sloth_Power_Up.webp",
+    "color": "var(--Buff-color)",
+    "description": "Sloth skills gain final Power by the effect's Count for one turn."
+  },
+  "gluttony_power_up": {
+    "key": "gluttony_power_up",
+    "name": "Gluttony Power Up",
+    "image": "/Images/status-effect/Gluttony_Power_Up.webp",
+    "color": "var(--Buff-color)",
+    "description": "Gluttony skills gain final Power by the effect's Count for one turn."
+  },
+  "gloom_power_up": {
+    "key": "gloom_power_up",
+    "name": "Gloom Power Up",
+    "image": "/Images/status-effect/Gloom_Power_Up.webp",
+    "color": "var(--Buff-color)",
+    "description": "Gloom skills gain final Power by the effect's Count for one turn."
+  },
+  "pride_power_up": {
+    "key": "pride_power_up",
+    "name": "Pride Power Up",
+    "image": "/Images/status-effect/Pride_Power_Up.webp",
+    "color": "var(--Buff-color)",
+    "description": "Pride skills gain final Power by the effect's Count for one turn."
+  },
+  "envy_power_up": {
+    "key": "envy_power_up",
+    "name": "Envy Power Up",
+    "image": "/Images/status-effect/Envy_Power_Up.webp",
+    "color": "var(--Buff-color)",
+    "description": "Envy skills gain final Power by the effect's Count for one turn."
+  },
+  "slash_protection": {
+    "key": "slash_protection",
+    "name": "Slash Protection",
+    "image": "/Images/status-effect/Slash_Protection.webp",
+    "color": "var(--Buff-color)",
+    "description": "Take 10% less damage from Slash skills per Count for one turn. (Max 10)"
+  },
+  "pierce_protection": {
+    "key": "pierce_protection",
+    "name": "Pierce Protection",
+    "image": "/Images/status-effect/Pierce_Protection.webp",
+    "color": "var(--Buff-color)",
+    "description": "Take 10% less damage from Pierce skills per Count for one turn. (Max 10)"
+  },
+  "blunt_protection": {
+    "key": "blunt_protection",
+    "name": "Blunt Protection",
+    "image": "/Images/status-effect/Blunt_Protection.webp",
+    "color": "var(--Buff-color)",
+    "description": "Take 10% less damage from Blunt skills per Count for one turn. (Max 10)"
+  },
+  "wrath_protection": {
+    "key": "wrath_protection",
+    "name": "Wrath Protection",
+    "image": "/Images/status-effect/Wrath_Protection.webp",
+    "color": "var(--Buff-color)",
+    "description": "Take 10% less damage from Wrath skills per Count for one turn. (Max 10)"
+  },
+  "lust_protection": {
+    "key": "lust_protection",
+    "name": "Lust Protection",
+    "image": "/Images/status-effect/Lust_Protection.webp",
+    "color": "var(--Buff-color)",
+    "description": "Take 10% less damage from Lust skills per Count for one turn. (Max 10)"
+  },
+  "sloth_protection": {
+    "key": "sloth_protection",
+    "name": "Sloth Protection",
+    "image": "/Images/status-effect/Sloth_Protection.webp",
+    "color": "var(--Buff-color)",
+    "description": "Take 10% less damage from Sloth skills per Count for one turn. (Max 10)"
+  },
+  "gluttony_protection": {
+    "key": "gluttony_protection",
+    "name": "Gluttony Protection",
+    "image": "/Images/status-effect/Gluttony_Protection.webp",
+    "color": "var(--Buff-color)",
+    "description": "Take 10% less damage from Gluttony skills per Count for one turn. (Max 10)"
+  },
+  "gloom_protection": {
+    "key": "gloom_protection",
+    "name": "Gloom Protection",
+    "image": "/Images/status-effect/Gloom_Protection.webp",
+    "color": "var(--Buff-color)",
+    "description": "Take 10% less damage from Gloom skills per Count for one turn. (Max 10)"
+  },
+  "pride_protection": {
+    "key": "pride_protection",
+    "name": "Pride Protection",
+    "image": "/Images/status-effect/Pride_Protection.webp",
+    "color": "var(--Buff-color)",
+    "description": "Take 10% less damage from Pride skills per Count for one turn. (Max 10)"
+  },
+  "envy_protection": {
+    "key": "envy_protection",
+    "name": "Envy Protection",
+    "image": "/Images/status-effect/Envy_Protection.webp",
+    "color": "var(--Buff-color)",
+    "description": "Take 10% less damage from Envy skills per Count for one turn. (Max 10)"
+  },
+  "defense_power_up": {
+    "key": "defense_power_up",
+    "name": "Defense Power Up",
+    "image": "/Images/status-effect/Defense_Power_Up.webp",
+    "color": "var(--Buff-color)",
+    "description": "Defense skills gain Final Power by the effect's Count for one turn."
+  },
+  "offense_level_up": {
+    "key": "offense_level_up",
+    "name": "Offense Level Up",
+    "image": "/Images/status-effect/Offense_Level_Up.webp",
+    "color": "var(--Buff-color)",
+    "description": "Offense level increases based on the effect's Potency for one turn."
+  },
+  "defense_level_up": {
+    "key": "defense_level_up",
+    "name": "Defense Level Up",
+    "image": "/Images/status-effect/Defense_Level_Up.webp",
+    "color": "var(--Buff-color)",
+    "description": "Defense Level increases based on the effect's Potency for one turn."
+  },
+  "damage_up": {
+    "key": "damage_up",
+    "name": "Damage Up",
+    "image": "/Images/status-effect/Damage_Up.webp",
+    "color": "var(--Buff-color)",
+    "description": "Deal 10% more damage with skills based on the effect's Count for one turn. (Max 10)"
+  },
+  "protection": {
+    "key": "protection",
+    "name": "Protection",
+    "image": "/Images/status-effect/Protection.webp",
+    "color": "var(--Buff-color)",
+    "description": "Take 10% less damage per Count from attacks for one turn. (Max 10)"
+  },
+  "rupture_protection": {
+    "key": "rupture_protection",
+    "name": "Rupture Protection",
+    "image": "/Images/status-effect/Rupture_Protection.webp",
+    "color": "var(--Buff-color)",
+    "description": "Take -1 damage per Count from Rupture effects for one turn."
+  },
+  "bleed_resistance": {
+    "key": "bleed_resistance",
+    "name": "Bleed Resistance",
+    "image": "/Images/status-effect/Bleed_Resistance.webp",
+    "color": "var(--Buff-color)",
+    "description": ""
+  },
+  "plus_coin_boost": {
+    "key": "plus_coin_boost",
+    "name": "Plus Coin Boost",
+    "image": "/Images/status-effect/Plus_Coin_Boost.webp",
+    "color": "var(--Buff-color)",
+    "description": "Raise the Power of Plus Coins by the effect's Count for one turn."
+  },
+  "minus_coin_drop": {
+    "key": "minus_coin_drop",
+    "name": "Minus Coin Drop",
+    "image": "/Images/status-effect/Minus_Coin_Drop.webp",
+    "color": "var(--Buff-color)",
+    "description": "Reduce the Power of Minus Coins by the effect's Count for one turn."
+  },
+  "haste": {
+    "key": "haste",
+    "name": "Haste",
+    "image": "/Images/status-effect/Haste.webp",
+    "color": "var(--Buff-color)",
+    "description": "Speed increases by the effect’s Count for one turn."
+  },
+  "poise": {
+    "key": "poise",
+    "name": "Poise",
+    "image": "/Images/status-effect/Poise.webp",
+    "color": "var(--Buff-color)",
+    "description": "On hit, gain a Potency-based chance to deal critical damage, reducing the Count by 1 if successful. At the end of the turn, reduce the Count by 1. Critical hits deal 1.2x damage."
+  },
+  "charge": {
+    "key": "charge",
+    "name": "Charge",
+    "image": "/Images/status-effect/Charge.webp",
+    "color": "var(--Buff-color)",
+    "description": "Resource used by certain skills for additional effects. Its Count can go up to 20. Count lowers by 1 at the end of each turn."
+  },
+  "load": {
+    "key": "load",
+    "name": "Load",
+    "image": "/Images/status-effect/Load.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Value: 6\n- Attack Skills that consumed Charge Count deal +2.5% more damage for every value on self (max 15%)\n- If the affected unit is a W Corp. employee, deal +5% more damage for every value instead (max 30%)\n- Turn End: this effect expires"
+  },
+  "red_eyes": {
+    "key": "red_eyes",
+    "name": "Red Eyes",
+    "image": "/Images/status-effect/Red_Eyes.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Base Skill Coin effects inflict +1 more Bleed\n- Max Value: 20\n- Unique Charge (fixed Potency)\n- Resource used by certain Skills for additional effects\n- Enhances the buff based on Value\n· Stage 1 (1~7): Red Eyes\n· Stage 2 (8~15): Red Eyes - Alert\n· Stage 3 (16~20): Red Eyes - Devouring\n- The amount of additional Bleed inflicted by the first line of this buff is equal to the buff enhancement Stage (max 3)"
+  },
+  "penitence": {
+    "key": "penitence",
+    "name": "Penitence",
+    "image": "/Images/status-effect/Penitence.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Heal 2 SP On Hit with Base Skill Coins that gain Penitence\n- Max Value: 20\n- Unique Charge (fixed Potency)\n- Turn Start: gain (Penitence)% of max HP as Shield\n- Resource used by certain Skills for additional effects\n- Enhances the buff based on Value\n· Stage 1 (1~7): Penitence\n· Stage 2 (8~15): Penitence - Periphery\n· Stage 3 (16~20): Penitence - Confession\n- The amount of SP healed by the first line of this buff is based on the enhancement Stage (enhancement Stage x 2)"
+  },
+  "e.g.o_resource_amp": {
+    "key": "e.g.o_resource_amp",
+    "name": "E.G.O Resource Amp",
+    "image": "/Images/status-effect/E.G.O_Resource_Amp.webp",
+    "color": "var(--Buff-color)",
+    "description": "Increases the amount of E.G.O resources earned from skills by the effect's Count for one turn."
+  },
+  "fanatic": {
+    "key": "fanatic",
+    "name": "Fanatic",
+    "image": "/Images/status-effect/Fanatic.webp",
+    "color": "var(--Buff-color)",
+    "description": "Raise Skill Final Power by the effect's Count against targets that have Nails for the turn. (Applies to clashes as well)"
+  },
+  "appetite": {
+    "key": "appetite",
+    "name": "Appetite",
+    "image": "/Images/status-effect/Appetite.webp",
+    "color": "var(--Buff-color)",
+    "description": "Increases the healing provided by the Passive [Rustle Up]. Spent when the Passive activates."
+  },
+  "defensive_stance": {
+    "key": "defensive_stance",
+    "name": "Defensive Stance",
+    "image": "/Images/status-effect/Defensive_Stance.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Value: 2\n- This effect does not compound in Potency; stacking it only extends its duration.\n- Reduced by 1 at Turn End\n- When a unit gains this effect, gain the following effects next turn:\n· Fix this unit's Speed to its minimum value\n· Gain 5 Defense Level Up\n· Each of this unit's Slots gain +(10 / this unit's # of Slots) Aggro\n· When chaining Skills, this unit can draw enemies' attack toward this unit regardless of Speed (Focused Encounters only)\n· Upon Clash Win, trigger Tremor Burst\n· Cannot be Staggered by damage"
+  },
+  "charge_barrier": {
+    "key": "charge_barrier",
+    "name": "Charge Barrier",
+    "image": "/Images/status-effect/Charge_Barrier.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Gain (Charge Barrier # x 3) Shield.\n- Lose 1 Charge Barrier after losing (Charge Barrier # x 3) Shield.\n- (If the unit is a W Corp. employee, ALL Charge Barrier effects activate at (Charge Barrier # x 5) instead of at (Charge Barrier # x 3))\n- Turn end: Gain a Charge Count for each Charge Barrier #, and Charge Barrier and Shield gained from Charge Barrier expire completely next turn"
+  },
+  "unjust_enrichment": {
+    "key": "unjust_enrichment",
+    "name": "Unjust Enrichment",
+    "image": "/Images/status-effect/Unjust_Enrichment.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Gained on Heads Hit against targets that have Bleed (Max 4)\n- When 'Bullets are Pricey' Passive activates, consume all Unjust Enrichment stack to deal bonus damage"
+  },
+  "assist_attack": {
+    "key": "assist_attack",
+    "name": "Assist Attack",
+    "image": "/Images/status-effect/Assist_Attack.webp",
+    "color": "var(--Buff-color)",
+    "description": "- If unit A applies this effect to unit B: Unit B follows up with an Unopposed Attack with its Skill 1 against the same enemy unit A attacked with its Skill. Activates at unit A's Attack End.\n- The Skill used as an Assist Attack does not affect Unit B's upcoming Skills list."
+  },
+  "heated_gas_harpoon": {
+    "key": "heated_gas_harpoon",
+    "name": "Heated Gas Harpoon",
+    "image": "/Images/status-effect/Heated_Gas_Harpoon.webp",
+    "color": "var(--Buff-color)",
+    "description": "For 1 turn, inflict 1 Burn with Heads Hit"
+  },
+  "overheated_gas_harpoon": {
+    "key": "overheated_gas_harpoon",
+    "name": "Overheated Gas Harpoon",
+    "image": "/Images/status-effect/Overheated_Gas_Harpoon.webp",
+    "color": "var(--Buff-color)",
+    "description": "For 1 turn, inflict 1 Burn On Hit"
+  },
+  "sword_of_the_homeland_-_rending": {
+    "key": "sword_of_the_homeland_-_rending",
+    "name": "Sword of the Homeland - Rending",
+    "image": "/Images/status-effect/Sword_of_the_Homeland_-_Rending.webp",
+    "color": "var(--Buff-color)",
+    "description": "Skill 1 gains Final Power by the effect's Count for this turn"
+  },
+  "sword_of_the_homeland_-_penetrating": {
+    "key": "sword_of_the_homeland_-_penetrating",
+    "name": "Sword of the Homeland - Penetrating",
+    "image": "/Images/status-effect/Sword_of_the_Homeland_-_Penetrating.webp",
+    "color": "var(--Buff-color)",
+    "description": "Skill 2 gains Final Power by the effect's Count for this turn"
+  },
+  "swordplay_of_the_homeland": {
+    "key": "swordplay_of_the_homeland",
+    "name": "Swordplay of the Homeland",
+    "image": "/Images/status-effect/Swordplay_of_the_Homeland.webp",
+    "color": "var(--Buff-color)",
+    "description": "- When at 5+ Poise, upon Skill use, Skill 1 and Skill 2 gain Coin Power +(3/# of Coins, minimum 1) and deal +(30/# of Coins)% damage on Critical Hit\n- When at 7+ Poise, upon Skill use, Skill 3 deals +(30/# of Coins)% more damage and deals +(50/# of Coins)% damage on Critical Hit"
+  },
+  "remembrance": {
+    "key": "remembrance",
+    "name": "Remembrance",
+    "image": "/Images/status-effect/Remembrance.webp",
+    "color": "var(--Buff-color)",
+    "description": "- When at 5+ Poise, upon Skill use, Skill 1 and Skill 2 gain Coin Power +(3/# of Coins, minimum 1) and deal +(30/# of Coins)% damage on Critical Hit\n- When at 7+ Poise, upon Skill use, Skill 3 deals +(30/# of Coins)% more damage and deals +(50/# of Coins)% damage on Critical Hit"
+  },
+  "borrowed_time": {
+    "key": "borrowed_time",
+    "name": "Borrowed Time",
+    "image": "/Images/status-effect/Borrowed_Time.webp",
+    "color": "var(--Buff-color)",
+    "description": "Turn End at 2+ Count:\n- Gain (Borrowed Time Count - 1) Haste, Clash Power Up, and Fragile next turn\n- If this unit is set to gain more Bind than Haste next turn, the Borrowed Time effect expires at the next Turn Start, and this unit gets Staggered\nTurn End: At 1 Count, gain 2(Borrowed Time Stack - 1) Bind next turn\nTurn End: Gain 1 Stack, lose 1 Count"
+  },
+  "erudition": {
+    "key": "erudition",
+    "name": "Erudition",
+    "image": "/Images/status-effect/Erudition.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Value: 6\n- When Discarding a Skill, gain (Erudition x 1.5)% of this unit's max HP as Shield (once per turn)\n- If this unit Discards a Skill at 2+ Insight, gain 1 Clash Power (once per turn)\n- Reduced by 1 when taking HP damage after getting hit by an enemy's Attack Skill\n- Expires when Staggered"
+  },
+  "tremor_-_clockwinding": {
+    "key": "tremor_-_clockwinding",
+    "name": "Tremor - Clockwinding",
+    "image": "/Images/status-effect/Tremor_-_Clockwinding.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Speed +2\n- Consume Tremor Count on self to inflict 1 more Tremor Potency or Count when inflicting them with this unit's Skill or Coin Effects\n- When Hit by Skills that trigger Tremor Burst, raise the Stagger Threshold by the effect's Potency\n- Turn End:reduce the Count by 1\n(Interacts the same way as normal Tremor does to effects that raises or reduces Tremor Potency/Count)"
+  },
+  "blood-tinged_scissorblades": {
+    "key": "blood-tinged_scissorblades",
+    "name": "Blood-tinged Scissorblades",
+    "image": "/Images/status-effect/Blood-tinged_Scissorblades.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Value: 10\n- Stage 1 Blood-tinged Scissorblades\n- At 10+ Blood-tinged Scissorblades, converts to Blood-tinged Scissorblades II.\n- At 20+ Blood-tinged Scissorblades, converts to Blood-tinged Scissorblades III.\n- Reverts to previous stage when the Stack drops below the requirements.\n- Blood-tinged Scissorblades does not drop below 1.\n- At Blood-tinged Scissorblades II, gain 1 Offense Level Up and 1 Defense Level Down based on the Stack (1/5 Stack)\n- At Blood-tinged Scissorblades III, gain 1 Offense Level Up on the Stack (1/5 Stack)"
+  },
+  "gaze_of_contempt": {
+    "key": "gaze_of_contempt",
+    "name": "Gaze of Contempt",
+    "image": "/Images/status-effect/Gaze_of_Contempt.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Value: 7\n- Deal +7% more damage for every Gaze of Contempt\n- Turn End: this effect expires\n- Turn End: At 7 Gaze of Contempt value, convert it to Contempt of the Gaze next turn instead of expiring"
+  },
+  "coffin": {
+    "key": "coffin",
+    "name": "Coffin",
+    "image": "/Images/status-effect/Coffin.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Value: 10\n- At Turn End:\n- Gain 2 Damage Up next turn for every 3 Value (max 6)\n- Raise minimum Speed by 1 next turn for every 4 Value (max 2)\n- Gain 1 Clash Power Up next turn for every 5 Value (max 2)"
+  },
+  "wild_hunt": {
+    "key": "wild_hunt",
+    "name": "Wild Hunt",
+    "image": "/Images/status-effect/Wild_Hunt.webp",
+    "color": "var(--Buff-color)",
+    "description": "- In the same turn this unit gained Wild Hunt for the first time, always have 1 remaining HP; \"revive\" (heal 50% HP and reset SP to 0) this unit at Turn End.\n- If this unit is killed by an attack, gain 1 E.G.O resource for the least-owned E.G.O resource\n- If this unit is killed by an attack, inflict 3 Sinking against the last attacker\n- Dies at the end of the same turn this unit was revived in"
+  },
+  "dullahan": {
+    "key": "dullahan",
+    "name": "Dullahan",
+    "image": "/Images/status-effect/Dullahan.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Value: 3\n- Gain 3 Offense Level\n- Lose 3 Defense Level\n- Raises Min & Max Speed values by 1\n- Turn End: Gain 1 Dullahan next turn (At -25 SP or less, however, completely lose Dullahan)\n- Turn End: If this unit has Dullahan, lose (15 - (Coffin/2)) SP. (min 10)"
+  },
+  "hardblood": {
+    "key": "hardblood",
+    "name": "Hardblood",
+    "image": "/Images/status-effect/Hardblood.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 10\n- Stage 1 Hardblood\n- At 10+ Hardblood, converts to Hardblood II.\n- At 20+ Hardblood, converts to Hardblood III.\n- Reverts to the previous Stage when the Stack drops below the requirements.\n- Hardblood does not drop below 1.\n- Raise Min & Max Speed values by 1 for every 10 Hardblood\n- At Hardblood II, gain 1 Offense Level Up based on the Stack (1 / 5 Stack)\n- At Hardblood III, gain 1 Offense Level Up and 1 Defense Level Up based on the Stack (1 / 5 Stack)"
+  },
+  "shimmering【bloodfiend】": {
+    "key": "shimmering【bloodfiend】",
+    "name": "Shimmering [BloodFiend]",
+    "image": "/Images/status-effect/Shmimering_BloodFiend.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 50\n- As long as this effect exists, all Bleed damage taken by the Shield HP is converted to Bloodfeast.\n- Gain Shield HP equal to the Stack at the moment of its application\n- Expires at Turn End"
+  },
+  "blooming_thorn": {
+    "key": "blooming_thorn",
+    "name": "Blooming Thorn",
+    "image": "/Images/status-effect/Blooming_Thorn.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Value: 10\n- Stage 1 Blooming Thorn\n- Gain 1 Defense Level for every 2 Stack (max 5)\n- When hit, inflict 1 Bleed against the attacker and lose 1 Stack\n- [The Princess of La Manchaland Rodion Only]\n· At max Stack, convert to the next Stage of this effect.\n· (10+ Stack: Blooming Thorn II)\n· (20+ Stack: Blooming Thorn III)\n· Inflict +(Stage - 1) more Bleed and Rupture Potency using this unit's Base Attack Skill Coin effects.\n· Reverts to previous Stage when the Stack drops below the requirements."
+  },
+  "festive_fever": {
+    "key": "festive_fever",
+    "name": "Festive Fever",
+    "image": "/Images/status-effect/Festive_Fever.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Value: 10\nExpires at Turn End\n- Against targets that have Bleed: deal +1.5% more damage for every Stack\n- Skills that consume or gain Bloodfeast deal +3% more damage for every Stack instead"
+  },
+  "bloodied_hand": {
+    "key": "bloodied_hand",
+    "name": "Bloodied Hand",
+    "image": "/Images/status-effect/Bloodied_Hand.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Value: 10\n- Stage 1 Bloodied Hand\n- At 10+ Bloodied Hand, converts to Bloodied Hand II.\n- At 20+ Bloodied Hand, converts to Bloodied Hand III.\n- Reverts to previous Stage when the Stack drops below the requirements.\n- At Bloodied Hand II, gain 1 Offense Level Up based on the Stack (1/10 Stack)\n- At Bloodied Hand III, gain 1 Offense Level Up based on the Stack (1/10 Stack), and additionally inflict 1 Rupture and 1 Bleed On Hit with Base Skills"
+  },
+  "ailing_heart": {
+    "key": "ailing_heart",
+    "name": "Ailing Heart",
+    "image": "/Images/status-effect/Ailing_Heart.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Value: 10\n- Turn End: gain 1 Stack\n- Turn Start: gain 1 Defense Level Up for every 3 Stack\n- At 50%- HP, gain 1 Defense Level for every 3 Stack\n- At 40%- HP, On Hit with Base Skills, heal (Stack x 5)% of damage dealt On Hit as HP (min 1; rounded down; heal up to 30 HP per Skill)"
+  },
+  "concentration_-_sniper": {
+    "key": "concentration_-_sniper",
+    "name": "Concentration - Sniper",
+    "image": "/Images/status-effect/Concentration-Sniper.webp",
+    "color": "var(--Buff-color)",
+    "description": ""
+  },
+  "nebulizer_β": {
+    "key": "nebulizer_β",
+    "name": "Nebulizer β",
+    "image": "/Images/status-effect/Nebulizer_β.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 5\n- This effect persists throughout the Encounter\n- When activating Pride A-Reson.: on Combat Start, apply 3 Poise and +3 Poise Count on self and (Stack) allies (prioritizes allies that gain or use Poise or Poise Count; among them, prioritize allies with the least Poise Potency)"
+  },
+  "nebulizer_α": {
+    "key": "nebulizer_α",
+    "name": "Nebulizer α",
+    "image": "/Images/status-effect/Nebulizer_α.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 5\n- This effect persists throughout the Encounter\n- Combat Start: on all allies, including this unit, apply 1 Poise Potency and +1 Poise Count"
+  },
+  "deep_inhale": {
+    "key": "deep_inhale",
+    "name": "Deep Inhale",
+    "image": "/Images/status-effect/Deep_Inhale.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 20\n- On Crit: at 20+ Poise Potency and 5+ Poise Count, consume (Poise Potency on self / 5) Poise Potency to deal +(Poise Potency consumed x 4)% more Damage on Critical Hit and lose 1 Stack"
+  },
+  "strider【mao】": {
+    "key": "strider【mao】",
+    "name": "Strider [Mao]",
+    "image": "/Images/status-effect/Strider_-Mao-.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 3\n- Turn End: gain 5 Haste next turn\n- Reduced by 1 at Turn End"
+  },
+  "strider【wu】": {
+    "key": "strider【wu】",
+    "name": "Strider [Wu]",
+    "image": "/Images/status-effect/Strider_-Wu-.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 3\n- Turn End: gain 2 Haste and (Stack x 2) Aggro next turn\n- Before Attack: inflict (Stack) Tremor Potency against the main target (max 6 per turn)\n- Lose 1 Stack at Turn End"
+  },
+  "linebreaker": {
+    "key": "linebreaker",
+    "name": "Linebreaker",
+    "image": "/Images/status-effect/Linebreaker.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 5\n- Turn Start: gain (Stack x 10) Shield for this turn\n- At max Stack, gain 2 Final Power\n- When hit: if this unit took 100+ damage from a single Skill, gain Protection after Skill End (2 times per turn; includes damage against Shield HP; does not count damage from Keywords)"
+  },
+  "commanding_cry": {
+    "key": "commanding_cry",
+    "name": "Commanding Cry",
+    "image": "/Images/status-effect/Commanding_Cry.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Gain 1 Clash Power and 2 Defense Level\n- Expires at Turn End"
+  },
+  "cumulus_wall": {
+    "key": "cumulus_wall",
+    "name": "Cumulus Wall",
+    "image": "/Images/status-effect/Cumulus_Wall.webp",
+    "color": "var(--Buff-color)",
+    "description": "Max Stack: 1\nDefense Skill Final Power +1\nThis effect expires at Turn End or Attack End of the following: 'Rules of the Backstreets'"
+  },
+  "battle_ready": {
+    "key": "battle_ready",
+    "name": "Battle Ready",
+    "image": "/Images/status-effect/Battle_Ready.webp",
+    "color": "var(--Buff-color)",
+    "description": "Max Value: 1\nBleed Potency and Count inflicted using this unit's Skill or Coin effects: +1\nGain 1 Slash Power Up and 3 Slash DMG Up for the duration of this Encounter"
+  },
+  "dark_cloud_blade": {
+    "key": "dark_cloud_blade",
+    "name": "Dark Cloud Blade",
+    "image": "/Images/status-effect/Dark_Cloud_Blade.webp",
+    "color": "var(--Buff-color)",
+    "description": "Max Stack: 1\nGain 1 Slash Power\nInflict 1 Bleed On Hit with Slash Skills"
+  },
+  "serpent_arm": {
+    "key": "serpent_arm",
+    "name": "Serpent Arm",
+    "image": "/Images/status-effect/Serpent_Arm.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 3\n- Turn End: gain 3 Poise and +2 Poise count next turn\n- On Base Attack Skill use, if target has Rupture, gain 5 Poise\n- Turn End: lose 1 Stack"
+  },
+  "assist_[援]": {
+    "key": "assist_[援]",
+    "name": "Assist [援]",
+    "image": "/Images/status-effect/Assist_-援-.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 1\n- If target has 5+ negative effects, Clash Power +1, deal +10% damage"
+  },
+  "overheat": {
+    "key": "overheat",
+    "name": "Overheat",
+    "image": "/Images/status-effect/Overheat.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Loses this effect when this unit gains Savage Tigermark Round\n- Min & Max Speed +2\n- Base Attack Skills Lose (cumulative number of Tigermark Rounds & Savage Tigermark Rounds spent / 2) Clash Power (max 10); however, gain the following effects(cumulative):\n· Cumulative Rounds spent: X\n· 8+ Rounds spent: Gain 1 Protection for every 10% missing HP on self at Turn Start (max 5)\n· 14+ Rounds spent: On Clash Lose, Unbreakable Coins of this unit's Base Attack Skills deal +(75 + missing HP percentage on self)% damage (max 150%)\n· 20+ Rounds spent: Deal +(HP percentage difference)% damage against targets with higher remaining HP percentage than this unit (max 50%; except E.G.O Skills)"
+  },
+  "unrelenting_spirit_[剛氣]": {
+    "key": "unrelenting_spirit_[剛氣]",
+    "name": "Unrelenting Spirit [剛氣]",
+    "image": "/Images/status-effect/Unrelenting_Spirit_-剛氣-.webp",
+    "color": "var(--Buff-color)",
+    "description": ""
+  },
+  "unrelenting_spirit_-_shin_[剛氣-心]": {
+    "key": "unrelenting_spirit_-_shin_[剛氣-心]",
+    "name": "Unrelenting Spirit - Shin [剛氣-心]",
+    "image": "/Images/status-effect/Unrelenting_Spirit_-_Shin_-剛氣-心-.webp",
+    "color": "var(--Buff-color)",
+    "description": ""
+  },
+  "scorch_propellant_ammo": {
+    "key": "scorch_propellant_ammo",
+    "name": "Scorch Propellant Ammo",
+    "image": "/Images/status-effect/Scorch_Propellant_Ammo.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Unique Ammo\n- Max Stack : 15\n- Consumed when using certain Skills\n- Counts as Ammo"
+  },
+  "fell_bullet": {
+    "key": "fell_bullet",
+    "name": "Fell Bullet",
+    "image": "/Images/status-effect/Fell_Bullet.webp",
+    "color": "var(--Buff-color)",
+    "description": "Max Stack: 1\n+3% damage on Critical Hit for every Torn Memory (max 18%)\nOn Hit, inflict 1 Bleed (3 per turn)\nOn Kill, gain 3 Poise and +2 Poise Count (2 times per turn)\nExpires at Turn End"
+  },
+  "deep_tears": {
+    "key": "deep_tears",
+    "name": "Deep Tears",
+    "image": "/Images/status-effect/Deep_Tears.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Unique Charge (Potency Fixed)\n- Resource used by certain Skills for additional effects\n- Max Stack: 20"
+  },
+  "piercing_sword": {
+    "key": "piercing_sword",
+    "name": "Piercing Sword",
+    "image": "/Images/status-effect/Piercing_Sword.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Turn Start: gain 1 Offense Level Up for every Stack (max 5)\n- Turn Start: -(Stack x 0.15) Aggro to this unit's Skill Slots on the Dashboard (max 0.75)\n- Max Stack: 5\n- Expires at Turn End"
+  },
+  "protecting_sword": {
+    "key": "protecting_sword",
+    "name": "Protecting Sword",
+    "image": "/Images/status-effect/Protecting_Sword.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Turn Start: gain 1 Defense Level Up for every Stack (max 5)\n- Turn Start: +(Stack x 3) Aggro to the leftmost Skill Slot on the Dashboard (max 15)\n- Max Stack: 5\n- Expires at Turn End"
+  },
+  "tear-sharpened": {
+    "key": "tear-sharpened",
+    "name": "Tear-sharpened",
+    "image": "/Images/status-effect/Tear-sharpened.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Turn Start: gain 5 Deep Tears\n· At 3 Stack, gain additional 5 Deep Tears\n- Turn End: lose (Stack x 15) SP\n- Base Attack Skills deal +(Stack x 10)% damage (max 30%)\n- If this unit has Blessing, gain Clash Power Up by the effect's Stack at Turn Start\n- If this unit has Despair, gain Pierce Power Up by the effect's Stack at Turn Start\n- Max Stack: 3"
+  },
+  "blessing": {
+    "key": "blessing",
+    "name": "Blessing",
+    "image": "/Images/status-effect/Blessing.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Turn Start: gain 1 Protecting Sword for every 8 SP (max 5)\n- When Clash ends, inflict 2 Sinking (once per turn)\n- When hit, inflict 2 Sinking on the attacker (once per turn)\n- For every 20 SP, inflict +1 more Sinking Potency with above effects (max 2)\n- Replace this unit's Base Skills with Plus Coin Skills"
+  },
+  "despair": {
+    "key": "despair",
+    "name": "Despair",
+    "image": "/Images/status-effect/Despair.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Turn Start: gain 1 Piercing Sword for every -8 SP (max 5)\n- When Clash ends, inflict +1 Sinking Count (once per turn)\n- On Hit with the first Coin of a Base Attack Skill, inflict +1 Sinking Count (once per turn)\n- For every -20 SP, inflict +1 more Sinking Count with above effects (max 2)\n- Replace this unit's Base Skills with Minus Coin Skills"
+  },
+  "love/hate": {
+    "key": "love/hate",
+    "name": "Love-Hate",
+    "image": "/Images/status-effect/Love-Hate.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Count: 20\n- Unique Charge\n- Resource used by certain Skills for additional effects. Its Count can go up to 20. Count lowers by 1 at the end of each turn.\n(Interacts the same way as normal Charge does to effects that raise or reduce Charge Potency/Count)"
+  },
+  "magical_girl's_chant": {
+    "key": "magical_girl's_chant",
+    "name": "Magical Girl's Chant",
+    "image": "/Images/status-effect/Magical_Girl's_Chant.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 2\n- When this unit gains this effect, gain 1 Attack Power Up and 1 Damage Up\n- This unit's Attack Skills that gain or consume Charge Count gain Final Power +1 and deal +10% damage\n- Reduced by 1 at Turn End"
+  },
+  "here_comes_magical_girl!": {
+    "key": "here_comes_magical_girl!",
+    "name": "Here Comes Magical Girl!",
+    "image": "/Images/status-effect/Here_Comes_Magical_Girl!.webp",
+    "color": "var(--Buff-color)",
+    "description": "- For this turn, this unit uses Plus Coin Attack Skills\n- Base Attack Skills deal +3% damage for every Love/Hate on self (max 15%)"
+  },
+  "magical_arcana": {
+    "key": "magical_arcana",
+    "name": "Magical Arcana",
+    "image": "/Images/status-effect/Magical_Arcana.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 3\n- Base Attack Skills deal +(Stack x 5)% damage\n- Turn End: At 3 Stack and with -25 or higher SP, change SP to -25"
+  },
+  "violent_collections": {
+    "key": "violent_collections",
+    "name": "Violent Collections",
+    "image": "/Images/status-effect/Violent_Collections.webp",
+    "color": "var(--Buff-color)",
+    "description": "- When this unit has Haste, gain +1 more Tremor Count from its Base Skills\n- If this unit's Speed is faster than the target's, deal +(Speed difference x 3)% damage (max 15%)"
+  },
+  "accumulated_past": {
+    "key": "accumulated_past",
+    "name": "Accumulated Past",
+    "image": "/Images/status-effect/Accumulated_Past.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 12\n- Turn Start: gain 1 Clash Power Up and 1 Offense Level Up for every 3 Stack"
+  },
+  "leash-holder_of_all_heishou": {
+    "key": "leash-holder_of_all_heishou",
+    "name": "Leash Holder of All Heishou",
+    "image": "/Images/status-effect/Leash-holder_of_All_Heishou.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 11\n- Gain the following effects based on Stack:\n· For every 1 Stack, gain 1 Max Speed (max 5) and deal 1% more damage with Skills\n· For every 2 Stack, gain 1 Min Speed (max 2) and 1 Defense Level Up (max 5)\n· For every 3 Stack, gain 1 Offense Level Up (max 3)\n· At 5+ Stack, gain 1 Damage Up and apply 1 Offense Level Up to all Heishou Pack Identities"
+  },
+  "life_from_death_[死中求活]": {
+    "key": "life_from_death_[死中求活]",
+    "name": "Life from Death [死中求活]",
+    "image": "/Images/status-effect/Life_from_Death_-死中求活-.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 5\n- Turn Start: activate the following\n· Gain 1 Offense Level Up for every 1 Stack (max 5)\n· Gain 1 Damage Up for every 2 Stack (max 2)\n· Gain 1 Attack Power Up at 3+ Stack"
+  },
+  "heishou_bolus_contamination_[黑獸丸染]": {
+    "key": "heishou_bolus_contamination_[黑獸丸染]",
+    "name": "Heishou Bolus Contamination [黑獸丸染]",
+    "image": "/Images/status-effect/Heishou_Bolus_Contamination_-黑獸丸染-.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 11\n- Empowers The Lord of Hongyuan Hong Lu based on which Heishou he activated combo with\n- The Heishou Bolus Contamination effects can stack with each other:\n· Heishou - Mao Adept Faust: take -5% damage from Skills\n· Heishou - Mao Ryōshū: if this unit's Speed is faster than the target's, deal +5% damage\n· Heishou - Mao Outis: inflict +1 Rupture Count On Hit with Unopposed Attacks (once per turn)\n· Heishou - Si Rodion: inflict 1 Rupture On Critical Hit (3 times per turn)\n· Heishou - Si Gregor: Gain +1 Poise Count when dealing Rupture damage (once per turn)\n· Heishou - Wu Adept Yi Sang: trigger Tremor Burst once on Final Coin (once per turn)\n· Heishou - You Adept Heathcliff: deal 5% of Gluttony damage dealt as Wrath damage\n· Heishou - You Sinclair: inflict 1 Burn when inflicting Rupture (3 times per turn)\n· Heishou - Wei Don Quixote: inflict 1 Sinking when inflicting Rupture (3 times per turn)"
+  },
+  "tarnished_blood": {
+    "key": "tarnished_blood",
+    "name": "Tarnished Blood",
+    "image": "/Images/status-effect/Tarnished_Blood.webp",
+    "color": "var(--Buff-color)",
+    "description": "Max Stack: 5\n- Turn End: take 20% HP damage per Stack (cannot be Staggered by this effect)\n- Gain 1 Stack at Turn End\n- Expires upon death or Retreat"
+  },
+  "unrelenting_storm": {
+    "key": "unrelenting_storm",
+    "name": "Unrelenting Storm",
+    "image": "/Images/status-effect/Unrelenting_Storm.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Number of times this unit activated combo with The Lord of Hongyuan Hong Lu Identity\n- Max Stack: 2\n- Turn Start: gain 1 Offense Level Up and 1 Defense Level Up for every Stack"
+  },
+  "flower-burying_pin_[埋花針]": {
+    "key": "flower-burying_pin_[埋花針]",
+    "name": "Flower Burying Pin [埋花針]",
+    "image": "/Images/status-effect/Flower-burying_Pin_-埋花針-.webp",
+    "color": "var(--Buff-color)",
+    "description": "Max Stack: 20\n- Gain 1 Stack at Turn End or when hit\n- Gain 1 Offense Level per 5 Stack\n- If the unit that has this effect dies, inflict Gluttony damage equal to Stack and inflict 5 Rupture\n- Expires upon death or Retreat"
+  },
+  "denial_[不許]": {
+    "key": "denial_[不許]",
+    "name": "Denial [不許]",
+    "image": "/Images/status-effect/Denial_-不許-.webp",
+    "color": "var(--Buff-color)",
+    "description": "When this unit takes damage that brings their HP down to 0: this unit's HP does not drop below 1; recover from Stagger due to damage.\nIf the above effect activated, dies at Turn End.\nExpires upon death, Retreat, or Turn End"
+  },
+  "flower-burying_wedge_[埋花櫼]": {
+    "key": "flower-burying_wedge_[埋花櫼]",
+    "name": "Flower Burying Wedge [埋花櫼]",
+    "image": "/Images/status-effect/Flower-burying_Wedge_-埋花櫼-.webp",
+    "color": "var(--Buff-color)",
+    "description": "Base Stack: 0\nMax Stack: 3\n- All Coins on this unit's leftmost Base Attack Skill on the Dashboard become Unbreakable Coins\n- Turn Start: gain 2 Offense Level Up and 2 Defense Level Down\n- Turn Start: at 3+ Stack, gain 1 Tarnished Blood (once per Encounter)\n- Turn End: gain 1 Stack\n※ Cannot raise the effect's Stack by any other means than the ones above\n- Expires upon defeat or Retreat\n- When this unit takes damage that brings their HP down to 0: instead of letting this unit's HP drop below 1, or becoming Staggered or Defeated, use the 'Tears of the Tarnished Blood - The End' Skill at the very end of that turn. Remove the Flower-burying Wedge when the Skill ends.\nWhen this unit takes damage that brings their HP down to 1 at Turn End, use 'Tears of the Tarnished Blood - The End' Skill based on this unit's Speed next turn"
+  },
+  "man_in_scabbard": {
+    "key": "man_in_scabbard",
+    "name": "Man in Scabbard",
+    "image": "/Images/status-effect/Man_in_Scabbard.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 40\n- For every (Stack / 8), gain Aggro (max 5; rounded down; affects the leftmost Skill Slot on the Dashboard)\n- For every (Stack / 20), gain Protection (max 2; rounded down)\n- Gain 10 Stacks at Turn End\n※ Can gain up to 20 per turn"
+  },
+  "hardened_shell-barrier": {
+    "key": "hardened_shell-barrier",
+    "name": "Hardened Shell-Barrier",
+    "image": "/Images/status-effect/Hardened_Shell-Barrier.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Turn Start: gain (Stack / 3) Defense Level Up (max 3; rounded down)\n- Immediately before taking a hit from an enemy, consume half of Hardened Shell-Barrier and gain Protection equal to the Stack consumed (once per turn; rounded up)\n- Turn End: lose 3 Stack\n- Max Stack: 10"
+  },
+  "thunderer": {
+    "key": "thunderer",
+    "name": "Thunderer",
+    "image": "/Images/status-effect/Thunderer.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Turn Start: gain 1 Offense Level Up and 1 Defense Level Up\n- Turn End: lose 1 Stack\n- Max Stack: 5"
+  },
+  "higher_thunderer": {
+    "key": "higher_thunderer",
+    "name": "Higher Thunderer",
+    "image": "/Images/status-effect/Higher_Thunderer.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Turn Start: gain 2 Offense Level Up and 2 Defense Level Up\n- Turn End: lose 1 Stack\n- Max Stack: 5"
+  },
+  "target_aim": {
+    "key": "target_aim",
+    "name": "Target Aim",
+    "image": "/Images/status-effect/Target_Aim.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 4\n- Expires if this unit does not have Ready to Loose"
+  },
+  "ready_to_loose": {
+    "key": "ready_to_loose",
+    "name": "Ready to Loose",
+    "image": "/Images/status-effect/Ready_to_Loose.webp",
+    "color": "var(--Buff-color)",
+    "description": "- When this unit has this effect, activate the following effects:\n· Converts the leftmost Base Attack Skill on the Dashboard to \"Bow's Glimmer\", then uses it at Combat Start\n· This unit cannot be Staggered from taking damage, Tremor Burst, or raised Stagger Threshold\n· Does not trigger Assist Attack while this unit has this buff\n· Removed if an E.G.O Skill was equipped at Combat Start"
+  },
+  "focused_performance": {
+    "key": "focused_performance",
+    "name": "Focused Performance",
+    "image": "/Images/status-effect/Focused_Performance.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 3\n- <La Manchaland> Identities only; includes Empowered versions\n- Skill 1 and Skill 2 gain Final Power +1; deal +5% damage for every Stack (max 15%)\n- Skill 3 gains Final Power +2; deals +10% damage for every Stack (max 30%)\n- Lose 1 Stack when:\n1) Skill 3 Attack End\n2) If this unit does not have Hardblood Armor at Turn Start"
+  },
+  "hardblood_armor": {
+    "key": "hardblood_armor",
+    "name": "Hardblood Armor",
+    "image": "/Images/status-effect/Hardblood_Armor.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 5\n- If this unit isn't at max HP: after its Skill attack, heal 10% of HP damage dealt (once per turn; max 40 healing)\n- Attack End: If this unit dealt HP damage, lose 1 Stack (once per turn)\n· If Lust Reson. was activated, halve the amount of HP healed, but do not lose any Hardblood Armor Stack"
+  },
+  "bright_[光]": {
+    "key": "bright_[光]",
+    "name": "Bright [光]",
+    "image": "/Images/status-effect/Bright_-光-.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Potency: Base 0, Max 5\n- Count: Base 3, Max 3\n- Turn Start: gain 1 Offense Level Up for every Potency\n- Turn Start: lose 1 Count"
+  },
+  "bloodflame_[血炎]": {
+    "key": "bloodflame_[血炎]",
+    "name": "Bloodflame [血炎]",
+    "image": "/Images/status-effect/Bloodflame_-血炎-.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 3\n- This unit inflicts +1 more Burn and Rupture potency with its Base Skills\n- While this unit has this effect, heal 3 SP upon Staggering or killing an enemy (3 times per turn)\n· If this unit's SP is at max when the above effect activates, gain 1 Offense Level Up and 1 Haste next turn\n- Lose 1 Stack at Turn End"
+  },
+  "battleblood_instinct": {
+    "key": "battleblood_instinct",
+    "name": "Battleblood Instinct",
+    "image": "/Images/status-effect/Battleblood_Instinct.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 20\n- For every Stack, deal +0.75% damage\n- For every 10 Stack, gain 1 Haste next turn"
+  },
+  "burgeoning_of_horns_[發角]": {
+    "key": "burgeoning_of_horns_[發角]",
+    "name": "Burgeoning of Horns [發角]",
+    "image": "/Images/status-effect/Burgeoning_of_Horns_-發角-.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Value: 3\n- This unit's Base Skills inflict +1 more of Rupture and Sinking Potency\n- Turn End: Lose 1 Stack"
+  },
+  "protector's_stance": {
+    "key": "protector's_stance",
+    "name": "Protector's Stance",
+    "image": "/Images/status-effect/Protector's_Stance.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 2\n- Take (Stack x 10)% less damage\n- Turn Start: Gain Shield by Poise on self (max 20)\n- Turn End: Gain 3 Poise and +1 Poise Count; this unit's leftmost Skill Slot gains +5 Aggro next turn\n- Turn End: Lose 1 Stack"
+  },
+  "entangled_life_[羅生]": {
+    "key": "entangled_life_[羅生]",
+    "name": "Entangled Life [羅生]",
+    "image": "/Images/status-effect/Entangled_Life_-羅生-.webp",
+    "color": "var(--Buff-color)",
+    "description": "Max Stack: 999\n- Gain 1 Stack for every HP damage dealt by Ryōshū's Skills\n- Deal +1% damage with Base Skills for every 33 Stack (max 10%)\n'Twisted and entangled beyond measure, bound and woven into a cocoon. Thread. Life. World.'"
+  },
+  "grace_of_the_prescript": {
+    "key": "grace_of_the_prescript",
+    "name": "Grace of the Prescript",
+    "image": "/Images/status-effect/Grace_of_the_Prescript.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Offense Level +1 for every 3 Stacks\n- Max Stack: 9"
+  },
+  "the_udjat_[vanguard]": {
+    "key": "the_udjat_[vanguard]",
+    "name": "The Udjat [Vanguard]",
+    "image": "/Images/status-effect/The_Udjat_-Vanguard-.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 2\n- Min & Max Speed +3\n- Combat Start: gain 1 Protection\n- Gain the following effects during the Combat Phase (once per Skill, 3 times per turn)\n· When this unit is the main target of an Unopposed Attack Skill, halve the chance for the Skill's first Coin to flip Heads\n· Clash Start: In the first Clash, halve the target's chance to flip Heads for all of its Coins\n· For both of the above effects, if the target uses Minus Coins, halve their chance to flip Tails instead\n- Turn End: Reduce 1 Stack"
+  },
+  "unlock": {
+    "key": "unlock",
+    "name": "Unlock",
+    "image": "/Images/status-effect/Unlock.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Gain this effect when over certain Grace of the Prescript Stack\n- Effect stage increases based on Grace of the Prescript Stack\n- Max: Stage 3"
+  },
+  "unlock_-_i": {
+    "key": "unlock_-_i",
+    "name": "Unlock - I",
+    "image": "/Images/status-effect/Unlock.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Defense Level +1\n- Combat End: Heal 5 SP"
+  },
+  "unlock_-_ii": {
+    "key": "unlock_-_ii",
+    "name": "Unlock - II",
+    "image": "/Images/status-effect/Unlock_-_II.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Defense Level +2\n- Combat End: Heal 10 SP"
+  },
+  "unlock_-_iii": {
+    "key": "unlock_-_iii",
+    "name": "Unlock - III",
+    "image": "/Images/status-effect/Unlock_-_III.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Defense Level +3\n- Combat End: Heal 15 SP"
+  },
+  "shin_(心)_-_procuration": {
+    "key": "shin_(心)_-_procuration",
+    "name": "Shin (心) - Procuration",
+    "image": "/Images/status-effect/Shin_(心)_-_Procuration.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Min & Max Speed +2\n- Offense Level +1, Defense Level +1\n- Gain 1 more Poise Potency and Poise Count from Base Skills\n- Deal +(missing HP percentage / 2)% damage with Base Skills (max 40%)\n- Max Stack: 1"
+  },
+  "faith_beyond_question": {
+    "key": "faith_beyond_question",
+    "name": "Faith Beyond Question",
+    "image": "/Images/status-effect/Faith_Beyond_Question.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Min & Max Speed +1\n- Offense Level +2, Defense Level +2\n- Gain 1 more Poise Potency from Base Skills\n- This unit's SP does not drop below -15 from SP loss effects on this unit's Base Attack Skills\n- Max Stack: 1"
+  },
+  "the_middle_-_grudge": {
+    "key": "the_middle_-_grudge",
+    "name": "The Middle - Grudge",
+    "image": "/Images/status-effect/The_Middle_-_Grudge_(Ishmael).webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 15\n- If target has Vengeance Mark, deal +20% damage"
+  },
+  "thermal_blades": {
+    "key": "thermal_blades",
+    "name": "Thermal Blades",
+    "image": "/Images/status-effect/Thermal_Blades.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 2\n- if target hit by Base Skills has Burn, heal 3 SP (2 times per turn )\n- Inflict Burn when inflicting Bleed with certain Skill Coins\n- Turn End: Lose 1 Stack"
+  },
+  "the_middle_styled_augmentation_tattoos": {
+    "key": "the_middle_styled_augmentation_tattoos",
+    "name": "The Middle Styled Augmentation Tattoos",
+    "image": "/Images/status-effect/The_Middle_Styled_Augmentation_Tattoos_(Ishmael).webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 10\n- Final Power +1 for Base Skills for every 5 Stack (max 2)\n- Envy Skills and Blunt Skills deal +5% damage for every Stack (max 50%)"
+  },
+  "hp_healing_boost": {
+    "key": "hp_healing_boost",
+    "name": "HP Healing Boost",
+    "image": "/Images/status-effect/HP_Healing_Boost.webp",
+    "color": "var(--Buff-color)",
+    "description": "Increases HP healing provided by Passive abilities, Skills, and Coin effects by 10% per Count. (Max 5)"
+  },
+  "crit_dmg_up": {
+    "key": "crit_dmg_up",
+    "name": "Crit DMG Up",
+    "image": "/Images/status-effect/Crit_DMG_Up.webp",
+    "color": "var(--Buff-color)",
+    "description": "For this turn: Deal +10% damage on Critical Hit for every Stack"
+  },
+  "guardians_of_the_forest": {
+    "key": "guardians_of_the_forest",
+    "name": "Guardians of the Forest",
+    "image": "/Images/status-effect/Guardians_of_the_Forest.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Before Attack, activate the following effects:\n· Plus Coin Skills heal 4 SP (if already at max SP, gain 2 Offense Level Up next turn)\n· Minus Coin Skills lose 8 SP (this effect cannot reduce the unit's SP below -40)\n· Lose this effect"
+  },
+  "before_the_king_in_binds": {
+    "key": "before_the_king_in_binds",
+    "name": "Before the King in Binds",
+    "image": "/Images/status-effect/Before_the_King_in_Binds.webp",
+    "color": "var(--Buff-color)",
+    "description": "When this unit's attack with 1 Atk Weight hits, inflict 100% of the resulting Coin value on hit as (Affinity/Attack type of the Attack Skill used to hit) damage against 2 other attackable enemies with the least HP."
+  },
+  "indulgence_in_prescripts": {
+    "key": "indulgence_in_prescripts",
+    "name": "Indulgence in Prescripts",
+    "image": "/Images/status-effect/Indulgence_in_Prescripts.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Min & Max Speed +5\n- Apply the following effects to 'Furioso-Replica':\n· On Hit, inflict +1 more Sinking Potency and gain +1 more Poise Potency\n· On Hit, inflict +3 Sinking Count (once per target)\n· Deal +30% damage\n- Expires at Turn End"
+  },
+  "sizzling_wound": {
+    "key": "sizzling_wound",
+    "name": "Sizzling Wound",
+    "image": "/Images/status-effect/Sizzling_Wound.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Offense Level +3, Defense Level -3\n- Take -25% damage from Unopposed Attacks\n- Turn Start: Gain 1 Burn and 1 Bleed\n- Deal +15% damage with Base Attacks Skill's Unbreakable Coins"
+  },
+  "wound-casing_mask": {
+    "key": "wound-casing_mask",
+    "name": "Wound-casing Mask",
+    "image": "/Images/status-effect/Wound-casing_Mask.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Offense Level +2, Defense Level -2\n- Take -10% damage from Unopposed Attacks"
+  },
+  "desire_for_acknowledgement_sated": {
+    "key": "desire_for_acknowledgement_sated",
+    "name": "Desire for Acknowledgement Sated",
+    "image": "/Images/status-effect/Desire_for_Acknowledgement_Sated.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Deal +7.5% damage with Skills marked with the Mark of the Prescript\n- Deal +7.5% damage against The Prescript's Targets"
+  },
+  "shin_(心)_-_fate": {
+    "key": "shin_(心)_-_fate",
+    "name": "Shin (心) - Fate",
+    "image": "/Images/status-effect/Shin_(心)_-_Fate.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Min & Max Speed +1\n- Gain +1 more Poise Potency and Count from Base Skills\nIf this unit's SP is higher than the target's, deal +1% damage for every 3 SP difference (max 15%; Non-SP Units are considered to be at 0 SP)"
+  },
+  "loyalty_pheromone": {
+    "key": "loyalty_pheromone",
+    "name": "Loyalty Pheromone",
+    "image": "/Images/status-effect/Loyalty_Pheromone.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 3\n- Gain the following effects next turn based on Stack at Turn End:\n1+ Stack: 1 Protection\n2+ Stack: 1 Haste\n3 Stack: 1 Clash Power Up"
+  },
+  "high-voltage_exoskeleton": {
+    "key": "high-voltage_exoskeleton",
+    "name": "High-voltage Exoskeleton",
+    "image": "/Images/status-effect/High-voltage_Exoskeleton.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Gain (Stack x 5) Shield\n- If this unit loses (Stack x 5) Shield, lose 1 High-voltage Exoskeleton Stack\n- Turn End: Gain Charge Count equal to High-voltage Exoskeleton; both High-voltage Exoskeleton and Shield gained from its effect expire\n- Max Stack: 20"
+  },
+  "self-charge": {
+    "key": "self-charge",
+    "name": "Self-charge",
+    "image": "/Images/status-effect/Self-charge.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Final Power +2\n- Gain Charge Count equal to Stack lost\n- Lose Stack at:\n· Attack End of Skills that hit this unit (lose 1 Stack)\n· Attack End (lose 3 Stack)\n· Turn End (lose 5 Stack)\n- Max Stack: 20\n- This unit's HP cannot drop below 1 before this effect expires"
+  },
+  "when_boring_a_20-inch_hole_with_a_lance...": {
+    "key": "when_boring_a_20-inch_hole_with_a_lance...",
+    "name": "When boring a 20-inch hole with a lance...",
+    "image": "/Images/status-effect/When_boring_a_20-inch_hole_with_a_lance....webp",
+    "color": "var(--Buff-color)",
+    "description": "- This coin deals Pierce damage\n- This Coin deals +15% damage\n- On Hit without Cracking, inflict 1 Pierce Fragility until next turn (2 times per turn)"
+  },
+  "when_caving_in_the_back_of_the_skull_with_a_hammer...": {
+    "key": "when_caving_in_the_back_of_the_skull_with_a_hammer...",
+    "name": "When caving in the back of the skull with a hammer...",
+    "image": "/Images/status-effect/When_caving_in_the_back_of_the_skull_with_a_hammer....webp",
+    "color": "var(--Buff-color)",
+    "description": "- This coin deals Blunt damage\n- This Coin deals +5% damage\n- On Hit without Cracking, raise target's Stagger Threshold by 3"
+  },
+  "when_cleaving_through_the_shoulder_and_the_skull_with_a_bastard_sword...": {
+    "key": "when_cleaving_through_the_shoulder_and_the_skull_with_a_bastard_sword...",
+    "name": "When cleaving through the shoulder and the skull with a bastard sword...",
+    "image": "/Images/status-effect/When_cleaving_through_the_shoulder_and_the_skull_with_a_bastard_sword....webp",
+    "color": "var(--Buff-color)",
+    "description": "- This coin deals Slash damage\n- This Coin deals +5% damage\n- On Hit without Cracking, gain 1 Offense Level Up next turn (2 times per turn)"
+  },
+  "when_hacking_through_the_ribs_with_a_hatchet...": {
+    "key": "when_hacking_through_the_ribs_with_a_hatchet...",
+    "name": "When hacking through the ribs with a hatchet...",
+    "image": "/Images/status-effect/When_hacking_through_the_ribs_with_a_hatchet....webp",
+    "color": "var(--Buff-color)",
+    "description": "- This coin deals Blunt damage\n- On Hit without Cracking, gain 2 Poise"
+  },
+  "when_lacerating_through_space_itself_with_a_scythe,_like_a_certain_someone...": {
+    "key": "when_lacerating_through_space_itself_with_a_scythe,_like_a_certain_someone...",
+    "name": "When lacerating through space itself with a scythe, like a certain someone...",
+    "image": "/Images/status-effect/When_lacerating_through_space_itself_with_a_scythe,_like_a_certain_someone....webp",
+    "color": "var(--Buff-color)",
+    "description": "- This coin deals Slash damage\n- This Coin deals +30% damage\n- On Hit without Cracking, it hits a guaranteed Crit"
+  },
+  "when_penetrating_the_lungs_with_a_stiletto...": {
+    "key": "when_penetrating_the_lungs_with_a_stiletto...",
+    "name": "When penetrating the lungs with a stiletto...",
+    "image": "/Images/status-effect/When_penetrating_the_lungs_with_a_stiletto....webp",
+    "color": "var(--Buff-color)",
+    "description": "- This coin deals Pierce damage\n- On Hit without Cracking, inflict 2 Sinking"
+  },
+  "when_punching_10_or_more_holes_in_the_torso_with_a_rapier...": {
+    "key": "when_punching_10_or_more_holes_in_the_torso_with_a_rapier...",
+    "name": "When punching 10 or more holes in the torso with a rapier...",
+    "image": "/Images/status-effect/When_punching_10_or_more_holes_in_the_torso_with_a_rapier....webp",
+    "color": "var(--Buff-color)",
+    "description": "- This coin deals Pierce damage\n- This Coin deals +5% damage\n- On Hit without Cracking, inflict 1 Defense Level Down next turn (2 times per turn)"
+  },
+  "when_rending_the_body_with_a_great_sword...": {
+    "key": "when_rending_the_body_with_a_great_sword...",
+    "name": "When rending the body with a greatsword...",
+    "image": "/Images/status-effect/When_rending_the_body_with_a_greatsword....webp",
+    "color": "var(--Buff-color)",
+    "description": "- This coin deals Slash damage\n- This Coin deals +15% damage\n- On Hit without Cracking, inflict 1 Slash Fragility until next turn (2 times per turn)"
+  },
+  "when_ripping_the_flesh_to_ten_thousand_strips_with_a_whip...": {
+    "key": "when_ripping_the_flesh_to_ten_thousand_strips_with_a_whip...",
+    "name": "When ripping the flesh to ten thousand strips with a whip...",
+    "image": "/Images/status-effect/When_ripping_the_flesh_to_ten_thousand_strips_with_a_whip....webp",
+    "color": "var(--Buff-color)",
+    "description": "This coin deals Blunt damage\n- This Coin deals +15% damage\n- On Hit without Cracking, inflict 1 Blunt Fragility until next turn (2 times per turn)"
+  },
+  "artwork:_fascia": {
+    "key": "artwork:_fascia",
+    "name": "Artwork: Fascia",
+    "image": "/Images/status-effect/Artwork_-_Fascia.webp",
+    "color": "var(--Buff-color)",
+    "description": "Apply the following effects to this unit's Base Attack Skills and Clashable Counter Skill based on Corpus Ingredient Potency:\n- 1+: Base Power +1\n- 2+: If the enemy has Bleed or 'Unique Bleed', deal +10% damage\n- 3+: Inflict +1 more Bleed Potency and Count\n- 4+: Base Power +1"
+  },
+  "artwork:_tibia": {
+    "key": "artwork:_tibia",
+    "name": "Artwork: Tibia",
+    "image": "/Images/status-effect/Artwork_-_Tibia.webp",
+    "color": "var(--Buff-color)",
+    "description": "Apply the following effects to this unit's Base Attack Skills and Clashable Counter Skill based on Corpus Ingredient Potency:\n- 1+: Base Power +1\n- 2+: If the enemy has Bleed or 'Unique Bleed', deal +10% damage\n- 3+: Inflict +1 more Bleed Potency and Count\n- 4+: Base Power +1\n- 5+: Base Power +1"
+  },
+  "corpus_ingredient": {
+    "key": "corpus_ingredient",
+    "name": "Corpus Ingredient",
+    "image": "/Images/status-effect/Corpus_Ingredient.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Count: 20\n- Unique Charge\n- Interacts the same way as normal Charge does to effects that raise or reduce Charge Potency and Count\n- Turn End: Lose 1 Count"
+  },
+  "iron_maiden": {
+    "key": "iron_maiden",
+    "name": "Iron Maiden",
+    "image": "/Images/status-effect/Iron_Maiden.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Gain +4 Aggro to the leftmost Slot\n- Turn Start: Gain 1 Protection, 5 Defense Level Up, and Shield HP equal to 5% of this unit's current HP\n- When hit by the last Coin of an attacker, deal Pierce damage equal to 20% of the said Coin's damage and inflict +2 Bleed Count (max once per Skill, 3 times per turn. Max damage per turn: 60)"
+  },
+  "somatic_frisson-inspiring_melody": {
+    "key": "somatic_frisson-inspiring_melody",
+    "name": "Somatic Frisson-inspiring Melody",
+    "image": "/Images/status-effect/Somatic_Frisson-inspiring_Melody.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Min & Max Speed +1\n- Base Attack Skills gain Clash Power +1 and deal +10% damage"
+  },
+  "the_self_unbound_-_flow_state": {
+    "key": "the_self_unbound_-_flow_state",
+    "name": "The Self Unbound - Flow State",
+    "image": "/Images/status-effect/The_Self_Unbound_-_Flow_State.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Min & Max Speed +2\n- Gain a new set of Base Skills\n- Deal +20% damage with Base Attack Skills to enemies whose Speed is slower than this unit"
+  },
+  "petals": {
+    "key": "petals",
+    "name": "Petals",
+    "image": "/Images/status-effect/Petals.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 30\n- Offense Level +1 for every 10 Stack\n- Can be gained up to 15 Stacks per turn"
+  },
+  "moonlit_azure_blade": {
+    "key": "moonlit_azure_blade",
+    "name": "Moonlit Azure Blade",
+    "image": "/Images/status-effect/Moonlit_Azure_Blade.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 20\n- Turn Start: Gain 2 Shield for every Stack\n- Deal +1% Damage on Critical Hit for every Stack"
+  },
+  "power_up": {
+    "key": "power_up",
+    "name": "Power Up",
+    "image": "/Images/status-effect/Power_Up.webp",
+    "color": "var(--Buff-color)",
+    "description": "All skills gain Final Power by the effect's Count for one turn."
+  },
+  "base_power_up": {
+    "key": "base_power_up",
+    "name": "Base Power Up",
+    "image": "/Images/status-effect/Base_Power_Up.webp",
+    "color": "var(--Buff-color)",
+    "description": "Raise the Base Power of Skills by the effect's Count."
+  },
+  "weak-resist_dmg_boost": {
+    "key": "weak-resist_dmg_boost",
+    "name": "Weak-resist DMG Boost",
+    "image": "/Images/status-effect/Weak-resist_DMG_Boost.webp",
+    "color": "var(--Buff-color)",
+    "description": "Boost the damage of attacks against Weak resistances by 1% per Count for one turn."
+  },
+  "sword_of_the_homeland_-_the_true_essence": {
+    "key": "sword_of_the_homeland_-_the_true_essence",
+    "name": "Sword of the Homeland - The True Essence",
+    "image": "/Images/status-effect/Sword_of_the_Homeland_-_The_True_Essence.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Base Attack Skills gain Final Power +(# of Blade Lineage allies on the field / 3) (max 2, rounded down)\n- If this unit is a Blade Lineage Salsu, Base Skills gain Final Power +1 and deal +(120 / # of Coins)% damage\n- Turn End: Gain 1 Haste next turn and this effect expires"
+  },
+  "scarlet_moth": {
+    "key": "scarlet_moth",
+    "name": "Scarlet Moth",
+    "image": "/Images/status-effect/Scarlet_Moth.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 3\n- Turn End: Heal (Stack)% HP (minimum HP healed : 1)\n- Turn End: Heal SP equal to Stack\n- Turn End: Lose 1 Stack"
+  },
+  "i_got_praised!": {
+    "key": "i_got_praised!",
+    "name": "I Got Praised!",
+    "image": "/Images/status-effect/I_Got_Praised!_(Ishmael).webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 10\n- Reduced by 1 when this unit is hit by 2 Skills\n- At 5+ Stack, Base Skills gain Final Power +1\n- Blunt Skills deal +1% damage for every Stack (max 10%)"
+  },
+  "gebura's_blade": {
+    "key": "gebura's_blade",
+    "name": "Gebura's Blade",
+    "image": "/Images/status-effect/Gebura's_Blade.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Convert all Skill Coins into Unbreakable Coins\n- Deal +100% damage\n- Plus Coin Skills gain Coin Power +1; Minus Coin Skills gain Final Power +1\n- For this turn, this unit cannot be Staggered from all sources of damage\n- At less than 10 HP, heal to 10 HP\n- For this turn, this unit's HP does not drop below 10\n- For this turn, every Coin Hit from Base Attack Skills and Counter Skills heals 10% of the damage dealt (max healing from each Skill: 100)\n- Expires at Turn End"
+  },
+  "liferender": {
+    "key": "liferender",
+    "name": "Liferender",
+    "image": "/Images/status-effect/Liferender.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Offense Level +2\n- Final Power +1\n- Expires at Turn End"
+  },
+  "entanglement": {
+    "key": "entanglement",
+    "name": "Entanglement",
+    "image": "/Images/status-effect/Afterimage_Entanglement.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 4\n- Skill and Passive effects can increase Min & Max Stack of this effect to 5 and 9, respectively\nThe threads of fate are entwined by encounter, and by the length of time surrendered unto another.\nThe myriad moments wherein one's time and another's overlap, be they fair or foul, will bind their strings in pitiless entanglement.\nThe time that has already been shared cannot be undone."
+  },
+  "string_severance_[絕緣]": {
+    "key": "string_severance_[絕緣]",
+    "name": "String Severance [絕緣]",
+    "image": "/Images/status-effect/String_Severance_-絕緣-.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 4\n- Gain 1 Stack for every The House of Spiders Nursefather ally death\n- Gain a different unique effect based on which of The House of Spiders ally was defeated\n- Take -7.5% damage for every Stack\nAnd so, let it be cut and severed. Even if it strays from what it must be."
+  },
+  "shin_(心)_-_dihui_star_[地慧星]": {
+    "key": "shin_(心)_-_dihui_star_[地慧星]",
+    "name": "Shin (心) - Dihui Star [地慧星]",
+    "image": "/Images/status-effect/Shin_(心).webp",
+    "color": "var(--Buff-color)",
+    "description": "- Gain Min & Max Speed +2\n- Upon using a Base Attack Skill, gain 2 Poise Potency and +1 Poise Count\n- This unit's Base Attack Skills deal +10% damage on Critical Hit\n- Take -20% damage from Unopposed Attacks and Unbreakable Coins"
+  },
+  "tiantui_star_[天退星]": {
+    "key": "tiantui_star_[天退星]",
+    "name": "Tiantui Star [天退星]",
+    "image": "/Images/status-effect/Unrelenting_Spirit_-剛氣-.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Min & Max Speed +1\n- If this unit's Speed is faster than the target's by 3 or more, deal +(Speed difference x 2.5)% damage (max 20%)\n- Inflict +1 more Tremor Potency and Tremor Count with this unit's Skills\n- If this unit has spent 8+ Tigermark Rounds and Savage Tigermark Rounds: at Turn End, convert this buff to Shin (心) - Tiantui Star [天退星] next turn\n- Max Stack: 1"
+  },
+  "shin_(心)_-_tiantui_star_[天退星]": {
+    "key": "shin_(心)_-_tiantui_star_[天退星]",
+    "name": "Shin (心) - Tiantui Star [天退星]",
+    "image": "/Images/status-effect/Unrelenting_Spirit_-_Shin_-剛氣-心-.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Min & Max Speed +3\n- If this unit's Speed is faster than the target's by 3 or more, deal +(Speed difference x 5)% damage (max 40%)\n- Inflict +2 more Tremor Potency and Tremor Count with this unit's Skills\n- Max Stack: 1"
+  },
+  "le_fauvisme_-_masque_de_chien": {
+    "key": "le_fauvisme_-_masque_de_chien",
+    "name": "Le Fauvisme - Masque de Chien",
+    "image": "/Images/status-effect/Le_Fauvisme_-_Masque_de_Chien.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Deal +5% damage for every 3 Mauled Color on target (max 15%)\n- Inflict +1 more Bleed and Sinking Potency with Base Skills\n- Before hitting with a Base Skill, if target does not have Bleed, inflict +2 Bleed Count on target (once per turn)"
+  },
+  "imperfections_addressed": {
+    "key": "imperfections_addressed",
+    "name": "Imperfections Addressed",
+    "image": "/Images/status-effect/Imperfections_Addressed.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Deal +10% damage\n- On Reuse of a Coin in The Ring Fauvist Docent Rodion's \"Critique\" Skill, heal 3 SP (once per turn)\n- Turn Start: If The Ring Fauvist Docent Rodion does not have Réflexion, this effect expires"
+  },
+  "drink_to_the_fallen": {
+    "key": "drink_to_the_fallen",
+    "name": "Drink to the Fallen",
+    "image": "/Images/status-effect/Drink_to_the_Fallen.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 4\n- Turn Start: Gain 1 Poise for every Stack\n· Blade Lineage Mentor Meursault gains 2 Poise for every Stack instead\n- Base Skills deal +(Poise on self x 1.5)% damage on Critical Hit (max 15%)\n- Base Skills that gain Poise Potency or Count gain Clash Power +1\n- Turn End: Lose 1 Stack"
+  },
+  "resentment": {
+    "key": "resentment",
+    "name": "Resentment",
+    "image": "/Images/status-effect/Resentment.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Min & Max Speed +2\n- On Hit, heal HP by 10% of damage dealt using the Skill (can heal up to 50% of this unit's max HP per Skill)"
+  },
+  "resentful_scabbard": {
+    "key": "resentful_scabbard",
+    "name": "Resentful Scabbard",
+    "image": "/Images/status-effect/Resentful_Scabbard_(Meursault).webp",
+    "color": "var(--Buff-color)",
+    "description": "- When an ally, including this unit, takes HP damage, gain Growing Resentment equal to damage taken\n- In Memoriam Passive now ignores conditionals and activates at max potential\n- When activating Pride Reson., apply Sword of the Homeland - The True Essence on all Blade Lineage allies other than this unit\n- On Using \"Yield My Flesh\", until Skill End:\n· This unit's HP does not drop below 10 (once per turn)\n· Lose (Poise on self / 2) Clash Power (rounded down)\n- On Using \"To Claim Their Bones\", gain 4 Poise"
+  },
+  "growing_resentment": {
+    "key": "growing_resentment",
+    "name": "Growing Resentment",
+    "image": "/Images/status-effect/Growing_Resentment_(Meursault).webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 999\n- \"To Claim Their Bones\" gains (Stack / 100) Final Power (max 6; rounded down)\n- On Hit using the final Coins of either \"Yield My Flesh\" or \"To Claim Their Bones\", deal +(Stack / 10)% damage; then, this effect expires"
+  },
+  "prisoner_transport_arrangements": {
+    "key": "prisoner_transport_arrangements",
+    "name": "Prisoner Transport Arrangements",
+    "image": "/Images/status-effect/Prisoner_Transport_Arrangements_(Hong_Lu).webp",
+    "color": "var(--Buff-color)",
+    "description": "- Base Stack: 1\n- In a Clash against enemies that have Trussed [Hong Lu], gain Clash Power +1\n- On Hit against enemies that have Trussed [Hong Lu], inflict 1 Bleed and gain 2 Poise (2 Skills per turn)\n- If there are no Trussed [Hong Lu] targets, expire"
+  },
+  "concentration【sniper】": {
+    "key": "concentration【sniper】",
+    "name": "Concentration【Sniper】",
+    "image": "/Images/status-effect/Concentration-Sniper-.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 4\n- Turn End: gain 1 Stack"
+  },
+  "book_of_vengeance_[heathcliff]": {
+    "key": "book_of_vengeance_[heathcliff]",
+    "name": "Book of Vengeance [Heathcliff]",
+    "image": "/Images/status-effect/Book_of_Vengeance.webp",
+    "color": "var(--Buff-color)",
+    "description": "Max Stack: 30\n- Offense Level +1, Defense Level +1 for every 5 Stack"
+  },
+  "vengeance_tattoo": {
+    "key": "vengeance_tattoo",
+    "name": "Vengeance Tattoo",
+    "image": "/Images/status-effect/Vengeance_Tattoo.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 20\n- Base Skills deal +1% damage for every Stack"
+  },
+  "dokkaebi_arms": {
+    "key": "dokkaebi_arms",
+    "name": "Dokkaebi Arms",
+    "image": "/Images/status-effect/Dokkaebi_Arms.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Take -15% damage\n- On Skill Use, gain 1 Haste next turn (2 times per turn)\n- Combat End: This effect expires, and gain +2 Poise Count"
+  },
+  "bearing_of_a_salsu": {
+    "key": "bearing_of_a_salsu",
+    "name": "Bearing of a Salsu",
+    "image": "/Images/status-effect/Bearing_of_a_Salsu.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 3\n- Gain Offense Level for every Stack\n- On Attack Hit with Slash Skills, gain 1 Poise (2 times per turn)\n- Lose 1 Stack when an allied Blade Lineage Identity is defeated"
+  },
+  "mook_workshop_-_ye_[銳]_type_ii_bladedraw_/_thrust_force:_dokkaebi_fire": {
+    "key": "mook_workshop_-_ye_[銳]_type_ii_bladedraw_/_thrust_force:_dokkaebi_fire",
+    "name": "Mook Workshop - Ye [銳] Type II Bladedraw / Thrust Force: Dokkaebi Fire",
+    "image": "/Images/status-effect/Mook_Workshop_-_Ye_-銳-_Type_II_Bladedraw_-_Thrust_Force_-_Dokkaebi_Fire.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 20\n- Can gain up to 10 Stacks per turn\n- Slash Base Attack Skills deal +1% damage for every Stack (max 10%)\n- Defense Skills lose 1 Clash Power for every 2 Stack (max 5)\n- Turn End: Gain 1 Haste next turn for every 5 Stack (max 3)"
+  },
+  "le_fauvisme_-_masque_de_loup": {
+    "key": "le_fauvisme_-_masque_de_loup",
+    "name": "Le Fauvisme - Masque de Loup",
+    "image": "/Images/status-effect/Le_Fauvisme_-_Masque_de_Loup.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Min & Max Speed +1\n- Inflict +1 more Bleed and Sinking Potency with Base Skills\n- On Hit, if target has 3+ Mauled Color [Bleu], inflict +1 Sinking Count (once per turn)\n- On Hit, if target has 3+ Mauled Color [Rouge], inflict +1 Bleed Count (once per turn)"
+  },
+  "l'hommage": {
+    "key": "l'hommage",
+    "name": "L'Hommage",
+    "image": "/Images/status-effect/L'Hommage.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 3\n- Turn Start: Randomly gain 1 Offense Level Up or 1 Defense Level Up for every Stack (max 3 times)\n- Turn End: This effect expires"
+  },
+  "book_of_vengeance_[sinclair]": {
+    "key": "book_of_vengeance_[sinclair]",
+    "name": "Book of Vengeance [Sinclair]",
+    "image": "/Images/status-effect/Book_of_Vengeance.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 30\n- Deal more damage equal to (Stack)% (max 30%)\n- Gain the following effects next turn based on Stack:\n· At 10+ Stack: gain 1 Blunt DMG Up\n· At 20+ Stack: Max Speed +1, gain 1 Power Up\n· At 30 Stack: gain 2 Blunt DMG Up"
+  },
+  "the_middle_-_vengeance_tattoo_[great_sister]": {
+    "key": "the_middle_-_vengeance_tattoo_[great_sister]",
+    "name": "The Middle - Vengeance Tattoo [Great Sister]",
+    "image": "/Images/status-effect/The_Middle_Styled_Augmentation_Tattoos_(Ishmael).webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 10\n- Final Power +1 for Base Skills for every 5 Stack (max 2)\n- Envy Skills and Blunt Skills deal +5% damage for every Stack (max 50%)"
+  },
+  "ridiculous_grit": {
+    "key": "ridiculous_grit",
+    "name": "Ridiculous Grit",
+    "image": "/Images/status-effect/Ridiculous_Grit_(Outis).webp",
+    "color": "var(--Buff-color)",
+    "description": "- Fix any Attack Type Resistances that exceed Normal (1.0) to Normal (unless Staggered)\n- Take -(30 + (The Middle - Vengeance Tattoo [Great Sister] Stack x 4))% damage from Skills (max 50%; rounded down)\n- On Clash Win, heal an additional (Clash count x 5) SP (max 15)\n- Turn End: If this unit lost SP this turn due to its Skill effects, deal +10% damage next turn using Base Skills (once per turn)\n- Turn End: Lose 1 Stack"
+  },
+  "check_this_out,_kiddo!": {
+    "key": "check_this_out,_kiddo!",
+    "name": "Check This Out, Kiddo!",
+    "image": "/Images/status-effect/Check_This_Out,_Kiddo!_(Outis).webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 10\n- Reduced by 1 when this unit is hit by 2 Skills\n- At 5+ Stack, Base Skills gain Final Power +1\n- Blunt Skills deal +1% damage for every Stack (max 10%)"
+  },
+  "avenging_my_family": {
+    "key": "avenging_my_family",
+    "name": "Avenging My Family",
+    "image": "/Images/status-effect/Avenging_My_Family.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Envy Base Skills deal +20% damage\n- Base Skills gain Final Power +1"
+  },
+  "pheromone": {
+    "key": "pheromone",
+    "name": "Pheromone",
+    "image": "/Images/status-effect/Pheromone.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Gain +10 Aggro\n- When hit, inflict 3 Burn on target"
+  },
+  "hardblood_cast": {
+    "key": "hardblood_cast",
+    "name": "Hardblood Cast",
+    "image": "/Images/status-effect/Hardblood_Cast.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 3\n- When clashing against enemies with Bleed or Unique Bleed, Clash Power +1\n- When consuming Bloodfeast with an Attack Skill, if there isn't enough Bloodfeast, consume 1 HP for every 1 missing Bloodfeast to generate it before consuming it (the damage from this effect does not Stagger or reduce this unit's HP below 1\n- Reduced by 1 at Turn End"
+  },
+  "spark_of_inspiration": {
+    "key": "spark_of_inspiration",
+    "name": "Spark of Inspiration",
+    "image": "/Images/status-effect/Spark_of_Inspiration.webp",
+    "color": "var(--Buff-color)",
+    "description": "Deal +10% damage against targets with Art Medium"
+  },
+  "exquisite_aesthetics": {
+    "key": "exquisite_aesthetics",
+    "name": "Exquisite Aesthetics",
+    "image": "/Images/status-effect/Exquisite_Aesthetics.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Plus Coin Skills gain Coin Power +1\n- Minus Coin Skills gain Base Power +(4 / # of Coins)\n- Deal +30% damage with Skills"
+  },
+  "beauty_of_the_physique": {
+    "key": "beauty_of_the_physique",
+    "name": "Beauty of the Physique",
+    "image": "/Images/status-effect/Beauty_of_the_Physique.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Against enemies that have 20+ Bleed, Base Skills gain Coin Power +1 and deal +20% damage (calculated as the sum of Bleed on all targets for Skills that have 2+ Atk Weight)\n- Base Skills that consume 'Unique Charge' gain Coin Power +1 (excluding E.G.O Skills)\n- Turn End: This effect expires"
+  },
+  "charm_of_the_beastly": {
+    "key": "charm_of_the_beastly",
+    "name": "Charm of the Beastly",
+    "image": "/Images/status-effect/Charm_of_the_Beastly.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Against enemies that have 20+ Bleed, Base Skills gain Coin Power +1 and deal +20% damage (calculated as the sum of Bleed on all targets for Skills that have 2+ Atk Weight)\n- On Attack Start, if target has 15- SP or 20+ Sinking Potency, gain 1 Blunt Power Up next turn (once per turn)\n- Turn End: This effect expires"
+  },
+  "tremor_-_distribution": {
+    "key": "tremor_-_distribution",
+    "name": "Tremor - Distribution",
+    "image": "/Images/status-effect/Tremor_-_Distribution.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Turn End: Gain ((sum of all allies' Tremor Count) / (# of surviving allies)) Offense Level Up next turn (max 5)\n- When Hit by Skills that trigger Tremor Burst, raise the Stagger Threshold by the effect's Potency\n- Turn End:reduce the Count by 1\n(Interacts the same way as normal Tremor does to effects that raises or reduces Tremor Potency/Count)"
+  },
+  "microprecision_time_acceleration": {
+    "key": "microprecision_time_acceleration",
+    "name": "Microprecision Time Acceleration",
+    "image": "/Images/status-effect/Microprecision_Time_Acceleration.webp",
+    "color": "var(--Buff-color)",
+    "description": "This unit gains base Min and Max Speed by Stack\nSkills that inflict Tremor Potency, Count, or trigger Tremor Burst: gain Base Power +(Stack), deal +(Stack x 10)% damage against enemies, and when raising Stagger Thresholds via Tremor Burst, increase the amount raised by (Stack x 10)% (including E.G.O Skills)\nReduced by 1 at Turn End\nAt 1 Stack, the Stack does not drop below 0, and is maintained through the Encounter."
+  },
+  "glimpse_of_precognition": {
+    "key": "glimpse_of_precognition",
+    "name": "Glimpse of Precognition",
+    "image": "/Images/status-effect/Glimpse_of_Precognition.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 5\n- Clash Power +2 for every Stack\n- For every 2 Stack:\n- Plus Coin Skills gain Coin Power +1\n- Minus Coin Skills gain Final Power +2\n- Expires at Skill End"
+  },
+  "emergency_barrier_battery": {
+    "key": "emergency_barrier_battery",
+    "name": "Emergency Barrier Battery",
+    "image": "/Images/status-effect/Emergency_Barrier_Battery.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 7\n- When Staggered, consume all Emergency Barrier Battery Stack and gain Charge Barrier by the Stack consumed"
+  },
+  "near-light_superbattery": {
+    "key": "near-light_superbattery",
+    "name": "Near-light Superbattery",
+    "image": "/Images/status-effect/Near-light_Superbattery.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 100\n- When consuming Charge Count, add the amount consumed to this buff's Stack\n- Max Charge Count Cap +10\n- Gain 1 Charge Count when allies gain Charge Potency or Count\n- When this unit consumes Charge Count with its Skills, consume the same amount of Charge Count 1 more time (when there isn't enough Charge Count, consume as much as available)\n- Deal +10% damage for every 10 Stack\n- Enemies gain +0.1 Resistance against this unit's attacks for every 20 Stack (max +0.5 Resist; does not activate against Staggered enemies)\n- When the Identity with this effect dies, the buff transfers to the ally who is second earliest to this unit in the Deployment order. The Stack carries over as well."
+  },
+  "sword_of_the_homeland_-_striking": {
+    "key": "sword_of_the_homeland_-_striking",
+    "name": "Sword of the Homeland - Striking",
+    "image": "/Images/status-effect/Sword_of_the_Homeland_-_Striking.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 1\n- Plus Coin Power +1, deal +15% damage on Critical Hit\n- Expires at Turn End"
+  },
+  "desperado": {
+    "key": "desperado",
+    "name": "Desperado",
+    "image": "/Images/status-effect/Desperado.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 2\n- For every Stack, Base Attack Skill Clash Power +1, Base Power +1\n- At 2 Stack, Base Attack Skill Plus Coin Power +1, Minus Coin Power -1\n- Expires at Turn End"
+  },
+  "trauma_shield": {
+    "key": "trauma_shield",
+    "name": "Trauma Shield",
+    "image": "/Images/status-effect/Trauma_Shield.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Reduce SP damage from enemies by 80%\n- Reduce Sinking damage taken by 80%\n- Reduced by 1 at Turn End"
+  },
+  "dhyāna": {
+    "key": "dhyāna",
+    "name": "Dhyāna",
+    "image": "/Images/status-effect/Dhyāna.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 108\n- Deal +1% more damage for every Stack"
+  },
+  "firepower": {
+    "key": "firepower",
+    "name": "Firepower",
+    "image": "/Images/status-effect/Firepower.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 10\n- Deal +10% damage for every Stack"
+  },
+  "backup_candy": {
+    "key": "backup_candy",
+    "name": "Backup Candy",
+    "image": "/Images/status-effect/Backup_Candy.webp",
+    "color": "var(--Buff-color)",
+    "description": "Turn End: at less than 60% HP...\nHeal 30% HP, heal 15 SP, lose 1 Backup Candy, and 1 Hunger\nAt 0 Stack, apply 1 Incandescent Indulgence, then expires"
+  },
+  "hunger": {
+    "key": "hunger",
+    "name": "Hunger",
+    "image": "/Images/status-effect/Hunger_(Kkomi).webp",
+    "color": "var(--Buff-color)",
+    "description": "Max Stack: 3\nTurn End: gain 2 Offense Level Up and 1 Damage Up next turn for every Stack\nAt max Stack(3), lose 5% HP at Turn End"
+  },
+  "incandescent_indulgence": {
+    "key": "incandescent_indulgence",
+    "name": "Incandescent Indulgence",
+    "image": "/Images/status-effect/Indulged.webp",
+    "color": "var(--Buff-color)",
+    "description": "Gain 30% base HP for this Encounter\nTurn Start: fully heal HP and SP (once per Encounter)"
+  },
+  "maturing_textbook": {
+    "key": "maturing_textbook",
+    "name": "Maturing Textbook",
+    "image": "/Images/status-effect/Maturing_Textbook.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Base Skills deal +(10 + (Stack x 5))% damage\n- Can gain up to 2 Stacks per turn\n- Max Stack: 3"
+  },
+  "eye_of_precognition": {
+    "key": "eye_of_precognition",
+    "name": "Eye of Precognition",
+    "image": "/Images/status-effect/Eye_of_Precognition_(Rodion).webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 30\n- Can lose up to 10 Stacks per turn"
+  },
+  "eye_of_precognition_-_overheat": {
+    "key": "eye_of_precognition_-_overheat",
+    "name": "Eye of Precognition - Overheat",
+    "image": "/Images/status-effect/Eye_of_Precognition_-_Overheat_(Rodion).webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 30\n- Offense Level +3, Defense Level -3\n- Turn Start: Gain 10 Stacks\n- At 30 Stack, convert into Eye of Precognition"
+  },
+  "accelerating_future": {
+    "key": "accelerating_future",
+    "name": "Accelerating Future",
+    "image": "/Images/status-effect/Accelerating_Future_(Rodion).webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 5\n- Base Skills deal +3% damage for every Stack (max 15%)\n- Base Skill Clash Power +1 for every 2 Stacks\n- At 5 Stacks, Base Skill Coin Power +1\n- Skill End: This effect expires"
+  },
+  "shin_(心)_-_disgrace": {
+    "key": "shin_(心)_-_disgrace",
+    "name": "Shin (心) - Disgrace",
+    "image": "/Images/status-effect/Shin_(心).webp",
+    "color": "var(--Buff-color)",
+    "description": "- Min & Max Speed +1\n- Base Skills inflict +1 more Tremor and Burn Potency and Count\n- Deal +3% damage for every 3 Poise Potency on self (max 15%)"
+  },
+  "high_noon": {
+    "key": "high_noon",
+    "name": "High Noon",
+    "image": "/Images/status-effect/High_Noon.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Min Speed +2\n- On Base Attack Skills Use: Gain Base Power +2 and deal +(45 / # of Coins)% damage\n- Apply the following effects to \"Sunset Blade\"\n· On Final Coin Hit: If the target has 15+ Burn, activate Burn on target; then, reduce target's Burn Count by 1\n- Apply the following effects to \"Blazing Strike\"\n· Deal +100% damage\n· On Use : Convert all Coins to Unbreakable Coins\n· On Hit against an enemy, activate Burn on target; then, reduce target's Burn Count by 1\n· On Use: At 3+ Volatile Passion, consume up to 100 Scorchfield\n· Deal +1% damage for every Scorchfield consumed (max 100%)\n\"The request has been resolved ahead of schedule, and the weather conditions are optimal today for a team lunch. Shall we all proceed?\""
+  },
+  "loneliness_at_high_noon": {
+    "key": "loneliness_at_high_noon",
+    "name": "Loneliness at High Noon",
+    "image": "/Images/status-effect/Loneliness_at_High_Noon.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Min Speed +2\n- On Base Attack Skills Use: Gain Base Power +3 and deal +(90 / # of Coins)% damage\n- Apply the following effects to \"Sunset Blade\"\n· On Final Coin Hit: If the target has 15+ Burn, activate Burn on target; then, reduce target's Burn Count by 1\n- Apply the following effects to \"Blazing Strike\"\n· Deal +150% damage\n· On Use : Convert all Coins to Unbreakable Coins\n· On Hit against an enemy, activate Burn on target; then, reduce target's Burn Count by 1\n· On Use consume up to 100 Scorchfield and deal +1.5% damage for every Scorchfield consumed (max 150%)\n- When this unit takes damage that brings its HP down to 0 this turn, this unit's HP cannot drop below 1 for the turn, and recovers from Stagger when Staggered due to damage (once per Encounter)\n\"Do you understand what 'loneliness' means, Sinclair? Loneliness is being bathed in the light of the sun at high noon, only to realize that the ones you would have shared a luncheon with have departed you. That is how I would put into words the concept of 'loneliness'—for me, at least. I do hope, Sinclair, that you will never have cause to understand that concept.\""
+  },
+  "dawnherald": {
+    "key": "dawnherald",
+    "name": "Dawnherald",
+    "image": "/Images/status-effect/Dawnherald.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 3\n- Base Skills that inflict Burn Potency, Count, or 'Unique Burn' deal +10% damage\n· If the said Skill is a Wrath Skill, deal +15% damage\n- Base Skills that inflict Burn Potency, Count, or 'Unique Burn', gain Clash Power +1\n· If this unit is a Dawn Office Identity, gain Base Power +1 instead\n- Turn End: Lose 1 Stack\n\"Burn, burn, burn—y'see, Kid, fire's not the be-all, end-all solution to every problem you've got. When it comes to using heat-modulating weapons like these, the deciding factors often come down to when to spark the flame, and how hot you let it burn.\n\"Yeah, that's why I'm always chewing your ear off about how important it is to feel the 'moment' that comes with the territory of using heat-modulating weapons. But on the other hand… when that 'moment' tells you to burn it all down, don't hold back and just let it rip. … Hm? Oh, you want to know who's the best in the field?\"\n\"Hmm, let's see… Well, the best of the best's got to be the Vermilion Cross, I'd wager.\""
+  },
+  "dawn_office": {
+    "key": "dawn_office",
+    "name": "Dawn Office",
+    "image": "/Images/status-effect/Dawn_Office.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 3\n- Gain 1 Offense Level for every Stack\n- Turn Start: At 3 Stack, heal 5 SP\nTurn Start: If all other allied Identities that have \"Dawn Office\" are killed, expires\nThe Dawn Office of this Mirror World, unlike that of others, has yet to completely lose its fervor. One can reasonably conjecture that the two leading Fixers of this Office have sufficient competence to find work as Grade 1 of the vocation.\nHowever, it must be stated that the Office and its Fixers' grades do not vary from those of other observed Mirror Worlds, as combat capability is hardly the sole criterion by which the Grades are assigned. Failure to meet the conditions stipulated by the contract clauses to the client's satisfaction, eschewal of high-risk contracts that contribute to the advancement of Fixer Grades—these are all conditions that limit one's mobility along the ladder of Fixer Grades."
+  },
+  "from_dawnbreak_to_sunset": {
+    "key": "from_dawnbreak_to_sunset",
+    "name": "From Dawnbreak to Sunset",
+    "image": "/Images/status-effect/From_Dawnbreak_to_Sunset.webp",
+    "color": "var(--Buff-color)",
+    "description": "- If this unit has 3+ Stagger Threshold, remove the first Stagger Threshold\n- Turn End: If this unit is Staggered, recover from Stagger; if this unit is at Uptie 3 or higher, replace 1 of its Base Skills with Skill 3 (excluding forced Stagger; prioritize the Skill of lowest rank)\n- Turn Start: Heal 5 SP\n- Passive \"Unstable Shell of Ego\" effects, Base Attack Skill effects, and Volatile Passion effects cannot reduce this unit's SP below 25\n- When in Volatile E.G.O::Waxen Pinion state, gain the following effects:\n· Turn Start: Gain Shield equal to 15% of max HP\n· When hit while this unit has Shield, inflict 1 Burn against the attacker (2 times per turn)\n· Activate Scorchfield on this field\n\"Ah… What a pleasant aroma. You're practically a Color Fixer when it comes to brewing ssanghwa-cha, you know that? I hereby anoint you Color Fixer \"The Yellow Ssanghwa…\"\n\"That's settled, then. I'll be tutoring you myself, so you'd better keep up. I see real potential in you, Kid—your ssanghwa-cha brewing skills have this instinctive grasp of the 'moment'… And being able to recognize that 'moment' is the key to just about everything.\""
+  },
+  "blazing_sunset": {
+    "key": "blazing_sunset",
+    "name": "Blazing Sunset",
+    "image": "/Images/status-effect/Blazing_Sunset.webp",
+    "color": "var(--Buff-color)",
+    "description": "- If this unit has 3+ Stagger Threshold, remove the first Stagger Threshold\n- Turn End: If this unit is Staggered, recover from Stagger; if this unit is at Uptie 3 or higher, replace 1 of its Base Skills with Skill 3 (excluding forced Stagger; prioritize the Skill of lowest rank)\n- Turn Start: Heal 8 SP\n- Passive \"Unstable Shell of Ego\" effects, Base Attack Skill effects, and Volatile Passion effects cannot reduce this unit's SP below 45\n- Turn Start: enter the Volatile E.G.O::Waxen Pinion State, heal 50% HP, and heal SP to max (once per Encounter)\n- Volatile E.G.O::Waxen Pinion State is maintained even when this unit has 0 or lower SP at Turn Start\n- When in Volatile E.G.O::Waxen Pinion state, gain the following effects:\n· Turn Start: Gain Shield equal to 20% of max HP\n· When hit while this unit has Shield, inflict 2 Burn against the attacker (2 times per turn)\n· Activate Scorchfield on this field\n\"Master, please… I still have so much to learn… You said it yourself…\"\nDawn is a fleeting thing; it soon gives way to morning and fades into daylight, with a promise of sunset that will bring about the evening."
+  },
+  "dimensional_castaway": {
+    "key": "dimensional_castaway",
+    "name": "Dimensional Castaway",
+    "image": "/Images/status-effect/Dimensional_Castaway.webp",
+    "color": "var(--Buff-color)",
+    "description": "Max Stack: 3\nBefore Getting Hit, gain Shield equal to (Stack)% HP (3 times per turn)"
+  },
+  "quadricolor_dimensions": {
+    "key": "quadricolor_dimensions",
+    "name": "Quadricolor Dimensions",
+    "image": "/Images/status-effect/Quadricolor_Dimensions.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 4\n- Gain the following effects based on Stack:\n· 1+ : Offense Level +1\n· 2+ : Defense Level +2\n· 3+ : Gain +1 more Charge Count from this unit's Skills\n· 4+ : This unit's Skills deal +(Charge Potency x 4)% damage (max 20%)\n- If this unit gains this effect past its max cap, this unit gains the surplus Stack next turn\n- Turn End: Lose 1 Stack"
+  },
+  "battle_instinct": {
+    "key": "battle_instinct",
+    "name": "Battle Instinct",
+    "image": "/Images/status-effect/Battle_Instinct.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 3\n- Min & Max Speed +2\n- Base Skills inflict +1 Burn Potency and Burn Count on enemies\n- Skill \"Eject\" deals +(Stack x 5)% damage\n- Skills \"Eject - High Noon\" and \"Dismemberment at High Noon\" deal +(Stack x 10)% damage\n\"To resume the subject at hand: aside from Singularities, there exists a means of overcoming the penalties incurred by using this type of weaponry. Namely, effort.\"\n\"This may go without saying, but it is recommended that you focus on honing your body and battle instinct whenever time permits—both during downtime and when handling requests.\"\n\"Granted, battle instinct, in most cases, can only be properly demonstrated in the heat of battle. One might refer to this process as a \"warm up,\" although that term is perhaps too simple. In any case, a heightened natural battle instinct will help you offset the gear's structural and technical vulnerabilities. This is how you may raise the baseline of your performance threshold. Are you able to comprehend this explanation, Sinclair?\""
+  },
+  "light_of_daybreak": {
+    "key": "light_of_daybreak",
+    "name": "Light of Daybreak",
+    "image": "/Images/status-effect/Light_of_Daybreak.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 30\n- Can gain up to 20 Stack per turn\n- Turn Start: Gain 1 Burn for every 5 Stack; then, gain +1 Burn Count for every 10 Stack\n- On Hit using Base Attack Skill, gain (1 + (Burn on target / 3)) Stack (max 3)\n- At 10+ Stack, Base Skills inflict +1 more Burn Potency on enemies\n- At 20+ Stack, Base Skills inflict +1 more Burn Count on enemies\nThe first flare of dawn is not a fire that scorches, but one that casts its glow on people."
+  },
+  "witnessed_-_eastern_cinq": {
+    "key": "witnessed_-_eastern_cinq",
+    "name": "Witnessed - Eastern Cinq",
+    "image": "/Images/status-effect/Witnessed_-_Eastern_Cinq.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 3\n- Offense Level +(Stack)\n- At 2+ Stack, Base Skills gain +1 more Poise Potency\n- At 3+ Stack, Base Skills gain +1 more Poise Count"
+  },
+  "preservation": {
+    "key": "preservation",
+    "name": "Preservation",
+    "image": "/Images/status-effect/Preservation.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Unique Charge\n- Max Count: 20\n- Interacts the same way as normal Charge does to effects that raise or reduce Charge Potency and Count\n- Turn End: Lose 1 Count\nForce is compressed, gathered, and fixed in place. Sometimes, it takes more force to prevent change than cause it."
+  },
+  "pulsation": {
+    "key": "pulsation",
+    "name": "Pulsation",
+    "image": "/Images/status-effect/Pulsation.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Unique Charge\n- Max Count: 20\n- Interacts the same way as normal Charge does to effects that raise or reduce Charge Potency and Count\n- Turn End: Lose 1 Count"
+  },
+  "le_noir:_gabardine_overcoat": {
+    "key": "le_noir:_gabardine_overcoat",
+    "name": "Le Noir: Gabardine Overcoat",
+    "image": "/Images/status-effect/Le_Noir_Gabardine_Overcoat.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 100\n- Defense Level +1 for every 25 Stacks\n- Gain +5 Aggro to the leftmost Slot\n- When hit while this unit has Shield, gain 5 Stack (10 per turn)\n- Turn End: If this unit has remaining Shield, gain 10 Stack\n- Apply the following when this unit gains or consumes Preservation Count due to its Skill or Passive effects:\n· Gain Stack equal to Preservation Count gained (this effect's Stack is gained regardless of Preservation's max Count)\n· Gain Stack equal to (Preservation Count consumed x 2)\n· Can gain up to 30 Stacks per turn via this effect\n- At 100 Stacks, convert this effect to Armure Éveillée next turn\nAn overcoat made from twill fabric, a type of weave made by threading several weft threads over fewer warp threads.\nIts characteristic high-density weave protects its wearer from external trauma."
+  },
+  "armure_éveillée": {
+    "key": "armure_éveillée",
+    "name": "Armure Éveillée",
+    "image": "/Images/status-effect/Armure_Éveillée.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 100\n- Min & Max Speed +2\n- Offense Level +1 and Defense Level +1 for every 25 Stacks\n- Convert all Base Attack Skill Coins into Unbreakable Coins\n- Turn Start: Heal 8 SP\n- At 0 Stacks, convert this effect into Le Noir: Gabardine Overcoat\nLe Noir's fabric weave prevents external force from reaching its wearer. The purpose for which it awakens is to eliminate change imposed from the outside.\nThe fabric stores energy from attacks it absorbs, then expels all that force in a single burst to remove the external source of change."
+  },
+  "black_wings": {
+    "key": "black_wings",
+    "name": "Black Wings",
+    "image": "/Images/status-effect/Black_Wings.webp",
+    "color": "var(--Buff-color)",
+    "description": ""
+  },
+  "inertia_of_drifting": {
+    "key": "inertia_of_drifting",
+    "name": "Inertia of Drifting",
+    "image": "/Images/status-effect/Inertia_of_Drifting.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Count: 20\n- Unique Charge\n- Interacts the same way as normal Charge does to effects that raise or reduce Charge Potency and Count\n- Turn End: Lose 1 Count\nThose who are carried by the tide like buoys may not be able to change the flow of things, but they can still bolster the tide and commit to their acts within."
+  },
+  "blossom_scissors": {
+    "key": "blossom_scissors",
+    "name": "Blossom Scissors",
+    "image": "/Images/status-effect/Blossom_Scissors.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 2\n- Deal +7% damage for every Stack\nThe scissors used to sever the primordial materials produced underground are larger and more extraordinary still. These scissors have cut and recut the very first cloth ever woven. That flowers should bloom from them is only natural, for they have always cut things at their very roots."
+  },
+  "second_is_welcome-snipping": {
+    "key": "second_is_welcome-snipping",
+    "name": "Second is Welcome-snipping",
+    "image": "/Images/status-effect/Second_is_Welcome-snipping.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 1\n- Offense Level +3, Defense Level +3\n- On Skill Use, heal 5 SP if this unit is a Charge Identity (once per turn)\n- On Base Skill Hit, deal Slash damage equal to 5% of each Coin's final damage\n- Expires at Turn End\nA pair of scissors becomes one through two, and makes two of what was one."
+  },
+  "blessing_of_the_obsidian_god_(Don_Quixote)": {
+    "key": "blessing_of_the_obsidian_god_(Don_Quixote)",
+    "name": "Blessing of the Obsidian God (Don Quixote)",
+    "image": "/Images/status-effect/Blessing_of_the_Obsidian_God_(Don_Quixote).webp",
+    "color": "var(--Buff-color)",
+    "description": ""
+  },
+  "sanctum_of_conservation": {
+    "key": "sanctum_of_conservation",
+    "name": "Sanctum of Conservation",
+    "image": "/Images/status-effect/Sanctum_of_Conservation.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 5\n- Apply the following effect on all allied Identities:\n· On Skill Use, each ally gains Shield equal to (Preservation Potency on Don Quixote x 2)% of their respective max HP (once per turn, max 10%)\n- Apply the following effects on all \"Le Noir\" allied Identities:\n· Offense Level +(Preservation Potency on Don Quixote / 3) (rounded down; max 2)\n· Defense Level +(Preservation Potency on Don Quixote / 2) (rounded down; max 3)\n- Apply the following effects on all enemies:\n· Min & Max Speed -1 (this effect cannot reduce Min & Max Speed below 1)\n· Stagger Threshold raised by Tremor Burst +10%\n· Take +10% damage from Skills that consume Charge Count or Unique Charge (from \"Le Noir\" allied Identities' Skills, take +20% damage instead)\n- Turn End: Lose 1 Stack\nA sanctuary in which the value of conservation pursued by Le Noir is preserved. Within it, the Noirs' preservative actions are retained to their benefit. It is a realm of eternal conservation—a place that stirs the drive to infinitely approach death."
+  }
 }

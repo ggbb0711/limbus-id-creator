@@ -1,0 +1,352 @@
+{
+  "on_use": {
+    "key": "on_use",
+    "name": "[On Use]",
+    "image": "",
+    "color": "#26cfff",
+    "description": ""
+  },
+  "before_attack": {
+    "key": "before_attack",
+    "name": "[Before Attack]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "after_attack": {
+    "key": "after_attack",
+    "name": "[After Attack]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "on_hit": {
+    "key": "on_hit",
+    "name": "[On Hit]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "on_hit_without_cracking": {
+    "key": "on_hit_without_cracking",
+    "name": "[On Hit Without Cracking]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "on_hit_cracked": {
+    "key": "on_hit_cracked",
+    "name": "[On Hit Cracked]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "reuse_-_on_hit": {
+    "key": "reuse_-_on_hit",
+    "name": "[Reuse - On Hit]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "hit_after_clash_win": {
+    "key": "hit_after_clash_win",
+    "name": "[Hit after Clash Win]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "clash_win": {
+    "key": "clash_win",
+    "name": "[Clash Win]",
+    "image": "",
+    "color": "#ff7e00",
+    "description": ""
+  },
+  "clash_lose": {
+    "key": "clash_lose",
+    "name": "[Clash Lose]",
+    "image": "",
+    "color": "#e30000",
+    "description": ""
+  },
+  "clash_tie": {
+    "key": "clash_tie",
+    "name": "[Clash Tie]",
+    "image": "",
+    "color": "#009100",
+    "description": ""
+  },
+  "on_evade": {
+    "key": "on_evade",
+    "name": "[On Evade]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "failed_evade": {
+    "key": "failed_evade",
+    "name": "[Failed Evade]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "heads_hit": {
+    "key": "heads_hit",
+    "name": "[Heads Hit]",
+    "image": "",
+    "color": "#c7ff94",
+    "description": ""
+  },
+  "heads_attack_end": {
+    "key": "heads_attack_end",
+    "name": "[Heads Attack End]",
+    "image": "",
+    "color": "#ff59c2",
+    "description": ""
+  },
+  "heads_attack_start": {
+    "key": "heads_attack_start",
+    "name": "[Heads Attack Start]",
+    "image": "",
+    "color": "#ff59c2",
+    "description": ""
+  },
+  "tails_hit": {
+    "key": "tails_hit",
+    "name": "[Tails Hit]",
+    "image": "",
+    "color": "#64ab23",
+    "description": ""
+  },
+  "tails_attack_end": {
+    "key": "tails_attack_end",
+    "name": "[Tails Attack Hit]",
+    "image": "",
+    "color": "#64ab23",
+    "description": ""
+  },
+  "tails_attack_start": {
+    "key": "tails_attack_start",
+    "name": "[Tails Attack Start]",
+    "image": "",
+    "color": "#64ab23",
+    "description": ""
+  },
+  "on_kill": {
+    "key": "on_kill",
+    "name": "[On Kill]",
+    "image": "",
+    "color": "#c9fe98",
+    "description": ""
+  },
+  "on_crit": {
+    "key": "on_crit",
+    "name": "[On Crit]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "on_crit_kill": {
+    "key": "on_crit_kill",
+    "name": "[On Crit Kill]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "on_crit_kill_ally": {
+    "key": "on_crit_kill_ally",
+    "name": "[On Crit Kill Ally]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "on_crit_kill_ally_fail": {
+    "key": "on_crit_kill_ally_fail",
+    "name": "[On Crit Kill Ally Fail]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "on_crit_kill_against_enemy": {
+    "key": "on_crit_kill_against_enemy",
+    "name": "[On Crit Kill Against Enemy]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "on_crit_kill_against_enemy_fail": {
+    "key": "on_crit_kill_against_enemy_fail",
+    "name": "[On Crit Kill Against Enemy Fail]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "indiscriminate": {
+    "key": "indiscriminate",
+    "name": "[Indiscriminate]",
+    "image": "",
+    "color": "#ff0000",
+    "description": ""
+  },
+  "unopposed_attack": {
+    "key": "unopposed_attack",
+    "name": "[Unopposed Attack]",
+    "image": "",
+    "color": "#ff0000",
+    "description": ""
+  },
+  "unclashable": {
+    "key": "unclashable",
+    "name": "[Unclashable]",
+    "image": "",
+    "color": "#ff0000",
+    "description": ""
+  },
+  "combat_start": {
+    "key": "combat_start",
+    "name": "[Combat Start]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "combat_end": {
+    "key": "combat_end",
+    "name": "[Combat End]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "coin_start": {
+    "key": "coin_start",
+    "name": "[Coin Start]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "coin_end": {
+    "key": "coin_end",
+    "name": "[Coin End]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "clash_start": {
+    "key": "clash_start",
+    "name": "[Clash Start]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "clash_end": {
+    "key": "clash_end",
+    "name": "[Clash End]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "before_getting_hit": {
+    "key": "before_getting_hit",
+    "name": "[Before Getting Hit]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "after_getting_hit": {
+    "key": "after_getting_hit",
+    "name": "[After Getting Hit]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "on_ally_kill": {
+    "key": "on_ally_kill",
+    "name": "[On Ally Kill]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "on_ally_kill_fail": {
+    "key": "on_ally_kill_fail",
+    "name": "[On Ally Kill Fail]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "on_unopposed_attack": {
+    "key": "on_unopposed_attack",
+    "name": "[On Unopposed Attack]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "clashable_counter": {
+    "key": "clashable_counter",
+    "name": "[Clashable Counter]",
+    "image": "",
+    "color": "#ff7e00",
+    "description": ""
+  },
+  "before_use": {
+    "key": "before_use",
+    "name": "[Before Use]",
+    "image": "",
+    "color": "#26cfff",
+    "description": ""
+  },
+  "after_use": {
+    "key": "after_use",
+    "name": "[After Use]",
+    "image": "",
+    "color": "#26cfff",
+    "description": ""
+  },
+  "skill_start": {
+    "key": "skill_start",
+    "name": "[Skill Start]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "skill_end": {
+    "key": "skill_end",
+    "name": "[Skill End]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "turn_end": {
+    "key": "turn_end",
+    "name": "[Turn End]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "turn_start": {
+    "key": "turn_start",
+    "name": "[Turn Start]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "target_fixed": {
+    "key": "target_fixed",
+    "name": "[Target Fixed]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "attack_start": {
+    "key": "attack_start",
+    "name": "[Attack Start]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  },
+  "attack_end": {
+    "key": "attack_end",
+    "name": "[Attack End]",
+    "image": "",
+    "color": "#94f140",
+    "description": ""
+  }
+}
