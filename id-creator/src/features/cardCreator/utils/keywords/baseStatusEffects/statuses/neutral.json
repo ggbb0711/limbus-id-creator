@@ -712,5 +712,40 @@
     "image": "/Images/status-effect/Tremor_Identity.webp",
     "color": "var(--Neutral-color)",
     "description": ""
+  },
+  "joint_combo": {
+    "key": "joint_combo",
+    "name": "Joint Combo",
+    "image": "/Images/status-effect/Joint_Combo.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- If the pertinent Identity is on the field, alive, and isn't immobilized, activate the linked effects (does not activate if the pertinent Identity is in any of the following states: all types of immobilized states, E.G.O Corrosions, and Staggers)"
+  },
+  "buffet": {
+    "key": "buffet",
+    "name": "Buffet",
+    "image": "/Images/status-effect/Buffet.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Max Value: 999\n- This value is increased by (actual HP healed / 10) whenever allies' or enemies' HP is healed on the field\n· Rounded up for each instance\n· Healing from E.G.O Gifts does not count\n- This value is shared by all characters\n- Resets when moving to a different zone\nThe Buffet of flesh and meat is served. Let this be a feasting hall for all."
+  },
+  "attending_the_divine": {
+    "key": "attending_the_divine",
+    "name": "Attending the Divine",
+    "image": "/Images/status-effect/Attending_the_Divine.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Unique Assist Defense\n- Max Stack: 1\n- When Haute Couture::The Crimson God of Le Rouge Sinclair is about to take an Unopposed Attack from an enemy, consume 1 Stack to redirect the enemy's targeting to self\n· Then, copy and use Haute Couture::The Crimson God of Le Rouge Sinclair's \"La Garde\"\n- When there are multiple allies that have Assist Defense Stacks, the ally that has the highest Stack has the highest activation priority\n- This effect counts as Assist Defense, and is counted toward calculating Assist Defense Stacks\n- Turn End: This effect expires\nLet us attend to our new God."
+  },
+  "weathered_pride": {
+    "key": "weathered_pride",
+    "name": "Weathered Pride",
+    "image": "/Images/status-effect/Despair.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Max Stack: 999\n- Can only be gained up to 500 Stacks per turn"
+  },
+  "tiny_and_sharp_nails": {
+    "key": "tiny_and_sharp_nails",
+    "name": "Tiny and Sharp Nails",
+    "image": "/Images/status-effect/Tongue-pinning_Needle.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Max Stack: 30"
   }
 }

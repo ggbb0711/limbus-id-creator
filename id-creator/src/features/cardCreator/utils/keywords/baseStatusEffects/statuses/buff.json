@@ -1706,5 +1706,152 @@
     "image": "/Images/status-effect/Sanctum_of_Conservation.webp",
     "color": "var(--Buff-color)",
     "description": "- Max Stack: 5\n- Apply the following effect on all allied Identities:\n· On Skill Use, each ally gains Shield equal to (Preservation Potency on Don Quixote x 2)% of their respective max HP (once per turn, max 10%)\n- Apply the following effects on all \"Le Noir\" allied Identities:\n· Offense Level +(Preservation Potency on Don Quixote / 3) (rounded down; max 2)\n· Defense Level +(Preservation Potency on Don Quixote / 2) (rounded down; max 3)\n- Apply the following effects on all enemies:\n· Min & Max Speed -1 (this effect cannot reduce Min & Max Speed below 1)\n· Stagger Threshold raised by Tremor Burst +10%\n· Take +10% damage from Skills that consume Charge Count or Unique Charge (from \"Le Noir\" allied Identities' Skills, take +20% damage instead)\n- Turn End: Lose 1 Stack\nA sanctuary in which the value of conservation pursued by Le Noir is preserved. Within it, the Noirs' preservative actions are retained to their benefit. It is a realm of eternal conservation—a place that stirs the drive to infinitely approach death."
+  },
+  "field_analysis": {
+    "key": "field_analysis",
+    "name": "Field Analysis",
+    "image": "/Images/status-effect/Field_Analysis.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 5\n- Gain +1 Poise Count when gaining Stacks of this effect\n- Turn End: Gain +(Stack) Poise Count\n- If this unit is Staggered at Turn Start, recover from Stagger (2 times per Encounter; excluding forced Staggers)\nBase Attack Skills gain the following effects based on Stack:\n· 2+: On Skill Use, deal +(30 / # of Coins)% damage on enemies (rounded down)\n· 3+: Coin Power +1; On Skill Use, convert the final Coin to Unbreakable Coin\n· 4+: On Skill Use, deal +(30 / # of Coins)% damage on enemies (rounded down)\n· 5+: Target's Pierce Resist. +0.1 from Attack Start to Attack End\n- The Stack immediately before Skill Use is used to determine whether the damage-boosting and Unbreakable Coin conversion effects are activated"
+  },
+  "wedge_office": {
+    "key": "wedge_office",
+    "name": "Wedge Office",
+    "image": "/Images/status-effect/Wedge_Office.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 3\n- Offense Level +1 for every Stack\n- Combat Start: At 3 Stacks, gain 1 Pierce DMG Up\n- Expires at Turn End"
+  },
+  "blessing_of_the_obsidian_god": {
+    "key": "blessing_of_the_obsidian_god",
+    "name": "Blessing of the Obsidian God",
+    "image": "/Images/status-effect/Blessing_of_the_Obsidian_God_(Don_Quixote).webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 100\n- Turn Start: Gain Shield equal to (Stack / 5)% of this unit's max HP (rounded down)\n- At 25+ Stack, On Base Attack Skill Use, convert all Coins into Unbreakable Coins\n- At 40+ Stack, this unit cannot be Staggered (excluding forced Staggers)\nThe Obsidian God. The Obsidian Giant. The Chaplain of the Hammer. The Obsidian God of the Grand Magasin, whose domain is the power of preservation, grants his blessing through direct contact. The hammer is hard, and its black hue absorbs all things and brings them to a halt... much like death itself."
+  },
+  "le_noir:_worsted_overcoat": {
+    "key": "le_noir:_worsted_overcoat",
+    "name": "Le Noir: Worsted Overcoat",
+    "image": "/Images/status-effect/Le_Noir_Worsted_Overcoat.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 15\n- Offense Level +1, Defense Level +1 for every 5 Stack\n- When hit while this unit has Shield, gain 1 Stack (5 Stacks per turn)\n- Turn End: Next turn, gain (Stack x 5) Shield and lose 1 Stack"
+  },
+  "ready_to_narrate": {
+    "key": "ready_to_narrate",
+    "name": "Ready to Narrate",
+    "image": "/Images/status-effect/Ready_to_Narrate.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 2\n- Turn End: Gain (Stack) Protection next turn\n- Turn End: At max Stack, consume all Stacks to gain 2 Time to Listen next turn\n- Can gain up to 1 Stack per turn\n- If this unit has Time to Listen, it cannot gain Ready to Narrate"
+  },
+  "time_to_listen": {
+    "key": "time_to_listen",
+    "name": "Time to Listen",
+    "image": "/Images/status-effect/Time_to_Listen.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 2\n- Base Skill Base Power +1\n- Combat Start (once per turn per Sinner):\n· Identities that equipped Plus Coin Skills in their leftmost Slots heal 4 SP\n· Identities that equipped Minus Coin Skills in their leftmost Slots lose 4 SP (this effect cannot reduce the unit's SP below -40)\n- Combat Start: Apply 1 Sloth DMG Up on the following Identities (once per turn per Sinner):\n· Identities that equipped Plus Coin Skills and have 40 or higher SP; Le Noir Identities additionally gain 1 Base Power Up\n· Identities that equipped Minus Coin Skills and have -40 or lower SP; Le Noir Identities additionally gain 1 Base Power Up\n- Turn End: Lose 1 Stack"
+  },
+  "the_knight's_loyal_protection": {
+    "key": "the_knight's_loyal_protection",
+    "name": "The Knight's Loyal Protection",
+    "image": "/Images/status-effect/Blessing.webp",
+    "color": "var(--Buff-color)",
+    "description": "Base Stack: 3\nThis unit's Attack Type Resist. that are higher than 1.5 are adjusted to 1.5 (except while Staggered)\nIf this unit is Staggered, take -30% damage (including forced Staggers)\nTurn End: Lose 1 Stack\nExpires when the character that applied this effect retreats, is defeated, or applies this effect to a different target; replaced when another character applies the same effect\nIf this unit is defeated by an enemy, inflict 2 Fragile against the attacker next turn, and the unit that applied this effect gains 2 Attack Power Up and 3 Damage Up next turn"
+  },
+  "sword_sharpened_with_tears": {
+    "key": "sword_sharpened_with_tears",
+    "name": "Sword Sharpened with Tears",
+    "image": "/Images/status-effect/Tear-sharpened.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 3\n- Skills that gain or consume Charge deal +(Charge Potency x 2)% damage (max 10%)\n- Pierce or Pride Skills deal +(Stack x 5)% damage\n- On Hit using this unit's Pierce or Pride Skills, deal Pride damage equal to ((Stack x 2) + (5% of the Coin's final damage))\n- Attack End: If the main target is an enemy, inflict Sinking Potency equal to Stack"
+  },
+  "needlekin": {
+    "key": "needlekin",
+    "name": "Needlekin",
+    "image": "/Images/status-effect/Needlekin.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 3\n- Offense Level +1 for every Stack\nShaddap! Shaddap!"
+  },
+  "cry_of_the_cocoon_-_frail": {
+    "key": "cry_of_the_cocoon_-_frail",
+    "name": "Cry of the Cocoon - Frail",
+    "image": "/Images/status-effect/Cry_of_the_Cocoon_-_Frail.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 5\n- Base Skill Final Power +1\n- On Hit using Base Skills, heal 3% HP (5 times per turn)\n- Turn Start: If allied Haute Couture::The Crimson God of Le Rouge Sinclair is not on the field, this effect expires"
+  },
+  "cry_of_the_cocoon_-_vicious": {
+    "key": "cry_of_the_cocoon_-_vicious",
+    "name": "Cry of the Cocoon - Vicious",
+    "image": "/Images/status-effect/Cry_of_the_Cocoon_-_Vicious.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 1\n- Base Skill Final Power +1\n- Deal +10% damage using Base Skills\n- On Hit using Base Skills, heal 6% HP (5 times per turn)\n- Turn Start: If allied Haute Couture::The Crimson God of Le Rouge Sinclair is not on the field, this effect expires"
+  },
+  "relentless_hunger": {
+    "key": "relentless_hunger",
+    "name": "Relentless Hunger",
+    "image": "/Images/status-effect/Relentless_Hunger.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 150\n- Can gain up to 50 Stacks per turn"
+  },
+  "noble_dignity": {
+    "key": "noble_dignity",
+    "name": "Noble Dignity",
+    "image": "/Images/status-effect/Noble_Dignity.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Gain all of the following effects based on Pulsation Potency on self:\n· 2+: Take -25% damage from Bleed\n· 3+: Base Skills inflict +1 more Bleed Potency and Count\n· 4+: Base Skill Base Power +1\n- Min & Max Speed +1\n- When this unit takes damage that brings its HP down to 0, this unit's HP does not drop below 1 for the turn (once per Encounter)\n- Apply the following effects to \"Le Rouge\" allied Identities (including this unit):\n· Min & Max Speed +1\n· If there is not enough Charge Count to activate the effects of Skills that consume Charge Count, consume 1 Buffet to gain 1 Charge Count for every missing Charge Count required for activation"
+  },
+  "uncontrollable_rampage": {
+    "key": "uncontrollable_rampage",
+    "name": "Uncontrollable Rampage",
+    "image": "/Images/status-effect/Uncontrollable_Rampage_(Sinclair).webp",
+    "color": "var(--Buff-color)",
+    "description": "Max Stack: 3\n- Offense Level +1 for every Stack (max 3)\n- Min & Max Speed +1\n- Deal +1% damage for every Bleed on self (max 15%)\n- Cannot become Staggered (excluding forced Stagger)\n- Take -50% damage from Bleed\n- Cannot be defeated by Bleed damage\n- On Base Attack Skill Use, gain +3 Bleed Count\n- On Base Attack Skill Hit, gain Bleed equal to Uncontrollable Rampage Stack\n- Turn End: Lose 1 Count"
+  },
+  "desperate_hunger": {
+    "key": "desperate_hunger",
+    "name": "Desperate Hunger",
+    "image": "/Images/status-effect/Desperate_Hunger.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Offense Level +2\n- At Coin Start of a Base Skill used against an enemy, consume 1 Charge Count to deal +5% damage\n· Skills that inflict Bleed Potency or Count deal +10% damage instead (including Unique Bleed)\n· At 1+ Buffet Value on the field, if this unit is not at max Charge Count, consume 1 Buffet to gain +1 Charge Count\n· If both Charge Count and Buffet are at 0, consume 1% max HP instead to activate the effect (rounded down; damage dealt by this effect does not Stagger or reduce this unit's HP below 1; activates even at 1 HP)\n- Turn End: this effect expires\nThe sharper one hungers, the fiercer the desperation.\nThe further one is driven, the deeper the longing."
+  },
+  "crimson_cradle": {
+    "key": "crimson_cradle",
+    "name": "Crimson Cradle",
+    "image": "/Images/status-effect/Crimson_Cradle.webp",
+    "color": "var(--Buff-color)",
+    "description": "When conditions are met by other \"Le Rouge\" allies, activate corresponding effects for Haute Couture::The Crimson God of Le Rouge Sinclair\n- Effects remain active even if the corresponding ally is defeated\nHaute Couture::Boutique du Rouge Ishmael\n- If Ishmael is in \"Full Makeover\" state, Sinclair's max HP +10%; Sinclair's heals 5% max HP On Base Attack Hit (rounded up, 5 times per turn)\nHaute Couture::Le Rouge King of Needleworks Heathcliff\n- On Hit using the \"La Demande\" Skill's Coins, gain +1 Pulsation Count and heal 5% HP"
+  },
+  "momentum": {
+    "key": "momentum",
+    "name": "Momentum",
+    "image": "/Images/status-effect/Momentum.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 30\n- Can gain up to 20 Stacks per turn\nTurn Start: If this unit is Staggered, recover from Stagger (once per Encounter; excluding forced Staggers)"
+  },
+  "dawn's_camaraderie": {
+    "key": "dawn's_camaraderie",
+    "name": "Dawn's Camaraderie",
+    "image": "/Images/status-effect/Dawn's_Camaraderie.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 5"
+  },
+  "thundercrack": {
+    "key": "thundercrack",
+    "name": "Thundercrack",
+    "image": "/Images/status-effect/Thundercrack.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Max Stack: 3\n- For every Stack:\n· Coin Power +1\n· Base Skills deal +15% damage against enemies\n- If Wild Hunt Heathcliff has been defeated or Retreated, expires"
+  },
+  "learning_by_example": {
+    "key": "learning_by_example",
+    "name": "Learning by Example",
+    "image": "/Images/status-effect/Learning_by_Example.webp",
+    "color": "var(--Buff-color)",
+    "description": "Max Stack: 30\nGain Stacks based on the following conditions:\n- On Clash Win, gain 2 Stacks; On Hit using Base Attack Skills, gain 1 Stack; At Attack End, if the enemy was defeated, gain 3 Stacks\n- On Clash Win using Base Attack Skills by other allies, gain 2 Stacks\n· On Clash Win using Base Attack Skills by other allies in the same faction as this unit, gain 4 Stacks instead\nGain the following effects cumulatively based on Stacks:\n- Base Attack Skills deal +1% damage for every Stack (max 30%)\n- 10+: Base Attack Skills Clash Power +1\n- 20+: Base Attack Skills Coin Power +1"
+  },
+  "the_one_beyond_despair": {
+    "key": "the_one_beyond_despair",
+    "name": "The One Beyond Despair",
+    "image": "/Images/status-effect/The_One_Beyond_Despair.webp",
+    "color": "var(--Buff-color)",
+    "description": "- Turn Start: Gain 2 Protection and 1 Attack Power Up\n- On Defense Skill Use, gain 3 Defense Power Up (once per turn)\n- On Clash Win, heal 5 SP (2 times per turn)\n· At max SP, remove 1 removable negative effect applied to self\n- At Base Skill End, deal Pride damage equal to 10% of damage the said Skill dealt to each enemy\n- When this unit takes damage that brings its HP down to 0, it does not take damage for the turn (once per Encounter)\n· After the above effect activates, heal all HP next turn; then, deal +10% damage for every Protection on self until Combat End (max 80%)"
   }
 }

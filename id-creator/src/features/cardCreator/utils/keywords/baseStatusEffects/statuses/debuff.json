@@ -1090,5 +1090,61 @@
     "image": "/Images/status-effect/Tremor_-_Conservation.webp",
     "color": "var(--Debuff-color)",
     "description": "- On Tremor Burst, take Sloth Damage equal to (60 + sum of Charge Potency or Unique Charge on the attacker x 8)% of Tremor Potency, and reduce the Count by 1 (max 120%)\n· When \"Le Noir\" units' Skills and Passives trigger Tremor Burst, the above effect does not reduce the Count\n- When hit by Tremor Burst Skills, raise Stagger Threshold by this effect's Potency\n- Turn End: Lose 1 Count\n(Interacts the same way as normal Tremor does to effects that raise or reduce Tremor Potency/Count)"
+  },
+  "naildle": {
+    "key": "naildle",
+    "name": "Naildle",
+    "image": "/Images/status-effect/Naildle.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Unique Bleed\n- Max Stack: 10\n- Turn End: Lose 1 Stack\n- When losing this effect's Stack, gain 1 Bleed Potency and take 3 Lust damage for every Stack lost\n- Turn End: If enemy Haute Couture::The Crimson God of Le Rouge Sinclair is on the field and this unit has this effect, this unit gains 1 L'Abject"
+  },
+  "taxidermized": {
+    "key": "taxidermized",
+    "name": "Taxidermized",
+    "image": "/Images/status-effect/Taxidermized.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 1\n- Skill Final Power -1\n- On Attack Skill Use, activate Bleed on self and lose 1 Bleed Count (once per Skill)\n- Turn End: Gain +2 Bleed Count, 1 Power Down, and 2 Bind next turn\n- Turn End: This effect expires"
+  },
+  "wedge_-_don_quixote": {
+    "key": "wedge_-_don_quixote",
+    "name": "Wedge - Don Quixote",
+    "image": "/Images/status-effect/Wedge_-_Don_Quixote.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 8\n- At sufficient Stacks, empower a certain Skill of Wedge Office Fixer Sinclair/Wedge Office Fixer Don Quixote[1]\n- Turn End: Gain +1 Tremor Count\n- Turn Start: If there are no enemy \"Wedge Office\" characters on the field, this effect expires"
+  },
+  "wedge_-_sinclair": {
+    "key": "wedge_-_sinclair",
+    "name": "Wedge - Sinclair",
+    "image": "/Images/status-effect/Wedge_-_Sinclair.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 8\n- At sufficient Stacks, empower a certain Skill of Wedge Office Fixer Sinclair/Wedge Office Fixer Don Quixote[1]\n- Turn End: Gain +1 Tremor Count\n- Turn Start: If there are no enemy \"Wedge Office\" characters on the field, this effect expires"
+  },
+  "auditive_punishment": {
+    "key": "auditive_punishment",
+    "name": "Auditive Punishment",
+    "image": "/Images/status-effect/Auditive_Punishment.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 2\n- Lose Offense Level equal to Stack\n- If there is an Identity that has Time to Listen, take +(Stack x 10)% damage from \"Le Noir\" Identities\n- Turn End: If there is an Identity that has Time to Listen, lose 1 Stack (if the Identity that inflicted this effect has been defeated or Retreated, expires)"
+  },
+  "sword_of_a_forgotten_knight": {
+    "key": "sword_of_a_forgotten_knight",
+    "name": "Sword of a Forgotten Knight",
+    "image": "/Images/status-effect/Sword_of_a_Forgotten_Knight.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 3\n- When hit by Pierce or Pride Skills, gain 1 Stack (once per Skill)\n· At max Stack, take 50 Pride damage; then, this effect expires. Gain 1 Pierce Fragility this turn and next turn\n- Only 1 character can have this effect at any given time (existing effect expires when inflicted on another target)"
+  },
+  "embedded_spearhead": {
+    "key": "embedded_spearhead",
+    "name": "Embedded Spearhead",
+    "image": "/Images/status-effect/Embedded_Spearhead.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 1\n- On Crit using Pierce Base Attack Skills by targets other than the target that inflicted this effect, take +15% damage\n- When hit by Skills that have the \"Joint Combo\" effect, take an additional +20% damage\n- At Skill End of the Skill that hit, expires"
+  },
+  "a_test_of_despair": {
+    "key": "a_test_of_despair",
+    "name": "A Test of Despair",
+    "image": "/Images/status-effect/A_Test_of_Despair.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- All Slots gain +20 Aggro\n- On Attack Skill Use, lose 20 SP\n- On Death, all other allies lose 20 SP"
   }
 }
