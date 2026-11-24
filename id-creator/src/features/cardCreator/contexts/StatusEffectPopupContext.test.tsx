@@ -44,7 +44,7 @@ describe('StatusEffectPopupContext', () => {
     })
 
     it('ignores plain text and unknown status effects', () => {
-        const { result, text } = renderWith(`<p id="plain">Plain</p>${statusSpan('<span>Bleed</span>')}`)
+        const { result, text } = renderWith(`<p id="plain">Plain</p>${statusSpan('<span>Not A Status Effect</span>')}`)
 
         let opened = true
         act(() => { opened = result.current.openFromElement(text.querySelector('#plain')) })

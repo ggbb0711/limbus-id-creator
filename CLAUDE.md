@@ -6,7 +6,7 @@ id-creator-server(backend, ASP.NET Core)
     /Server(source code)
     /Server.Tests(tests)
 
-Before searching for or creating files, read docs/folder-structure.md. It maps where every feature, service, config and constant lives and the exact steps to add, update or delete features and folders.
+Before searching for or creating files, read docs/folder-structure.md. It maps where every feature, service, config and constant lives and the exact steps to add, update or delete features and folders. Also if there is a plan.md, please read it, and delete it once u completed the task
 
 
 # Commands:
@@ -59,3 +59,15 @@ docs/folder-structure.md
 - Please read this doc before adding or changing anything in the project to understand its folder structure.
 
 - Whenever the folder structure changes (folder added/moved/renamed/deleted, layout convention changed) or a new feature/service/controller/repository/background service is added or removed, update docs/folder-structure.md in the same change
+
+#### Coding standard:
+
+docs/coding-standard.md
+
+- Read this when u try to change/review the codebase
+
+#### Prototype feature:
+
+docs/prototype-feature
+
+- Read this whenever you make a new feature, or implement something specifically ui related

@@ -1,158 +1,1150 @@
 {
-  "slash_dmg_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Slash_DMG_Down.webp' alt='' />Slash DMG Down</span>",
-  "pierce_dmg_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Pierce_DMG_Down.webp' alt='' />Pierce DMG Down</span>",
-  "blunt_dmg_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Blunt_DMG_Down.webp' alt='' />Blunt DMG Down</span>",
-  "wrath_dmg_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Wrath_DMG_Down.webp' alt='' />Wrath DMG Down</span>",
-  "lust_dmg_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Lust_DMG_Down.webp' alt='' />Lust DMG Down</span>",
-  "sloth_dmg_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Sloth_DMG_Down.webp' alt='' />Sloth DMG Down</span>",
-  "gluttony_dmg_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Gluttony_DMG_Down.webp' alt='' />Gluttony DMG Down</span>",
-  "gloom_dmg_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Gloom_DMG_Down.webp' alt='' />Gloom DMG Down</span>",
-  "pride_dmg_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Pride_DMG_Down.webp' alt='' />Pride DMG Down</span>",
-  "envy_dmg_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Envy_DMG_Down.webp' alt='' />Envy DMG Down</span>",
-  "slash_power_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Slash_Power_Down.webp' alt='' />Slash Power Down</span>",
-  "pierce_power_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Pierce_Power_Down.webp' alt='' />Pierce Power Down</span>",
-  "blunt_power_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Blunt_Power_Down.webp' alt='' />Blunt Power Down</span>",
-  "wrath_power_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Wrath_Power_Down.webp' alt='' />Wrath Power Down</span>",
-  "lust_power_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Lust_Power_Down.webp' alt='' />Lust Power Down</span>",
-  "sloth_power_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Sloth_Power_Down.webp' alt='' />Sloth Power Down</span>",
-  "gluttony_power_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Gluttony_Power_Down.webp' alt='' />Gluttony Power Down</span>",
-  "gloom_power_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Gloom_Power_Down.webp' alt='' />Gloom Power Down</span>",
-  "pride_power_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Pride_Power_Down.webp' alt='' />Pride Power Down</span>",
-  "envy_power_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Envy_Power_Down.webp' alt='' />Envy Power Down</span>",
-  "slash_fragility": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Slash_Fragility.webp' alt='' />Slash Fragility</span>",
-  "pierce_fragility": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Pierce_Fragility.webp' alt='' />Pierce Fragility</span>",
-  "blunt_fragility": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Blunt_Fragility.webp' alt='' />Blunt Fragility</span>",
-  "wrath_fragility": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Wrath_Fragility.webp' alt='' />Wrath Fragility</span>",
-  "lust_fragility": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Lust_Fragility.webp' alt='' />Lust Fragility</span>",
-  "sloth_fragility": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Sloth_Fragility.webp' alt='' />Sloth Fragility</span>",
-  "gluttony_fragility": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Gluttony_Fragility.webp' alt='' />Gluttony Fragility</span>",
-  "gloom_fragility": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Gloom_Fragility.webp' alt='' />Gloom Fragility</span>",
-  "pride_fragility": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Pride_Fragility.webp' alt='' />Pride Fragility</span>",
-  "envy_fragility": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Envy_Fragility.webp' alt='' />Envy Fragility</span>",
-  "attack_power_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Attack_Power_Down.webp' alt='' />Attack Power Down</span>",
-  "defense_power_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Defense_Power_Down.webp' alt='' />Defense Power Down</span>",
-  "offense_level_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Offense_Level_Down.webp' alt='' />Offense Level Down</span>",
-  "defense_level_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Defense_Level_Down.webp' alt='' />Defense Level Down</span>",
-  "damage_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Damage_Down.webp' alt='' />Damage Down</span>",
-  "clash_power_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Clash_Power_Down.webp' alt='' />Clash Power Down</span>",
-  "fragile": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Fragile.webp' alt='' />Fragile</span>",
-  "smoke": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Smoke.webp' alt='' />Smoke</span>",
-  "plus_coin_drop": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Plus_Coin_Drop.webp' alt='' />Plus Coin Drop</span>",
-  "minus_coin_boost": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Minus_Coin_Boost.webp' alt='' />Minus Coin Boost</span>",
-  "bind": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Bind.webp' alt='' />Bind</span>",
-  "paralyze": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Paralyze.webp' alt='' />Paralyze</span>",
-  "burn": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Burn.webp' alt='' />Burn</span>",
-  "bleed": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Bleed.webp' alt='' />Bleed</span>",
-  "sewing_target": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Sewing_Target.webp' alt='' />Sewing Target</span>",
-  "polydipsic_rose": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Polydipsic_Rose.webp' alt='' />Polydipsic Rose</span>",
-  "lasso": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Lasso.webp' alt='' />Lasso</span>",
-  "rose_wedge": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Rose_Wedge.webp' alt='' />Rose Wedge</span>",
-  "focused_attack": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Focused_Attack.webp' alt='' />Focused Attack</span>",
-  "rupture": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Rupture.webp' alt='' />Rupture</span>",
-  "sinking": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Sinking.webp' alt='' />Sinking</span>",
-  "sinking_fragility": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Sinking_Fragility.webp' alt='' />Sinking Fragility</span>",
-  "sinking_deluge": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Sinking_Deluge.webp' alt='' />Sinking Deluge</span>",
-  "butterfly": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Butterfly.webp' alt='' />Butterfly</span>",
-  "tremor": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Tremor.webp' alt='' />Tremor</span>",
-  "tremor_burst": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Tremor_Burst.webp' alt='' />Tremor Burst</span>",
-  "tremor_-_decay": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Tremor_-_Decay.webp' alt='' />Tremor - Decay</span>",
-  "tremor_-_fracture": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Tremor_-_Fracture.webp' alt='' />Tremor - Fracture</span>",
-  "tremor_-_reverb": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Tremor_-_Reverb.webp' alt='' />Tremor - Reverb</span>",
-  "tremor_-_everlasting": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Tremor_-_Everlasting.webp' alt='' />Tremor - Everlasting</span>",
-  "tremor_-_chain": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Tremor_-_Chain.webp' alt='' />Tremor - Chain</span>",
-  "tremor_-_hemorrhage": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Tremor_-_Hemorrhage.webp' alt='' />Tremor - Hemorrhage</span>",
-  "poison": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Poison.webp' alt='' />Poison</span>",
-  "centipede_venom": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Centipede_Venom.webp' alt='' />Centipede Venom</span>",
-  "hp_healing_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/HP_Healing_Down.webp' alt='' />HP Healing Down</span>",
-  "weakness_analyzed": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Weakness_Analyzed.webp' alt='' />Weakness Analyzed</span>",
-  "declared_duel": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Declared_Duel.webp' alt='' />Declared Duel</span>",
-  "immobilized": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Immobilized.webp' alt='' />Immobilized</span>",
-  "nails": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Nails.webp' alt='' />Nails</span>",
-  "gaze": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Gaze.webp' alt='' />Gaze</span>",
-  "talisman": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Talisman.webp' alt='' />Talisman</span>",
-  "twisted_curse_talisman": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Twisted_Curse_Talisman.webp' alt='' />Twisted Curse Talisman</span>",
-  "vengeance_mark": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Vengeance_Mark.webp' alt='' />Vengeance Mark</span>",
-  "red_plum_blossom": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Red_Plum_Blossom.webp' alt='' />Red Plum Blossom</span>",
-  "dark_flame": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Dark_Flame.webp' alt='' />Dark Flame</span>",
-  "maggots": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Maggots.webp' alt='' />Maggots</span>",
-  "curse": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Curse.webp' alt='' />Curse</span>",
-  "pink_ribbons": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Pink_Ribbons.webp' alt='' />Pink Ribbons</span>",
-  "dimensional_rift": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Dimensional_Rift.webp' alt='' />Dimensional Rift</span>",
-  "spark_discharge": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Spark_Discharge.webp' alt='' />Spark Discharge</span>",
-  "echoes_of_the_manor": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Echoes_of_the_Manor.webp' alt='' />Echoes of the Manor</span>",
-  "before_the_king": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Before_the_King.webp' alt='' />Before the King</span>",
-  "time_moratorium": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Time_Moratorium.webp' alt='' />Time Moratorium</span>",
-  "fairy_lure": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Fairy_Lure.webp' alt='' />Fairy Lure</span>",
-  "deathrite【haste】": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Deathrite_-Haste-.webp' alt='' />Deathrite [Haste]</span>",
-  "deathrite【fissure】": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Deathrite_-Fissure-.webp' alt='' />Deathrite [Fissure]</span>",
-  "deathrite【venom】": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Deathrite_-Venom-.webp' alt='' />Deathrite [Venom]</span>",
-  "vendetta_mark": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Vendetta_Mark.webp' alt='' />Vendetta Mark</span>",
-  "searing_birdcage": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Searing_Birdcage.webp' alt='' />Searing Birdcage</span>",
-  "mark_of_decay": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Mark_of_Decay.webp' alt='' />Mark of Decay</span>",
-  "tremor_-_scorch": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Tremor_-_Scorch.webp' alt='' />Tremor - Scorch</span>",
-  "mark_of_villainy": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Mark_of_Villainy.webp' alt='' />Mark of Villainy</span>",
-  "hysteria": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Hysteria.webp' alt='' />Hysteria</span>",
-  "regressive_transformation_-_reversed": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Regressive_Transformation_-_Reversed.webp' alt='' />Regressive Transformation - Reversed</span>",
-  "contempt_of_the_gaze": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Contempt_of_the_Gaze.webp' alt='' />Contempt of the Gaze</span>",
-  "concussion": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Concussion.webp' alt='' />Concussion</span>",
-  "comptempt": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Contempt_of_the_Gaze.webp' alt='' />Contempt</span>",
-  "la_mancha_parade": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/La_Mancha_Parade.webp' alt='' />La Mancha Parade</span>",
-  "open_wound": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Open_Wound.webp' alt='' />Open Wound</span>",
-  "fatal_wound": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Fatal_Wound.webp' alt='' />Fatal Wound</span>",
-  "deep_wound": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Deep_Wound.webp' alt='' />Deep Wound</span>",
-  "shattermark": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Shattermark.webp' alt='' />Shattermark</span>",
-  "needle": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Needle.webp' alt='' />Needle</span>",
-  "resident_reg._microchip": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Resident_Reg._Microchip.webp' alt='' />Resident Reg. Microchip</span>",
-  "shattered_world": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Shattered_World.webp' alt='' />Shattered World</span>",
-  "karmic_consequence": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Karmic_Consequence.webp' alt='' />Karmic Consequence</span>",
-  "sheut_fracture": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Sheut_Fracture.webp' alt='' />Sheut Fracture</span>",
-  "blue_sand": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Blue_Sand.webp' alt='' />Blue Sand</span>",
-  "gloom_resist_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Gloom_Resist_Down.webp' alt='' />Gloom Resist Down</span>",
-  "dazzle": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Dazzle.webp' alt='' />Dazzle</span>",
-  "embers": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Embers.webp' alt='' />Embers</span>",
-  "faint_aroma": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Faint_Aroma.webp' alt='' />Faint Aroma</span>",
-  "solitude": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Solitude.webp' alt='' />Solitude</span>",
-  "spore": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Spore.webp' alt='' />Spore</span>",
-  "rhythm": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Rhythm.webp' alt='' />Rhythm</span>",
-  "corpus_theater": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Corpus_Theater.webp' alt='' />Corpus Theater</span>",
-  "charged_sting": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Charged_Sting.webp' alt='' />Charged Sting</span>",
-  "slash_resist_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Slash_Resist_Down.webp' alt='' />Slash Resist Down</span>",
-  "pierce_resist_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Pierce_Resist_Down.webp' alt='' />Pierce Resist Down</span>",
-  "blunt_resist_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Blunt_Resist_Down.webp' alt='' />Blunt Resist Down</span>",
-  "wrath_resist_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Wrath_Resist_Down.webp' alt='' />Wrath Resist Down</span>",
-  "envy_resist_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Envy_Resist_Down.webp' alt='' />Envy Resist Down</span>",
-  "power_down": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Power_Down.webp' alt='' />Power Down</span>",
-  "touche_hardie": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Touche_Hardie.webp' alt='' />Touche Hardie</span>",
-  "mauled_color_[rouge]": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Mauled_Color_-Rouge-.webp' alt='' />Mauled Color [Rouge]</span>",
-  "trussed_[hong_lu]": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Trussed_-Hong_Lu-.webp' alt='' />Trussed [Hong Lu]</span>",
-  "avulsion_wound": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Avulsion_Wound.webp' alt='' />Avulsion Wound</span>",
-  "lodged_arrow": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Lodged_Arrow.webp' alt='' />Lodged Arrow</span>",
-  "palette_vibrante": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Palette_Vibrante.webp' alt='' />Palette Vibrante</span>",
-  "tremor_-_superposition": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Tremor_-_Superposition.webp' alt='' />Tremor - Superposition</span>",
-  "mauled_color_[bleu]": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Mauled_Color_-Bleu-.webp' alt='' />Mauled Color [Bleu]</span>",
-  "the_uninvited": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/The_Uninvited.webp' alt='' />The Uninvited</span>",
-  "photoelectricity": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Photoelectricity.webp' alt='' />Photoelectricity</span>",
-  "impending_ruin": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Impending_Ruin.webp' alt='' />Impending Ruin</span>",
-  "only_ashes_remain": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Only_Ashes_Remain.webp' alt='' />Only Ashes Remain</span>",
-  "nerve_strike": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Nerve_Strike.webp' alt='' />Nerve Strike</span>",
-  "sibling_vengeance_mark": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Sibling_Vengeance_Mark.webp' alt='' />Sibling Vengeance Mark</span>",
-  "book_of_vengeance_[the_house_of_spiders]": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Book_of_Vengeance_-The_House_of_Spiders-.webp' alt='' />Book of Vengeance [The House of Spiders]</span>",
-  "b.m.": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Butler%27s_Mark.webp' alt='' />B.M.</span>",
-  "contempt": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Contempt_of_the_Gaze.webp' alt='' />Contempt</span>",
-  "bladetrail_[afterimage]": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Bladetrail_-Afterimage-.webp' alt='' />Bladetrail [Afterimage]</span>",
-  "phantom_trace": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Dawn%27s_First_Crow_%28%E9%9B%9E%E9%B3%B4%29.webp' alt='' />Phantom Trace</span>",
-  "pheromone_mark": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Pheromone_Mark.webp' alt='' />Pheromone Mark</span>",
-  "art_medium": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Art_Medium.webp' alt='' />Art Medium</span>",
-  "gluttonous_thorn_(貪食棘)": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Gluttonous_Thorn_%28%E8%B2%AA%E9%A3%9F%E6%A3%98%29.webp' alt='' />Gluttonous Thorn (貪食棘)</span>",
-  "pink_petals": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Pink_Petals.webp' alt='' />Pink Petals</span>",
-  "reflux": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Reflux.webp' alt='' />Reflux</span>",
-  "requested_target": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Requested_Target.webp' alt='' />Requested Target</span>",
-  "delicateness": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Delicateness.webp' alt='' />Delicateness</span>",
-  "the_duel_escalates": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/The_Duel_Escalates_%28Heathcliff%29.webp' alt='' />The Duel Escalates</span>",
-  "severed_tendon": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Severed_Tendon_%28Heathcliff%29.webp' alt='' />Severed Tendon</span>",
-  "overheated_coffin": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Overheated_Coffin.webp' alt='' />Overheated Coffin</span>",
-  "fracturing_of_the_senses": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Fracturing_of_the_Senses.webp' alt='' />Fracturing of the Senses</span>",
-  "mark_of_shearing": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Mark_of_Shearing.webp' alt='' />Mark of Shearing</span>",
-  "promised_nail": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Promised_Nail.webp' alt='' />Promised Nail</span>",
-  "tremor_-_conservation": "<span class='center-element' contenteditable='false' style='color:var(--Debuff-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Tremor_-_Conservation.webp' alt='' />Tremor - Conservation</span>"
+  "slash_dmg_down": {
+    "key": "slash_dmg_down",
+    "name": "Slash DMG Down",
+    "image": "/Images/status-effect/Slash_DMG_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Deal 10% less damage with Slash skills per Count for one turn. (Max 10)"
+  },
+  "pierce_dmg_down": {
+    "key": "pierce_dmg_down",
+    "name": "Pierce DMG Down",
+    "image": "/Images/status-effect/Pierce_DMG_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Deal 10% less damage with Pierce skills per Count for one turn. (Max 10)"
+  },
+  "blunt_dmg_down": {
+    "key": "blunt_dmg_down",
+    "name": "Blunt DMG Down",
+    "image": "/Images/status-effect/Blunt_DMG_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Deal 10% less damage with Blunt skills per Count for one turn. (Max 10)"
+  },
+  "wrath_dmg_down": {
+    "key": "wrath_dmg_down",
+    "name": "Wrath DMG Down",
+    "image": "/Images/status-effect/Wrath_DMG_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Deal 10% less damage with Wrath skills per Count for one turn. (Max 10)"
+  },
+  "lust_dmg_down": {
+    "key": "lust_dmg_down",
+    "name": "Lust DMG Down",
+    "image": "/Images/status-effect/Lust_DMG_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Deal 10% less damage with Lust skills per Count for one turn. (Max 10)"
+  },
+  "sloth_dmg_down": {
+    "key": "sloth_dmg_down",
+    "name": "Sloth DMG Down",
+    "image": "/Images/status-effect/Sloth_DMG_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Deal 10% less damage with Sloth skills per Count for one turn. (Max 10)"
+  },
+  "gluttony_dmg_down": {
+    "key": "gluttony_dmg_down",
+    "name": "Gluttony DMG Down",
+    "image": "/Images/status-effect/Gluttony_DMG_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Deal 10% less damage with Gluttony skills per Count for one turn. (Max 10)"
+  },
+  "gloom_dmg_down": {
+    "key": "gloom_dmg_down",
+    "name": "Gloom DMG Down",
+    "image": "/Images/status-effect/Gloom_DMG_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Deal 10% less damage with Gloom skills per Count for one turn. (Max 10)"
+  },
+  "pride_dmg_down": {
+    "key": "pride_dmg_down",
+    "name": "Pride DMG Down",
+    "image": "/Images/status-effect/Pride_DMG_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Deal 10% less damage with Pride skills per Count for one turn. (Max 10)"
+  },
+  "envy_dmg_down": {
+    "key": "envy_dmg_down",
+    "name": "Envy DMG Down",
+    "image": "/Images/status-effect/Envy_DMG_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Deal 10% less damage with Envy skills per Count for one turn. (Max 10)"
+  },
+  "slash_power_down": {
+    "key": "slash_power_down",
+    "name": "Slash Power Down",
+    "image": "/Images/status-effect/Slash_Power_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Slash skills lose final Power by the effect's Count for one turn"
+  },
+  "pierce_power_down": {
+    "key": "pierce_power_down",
+    "name": "Pierce Power Down",
+    "image": "/Images/status-effect/Pierce_Power_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Pierce skills lose final Power by the effect's Count for one turn"
+  },
+  "blunt_power_down": {
+    "key": "blunt_power_down",
+    "name": "Blunt Power Down",
+    "image": "/Images/status-effect/Blunt_Power_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Blunt skills lose final Power by the effect's Count for one turn."
+  },
+  "wrath_power_down": {
+    "key": "wrath_power_down",
+    "name": "Wrath Power Down",
+    "image": "/Images/status-effect/Wrath_Power_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Wrath skills lose final Power by the effect's Count for one turn."
+  },
+  "lust_power_down": {
+    "key": "lust_power_down",
+    "name": "Lust Power Down",
+    "image": "/Images/status-effect/Lust_Power_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Lust skills lose final Power by the effect's Count for one turn."
+  },
+  "sloth_power_down": {
+    "key": "sloth_power_down",
+    "name": "Sloth Power Down",
+    "image": "/Images/status-effect/Sloth_Power_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Sloth skills lose final Power by the effect's Count for one turn."
+  },
+  "gluttony_power_down": {
+    "key": "gluttony_power_down",
+    "name": "Gluttony Power Down",
+    "image": "/Images/status-effect/Gluttony_Power_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Gluttony skills lose final Power by the effect's Count for one turn."
+  },
+  "gloom_power_down": {
+    "key": "gloom_power_down",
+    "name": "Gloom Power Down",
+    "image": "/Images/status-effect/Gloom_Power_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Gloom skills lose final Power by the effect's Count for one turn."
+  },
+  "pride_power_down": {
+    "key": "pride_power_down",
+    "name": "Pride Power Down",
+    "image": "/Images/status-effect/Pride_Power_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Pride skills lose final Power by the effect's Count for one turn."
+  },
+  "envy_power_down": {
+    "key": "envy_power_down",
+    "name": "Envy Power Down",
+    "image": "/Images/status-effect/Envy_Power_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Envy skills lose final Power by the effect's Count for one turn."
+  },
+  "slash_fragility": {
+    "key": "slash_fragility",
+    "name": "Slash Fragility",
+    "image": "/Images/status-effect/Slash_Fragility.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Take 10% more damage from Slash skills per Count for one turn. (Max 10)"
+  },
+  "pierce_fragility": {
+    "key": "pierce_fragility",
+    "name": "Pierce Fragility",
+    "image": "/Images/status-effect/Pierce_Fragility.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Take 10% more damage from Pierce skills per Count for one turn. (Max 10)"
+  },
+  "blunt_fragility": {
+    "key": "blunt_fragility",
+    "name": "Blunt Fragility",
+    "image": "/Images/status-effect/Blunt_Fragility.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Take 10% more damage from Blunt skills per Count for one turn. (Max 10)"
+  },
+  "wrath_fragility": {
+    "key": "wrath_fragility",
+    "name": "Wrath Fragility",
+    "image": "/Images/status-effect/Wrath_Fragility.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Take 10% more damage from Wrath skills per Count for one turn. (Max 10)"
+  },
+  "lust_fragility": {
+    "key": "lust_fragility",
+    "name": "Lust Fragility",
+    "image": "/Images/status-effect/Lust_Fragility.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Take 10% more damage from Lust skills per Count for one turn. (Max 10)"
+  },
+  "sloth_fragility": {
+    "key": "sloth_fragility",
+    "name": "Sloth Fragility",
+    "image": "/Images/status-effect/Sloth_Fragility.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Take 10% more damage from Sloth skills per Count for one turn. (Max 10)"
+  },
+  "gluttony_fragility": {
+    "key": "gluttony_fragility",
+    "name": "Gluttony Fragility",
+    "image": "/Images/status-effect/Gluttony_Fragility.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Take 10% more damage from Gluttony skills per Count for one turn. (Max 10)"
+  },
+  "gloom_fragility": {
+    "key": "gloom_fragility",
+    "name": "Gloom Fragility",
+    "image": "/Images/status-effect/Gloom_Fragility.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Take 10% more damage from Gloom skills per Count for one turn. (Max 10)"
+  },
+  "pride_fragility": {
+    "key": "pride_fragility",
+    "name": "Pride Fragility",
+    "image": "/Images/status-effect/Pride_Fragility.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Take 10% more damage from Pride skills per Count for one turn. (Max 10)"
+  },
+  "envy_fragility": {
+    "key": "envy_fragility",
+    "name": "Envy Fragility",
+    "image": "/Images/status-effect/Envy_Fragility.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Take 10% more damage from Envy skills per Count for one turn. (Max 10)"
+  },
+  "attack_power_down": {
+    "key": "attack_power_down",
+    "name": "Attack Power Down",
+    "image": "/Images/status-effect/Attack_Power_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Attack skills lose Final Power by the effect’s Potency for one turn."
+  },
+  "defense_power_down": {
+    "key": "defense_power_down",
+    "name": "Defense Power Down",
+    "image": "/Images/status-effect/Defense_Power_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Defense skills lose Final Power by the effect’s Potency for one turn."
+  },
+  "offense_level_down": {
+    "key": "offense_level_down",
+    "name": "Offense Level Down",
+    "image": "/Images/status-effect/Offense_Level_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Offense level decreases based on the effect's Potency for one turn."
+  },
+  "defense_level_down": {
+    "key": "defense_level_down",
+    "name": "Defense Level Down",
+    "image": "/Images/status-effect/Defense_Level_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Defense Level decreases based on the effect's Potency for one turn."
+  },
+  "damage_down": {
+    "key": "damage_down",
+    "name": "Damage Down",
+    "image": "/Images/status-effect/Damage_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Deal 10% less damage with skills per Count for one turn. (Max 10)"
+  },
+  "clash_power_down": {
+    "key": "clash_power_down",
+    "name": "Clash Power Down",
+    "image": "/Images/status-effect/Clash_Power_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Lose Clash Power by the effect's Potency for one turn."
+  },
+  "fragile": {
+    "key": "fragile",
+    "name": "Fragile",
+    "image": "/Images/status-effect/Fragile.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Take 10% more damage from skills per Count for one turn. (Max 10)"
+  },
+  "smoke": {
+    "key": "smoke",
+    "name": "Smoke",
+    "image": "/Images/status-effect/Smoke.webp",
+    "color": "var(--Debuff-color)",
+    "description": ""
+  },
+  "plus_coin_drop": {
+    "key": "plus_coin_drop",
+    "name": "Plus Coin Drop",
+    "image": "/Images/status-effect/Plus_Coin_Drop.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Reduce the Power of Plus Coins by the effect's Count for one turn."
+  },
+  "minus_coin_boost": {
+    "key": "minus_coin_boost",
+    "name": "Minus Coin Boost",
+    "image": "/Images/status-effect/Minus_Coin_Boost.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Raise the Power of Minus Coins by the effect's Count for one turn."
+  },
+  "bind": {
+    "key": "bind",
+    "name": "Bind",
+    "image": "/Images/status-effect/Bind.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Speed decreases by the effect’s Potency for one turn."
+  },
+  "paralyze": {
+    "key": "paralyze",
+    "name": "Paralyze",
+    "image": "/Images/status-effect/Paralyze.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Fix the Power of X Coin(s) to 0 for one turn."
+  },
+  "burn": {
+    "key": "burn",
+    "name": "Burn",
+    "image": "/Images/status-effect/Burn.webp",
+    "color": "var(--Debuff-color)",
+    "description": "At the end of the turn, take fixed damage by the effect’s Potency, then reduce its Count by 1."
+  },
+  "bleed": {
+    "key": "bleed",
+    "name": "Bleed",
+    "image": "/Images/status-effect/Bleed.webp",
+    "color": "var(--Debuff-color)",
+    "description": "When tossing an attack Coin, take fixed damage by the effect’s Potency. Then, reduce its Count by 1."
+  },
+  "sewing_target": {
+    "key": "sewing_target",
+    "name": "Sewing Target",
+    "image": "/Images/status-effect/Sewing_Target.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Value: 1\n- Take +0.5% more damage for every Bleed on self (max 10%)\n- Turn End: reduced by 1"
+  },
+  "polydipsic_rose": {
+    "key": "polydipsic_rose",
+    "name": "Polydipsic Rose",
+    "image": "/Images/status-effect/Polydipsic_Rose.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Value: 5\n- Turn End: at 10+ Bleed Potency, take Lust damage equal to 1% of this unit's max HP. (max 30)\n- Turn End: reduced by 1"
+  },
+  "lasso": {
+    "key": "lasso",
+    "name": "Lasso",
+    "image": "/Images/status-effect/Lasso.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Value: 3\n- Turn End: gain Rupture Potency by equal to this unit's current Speed value (max 5), and gain 1 Bind next turn\n- Turn End: reduced by 1"
+  },
+  "rose_wedge": {
+    "key": "rose_wedge",
+    "name": "Rose Wedge",
+    "image": "/Images/status-effect/Rose_Wedge.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Potency: 10\n- Max Count: 4\n- Gain 1 Potency every time this unit takes 10 Bleed damage\n- When gaining Bleed or 'Unique Bleed' from getting hit, gain 2 Bleed and inflict 1 Bleed against the Attacker (5 times per turn)\n· At 10 Potency, gain +1 Bleed Count as well when triggering the above effect\n- Turn End: lose 1 Count\n- Combat End: at 10 Potency or 1 Count, this effect expires, and this unit takes (Potency x 10) Lust damage.\n- If the unit inflicted with this effect dies, or when this effect expires: increase Bloodfeast by (Potency x 10), and deal (Potency x 2) Lust damage against all of its allies (min 1)"
+  },
+  "focused_attack": {
+    "key": "focused_attack",
+    "name": "Focused Attack",
+    "image": "/Images/status-effect/Focused_Attack.webp",
+    "color": "var(--Debuff-color)",
+    "description": "<Focused Encounters Only>\n- The unit that inflicted this Focused Attack gains the following effects based on the target Slot's Focused Attack Stack.\n·1x Stack: Gain Clash Power +1\n·2x Stack: Gain Base Power +1\n·3x Stack: Gain Base Power +1 and Coin Power +1\n- Expires if, for a turn, the unit who inflicted it fails to hit the Slot inflicted with their Focused Attack.\n- Expires if the unit who inflicted Focused Attack inflicts it on a different Slot.\n- Replaced if a different unit inflicts Focused Attack on a Slot already inflicted with Focused Attack.\n- At the start of the next turn, if a Slot inflicted with Focused Attack is no longer present, rearrange all Focused Attacks inflicted against the Slots of that Part in the order of Deployment"
+  },
+  "rupture": {
+    "key": "rupture",
+    "name": "Rupture",
+    "image": "/Images/status-effect/Rupture.webp",
+    "color": "var(--Debuff-color)",
+    "description": "When hit by an attack, take fixed damage by the effect’s potency. Then, reduce its Count by 1."
+  },
+  "sinking": {
+    "key": "sinking",
+    "name": "Sinking",
+    "image": "/Images/status-effect/Sinking.webp",
+    "color": "var(--Debuff-color)",
+    "description": "When hit by an attack, take fixed SP damage by the effect’s Potency.\n(Non-SP Units take Gloom damage instead.)\nThen, reduce its Count by 1."
+  },
+  "sinking_fragility": {
+    "key": "sinking_fragility",
+    "name": "Sinking Fragility",
+    "image": "/Images/status-effect/Sinking_Fragility.webp",
+    "color": "var(--Debuff-color)",
+    "description": ""
+  },
+  "sinking_deluge": {
+    "key": "sinking_deluge",
+    "name": "Sinking Deluge",
+    "image": "/Images/status-effect/Sinking_Deluge.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Deal SP damage by (Sinking Count * Sinking Potency), then remove Sinking\nIf target's SP is -45 or lower, the excess SP damage is dealt as Gloom-affinity HP damage (Non-SP Units take all of it as Gloom HP damage)"
+  },
+  "butterfly": {
+    "key": "butterfly",
+    "name": "Butterfly",
+    "image": "/Images/status-effect/Butterfly.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Unique Sinking\n- Base Value: 0, Max Value: 15\n- The Potency and the Count of this effect is called \"The Living\" and \"The Departed\", respectively.\n- When hit, the attacker heals (The Living/4) SP. (min 1; rounded down)\n- When hit, and if this unit's SP is at less than 0, take (Sinking Potency/5) Gloom damage for every value of The Departed. (max Gloom damage 30; rounded down; deals half damage to targets that are Non-SP Units.)\n- Turn End: Reset The Departed of this effect to 0; then, gain Sinking equal to The Living and convert The Living into The Departed.\n- No external effects can raise the amount of Butterfly inflicted. \"Inflict additional Sinking\" effects inflict additional Sinking instead of additional Butterfly.\n- This effect expires when both The Living and The Departed reach 0."
+  },
+  "tremor": {
+    "key": "tremor",
+    "name": "Tremor",
+    "image": "/Images/status-effect/Tremor.webp",
+    "color": "var(--Debuff-color)",
+    "description": "When attacked by skills that burst Tremor, raise the Stagger Threshold by the effect’s Potency. At the end of the turn, reduce the Count by 1."
+  },
+  "tremor_burst": {
+    "key": "tremor_burst",
+    "name": "Tremor Burst",
+    "image": "/Images/status-effect/Tremor_Burst.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Raise target's Stagger Threshold by Tremor Potency on target"
+  },
+  "tremor_-_decay": {
+    "key": "tremor_-_decay",
+    "name": "Tremor - Decay",
+    "image": "/Images/status-effect/Tremor_-_Decay.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Lose 1 Defense Level for every 4 Tremor Potency on self\nWhen Hit by Skills that trigger Tremor Burst, raise the Stagger Threshold by the effect's Potency\nTurn End:reduce the Count by 1\n(Interacts the same way as normal Tremor does to effects that raises or reduces Tremor Potency/Count)"
+  },
+  "tremor_-_fracture": {
+    "key": "tremor_-_fracture",
+    "name": "Tremor - Fracture",
+    "image": "/Images/status-effect/Tremor_-_Fracture.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- When Staggered, and when the sum of Tremor Potency and Count adds up to 20 or higher, raise Stagger Level by 1\n- Cannot exceed maximum Stagger Level with this effect\nWhen Hit by Skills that trigger Tremor Burst, raise the Stagger Threshold by the effect's Potency\nTurn End:reduce the Count by 1\n(Interacts the same way as normal Tremor does to effects that raises or reduces Tremor Potency/Count)"
+  },
+  "tremor_-_reverb": {
+    "key": "tremor_-_reverb",
+    "name": "Tremor - Reverb",
+    "image": "/Images/status-effect/Tremor_-_Reverb.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- On Tremor Burst, take Sloth damage equal to Tremor Potency on self.\n- When Hit by Skills that trigger Tremor Burst, raise the Stagger Threshold by the effect's Potency\n- Turn End:reduce the Count by 1\n(Interacts the same way as normal Tremor does to effects that raises or reduces Tremor Potency/Count)"
+  },
+  "tremor_-_everlasting": {
+    "key": "tremor_-_everlasting",
+    "name": "Tremor - Everlasting",
+    "image": "/Images/status-effect/Tremor_-_Everlasting.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- When hit by Skills or Coin effects that trigger Tremor Burst, (Tremor Potency on self)% chance to trigger an additional Tremor Burst. (max 50%)\n- When hit by Skills or Coin effects that trigger Tremor Burst, (Tremor Count on self)% chance to trigger an additional Tremor Burst. (max 50%)\n- When Hit by Skills that trigger Tremor Burst, raise the Stagger Threshold by the effect's Potency\n- Turn End:reduce the Count by 1\n(Interacts the same way as normal Tremor does to effects that raises or reduces Tremor Potency/Count)"
+  },
+  "tremor_-_chain": {
+    "key": "tremor_-_chain",
+    "name": "Tremor - Chain",
+    "image": "/Images/status-effect/Tremor_-_Chain.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Lose 1 Clash Power for every 10 Tremor Potency on self (max 3)\n- When Hit by Skills that trigger Tremor Burst, raise the Stagger Threshold by the effect's Potency\n- Turn End:reduce the Count by 1\n(Interacts the same way as normal Tremor does to effects that raises or reduces Tremor Potency/Count)"
+  },
+  "tremor_-_hemorrhage": {
+    "key": "tremor_-_hemorrhage",
+    "name": "Tremor - Hemorrhage",
+    "image": "/Images/status-effect/Tremor_-_Hemorrhage.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- On Tremor Burst, take Lust Damage equal to (sum of Tremor Potency and Bleed Potency / 2), and lose 1 Bleed Count\n- When hit by Skills that trigger Tremor Burst, raise this unit's Stagger Threshold by the effect's Potency\n- Turn End: reduce the Count by 1 (Interacts the same way as normal Tremor does to effects that raise or reduce Tremor Potency/Count)"
+  },
+  "poison": {
+    "key": "poison",
+    "name": "Poison",
+    "image": "/Images/status-effect/Poison.webp",
+    "color": "var(--Debuff-color)",
+    "description": "At the end of the turn, take fixed damage by the Count, then halve the Count."
+  },
+  "centipede_venom": {
+    "key": "centipede_venom",
+    "name": "Centipede Venom",
+    "image": "/Images/status-effect/Centipede_Venom.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 20\n- Turn End: Gain (Stack / 4) Defense Level Down next turn (rounded down)\n- Turn End: Take Gluttony damage equal to Stack, and halve the Stack (rounded down)\nUpon death, transfers to this unit's ally (for Focused Encounters, a different Part) that has none or the least Centipede Venom Stacks."
+  },
+  "hp_healing_down": {
+    "key": "hp_healing_down",
+    "name": "HP Healing Down",
+    "image": "/Images/status-effect/HP_Healing_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Decreases HP healing provided by Passive abilities, Skills, and Coin effects."
+  },
+  "weakness_analyzed": {
+    "key": "weakness_analyzed",
+    "name": "Weakness Analyzed",
+    "image": "/Images/status-effect/Weakness_Analyzed.webp",
+    "color": "var(--Debuff-color)",
+    "description": "A random \"Endure\" or \"Normal\" attack type resistance is weakened [+0.2 to damage multiplier] for one turn."
+  },
+  "declared_duel": {
+    "key": "declared_duel",
+    "name": "Declared Duel",
+    "image": "/Images/status-effect/Declared_Duel.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- In a Clash between the unit that inflicted Declared Duel and the unit that has the status, the declarer has +1 Clash Power. On Hit, the declarer gains 1 Haste next turn. (4 times per turn)\n- Expires when the unit inflicts Declared Duel on a different target. Replaced when another unit inflicts Declared Duel on the same target."
+  },
+  "immobilized": {
+    "key": "immobilized",
+    "name": "Immobilized",
+    "image": "/Images/status-effect/Immobilized.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Does not act for this turn."
+  },
+  "nails": {
+    "key": "nails",
+    "name": "Nails",
+    "image": "/Images/status-effect/Nails.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Unique Bleed\nTurn Start: Apply 1 Bleed to self, and increase Bleed count by this effect's Count.\nTurn End: halves Count (rounded down)."
+  },
+  "gaze": {
+    "key": "gaze",
+    "name": "Gaze",
+    "image": "/Images/status-effect/Gaze.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Affected unit takes more damage from Pierce and Blunt skills for one turn. The ally that defeats the marked unit heals sanity; if the ally is an 'N Corp. Fanatic', they also gain Fanatic next turn."
+  },
+  "talisman": {
+    "key": "talisman",
+    "name": "Talisman",
+    "image": "/Images/status-effect/Talisman.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Max Stack: 6\nOn Hit, consume 1 Rupture Count on target to inflict (Stack / 2) Rupture (inflicts at least 1 Rupture if Rupture Count was consumed; rounded down)\nWhen hit, gain (Stack / 2) Rupture and lose 1 Stack (gain at least 1; rounded down)\nTurn End: at 6+ Stack, remove all Talisman on self and take fixed damage by Stack"
+  },
+  "twisted_curse_talisman": {
+    "key": "twisted_curse_talisman",
+    "name": "Twisted Curse Talisman",
+    "image": "/Images/status-effect/Twisted_Curse_Talisman.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 10\n- Expires at Turn End\n- At 10+ Stack, when taking 30+ damage from a Skill: gain +1 Rupture Count; take Gluttony damage equal to Rupture Potency on self (once per turn)\n- When this effect expires, gain (Stack / 4) Attack Power Down next turn (max 2)\n※ Cannot gain additional Stacks of this effect while it is already active"
+  },
+  "vengeance_mark": {
+    "key": "vengeance_mark",
+    "name": "Vengeance Mark",
+    "image": "/Images/status-effect/Vengeance_Mark.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Applies to the enemy that inflicted the most skill damage to allies."
+  },
+  "red_plum_blossom": {
+    "key": "red_plum_blossom",
+    "name": "Red Plum Blossom",
+    "image": "/Images/status-effect/Red_Plum_Blossom.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Unique Bleed\n- Max Value: 10\n- +10% chance for this unit to be Critically hit if this unit is the main target\n- When struck by a Critical Hit, gain Bleed equal to half of the value and take +(value x 3)% damage on Critical Hit\n- Reduce value by 1 when hit"
+  },
+  "dark_flame": {
+    "key": "dark_flame",
+    "name": "Dark Flame",
+    "image": "/Images/status-effect/Dark_Flame.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Unique Burn\n- Max Value: 7\n- Target loses Defense Level equal to the value of this effect\n- Turn End: Deal (Value x Burn on target) Pride Affinity damage, then expires"
+  },
+  "maggots": {
+    "key": "maggots",
+    "name": "Maggots",
+    "image": "/Images/status-effect/Maggots.webp",
+    "color": "var(--Debuff-color)",
+    "description": "At the end of the turn, take Gluttony damage by the Count, increase Bleed Count by 1, then reduce this effect’s Count by 1."
+  },
+  "curse": {
+    "key": "curse",
+    "name": "Curse",
+    "image": "/Images/status-effect/Curse.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Turn End: next turn, randomly gain one of the following, then reduce this effect's Count by 1.\n1 Attack Power Down/1 Defense Power Down/2 Offense Level Down/2 Defense Level Down"
+  },
+  "pink_ribbons": {
+    "key": "pink_ribbons",
+    "name": "Pink Ribbons",
+    "image": "/Images/status-effect/Pink_Ribbons.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Count increases by 1 whenever the affected unit tosses an attack skill Coin. At the end of the turn, inflict Bind by the effect's Count, then remove the effect."
+  },
+  "dimensional_rift": {
+    "key": "dimensional_rift",
+    "name": "Dimensional Rift",
+    "image": "/Images/status-effect/Dimensional_Rift.webp",
+    "color": "var(--Debuff-color)",
+    "description": "At the end of the turn, gain Rupture Count by this effect's amount. Then, remove this effect."
+  },
+  "spark_discharge": {
+    "key": "spark_discharge",
+    "name": "Spark Discharge",
+    "image": "/Images/status-effect/Spark_Discharge.webp",
+    "color": "var(--Debuff-color)",
+    "description": "When hit, the attacker gains +1 Charge Count; when hit with a Gloom attack, gain +1 Rupture Count, then reduce Count by 1"
+  },
+  "echoes_of_the_manor": {
+    "key": "echoes_of_the_manor",
+    "name": "Echoes of the Manor",
+    "image": "/Images/status-effect/Echoes_of_the_Manor.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- 50% chance to gain +1 Sinking Count when gaining Sinking Potency or Count from Skill or Coin effects\n- SP Units: Change Panic Type to Echoes of the Manor. When this unit Panics, inflict Echoes of the Manor to 2 random other allies of this unit.\n- Non-SP Units: -10% chance to flip Heads.\n- Reduced by 1 at Turn End\n- This effect is not cumulative; inflicting it will replace the current value with the inflicted value.\n※ Apply the \"Non-SP Units\" conditional to certain enemies that have SP but can't change their Panic Types."
+  },
+  "before_the_king": {
+    "key": "before_the_king",
+    "name": "Before the King",
+    "image": "/Images/status-effect/Before_the_King.webp",
+    "color": "var(--Debuff-color)",
+    "description": "When this unit's attack with 1 Atk Weight hits, inflict 50% of the resulting Coin value on hit as (Affinity/Attack type of the Attack Skill used to hit) damage against 2 other attackable enemies with the least HP."
+  },
+  "time_moratorium": {
+    "key": "time_moratorium",
+    "name": "Time Moratorium",
+    "image": "/Images/status-effect/Time_Moratorium.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Does not take any damage as long as this effect is active; store all damage received instead\n- Combat End: If there is only 1 Count left of this effect, the effect triggers Tremor Burst (Stack) times after dealing (100 + (Stack x 15))% of stored damage as Sloth damage\n- Turn End: Gain 1 Stack and lose 1 Count\n- The Time Moratorium will immediately expire after triggering the Tremor Burst and the Sloth damage effect if another instance of Time Moratorium is inflicted on a unit that has Time Moratorium."
+  },
+  "fairy_lure": {
+    "key": "fairy_lure",
+    "name": "Fairy Lure",
+    "image": "/Images/status-effect/Fairy_Lure.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 5\n- Turn Start: leftmost Slot on the Dashboard gains +10 Aggro\n- Take +50% more damage\n- When hit, inflict 1 Rupture against the attacker (3 times per target's Skill)\n· At less than 50% HP, inflict 1 additional Rupture\n· If the target has 15+ Rupture, this effect does not inflict Rupture\n- Reduced by 1 at Turn End"
+  },
+  "deathrite【haste】": {
+    "key": "deathrite【haste】",
+    "name": "Deathrite [Haste]",
+    "image": "/Images/status-effect/Deathrite_-Haste-.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Base Stack: 3\n- When getting Rupture triggered by getting hit by an Attack Skill from a target with 10+ Speed, lose 1 Stack and gain +1 Rupture Count\n- At 0 Stack, take Gluttony damage equal to Rupture Potency on self; then, this effect expires\n※ Cannot gain additional Stacks of this effect while it is already active"
+  },
+  "deathrite【fissure】": {
+    "key": "deathrite【fissure】",
+    "name": "Deathrite [Fissure]",
+    "image": "/Images/status-effect/Deathrite_-Fissure-.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Base Stack: 3\n- When getting Rupture triggered while this unit has Deathrite, lose 1 Stack, and gain 1 Bind next turn\n· When this effect activates, if this unit is to gain 3 or more Bind next turn, lose 2 Stacks instead of gaining Bind\n- At 0 Stack, take Gluttony damage equal to Rupture Potency on self\n-※ Cannot gain additional Stacks of this effect while it is already active."
+  },
+  "deathrite【venom】": {
+    "key": "deathrite【venom】",
+    "name": "Deathrite [Venom]",
+    "image": "/Images/status-effect/Deathrite_-Venom-.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Base Stack: 5\n- Deathrite\n- When getting Rupture triggered by a Critical Hit from the target, lose 1 Stack\n- When losing Stacks due to this effect, gain 1 Offense Level Down or 1 Defense Level Down (3 times per turn)\n- When losing Stacks due to this effect, if the Stack drops to 0, take Gluttony damage equal to Rupture Potency on self\n- ※ Cannot gain additional Stacks of this effect while it is already active"
+  },
+  "vendetta_mark": {
+    "key": "vendetta_mark",
+    "name": "Vendetta Mark",
+    "image": "/Images/status-effect/Vendetta_Mark.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 10\n- Consumed by certain Skills or Passives\n- Take +2% damage from The Middle enemies for every Stack (max 20%)\n- Turn End: The unit with the highest Stack of this effect gains 1 Sibling Vengeance Mark next turn\n(Counted separately from Vengeance Mark; if more than a single unit has the highest Stack of this effect, this effect targets the one that has a higher HP percentage)"
+  },
+  "searing_birdcage": {
+    "key": "searing_birdcage",
+    "name": "Searing Birdcage",
+    "image": "/Images/status-effect/Searing_Birdcage.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Max Stack: 5\nIf this unit has Burn, Wrath Resistance +0.1 for every Stack (cannot exceed 2.0 Wrath Resistance with this effect)\nTurn End: gain Bind equal to Stack next turn\nTurn End: halve Stack (rounded down)\n※ Cannot gain additional Stacks of this effect while it is already active"
+  },
+  "mark_of_decay": {
+    "key": "mark_of_decay",
+    "name": "Mark of Decay",
+    "image": "/Images/status-effect/Mark_of_Decay.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 1\n- Take +10% damage from Gluttony Affinity Skills\n- Take +10% damage from Deathrite\n- Removed at Turn End"
+  },
+  "tremor_-_scorch": {
+    "key": "tremor_-_scorch",
+    "name": "Tremor - Scorch",
+    "image": "/Images/status-effect/Tremor_-_Scorch.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- On Tremor Burst, take Wrath Damage equal to (sum of Tremor Potency and Burn Potency / 2), and lose 1 Burn Count\n- When hit by Skills that trigger Tremor Burst, raise this unit's Stagger Threshold equal by the effect's Potency\n- Turn End: reduce the Count by 1\n(Interacts the same way as normal Tremor does to effects that raise or reduce Tremor Potency/Count)"
+  },
+  "mark_of_villainy": {
+    "key": "mark_of_villainy",
+    "name": "Mark of Villainy",
+    "image": "/Images/status-effect/Mark_of_Villainy.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Take +10% damage from Don Quixote\n- Applies only to the first target to receive the effect in each turn"
+  },
+  "hysteria": {
+    "key": "hysteria",
+    "name": "Hysteria",
+    "image": "/Images/status-effect/Hysteria.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Base Stack: 0\n- Max Stack: 3\n- At Turn End…\n· At 0 or higher SP, lose 1 Stack\n· At less than 0 SP, gain 1 Stack"
+  },
+  "regressive_transformation_-_reversed": {
+    "key": "regressive_transformation_-_reversed",
+    "name": "Regressive Transformation - Reversed",
+    "image": "/Images/status-effect/Regressive_Transformation_-_Reversed.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- For this turn, this unit uses Minus Coin Attack Skills"
+  },
+  "contempt_of_the_gaze": {
+    "key": "contempt_of_the_gaze",
+    "name": "Contempt of the Gaze",
+    "image": "/Images/status-effect/Contempt_of_the_Gaze.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Gain 7 Protection\n- Gain 7 Damage Down\n- One of this unit's Slots gains +20 Aggro\n- Cannot gain Gaze of Contempt as long as Contempt of the Gaze is active\n- Turn End: this effect expires"
+  },
+  "concussion": {
+    "key": "concussion",
+    "name": "Concussion",
+    "image": "/Images/status-effect/Concussion.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 2\n- Multiply the amount of Stagger Threshold raised and Rupture damage dealt against this unit by 1.2 (rounded down)\n- Lose 1 Stack at Turn End"
+  },
+  "comptempt": {
+    "key": "comptempt",
+    "name": "Contempt",
+    "image": "/Images/status-effect/Contempt_of_the_Gaze.webp",
+    "color": "var(--Debuff-color)",
+    "description": ""
+  },
+  "la_mancha_parade": {
+    "key": "la_mancha_parade",
+    "name": "La Mancha Parade",
+    "image": "/Images/status-effect/La_Mancha_Parade.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 4\n- Take +10% damage from Lust Skills\n· If the target is a <La Manchaland> Identity, take +20% damage regardless of the Skill's Affinity\n· At max Stack, deal -20% damage against <La Manchaland> Identities\n- Lose 1 Stack either after this unit's Skill hits and ends or after the Skill that attacked this unit hits and ends"
+  },
+  "open_wound": {
+    "key": "open_wound",
+    "name": "Open Wound",
+    "image": "/Images/status-effect/Open_Wound.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 2\n- Turn End: Gain 1 Bind next turn\n- Turn End: At 2 Stack, replace this effect with Deep Wound next turn"
+  },
+  "fatal_wound": {
+    "key": "fatal_wound",
+    "name": "Fatal Wound",
+    "image": "/Images/status-effect/Fatal_Wound.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Base Stack: 3\n- When Tremor Burst is triggered on this unit, gain +3 Bleed Count (2 times per turn)\n- Cannot gain Open Wound (in Focused Encounters, the Part)\n- Turn End: Gain Bind equal to Stack next turn\n- Turn End: Reduce Stack by 1"
+  },
+  "deep_wound": {
+    "key": "deep_wound",
+    "name": "Deep Wound",
+    "image": "/Images/status-effect/Deep_Wound.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Base Stack: 3\n- When Tremor Burst is triggered on this unit, gain +1 Bleed Count (2 times per turn)\n- Cannot gain Open Wound (in Focused Encounters, the Part)\n- Turn End: Gain (Stack - 1) Bind next turn\n- Turn End: Reduce Stack by 1"
+  },
+  "shattermark": {
+    "key": "shattermark",
+    "name": "Shattermark",
+    "image": "/Images/status-effect/Shattermark.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Take +10% damage from Gluttony and Gloom Skills\n- SP Units: change their Panic Type to \"Shattermark\"\n- Non-SP Units: Clash Power -1\n- Tum End: Reduce 1 Stack\n- This effect is not cumulative; inflicting it will replace the current value with the inflicted value\n- Apply the \"Non-SP Units\" conditional to certain enemies that have SP but can't change their Panic Types\n※ Shattermark Panic-type Effects\n- Low Morale: Clash Power -1, Defense Level -2 on self\n- Panic: Clash Power -2, Defense Level -3 on self"
+  },
+  "needle": {
+    "key": "needle",
+    "name": "Needle",
+    "image": "/Images/status-effect/Needle.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Unique Bleed\n- When taking Envy damage, gain +1 Bleed Count and reduce this effect's Stack by 1\n- Turn End: Gain 1 Bleed and reduce this effect's Stack by 1"
+  },
+  "resident_reg._microchip": {
+    "key": "resident_reg._microchip",
+    "name": "Resident Reg. Microchip",
+    "image": "/Images/status-effect/Resident_Reg._Microchip.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 2\n- Take +10% damage from Wrath and Envy Skills\n- On Clash Lose, gain 1 Burn (3 times per turn)\n- Turn End: Lose 1 Stack"
+  },
+  "shattered_world": {
+    "key": "shattered_world",
+    "name": "Shattered World",
+    "image": "/Images/status-effect/Shattered_World.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 1\n- Expires at Turn End\n- Take x1.2 damage from Burn (rounded down; except Unique Burn)\n- Take +10% damage from Yi Sang's Wrath and Gloom Base Attack Skills"
+  },
+  "karmic_consequence": {
+    "key": "karmic_consequence",
+    "name": "Karmic Consequence",
+    "image": "/Images/status-effect/Karmic_Consequence.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Turn Start:\n· Gain 1 Defense Level Down for every 10 Stacks\n· Gain 1 Fragile for every 20 Stacks\n- Max Stack: 100"
+  },
+  "sheut_fracture": {
+    "key": "sheut_fracture",
+    "name": "Sheut Fracture",
+    "image": "/Images/status-effect/Sheut_Fracture.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Unique Sinking\n- Max Stack: 10\n- For every Stack, take +1% damage from Sloth and Gloom Skills\n- At max Stack, gain 1 Gloom Fragility (once per turn), take Gloom damage equal to Sinking Potency on self (lose 1 Sinking Count), then expires\n- If the unit that has this effect dies, transfer half of its Stack to its ally that has the highest SP (rounded down)\n- Turn Start: If there are no LCA Identities on the field, expires"
+  },
+  "blue_sand": {
+    "key": "blue_sand",
+    "name": "Blue Sand",
+    "image": "/Images/status-effect/Blue_Sand.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- On Clash Lose, gain +1 Sinking Count (3 times per turn)\n- SP Units: change their Panic Type to \"Blue Sand\"\n- Non-SP Units: Min & Max Speed -1\n- Turn End: Reduce 1 Stack\n- This effect is not cumulative; inflicting it will replace the current value with the inflicted value\n- Apply the \"Non-SP Units\" conditional to certain enemies that have SP but can't change their Panic Types\n※ Blue Sand Panic Effects\n- Low Morale: Clash Power -1, Min & Max Speed -1\n- Panic: Clash Power -2, Min & Max Speed -1"
+  },
+  "gloom_resist_down": {
+    "key": "gloom_resist_down",
+    "name": "Gloom Resist Down",
+    "image": "/Images/status-effect/Gloom_Resist_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Increase Gloom Resistance based on Count\n(0.1 per Count)"
+  },
+  "dazzle": {
+    "key": "dazzle",
+    "name": "Dazzle",
+    "image": "/Images/status-effect/Dazzle.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- For every 1 (Sinking + Burn), take +0.5% damage from Base Attack Skills (max 10%)\n- SP Units: Change their Panic Type to \"Dazzle\"\n- Non-SP Units: Defense Level -2\n- Turn End: Lose 1 Stack\n- This effect is not cumulative; inflicting it will replace the current value with the inflicted value\n- Apply the \"Non-SP Units\" conditional to certain enemies that have SP but can't change their Panic Types\n※ \"Dazzle\" Panic-type effects:\n- Low Morale: Turn End: Gain 1 Bind and 2 Offense Level Down next turn\n- Panic: Turn End: Gain 1 Bind and 4 Offense Level Down next turn"
+  },
+  "embers": {
+    "key": "embers",
+    "name": "Embers",
+    "image": "/Images/status-effect/Embers.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Potency: 3\n- Max Count: 6\n- If this unit has Burn, lose 1 Embers Count when hit by a Skill that inflicts Burn Potency, Count, or 'Unique Burn' (including E.G.O Skills)\n- If this unit does not have Burn, reset Embers Count to 6 when hit (independent of Skills that inflict Burn)\n- At 0 Embers Count, activate the following effects:\n· Activate Burn on self once and lose 1 Burn Count\n· Lose 1 Embers Potency\n· If this unit has 1+ remaining Embers Potency, reset Embers Count to 6"
+  },
+  "faint_aroma": {
+    "key": "faint_aroma",
+    "name": "Faint Aroma",
+    "image": "/Images/status-effect/Faint_Aroma.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 30\n- Gain 1 Stack if this unit takes Sinking damage\n- Upon Tremor Burst, apply 1~2 Faint Aroma on 3 other random allies (for Abnormalities, the Part)\n- At max Stack, gain 2 Tremor and trigger Tremor Burst on self; then, take Gloom damage equal to Sinking on self and lose all Faint Aroma. Cannot gain Faint Aroma for the rest of the turn.\n- If this unit is killed, inflict (remaining Faint Aroma on this unit / 2) Faint Aroma randomly between this unit's allies (rounded down)"
+  },
+  "solitude": {
+    "key": "solitude",
+    "name": "Solitude",
+    "image": "/Images/status-effect/Solitude.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Take +10% damage from Gloom Skills\n- SP Units: Change their Panic Type to 'Solitude'\n- Non-SP Units: Gain +2 Sinking Count at Turn End\n- Turn End: Lose 1 Stack\n- This effect is not cumulative; inflicting it will replace the current value with the inflicted value\n- Apply the \"Non-SP Units\" conditional to certain enemies that have SP but cannot change their Panic Types\n※ Solitude Panic Effect:\n- Low Morale: Gain +2 Sinking Count at Turn End\n- Panic: Gain +3 Sinking Count at Turn End"
+  },
+  "spore": {
+    "key": "spore",
+    "name": "Spore",
+    "image": "/Images/status-effect/Spore.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 15\n- Turn End: Gain +1 Burn Count for every 5 Stack\n- Gain 1 Bind next turn"
+  },
+  "rhythm": {
+    "key": "rhythm",
+    "name": "Rhythm",
+    "image": "/Images/status-effect/Rhythm.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 5\n- Deal +2% damage for every Stack (max 10%)\n- Offense Level +1 for every Stack (max 5)\n- Defense Level -1 for every Stack (max -5)\n- Turn End: This effect expires"
+  },
+  "corpus_theater": {
+    "key": "corpus_theater",
+    "name": "Corpus Theater",
+    "image": "/Images/status-effect/Corpus_Theater.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Base Stack: 3\n- When this unit gains Bleed from enemy Attack Skills, randomly gain 1 of the following effects next turn and lose 1 Stack of this effect (once per Skill)\n· 3 Bleed Potency\n· 1 Bind\n· 1 Defense Power Down"
+  },
+  "charged_sting": {
+    "key": "charged_sting",
+    "name": "Charged Sting",
+    "image": "/Images/status-effect/Charged_Sting.webp",
+    "color": "var(--Debuff-color)",
+    "description": "For every Stack, take +4% Damage from Skills that gain or consume Charge Count (including 'Unique Charge') (max 20%)\n· For Envy Skills, strengthen this effect and take +8% for every Stack instead instead (max 40%)\nMax Stack: 5\nLose 1 Stack at Attack End or Turn End after being hit by Skills that fulfill the effect-triggering conditions above (excluding Base Attack Skills that inflict Charged Sting)"
+  },
+  "slash_resist_down": {
+    "key": "slash_resist_down",
+    "name": "Slash Resist Down",
+    "image": "/Images/status-effect/Slash_Resist_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Increase Slash Resistance based on Count\n(0.1 per Count)"
+  },
+  "pierce_resist_down": {
+    "key": "pierce_resist_down",
+    "name": "Pierce Resist Down",
+    "image": "/Images/status-effect/Pierce_Resist_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Increase Pierce Resistance based on Count\n(0.1 per Count)"
+  },
+  "blunt_resist_down": {
+    "key": "blunt_resist_down",
+    "name": "Blunt Resist Down",
+    "image": "/Images/status-effect/Blunt_Resist_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Increase Pierce Resistance based on Count\n(0.1 per Count)"
+  },
+  "wrath_resist_down": {
+    "key": "wrath_resist_down",
+    "name": "Wrath Resist Down",
+    "image": "/Images/status-effect/Wrath_Resist_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Increase Wrath Resistance based on Count\n(0.1 per Count)"
+  },
+  "envy_resist_down": {
+    "key": "envy_resist_down",
+    "name": "Envy Resist Down",
+    "image": "/Images/status-effect/Envy_Resist_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Increase Envy Resistance based on Count\n(0.1 per Count)"
+  },
+  "power_down": {
+    "key": "power_down",
+    "name": "Power Down",
+    "image": "/Images/status-effect/Power_Down.webp",
+    "color": "var(--Debuff-color)",
+    "description": "All skills lose Final Power by the effect's Potency for one turn."
+  },
+  "touche_hardie": {
+    "key": "touche_hardie",
+    "name": "Touche Hardie",
+    "image": "/Images/status-effect/Touche_Hardie.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 2\n- Take +10% HP and SP damage from Bleed and Sinking effects for every Stack (max 20%, rounded down)\n- Turn End: Lose 1 Stack"
+  },
+  "mauled_color_[rouge]": {
+    "key": "mauled_color_[rouge]",
+    "name": "Mauled Color [Rouge]",
+    "image": "/Images/status-effect/Mauled_Color_-Rouge-.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 9\n- When hit, gain 1 Bleed Potency for every 3 Stack (once per turn)\n- Turn End: Gain 1 Defense Level Down next turn for every 4 Stack (max 2)\n- Turn End: Lose 1 Stack"
+  },
+  "trussed_[hong_lu]": {
+    "key": "trussed_[hong_lu]",
+    "name": "Trussed [Hong Lu]",
+    "image": "/Images/status-effect/Trussed_-Hong_Lu-.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Base Stack: 3\n- Min & Max Speed -2\n- Take +10% Pride Damage\n- Expires when the inflicter Retreats, is killed, or inflicts it on a different target. Replaced when Trussed by another unit.\n- Lose 1 Stack if the inflicter did not hit this unit this turn"
+  },
+  "avulsion_wound": {
+    "key": "avulsion_wound",
+    "name": "Avulsion Wound",
+    "image": "/Images/status-effect/Avulsion_Wound.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 3\n- Turn Start: Gain 2 Bleed\n- Turn End: Gain 1 Bind next turn\n- Turn End: Lose 1 Stack"
+  },
+  "lodged_arrow": {
+    "key": "lodged_arrow",
+    "name": "Lodged Arrow",
+    "image": "/Images/status-effect/Lodged_Arrow.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 4\n- Turn Start: gain Bleed Potency by Stack\n- Lose Defense Level by Stack\n- Turn End: at 2+ Stack, gain 1 Fragile next turn (once per turn)\n- Expires on: Death, Retreat, buff removal/expiration. When it expires, apply Arrow - Shi to Shi East Section 3 Faust by Stack"
+  },
+  "palette_vibrante": {
+    "key": "palette_vibrante",
+    "name": "Palette Vibrante",
+    "image": "/Images/status-effect/Palette_Vibrante.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 4\n- Take +(Stack x 2.5)% damage from The Ring-faction Identities\n· If the attacker is in both The Ring faction and School of Fauvism faction, take +(Stack x 5)% damage instead\n- Combat Start: Randomly gain 1 Bleed, 1 Sinking, 1 Bleed Count, or 1 Sinking Count (Stack) times\n- Combat End: This effect expires. Halve Mauled Color [Rouge] and Mauled Color [Bleu] Stacks on this unit (rounded down)"
+  },
+  "tremor_-_superposition": {
+    "key": "tremor_-_superposition",
+    "name": "Tremor - Superposition",
+    "image": "/Images/status-effect/Tremor_-_Superposition.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Gained through Amplitude Entanglement\n- When triggering Amplitude Conversion, add the effects of the resulting Tremor type to the list of active Tremor effects under Tremor - Superposition."
+  },
+  "mauled_color_[bleu]": {
+    "key": "mauled_color_[bleu]",
+    "name": "Mauled Color [Bleu]",
+    "image": "/Images/status-effect/Mauled_Color_-Bleu-.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 9\n- When hit, gain 1 Sinking Potency for every 3 Stack (once per turn)\n- Turn End: At 5+ Stack, lose 5 SP\n- Turn End: Lose 1 Stack"
+  },
+  "the_uninvited": {
+    "key": "the_uninvited",
+    "name": "The Uninvited",
+    "image": "/Images/status-effect/The_Uninvited.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Value: 2\n- Upon death, the last attacker heals 3 SP; then, a random ally without this effect gains 2 Stacks of this effect.\n- Take +0.5% more damage for every Sinking on self (max 10%; for Focused Encounters, count Sinking on each Part separately)\n- Turn End: reduced by 1"
+  },
+  "photoelectricity": {
+    "key": "photoelectricity",
+    "name": "Photoelectricity",
+    "image": "/Images/status-effect/Photoelectricity.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Max Value: 3\nWhen this unit is hit, the Attacker gains Charge Count equal to the value (once per Skill)\n- If the Attacker has 5- Charge Count, they gain +3 additional Charge Count\nTurn End: this effect expires"
+  },
+  "impending_ruin": {
+    "key": "impending_ruin",
+    "name": "Impending Ruin",
+    "image": "/Images/status-effect/Impending_Ruin.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- SP Units: change their Panic Type to \"Ruin\".\n(Ruin: When this unit enters Low Morale state, gain 3 Sinking at every Turn End and lose 1 Clash Power. When this unit Panics, gain 5 Sinking and 3 Sinking Count at every Turn End and lose 2 Clash Power)\n- Non-SP Units: -10% chance to flip Heads\n- Reduced by 1 at Turn End\n- This effect is not cumulative; inflicting it will replace the current value with the inflicted value.\n※ Apply the \"Non-SP Units\" conditional to certain enemies that have SP but can't change their Panic Types."
+  },
+  "only_ashes_remain": {
+    "key": "only_ashes_remain",
+    "name": "Only Ashes Remain",
+    "image": "/Images/status-effect/Only_Ashes_Remain.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Cannot maintain Red Eyes & Penitence\n- When gaining Red Eyes with Base Skill effects, heal self and 1 ally with the lowest HP percentage by (Red Eyes gained)% of this unit's max HP (2 times per turn)\n- When gaining Penitence with Base Skill effects, heal self and 1 ally with the least SP by ((Penitence gained)/2) SP (2 times per turn)\n- Turn End: this effect expires"
+  },
+  "nerve_strike": {
+    "key": "nerve_strike",
+    "name": "Nerve Strike",
+    "image": "/Images/status-effect/Nerve_Strike.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 3\n- The unit that inflicted this Nerve Strike gains the following effects based on the target's (or targeted Part's) Nerve Strike Stack\n· 1x Stack: Gain Clash Power +1\n· 2x Stack: Gain Base Power +1\n· 3x Stack: Gain Clash Power +1 and Base Power +1\n- Expires if the unit that inflicted it inflicts this effect against a different target (or a different Part)\n- Replaced when another unit inflicts Nerve Strike"
+  },
+  "sibling_vengeance_mark": {
+    "key": "sibling_vengeance_mark",
+    "name": "Sibling Vengeance Mark",
+    "image": "/Images/status-effect/Sibling_Vengeance_Mark.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 1\n- Expires at Turn End\n- Every Identity treats this unit as having their Vengeance Mark"
+  },
+  "book_of_vengeance_[the_house_of_spiders]": {
+    "key": "book_of_vengeance_[the_house_of_spiders]",
+    "name": "Book of Vengeance [The House of Spiders]",
+    "image": "/Images/status-effect/Book_of_Vengeance_-The_House_of_Spiders-.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Against units that have this effect, The House of Spiders: The Middle Nursefather Outis and The House of Spiders: The Middle Apprentice Ishmael heal 5 SP On Hit using a Skill (once per Skill, 2 times per turn)\n- On Hit using a Skill against The House of Spiders: The Middle Nursefather Outis, gain 1 additional Stack of The Middle - Grudge (once per Skill, 2 times per turn for each Identity)\n- On Hit using a Skill against The House of Spiders: The Middle Apprentice Ishmael, gain 1 additional Stack of The Middle - Grudge (once per Skill, 2 times per turn for each Identity)\n- Expires at Turn End"
+  },
+  "b.m.": {
+    "key": "b.m.",
+    "name": "B.M.",
+    "image": "/Images/status-effect/Butler's_Mark.webp",
+    "color": "var(--Debuff-color)",
+    "description": "Enhances Edgar Family Chief Butler Ryōshū Skills against targets with this effect\nTurn End: reduce the Count by 1"
+  },
+  "contempt": {
+    "key": "contempt",
+    "name": "Contempt",
+    "image": "/Images/status-effect/Contempt_of_the_Gaze.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 1\n- Take and deal -50% damage from and against Ryōshū\n- Targets with Contempt cannot gain Gaze\n- On death, transfers to this unit's ally (for Focused Encounters, a different Part) that has no Contempt or Gaze, or has the least Contempt or Gaze (this effect does not activate if this unit was killed during the Skill attack 'Cascading Gaze of Awe Underneath Contempt')\n- Turn End: Expires; then, this unit gains 7 Gaze next turn"
+  },
+  "bladetrail_[afterimage]": {
+    "key": "bladetrail_[afterimage]",
+    "name": "Bladetrail [Afterimage]",
+    "image": "/Images/status-effect/Bladetrail_-Afterimage-.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 100\n- Take +1% damage from Slash Skills for every 10 Stack"
+  },
+  "phantom_trace": {
+    "key": "phantom_trace",
+    "name": "Phantom Trace",
+    "image": "/Images/status-effect/Dawn's_First_Crow_(雞鳴).webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 1\n- Take +5% damage from Blade of the House of Spiders Ryōshū's Base Attack Skills\nA phantom trace (殘影) is not simply a faint shade left in passing. It is the shadow of times past, cruelly drawn across bygone days."
+  },
+  "pheromone_mark": {
+    "key": "pheromone_mark",
+    "name": "Pheromone Mark",
+    "image": "/Images/status-effect/Pheromone_Mark.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- For every 3 Burn on self, take +1% damage when hit (max 20%)\n- Expires at Turn End"
+  },
+  "art_medium": {
+    "key": "art_medium",
+    "name": "Art Medium",
+    "image": "/Images/status-effect/Art_Medium.webp",
+    "color": "var(--Debuff-color)",
+    "description": "If this unit has Bleed (in Focused Encounters, count Bleed on each Part separately), take +10% damage from Lust Skills"
+  },
+  "gluttonous_thorn_(貪食棘)": {
+    "key": "gluttonous_thorn_(貪食棘)",
+    "name": "Gluttonous Thorn (貪食棘)",
+    "image": "/Images/status-effect/Gluttonous_Thorn_(貪食棘).webp",
+    "color": "var(--Debuff-color)",
+    "description": "Max Stack: 9\nTurn End: gain Bleed Count equal to Lust Reson., then lose 1 Gluttonous Thorn (貪食棘). (max Bleed Count gain: 5)\nWhile this unit has this effect, if it gains Bleed Potency beyond 99, increase Bloodfeast equal to the excess Bleed Potency; then, gain Defense Level Down next turn equal to Bloodfeast increased (max Defense Level Down gain: 5)"
+  },
+  "pink_petals": {
+    "key": "pink_petals",
+    "name": "Pink Petals",
+    "image": "/Images/status-effect/Pink_Petals.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 30\n- For every Stack, take +1% damage when hit by Gloom Skills (max 15%)\n- For every 10 Stack, gain +1 Sinking Count when hit (2 times per turn)\n- When Tremor Burst is triggered on this unit, take ((Sinking Potency + Pink Petals) / 5) Gloom damage\n- Turn End: Lose 1 Stack"
+  },
+  "reflux": {
+    "key": "reflux",
+    "name": "Reflux",
+    "image": "/Images/status-effect/Reflux.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 3\nWhen hit, gain Sinking Potency equal to Stack\nTurn End: if this unit has -30 or less SP, activate the following effects (for Non-SP Units, activates at 60+ Sinking Potency):\n- Take (Sinking Potency on self x Stack) Gloom damage\n- Inflict 1 Reflux against 2 other targets with the least SP (for Abnormalities, Parts); then, deal (Sinking Potency x Stack) Gloom damage to both targets, respectively\nIf the unit with Reflux dies, transfer its Reflux Stack to its ally with the highest Reflux Stack"
+  },
+  "requested_target": {
+    "key": "requested_target",
+    "name": "Requested Target",
+    "image": "/Images/status-effect/Requested_Target.webp",
+    "color": "var(--Debuff-color)",
+    "description": "+0.2 Resistance to Attack Types with 1.5 or less Resistance. If the target with this effect is defeated, gain 1 E.G.O resource for all Affinities, and the unit that defeated the target heals 10 SP"
+  },
+  "delicateness": {
+    "key": "delicateness",
+    "name": "Delicateness",
+    "image": "/Images/status-effect/Delicateness.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 10\n- Take +10% damage for every Stack"
+  },
+  "the_duel_escalates": {
+    "key": "the_duel_escalates",
+    "name": "The Duel Escalates",
+    "image": "/Images/status-effect/The_Duel_Escalates_(Heathcliff).webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Affects The House of Spiders: The Thumb Apprentice Heathcliff's Skills and Passive effects\n- Can gain up to 3 Stacks per turn\n- Max Stack: 5"
+  },
+  "severed_tendon": {
+    "key": "severed_tendon",
+    "name": "Severed Tendon",
+    "image": "/Images/status-effect/Severed_Tendon_(Heathcliff).webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Base Power -1\n- Expires at Turn End\n- Max Stack: 1"
+  },
+  "overheated_coffin": {
+    "key": "overheated_coffin",
+    "name": "Overheated Coffin",
+    "image": "/Images/status-effect/Overheated_Coffin.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 1\n- Turn End:\n· Gain 3 Burn next turn\n· This effect expires\n\"Keep in mind, however, that convenience is always accompanied by a trade-off. A weapon of this structure comes with drawbacks that standard Stigma Workshop weapons would not possess—inevitable penalties that can only be mitigated by Singularities, the pinnacle of the myriad technological innovations of the City.\"\n\"It would do justice to properly acknowledge the extraordinary qualities of Singulari—ahem. That was tangential to the subject. Let us return to the subject, Sinclair.\""
+  },
+  "fracturing_of_the_senses": {
+    "key": "fracturing_of_the_senses",
+    "name": "Fracturing of the Senses",
+    "image": "/Images/status-effect/Fracturing_of_the_Senses.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 5\n- When other allies are hit, gain +1 Tremor Count, and lose 1 Stack (once per Skill)\n- If there are no other allies on the field, gain 2 Tremor Potency when hit, and lose 1 Stack (once per Skill)\n- When hit by Crit Attack, take +(Tremor Potency on self)% damage (max 15%)\nThe fracturing occurs when one first recognizes the incongruity between the forms of the body and heart."
+  },
+  "mark_of_shearing": {
+    "key": "mark_of_shearing",
+    "name": "Mark of Shearing",
+    "image": "/Images/status-effect/Mark_of_Shearing.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 4\n- When a target that has this effect is defeated, the unit that inflicted this effect heals 5 SP and gains 1 Offense Level Up next turn (3 times per turn)\nA cutting mark used to trim fabric and other materials to the required measurements."
+  },
+  "promised_nail": {
+    "key": "promised_nail",
+    "name": "Promised Nail",
+    "image": "/Images/status-effect/Promised_Nail.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 30\n- Upon Tremor Burst due to Skill effects, take 1 Sloth damage for every Stack (max 10; once per Skill)\n- Turn End: At 4+ Stack, gain 1 Bind next turn\n- Turn Start: If Haute Couture::Le Noir Brand Manager Don Quixote is not on the field, expires\nThe promised hammer is bound by promise to drive in a nail. Therefore, whenever the hammer falls, a nail must exist there... even if there is none."
+  },
+  "tremor_-_conservation": {
+    "key": "tremor_-_conservation",
+    "name": "Tremor - Conservation",
+    "image": "/Images/status-effect/Tremor_-_Conservation.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- On Tremor Burst, take Sloth Damage equal to (60 + sum of Charge Potency or Unique Charge on the attacker x 8)% of Tremor Potency, and reduce the Count by 1 (max 120%)\n· When \"Le Noir\" units' Skills and Passives trigger Tremor Burst, the above effect does not reduce the Count\n- When hit by Tremor Burst Skills, raise Stagger Threshold by this effect's Potency\n- Turn End: Lose 1 Count\n(Interacts the same way as normal Tremor does to effects that raise or reduce Tremor Potency/Count)"
+  },
+  "naildle": {
+    "key": "naildle",
+    "name": "Naildle",
+    "image": "/Images/status-effect/Naildle.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Unique Bleed\n- Max Stack: 10\n- Turn End: Lose 1 Stack\n- When losing this effect's Stack, gain 1 Bleed Potency and take 3 Lust damage for every Stack lost\n- Turn End: If enemy Haute Couture::The Crimson God of Le Rouge Sinclair is on the field and this unit has this effect, this unit gains 1 L'Abject"
+  },
+  "taxidermized": {
+    "key": "taxidermized",
+    "name": "Taxidermized",
+    "image": "/Images/status-effect/Taxidermized.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 1\n- Skill Final Power -1\n- On Attack Skill Use, activate Bleed on self and lose 1 Bleed Count (once per Skill)\n- Turn End: Gain +2 Bleed Count, 1 Power Down, and 2 Bind next turn\n- Turn End: This effect expires"
+  },
+  "wedge_-_don_quixote": {
+    "key": "wedge_-_don_quixote",
+    "name": "Wedge - Don Quixote",
+    "image": "/Images/status-effect/Wedge_-_Don_Quixote.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 8\n- At sufficient Stacks, empower a certain Skill of Wedge Office Fixer Sinclair/Wedge Office Fixer Don Quixote[1]\n- Turn End: Gain +1 Tremor Count\n- Turn Start: If there are no enemy \"Wedge Office\" characters on the field, this effect expires"
+  },
+  "wedge_-_sinclair": {
+    "key": "wedge_-_sinclair",
+    "name": "Wedge - Sinclair",
+    "image": "/Images/status-effect/Wedge_-_Sinclair.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 8\n- At sufficient Stacks, empower a certain Skill of Wedge Office Fixer Sinclair/Wedge Office Fixer Don Quixote[1]\n- Turn End: Gain +1 Tremor Count\n- Turn Start: If there are no enemy \"Wedge Office\" characters on the field, this effect expires"
+  },
+  "auditive_punishment": {
+    "key": "auditive_punishment",
+    "name": "Auditive Punishment",
+    "image": "/Images/status-effect/Auditive_Punishment.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 2\n- Lose Offense Level equal to Stack\n- If there is an Identity that has Time to Listen, take +(Stack x 10)% damage from \"Le Noir\" Identities\n- Turn End: If there is an Identity that has Time to Listen, lose 1 Stack (if the Identity that inflicted this effect has been defeated or Retreated, expires)"
+  },
+  "sword_of_a_forgotten_knight": {
+    "key": "sword_of_a_forgotten_knight",
+    "name": "Sword of a Forgotten Knight",
+    "image": "/Images/status-effect/Sword_of_a_Forgotten_Knight.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 3\n- When hit by Pierce or Pride Skills, gain 1 Stack (once per Skill)\n· At max Stack, take 50 Pride damage; then, this effect expires. Gain 1 Pierce Fragility this turn and next turn\n- Only 1 character can have this effect at any given time (existing effect expires when inflicted on another target)"
+  },
+  "embedded_spearhead": {
+    "key": "embedded_spearhead",
+    "name": "Embedded Spearhead",
+    "image": "/Images/status-effect/Embedded_Spearhead.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- Max Stack: 1\n- On Crit using Pierce Base Attack Skills by targets other than the target that inflicted this effect, take +15% damage\n- When hit by Skills that have the \"Joint Combo\" effect, take an additional +20% damage\n- At Skill End of the Skill that hit, expires"
+  },
+  "a_test_of_despair": {
+    "key": "a_test_of_despair",
+    "name": "A Test of Despair",
+    "image": "/Images/status-effect/A_Test_of_Despair.webp",
+    "color": "var(--Debuff-color)",
+    "description": "- All Slots gain +20 Aggro\n- On Attack Skill Use, lose 20 SP\n- On Death, all other allies lose 20 SP"
+  }
 }

@@ -1,104 +1,751 @@
 {
-  "procuration_[hermes]": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Procuration_-Hermes-.webp' alt='' />Procuration [Hermes]</span>",
-  "bullet_-_solitude": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Bullet_-_Solitude.webp' alt='' />Bullet - Solitude</span>",
-  "spore_round_[base]": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Spore_Round_-Base-.webp' alt='' />Spore Round [Base]</span>",
-  "spore_round_[buckshot]": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Spore_Round_-Buckshot-.webp' alt='' />Spore Round [BuckShot]</span>",
-  "reload_[germination]": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Reload_-Germination-.webp' alt='' />Reload [Germination]</span>",
-  "aggro": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Aggro.webp' alt='' />Aggro</span>",
-  "unfocused_volley": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Unfocused_Volley.webp' alt='' />Unfocused Volley</span>",
-  "ammo": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Ammo.webp' alt='' />Ammo</span>",
-  "ammo_-_atelier_logic": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Ammo_-_Atelier_Logic.webp' alt='' />Ammo - Atelier Logic</span>",
-  "discard": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration: underline;'><img class='status-icon' src='/Images/status-effect/Discard.webp' alt='' />Discard</span>",
-  "responsibility": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration: underline;'><img class='status-icon' src='/Images/status-effect/Responsibility.webp' alt='' />Responsibility</span>",
-  "sp_heal_efficiency": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/SP_Heal_Efficiency.webp' alt='' />SP Heal Efficiency</span>",
-  "sp_loss_efficiency": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/SP_Loss_Efficiency.webp' alt='' />SP Loss Efficiency</span>",
-  "single_combat": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Single_Combat.webp' alt='' />Single Combat</span>",
-  "insight": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Insight.webp' alt='' />Insight</span>",
-  "k_corp_ampule": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/K_Corp_Ampule.webp' alt='' />K Corp Ampule</span>",
-  "magic_bullet": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Magic_Bullet.webp' alt='' />Magic Bullet</span>",
-  "reload": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Reload.webp' alt='' />Reload</span>",
-  "the_living_&_the_departed": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/The_Living_&_The_Departed.webp' alt='' />The Living & The Departed</span>",
-  "final_augment": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Final_Augment.webp' alt='' />Final Augment</span>",
-  "courier_trunk": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Courier_Trunk.webp' alt='' />Courier Trunk</span>",
-  "strategic_r&r_mode": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Strategic_R&R_Mode.webp' alt='' />Strategic R&R Mode</span>",
-  "overwatch_assignment": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Overwatch_Assignment.webp' alt='' />Overwatch Assignment</span>",
-  "surgery": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Makeshift_Surgery.webp' alt='' />Makeshift Surgery</span>",
-  "blubberbubble": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Blubberbubble.webp' alt='' />Blubberbubble</span>",
-  "amplitude_conversion": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Amplitude_Conversion.webp' alt='' />Amplitude Conversion</span>",
-  "amplitude_entanglement": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Amplitude_Entanglement.webp' alt='' />Amplitude Entanglement</span>",
-  "clashable_guard": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Clashable_Guard.webp' alt='' />Clashable Guard</span>",
-  "unbreakable_coin": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/Unbreakable_Coin.webp' alt='' />Unbreakable Coin</span>",
-  "excision_coin": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/Excision_Coin.webp' alt='' />Excision Coin</span>",
-  "bloodfeast": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/bloodfeast.webp' alt='' />Bloodfeast</span>",
-  "bloodfeast_consumed": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/bloodfeast_consumed.webp' alt='' />Bloodfeast Consumed</span>",
-  "bloodfeast_consumed_(shared)": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/bloodfeast_consumed.webp' alt='' />Bloodfeast Consumed (shared)</span>",
-  "overheated_fuel": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Overheated_Fuel.webp' alt='' />Overheated Fuel</span>",
-  "district_12_fuel": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/District_12_Fuel.webp' alt='' />District 12 Fuel</span>",
-  "shallow_exhale": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Shallow_Exhale.webp' alt='' />Shallow Exhale</span>",
-  "dark_cloud": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Dark_Cloud.webp' alt='' />Dark Cloud</span>",
-  "assist_defense": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Assist_Defense.webp' alt='' />Assist Defense</span>",
-  "tianjiu_star's_blade": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Tianjiu_Star&#39;s_Blade.webp' alt='' />Tianjiu Star's Blade</span>",
-  "launcher_[始]": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Launcher_-始-.webp' alt='' />Launcher [始]</span>",
-  "ready_[待]": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Ready_-待-.webp' alt='' />Ready [待]</span>",
-  "battlefield_retreat": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Battlefield_Retreat.webp' alt='' />Battlefield Retreat</span>",
-  "savage_tigermark_round": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Savage_Tigermark_Round.webp' alt='' />Savage Tigermark Round</span>",
-  "tigermark_round": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Tigermark_Round.webp' alt='' />Tigermark Round</span>",
-  "torn_memory": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Torn_Memory.webp' alt='' />Torn Memory</span>",
-  "your_will_guides_my_blade.": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Your_Will_Guides_My_Blade.webp' alt='' />Your Will Guides My Blade</span>",
-  "exalted_command": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Exalted_Command.webp' alt='' />Exalted Command</span>",
-  "lordsguard": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/LordsGuard.webp' alt='' />LordsGuard</span>",
-  "arrow_-_shi": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Arrow-Shi.webp' alt='' />Arrow-Shi</span>",
-  "overcharge": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Overcharge.webp' alt='' />Overcharge</span>",
-  "hand_-_pine_crane_suit": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Hand_-_Pine_Crane_Suit.webp' alt='' />Hand - Pine Crane Suit</span>",
-  "hand_-_susuki_grass_suit": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Hand_-_Susuki_Grass_Suit.webp' alt='' />Hand - Susuki Grass Suit</span>",
-  "hand_-_blue_sakura_suit": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Hand_-_Blue_Sakura_Suit.webp' alt='' />Hand - Blue Sakura Suit</span>",
-  "prescript:_[paper_slip]": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Prescript_[Paper_Slip].webp' alt='' />Prescript [Paper Slip]</span>",
-  "prescript:_[paper_slip]_i": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Prescript_[Paper_Slip].webp' alt='' />Prescript [Paper Slip] I</span>",
-  "prescript:_[paper_slip]_ii": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Prescript_[Paper_Slip].webp' alt='' />Prescript [Paper Slip] II</span>",
-  "prescript:_[paper_slip]_iii": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Prescript_[Paper_Slip].webp' alt='' />Prescript [Paper Slip] III</span>",
-  "prescript:_[paper_slip]_iv": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Prescript_[Paper_Slip].webp' alt='' />Prescript [Paper Slip] IV</span>",
-  "the_prescript's_target": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/The_Prescript&#39;s_Target.webp' alt='' />The Prescript&#39;s Target</span>",
-  "mark_of_the_prescript": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Mark_of_the_Prescript.webp' alt='' />Mark of the Prescript</span>",
-  "lca_fracture_round": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/LCA_Fracture_Round.webp' alt='' />LCA Fracture Round</span>",
-  "prescript:_[device]": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Prescript_[Device].webp' alt='' />Prescript [Device]</span>",
-  "prescript:_[device]_i": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Prescript_[Device].webp' alt='' />Prescript [Device] I</span>",
-  "prescript:_[device]_ii": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Prescript_[Device].webp' alt='' />Prescript [Device] II</span>",
-  "prescript:_[device]_iii": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Prescript_[Device].webp' alt='' />Prescript [Device] III</span>",
-  "prescript:_[device]_iv": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Prescript_[Device].webp' alt='' />Prescript [Device] IV</span>",
-  "melee_support": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Melee_Support.webp' alt='' />Melee Support</span>",
-  "lamp": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Lamp.webp' alt='' />Lamp</span>",
-  "viewing_the_tableau": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Viewing_the_Tableau.webp' alt='' />Viewing the Tableau</span>",
-  "fixed_panic": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Fixed_Panic.webp' alt='' />Fixed Panic</span>",
-  "total_bloodfeast_consumed": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Total_Bloodfeast_Consumed.webp' alt='' />Total Bloodfeast Consumed</span>",
-  "target_spotted": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Target_Spotted.webp' alt='' />Target Spotted</span>",
-  "prescript": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Prescript_%28Device%29.webp' alt='' />Prescript</span>",
-  "blazing": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Blazing.webp' alt='' />Blazing</span>",
-  "dihui_star's_blade": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Dihui_Star%27s_Blade.webp' alt='' />Dihui Star's Blade</span>",
-  "hornet_[rifle]": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Hornet_-Rifle-.webp' alt='' />Hornet [Rifle]</span>",
-  "hornet_[shotgun]": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Hornet_-Shotgun-.webp' alt='' />Hornet [Shotgun]</span>",
-  "réflexion": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/R%C3%A9flexion.webp' alt='' />Réflexion</span>",
-  "volatile_passion": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Volatile_Passion.webp' alt='' />Volatile Passion</span>",
-  "rising_fever": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Rising_Fever.webp' alt='' />Rising Fever</span>",
-  "sealed_sword": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Sealed_Sword_%28Outis%29.webp' alt='' />Sealed Sword</span>",
-  "first_seal_removed": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/First_Seal_Removed_%28Outis%29.webp' alt='' />First Seal Removed</span>",
-  "second_seal_removed": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Second_Seal_Removed_%28Outis%29.webp' alt='' />Second Seal Removed</span>",
-  "lævateinn": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/L%C3%A6vateinn_%28Outis%29.webp' alt='' />Lævateinn</span>",
-  "hyped-up": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Hyped-up.webp' alt='' />Hyped-up</span>",
-  "curio": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Curio.webp' alt='' />Curio</span>",
-  "self_resonance_circuitry": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Self_Resonance_Circuitry.webp' alt='' />Self Resonance Circuitry</span>",
-  "game_target": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Game_Target.webp' alt='' />Game Target</span>",
-  "scorchfield": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Scorchfield.webp' alt='' />Scorchfield</span>",
-  "escape_apparatus": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Escape_Apparatus.webp' alt='' />Escape Apparatus</span>",
-  "fire_butterfly_coffin": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Fire_Butterfly_Coffin.webp' alt='' />Fire Butterfly Coffin</span>",
-  "changing_room": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Changing_Room_%28Ishmael%29.webp' alt='' />Changing Room</span>",
-  "full_makeover": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Full_Makeover.webp' alt='' />Full Makeover</span>",
-  "ashen_bullet": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Ashen_Bullet.webp' alt='' />Ashen Bullet</span>",
-  "duality": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Duality.webp' alt='' />Duality</span>",
-  "bleed_identity": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Bleed_Identity.webp' alt='' />Bleed Identity</span>",
-  "burn_identity": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Burn_Identity.webp' alt='' />Burn Identity</span>",
-  "charge_identity": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Charge_Identity.webp' alt='' />Charge Identity</span>",
-  "poise_identity": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Poise_Identity.webp' alt='' />Poise Identity</span>",
-  "rupture_identity": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Rupture_Identity.webp' alt='' />Rupture Identity</span>",
-  "sinking_identity": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Sinking_Identity.webp' alt='' />Sinking Identity</span>",
-  "tremor_identity": "<span class='center-element' contenteditable='false' style='color:var(--Neutral-color);text-decoration:underline;'><img class='status-icon' src='/Images/status-effect/Tremor_Identity.webp' alt='' />Tremor Identity</span>"
+  "procuration_[hermes]": {
+    "key": "procuration_[hermes]",
+    "name": "Procuration [Hermes]",
+    "image": "/Images/status-effect/Procuration_-Hermes-.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Turn Start: at 9 Stack, a powerful Skill becomes available\n- Can be gained up to (Unlock stage + 2) Stack per turn\nMax Stack: 9\n· At below Unlock - II, this effect's maximum stack is limited to 8"
+  },
+  "bullet_-_solitude": {
+    "key": "bullet_-_solitude",
+    "name": "Bullet - Solitude",
+    "image": "/Images/status-effect/Bullet_-_Solitude.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Unique Ammo\n- Max Capacity: 6\nSpent by certain Skills\n- This Ammo's count cannot be gained or lost due to external effects"
+  },
+  "spore_round_[base]": {
+    "key": "spore_round_[base]",
+    "name": "Spore Round [Base]",
+    "image": "/Images/status-effect/Spore_Round_-Base-.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Unique Ammo\n- Max Stack: 10\n- Spent when using certain Skills\n- Some attacks cancel if lacking Ammo\n- When spent, inflict 2 Spore on target On Hit"
+  },
+  "spore_round_[buckshot]": {
+    "key": "spore_round_[buckshot]",
+    "name": "Spore Round [BuckShot]",
+    "image": "/Images/status-effect/Spore_Round_-Buckshot-.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Unique Ammo\n- Max Stack: 6\n- Spent when using certain Skills\n- Some attacks cancel if lacking Ammo\n- When spent, inflict 3 Spore on target On Hit"
+  },
+  "reload_[germination]": {
+    "key": "reload_[germination]",
+    "name": "Reload [Germination]",
+    "image": "/Images/status-effect/Reload_-Germination-.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Effect applied to Spore Round (Unique Ammo)\n- Consume ((16 - sum of Spore Round) / 2) SP(rounded down), reset both Spore Round [Base] and Spore Round [Buckshot] to 0 Stacks, and gain them up to max Stacks"
+  },
+  "aggro": {
+    "key": "aggro",
+    "name": "Aggro",
+    "image": "/Images/status-effect/Aggro.webp",
+    "color": "var(--Neutral-color)",
+    "description": "More likely to be targeted by enemies."
+  },
+  "unfocused_volley": {
+    "key": "unfocused_volley",
+    "name": "Unfocused Volley",
+    "image": "/Images/status-effect/Unfocused_Volley.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- When this Skill flips Coins, each Coin flips against a random enemy among its targets\n· The first Coin always targets the main target\n· All 'On Hit' effects and all damage dealt by each Coin are inflicted only against the random target the Coin selected"
+  },
+  "ammo": {
+    "key": "ammo",
+    "name": "Ammo",
+    "image": "/Images/status-effect/Ammo.webp",
+    "color": "var(--Neutral-color)",
+    "description": "Spent by certain skills. Some attacks cancel if lacking Ammo."
+  },
+  "ammo_-_atelier_logic": {
+    "key": "ammo_-_atelier_logic",
+    "name": "Ammo - Atelier Logic",
+    "image": "/Images/status-effect/Ammo_-_Atelier_Logic.webp",
+    "color": "var(--Neutral-color)",
+    "description": "Unique Ammo\nAtelier Logic Workshop Special Ammo\n- This Ammo's Count cannot be gained or lost due to external effects"
+  },
+  "discard": {
+    "key": "discard",
+    "name": "Discard",
+    "image": "/Images/status-effect/Discard.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Delete Skills that fit the condition and are selectable during the Chaining Phase on the Dashboard. (Defensive & E.G.O Skills do not count. Does not delete the Skill from the upcoming Skills list)\n- Discarded Skills will not activate Skill effects or Coin effects other than effects from Discard, and will not give E.G.O resources."
+  },
+  "responsibility": {
+    "key": "responsibility",
+    "name": "Responsibility",
+    "image": "/Images/status-effect/Responsibility.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Max Value: 1\n- Clash Power +1\n- Deal +20% more damage\n- Take +20% more damage"
+  },
+  "sp_heal_efficiency": {
+    "key": "sp_heal_efficiency",
+    "name": "SP Heal Efficiency",
+    "image": "/Images/status-effect/SP_Heal_Efficiency.webp",
+    "color": "var(--Neutral-color)",
+    "description": "Amount of SP healed due to the Identity's 'Base factors increasing Sanity(SP)'\n(That is, +(Potency) to all SP healed by allies this turn (Potency may be a negative number))"
+  },
+  "sp_loss_efficiency": {
+    "key": "sp_loss_efficiency",
+    "name": "SP Loss Efficiency",
+    "image": "/Images/status-effect/SP_Loss_Efficiency.webp",
+    "color": "var(--Neutral-color)",
+    "description": "Amount of SP lost due to the Identity's 'Base factors decreasing Sanity(SP)'\n(That is, +(Potency) to all SP lost by allies this turn (Potency may be a negative number))"
+  },
+  "single_combat": {
+    "key": "single_combat",
+    "name": "Single Combat",
+    "image": "/Images/status-effect/Single_Combat.webp",
+    "color": "var(--Neutral-color)",
+    "description": ""
+  },
+  "insight": {
+    "key": "insight",
+    "name": "Insight",
+    "image": "/Images/status-effect/Insight.webp",
+    "color": "var(--Neutral-color)",
+    "description": "The rank of the last Skill Discarded by the unit with this effect (Base Value:1)"
+  },
+  "k_corp_ampule": {
+    "key": "k_corp_ampule",
+    "name": "K Corp Ampule",
+    "image": "/Images/status-effect/K_Corp_Ampule.webp",
+    "color": "var(--Neutral-color)",
+    "description": "Turn Start: At less than 4 Count, heal by (Count * 5)% of Max HP\nAt 4+ Count, this unit dies"
+  },
+  "magic_bullet": {
+    "key": "magic_bullet",
+    "name": "Magic Bullet",
+    "image": "/Images/status-effect/Magic_Bullet.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Max: 7\n- Value changes depending on certain Skill effects.\n- The higher the value, the higher the Base Power and Coin Power of Skill 3"
+  },
+  "reload": {
+    "key": "reload",
+    "name": "Reload",
+    "image": "/Images/status-effect/Reload.webp",
+    "color": "var(--Neutral-color)",
+    "description": "Lose all currently owned Ammo, and reload back to full"
+  },
+  "the_living_&_the_departed": {
+    "key": "the_living_&_the_departed",
+    "name": "The Living & The Departed",
+    "image": "/Images/status-effect/The_Living_&_The_Departed.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Unique Ammo\n- The sum of Potency and Count maxes out at 20.\n- Consumed for certain Skills.\n- Whether The Living(Potency) or The Departed(Count) will be consumed for each shot is randomly determined\n- Some attacks cancel if this unit runs out of ammo."
+  },
+  "final_augment": {
+    "key": "final_augment",
+    "name": "Final Augment",
+    "image": "/Images/status-effect/Final_Augment.webp",
+    "color": "var(--Neutral-color)",
+    "description": "Turn Start: Gain 3 Attack Power Up, Defense Power Up, and Haste; die when count reaches zero."
+  },
+  "courier_trunk": {
+    "key": "courier_trunk",
+    "name": "Courier Trunk",
+    "image": "/Images/status-effect/Courier_Trunk.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Base Value: 0\n- Turn Start: gain 3 Stack\n- Stack does not expire upon Retreat; it is stored instead\n- At 10+ Stack: raise Min & Max Speed values by 1\n- At 20+ Stack: Gain 1 Clash Power Up and 1 Damage Type DMG Up\n· (Courier Trunk - Rodion: Slash DMG Up)\n· (Courier Trunk - Sinclair: Blunt DMG Up)\n- At 30+ Stack:\n· On Skill Use, take (Stack/3)% HP damage and (Stack/3) SP damage\n· On Turn End, take (Stack/2)% HP damage and (Stack/2) SP damage\n(applies before Retreat)"
+  },
+  "strategic_r&r_mode": {
+    "key": "strategic_r&r_mode",
+    "name": "Strategic R&R Mode",
+    "image": "/Images/status-effect/Strategic_R&R_Mode.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Turn End: Recover from Stagger and Retreat from the Encounter (excluding forced Staggers; does not count as death)\n· In Chain Battles, give this unit's Slots to a Substituted unit and move to the rearmost place in the Backup units' Deployment order (escape from the Encounter entirely if there are no other Backup Units remaining to swap places with next turn. When returning to battle, return in the order they retreated in)\n· When returning to battle, return with the same amount of HP and SP this unit had when it retreated, and eliminate all effects on self save for a select few (if this unit had less than 0 SP when retreating, reset SP to 0 instead)"
+  },
+  "overwatch_assignment": {
+    "key": "overwatch_assignment",
+    "name": "Overwatch Assignment",
+    "image": "/Images/status-effect/Overwatch_Assignment.webp",
+    "color": "var(--Neutral-color)",
+    "description": ""
+  },
+  "surgery": {
+    "key": "surgery",
+    "name": "Makeshift Surgery",
+    "image": "/Images/status-effect/Makeshift_Surgery.webp",
+    "color": "var(--Neutral-color)",
+    "description": "Die when Count reaches 5.\nReduce Max HP by 20% (per Count).\nDeal +20% (per Count) damage.\nAt the start of the turn, gain Haste by the effect's Count."
+  },
+  "blubberbubble": {
+    "key": "blubberbubble",
+    "name": "Blubberbubble",
+    "image": "/Images/status-effect/Blubberbubble.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- This effect counts as a 'Shield Management' effect.\n- Turn End: Reduce Count by 1\n- This unit does not lose Shield at Turn End as long as it has the Blubberbubble effect (unless depleted by damage or effect)\n- If the Shield affected by Blubberbubble breaks due to taking damage, inflict 4 Sinking Potency/Count against the attacker. (How much of that '4' value is Potency or Count is randomly determined)\n- This unit can stack their Shield value by stacking this effect. However, as long as Blubberbubble is in effect, the Shield value cannot exceed 60% of this unit's Max HP."
+  },
+  "amplitude_conversion": {
+    "key": "amplitude_conversion",
+    "name": "Amplitude Conversion",
+    "image": "/Images/status-effect/Amplitude_Conversion.webp",
+    "color": "var(--Neutral-color)",
+    "description": "Converts Tremor or already converted Tremor on target to a different kind of Tremor\nPotency and Count values do not change over the conversion."
+  },
+  "amplitude_entanglement": {
+    "key": "amplitude_entanglement",
+    "name": "Amplitude Entanglement",
+    "image": "/Images/status-effect/Amplitude_Entanglement.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Fuses the effects of the Tremor type added by Amplitude Entanglement and the Tremor type currently on the target together under Tremor - Superposition.\n- Potency and Count values do not change over Entanglement.\n- When triggering Amplitude Conversion on Tremor - Superposition, it activates as Amplitude Entanglement instead.\n- Turn End: converted into base Tremor."
+  },
+  "clashable_guard": {
+    "key": "clashable_guard",
+    "name": "Clashable Guard",
+    "image": "/Images/status-effect/Clashable_Guard.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- On Clash Win: raise the target's Stagger Threshold by this unit's final Clash Power.\n- On Clash Lose: when hit, reduce the attacker's Final Skill Power by this unit's Final Power.\n- On Clash Lose: does not gain Final Power from the following sources: Resonance and the Level disparity against the Attack Skill"
+  },
+  "unbreakable_coin": {
+    "key": "unbreakable_coin",
+    "name": "Unbreakable Coin",
+    "image": "/Images/Unbreakable_Coin.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- This Coin does not break upon Clash Lose.\n- If an Attack Skill has this Coin, attack with this Coin after getting hit.\n- Upon Clash Lose, fix the Coin Power of the unbroken Coin to 1"
+  },
+  "excision_coin": {
+    "key": "excision_coin",
+    "name": "Excision Coin",
+    "image": "/Images/Excision_Coin.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- This Coin can destroy Unbreakable Coins in a Clash.\n- This Coin does not break upon Clash Lose.\n- If an Attack Skill has this Coin, attack with the Coin after getting hit.\n- On Clash Lose, fix the Coin Power of the unbroken Coin to 1"
+  },
+  "bloodfeast": {
+    "key": "bloodfeast",
+    "name": "Bloodfeast",
+    "image": "/Images/status-effect/Bloodfeast.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Max Value: 999\n- Stores all Bleed damage dealt in this zone\n- Resets when moving to a different zone\n- This value is shared by all characters\n- Among allies, if there is a higher Kindred who also consumes Bloodfeast in the same turn, this unit cannot consume Bloodfeast until that ally consumes it first."
+  },
+  "bloodfeast_consumed": {
+    "key": "bloodfeast_consumed",
+    "name": "Bloodfeast Consumed",
+    "image": "/Images/status-effect/Bloodfeast_Consumed.webp",
+    "color": "var(--Neutral-color)",
+    "description": ""
+  },
+  "bloodfeast_consumed_(shared)": {
+    "key": "bloodfeast_consumed_(shared)",
+    "name": "Bloodfeast Consumed (shared)",
+    "image": "/Images/status-effect/Bloodfeast_Consumed.webp",
+    "color": "var(--Neutral-color)",
+    "description": "Total Bloodfeast consumed in this Encounter"
+  },
+  "overheated_fuel": {
+    "key": "overheated_fuel",
+    "name": "Overheated Fuel",
+    "image": "/Images/status-effect/Overheated_Fuel.webp",
+    "color": "var(--Neutral-color)",
+    "description": "Max Stack: 100\nConsuming District 12 Fuel in Overheated Fuel State consumes Overheated Fuel instead\nConsuming Overheated Fuel also counts as consuming District 12 Fuel\nAt over 50 Stack, become District 12 Fuel"
+  },
+  "district_12_fuel": {
+    "key": "district_12_fuel",
+    "name": "District 12 Fuel",
+    "image": "/Images/status-effect/District_12_Fuel.webp",
+    "color": "var(--Neutral-color)",
+    "description": "Max Stack: 100\nConsumed by certain Skills.\nAt 50- Stack, become Overheated Fuel"
+  },
+  "shallow_exhale": {
+    "key": "shallow_exhale",
+    "name": "Shallow Exhale",
+    "image": "/Images/status-effect/Shallow_Exhale.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Max Value: 1\n- At 20+ Poise Potency, gain +1 Poise Count as well whenever this unit gains Poise Potency with Skill and Coin effects\n- Expires at Turn End"
+  },
+  "dark_cloud": {
+    "key": "dark_cloud",
+    "name": "Dark Cloud",
+    "image": "/Images/status-effect/Dark_Cloud.webp",
+    "color": "var(--Neutral-color)",
+    "description": "Max Stack: 1\nConverts all of this unit's Base Attack Skill Coins used this turn into Unbreakable Coins, prevents damage from Staggering this unit until Skill End, and inflict +1 more of Bleed effects\nOn Clash Lose: gain Final Power +3\nTurn End: this effect expires"
+  },
+  "assist_defense": {
+    "key": "assist_defense",
+    "name": "Assist Defense",
+    "image": "/Images/status-effect/Assist_Defense.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Max Stack: 3\n- When an ally is about to take an Unopposed Attack from an enemy, consume 1 Stack to redirect the enemy's targeting to self; then, use the unique Skill that activates for Assist Defense\n- When there are multiple allies that have Assist Defense Stacks, the ally that has the highest Stack has the highest activation priority\n- Does not activate for allies who equipped Defense Skills\n- Expires at Turn End"
+  },
+  "tianjiu_star's_blade": {
+    "key": "tianjiu_star's_blade",
+    "name": "Tianjiu Star's Blade",
+    "image": "/Images/status-effect/Tianjiu_Star's_Blade.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Max Stack: 20\n- At 10+ Stack: at Turn End, gain 1 Haste next turn\n- Used for certain Skills"
+  },
+  "launcher_[始]": {
+    "key": "launcher_[始]",
+    "name": "Launcher [始]",
+    "image": "/Images/status-effect/Launcher_-始-.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Max Stack: 6\n- Number of turns this unit spent active in the Encounter\n- Expires upon Retreat\n- Gain 1 Stack at Turn End"
+  },
+  "ready_[待]": {
+    "key": "ready_[待]",
+    "name": "Ready [待]",
+    "image": "/Images/status-effect/Ready_-待-.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Max Stack: 3\n- Number of turns this unit spent in Retreat or as a Backup unit"
+  },
+  "battlefield_retreat": {
+    "key": "battlefield_retreat",
+    "name": "Battlefield Retreat",
+    "image": "/Images/status-effect/Battlefield_Retreat.webp",
+    "color": "var(--Neutral-color)",
+    "description": ""
+  },
+  "savage_tigermark_round": {
+    "key": "savage_tigermark_round",
+    "name": "Savage Tigermark Round",
+    "image": "/Images/status-effect/Savage_Tigermark_Round.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Unique Ammo\n- At 8+ (cumulative sum of Tigermark Rounds and Savage Tigermark Rounds spent), gain Shin (心) - Tiantui Star [天退星] instead of Tiantui Star [天退星] from this unit's Passive\n· Cumulative Rounds spent: X\n- Actives the same way as Tigermark Round does\n- Max Capacity: 8"
+  },
+  "tigermark_round": {
+    "key": "tigermark_round",
+    "name": "Tigermark Round",
+    "image": "/Images/status-effect/Tigermark_Round.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Unique Ammo\n- At 8+ (cumulative sum of Tigermark Rounds and Savage Tigermark Rounds spent), gain Shin (心) - Tiantui Star [天退星] instead of Tiantui Star [天退星] from this unit's Passive\n· Cumulative Rounds spent: X\n- Max Capacity: 12"
+  },
+  "torn_memory": {
+    "key": "torn_memory",
+    "name": "Torn Memory",
+    "image": "/Images/status-effect/Torn_Memory.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Max Value: 7\n- Used for certain Skills"
+  },
+  "your_will_guides_my_blade.": {
+    "key": "your_will_guides_my_blade.",
+    "name": "Your Will Guides My Blade",
+    "image": "/Images/status-effect/Your_Will_Guides_My_Blade.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- If unit A applies this effect to unit B: Unit B follows up with an Unopposed Attack with its Skill 1 against the same enemy unit A attacked with its Skill. Activates at unit A's Skill Attack End.\n- The Skill used as an Assist Attack does not affect Unit B's upcoming Skills list."
+  },
+  "exalted_command": {
+    "key": "exalted_command",
+    "name": "Exalted Command",
+    "image": "/Images/status-effect/Exalted_Command.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- If unit A applies this effect to unit B: Unit B follows up with an Unopposed Attack with its Base Skill 3 against the same enemy unit A attacked with its Skill. Activates at unit A's Attack End. (Does not activate as Empowered Skills)\n- The Skill used as an Assist Attack does not affect Unit B's upcoming Skills list.\n- Does not activate if affected ally's Skill 3 is not unlocked."
+  },
+  "lordsguard": {
+    "key": "lordsguard",
+    "name": "LordsGuard",
+    "image": "/Images/status-effect/Lordsguard.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Unique Assist Defense\n- Max Stack: 1\n- When The Lord of Hongyuan Hong Lu is about to take an Unopposed Attack from an enemy, consume 1 Stack to redirect the enemy's targeting to self; then, copy and use The Lord of Hongyuan Hong Lu's 'Lordsguard' Skill\n- When there are multiple allies that have Assist Defense Stacks, the ally that has the highest Stack has the highest activation priority\n- This effect counts as Assist Defense, and is counted toward calculating Assist Defense Stacks\n- Expires at Turn End"
+  },
+  "arrow_-_shi": {
+    "key": "arrow_-_shi",
+    "name": "Arrow-Shi",
+    "image": "/Images/status-effect/Arrow-Shi.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Min Capacity: 0\n- Max Capacity: 4\n- Arrows spent by certain Skills"
+  },
+  "overcharge": {
+    "key": "overcharge",
+    "name": "Overcharge",
+    "image": "/Images/status-effect/Overcharge.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Max Value: 1\n- Become Immobilized\n- Take 10 + (Charge Potency x 5)% less damage (max 25%)\n- Turn Start: Gain Charge Barrier based on Charge Potency on self (max 5)\n- Turn End: Gain +10 Charge Count and 2 Attack Power Up next turn, and lose this effect\n- Gain Aggro to this unit's leftmost Slot based on Charge Potency on self (max 5)\n- When hit, gain +1 Charge Count and 1 Load next turn (max 5 per turn)\n- If this unit is in Panic or E.G.O Corrosion at Turn Start, or if this unit is Staggered, lose this effect"
+  },
+  "hand_-_pine_crane_suit": {
+    "key": "hand_-_pine_crane_suit",
+    "name": "Hand - Pine Crane Suit",
+    "image": "/Images/status-effect/Hand_-_Pine_Crane_Suit.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Skill 1 Base Power +2\nWhen this unit equips and uses a Wrath Base Attack Skill or E.G.O Skill on its leftmost Skill Slot, activate the \"forming a Hand\" effects on the \"Koi-Koi\" Passive"
+  },
+  "hand_-_susuki_grass_suit": {
+    "key": "hand_-_susuki_grass_suit",
+    "name": "Hand - Susuki Grass Suit",
+    "image": "/Images/status-effect/Hand_-_Susuki_Grass_Suit.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Skill 2 Base Power +1\nWhen this unit equips and uses a Sloth Base Attack Skill or E.G.O Skill on its leftmost Skill Slot, activate the \"forming a Hand\" effects on the \"Koi-Koi\" Passive"
+  },
+  "hand_-_blue_sakura_suit": {
+    "key": "hand_-_blue_sakura_suit",
+    "name": "Hand - Blue Sakura Suit",
+    "image": "/Images/status-effect/Hand_-_Blue_Sakura_Suit.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Skill 3 Base Power +1\nWhen this unit equips and uses a Gloom Base Attack Skill or E.G.O Skill on its leftmost Skill Slot, activate the \"forming a Hand\" effects on the \"Koi-Koi\" Passive"
+  },
+  "prescript:_[paper_slip]": {
+    "key": "prescript:_[paper_slip]",
+    "name": "Prescript [Paper Slip]",
+    "image": "/Images/status-effect/Prescript_[Paper_Slip].webp",
+    "color": "var(--Neutral-color)",
+    "description": ""
+  },
+  "prescript:_[paper_slip]_i": {
+    "key": "prescript:_[paper_slip]_i",
+    "name": "Prescript [Paper Slip] I",
+    "image": "/Images/status-effect/Prescript_[Paper_Slip].webp",
+    "color": "var(--Neutral-color)",
+    "description": "Use a Skill marked with Mark of the Prescript or hit a target with a marked Skill.\n- Turn Start: At 0~2 Grace of the Prescript, gain this effect\n- Maximum stackable Grace of the Prescript with this Prescript is limited to 3\nThe Prescripts are delivered by many means, their medium determined with finality akin to divine prophecy. Those who receive them hold no power over how they arrive."
+  },
+  "prescript:_[paper_slip]_ii": {
+    "key": "prescript:_[paper_slip]_ii",
+    "name": "Prescript [Paper Slip] II",
+    "image": "/Images/status-effect/Prescript_[Paper_Slip].webp",
+    "color": "var(--Neutral-color)",
+    "description": "Hit a target with a Skill marked with Mark of the Prescript.\n- Turn Start: At 3~5 Grace of the Prescript, gain this effect\n- Maximum stackable Grace of the Prescript with this Prescript is limited to 6\nThe Prescripts are delivered by many means, their medium determined with finality akin to divine prophecy. Those who receive them hold no power over how they arrive."
+  },
+  "prescript:_[paper_slip]_iii": {
+    "key": "prescript:_[paper_slip]_iii",
+    "name": "Prescript [Paper Slip] III",
+    "image": "/Images/status-effect/Prescript_[Paper_Slip].webp",
+    "color": "var(--Neutral-color)",
+    "description": "Hit a target with E.G.O Awakening Skill or 'Skill 3' marked with Mark of the Prescript.\n- Turn Start: At 6~8 Grace of the Prescript, gain this effect\n- Maximum stackable Grace of the Prescript with this Prescript is limited to 9\nThe Prescripts are delivered by many means, their medium determined with finality akin to divine prophecy. Those who receive them hold no power over how they arrive."
+  },
+  "prescript:_[paper_slip]_iv": {
+    "key": "prescript:_[paper_slip]_iv",
+    "name": "Prescript [Paper Slip] IV",
+    "image": "/Images/status-effect/Prescript_[Paper_Slip].webp",
+    "color": "var(--Neutral-color)",
+    "description": "Eliminate all enemies before the next Prescript arrives.\n- Turn Start: At 9 Grace of the Prescript, gain this effect\nThe Prescripts are delivered by many means, their medium determined with finality akin to divine prophecy. Those who receive them hold no power over how they arrive."
+  },
+  "the_prescript's_target": {
+    "key": "the_prescript's_target",
+    "name": "The Prescript's Target",
+    "image": "/Images/status-effect/The_Prescript's_Target.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Take +10% damage from The Index units\n- This effect is applied to a single target every turn regardless of the number of The Index units deployed"
+  },
+  "mark_of_the_prescript": {
+    "key": "mark_of_the_prescript",
+    "name": "Mark of the Prescript",
+    "image": "/Images/status-effect/Mark_of_the_Prescript.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Apply Mark of the Prescript to a Base Attack Skill on this unit's Dashboard"
+  },
+  "lca_fracture_round": {
+    "key": "lca_fracture_round",
+    "name": "LCA Fracture Round",
+    "image": "/Images/status-effect/LCA_Fracture_Round.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Unique Ammo\n- Max Capacity: 16\n- Spent by certain Skills\n- Some attacks cancel if lacking Ammo"
+  },
+  "prescript:_[device]": {
+    "key": "prescript:_[device]",
+    "name": "Prescript [Device]",
+    "image": "/Images/status-effect/Prescript_[Device].webp",
+    "color": "var(--Neutral-color)",
+    "description": ""
+  },
+  "prescript:_[device]_i": {
+    "key": "prescript:_[device]_i",
+    "name": "Prescript [Device] I",
+    "image": "/Images/status-effect/Prescript_[Device].webp",
+    "color": "var(--Neutral-color)",
+    "description": "Use a Skill marked with Mark of the Prescript or hit a target with a marked Skill.\n- Turn Start: Gain this effect when this unit has no Unlock\n- Maximum stackable Grace of the Prescript with this Prescript is limited to 3\nThe Prescripts are delivered by many means, their medium determined with finality akin to divine prophecy. Those who receive them hold no power over how they arrive."
+  },
+  "prescript:_[device]_ii": {
+    "key": "prescript:_[device]_ii",
+    "name": "Prescript [Device] II",
+    "image": "/Images/status-effect/Prescript_[Device].webp",
+    "color": "var(--Neutral-color)",
+    "description": "Hit a target with a Skill marked with Mark of the Prescript.\n- Turn Start: Gain this effect when this unit has Unlock - I\n- Maximum stackable Grace of the Prescript with this Prescript is limited to 6\nThe Prescripts are delivered by many means, their medium determined with finality akin to divine prophecy. Those who receive them hold no power over how they arrive."
+  },
+  "prescript:_[device]_iii": {
+    "key": "prescript:_[device]_iii",
+    "name": "Prescript [Device] III",
+    "image": "/Images/status-effect/Prescript_[Device].webp",
+    "color": "var(--Neutral-color)",
+    "description": "Hit a target with E.G.O Awakening Skill, or, in Effloresced E.G.O::Procuration state, 'Skill 3' marked with Mark of the Prescript.\n- Turn Start: Gain this effect when this unit has Unlock - II\n- Maximum stackable Grace of the Prescript with this Prescript is limited to 9\nThe Prescripts are delivered by many means, their medium determined with finality akin to divine prophecy. Those who receive them hold no power over how they arrive."
+  },
+  "prescript:_[device]_iv": {
+    "key": "prescript:_[device]_iv",
+    "name": "Prescript [Device] IV",
+    "image": "/Images/status-effect/Prescript_[Device].webp",
+    "color": "var(--Neutral-color)",
+    "description": "Eliminate all enemies before the next Prescript arrives.\n- Turn Start: Gain this effect when this unit has Unlock - III\nThe Prescripts are delivered by many means, their medium determined with finality akin to divine prophecy. Those who receive them hold no power over how they arrive."
+  },
+  "melee_support": {
+    "key": "melee_support",
+    "name": "Melee Support",
+    "image": "/Images/status-effect/Melee_Support.webp",
+    "color": "var(--Neutral-color)",
+    "description": "If unit A applied this effect to unit B: Unit B follows up with an Unopposed Attack with the 'Melee Support' Skill against the same enemy that attacked Unit A. Activates at Unit A's Attack End.\n- The Skill used due to the 'Melee Support' effect does not affect Unit B's upcoming Skills list."
+  },
+  "lamp": {
+    "key": "lamp",
+    "name": "Lamp",
+    "image": "/Images/status-effect/Lamp.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Max Stack: 8\n- Turn End: Gain 1 Bind next turn for every 2 Stack (max 4)\n- Turn End: At max Stack, if there are enemies on the field, consume all Stack to activate the following effects next turn:\n· Gain +10 Aggro to the leftmost Slot\n· Inflict 3 Dazzle to the enemy(Core) with the most current HP"
+  },
+  "viewing_the_tableau": {
+    "key": "viewing_the_tableau",
+    "name": "Viewing the Tableau",
+    "image": "/Images/status-effect/Viewing_the_Tableau.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- If The House of Spiders: The Ring Apprentice Faust is on the field, gain 2 Protection at Turn Start\n- Turn End: Lose 2 Stack"
+  },
+  "fixed_panic": {
+    "key": "fixed_panic",
+    "name": "Fixed Panic",
+    "image": "/Images/status-effect/Fixed_Panic.webp",
+    "color": "var(--Neutral-color)",
+    "description": "This unit's Panic Type does not change when inflicted with an effect that changes Panic Types. Instead, this unit is inflicted with an effect that is inflicted against targets without SP."
+  },
+  "total_bloodfeast_consumed": {
+    "key": "total_bloodfeast_consumed",
+    "name": "Total Bloodfeast Consumed",
+    "image": "/Images/status-effect/Total_Bloodfeast_Consumed.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Max Value: 999\n- Displays the total amount of Bloodfeast consumed in this Encounter"
+  },
+  "target_spotted": {
+    "key": "target_spotted",
+    "name": "Target Spotted",
+    "image": "/Images/status-effect/Target_Spotted.webp",
+    "color": "var(--Neutral-color)",
+    "description": "If unit A applied this effect to unit B: Unit B follows up with an Unopposed Attack with its Skill 2 against the same enemy unit A attacked with its Skill. Activates at Unit A's Attack End.\n- The Skill used due to this effect does not affect Unit B's upcoming Skills list."
+  },
+  "prescript": {
+    "key": "prescript",
+    "name": "Prescript",
+    "image": "/Images/status-effect/Prescript_(Device).webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Receive 'Prescript: [Paper Slip]' under specific conditions\nThe Prescripts are delivered by many means, their medium determined with finality akin to divine prophecy. Those who receive them hold no power over how they arrive."
+  },
+  "blazing": {
+    "key": "blazing",
+    "name": "Blazing",
+    "image": "/Images/status-effect/Blazing.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Min & Max Speed +1\n- This turn's first-used Base Attack Skill gains Final Power +2\n- Take 2% HP damage On Hit with the affected Skill (max 10%; this damage does not Stagger or reduce this unit's HP below 1)\n- Expires at Turn End"
+  },
+  "dihui_star's_blade": {
+    "key": "dihui_star's_blade",
+    "name": "Dihui Star's Blade",
+    "image": "/Images/status-effect/Dihui_Star's_Blade.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Max Stack: 70\n- Total sum of Bladetrail [Afterimage] Stacks inflicted by this unit\n- Can gain up to 25 Stack per turn\nEtch a mark into the earth. Such is the purpose this blade was made to serve.\nInto this sword was poured the light of a star, so that something may be left behind in this land."
+  },
+  "hornet_[rifle]": {
+    "key": "hornet_[rifle]",
+    "name": "Hornet [Rifle]",
+    "image": "/Images/status-effect/Hornet_-Rifle-.webp",
+    "color": "var(--Neutral-color)",
+    "description": "Current Mode: Hornet [Rifle]"
+  },
+  "hornet_[shotgun]": {
+    "key": "hornet_[shotgun]",
+    "name": "Hornet [Shotgun]",
+    "image": "/Images/status-effect/Hornet_-Shotgun-.webp",
+    "color": "var(--Neutral-color)",
+    "description": "Current Mode: Hornet [Shotgun]\nInstead of deferring the definition to its rifle-form, gaze into the core essence of \"Hornet.\"\nepoché"
+  },
+  "réflexion": {
+    "key": "réflexion",
+    "name": "Réflexion",
+    "image": "/Images/status-effect/Réflexion.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Max Stack: 2\n- Cannot use \"Critique\" during the turn this unit has this effect\n- Turn Start: Heal 5 SP\n- Turn End: Lose 1 Stack\n- When this effect expires, gain L'Hommage next turn equal to the number of The Ring Student Identities on the field"
+  },
+  "volatile_passion": {
+    "key": "volatile_passion",
+    "name": "Volatile Passion",
+    "image": "/Images/status-effect/Volatile_Passion.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- On Hit, inflict 1 Burn\n- If the main target has Burn, Final Power +1\n- When hit, if this unit had a Defense Skill chained at Combat Start, inflict 1 Burn per hit against the attacker for the turn\n- Turn End: lose (# of turns spent in Volatile E.G.O state x 5) SP. (Max SP Loss: 40)"
+  },
+  "rising_fever": {
+    "key": "rising_fever",
+    "name": "Rising Fever",
+    "image": "/Images/status-effect/Rising_Fever.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Lose 1 Stack when meeting one of the following conditions:\n· Using the \"Stamp of Vengeance\" Skill (including activation via Counter)\n· At Turn End after activating 6+ Envy A-Reson.\n- At 0 Stack, use the \"Time to Unpack!\" Skill"
+  },
+  "sealed_sword": {
+    "key": "sealed_sword",
+    "name": "Sealed Sword",
+    "image": "/Images/status-effect/Sealed_Sword_(Outis).webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Turn End: Gain 2 Haste next turn\n- Blunt Base Skills deal +2% damage for every 4 Bleed on target (max 10%)\n- On final Coin Hit using Base Skills, if target has 20+ Bleed, deal (10% of the Coin's final damage) Blunt damage (rounded down)"
+  },
+  "first_seal_removed": {
+    "key": "first_seal_removed",
+    "name": "First Seal Removed",
+    "image": "/Images/status-effect/First_Seal_Removed_(Outis).webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Turn End: Gain 1 Haste next turn\n- Blunt Base Skills deal +2% damage for every 4 (Burn + Bleed) on target (max 10%)\n- On final Coin Hit using Base Skills, if target has 20+ (Burn + Bleed), deal (10% of the Coin's final damage) Blunt damage (rounded down)"
+  },
+  "second_seal_removed": {
+    "key": "second_seal_removed",
+    "name": "Second Seal Removed",
+    "image": "/Images/status-effect/Second_Seal_Removed_(Outis).webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Turn End: Gain 1 Haste next turn\n- Blunt Base Skills deal 2% damage for every 4 (Burn + Bleed) on target (max 10%)\n- On final Coin Hit using Base Skills, if target has 20+ (Burn + Bleed), deal (10% of the Coin's final damage) Slash damage (rounded down)"
+  },
+  "lævateinn": {
+    "key": "lævateinn",
+    "name": "Lævateinn",
+    "image": "/Images/status-effect/Lævateinn_(Outis).webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Turn Start: Inflict 3 Burn on all units on the field\n- Replace this unit's Base Skills with Lævateinn-exclusive Skills corresponding to each Skill's rank\n- Blunt Base Skills deal +2% damage for every 4 (Burn + Bleed) on target (max 10%)\n- On final Coin Hit using Base Skills, if target has 20+ (Burn + Bleed), deal (10% of the Coin's final damage) Pierce damage (rounded down)"
+  },
+  "hyped-up": {
+    "key": "hyped-up",
+    "name": "Hyped-up",
+    "image": "/Images/status-effect/Hyped-up.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Max Stack: 3\n- For every Stack, deal +5% damage with Wrath and Lust Skills\n- When hit, raise this unit's Stagger Threshold by (5 x Stack)\n- Expires at Turn End"
+  },
+  "curio": {
+    "key": "curio",
+    "name": "Curio",
+    "image": "/Images/status-effect/Curio.webp",
+    "color": "var(--Neutral-color)",
+    "description": "When certain conditions are fulfilled, replace this effect with 'Art Medium'"
+  },
+  "self_resonance_circuitry": {
+    "key": "self_resonance_circuitry",
+    "name": "Self Resonance Circuitry",
+    "image": "/Images/status-effect/Self_Resonance_Circuitry.webp",
+    "color": "var(--Neutral-color)",
+    "description": "Total sum of Charge Count currently owned by all allies\nCumulative Charge Count consumed by allies: X\nOn Hit with a Skill: deal +(sum of Charge Count on all allies / 3)% damage\nAll allies gain 1 Offense Level Up for every 100 cumulative Charge Count consumed by allies (max 30)"
+  },
+  "game_target": {
+    "key": "game_target",
+    "name": "Game Target",
+    "image": "/Images/status-effect/Game_Target.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Take +15% damage from Base Skills used by The House of Spiders: The Thumb Nursefather Rodion"
+  },
+  "scorchfield": {
+    "key": "scorchfield",
+    "name": "Scorchfield",
+    "image": "/Images/status-effect/Scorchfield.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Stores all Burn damage dealt in this zone\n- Resets when moving to a different zone\n- This value is shared by all characters\nHeat turns air into a breeze, a gust, a firestorm, scorching the forest with abandon as men and beasts alike depart."
+  },
+  "escape_apparatus": {
+    "key": "escape_apparatus",
+    "name": "Escape Apparatus",
+    "image": "/Images/status-effect/Escape_Apparatus.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- When this unit takes damage that brings its HP to 10, this unit's HP does not drop below 10 for the turn\n- Turn End after the above effect activates: Recover from Stagger and Retreat from the Encounter (excluding forced Staggers; does not count as death; in Encounters where Retreat is disabled, the Retreat effect does not activate and expires at Turn End)\n- In Chain Battles, give this unit's Slots to a Substituted unit and move to the rearmost place in the Backup units' Deployment order (escape from the Encounter entirely if there are no other Backup Units remaining to swap places with next turn. When returning to battle, return in the order they retreated in)\n· When returning to battle, return with the same amount of HP and SP this unit had when it retreated, and eliminate all effects on self save for a select few (if this unit had less than 0 SP when retreating, reset SP to 0 instead)\n'… Live.'"
+  },
+  "fire_butterfly_coffin": {
+    "key": "fire_butterfly_coffin",
+    "name": "Fire Butterfly Coffin",
+    "image": "/Images/status-effect/Fire_Butterfly_Coffin.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Max Stack: 30\n- Can gain up to 20 Stacks per turn\n- On Base Skill Hit: Gain 2 Stacks\n- Turn End: At 20+ Stacks, gain Burn next turn equal to half of surplus Stacks past 20 (rounded down)\n· At 30 Stacks, Gain 5 Burn and +2 Burn Count instead\n\"Heated to a smoldering temperature within the coffin are butterflies, the kaleidoscope spilling forth to melt and tear the target apart.\n\"This type of weapon is still too premature for you to wield, Sinclair, but it is advisable that you familiarize yourself with its properties.\"\n\"The array of blades within the coffin affords considerable convenience in circumstances where time constraints prove solitary handling of requests impossible, or in combat against multiple adversaries.\""
+  },
+  "changing_room": {
+    "key": "changing_room",
+    "name": "Changing Room",
+    "image": "/Images/status-effect/Changing_Room_(Ishmael).webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Max Stack: 2\n- Fix this unit's Speed to 1\n- Take -50% damage from Skills\n- Immediately after gaining this effect, remove Stagger Thresholds; when Staggered, recover from Stagger\n- Turn Start: Gain 10 Aggro\n- When hit, gain +1 Pulsation Count (20 times per turn)\n- Turn End: Lose 1 Stack\n- Cannot Retreat\n- Cannot enter E.G.O Corrosion; instead, enters default Panic state (is affected by Panic-changing effects)\n- While in this state, aside from its exclusive Skill \"As the Voice Says, I Gladly Withdraw into Myself\", cannot equip Defense Skills or E.G.O Skills\nThough it has become hardier, it has now become passive. When viewed through the lens of Le Rouge, however durable something might have become, what is passive is always fragile.\nBut one must first come to a halt in order to usher in change. And that is what makes this process painful."
+  },
+  "full_makeover": {
+    "key": "full_makeover",
+    "name": "Full Makeover",
+    "image": "/Images/status-effect/Full_Makeover.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Min & Max Speed +1\n- Max HP increased by 25%\n- Take -10% damage from Skills\n- Base Skills inflict +1 Bleed Potency on enemies\nThough she has emerged from the cocoon, she has failed to truly metamorphose—as that process involves the disintegration of the self. Still, the process has managed to boost her physical abilities."
+  },
+  "ashen_bullet": {
+    "key": "ashen_bullet",
+    "name": "Ashen Bullet",
+    "image": "/Images/status-effect/Ashen_Bullet.webp",
+    "color": "var(--Neutral-color)",
+    "description": ""
+  },
+  "duality": {
+    "key": "duality",
+    "name": "Duality",
+    "image": "/Images/status-effect/Duality.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Skills can target allied Identities\n- Upon auto-targeting Skills, or in Regular Encounters, prioritize the ally with the earliest Deployment Order\n· If target is an ally, the attack does not hit, and does not trigger Defense Skills (including Clashable Defense Skills)\n- If target is an ally, activate this Skill at Combat Start"
+  },
+  "bleed_identity": {
+    "key": "bleed_identity",
+    "name": "Bleed Identity",
+    "image": "/Images/status-effect/Bleed_Identity.webp",
+    "color": "var(--Neutral-color)",
+    "description": ""
+  },
+  "burn_identity": {
+    "key": "burn_identity",
+    "name": "Burn Identity",
+    "image": "/Images/status-effect/Burn_Identity.webp",
+    "color": "var(--Neutral-color)",
+    "description": ""
+  },
+  "charge_identity": {
+    "key": "charge_identity",
+    "name": "Charge Identity",
+    "image": "/Images/status-effect/Charge_Identity.webp",
+    "color": "var(--Neutral-color)",
+    "description": ""
+  },
+  "poise_identity": {
+    "key": "poise_identity",
+    "name": "Poise Identity",
+    "image": "/Images/status-effect/Poise_Identity.webp",
+    "color": "var(--Neutral-color)",
+    "description": ""
+  },
+  "rupture_identity": {
+    "key": "rupture_identity",
+    "name": "Rupture Identity",
+    "image": "/Images/status-effect/Rupture_Identity.webp",
+    "color": "var(--Neutral-color)",
+    "description": ""
+  },
+  "sinking_identity": {
+    "key": "sinking_identity",
+    "name": "Sinking Identity",
+    "image": "/Images/status-effect/Sinking_Identity.webp",
+    "color": "var(--Neutral-color)",
+    "description": ""
+  },
+  "tremor_identity": {
+    "key": "tremor_identity",
+    "name": "Tremor Identity",
+    "image": "/Images/status-effect/Tremor_Identity.webp",
+    "color": "var(--Neutral-color)",
+    "description": ""
+  },
+  "joint_combo": {
+    "key": "joint_combo",
+    "name": "Joint Combo",
+    "image": "/Images/status-effect/Joint_Combo.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- If the pertinent Identity is on the field, alive, and isn't immobilized, activate the linked effects (does not activate if the pertinent Identity is in any of the following states: all types of immobilized states, E.G.O Corrosions, and Staggers)"
+  },
+  "buffet": {
+    "key": "buffet",
+    "name": "Buffet",
+    "image": "/Images/status-effect/Buffet.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Max Value: 999\n- This value is increased by (actual HP healed / 10) whenever allies' or enemies' HP is healed on the field\n· Rounded up for each instance\n· Healing from E.G.O Gifts does not count\n- This value is shared by all characters\n- Resets when moving to a different zone\nThe Buffet of flesh and meat is served. Let this be a feasting hall for all."
+  },
+  "attending_the_divine": {
+    "key": "attending_the_divine",
+    "name": "Attending the Divine",
+    "image": "/Images/status-effect/Attending_the_Divine.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Unique Assist Defense\n- Max Stack: 1\n- When Haute Couture::The Crimson God of Le Rouge Sinclair is about to take an Unopposed Attack from an enemy, consume 1 Stack to redirect the enemy's targeting to self\n· Then, copy and use Haute Couture::The Crimson God of Le Rouge Sinclair's \"La Garde\"\n- When there are multiple allies that have Assist Defense Stacks, the ally that has the highest Stack has the highest activation priority\n- This effect counts as Assist Defense, and is counted toward calculating Assist Defense Stacks\n- Turn End: This effect expires\nLet us attend to our new God."
+  },
+  "weathered_pride": {
+    "key": "weathered_pride",
+    "name": "Weathered Pride",
+    "image": "/Images/status-effect/Despair.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Max Stack: 999\n- Can only be gained up to 500 Stacks per turn"
+  },
+  "tiny_and_sharp_nails": {
+    "key": "tiny_and_sharp_nails",
+    "name": "Tiny and Sharp Nails",
+    "image": "/Images/status-effect/Tongue-pinning_Needle.webp",
+    "color": "var(--Neutral-color)",
+    "description": "- Max Stack: 30"
+  }
 }

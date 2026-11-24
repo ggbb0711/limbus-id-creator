@@ -61,7 +61,7 @@ The editor gives you three ways to add a term to skill text. Each fits a differe
 | Icon | The game's icon | Your uploaded icon | None |
 | Color | Buff, Debuff or Neutral | Your choice | Your choice |
 | Description on the card | No | Yes, as an Effects entry | No |
-| Popup for readers | No | Yes, when it has a description | No |
+| Popup for readers | Yes, when it has a description | Yes, when it has a description | No |
 | Saved with the card | Yes | Yes | No, it stays in your browser |
 
 Use a **built-in status** whenever your mechanic is the game's mechanic. Readers already know what `[rupture]` does, and a familiar icon reads faster than a new one.
@@ -81,7 +81,7 @@ A custom effect's keyword is its name in lower case with spaces turned into unde
 
 ## Popups, copying and pasting
 
-Clicking a custom effect, in a description box, on the card preview or in a card summary on a post, opens a popup with its icon, name and description. Built-in statuses don't open popups, because readers already know them.
+Clicking a custom effect, in a description box, on the card preview or in a card summary on a post, opens a popup with its icon, name and description. Built-in statuses open the same popup with the game's description, when the editor has one. Triggers and coin icons don't.
 
 Selecting skill text and copying it keeps the keywords as words. Pasted into Discord or a document, `[coin_2] [heads_hit] Inflict 2 [bleed]` comes out as "[Heads Hit] Inflict 2 Bleed". Trigger labels keep their brackets, as they do on the card, and the coin icon has no text, so it's dropped. Pasted back into a description box in the editor, the keywords turn back into their styled versions. That works for every built-in keyword and for custom effects that exist on the card you paste into. A custom effect from another card pastes as its plain name until you add an effect with that name to the current card.
 
@@ -95,7 +95,7 @@ Selecting skill text and copying it keeps the keywords as words. Pasted into Dis
 
 ## Keyword reference
 
-The tables below list every built-in keyword the editor knows, generated from the editor's own data. Coin keywords follow the patterns `[coin_1]` to `[coin_9]`, `[coin_N_unbreakable]` and `[coin_N_excision]` described above, so they aren't repeated here. New statuses are added as the game releases them.
+The tables below list every built-in keyword the editor knows, generated from the editor's own data, with the game's description for each status where the editor has one. Coin keywords follow the patterns `[coin_1]` to `[coin_9]`, `[coin_N_unbreakable]` and `[coin_N_excision]` described above, so they aren't repeated here. New statuses are added as the game releases them.
 
 ### Suggest a status effect
 
@@ -121,6 +121,8 @@ Timing labels for when an effect happens. They show as bracketed labels like the
 | `[clash_tie]` | [Clash Tie] |
 | `[clash_win]` | [Clash Win] |
 | `[clashable_counter]` | [Clashable Counter] |
+| `[coin_end]` | [Coin End] |
+| `[coin_start]` | [Coin Start] |
 | `[combat_end]` | [Combat End] |
 | `[combat_start]` | [Combat Start] |
 | `[failed_evade]` | [Failed Evade] |
@@ -160,520 +162,554 @@ Timing labels for when an effect happens. They show as bracketed labels like the
 
 Shown in the Buff color.
 
-| Keyword | Shows as |
-| --- | --- |
-| `[accelerating_future]` | Accelerating Future |
-| `[accumulated_past]` | Accumulated Past |
-| `[ailing_heart]` | Ailing Heart |
-| `[appetite]` | Appetite |
-| `[armure_éveillée]` | Armure Éveillée |
-| `[artwork:_fascia]` | Artwork: Fascia |
-| `[artwork:_tibia]` | Artwork: Tibia |
-| `[assist_[援]]` | Assist [援] |
-| `[assist_attack]` | Assist Attack |
-| `[attack_power_up]` | Attack Power Up |
-| `[avenging_my_family]` | Avenging My Family |
-| `[backup_candy]` | Backup Candy |
-| `[base_power_up]` | Base Power Up |
-| `[battle_instinct]` | Battle Instinct |
-| `[battle_ready]` | Battle Ready |
-| `[battleblood_instinct]` | Battleblood Instinct |
-| `[bearing_of_a_salsu]` | Bearing of a Salsu |
-| `[beauty_of_the_physique]` | Beauty of the Physique |
-| `[before_the_king_in_binds]` | Before the King in Binds |
-| `[black_wings]` | Black Wings |
-| `[blazing_sunset]` | Blazing Sunset |
-| `[bleed_resistance]` | Bleed Resistance |
-| `[blessing]` | Blessing |
-| `[blessing_of_the_obsidian_god_(Don_Quixote)]` | Blessing of the Obsidian God (Don Quixote) |
-| `[blood-tinged_scissorblades]` | Blood-tinged Scissorblades |
-| `[bloodflame_[血炎]]` | Bloodflame [血炎] |
-| `[bloodied_hand]` | Bloodied Hand |
-| `[blooming_thorn]` | Blooming Thorn |
-| `[blossom_scissors]` | Blossom Scissors |
-| `[blunt_dmg_up]` | Blunt DMG Up |
-| `[blunt_power_up]` | Blunt Power Up |
-| `[blunt_protection]` | Blunt Protection |
-| `[book_of_vengeance_[heathcliff]]` | Book of Vengeance [Heathcliff] |
-| `[book_of_vengeance_[sinclair]]` | Book of Vengeance [Sinclair] |
-| `[borrowed_time]` | Borrowed Time |
-| `[bright_[光]]` | Bright [光] |
-| `[burgeoning_of_horns_[發角]]` | Burgeoning of Horns [發角] |
-| `[charge]` | Charge |
-| `[charge_barrier]` | Charge Barrier |
-| `[charm_of_the_beastly]` | Charm of the Beastly |
-| `[check_this_out,_kiddo!]` | Check This Out, Kiddo! |
-| `[clash_power_up]` | Clash Power Up |
-| `[coffin]` | Coffin |
-| `[commanding_cry]` | Commanding Cry |
-| `[concentration_-_sniper]` | Concentration - Sniper |
-| `[concentration【sniper】]` | Concentration【Sniper】 |
-| `[corpus_ingredient]` | Corpus Ingredient |
-| `[crit_dmg_up]` | Crit DMG Up |
-| `[cumulus_wall]` | Cumulus Wall |
-| `[damage_up]` | Damage Up |
-| `[dark_cloud_blade]` | Dark Cloud Blade |
-| `[dawn_office]` | Dawn Office |
-| `[dawnherald]` | Dawnherald |
-| `[deep_inhale]` | Deep Inhale |
-| `[deep_tears]` | Deep Tears |
-| `[defense_level_up]` | Defense Level Up |
-| `[defense_power_up]` | Defense Power Up |
-| `[defensive_stance]` | Defensive Stance |
-| `[denial_[不許]]` | Denial [不許] |
-| `[desire_for_acknowledgement_sated]` | Desire for Acknowledgement Sated |
-| `[despair]` | Despair |
-| `[desperado]` | Desperado |
-| `[dhyāna]` | Dhyāna |
-| `[dimensional_castaway]` | Dimensional Castaway |
-| `[dokkaebi_arms]` | Dokkaebi Arms |
-| `[drink_to_the_fallen]` | Drink to the Fallen |
-| `[dullahan]` | Dullahan |
-| `[e.g.o_resource_amp]` | E.G.O Resource Amp |
-| `[emergency_barrier_battery]` | Emergency Barrier Battery |
-| `[entangled_life_[羅生]]` | Entangled Life [羅生] |
-| `[entanglement]` | Entanglement |
-| `[envy_dmg_up]` | Envy DMG Up |
-| `[envy_power_up]` | Envy Power Up |
-| `[envy_protection]` | Envy Protection |
-| `[erudition]` | Erudition |
-| `[exquisite_aesthetics]` | Exquisite Aesthetics |
-| `[eye_of_precognition]` | Eye of Precognition |
-| `[eye_of_precognition_-_overheat]` | Eye of Precognition - Overheat |
-| `[faith_beyond_question]` | Faith Beyond Question |
-| `[fanatic]` | Fanatic |
-| `[fell_bullet]` | Fell Bullet |
-| `[festive_fever]` | Festive Fever |
-| `[firepower]` | Firepower |
-| `[flower-burying_pin_[埋花針]]` | Flower Burying Pin [埋花針] |
-| `[flower-burying_wedge_[埋花櫼]]` | Flower Burying Wedge [埋花櫼] |
-| `[focused_performance]` | Focused Performance |
-| `[from_dawnbreak_to_sunset]` | From Dawnbreak to Sunset |
-| `[gaze_of_contempt]` | Gaze of Contempt |
-| `[gebura's_blade]` | Gebura's Blade |
-| `[glimpse_of_precognition]` | Glimpse of Precognition |
-| `[gloom_dmg_up]` | Gloom DMG Up |
-| `[gloom_power_up]` | Gloom Power Up |
-| `[gloom_protection]` | Gloom Protection |
-| `[gluttony_dmg_up]` | Gluttony DMG Up |
-| `[gluttony_power_up]` | Gluttony Power Up |
-| `[gluttony_protection]` | Gluttony Protection |
-| `[grace_of_the_prescript]` | Grace of the Prescript |
-| `[growing_resentment]` | Growing Resentment |
-| `[guardians_of_the_forest]` | Guardians of the Forest |
-| `[hardblood]` | Hardblood |
-| `[hardblood_armor]` | Hardblood Armor |
-| `[hardblood_cast]` | Hardblood Cast |
-| `[hardened_shell-barrier]` | Hardened Shell-Barrier |
-| `[haste]` | Haste |
-| `[heated_gas_harpoon]` | Heated Gas Harpoon |
-| `[heishou_bolus_contamination_[黑獸丸染]]` | Heishou Bolus Contamination [黑獸丸染] |
-| `[here_comes_magical_girl!]` | Here Comes Magical Girl! |
-| `[high-voltage_exoskeleton]` | High-voltage Exoskeleton |
-| `[high_noon]` | High Noon |
-| `[higher_thunderer]` | Higher Thunderer |
-| `[hp_healing_boost]` | HP Healing Boost |
-| `[hunger]` | Hunger |
-| `[i_got_praised!]` | I Got Praised! |
-| `[imperfections_addressed]` | Imperfections Addressed |
-| `[incandescent_indulgence]` | Incandescent Indulgence |
-| `[indulgence_in_prescripts]` | Indulgence in Prescripts |
-| `[inertia_of_drifting]` | Inertia of Drifting |
-| `[iron_maiden]` | Iron Maiden |
-| `[l'hommage]` | L'Hommage |
-| `[le_fauvisme_-_masque_de_chien]` | Le Fauvisme - Masque de Chien |
-| `[le_fauvisme_-_masque_de_loup]` | Le Fauvisme - Masque de Loup |
-| `[le_noir:_gabardine_overcoat]` | Le Noir: Gabardine Overcoat |
-| `[leash-holder_of_all_heishou]` | Leash Holder of All Heishou |
-| `[life_from_death_[死中求活]]` | Life from Death [死中求活] |
-| `[liferender]` | Liferender |
-| `[light_of_daybreak]` | Light of Daybreak |
-| `[linebreaker]` | Linebreaker |
-| `[load]` | Load |
-| `[loneliness_at_high_noon]` | Loneliness at High Noon |
-| `[love/hate]` | Love-Hate |
-| `[loyalty_pheromone]` | Loyalty Pheromone |
-| `[lust_dmg_up]` | Lust DMG Up |
-| `[lust_power_up]` | Lust Power Up |
-| `[lust_protection]` | Lust Protection |
-| `[magical_arcana]` | Magical Arcana |
-| `[magical_girl's_chant]` | Magical Girl's Chant |
-| `[man_in_scabbard]` | Man in Scabbard |
-| `[maturing_textbook]` | Maturing Textbook |
-| `[microprecision_time_acceleration]` | Microprecision Time Acceleration |
-| `[minus_coin_drop]` | Minus Coin Drop |
-| `[mook_workshop_-_ye_[銳]_type_ii_bladedraw_/_thrust_force:_dokkaebi_fire]` | Mook Workshop - Ye [銳] Type II Bladedraw / Thrust Force: Dokkaebi Fire |
-| `[moonlit_azure_blade]` | Moonlit Azure Blade |
-| `[near-light_superbattery]` | Near-light Superbattery |
-| `[nebulizer_α]` | Nebulizer α |
-| `[nebulizer_β]` | Nebulizer β |
-| `[offense_level_up]` | Offense Level Up |
-| `[overheat]` | Overheat |
-| `[overheated_gas_harpoon]` | Overheated Gas Harpoon |
-| `[penitence]` | Penitence |
-| `[petals]` | Petals |
-| `[pheromone]` | Pheromone |
-| `[pierce_dmg_up]` | Pierce DMG Up |
-| `[pierce_power_up]` | Pierce Power Up |
-| `[pierce_protection]` | Pierce Protection |
-| `[piercing_sword]` | Piercing Sword |
-| `[plus_coin_boost]` | Plus Coin Boost |
-| `[poise]` | Poise |
-| `[power_up]` | Power Up |
-| `[preservation]` | Preservation |
-| `[pride_dmg_up]` | Pride DMG Up |
-| `[pride_power_up]` | Pride Power Up |
-| `[pride_protection]` | Pride Protection |
-| `[prisoner_transport_arrangements]` | Prisoner Transport Arrangements |
-| `[protecting_sword]` | Protecting Sword |
-| `[protection]` | Protection |
-| `[protector's_stance]` | Protector's Stance |
-| `[pulsation]` | Pulsation |
-| `[quadricolor_dimensions]` | Quadricolor Dimensions |
-| `[ready_to_loose]` | Ready to Loose |
-| `[red_eyes]` | Red Eyes |
-| `[remembrance]` | Remembrance |
-| `[resentful_scabbard]` | Resentful Scabbard |
-| `[resentment]` | Resentment |
-| `[ridiculous_grit]` | Ridiculous Grit |
-| `[rupture_protection]` | Rupture Protection |
-| `[sanctum_of_conservation]` | Sanctum of Conservation |
-| `[scarlet_moth]` | Scarlet Moth |
-| `[scorch_propellant_ammo]` | Scorch Propellant Ammo |
-| `[second_is_welcome-snipping]` | Second is Welcome-snipping |
-| `[self-charge]` | Self-charge |
-| `[serpent_arm]` | Serpent Arm |
-| `[shimmering【bloodfiend】]` | Shimmering [BloodFiend] |
-| `[shin_(心)_-_dihui_star_[地慧星]]` | Shin (心) - Dihui Star [地慧星] |
-| `[shin_(心)_-_disgrace]` | Shin (心) - Disgrace |
-| `[shin_(心)_-_fate]` | Shin (心) - Fate |
-| `[shin_(心)_-_procuration]` | Shin (心) - Procuration |
-| `[shin_(心)_-_tiantui_star_[天退星]]` | Shin (心) - Tiantui Star [天退星] |
-| `[sizzling_wound]` | Sizzling Wound |
-| `[slash_dmg_up]` | Slash DMG Up |
-| `[slash_power_up]` | Slash Power Up |
-| `[slash_protection]` | Slash Protection |
-| `[sloth_dmg_up]` | Sloth DMG Up |
-| `[sloth_power_up]` | Sloth Power Up |
-| `[sloth_protection]` | Sloth Protection |
-| `[somatic_frisson-inspiring_melody]` | Somatic Frisson-inspiring Melody |
-| `[spark_of_inspiration]` | Spark of Inspiration |
-| `[strider【mao】]` | Strider [Mao] |
-| `[strider【wu】]` | Strider [Wu] |
-| `[string_severance_[絕緣]]` | String Severance [絕緣] |
-| `[sword_of_the_homeland_-_penetrating]` | Sword of the Homeland - Penetrating |
-| `[sword_of_the_homeland_-_rending]` | Sword of the Homeland - Rending |
-| `[sword_of_the_homeland_-_striking]` | Sword of the Homeland - Striking |
-| `[sword_of_the_homeland_-_the_true_essence]` | Sword of the Homeland - The True Essence |
-| `[swordplay_of_the_homeland]` | Swordplay of the Homeland |
-| `[target_aim]` | Target Aim |
-| `[tarnished_blood]` | Tarnished Blood |
-| `[tear-sharpened]` | Tear-sharpened |
-| `[the_middle_-_grudge]` | The Middle - Grudge |
-| `[the_middle_-_vengeance_tattoo_[great_sister]]` | The Middle - Vengeance Tattoo [Great Sister] |
-| `[the_middle_styled_augmentation_tattoos]` | The Middle Styled Augmentation Tattoos |
-| `[the_self_unbound_-_flow_state]` | The Self Unbound - Flow State |
-| `[the_udjat_[vanguard]]` | The Udjat [Vanguard] |
-| `[thermal_blades]` | Thermal Blades |
-| `[thunderer]` | Thunderer |
-| `[tiantui_star_[天退星]]` | Tiantui Star [天退星] |
-| `[trauma_shield]` | Trauma Shield |
-| `[tremor_-_clockwinding]` | Tremor - Clockwinding |
-| `[tremor_-_distribution]` | Tremor - Distribution |
-| `[unjust_enrichment]` | Unjust Enrichment |
-| `[unlock]` | Unlock |
-| `[unlock_-_i]` | Unlock - I |
-| `[unlock_-_ii]` | Unlock - II |
-| `[unlock_-_iii]` | Unlock - III |
-| `[unrelenting_spirit_-_shin_[剛氣-心]]` | Unrelenting Spirit - Shin [剛氣-心] |
-| `[unrelenting_spirit_[剛氣]]` | Unrelenting Spirit [剛氣] |
-| `[unrelenting_storm]` | Unrelenting Storm |
-| `[vengeance_tattoo]` | Vengeance Tattoo |
-| `[violent_collections]` | Violent Collections |
-| `[weak-resist_dmg_boost]` | Weak-resist DMG Boost |
-| `[when_boring_a_20-inch_hole_with_a_lance...]` | When boring a 20-inch hole with a lance... |
-| `[when_caving_in_the_back_of_the_skull_with_a_hammer...]` | When caving in the back of the skull with a hammer... |
-| `[when_cleaving_through_the_shoulder_and_the_skull_with_a_bastard_sword...]` | When cleaving through the shoulder and the skull with a bastard sword... |
-| `[when_hacking_through_the_ribs_with_a_hatchet...]` | When hacking through the ribs with a hatchet... |
-| `[when_lacerating_through_space_itself_with_a_scythe,_like_a_certain_someone...]` | When lacerating through space itself with a scythe, like a certain someone... |
-| `[when_penetrating_the_lungs_with_a_stiletto...]` | When penetrating the lungs with a stiletto... |
-| `[when_punching_10_or_more_holes_in_the_torso_with_a_rapier...]` | When punching 10 or more holes in the torso with a rapier... |
-| `[when_rending_the_body_with_a_great_sword...]` | When rending the body with a greatsword... |
-| `[when_ripping_the_flesh_to_ten_thousand_strips_with_a_whip...]` | When ripping the flesh to ten thousand strips with a whip... |
-| `[wild_hunt]` | Wild Hunt |
-| `[witnessed_-_eastern_cinq]` | Witnessed - Eastern Cinq |
-| `[wound-casing_mask]` | Wound-casing Mask |
-| `[wrath_dmg_up]` | Wrath DMG Up |
-| `[wrath_power_up]` | Wrath Power Up |
-| `[wrath_protection]` | Wrath Protection |
+| Keyword | Shows as | Description |
+| --- | --- | --- |
+| `[accelerating_future]` | Accelerating Future | - Max Stack: 5 - Base Skills deal +3% damage for every Stack (max 15%) - Base Skill Clash Power +1 for every 2 Stacks - At 5 Stacks, Base Skill Coin Power +1 - Skill End: This effect expires |
+| `[accumulated_past]` | Accumulated Past | - Max Stack: 12 - Turn Start: gain 1 Clash Power Up and 1 Offense Level Up for every 3 Stack |
+| `[ailing_heart]` | Ailing Heart | - Max Value: 10 - Turn End: gain 1 Stack - Turn Start: gain 1 Defense Level Up for every 3 Stack - At 50%- HP, gain 1 Defense Level for every 3 Stack - At 40%- HP, On Hit with Base Skills, heal (Stack x 5)% of damage dealt On Hit as HP (min 1; rounded down; heal up to 30 HP per Skill) |
+| `[appetite]` | Appetite | Increases the healing provided by the Passive \[Rustle Up\]. Spent when the Passive activates. |
+| `[armure_éveillée]` | Armure Éveillée | - Max Stack: 100 - Min & Max Speed +2 - Offense Level +1 and Defense Level +1 for every 25 Stacks - Convert all Base Attack Skill Coins into Unbreakable Coins - Turn Start: Heal 8 SP - At 0 Stacks, convert this effect into Le Noir: Gabardine Overcoat Le Noir's fabric weave prevents external force from reaching its wearer. The purpose for which it awakens is to eliminate change imposed from the outside. The fabric stores energy from attacks it absorbs, then expels all that force in a single burst to remove the external source of change. |
+| `[artwork:_fascia]` | Artwork: Fascia | Apply the following effects to this unit's Base Attack Skills and Clashable Counter Skill based on Corpus Ingredient Potency: - 1+: Base Power +1 - 2+: If the enemy has Bleed or 'Unique Bleed', deal +10% damage - 3+: Inflict +1 more Bleed Potency and Count - 4+: Base Power +1 |
+| `[artwork:_tibia]` | Artwork: Tibia | Apply the following effects to this unit's Base Attack Skills and Clashable Counter Skill based on Corpus Ingredient Potency: - 1+: Base Power +1 - 2+: If the enemy has Bleed or 'Unique Bleed', deal +10% damage - 3+: Inflict +1 more Bleed Potency and Count - 4+: Base Power +1 - 5+: Base Power +1 |
+| `[assist_[援]]` | Assist [援] | - Max Stack: 1 - If target has 5+ negative effects, Clash Power +1, deal +10% damage |
+| `[assist_attack]` | Assist Attack | - If unit A applies this effect to unit B: Unit B follows up with an Unopposed Attack with its Skill 1 against the same enemy unit A attacked with its Skill. Activates at unit A's Attack End. - The Skill used as an Assist Attack does not affect Unit B's upcoming Skills list. |
+| `[attack_power_up]` | Attack Power Up | Attack skills gain Final Power by the effect’s Count for one turn. |
+| `[avenging_my_family]` | Avenging My Family | - Envy Base Skills deal +20% damage - Base Skills gain Final Power +1 |
+| `[backup_candy]` | Backup Candy | Turn End: at less than 60% HP... Heal 30% HP, heal 15 SP, lose 1 Backup Candy, and 1 Hunger At 0 Stack, apply 1 Incandescent Indulgence, then expires |
+| `[base_power_up]` | Base Power Up | Raise the Base Power of Skills by the effect's Count. |
+| `[battle_instinct]` | Battle Instinct | - Max Stack: 3 - Min & Max Speed +2 - Base Skills inflict +1 Burn Potency and Burn Count on enemies - Skill "Eject" deals +(Stack x 5)% damage - Skills "Eject - High Noon" and "Dismemberment at High Noon" deal +(Stack x 10)% damage "To resume the subject at hand: aside from Singularities, there exists a means of overcoming the penalties incurred by using this type of weaponry. Namely, effort." "This may go without saying, but it is recommended that you focus on honing your body and battle instinct whenever time permits—both during downtime and when handling requests." "Granted, battle instinct, in most cases, can only be properly demonstrated in the heat of battle. One might refer to this process as a "warm up," although that term is perhaps too simple. In any case, a heightened natural battle instinct will help you offset the gear's structural and technical vulnerabilities. This is how you may raise the baseline of your performance threshold. Are you able to comprehend this explanation, Sinclair?" |
+| `[battle_ready]` | Battle Ready | Max Value: 1 Bleed Potency and Count inflicted using this unit's Skill or Coin effects: +1 Gain 1 Slash Power Up and 3 Slash DMG Up for the duration of this Encounter |
+| `[battleblood_instinct]` | Battleblood Instinct | - Max Stack: 20 - For every Stack, deal +0.75% damage - For every 10 Stack, gain 1 Haste next turn |
+| `[bearing_of_a_salsu]` | Bearing of a Salsu | - Max Stack: 3 - Gain Offense Level for every Stack - On Attack Hit with Slash Skills, gain 1 Poise (2 times per turn) - Lose 1 Stack when an allied Blade Lineage Identity is defeated |
+| `[beauty_of_the_physique]` | Beauty of the Physique | - Against enemies that have 20+ Bleed, Base Skills gain Coin Power +1 and deal +20% damage (calculated as the sum of Bleed on all targets for Skills that have 2+ Atk Weight) - Base Skills that consume 'Unique Charge' gain Coin Power +1 (excluding E.G.O Skills) - Turn End: This effect expires |
+| `[before_the_king_in_binds]` | Before the King in Binds | When this unit's attack with 1 Atk Weight hits, inflict 100% of the resulting Coin value on hit as (Affinity/Attack type of the Attack Skill used to hit) damage against 2 other attackable enemies with the least HP. |
+| `[black_wings]` | Black Wings |  |
+| `[blazing_sunset]` | Blazing Sunset | - If this unit has 3+ Stagger Threshold, remove the first Stagger Threshold - Turn End: If this unit is Staggered, recover from Stagger; if this unit is at Uptie 3 or higher, replace 1 of its Base Skills with Skill 3 (excluding forced Stagger; prioritize the Skill of lowest rank) - Turn Start: Heal 8 SP - Passive "Unstable Shell of Ego" effects, Base Attack Skill effects, and Volatile Passion effects cannot reduce this unit's SP below 45 - Turn Start: enter the Volatile E.G.O::Waxen Pinion State, heal 50% HP, and heal SP to max (once per Encounter) - Volatile E.G.O::Waxen Pinion State is maintained even when this unit has 0 or lower SP at Turn Start - When in Volatile E.G.O::Waxen Pinion state, gain the following effects: · Turn Start: Gain Shield equal to 20% of max HP · When hit while this unit has Shield, inflict 2 Burn against the attacker (2 times per turn) · Activate Scorchfield on this field "Master, please… I still have so much to learn… You said it yourself…" Dawn is a fleeting thing; it soon gives way to morning and fades into daylight, with a promise of sunset that will bring about the evening. |
+| `[bleed_resistance]` | Bleed Resistance |  |
+| `[blessing]` | Blessing | - Turn Start: gain 1 Protecting Sword for every 8 SP (max 5) - When Clash ends, inflict 2 Sinking (once per turn) - When hit, inflict 2 Sinking on the attacker (once per turn) - For every 20 SP, inflict +1 more Sinking Potency with above effects (max 2) - Replace this unit's Base Skills with Plus Coin Skills |
+| `[blessing_of_the_obsidian_god]` | Blessing of the Obsidian God | - Max Stack: 100 - Turn Start: Gain Shield equal to (Stack / 5)% of this unit's max HP (rounded down) - At 25+ Stack, On Base Attack Skill Use, convert all Coins into Unbreakable Coins - At 40+ Stack, this unit cannot be Staggered (excluding forced Staggers) The Obsidian God. The Obsidian Giant. The Chaplain of the Hammer. The Obsidian God of the Grand Magasin, whose domain is the power of preservation, grants his blessing through direct contact. The hammer is hard, and its black hue absorbs all things and brings them to a halt... much like death itself. |
+| `[blessing_of_the_obsidian_god_(Don_Quixote)]` | Blessing of the Obsidian God (Don Quixote) |  |
+| `[blood-tinged_scissorblades]` | Blood-tinged Scissorblades | - Max Value: 10 - Stage 1 Blood-tinged Scissorblades - At 10+ Blood-tinged Scissorblades, converts to Blood-tinged Scissorblades II. - At 20+ Blood-tinged Scissorblades, converts to Blood-tinged Scissorblades III. - Reverts to previous stage when the Stack drops below the requirements. - Blood-tinged Scissorblades does not drop below 1. - At Blood-tinged Scissorblades II, gain 1 Offense Level Up and 1 Defense Level Down based on the Stack (1/5 Stack) - At Blood-tinged Scissorblades III, gain 1 Offense Level Up on the Stack (1/5 Stack) |
+| `[bloodflame_[血炎]]` | Bloodflame [血炎] | - Max Stack: 3 - This unit inflicts +1 more Burn and Rupture potency with its Base Skills - While this unit has this effect, heal 3 SP upon Staggering or killing an enemy (3 times per turn) · If this unit's SP is at max when the above effect activates, gain 1 Offense Level Up and 1 Haste next turn - Lose 1 Stack at Turn End |
+| `[bloodied_hand]` | Bloodied Hand | - Max Value: 10 - Stage 1 Bloodied Hand - At 10+ Bloodied Hand, converts to Bloodied Hand II. - At 20+ Bloodied Hand, converts to Bloodied Hand III. - Reverts to previous Stage when the Stack drops below the requirements. - At Bloodied Hand II, gain 1 Offense Level Up based on the Stack (1/10 Stack) - At Bloodied Hand III, gain 1 Offense Level Up based on the Stack (1/10 Stack), and additionally inflict 1 Rupture and 1 Bleed On Hit with Base Skills |
+| `[blooming_thorn]` | Blooming Thorn | - Max Value: 10 - Stage 1 Blooming Thorn - Gain 1 Defense Level for every 2 Stack (max 5) - When hit, inflict 1 Bleed against the attacker and lose 1 Stack - \[The Princess of La Manchaland Rodion Only\] · At max Stack, convert to the next Stage of this effect. · (10+ Stack: Blooming Thorn II) · (20+ Stack: Blooming Thorn III) · Inflict +(Stage - 1) more Bleed and Rupture Potency using this unit's Base Attack Skill Coin effects. · Reverts to previous Stage when the Stack drops below the requirements. |
+| `[blossom_scissors]` | Blossom Scissors | - Max Stack: 2 - Deal +7% damage for every Stack The scissors used to sever the primordial materials produced underground are larger and more extraordinary still. These scissors have cut and recut the very first cloth ever woven. That flowers should bloom from them is only natural, for they have always cut things at their very roots. |
+| `[blunt_dmg_up]` | Blunt DMG Up | Deal 10% more damage with Blunt skills based on the effect's Count for one turn. (Max 10) |
+| `[blunt_power_up]` | Blunt Power Up | Blunt skills gain final Power by the effect's Count for one turn. |
+| `[blunt_protection]` | Blunt Protection | Take 10% less damage from Blunt skills per Count for one turn. (Max 10) |
+| `[book_of_vengeance_[heathcliff]]` | Book of Vengeance [Heathcliff] | Max Stack: 30 - Offense Level +1, Defense Level +1 for every 5 Stack |
+| `[book_of_vengeance_[sinclair]]` | Book of Vengeance [Sinclair] | - Max Stack: 30 - Deal more damage equal to (Stack)% (max 30%) - Gain the following effects next turn based on Stack: · At 10+ Stack: gain 1 Blunt DMG Up · At 20+ Stack: Max Speed +1, gain 1 Power Up · At 30 Stack: gain 2 Blunt DMG Up |
+| `[borrowed_time]` | Borrowed Time | Turn End at 2+ Count: - Gain (Borrowed Time Count - 1) Haste, Clash Power Up, and Fragile next turn - If this unit is set to gain more Bind than Haste next turn, the Borrowed Time effect expires at the next Turn Start, and this unit gets Staggered Turn End: At 1 Count, gain 2(Borrowed Time Stack - 1) Bind next turn Turn End: Gain 1 Stack, lose 1 Count |
+| `[bright_[光]]` | Bright [光] | - Potency: Base 0, Max 5 - Count: Base 3, Max 3 - Turn Start: gain 1 Offense Level Up for every Potency - Turn Start: lose 1 Count |
+| `[burgeoning_of_horns_[發角]]` | Burgeoning of Horns [發角] | - Max Value: 3 - This unit's Base Skills inflict +1 more of Rupture and Sinking Potency - Turn End: Lose 1 Stack |
+| `[charge]` | Charge | Resource used by certain skills for additional effects. Its Count can go up to 20. Count lowers by 1 at the end of each turn. |
+| `[charge_barrier]` | Charge Barrier | - Gain (Charge Barrier # x 3) Shield. - Lose 1 Charge Barrier after losing (Charge Barrier # x 3) Shield. - (If the unit is a W Corp. employee, ALL Charge Barrier effects activate at (Charge Barrier # x 5) instead of at (Charge Barrier # x 3)) - Turn end: Gain a Charge Count for each Charge Barrier #, and Charge Barrier and Shield gained from Charge Barrier expire completely next turn |
+| `[charm_of_the_beastly]` | Charm of the Beastly | - Against enemies that have 20+ Bleed, Base Skills gain Coin Power +1 and deal +20% damage (calculated as the sum of Bleed on all targets for Skills that have 2+ Atk Weight) - On Attack Start, if target has 15- SP or 20+ Sinking Potency, gain 1 Blunt Power Up next turn (once per turn) - Turn End: This effect expires |
+| `[check_this_out,_kiddo!]` | Check This Out, Kiddo! | - Max Stack: 10 - Reduced by 1 when this unit is hit by 2 Skills - At 5+ Stack, Base Skills gain Final Power +1 - Blunt Skills deal +1% damage for every Stack (max 10%) |
+| `[clash_power_up]` | Clash Power Up | Gain Clash Power by the effect's Count for one turn. |
+| `[coffin]` | Coffin | - Max Value: 10 - At Turn End: - Gain 2 Damage Up next turn for every 3 Value (max 6) - Raise minimum Speed by 1 next turn for every 4 Value (max 2) - Gain 1 Clash Power Up next turn for every 5 Value (max 2) |
+| `[commanding_cry]` | Commanding Cry | - Gain 1 Clash Power and 2 Defense Level - Expires at Turn End |
+| `[concentration_-_sniper]` | Concentration - Sniper |  |
+| `[concentration【sniper】]` | Concentration【Sniper】 | - Max Stack: 4 - Turn End: gain 1 Stack |
+| `[corpus_ingredient]` | Corpus Ingredient | - Max Count: 20 - Unique Charge - Interacts the same way as normal Charge does to effects that raise or reduce Charge Potency and Count - Turn End: Lose 1 Count |
+| `[crimson_cradle]` | Crimson Cradle | When conditions are met by other "Le Rouge" allies, activate corresponding effects for Haute Couture::The Crimson God of Le Rouge Sinclair - Effects remain active even if the corresponding ally is defeated Haute Couture::Boutique du Rouge Ishmael - If Ishmael is in "Full Makeover" state, Sinclair's max HP +10%; Sinclair's heals 5% max HP On Base Attack Hit (rounded up, 5 times per turn) Haute Couture::Le Rouge King of Needleworks Heathcliff - On Hit using the "La Demande" Skill's Coins, gain +1 Pulsation Count and heal 5% HP |
+| `[crit_dmg_up]` | Crit DMG Up | For this turn: Deal +10% damage on Critical Hit for every Stack |
+| `[cry_of_the_cocoon_-_frail]` | Cry of the Cocoon - Frail | - Max Stack: 5 - Base Skill Final Power +1 - On Hit using Base Skills, heal 3% HP (5 times per turn) - Turn Start: If allied Haute Couture::The Crimson God of Le Rouge Sinclair is not on the field, this effect expires |
+| `[cry_of_the_cocoon_-_vicious]` | Cry of the Cocoon - Vicious | - Max Stack: 1 - Base Skill Final Power +1 - Deal +10% damage using Base Skills - On Hit using Base Skills, heal 6% HP (5 times per turn) - Turn Start: If allied Haute Couture::The Crimson God of Le Rouge Sinclair is not on the field, this effect expires |
+| `[cumulus_wall]` | Cumulus Wall | Max Stack: 1 Defense Skill Final Power +1 This effect expires at Turn End or Attack End of the following: 'Rules of the Backstreets' |
+| `[damage_up]` | Damage Up | Deal 10% more damage with skills based on the effect's Count for one turn. (Max 10) |
+| `[dark_cloud_blade]` | Dark Cloud Blade | Max Stack: 1 Gain 1 Slash Power Inflict 1 Bleed On Hit with Slash Skills |
+| `[dawn's_camaraderie]` | Dawn's Camaraderie | - Max Stack: 5 |
+| `[dawn_office]` | Dawn Office | - Max Stack: 3 - Gain 1 Offense Level for every Stack - Turn Start: At 3 Stack, heal 5 SP Turn Start: If all other allied Identities that have "Dawn Office" are killed, expires The Dawn Office of this Mirror World, unlike that of others, has yet to completely lose its fervor. One can reasonably conjecture that the two leading Fixers of this Office have sufficient competence to find work as Grade 1 of the vocation. However, it must be stated that the Office and its Fixers' grades do not vary from those of other observed Mirror Worlds, as combat capability is hardly the sole criterion by which the Grades are assigned. Failure to meet the conditions stipulated by the contract clauses to the client's satisfaction, eschewal of high-risk contracts that contribute to the advancement of Fixer Grades—these are all conditions that limit one's mobility along the ladder of Fixer Grades. |
+| `[dawnherald]` | Dawnherald | - Max Stack: 3 - Base Skills that inflict Burn Potency, Count, or 'Unique Burn' deal +10% damage · If the said Skill is a Wrath Skill, deal +15% damage - Base Skills that inflict Burn Potency, Count, or 'Unique Burn', gain Clash Power +1 · If this unit is a Dawn Office Identity, gain Base Power +1 instead - Turn End: Lose 1 Stack "Burn, burn, burn—y'see, Kid, fire's not the be-all, end-all solution to every problem you've got. When it comes to using heat-modulating weapons like these, the deciding factors often come down to when to spark the flame, and how hot you let it burn. "Yeah, that's why I'm always chewing your ear off about how important it is to feel the 'moment' that comes with the territory of using heat-modulating weapons. But on the other hand… when that 'moment' tells you to burn it all down, don't hold back and just let it rip. … Hm? Oh, you want to know who's the best in the field?" "Hmm, let's see… Well, the best of the best's got to be the Vermilion Cross, I'd wager." |
+| `[deep_inhale]` | Deep Inhale | - Max Stack: 20 - On Crit: at 20+ Poise Potency and 5+ Poise Count, consume (Poise Potency on self / 5) Poise Potency to deal +(Poise Potency consumed x 4)% more Damage on Critical Hit and lose 1 Stack |
+| `[deep_tears]` | Deep Tears | - Unique Charge (Potency Fixed) - Resource used by certain Skills for additional effects - Max Stack: 20 |
+| `[defense_level_up]` | Defense Level Up | Defense Level increases based on the effect's Potency for one turn. |
+| `[defense_power_up]` | Defense Power Up | Defense skills gain Final Power by the effect's Count for one turn. |
+| `[defensive_stance]` | Defensive Stance | - Max Value: 2 - This effect does not compound in Potency; stacking it only extends its duration. - Reduced by 1 at Turn End - When a unit gains this effect, gain the following effects next turn: · Fix this unit's Speed to its minimum value · Gain 5 Defense Level Up · Each of this unit's Slots gain +(10 / this unit's # of Slots) Aggro · When chaining Skills, this unit can draw enemies' attack toward this unit regardless of Speed (Focused Encounters only) · Upon Clash Win, trigger Tremor Burst · Cannot be Staggered by damage |
+| `[denial_[不許]]` | Denial [不許] | When this unit takes damage that brings their HP down to 0: this unit's HP does not drop below 1; recover from Stagger due to damage. If the above effect activated, dies at Turn End. Expires upon death, Retreat, or Turn End |
+| `[desire_for_acknowledgement_sated]` | Desire for Acknowledgement Sated | - Deal +7.5% damage with Skills marked with the Mark of the Prescript - Deal +7.5% damage against The Prescript's Targets |
+| `[despair]` | Despair | - Turn Start: gain 1 Piercing Sword for every -8 SP (max 5) - When Clash ends, inflict +1 Sinking Count (once per turn) - On Hit with the first Coin of a Base Attack Skill, inflict +1 Sinking Count (once per turn) - For every -20 SP, inflict +1 more Sinking Count with above effects (max 2) - Replace this unit's Base Skills with Minus Coin Skills |
+| `[desperado]` | Desperado | - Max Stack: 2 - For every Stack, Base Attack Skill Clash Power +1, Base Power +1 - At 2 Stack, Base Attack Skill Plus Coin Power +1, Minus Coin Power -1 - Expires at Turn End |
+| `[desperate_hunger]` | Desperate Hunger | - Offense Level +2 - At Coin Start of a Base Skill used against an enemy, consume 1 Charge Count to deal +5% damage · Skills that inflict Bleed Potency or Count deal +10% damage instead (including Unique Bleed) · At 1+ Buffet Value on the field, if this unit is not at max Charge Count, consume 1 Buffet to gain +1 Charge Count · If both Charge Count and Buffet are at 0, consume 1% max HP instead to activate the effect (rounded down; damage dealt by this effect does not Stagger or reduce this unit's HP below 1; activates even at 1 HP) - Turn End: this effect expires The sharper one hungers, the fiercer the desperation. The further one is driven, the deeper the longing. |
+| `[dhyāna]` | Dhyāna | - Max Stack: 108 - Deal +1% more damage for every Stack |
+| `[dimensional_castaway]` | Dimensional Castaway | Max Stack: 3 Before Getting Hit, gain Shield equal to (Stack)% HP (3 times per turn) |
+| `[dokkaebi_arms]` | Dokkaebi Arms | - Take -15% damage - On Skill Use, gain 1 Haste next turn (2 times per turn) - Combat End: This effect expires, and gain +2 Poise Count |
+| `[drink_to_the_fallen]` | Drink to the Fallen | - Max Stack: 4 - Turn Start: Gain 1 Poise for every Stack · Blade Lineage Mentor Meursault gains 2 Poise for every Stack instead - Base Skills deal +(Poise on self x 1.5)% damage on Critical Hit (max 15%) - Base Skills that gain Poise Potency or Count gain Clash Power +1 - Turn End: Lose 1 Stack |
+| `[dullahan]` | Dullahan | - Max Value: 3 - Gain 3 Offense Level - Lose 3 Defense Level - Raises Min & Max Speed values by 1 - Turn End: Gain 1 Dullahan next turn (At -25 SP or less, however, completely lose Dullahan) - Turn End: If this unit has Dullahan, lose (15 - (Coffin/2)) SP. (min 10) |
+| `[e.g.o_resource_amp]` | E.G.O Resource Amp | Increases the amount of E.G.O resources earned from skills by the effect's Count for one turn. |
+| `[emergency_barrier_battery]` | Emergency Barrier Battery | - Max Stack: 7 - When Staggered, consume all Emergency Barrier Battery Stack and gain Charge Barrier by the Stack consumed |
+| `[entangled_life_[羅生]]` | Entangled Life [羅生] | Max Stack: 999 - Gain 1 Stack for every HP damage dealt by Ryōshū's Skills - Deal +1% damage with Base Skills for every 33 Stack (max 10%) 'Twisted and entangled beyond measure, bound and woven into a cocoon. Thread. Life. World.' |
+| `[entanglement]` | Entanglement | - Max Stack: 4 - Skill and Passive effects can increase Min & Max Stack of this effect to 5 and 9, respectively The threads of fate are entwined by encounter, and by the length of time surrendered unto another. The myriad moments wherein one's time and another's overlap, be they fair or foul, will bind their strings in pitiless entanglement. The time that has already been shared cannot be undone. |
+| `[envy_dmg_up]` | Envy DMG Up | Deal 10% more damage with Envy skills per Count for one turn. (Max 10) |
+| `[envy_power_up]` | Envy Power Up | Envy skills gain final Power by the effect's Count for one turn. |
+| `[envy_protection]` | Envy Protection | Take 10% less damage from Envy skills per Count for one turn. (Max 10) |
+| `[erudition]` | Erudition | - Max Value: 6 - When Discarding a Skill, gain (Erudition x 1.5)% of this unit's max HP as Shield (once per turn) - If this unit Discards a Skill at 2+ Insight, gain 1 Clash Power (once per turn) - Reduced by 1 when taking HP damage after getting hit by an enemy's Attack Skill - Expires when Staggered |
+| `[exquisite_aesthetics]` | Exquisite Aesthetics | - Plus Coin Skills gain Coin Power +1 - Minus Coin Skills gain Base Power +(4 / # of Coins) - Deal +30% damage with Skills |
+| `[eye_of_precognition]` | Eye of Precognition | - Max Stack: 30 - Can lose up to 10 Stacks per turn |
+| `[eye_of_precognition_-_overheat]` | Eye of Precognition - Overheat | - Max Stack: 30 - Offense Level +3, Defense Level -3 - Turn Start: Gain 10 Stacks - At 30 Stack, convert into Eye of Precognition |
+| `[faith_beyond_question]` | Faith Beyond Question | - Min & Max Speed +1 - Offense Level +2, Defense Level +2 - Gain 1 more Poise Potency from Base Skills - This unit's SP does not drop below -15 from SP loss effects on this unit's Base Attack Skills - Max Stack: 1 |
+| `[fanatic]` | Fanatic | Raise Skill Final Power by the effect's Count against targets that have Nails for the turn. (Applies to clashes as well) |
+| `[fell_bullet]` | Fell Bullet | Max Stack: 1 +3% damage on Critical Hit for every Torn Memory (max 18%) On Hit, inflict 1 Bleed (3 per turn) On Kill, gain 3 Poise and +2 Poise Count (2 times per turn) Expires at Turn End |
+| `[festive_fever]` | Festive Fever | - Max Value: 10 Expires at Turn End - Against targets that have Bleed: deal +1.5% more damage for every Stack - Skills that consume or gain Bloodfeast deal +3% more damage for every Stack instead |
+| `[field_analysis]` | Field Analysis | - Max Stack: 5 - Gain +1 Poise Count when gaining Stacks of this effect - Turn End: Gain +(Stack) Poise Count - If this unit is Staggered at Turn Start, recover from Stagger (2 times per Encounter; excluding forced Staggers) Base Attack Skills gain the following effects based on Stack: · 2+: On Skill Use, deal +(30 / # of Coins)% damage on enemies (rounded down) · 3+: Coin Power +1; On Skill Use, convert the final Coin to Unbreakable Coin · 4+: On Skill Use, deal +(30 / # of Coins)% damage on enemies (rounded down) · 5+: Target's Pierce Resist. +0.1 from Attack Start to Attack End - The Stack immediately before Skill Use is used to determine whether the damage-boosting and Unbreakable Coin conversion effects are activated |
+| `[firepower]` | Firepower | - Max Stack: 10 - Deal +10% damage for every Stack |
+| `[flower-burying_pin_[埋花針]]` | Flower Burying Pin [埋花針] | Max Stack: 20 - Gain 1 Stack at Turn End or when hit - Gain 1 Offense Level per 5 Stack - If the unit that has this effect dies, inflict Gluttony damage equal to Stack and inflict 5 Rupture - Expires upon death or Retreat |
+| `[flower-burying_wedge_[埋花櫼]]` | Flower Burying Wedge [埋花櫼] | Base Stack: 0 Max Stack: 3 - All Coins on this unit's leftmost Base Attack Skill on the Dashboard become Unbreakable Coins - Turn Start: gain 2 Offense Level Up and 2 Defense Level Down - Turn Start: at 3+ Stack, gain 1 Tarnished Blood (once per Encounter) - Turn End: gain 1 Stack ※ Cannot raise the effect's Stack by any other means than the ones above - Expires upon defeat or Retreat - When this unit takes damage that brings their HP down to 0: instead of letting this unit's HP drop below 1, or becoming Staggered or Defeated, use the 'Tears of the Tarnished Blood - The End' Skill at the very end of that turn. Remove the Flower-burying Wedge when the Skill ends. When this unit takes damage that brings their HP down to 1 at Turn End, use 'Tears of the Tarnished Blood - The End' Skill based on this unit's Speed next turn |
+| `[focused_performance]` | Focused Performance | - Max Stack: 3 - \<La Manchaland\> Identities only; includes Empowered versions - Skill 1 and Skill 2 gain Final Power +1; deal +5% damage for every Stack (max 15%) - Skill 3 gains Final Power +2; deals +10% damage for every Stack (max 30%) - Lose 1 Stack when: 1) Skill 3 Attack End 2) If this unit does not have Hardblood Armor at Turn Start |
+| `[from_dawnbreak_to_sunset]` | From Dawnbreak to Sunset | - If this unit has 3+ Stagger Threshold, remove the first Stagger Threshold - Turn End: If this unit is Staggered, recover from Stagger; if this unit is at Uptie 3 or higher, replace 1 of its Base Skills with Skill 3 (excluding forced Stagger; prioritize the Skill of lowest rank) - Turn Start: Heal 5 SP - Passive "Unstable Shell of Ego" effects, Base Attack Skill effects, and Volatile Passion effects cannot reduce this unit's SP below 25 - When in Volatile E.G.O::Waxen Pinion state, gain the following effects: · Turn Start: Gain Shield equal to 15% of max HP · When hit while this unit has Shield, inflict 1 Burn against the attacker (2 times per turn) · Activate Scorchfield on this field "Ah… What a pleasant aroma. You're practically a Color Fixer when it comes to brewing ssanghwa-cha, you know that? I hereby anoint you Color Fixer "The Yellow Ssanghwa…" "That's settled, then. I'll be tutoring you myself, so you'd better keep up. I see real potential in you, Kid—your ssanghwa-cha brewing skills have this instinctive grasp of the 'moment'… And being able to recognize that 'moment' is the key to just about everything." |
+| `[gaze_of_contempt]` | Gaze of Contempt | - Max Value: 7 - Deal +7% more damage for every Gaze of Contempt - Turn End: this effect expires - Turn End: At 7 Gaze of Contempt value, convert it to Contempt of the Gaze next turn instead of expiring |
+| `[gebura's_blade]` | Gebura's Blade | - Convert all Skill Coins into Unbreakable Coins - Deal +100% damage - Plus Coin Skills gain Coin Power +1; Minus Coin Skills gain Final Power +1 - For this turn, this unit cannot be Staggered from all sources of damage - At less than 10 HP, heal to 10 HP - For this turn, this unit's HP does not drop below 10 - For this turn, every Coin Hit from Base Attack Skills and Counter Skills heals 10% of the damage dealt (max healing from each Skill: 100) - Expires at Turn End |
+| `[glimpse_of_precognition]` | Glimpse of Precognition | - Max Stack: 5 - Clash Power +2 for every Stack - For every 2 Stack: - Plus Coin Skills gain Coin Power +1 - Minus Coin Skills gain Final Power +2 - Expires at Skill End |
+| `[gloom_dmg_up]` | Gloom DMG Up | Deal 10% more damage with Gloom skills per Count for one turn. (Max 10) |
+| `[gloom_power_up]` | Gloom Power Up | Gloom skills gain final Power by the effect's Count for one turn. |
+| `[gloom_protection]` | Gloom Protection | Take 10% less damage from Gloom skills per Count for one turn. (Max 10) |
+| `[gluttony_dmg_up]` | Gluttony DMG Up | Deal 10% more damage with Gluttony skills per Count for one turn. (Max 10) |
+| `[gluttony_power_up]` | Gluttony Power Up | Gluttony skills gain final Power by the effect's Count for one turn. |
+| `[gluttony_protection]` | Gluttony Protection | Take 10% less damage from Gluttony skills per Count for one turn. (Max 10) |
+| `[grace_of_the_prescript]` | Grace of the Prescript | - Offense Level +1 for every 3 Stacks - Max Stack: 9 |
+| `[growing_resentment]` | Growing Resentment | - Max Stack: 999 - "To Claim Their Bones" gains (Stack / 100) Final Power (max 6; rounded down) - On Hit using the final Coins of either "Yield My Flesh" or "To Claim Their Bones", deal +(Stack / 10)% damage; then, this effect expires |
+| `[guardians_of_the_forest]` | Guardians of the Forest | - Before Attack, activate the following effects: · Plus Coin Skills heal 4 SP (if already at max SP, gain 2 Offense Level Up next turn) · Minus Coin Skills lose 8 SP (this effect cannot reduce the unit's SP below -40) · Lose this effect |
+| `[hardblood]` | Hardblood | - Max Stack: 10 - Stage 1 Hardblood - At 10+ Hardblood, converts to Hardblood II. - At 20+ Hardblood, converts to Hardblood III. - Reverts to the previous Stage when the Stack drops below the requirements. - Hardblood does not drop below 1. - Raise Min & Max Speed values by 1 for every 10 Hardblood - At Hardblood II, gain 1 Offense Level Up based on the Stack (1 / 5 Stack) - At Hardblood III, gain 1 Offense Level Up and 1 Defense Level Up based on the Stack (1 / 5 Stack) |
+| `[hardblood_armor]` | Hardblood Armor | - Max Stack: 5 - If this unit isn't at max HP: after its Skill attack, heal 10% of HP damage dealt (once per turn; max 40 healing) - Attack End: If this unit dealt HP damage, lose 1 Stack (once per turn) · If Lust Reson. was activated, halve the amount of HP healed, but do not lose any Hardblood Armor Stack |
+| `[hardblood_cast]` | Hardblood Cast | - Max Stack: 3 - When clashing against enemies with Bleed or Unique Bleed, Clash Power +1 - When consuming Bloodfeast with an Attack Skill, if there isn't enough Bloodfeast, consume 1 HP for every 1 missing Bloodfeast to generate it before consuming it (the damage from this effect does not Stagger or reduce this unit's HP below 1 - Reduced by 1 at Turn End |
+| `[hardened_shell-barrier]` | Hardened Shell-Barrier | - Turn Start: gain (Stack / 3) Defense Level Up (max 3; rounded down) - Immediately before taking a hit from an enemy, consume half of Hardened Shell-Barrier and gain Protection equal to the Stack consumed (once per turn; rounded up) - Turn End: lose 3 Stack - Max Stack: 10 |
+| `[haste]` | Haste | Speed increases by the effect’s Count for one turn. |
+| `[heated_gas_harpoon]` | Heated Gas Harpoon | For 1 turn, inflict 1 Burn with Heads Hit |
+| `[heishou_bolus_contamination_[黑獸丸染]]` | Heishou Bolus Contamination [黑獸丸染] | - Max Stack: 11 - Empowers The Lord of Hongyuan Hong Lu based on which Heishou he activated combo with - The Heishou Bolus Contamination effects can stack with each other: · Heishou - Mao Adept Faust: take -5% damage from Skills · Heishou - Mao Ryōshū: if this unit's Speed is faster than the target's, deal +5% damage · Heishou - Mao Outis: inflict +1 Rupture Count On Hit with Unopposed Attacks (once per turn) · Heishou - Si Rodion: inflict 1 Rupture On Critical Hit (3 times per turn) · Heishou - Si Gregor: Gain +1 Poise Count when dealing Rupture damage (once per turn) · Heishou - Wu Adept Yi Sang: trigger Tremor Burst once on Final Coin (once per turn) · Heishou - You Adept Heathcliff: deal 5% of Gluttony damage dealt as Wrath damage · Heishou - You Sinclair: inflict 1 Burn when inflicting Rupture (3 times per turn) · Heishou - Wei Don Quixote: inflict 1 Sinking when inflicting Rupture (3 times per turn) |
+| `[here_comes_magical_girl!]` | Here Comes Magical Girl! | - For this turn, this unit uses Plus Coin Attack Skills - Base Attack Skills deal +3% damage for every Love/Hate on self (max 15%) |
+| `[high-voltage_exoskeleton]` | High-voltage Exoskeleton | - Gain (Stack x 5) Shield - If this unit loses (Stack x 5) Shield, lose 1 High-voltage Exoskeleton Stack - Turn End: Gain Charge Count equal to High-voltage Exoskeleton; both High-voltage Exoskeleton and Shield gained from its effect expire - Max Stack: 20 |
+| `[high_noon]` | High Noon | - Min Speed +2 - On Base Attack Skills Use: Gain Base Power +2 and deal +(45 / # of Coins)% damage - Apply the following effects to "Sunset Blade" · On Final Coin Hit: If the target has 15+ Burn, activate Burn on target; then, reduce target's Burn Count by 1 - Apply the following effects to "Blazing Strike" · Deal +100% damage · On Use : Convert all Coins to Unbreakable Coins · On Hit against an enemy, activate Burn on target; then, reduce target's Burn Count by 1 · On Use: At 3+ Volatile Passion, consume up to 100 Scorchfield · Deal +1% damage for every Scorchfield consumed (max 100%) "The request has been resolved ahead of schedule, and the weather conditions are optimal today for a team lunch. Shall we all proceed?" |
+| `[higher_thunderer]` | Higher Thunderer | - Turn Start: gain 2 Offense Level Up and 2 Defense Level Up - Turn End: lose 1 Stack - Max Stack: 5 |
+| `[hp_healing_boost]` | HP Healing Boost | Increases HP healing provided by Passive abilities, Skills, and Coin effects by 10% per Count. (Max 5) |
+| `[hunger]` | Hunger | Max Stack: 3 Turn End: gain 2 Offense Level Up and 1 Damage Up next turn for every Stack At max Stack(3), lose 5% HP at Turn End |
+| `[i_got_praised!]` | I Got Praised! | - Max Stack: 10 - Reduced by 1 when this unit is hit by 2 Skills - At 5+ Stack, Base Skills gain Final Power +1 - Blunt Skills deal +1% damage for every Stack (max 10%) |
+| `[imperfections_addressed]` | Imperfections Addressed | - Deal +10% damage - On Reuse of a Coin in The Ring Fauvist Docent Rodion's "Critique" Skill, heal 3 SP (once per turn) - Turn Start: If The Ring Fauvist Docent Rodion does not have Réflexion, this effect expires |
+| `[incandescent_indulgence]` | Incandescent Indulgence | Gain 30% base HP for this Encounter Turn Start: fully heal HP and SP (once per Encounter) |
+| `[indulgence_in_prescripts]` | Indulgence in Prescripts | - Min & Max Speed +5 - Apply the following effects to 'Furioso-Replica': · On Hit, inflict +1 more Sinking Potency and gain +1 more Poise Potency · On Hit, inflict +3 Sinking Count (once per target) · Deal +30% damage - Expires at Turn End |
+| `[inertia_of_drifting]` | Inertia of Drifting | - Max Count: 20 - Unique Charge - Interacts the same way as normal Charge does to effects that raise or reduce Charge Potency and Count - Turn End: Lose 1 Count Those who are carried by the tide like buoys may not be able to change the flow of things, but they can still bolster the tide and commit to their acts within. |
+| `[iron_maiden]` | Iron Maiden | - Gain +4 Aggro to the leftmost Slot - Turn Start: Gain 1 Protection, 5 Defense Level Up, and Shield HP equal to 5% of this unit's current HP - When hit by the last Coin of an attacker, deal Pierce damage equal to 20% of the said Coin's damage and inflict +2 Bleed Count (max once per Skill, 3 times per turn. Max damage per turn: 60) |
+| `[l'hommage]` | L'Hommage | - Max Stack: 3 - Turn Start: Randomly gain 1 Offense Level Up or 1 Defense Level Up for every Stack (max 3 times) - Turn End: This effect expires |
+| `[le_fauvisme_-_masque_de_chien]` | Le Fauvisme - Masque de Chien | - Deal +5% damage for every 3 Mauled Color on target (max 15%) - Inflict +1 more Bleed and Sinking Potency with Base Skills - Before hitting with a Base Skill, if target does not have Bleed, inflict +2 Bleed Count on target (once per turn) |
+| `[le_fauvisme_-_masque_de_loup]` | Le Fauvisme - Masque de Loup | - Min & Max Speed +1 - Inflict +1 more Bleed and Sinking Potency with Base Skills - On Hit, if target has 3+ Mauled Color \[Bleu\], inflict +1 Sinking Count (once per turn) - On Hit, if target has 3+ Mauled Color \[Rouge\], inflict +1 Bleed Count (once per turn) |
+| `[le_noir:_gabardine_overcoat]` | Le Noir: Gabardine Overcoat | - Max Stack: 100 - Defense Level +1 for every 25 Stacks - Gain +5 Aggro to the leftmost Slot - When hit while this unit has Shield, gain 5 Stack (10 per turn) - Turn End: If this unit has remaining Shield, gain 10 Stack - Apply the following when this unit gains or consumes Preservation Count due to its Skill or Passive effects: · Gain Stack equal to Preservation Count gained (this effect's Stack is gained regardless of Preservation's max Count) · Gain Stack equal to (Preservation Count consumed x 2) · Can gain up to 30 Stacks per turn via this effect - At 100 Stacks, convert this effect to Armure Éveillée next turn An overcoat made from twill fabric, a type of weave made by threading several weft threads over fewer warp threads. Its characteristic high-density weave protects its wearer from external trauma. |
+| `[le_noir:_worsted_overcoat]` | Le Noir: Worsted Overcoat | - Max Stack: 15 - Offense Level +1, Defense Level +1 for every 5 Stack - When hit while this unit has Shield, gain 1 Stack (5 Stacks per turn) - Turn End: Next turn, gain (Stack x 5) Shield and lose 1 Stack |
+| `[learning_by_example]` | Learning by Example | Max Stack: 30 Gain Stacks based on the following conditions: - On Clash Win, gain 2 Stacks; On Hit using Base Attack Skills, gain 1 Stack; At Attack End, if the enemy was defeated, gain 3 Stacks - On Clash Win using Base Attack Skills by other allies, gain 2 Stacks · On Clash Win using Base Attack Skills by other allies in the same faction as this unit, gain 4 Stacks instead Gain the following effects cumulatively based on Stacks: - Base Attack Skills deal +1% damage for every Stack (max 30%) - 10+: Base Attack Skills Clash Power +1 - 20+: Base Attack Skills Coin Power +1 |
+| `[leash-holder_of_all_heishou]` | Leash Holder of All Heishou | - Max Stack: 11 - Gain the following effects based on Stack: · For every 1 Stack, gain 1 Max Speed (max 5) and deal 1% more damage with Skills · For every 2 Stack, gain 1 Min Speed (max 2) and 1 Defense Level Up (max 5) · For every 3 Stack, gain 1 Offense Level Up (max 3) · At 5+ Stack, gain 1 Damage Up and apply 1 Offense Level Up to all Heishou Pack Identities |
+| `[life_from_death_[死中求活]]` | Life from Death [死中求活] | - Max Stack: 5 - Turn Start: activate the following · Gain 1 Offense Level Up for every 1 Stack (max 5) · Gain 1 Damage Up for every 2 Stack (max 2) · Gain 1 Attack Power Up at 3+ Stack |
+| `[liferender]` | Liferender | - Offense Level +2 - Final Power +1 - Expires at Turn End |
+| `[light_of_daybreak]` | Light of Daybreak | - Max Stack: 30 - Can gain up to 20 Stack per turn - Turn Start: Gain 1 Burn for every 5 Stack; then, gain +1 Burn Count for every 10 Stack - On Hit using Base Attack Skill, gain (1 + (Burn on target / 3)) Stack (max 3) - At 10+ Stack, Base Skills inflict +1 more Burn Potency on enemies - At 20+ Stack, Base Skills inflict +1 more Burn Count on enemies The first flare of dawn is not a fire that scorches, but one that casts its glow on people. |
+| `[linebreaker]` | Linebreaker | - Max Stack: 5 - Turn Start: gain (Stack x 10) Shield for this turn - At max Stack, gain 2 Final Power - When hit: if this unit took 100+ damage from a single Skill, gain Protection after Skill End (2 times per turn; includes damage against Shield HP; does not count damage from Keywords) |
+| `[load]` | Load | - Max Value: 6 - Attack Skills that consumed Charge Count deal +2.5% more damage for every value on self (max 15%) - If the affected unit is a W Corp. employee, deal +5% more damage for every value instead (max 30%) - Turn End: this effect expires |
+| `[loneliness_at_high_noon]` | Loneliness at High Noon | - Min Speed +2 - On Base Attack Skills Use: Gain Base Power +3 and deal +(90 / # of Coins)% damage - Apply the following effects to "Sunset Blade" · On Final Coin Hit: If the target has 15+ Burn, activate Burn on target; then, reduce target's Burn Count by 1 - Apply the following effects to "Blazing Strike" · Deal +150% damage · On Use : Convert all Coins to Unbreakable Coins · On Hit against an enemy, activate Burn on target; then, reduce target's Burn Count by 1 · On Use consume up to 100 Scorchfield and deal +1.5% damage for every Scorchfield consumed (max 150%) - When this unit takes damage that brings its HP down to 0 this turn, this unit's HP cannot drop below 1 for the turn, and recovers from Stagger when Staggered due to damage (once per Encounter) "Do you understand what 'loneliness' means, Sinclair? Loneliness is being bathed in the light of the sun at high noon, only to realize that the ones you would have shared a luncheon with have departed you. That is how I would put into words the concept of 'loneliness'—for me, at least. I do hope, Sinclair, that you will never have cause to understand that concept." |
+| `[love/hate]` | Love-Hate | - Max Count: 20 - Unique Charge - Resource used by certain Skills for additional effects. Its Count can go up to 20. Count lowers by 1 at the end of each turn. (Interacts the same way as normal Charge does to effects that raise or reduce Charge Potency/Count) |
+| `[loyalty_pheromone]` | Loyalty Pheromone | - Max Stack: 3 - Gain the following effects next turn based on Stack at Turn End: 1+ Stack: 1 Protection 2+ Stack: 1 Haste 3 Stack: 1 Clash Power Up |
+| `[lust_dmg_up]` | Lust DMG Up | Deal 10% more damage with Lust skills per Count for one turn. (Max 10) |
+| `[lust_power_up]` | Lust Power Up | Lust skills gain final Power by the effect's Count for one turn. |
+| `[lust_protection]` | Lust Protection | Take 10% less damage from Lust skills per Count for one turn. (Max 10) |
+| `[magical_arcana]` | Magical Arcana | - Max Stack: 3 - Base Attack Skills deal +(Stack x 5)% damage - Turn End: At 3 Stack and with -25 or higher SP, change SP to -25 |
+| `[magical_girl's_chant]` | Magical Girl's Chant | - Max Stack: 2 - When this unit gains this effect, gain 1 Attack Power Up and 1 Damage Up - This unit's Attack Skills that gain or consume Charge Count gain Final Power +1 and deal +10% damage - Reduced by 1 at Turn End |
+| `[man_in_scabbard]` | Man in Scabbard | - Max Stack: 40 - For every (Stack / 8), gain Aggro (max 5; rounded down; affects the leftmost Skill Slot on the Dashboard) - For every (Stack / 20), gain Protection (max 2; rounded down) - Gain 10 Stacks at Turn End ※ Can gain up to 20 per turn |
+| `[maturing_textbook]` | Maturing Textbook | - Base Skills deal +(10 + (Stack x 5))% damage - Can gain up to 2 Stacks per turn - Max Stack: 3 |
+| `[microprecision_time_acceleration]` | Microprecision Time Acceleration | This unit gains base Min and Max Speed by Stack Skills that inflict Tremor Potency, Count, or trigger Tremor Burst: gain Base Power +(Stack), deal +(Stack x 10)% damage against enemies, and when raising Stagger Thresholds via Tremor Burst, increase the amount raised by (Stack x 10)% (including E.G.O Skills) Reduced by 1 at Turn End At 1 Stack, the Stack does not drop below 0, and is maintained through the Encounter. |
+| `[minus_coin_drop]` | Minus Coin Drop | Reduce the Power of Minus Coins by the effect's Count for one turn. |
+| `[momentum]` | Momentum | - Max Stack: 30 - Can gain up to 20 Stacks per turn Turn Start: If this unit is Staggered, recover from Stagger (once per Encounter; excluding forced Staggers) |
+| `[mook_workshop_-_ye_[銳]_type_ii_bladedraw_/_thrust_force:_dokkaebi_fire]` | Mook Workshop - Ye [銳] Type II Bladedraw / Thrust Force: Dokkaebi Fire | - Max Stack: 20 - Can gain up to 10 Stacks per turn - Slash Base Attack Skills deal +1% damage for every Stack (max 10%) - Defense Skills lose 1 Clash Power for every 2 Stack (max 5) - Turn End: Gain 1 Haste next turn for every 5 Stack (max 3) |
+| `[moonlit_azure_blade]` | Moonlit Azure Blade | - Max Stack: 20 - Turn Start: Gain 2 Shield for every Stack - Deal +1% Damage on Critical Hit for every Stack |
+| `[near-light_superbattery]` | Near-light Superbattery | - Max Stack: 100 - When consuming Charge Count, add the amount consumed to this buff's Stack - Max Charge Count Cap +10 - Gain 1 Charge Count when allies gain Charge Potency or Count - When this unit consumes Charge Count with its Skills, consume the same amount of Charge Count 1 more time (when there isn't enough Charge Count, consume as much as available) - Deal +10% damage for every 10 Stack - Enemies gain +0.1 Resistance against this unit's attacks for every 20 Stack (max +0.5 Resist; does not activate against Staggered enemies) - When the Identity with this effect dies, the buff transfers to the ally who is second earliest to this unit in the Deployment order. The Stack carries over as well. |
+| `[nebulizer_α]` | Nebulizer α | - Max Stack: 5 - This effect persists throughout the Encounter - Combat Start: on all allies, including this unit, apply 1 Poise Potency and +1 Poise Count |
+| `[nebulizer_β]` | Nebulizer β | - Max Stack: 5 - This effect persists throughout the Encounter - When activating Pride A-Reson.: on Combat Start, apply 3 Poise and +3 Poise Count on self and (Stack) allies (prioritizes allies that gain or use Poise or Poise Count; among them, prioritize allies with the least Poise Potency) |
+| `[needlekin]` | Needlekin | - Max Stack: 3 - Offense Level +1 for every Stack Shaddap! Shaddap! |
+| `[noble_dignity]` | Noble Dignity | - Gain all of the following effects based on Pulsation Potency on self: · 2+: Take -25% damage from Bleed · 3+: Base Skills inflict +1 more Bleed Potency and Count · 4+: Base Skill Base Power +1 - Min & Max Speed +1 - When this unit takes damage that brings its HP down to 0, this unit's HP does not drop below 1 for the turn (once per Encounter) - Apply the following effects to "Le Rouge" allied Identities (including this unit): · Min & Max Speed +1 · If there is not enough Charge Count to activate the effects of Skills that consume Charge Count, consume 1 Buffet to gain 1 Charge Count for every missing Charge Count required for activation |
+| `[offense_level_up]` | Offense Level Up | Offense level increases based on the effect's Potency for one turn. |
+| `[overheat]` | Overheat | - Loses this effect when this unit gains Savage Tigermark Round - Min & Max Speed +2 - Base Attack Skills Lose (cumulative number of Tigermark Rounds & Savage Tigermark Rounds spent / 2) Clash Power (max 10); however, gain the following effects(cumulative): · Cumulative Rounds spent: X · 8+ Rounds spent: Gain 1 Protection for every 10% missing HP on self at Turn Start (max 5) · 14+ Rounds spent: On Clash Lose, Unbreakable Coins of this unit's Base Attack Skills deal +(75 + missing HP percentage on self)% damage (max 150%) · 20+ Rounds spent: Deal +(HP percentage difference)% damage against targets with higher remaining HP percentage than this unit (max 50%; except E.G.O Skills) |
+| `[overheated_gas_harpoon]` | Overheated Gas Harpoon | For 1 turn, inflict 1 Burn On Hit |
+| `[penitence]` | Penitence | - Heal 2 SP On Hit with Base Skill Coins that gain Penitence - Max Value: 20 - Unique Charge (fixed Potency) - Turn Start: gain (Penitence)% of max HP as Shield - Resource used by certain Skills for additional effects - Enhances the buff based on Value · Stage 1 (1~7): Penitence · Stage 2 (8~15): Penitence - Periphery · Stage 3 (16~20): Penitence - Confession - The amount of SP healed by the first line of this buff is based on the enhancement Stage (enhancement Stage x 2) |
+| `[petals]` | Petals | - Max Stack: 30 - Offense Level +1 for every 10 Stack - Can be gained up to 15 Stacks per turn |
+| `[pheromone]` | Pheromone | - Gain +10 Aggro - When hit, inflict 3 Burn on target |
+| `[pierce_dmg_up]` | Pierce DMG Up | Deal 10% more damage with Pierce skills per Count for one turn. (Max 10) |
+| `[pierce_power_up]` | Pierce Power Up | Pierce skills gain final Power by the effect's Count for one turn |
+| `[pierce_protection]` | Pierce Protection | Take 10% less damage from Pierce skills per Count for one turn. (Max 10) |
+| `[piercing_sword]` | Piercing Sword | - Turn Start: gain 1 Offense Level Up for every Stack (max 5) - Turn Start: -(Stack x 0.15) Aggro to this unit's Skill Slots on the Dashboard (max 0.75) - Max Stack: 5 - Expires at Turn End |
+| `[plus_coin_boost]` | Plus Coin Boost | Raise the Power of Plus Coins by the effect's Count for one turn. |
+| `[poise]` | Poise | On hit, gain a Potency-based chance to deal critical damage, reducing the Count by 1 if successful. At the end of the turn, reduce the Count by 1. Critical hits deal 1.2x damage. |
+| `[power_up]` | Power Up | All skills gain Final Power by the effect's Count for one turn. |
+| `[preservation]` | Preservation | - Unique Charge - Max Count: 20 - Interacts the same way as normal Charge does to effects that raise or reduce Charge Potency and Count - Turn End: Lose 1 Count Force is compressed, gathered, and fixed in place. Sometimes, it takes more force to prevent change than cause it. |
+| `[pride_dmg_up]` | Pride DMG Up | Deal 10% more damage with Pride skills per Count for one turn. (Max 10) |
+| `[pride_power_up]` | Pride Power Up | Pride skills gain final Power by the effect's Count for one turn. |
+| `[pride_protection]` | Pride Protection | Take 10% less damage from Pride skills per Count for one turn. (Max 10) |
+| `[prisoner_transport_arrangements]` | Prisoner Transport Arrangements | - Base Stack: 1 - In a Clash against enemies that have Trussed \[Hong Lu\], gain Clash Power +1 - On Hit against enemies that have Trussed \[Hong Lu\], inflict 1 Bleed and gain 2 Poise (2 Skills per turn) - If there are no Trussed \[Hong Lu\] targets, expire |
+| `[protecting_sword]` | Protecting Sword | - Turn Start: gain 1 Defense Level Up for every Stack (max 5) - Turn Start: +(Stack x 3) Aggro to the leftmost Skill Slot on the Dashboard (max 15) - Max Stack: 5 - Expires at Turn End |
+| `[protection]` | Protection | Take 10% less damage per Count from attacks for one turn. (Max 10) |
+| `[protector's_stance]` | Protector's Stance | - Max Stack: 2 - Take (Stack x 10)% less damage - Turn Start: Gain Shield by Poise on self (max 20) - Turn End: Gain 3 Poise and +1 Poise Count; this unit's leftmost Skill Slot gains +5 Aggro next turn - Turn End: Lose 1 Stack |
+| `[pulsation]` | Pulsation | - Unique Charge - Max Count: 20 - Interacts the same way as normal Charge does to effects that raise or reduce Charge Potency and Count - Turn End: Lose 1 Count |
+| `[quadricolor_dimensions]` | Quadricolor Dimensions | - Max Stack: 4 - Gain the following effects based on Stack: · 1+ : Offense Level +1 · 2+ : Defense Level +2 · 3+ : Gain +1 more Charge Count from this unit's Skills · 4+ : This unit's Skills deal +(Charge Potency x 4)% damage (max 20%) - If this unit gains this effect past its max cap, this unit gains the surplus Stack next turn - Turn End: Lose 1 Stack |
+| `[ready_to_loose]` | Ready to Loose | - When this unit has this effect, activate the following effects: · Converts the leftmost Base Attack Skill on the Dashboard to "Bow's Glimmer", then uses it at Combat Start · This unit cannot be Staggered from taking damage, Tremor Burst, or raised Stagger Threshold · Does not trigger Assist Attack while this unit has this buff · Removed if an E.G.O Skill was equipped at Combat Start |
+| `[ready_to_narrate]` | Ready to Narrate | - Max Stack: 2 - Turn End: Gain (Stack) Protection next turn - Turn End: At max Stack, consume all Stacks to gain 2 Time to Listen next turn - Can gain up to 1 Stack per turn - If this unit has Time to Listen, it cannot gain Ready to Narrate |
+| `[red_eyes]` | Red Eyes | - Base Skill Coin effects inflict +1 more Bleed - Max Value: 20 - Unique Charge (fixed Potency) - Resource used by certain Skills for additional effects - Enhances the buff based on Value · Stage 1 (1~7): Red Eyes · Stage 2 (8~15): Red Eyes - Alert · Stage 3 (16~20): Red Eyes - Devouring - The amount of additional Bleed inflicted by the first line of this buff is equal to the buff enhancement Stage (max 3) |
+| `[relentless_hunger]` | Relentless Hunger | - Max Stack: 150 - Can gain up to 50 Stacks per turn |
+| `[remembrance]` | Remembrance | - When at 5+ Poise, upon Skill use, Skill 1 and Skill 2 gain Coin Power +(3/# of Coins, minimum 1) and deal +(30/# of Coins)% damage on Critical Hit - When at 7+ Poise, upon Skill use, Skill 3 deals +(30/# of Coins)% more damage and deals +(50/# of Coins)% damage on Critical Hit |
+| `[resentful_scabbard]` | Resentful Scabbard | - When an ally, including this unit, takes HP damage, gain Growing Resentment equal to damage taken - In Memoriam Passive now ignores conditionals and activates at max potential - When activating Pride Reson., apply Sword of the Homeland - The True Essence on all Blade Lineage allies other than this unit - On Using "Yield My Flesh", until Skill End: · This unit's HP does not drop below 10 (once per turn) · Lose (Poise on self / 2) Clash Power (rounded down) - On Using "To Claim Their Bones", gain 4 Poise |
+| `[resentment]` | Resentment | - Min & Max Speed +2 - On Hit, heal HP by 10% of damage dealt using the Skill (can heal up to 50% of this unit's max HP per Skill) |
+| `[ridiculous_grit]` | Ridiculous Grit | - Fix any Attack Type Resistances that exceed Normal (1.0) to Normal (unless Staggered) - Take -(30 + (The Middle - Vengeance Tattoo \[Great Sister\] Stack x 4))% damage from Skills (max 50%; rounded down) - On Clash Win, heal an additional (Clash count x 5) SP (max 15) - Turn End: If this unit lost SP this turn due to its Skill effects, deal +10% damage next turn using Base Skills (once per turn) - Turn End: Lose 1 Stack |
+| `[rupture_protection]` | Rupture Protection | Take -1 damage per Count from Rupture effects for one turn. |
+| `[sanctum_of_conservation]` | Sanctum of Conservation | - Max Stack: 5 - Apply the following effect on all allied Identities: · On Skill Use, each ally gains Shield equal to (Preservation Potency on Don Quixote x 2)% of their respective max HP (once per turn, max 10%) - Apply the following effects on all "Le Noir" allied Identities: · Offense Level +(Preservation Potency on Don Quixote / 3) (rounded down; max 2) · Defense Level +(Preservation Potency on Don Quixote / 2) (rounded down; max 3) - Apply the following effects on all enemies: · Min & Max Speed -1 (this effect cannot reduce Min & Max Speed below 1) · Stagger Threshold raised by Tremor Burst +10% · Take +10% damage from Skills that consume Charge Count or Unique Charge (from "Le Noir" allied Identities' Skills, take +20% damage instead) - Turn End: Lose 1 Stack A sanctuary in which the value of conservation pursued by Le Noir is preserved. Within it, the Noirs' preservative actions are retained to their benefit. It is a realm of eternal conservation—a place that stirs the drive to infinitely approach death. |
+| `[scarlet_moth]` | Scarlet Moth | - Max Stack: 3 - Turn End: Heal (Stack)% HP (minimum HP healed : 1) - Turn End: Heal SP equal to Stack - Turn End: Lose 1 Stack |
+| `[scorch_propellant_ammo]` | Scorch Propellant Ammo | - Unique Ammo - Max Stack : 15 - Consumed when using certain Skills - Counts as Ammo |
+| `[second_is_welcome-snipping]` | Second is Welcome-snipping | - Max Stack: 1 - Offense Level +3, Defense Level +3 - On Skill Use, heal 5 SP if this unit is a Charge Identity (once per turn) - On Base Skill Hit, deal Slash damage equal to 5% of each Coin's final damage - Expires at Turn End A pair of scissors becomes one through two, and makes two of what was one. |
+| `[self-charge]` | Self-charge | - Final Power +2 - Gain Charge Count equal to Stack lost - Lose Stack at: · Attack End of Skills that hit this unit (lose 1 Stack) · Attack End (lose 3 Stack) · Turn End (lose 5 Stack) - Max Stack: 20 - This unit's HP cannot drop below 1 before this effect expires |
+| `[serpent_arm]` | Serpent Arm | - Max Stack: 3 - Turn End: gain 3 Poise and +2 Poise count next turn - On Base Attack Skill use, if target has Rupture, gain 5 Poise - Turn End: lose 1 Stack |
+| `[shimmering【bloodfiend】]` | Shimmering [BloodFiend] | - Max Stack: 50 - As long as this effect exists, all Bleed damage taken by the Shield HP is converted to Bloodfeast. - Gain Shield HP equal to the Stack at the moment of its application - Expires at Turn End |
+| `[shin_(心)_-_dihui_star_[地慧星]]` | Shin (心) - Dihui Star [地慧星] | - Gain Min & Max Speed +2 - Upon using a Base Attack Skill, gain 2 Poise Potency and +1 Poise Count - This unit's Base Attack Skills deal +10% damage on Critical Hit - Take -20% damage from Unopposed Attacks and Unbreakable Coins |
+| `[shin_(心)_-_disgrace]` | Shin (心) - Disgrace | - Min & Max Speed +1 - Base Skills inflict +1 more Tremor and Burn Potency and Count - Deal +3% damage for every 3 Poise Potency on self (max 15%) |
+| `[shin_(心)_-_fate]` | Shin (心) - Fate | - Min & Max Speed +1 - Gain +1 more Poise Potency and Count from Base Skills If this unit's SP is higher than the target's, deal +1% damage for every 3 SP difference (max 15%; Non-SP Units are considered to be at 0 SP) |
+| `[shin_(心)_-_procuration]` | Shin (心) - Procuration | - Min & Max Speed +2 - Offense Level +1, Defense Level +1 - Gain 1 more Poise Potency and Poise Count from Base Skills - Deal +(missing HP percentage / 2)% damage with Base Skills (max 40%) - Max Stack: 1 |
+| `[shin_(心)_-_tiantui_star_[天退星]]` | Shin (心) - Tiantui Star [天退星] | - Min & Max Speed +3 - If this unit's Speed is faster than the target's by 3 or more, deal +(Speed difference x 5)% damage (max 40%) - Inflict +2 more Tremor Potency and Tremor Count with this unit's Skills - Max Stack: 1 |
+| `[sizzling_wound]` | Sizzling Wound | - Offense Level +3, Defense Level -3 - Take -25% damage from Unopposed Attacks - Turn Start: Gain 1 Burn and 1 Bleed - Deal +15% damage with Base Attacks Skill's Unbreakable Coins |
+| `[slash_dmg_up]` | Slash DMG Up | Deal 10% more damage with Slash skills per Count for one turn. (Max 10) |
+| `[slash_power_up]` | Slash Power Up | Slash skills gain final Power by the effect's Count for one turn |
+| `[slash_protection]` | Slash Protection | Take 10% less damage from Slash skills per Count for one turn. (Max 10) |
+| `[sloth_dmg_up]` | Sloth DMG Up | Deal 10% more damage with Sloth skills per Count for one turn. (Max 10) |
+| `[sloth_power_up]` | Sloth Power Up | Sloth skills gain final Power by the effect's Count for one turn. |
+| `[sloth_protection]` | Sloth Protection | Take 10% less damage from Sloth skills per Count for one turn. (Max 10) |
+| `[somatic_frisson-inspiring_melody]` | Somatic Frisson-inspiring Melody | - Min & Max Speed +1 - Base Attack Skills gain Clash Power +1 and deal +10% damage |
+| `[spark_of_inspiration]` | Spark of Inspiration | Deal +10% damage against targets with Art Medium |
+| `[strider【mao】]` | Strider [Mao] | - Max Stack: 3 - Turn End: gain 5 Haste next turn - Reduced by 1 at Turn End |
+| `[strider【wu】]` | Strider [Wu] | - Max Stack: 3 - Turn End: gain 2 Haste and (Stack x 2) Aggro next turn - Before Attack: inflict (Stack) Tremor Potency against the main target (max 6 per turn) - Lose 1 Stack at Turn End |
+| `[string_severance_[絕緣]]` | String Severance [絕緣] | - Max Stack: 4 - Gain 1 Stack for every The House of Spiders Nursefather ally death - Gain a different unique effect based on which of The House of Spiders ally was defeated - Take -7.5% damage for every Stack And so, let it be cut and severed. Even if it strays from what it must be. |
+| `[sword_of_the_homeland_-_penetrating]` | Sword of the Homeland - Penetrating | Skill 2 gains Final Power by the effect's Count for this turn |
+| `[sword_of_the_homeland_-_rending]` | Sword of the Homeland - Rending | Skill 1 gains Final Power by the effect's Count for this turn |
+| `[sword_of_the_homeland_-_striking]` | Sword of the Homeland - Striking | - Max Stack: 1 - Plus Coin Power +1, deal +15% damage on Critical Hit - Expires at Turn End |
+| `[sword_of_the_homeland_-_the_true_essence]` | Sword of the Homeland - The True Essence | - Base Attack Skills gain Final Power +(# of Blade Lineage allies on the field / 3) (max 2, rounded down) - If this unit is a Blade Lineage Salsu, Base Skills gain Final Power +1 and deal +(120 / # of Coins)% damage - Turn End: Gain 1 Haste next turn and this effect expires |
+| `[sword_sharpened_with_tears]` | Sword Sharpened with Tears | - Max Stack: 3 - Skills that gain or consume Charge deal +(Charge Potency x 2)% damage (max 10%) - Pierce or Pride Skills deal +(Stack x 5)% damage - On Hit using this unit's Pierce or Pride Skills, deal Pride damage equal to ((Stack x 2) + (5% of the Coin's final damage)) - Attack End: If the main target is an enemy, inflict Sinking Potency equal to Stack |
+| `[swordplay_of_the_homeland]` | Swordplay of the Homeland | - When at 5+ Poise, upon Skill use, Skill 1 and Skill 2 gain Coin Power +(3/# of Coins, minimum 1) and deal +(30/# of Coins)% damage on Critical Hit - When at 7+ Poise, upon Skill use, Skill 3 deals +(30/# of Coins)% more damage and deals +(50/# of Coins)% damage on Critical Hit |
+| `[target_aim]` | Target Aim | - Max Stack: 4 - Expires if this unit does not have Ready to Loose |
+| `[tarnished_blood]` | Tarnished Blood | Max Stack: 5 - Turn End: take 20% HP damage per Stack (cannot be Staggered by this effect) - Gain 1 Stack at Turn End - Expires upon death or Retreat |
+| `[tear-sharpened]` | Tear-sharpened | - Turn Start: gain 5 Deep Tears · At 3 Stack, gain additional 5 Deep Tears - Turn End: lose (Stack x 15) SP - Base Attack Skills deal +(Stack x 10)% damage (max 30%) - If this unit has Blessing, gain Clash Power Up by the effect's Stack at Turn Start - If this unit has Despair, gain Pierce Power Up by the effect's Stack at Turn Start - Max Stack: 3 |
+| `[the_knight's_loyal_protection]` | The Knight's Loyal Protection | Base Stack: 3 This unit's Attack Type Resist. that are higher than 1.5 are adjusted to 1.5 (except while Staggered) If this unit is Staggered, take -30% damage (including forced Staggers) Turn End: Lose 1 Stack Expires when the character that applied this effect retreats, is defeated, or applies this effect to a different target; replaced when another character applies the same effect If this unit is defeated by an enemy, inflict 2 Fragile against the attacker next turn, and the unit that applied this effect gains 2 Attack Power Up and 3 Damage Up next turn |
+| `[the_middle_-_grudge]` | The Middle - Grudge | - Max Stack: 15 - If target has Vengeance Mark, deal +20% damage |
+| `[the_middle_-_vengeance_tattoo_[great_sister]]` | The Middle - Vengeance Tattoo [Great Sister] | - Max Stack: 10 - Final Power +1 for Base Skills for every 5 Stack (max 2) - Envy Skills and Blunt Skills deal +5% damage for every Stack (max 50%) |
+| `[the_middle_styled_augmentation_tattoos]` | The Middle Styled Augmentation Tattoos | - Max Stack: 10 - Final Power +1 for Base Skills for every 5 Stack (max 2) - Envy Skills and Blunt Skills deal +5% damage for every Stack (max 50%) |
+| `[the_one_beyond_despair]` | The One Beyond Despair | - Turn Start: Gain 2 Protection and 1 Attack Power Up - On Defense Skill Use, gain 3 Defense Power Up (once per turn) - On Clash Win, heal 5 SP (2 times per turn) · At max SP, remove 1 removable negative effect applied to self - At Base Skill End, deal Pride damage equal to 10% of damage the said Skill dealt to each enemy - When this unit takes damage that brings its HP down to 0, it does not take damage for the turn (once per Encounter) · After the above effect activates, heal all HP next turn; then, deal +10% damage for every Protection on self until Combat End (max 80%) |
+| `[the_self_unbound_-_flow_state]` | The Self Unbound - Flow State | - Min & Max Speed +2 - Gain a new set of Base Skills - Deal +20% damage with Base Attack Skills to enemies whose Speed is slower than this unit |
+| `[the_udjat_[vanguard]]` | The Udjat [Vanguard] | - Max Stack: 2 - Min & Max Speed +3 - Combat Start: gain 1 Protection - Gain the following effects during the Combat Phase (once per Skill, 3 times per turn) · When this unit is the main target of an Unopposed Attack Skill, halve the chance for the Skill's first Coin to flip Heads · Clash Start: In the first Clash, halve the target's chance to flip Heads for all of its Coins · For both of the above effects, if the target uses Minus Coins, halve their chance to flip Tails instead - Turn End: Reduce 1 Stack |
+| `[thermal_blades]` | Thermal Blades | - Max Stack: 2 - if target hit by Base Skills has Burn, heal 3 SP (2 times per turn ) - Inflict Burn when inflicting Bleed with certain Skill Coins - Turn End: Lose 1 Stack |
+| `[thundercrack]` | Thundercrack | - Max Stack: 3 - For every Stack: · Coin Power +1 · Base Skills deal +15% damage against enemies - If Wild Hunt Heathcliff has been defeated or Retreated, expires |
+| `[thunderer]` | Thunderer | - Turn Start: gain 1 Offense Level Up and 1 Defense Level Up - Turn End: lose 1 Stack - Max Stack: 5 |
+| `[tiantui_star_[天退星]]` | Tiantui Star [天退星] | - Min & Max Speed +1 - If this unit's Speed is faster than the target's by 3 or more, deal +(Speed difference x 2.5)% damage (max 20%) - Inflict +1 more Tremor Potency and Tremor Count with this unit's Skills - If this unit has spent 8+ Tigermark Rounds and Savage Tigermark Rounds: at Turn End, convert this buff to Shin (心) - Tiantui Star \[天退星\] next turn - Max Stack: 1 |
+| `[time_to_listen]` | Time to Listen | - Max Stack: 2 - Base Skill Base Power +1 - Combat Start (once per turn per Sinner): · Identities that equipped Plus Coin Skills in their leftmost Slots heal 4 SP · Identities that equipped Minus Coin Skills in their leftmost Slots lose 4 SP (this effect cannot reduce the unit's SP below -40) - Combat Start: Apply 1 Sloth DMG Up on the following Identities (once per turn per Sinner): · Identities that equipped Plus Coin Skills and have 40 or higher SP; Le Noir Identities additionally gain 1 Base Power Up · Identities that equipped Minus Coin Skills and have -40 or lower SP; Le Noir Identities additionally gain 1 Base Power Up - Turn End: Lose 1 Stack |
+| `[trauma_shield]` | Trauma Shield | - Reduce SP damage from enemies by 80% - Reduce Sinking damage taken by 80% - Reduced by 1 at Turn End |
+| `[tremor_-_clockwinding]` | Tremor - Clockwinding | - Max Speed +2 - Consume Tremor Count on self to inflict 1 more Tremor Potency or Count when inflicting them with this unit's Skill or Coin Effects - When Hit by Skills that trigger Tremor Burst, raise the Stagger Threshold by the effect's Potency - Turn End:reduce the Count by 1 (Interacts the same way as normal Tremor does to effects that raises or reduces Tremor Potency/Count) |
+| `[tremor_-_distribution]` | Tremor - Distribution | - Turn End: Gain ((sum of all allies' Tremor Count) / (# of surviving allies)) Offense Level Up next turn (max 5) - When Hit by Skills that trigger Tremor Burst, raise the Stagger Threshold by the effect's Potency - Turn End:reduce the Count by 1 (Interacts the same way as normal Tremor does to effects that raises or reduces Tremor Potency/Count) |
+| `[uncontrollable_rampage]` | Uncontrollable Rampage | Max Stack: 3 - Offense Level +1 for every Stack (max 3) - Min & Max Speed +1 - Deal +1% damage for every Bleed on self (max 15%) - Cannot become Staggered (excluding forced Stagger) - Take -50% damage from Bleed - Cannot be defeated by Bleed damage - On Base Attack Skill Use, gain +3 Bleed Count - On Base Attack Skill Hit, gain Bleed equal to Uncontrollable Rampage Stack - Turn End: Lose 1 Count |
+| `[unjust_enrichment]` | Unjust Enrichment | - Gained on Heads Hit against targets that have Bleed (Max 4) - When 'Bullets are Pricey' Passive activates, consume all Unjust Enrichment stack to deal bonus damage |
+| `[unlock]` | Unlock | - Gain this effect when over certain Grace of the Prescript Stack - Effect stage increases based on Grace of the Prescript Stack - Max: Stage 3 |
+| `[unlock_-_i]` | Unlock - I | - Defense Level +1 - Combat End: Heal 5 SP |
+| `[unlock_-_ii]` | Unlock - II | - Defense Level +2 - Combat End: Heal 10 SP |
+| `[unlock_-_iii]` | Unlock - III | - Defense Level +3 - Combat End: Heal 15 SP |
+| `[unrelenting_spirit_-_shin_[剛氣-心]]` | Unrelenting Spirit - Shin [剛氣-心] |  |
+| `[unrelenting_spirit_[剛氣]]` | Unrelenting Spirit [剛氣] |  |
+| `[unrelenting_storm]` | Unrelenting Storm | - Number of times this unit activated combo with The Lord of Hongyuan Hong Lu Identity - Max Stack: 2 - Turn Start: gain 1 Offense Level Up and 1 Defense Level Up for every Stack |
+| `[vengeance_tattoo]` | Vengeance Tattoo | - Max Stack: 20 - Base Skills deal +1% damage for every Stack |
+| `[violent_collections]` | Violent Collections | - When this unit has Haste, gain +1 more Tremor Count from its Base Skills - If this unit's Speed is faster than the target's, deal +(Speed difference x 3)% damage (max 15%) |
+| `[weak-resist_dmg_boost]` | Weak-resist DMG Boost | Boost the damage of attacks against Weak resistances by 1% per Count for one turn. |
+| `[wedge_office]` | Wedge Office | - Max Stack: 3 - Offense Level +1 for every Stack - Combat Start: At 3 Stacks, gain 1 Pierce DMG Up - Expires at Turn End |
+| `[when_boring_a_20-inch_hole_with_a_lance...]` | When boring a 20-inch hole with a lance... | - This coin deals Pierce damage - This Coin deals +15% damage - On Hit without Cracking, inflict 1 Pierce Fragility until next turn (2 times per turn) |
+| `[when_caving_in_the_back_of_the_skull_with_a_hammer...]` | When caving in the back of the skull with a hammer... | - This coin deals Blunt damage - This Coin deals +5% damage - On Hit without Cracking, raise target's Stagger Threshold by 3 |
+| `[when_cleaving_through_the_shoulder_and_the_skull_with_a_bastard_sword...]` | When cleaving through the shoulder and the skull with a bastard sword... | - This coin deals Slash damage - This Coin deals +5% damage - On Hit without Cracking, gain 1 Offense Level Up next turn (2 times per turn) |
+| `[when_hacking_through_the_ribs_with_a_hatchet...]` | When hacking through the ribs with a hatchet... | - This coin deals Blunt damage - On Hit without Cracking, gain 2 Poise |
+| `[when_lacerating_through_space_itself_with_a_scythe,_like_a_certain_someone...]` | When lacerating through space itself with a scythe, like a certain someone... | - This coin deals Slash damage - This Coin deals +30% damage - On Hit without Cracking, it hits a guaranteed Crit |
+| `[when_penetrating_the_lungs_with_a_stiletto...]` | When penetrating the lungs with a stiletto... | - This coin deals Pierce damage - On Hit without Cracking, inflict 2 Sinking |
+| `[when_punching_10_or_more_holes_in_the_torso_with_a_rapier...]` | When punching 10 or more holes in the torso with a rapier... | - This coin deals Pierce damage - This Coin deals +5% damage - On Hit without Cracking, inflict 1 Defense Level Down next turn (2 times per turn) |
+| `[when_rending_the_body_with_a_great_sword...]` | When rending the body with a greatsword... | - This coin deals Slash damage - This Coin deals +15% damage - On Hit without Cracking, inflict 1 Slash Fragility until next turn (2 times per turn) |
+| `[when_ripping_the_flesh_to_ten_thousand_strips_with_a_whip...]` | When ripping the flesh to ten thousand strips with a whip... | This coin deals Blunt damage - This Coin deals +15% damage - On Hit without Cracking, inflict 1 Blunt Fragility until next turn (2 times per turn) |
+| `[wild_hunt]` | Wild Hunt | - In the same turn this unit gained Wild Hunt for the first time, always have 1 remaining HP; "revive" (heal 50% HP and reset SP to 0) this unit at Turn End. - If this unit is killed by an attack, gain 1 E.G.O resource for the least-owned E.G.O resource - If this unit is killed by an attack, inflict 3 Sinking against the last attacker - Dies at the end of the same turn this unit was revived in |
+| `[witnessed_-_eastern_cinq]` | Witnessed - Eastern Cinq | - Max Stack: 3 - Offense Level +(Stack) - At 2+ Stack, Base Skills gain +1 more Poise Potency - At 3+ Stack, Base Skills gain +1 more Poise Count |
+| `[wound-casing_mask]` | Wound-casing Mask | - Offense Level +2, Defense Level -2 - Take -10% damage from Unopposed Attacks |
+| `[wrath_dmg_up]` | Wrath DMG Up | Deal 10% more damage with Wrath skills per Count for one turn. (Max 10) |
+| `[wrath_power_up]` | Wrath Power Up | Wrath skills gain final Power by the effect's Count for one turn. |
+| `[wrath_protection]` | Wrath Protection | Take 10% less damage from Wrath skills per Count for one turn. (Max 10) |
 
 ### Debuffs
 
 Shown in the Debuff color.
 
-| Keyword | Shows as |
-| --- | --- |
-| `[art_medium]` | Art Medium |
-| `[attack_power_down]` | Attack Power Down |
-| `[avulsion_wound]` | Avulsion Wound |
-| `[b.m.]` | B.M. |
-| `[before_the_king]` | Before the King |
-| `[bind]` | Bind |
-| `[bladetrail_[afterimage]]` | Bladetrail [Afterimage] |
-| `[bleed]` | Bleed |
-| `[blue_sand]` | Blue Sand |
-| `[blunt_dmg_down]` | Blunt DMG Down |
-| `[blunt_fragility]` | Blunt Fragility |
-| `[blunt_power_down]` | Blunt Power Down |
-| `[blunt_resist_down]` | Blunt Resist Down |
-| `[book_of_vengeance_[the_house_of_spiders]]` | Book of Vengeance [The House of Spiders] |
-| `[burn]` | Burn |
-| `[butterfly]` | Butterfly |
-| `[centipede_venom]` | Centipede Venom |
-| `[charged_sting]` | Charged Sting |
-| `[clash_power_down]` | Clash Power Down |
-| `[concussion]` | Concussion |
-| `[contempt]` | Contempt |
-| `[contempt_of_the_gaze]` | Contempt of the Gaze |
-| `[corpus_theater]` | Corpus Theater |
-| `[curse]` | Curse |
-| `[damage_down]` | Damage Down |
-| `[dark_flame]` | Dark Flame |
-| `[dazzle]` | Dazzle |
-| `[deathrite【fissure】]` | Deathrite [Fissure] |
-| `[deathrite【haste】]` | Deathrite [Haste] |
-| `[deathrite【venom】]` | Deathrite [Venom] |
-| `[declared_duel]` | Declared Duel |
-| `[deep_wound]` | Deep Wound |
-| `[defense_level_down]` | Defense Level Down |
-| `[defense_power_down]` | Defense Power Down |
-| `[delicateness]` | Delicateness |
-| `[dimensional_rift]` | Dimensional Rift |
-| `[echoes_of_the_manor]` | Echoes of the Manor |
-| `[embers]` | Embers |
-| `[envy_dmg_down]` | Envy DMG Down |
-| `[envy_fragility]` | Envy Fragility |
-| `[envy_power_down]` | Envy Power Down |
-| `[envy_resist_down]` | Envy Resist Down |
-| `[faint_aroma]` | Faint Aroma |
-| `[fairy_lure]` | Fairy Lure |
-| `[fatal_wound]` | Fatal Wound |
-| `[focused_attack]` | Focused Attack |
-| `[fracturing_of_the_senses]` | Fracturing of the Senses |
-| `[fragile]` | Fragile |
-| `[gaze]` | Gaze |
-| `[gloom_dmg_down]` | Gloom DMG Down |
-| `[gloom_fragility]` | Gloom Fragility |
-| `[gloom_power_down]` | Gloom Power Down |
-| `[gloom_resist_down]` | Gloom Resist Down |
-| `[gluttonous_thorn_(貪食棘)]` | Gluttonous Thorn (貪食棘) |
-| `[gluttony_dmg_down]` | Gluttony DMG Down |
-| `[gluttony_fragility]` | Gluttony Fragility |
-| `[gluttony_power_down]` | Gluttony Power Down |
-| `[hp_healing_down]` | HP Healing Down |
-| `[hysteria]` | Hysteria |
-| `[immobilized]` | Immobilized |
-| `[impending_ruin]` | Impending Ruin |
-| `[karmic_consequence]` | Karmic Consequence |
-| `[la_mancha_parade]` | La Mancha Parade |
-| `[lasso]` | Lasso |
-| `[lodged_arrow]` | Lodged Arrow |
-| `[lust_dmg_down]` | Lust DMG Down |
-| `[lust_fragility]` | Lust Fragility |
-| `[lust_power_down]` | Lust Power Down |
-| `[maggots]` | Maggots |
-| `[mark_of_decay]` | Mark of Decay |
-| `[mark_of_shearing]` | Mark of Shearing |
-| `[mark_of_villainy]` | Mark of Villainy |
-| `[mauled_color_[bleu]]` | Mauled Color [Bleu] |
-| `[mauled_color_[rouge]]` | Mauled Color [Rouge] |
-| `[minus_coin_boost]` | Minus Coin Boost |
-| `[nails]` | Nails |
-| `[needle]` | Needle |
-| `[nerve_strike]` | Nerve Strike |
-| `[offense_level_down]` | Offense Level Down |
-| `[only_ashes_remain]` | Only Ashes Remain |
-| `[open_wound]` | Open Wound |
-| `[overheated_coffin]` | Overheated Coffin |
-| `[palette_vibrante]` | Palette Vibrante |
-| `[paralyze]` | Paralyze |
-| `[phantom_trace]` | Phantom Trace |
-| `[pheromone_mark]` | Pheromone Mark |
-| `[photoelectricity]` | Photoelectricity |
-| `[pierce_dmg_down]` | Pierce DMG Down |
-| `[pierce_fragility]` | Pierce Fragility |
-| `[pierce_power_down]` | Pierce Power Down |
-| `[pierce_resist_down]` | Pierce Resist Down |
-| `[pink_petals]` | Pink Petals |
-| `[pink_ribbons]` | Pink Ribbons |
-| `[plus_coin_drop]` | Plus Coin Drop |
-| `[poison]` | Poison |
-| `[polydipsic_rose]` | Polydipsic Rose |
-| `[power_down]` | Power Down |
-| `[pride_dmg_down]` | Pride DMG Down |
-| `[pride_fragility]` | Pride Fragility |
-| `[pride_power_down]` | Pride Power Down |
-| `[promised_nail]` | Promised Nail |
-| `[red_plum_blossom]` | Red Plum Blossom |
-| `[reflux]` | Reflux |
-| `[regressive_transformation_-_reversed]` | Regressive Transformation - Reversed |
-| `[requested_target]` | Requested Target |
-| `[resident_reg._microchip]` | Resident Reg. Microchip |
-| `[rhythm]` | Rhythm |
-| `[rose_wedge]` | Rose Wedge |
-| `[rupture]` | Rupture |
-| `[searing_birdcage]` | Searing Birdcage |
-| `[severed_tendon]` | Severed Tendon |
-| `[sewing_target]` | Sewing Target |
-| `[shattered_world]` | Shattered World |
-| `[shattermark]` | Shattermark |
-| `[sheut_fracture]` | Sheut Fracture |
-| `[sibling_vengeance_mark]` | Sibling Vengeance Mark |
-| `[sinking]` | Sinking |
-| `[sinking_deluge]` | Sinking Deluge |
-| `[sinking_fragility]` | Sinking Fragility |
-| `[slash_dmg_down]` | Slash DMG Down |
-| `[slash_fragility]` | Slash Fragility |
-| `[slash_power_down]` | Slash Power Down |
-| `[slash_resist_down]` | Slash Resist Down |
-| `[sloth_dmg_down]` | Sloth DMG Down |
-| `[sloth_fragility]` | Sloth Fragility |
-| `[sloth_power_down]` | Sloth Power Down |
-| `[smoke]` | Smoke |
-| `[solitude]` | Solitude |
-| `[spark_discharge]` | Spark Discharge |
-| `[spore]` | Spore |
-| `[talisman]` | Talisman |
-| `[the_duel_escalates]` | The Duel Escalates |
-| `[the_uninvited]` | The Uninvited |
-| `[time_moratorium]` | Time Moratorium |
-| `[touche_hardie]` | Touche Hardie |
-| `[tremor]` | Tremor |
-| `[tremor_-_chain]` | Tremor - Chain |
-| `[tremor_-_conservation]` | Tremor - Conservation |
-| `[tremor_-_decay]` | Tremor - Decay |
-| `[tremor_-_everlasting]` | Tremor - Everlasting |
-| `[tremor_-_fracture]` | Tremor - Fracture |
-| `[tremor_-_hemorrhage]` | Tremor - Hemorrhage |
-| `[tremor_-_reverb]` | Tremor - Reverb |
-| `[tremor_-_scorch]` | Tremor - Scorch |
-| `[tremor_-_superposition]` | Tremor - Superposition |
-| `[tremor_burst]` | Tremor Burst |
-| `[trussed_[hong_lu]]` | Trussed [Hong Lu] |
-| `[twisted_curse_talisman]` | Twisted Curse Talisman |
-| `[vendetta_mark]` | Vendetta Mark |
-| `[vengeance_mark]` | Vengeance Mark |
-| `[weakness_analyzed]` | Weakness Analyzed |
-| `[wrath_dmg_down]` | Wrath DMG Down |
-| `[wrath_fragility]` | Wrath Fragility |
-| `[wrath_power_down]` | Wrath Power Down |
-| `[wrath_resist_down]` | Wrath Resist Down |
+| Keyword | Shows as | Description |
+| --- | --- | --- |
+| `[a_test_of_despair]` | A Test of Despair | - All Slots gain +20 Aggro - On Attack Skill Use, lose 20 SP - On Death, all other allies lose 20 SP |
+| `[art_medium]` | Art Medium | If this unit has Bleed (in Focused Encounters, count Bleed on each Part separately), take +10% damage from Lust Skills |
+| `[attack_power_down]` | Attack Power Down | Attack skills lose Final Power by the effect’s Potency for one turn. |
+| `[auditive_punishment]` | Auditive Punishment | - Max Stack: 2 - Lose Offense Level equal to Stack - If there is an Identity that has Time to Listen, take +(Stack x 10)% damage from "Le Noir" Identities - Turn End: If there is an Identity that has Time to Listen, lose 1 Stack (if the Identity that inflicted this effect has been defeated or Retreated, expires) |
+| `[avulsion_wound]` | Avulsion Wound | - Max Stack: 3 - Turn Start: Gain 2 Bleed - Turn End: Gain 1 Bind next turn - Turn End: Lose 1 Stack |
+| `[b.m.]` | B.M. | Enhances Edgar Family Chief Butler Ryōshū Skills against targets with this effect Turn End: reduce the Count by 1 |
+| `[before_the_king]` | Before the King | When this unit's attack with 1 Atk Weight hits, inflict 50% of the resulting Coin value on hit as (Affinity/Attack type of the Attack Skill used to hit) damage against 2 other attackable enemies with the least HP. |
+| `[bind]` | Bind | Speed decreases by the effect’s Potency for one turn. |
+| `[bladetrail_[afterimage]]` | Bladetrail [Afterimage] | - Max Stack: 100 - Take +1% damage from Slash Skills for every 10 Stack |
+| `[bleed]` | Bleed | When tossing an attack Coin, take fixed damage by the effect’s Potency. Then, reduce its Count by 1. |
+| `[blue_sand]` | Blue Sand | - On Clash Lose, gain +1 Sinking Count (3 times per turn) - SP Units: change their Panic Type to "Blue Sand" - Non-SP Units: Min & Max Speed -1 - Turn End: Reduce 1 Stack - This effect is not cumulative; inflicting it will replace the current value with the inflicted value - Apply the "Non-SP Units" conditional to certain enemies that have SP but can't change their Panic Types ※ Blue Sand Panic Effects - Low Morale: Clash Power -1, Min & Max Speed -1 - Panic: Clash Power -2, Min & Max Speed -1 |
+| `[blunt_dmg_down]` | Blunt DMG Down | Deal 10% less damage with Blunt skills per Count for one turn. (Max 10) |
+| `[blunt_fragility]` | Blunt Fragility | Take 10% more damage from Blunt skills per Count for one turn. (Max 10) |
+| `[blunt_power_down]` | Blunt Power Down | Blunt skills lose final Power by the effect's Count for one turn. |
+| `[blunt_resist_down]` | Blunt Resist Down | Increase Pierce Resistance based on Count (0.1 per Count) |
+| `[book_of_vengeance_[the_house_of_spiders]]` | Book of Vengeance [The House of Spiders] | - Against units that have this effect, The House of Spiders: The Middle Nursefather Outis and The House of Spiders: The Middle Apprentice Ishmael heal 5 SP On Hit using a Skill (once per Skill, 2 times per turn) - On Hit using a Skill against The House of Spiders: The Middle Nursefather Outis, gain 1 additional Stack of The Middle - Grudge (once per Skill, 2 times per turn for each Identity) - On Hit using a Skill against The House of Spiders: The Middle Apprentice Ishmael, gain 1 additional Stack of The Middle - Grudge (once per Skill, 2 times per turn for each Identity) - Expires at Turn End |
+| `[burn]` | Burn | At the end of the turn, take fixed damage by the effect’s Potency, then reduce its Count by 1. |
+| `[butterfly]` | Butterfly | - Unique Sinking - Base Value: 0, Max Value: 15 - The Potency and the Count of this effect is called "The Living" and "The Departed", respectively. - When hit, the attacker heals (The Living/4) SP. (min 1; rounded down) - When hit, and if this unit's SP is at less than 0, take (Sinking Potency/5) Gloom damage for every value of The Departed. (max Gloom damage 30; rounded down; deals half damage to targets that are Non-SP Units.) - Turn End: Reset The Departed of this effect to 0; then, gain Sinking equal to The Living and convert The Living into The Departed. - No external effects can raise the amount of Butterfly inflicted. "Inflict additional Sinking" effects inflict additional Sinking instead of additional Butterfly. - This effect expires when both The Living and The Departed reach 0. |
+| `[centipede_venom]` | Centipede Venom | - Max Stack: 20 - Turn End: Gain (Stack / 4) Defense Level Down next turn (rounded down) - Turn End: Take Gluttony damage equal to Stack, and halve the Stack (rounded down) Upon death, transfers to this unit's ally (for Focused Encounters, a different Part) that has none or the least Centipede Venom Stacks. |
+| `[charged_sting]` | Charged Sting | For every Stack, take +4% Damage from Skills that gain or consume Charge Count (including 'Unique Charge') (max 20%) · For Envy Skills, strengthen this effect and take +8% for every Stack instead instead (max 40%) Max Stack: 5 Lose 1 Stack at Attack End or Turn End after being hit by Skills that fulfill the effect-triggering conditions above (excluding Base Attack Skills that inflict Charged Sting) |
+| `[clash_power_down]` | Clash Power Down | Lose Clash Power by the effect's Potency for one turn. |
+| `[concussion]` | Concussion | - Max Stack: 2 - Multiply the amount of Stagger Threshold raised and Rupture damage dealt against this unit by 1.2 (rounded down) - Lose 1 Stack at Turn End |
+| `[contempt]` | Contempt | - Max Stack: 1 - Take and deal -50% damage from and against Ryōshū - Targets with Contempt cannot gain Gaze - On death, transfers to this unit's ally (for Focused Encounters, a different Part) that has no Contempt or Gaze, or has the least Contempt or Gaze (this effect does not activate if this unit was killed during the Skill attack 'Cascading Gaze of Awe Underneath Contempt') - Turn End: Expires; then, this unit gains 7 Gaze next turn |
+| `[contempt_of_the_gaze]` | Contempt of the Gaze | - Gain 7 Protection - Gain 7 Damage Down - One of this unit's Slots gains +20 Aggro - Cannot gain Gaze of Contempt as long as Contempt of the Gaze is active - Turn End: this effect expires |
+| `[corpus_theater]` | Corpus Theater | - Base Stack: 3 - When this unit gains Bleed from enemy Attack Skills, randomly gain 1 of the following effects next turn and lose 1 Stack of this effect (once per Skill) · 3 Bleed Potency · 1 Bind · 1 Defense Power Down |
+| `[curse]` | Curse | Turn End: next turn, randomly gain one of the following, then reduce this effect's Count by 1. 1 Attack Power Down/1 Defense Power Down/2 Offense Level Down/2 Defense Level Down |
+| `[damage_down]` | Damage Down | Deal 10% less damage with skills per Count for one turn. (Max 10) |
+| `[dark_flame]` | Dark Flame | - Unique Burn - Max Value: 7 - Target loses Defense Level equal to the value of this effect - Turn End: Deal (Value x Burn on target) Pride Affinity damage, then expires |
+| `[dazzle]` | Dazzle | - For every 1 (Sinking + Burn), take +0.5% damage from Base Attack Skills (max 10%) - SP Units: Change their Panic Type to "Dazzle" - Non-SP Units: Defense Level -2 - Turn End: Lose 1 Stack - This effect is not cumulative; inflicting it will replace the current value with the inflicted value - Apply the "Non-SP Units" conditional to certain enemies that have SP but can't change their Panic Types ※ "Dazzle" Panic-type effects: - Low Morale: Turn End: Gain 1 Bind and 2 Offense Level Down next turn - Panic: Turn End: Gain 1 Bind and 4 Offense Level Down next turn |
+| `[deathrite【fissure】]` | Deathrite [Fissure] | - Base Stack: 3 - When getting Rupture triggered while this unit has Deathrite, lose 1 Stack, and gain 1 Bind next turn · When this effect activates, if this unit is to gain 3 or more Bind next turn, lose 2 Stacks instead of gaining Bind - At 0 Stack, take Gluttony damage equal to Rupture Potency on self -※ Cannot gain additional Stacks of this effect while it is already active. |
+| `[deathrite【haste】]` | Deathrite [Haste] | - Base Stack: 3 - When getting Rupture triggered by getting hit by an Attack Skill from a target with 10+ Speed, lose 1 Stack and gain +1 Rupture Count - At 0 Stack, take Gluttony damage equal to Rupture Potency on self; then, this effect expires ※ Cannot gain additional Stacks of this effect while it is already active |
+| `[deathrite【venom】]` | Deathrite [Venom] | - Base Stack: 5 - Deathrite - When getting Rupture triggered by a Critical Hit from the target, lose 1 Stack - When losing Stacks due to this effect, gain 1 Offense Level Down or 1 Defense Level Down (3 times per turn) - When losing Stacks due to this effect, if the Stack drops to 0, take Gluttony damage equal to Rupture Potency on self - ※ Cannot gain additional Stacks of this effect while it is already active |
+| `[declared_duel]` | Declared Duel | - In a Clash between the unit that inflicted Declared Duel and the unit that has the status, the declarer has +1 Clash Power. On Hit, the declarer gains 1 Haste next turn. (4 times per turn) - Expires when the unit inflicts Declared Duel on a different target. Replaced when another unit inflicts Declared Duel on the same target. |
+| `[deep_wound]` | Deep Wound | - Base Stack: 3 - When Tremor Burst is triggered on this unit, gain +1 Bleed Count (2 times per turn) - Cannot gain Open Wound (in Focused Encounters, the Part) - Turn End: Gain (Stack - 1) Bind next turn - Turn End: Reduce Stack by 1 |
+| `[defense_level_down]` | Defense Level Down | Defense Level decreases based on the effect's Potency for one turn. |
+| `[defense_power_down]` | Defense Power Down | Defense skills lose Final Power by the effect’s Potency for one turn. |
+| `[delicateness]` | Delicateness | - Max Stack: 10 - Take +10% damage for every Stack |
+| `[dimensional_rift]` | Dimensional Rift | At the end of the turn, gain Rupture Count by this effect's amount. Then, remove this effect. |
+| `[echoes_of_the_manor]` | Echoes of the Manor | - 50% chance to gain +1 Sinking Count when gaining Sinking Potency or Count from Skill or Coin effects - SP Units: Change Panic Type to Echoes of the Manor. When this unit Panics, inflict Echoes of the Manor to 2 random other allies of this unit. - Non-SP Units: -10% chance to flip Heads. - Reduced by 1 at Turn End - This effect is not cumulative; inflicting it will replace the current value with the inflicted value. ※ Apply the "Non-SP Units" conditional to certain enemies that have SP but can't change their Panic Types. |
+| `[embedded_spearhead]` | Embedded Spearhead | - Max Stack: 1 - On Crit using Pierce Base Attack Skills by targets other than the target that inflicted this effect, take +15% damage - When hit by Skills that have the "Joint Combo" effect, take an additional +20% damage - At Skill End of the Skill that hit, expires |
+| `[embers]` | Embers | - Max Potency: 3 - Max Count: 6 - If this unit has Burn, lose 1 Embers Count when hit by a Skill that inflicts Burn Potency, Count, or 'Unique Burn' (including E.G.O Skills) - If this unit does not have Burn, reset Embers Count to 6 when hit (independent of Skills that inflict Burn) - At 0 Embers Count, activate the following effects: · Activate Burn on self once and lose 1 Burn Count · Lose 1 Embers Potency · If this unit has 1+ remaining Embers Potency, reset Embers Count to 6 |
+| `[envy_dmg_down]` | Envy DMG Down | Deal 10% less damage with Envy skills per Count for one turn. (Max 10) |
+| `[envy_fragility]` | Envy Fragility | Take 10% more damage from Envy skills per Count for one turn. (Max 10) |
+| `[envy_power_down]` | Envy Power Down | Envy skills lose final Power by the effect's Count for one turn. |
+| `[envy_resist_down]` | Envy Resist Down | Increase Envy Resistance based on Count (0.1 per Count) |
+| `[faint_aroma]` | Faint Aroma | - Max Stack: 30 - Gain 1 Stack if this unit takes Sinking damage - Upon Tremor Burst, apply 1~2 Faint Aroma on 3 other random allies (for Abnormalities, the Part) - At max Stack, gain 2 Tremor and trigger Tremor Burst on self; then, take Gloom damage equal to Sinking on self and lose all Faint Aroma. Cannot gain Faint Aroma for the rest of the turn. - If this unit is killed, inflict (remaining Faint Aroma on this unit / 2) Faint Aroma randomly between this unit's allies (rounded down) |
+| `[fairy_lure]` | Fairy Lure | - Max Stack: 5 - Turn Start: leftmost Slot on the Dashboard gains +10 Aggro - Take +50% more damage - When hit, inflict 1 Rupture against the attacker (3 times per target's Skill) · At less than 50% HP, inflict 1 additional Rupture · If the target has 15+ Rupture, this effect does not inflict Rupture - Reduced by 1 at Turn End |
+| `[fatal_wound]` | Fatal Wound | - Base Stack: 3 - When Tremor Burst is triggered on this unit, gain +3 Bleed Count (2 times per turn) - Cannot gain Open Wound (in Focused Encounters, the Part) - Turn End: Gain Bind equal to Stack next turn - Turn End: Reduce Stack by 1 |
+| `[focused_attack]` | Focused Attack | \<Focused Encounters Only\> - The unit that inflicted this Focused Attack gains the following effects based on the target Slot's Focused Attack Stack. ·1x Stack: Gain Clash Power +1 ·2x Stack: Gain Base Power +1 ·3x Stack: Gain Base Power +1 and Coin Power +1 - Expires if, for a turn, the unit who inflicted it fails to hit the Slot inflicted with their Focused Attack. - Expires if the unit who inflicted Focused Attack inflicts it on a different Slot. - Replaced if a different unit inflicts Focused Attack on a Slot already inflicted with Focused Attack. - At the start of the next turn, if a Slot inflicted with Focused Attack is no longer present, rearrange all Focused Attacks inflicted against the Slots of that Part in the order of Deployment |
+| `[fracturing_of_the_senses]` | Fracturing of the Senses | - Max Stack: 5 - When other allies are hit, gain +1 Tremor Count, and lose 1 Stack (once per Skill) - If there are no other allies on the field, gain 2 Tremor Potency when hit, and lose 1 Stack (once per Skill) - When hit by Crit Attack, take +(Tremor Potency on self)% damage (max 15%) The fracturing occurs when one first recognizes the incongruity between the forms of the body and heart. |
+| `[fragile]` | Fragile | Take 10% more damage from skills per Count for one turn. (Max 10) |
+| `[gaze]` | Gaze | Affected unit takes more damage from Pierce and Blunt skills for one turn. The ally that defeats the marked unit heals sanity; if the ally is an 'N Corp. Fanatic', they also gain Fanatic next turn. |
+| `[gloom_dmg_down]` | Gloom DMG Down | Deal 10% less damage with Gloom skills per Count for one turn. (Max 10) |
+| `[gloom_fragility]` | Gloom Fragility | Take 10% more damage from Gloom skills per Count for one turn. (Max 10) |
+| `[gloom_power_down]` | Gloom Power Down | Gloom skills lose final Power by the effect's Count for one turn. |
+| `[gloom_resist_down]` | Gloom Resist Down | Increase Gloom Resistance based on Count (0.1 per Count) |
+| `[gluttonous_thorn_(貪食棘)]` | Gluttonous Thorn (貪食棘) | Max Stack: 9 Turn End: gain Bleed Count equal to Lust Reson., then lose 1 Gluttonous Thorn (貪食棘). (max Bleed Count gain: 5) While this unit has this effect, if it gains Bleed Potency beyond 99, increase Bloodfeast equal to the excess Bleed Potency; then, gain Defense Level Down next turn equal to Bloodfeast increased (max Defense Level Down gain: 5) |
+| `[gluttony_dmg_down]` | Gluttony DMG Down | Deal 10% less damage with Gluttony skills per Count for one turn. (Max 10) |
+| `[gluttony_fragility]` | Gluttony Fragility | Take 10% more damage from Gluttony skills per Count for one turn. (Max 10) |
+| `[gluttony_power_down]` | Gluttony Power Down | Gluttony skills lose final Power by the effect's Count for one turn. |
+| `[hp_healing_down]` | HP Healing Down | Decreases HP healing provided by Passive abilities, Skills, and Coin effects. |
+| `[hysteria]` | Hysteria | - Base Stack: 0 - Max Stack: 3 - At Turn End… · At 0 or higher SP, lose 1 Stack · At less than 0 SP, gain 1 Stack |
+| `[immobilized]` | Immobilized | Does not act for this turn. |
+| `[impending_ruin]` | Impending Ruin | - SP Units: change their Panic Type to "Ruin". (Ruin: When this unit enters Low Morale state, gain 3 Sinking at every Turn End and lose 1 Clash Power. When this unit Panics, gain 5 Sinking and 3 Sinking Count at every Turn End and lose 2 Clash Power) - Non-SP Units: -10% chance to flip Heads - Reduced by 1 at Turn End - This effect is not cumulative; inflicting it will replace the current value with the inflicted value. ※ Apply the "Non-SP Units" conditional to certain enemies that have SP but can't change their Panic Types. |
+| `[karmic_consequence]` | Karmic Consequence | - Turn Start: · Gain 1 Defense Level Down for every 10 Stacks · Gain 1 Fragile for every 20 Stacks - Max Stack: 100 |
+| `[la_mancha_parade]` | La Mancha Parade | - Max Stack: 4 - Take +10% damage from Lust Skills · If the target is a \<La Manchaland\> Identity, take +20% damage regardless of the Skill's Affinity · At max Stack, deal -20% damage against \<La Manchaland\> Identities - Lose 1 Stack either after this unit's Skill hits and ends or after the Skill that attacked this unit hits and ends |
+| `[lasso]` | Lasso | - Max Value: 3 - Turn End: gain Rupture Potency by equal to this unit's current Speed value (max 5), and gain 1 Bind next turn - Turn End: reduced by 1 |
+| `[lodged_arrow]` | Lodged Arrow | - Max Stack: 4 - Turn Start: gain Bleed Potency by Stack - Lose Defense Level by Stack - Turn End: at 2+ Stack, gain 1 Fragile next turn (once per turn) - Expires on: Death, Retreat, buff removal/expiration. When it expires, apply Arrow - Shi to Shi East Section 3 Faust by Stack |
+| `[lust_dmg_down]` | Lust DMG Down | Deal 10% less damage with Lust skills per Count for one turn. (Max 10) |
+| `[lust_fragility]` | Lust Fragility | Take 10% more damage from Lust skills per Count for one turn. (Max 10) |
+| `[lust_power_down]` | Lust Power Down | Lust skills lose final Power by the effect's Count for one turn. |
+| `[maggots]` | Maggots | At the end of the turn, take Gluttony damage by the Count, increase Bleed Count by 1, then reduce this effect’s Count by 1. |
+| `[mark_of_decay]` | Mark of Decay | - Max Stack: 1 - Take +10% damage from Gluttony Affinity Skills - Take +10% damage from Deathrite - Removed at Turn End |
+| `[mark_of_shearing]` | Mark of Shearing | - Max Stack: 4 - When a target that has this effect is defeated, the unit that inflicted this effect heals 5 SP and gains 1 Offense Level Up next turn (3 times per turn) A cutting mark used to trim fabric and other materials to the required measurements. |
+| `[mark_of_villainy]` | Mark of Villainy | - Take +10% damage from Don Quixote - Applies only to the first target to receive the effect in each turn |
+| `[mauled_color_[bleu]]` | Mauled Color [Bleu] | - Max Stack: 9 - When hit, gain 1 Sinking Potency for every 3 Stack (once per turn) - Turn End: At 5+ Stack, lose 5 SP - Turn End: Lose 1 Stack |
+| `[mauled_color_[rouge]]` | Mauled Color [Rouge] | - Max Stack: 9 - When hit, gain 1 Bleed Potency for every 3 Stack (once per turn) - Turn End: Gain 1 Defense Level Down next turn for every 4 Stack (max 2) - Turn End: Lose 1 Stack |
+| `[minus_coin_boost]` | Minus Coin Boost | Raise the Power of Minus Coins by the effect's Count for one turn. |
+| `[naildle]` | Naildle | - Unique Bleed - Max Stack: 10 - Turn End: Lose 1 Stack - When losing this effect's Stack, gain 1 Bleed Potency and take 3 Lust damage for every Stack lost - Turn End: If enemy Haute Couture::The Crimson God of Le Rouge Sinclair is on the field and this unit has this effect, this unit gains 1 L'Abject |
+| `[nails]` | Nails | Unique Bleed Turn Start: Apply 1 Bleed to self, and increase Bleed count by this effect's Count. Turn End: halves Count (rounded down). |
+| `[needle]` | Needle | - Unique Bleed - When taking Envy damage, gain +1 Bleed Count and reduce this effect's Stack by 1 - Turn End: Gain 1 Bleed and reduce this effect's Stack by 1 |
+| `[nerve_strike]` | Nerve Strike | - Max Stack: 3 - The unit that inflicted this Nerve Strike gains the following effects based on the target's (or targeted Part's) Nerve Strike Stack · 1x Stack: Gain Clash Power +1 · 2x Stack: Gain Base Power +1 · 3x Stack: Gain Clash Power +1 and Base Power +1 - Expires if the unit that inflicted it inflicts this effect against a different target (or a different Part) - Replaced when another unit inflicts Nerve Strike |
+| `[offense_level_down]` | Offense Level Down | Offense level decreases based on the effect's Potency for one turn. |
+| `[only_ashes_remain]` | Only Ashes Remain | - Cannot maintain Red Eyes & Penitence - When gaining Red Eyes with Base Skill effects, heal self and 1 ally with the lowest HP percentage by (Red Eyes gained)% of this unit's max HP (2 times per turn) - When gaining Penitence with Base Skill effects, heal self and 1 ally with the least SP by ((Penitence gained)/2) SP (2 times per turn) - Turn End: this effect expires |
+| `[open_wound]` | Open Wound | - Max Stack: 2 - Turn End: Gain 1 Bind next turn - Turn End: At 2 Stack, replace this effect with Deep Wound next turn |
+| `[overheated_coffin]` | Overheated Coffin | - Max Stack: 1 - Turn End: · Gain 3 Burn next turn · This effect expires "Keep in mind, however, that convenience is always accompanied by a trade-off. A weapon of this structure comes with drawbacks that standard Stigma Workshop weapons would not possess—inevitable penalties that can only be mitigated by Singularities, the pinnacle of the myriad technological innovations of the City." "It would do justice to properly acknowledge the extraordinary qualities of Singulari—ahem. That was tangential to the subject. Let us return to the subject, Sinclair." |
+| `[palette_vibrante]` | Palette Vibrante | - Max Stack: 4 - Take +(Stack x 2.5)% damage from The Ring-faction Identities · If the attacker is in both The Ring faction and School of Fauvism faction, take +(Stack x 5)% damage instead - Combat Start: Randomly gain 1 Bleed, 1 Sinking, 1 Bleed Count, or 1 Sinking Count (Stack) times - Combat End: This effect expires. Halve Mauled Color \[Rouge\] and Mauled Color \[Bleu\] Stacks on this unit (rounded down) |
+| `[paralyze]` | Paralyze | Fix the Power of X Coin(s) to 0 for one turn. |
+| `[phantom_trace]` | Phantom Trace | - Max Stack: 1 - Take +5% damage from Blade of the House of Spiders Ryōshū's Base Attack Skills A phantom trace (殘影) is not simply a faint shade left in passing. It is the shadow of times past, cruelly drawn across bygone days. |
+| `[pheromone_mark]` | Pheromone Mark | - For every 3 Burn on self, take +1% damage when hit (max 20%) - Expires at Turn End |
+| `[photoelectricity]` | Photoelectricity | Max Value: 3 When this unit is hit, the Attacker gains Charge Count equal to the value (once per Skill) - If the Attacker has 5- Charge Count, they gain +3 additional Charge Count Turn End: this effect expires |
+| `[pierce_dmg_down]` | Pierce DMG Down | Deal 10% less damage with Pierce skills per Count for one turn. (Max 10) |
+| `[pierce_fragility]` | Pierce Fragility | Take 10% more damage from Pierce skills per Count for one turn. (Max 10) |
+| `[pierce_power_down]` | Pierce Power Down | Pierce skills lose final Power by the effect's Count for one turn |
+| `[pierce_resist_down]` | Pierce Resist Down | Increase Pierce Resistance based on Count (0.1 per Count) |
+| `[pink_petals]` | Pink Petals | - Max Stack: 30 - For every Stack, take +1% damage when hit by Gloom Skills (max 15%) - For every 10 Stack, gain +1 Sinking Count when hit (2 times per turn) - When Tremor Burst is triggered on this unit, take ((Sinking Potency + Pink Petals) / 5) Gloom damage - Turn End: Lose 1 Stack |
+| `[pink_ribbons]` | Pink Ribbons | Count increases by 1 whenever the affected unit tosses an attack skill Coin. At the end of the turn, inflict Bind by the effect's Count, then remove the effect. |
+| `[plus_coin_drop]` | Plus Coin Drop | Reduce the Power of Plus Coins by the effect's Count for one turn. |
+| `[poison]` | Poison | At the end of the turn, take fixed damage by the Count, then halve the Count. |
+| `[polydipsic_rose]` | Polydipsic Rose | - Max Value: 5 - Turn End: at 10+ Bleed Potency, take Lust damage equal to 1% of this unit's max HP. (max 30) - Turn End: reduced by 1 |
+| `[power_down]` | Power Down | All skills lose Final Power by the effect's Potency for one turn. |
+| `[pride_dmg_down]` | Pride DMG Down | Deal 10% less damage with Pride skills per Count for one turn. (Max 10) |
+| `[pride_fragility]` | Pride Fragility | Take 10% more damage from Pride skills per Count for one turn. (Max 10) |
+| `[pride_power_down]` | Pride Power Down | Pride skills lose final Power by the effect's Count for one turn. |
+| `[promised_nail]` | Promised Nail | - Max Stack: 30 - Upon Tremor Burst due to Skill effects, take 1 Sloth damage for every Stack (max 10; once per Skill) - Turn End: At 4+ Stack, gain 1 Bind next turn - Turn Start: If Haute Couture::Le Noir Brand Manager Don Quixote is not on the field, expires The promised hammer is bound by promise to drive in a nail. Therefore, whenever the hammer falls, a nail must exist there... even if there is none. |
+| `[red_plum_blossom]` | Red Plum Blossom | - Unique Bleed - Max Value: 10 - +10% chance for this unit to be Critically hit if this unit is the main target - When struck by a Critical Hit, gain Bleed equal to half of the value and take +(value x 3)% damage on Critical Hit - Reduce value by 1 when hit |
+| `[reflux]` | Reflux | - Max Stack: 3 When hit, gain Sinking Potency equal to Stack Turn End: if this unit has -30 or less SP, activate the following effects (for Non-SP Units, activates at 60+ Sinking Potency): - Take (Sinking Potency on self x Stack) Gloom damage - Inflict 1 Reflux against 2 other targets with the least SP (for Abnormalities, Parts); then, deal (Sinking Potency x Stack) Gloom damage to both targets, respectively If the unit with Reflux dies, transfer its Reflux Stack to its ally with the highest Reflux Stack |
+| `[regressive_transformation_-_reversed]` | Regressive Transformation - Reversed | - For this turn, this unit uses Minus Coin Attack Skills |
+| `[requested_target]` | Requested Target | +0.2 Resistance to Attack Types with 1.5 or less Resistance. If the target with this effect is defeated, gain 1 E.G.O resource for all Affinities, and the unit that defeated the target heals 10 SP |
+| `[resident_reg._microchip]` | Resident Reg. Microchip | - Max Stack: 2 - Take +10% damage from Wrath and Envy Skills - On Clash Lose, gain 1 Burn (3 times per turn) - Turn End: Lose 1 Stack |
+| `[rhythm]` | Rhythm | - Max Stack: 5 - Deal +2% damage for every Stack (max 10%) - Offense Level +1 for every Stack (max 5) - Defense Level -1 for every Stack (max -5) - Turn End: This effect expires |
+| `[rose_wedge]` | Rose Wedge | - Max Potency: 10 - Max Count: 4 - Gain 1 Potency every time this unit takes 10 Bleed damage - When gaining Bleed or 'Unique Bleed' from getting hit, gain 2 Bleed and inflict 1 Bleed against the Attacker (5 times per turn) · At 10 Potency, gain +1 Bleed Count as well when triggering the above effect - Turn End: lose 1 Count - Combat End: at 10 Potency or 1 Count, this effect expires, and this unit takes (Potency x 10) Lust damage. - If the unit inflicted with this effect dies, or when this effect expires: increase Bloodfeast by (Potency x 10), and deal (Potency x 2) Lust damage against all of its allies (min 1) |
+| `[rupture]` | Rupture | When hit by an attack, take fixed damage by the effect’s potency. Then, reduce its Count by 1. |
+| `[searing_birdcage]` | Searing Birdcage | Max Stack: 5 If this unit has Burn, Wrath Resistance +0.1 for every Stack (cannot exceed 2.0 Wrath Resistance with this effect) Turn End: gain Bind equal to Stack next turn Turn End: halve Stack (rounded down) ※ Cannot gain additional Stacks of this effect while it is already active |
+| `[severed_tendon]` | Severed Tendon | - Base Power -1 - Expires at Turn End - Max Stack: 1 |
+| `[sewing_target]` | Sewing Target | - Max Value: 1 - Take +0.5% more damage for every Bleed on self (max 10%) - Turn End: reduced by 1 |
+| `[shattered_world]` | Shattered World | - Max Stack: 1 - Expires at Turn End - Take x1.2 damage from Burn (rounded down; except Unique Burn) - Take +10% damage from Yi Sang's Wrath and Gloom Base Attack Skills |
+| `[shattermark]` | Shattermark | - Take +10% damage from Gluttony and Gloom Skills - SP Units: change their Panic Type to "Shattermark" - Non-SP Units: Clash Power -1 - Tum End: Reduce 1 Stack - This effect is not cumulative; inflicting it will replace the current value with the inflicted value - Apply the "Non-SP Units" conditional to certain enemies that have SP but can't change their Panic Types ※ Shattermark Panic-type Effects - Low Morale: Clash Power -1, Defense Level -2 on self - Panic: Clash Power -2, Defense Level -3 on self |
+| `[sheut_fracture]` | Sheut Fracture | - Unique Sinking - Max Stack: 10 - For every Stack, take +1% damage from Sloth and Gloom Skills - At max Stack, gain 1 Gloom Fragility (once per turn), take Gloom damage equal to Sinking Potency on self (lose 1 Sinking Count), then expires - If the unit that has this effect dies, transfer half of its Stack to its ally that has the highest SP (rounded down) - Turn Start: If there are no LCA Identities on the field, expires |
+| `[sibling_vengeance_mark]` | Sibling Vengeance Mark | - Max Stack: 1 - Expires at Turn End - Every Identity treats this unit as having their Vengeance Mark |
+| `[sinking]` | Sinking | When hit by an attack, take fixed SP damage by the effect’s Potency. (Non-SP Units take Gloom damage instead.) Then, reduce its Count by 1. |
+| `[sinking_deluge]` | Sinking Deluge | Deal SP damage by (Sinking Count \* Sinking Potency), then remove Sinking If target's SP is -45 or lower, the excess SP damage is dealt as Gloom-affinity HP damage (Non-SP Units take all of it as Gloom HP damage) |
+| `[sinking_fragility]` | Sinking Fragility |  |
+| `[slash_dmg_down]` | Slash DMG Down | Deal 10% less damage with Slash skills per Count for one turn. (Max 10) |
+| `[slash_fragility]` | Slash Fragility | Take 10% more damage from Slash skills per Count for one turn. (Max 10) |
+| `[slash_power_down]` | Slash Power Down | Slash skills lose final Power by the effect's Count for one turn |
+| `[slash_resist_down]` | Slash Resist Down | Increase Slash Resistance based on Count (0.1 per Count) |
+| `[sloth_dmg_down]` | Sloth DMG Down | Deal 10% less damage with Sloth skills per Count for one turn. (Max 10) |
+| `[sloth_fragility]` | Sloth Fragility | Take 10% more damage from Sloth skills per Count for one turn. (Max 10) |
+| `[sloth_power_down]` | Sloth Power Down | Sloth skills lose final Power by the effect's Count for one turn. |
+| `[smoke]` | Smoke |  |
+| `[solitude]` | Solitude | - Take +10% damage from Gloom Skills - SP Units: Change their Panic Type to 'Solitude' - Non-SP Units: Gain +2 Sinking Count at Turn End - Turn End: Lose 1 Stack - This effect is not cumulative; inflicting it will replace the current value with the inflicted value - Apply the "Non-SP Units" conditional to certain enemies that have SP but cannot change their Panic Types ※ Solitude Panic Effect: - Low Morale: Gain +2 Sinking Count at Turn End - Panic: Gain +3 Sinking Count at Turn End |
+| `[spark_discharge]` | Spark Discharge | When hit, the attacker gains +1 Charge Count; when hit with a Gloom attack, gain +1 Rupture Count, then reduce Count by 1 |
+| `[spore]` | Spore | - Max Stack: 15 - Turn End: Gain +1 Burn Count for every 5 Stack - Gain 1 Bind next turn |
+| `[sword_of_a_forgotten_knight]` | Sword of a Forgotten Knight | - Max Stack: 3 - When hit by Pierce or Pride Skills, gain 1 Stack (once per Skill) · At max Stack, take 50 Pride damage; then, this effect expires. Gain 1 Pierce Fragility this turn and next turn - Only 1 character can have this effect at any given time (existing effect expires when inflicted on another target) |
+| `[talisman]` | Talisman | Max Stack: 6 On Hit, consume 1 Rupture Count on target to inflict (Stack / 2) Rupture (inflicts at least 1 Rupture if Rupture Count was consumed; rounded down) When hit, gain (Stack / 2) Rupture and lose 1 Stack (gain at least 1; rounded down) Turn End: at 6+ Stack, remove all Talisman on self and take fixed damage by Stack |
+| `[taxidermized]` | Taxidermized | - Max Stack: 1 - Skill Final Power -1 - On Attack Skill Use, activate Bleed on self and lose 1 Bleed Count (once per Skill) - Turn End: Gain +2 Bleed Count, 1 Power Down, and 2 Bind next turn - Turn End: This effect expires |
+| `[the_duel_escalates]` | The Duel Escalates | - Affects The House of Spiders: The Thumb Apprentice Heathcliff's Skills and Passive effects - Can gain up to 3 Stacks per turn - Max Stack: 5 |
+| `[the_uninvited]` | The Uninvited | - Max Value: 2 - Upon death, the last attacker heals 3 SP; then, a random ally without this effect gains 2 Stacks of this effect. - Take +0.5% more damage for every Sinking on self (max 10%; for Focused Encounters, count Sinking on each Part separately) - Turn End: reduced by 1 |
+| `[time_moratorium]` | Time Moratorium | - Does not take any damage as long as this effect is active; store all damage received instead - Combat End: If there is only 1 Count left of this effect, the effect triggers Tremor Burst (Stack) times after dealing (100 + (Stack x 15))% of stored damage as Sloth damage - Turn End: Gain 1 Stack and lose 1 Count - The Time Moratorium will immediately expire after triggering the Tremor Burst and the Sloth damage effect if another instance of Time Moratorium is inflicted on a unit that has Time Moratorium. |
+| `[touche_hardie]` | Touche Hardie | - Max Stack: 2 - Take +10% HP and SP damage from Bleed and Sinking effects for every Stack (max 20%, rounded down) - Turn End: Lose 1 Stack |
+| `[tremor]` | Tremor | When attacked by skills that burst Tremor, raise the Stagger Threshold by the effect’s Potency. At the end of the turn, reduce the Count by 1. |
+| `[tremor_-_chain]` | Tremor - Chain | - Lose 1 Clash Power for every 10 Tremor Potency on self (max 3) - When Hit by Skills that trigger Tremor Burst, raise the Stagger Threshold by the effect's Potency - Turn End:reduce the Count by 1 (Interacts the same way as normal Tremor does to effects that raises or reduces Tremor Potency/Count) |
+| `[tremor_-_conservation]` | Tremor - Conservation | - On Tremor Burst, take Sloth Damage equal to (60 + sum of Charge Potency or Unique Charge on the attacker x 8)% of Tremor Potency, and reduce the Count by 1 (max 120%) · When "Le Noir" units' Skills and Passives trigger Tremor Burst, the above effect does not reduce the Count - When hit by Tremor Burst Skills, raise Stagger Threshold by this effect's Potency - Turn End: Lose 1 Count (Interacts the same way as normal Tremor does to effects that raise or reduce Tremor Potency/Count) |
+| `[tremor_-_decay]` | Tremor - Decay | Lose 1 Defense Level for every 4 Tremor Potency on self When Hit by Skills that trigger Tremor Burst, raise the Stagger Threshold by the effect's Potency Turn End:reduce the Count by 1 (Interacts the same way as normal Tremor does to effects that raises or reduces Tremor Potency/Count) |
+| `[tremor_-_everlasting]` | Tremor - Everlasting | - When hit by Skills or Coin effects that trigger Tremor Burst, (Tremor Potency on self)% chance to trigger an additional Tremor Burst. (max 50%) - When hit by Skills or Coin effects that trigger Tremor Burst, (Tremor Count on self)% chance to trigger an additional Tremor Burst. (max 50%) - When Hit by Skills that trigger Tremor Burst, raise the Stagger Threshold by the effect's Potency - Turn End:reduce the Count by 1 (Interacts the same way as normal Tremor does to effects that raises or reduces Tremor Potency/Count) |
+| `[tremor_-_fracture]` | Tremor - Fracture | - When Staggered, and when the sum of Tremor Potency and Count adds up to 20 or higher, raise Stagger Level by 1 - Cannot exceed maximum Stagger Level with this effect When Hit by Skills that trigger Tremor Burst, raise the Stagger Threshold by the effect's Potency Turn End:reduce the Count by 1 (Interacts the same way as normal Tremor does to effects that raises or reduces Tremor Potency/Count) |
+| `[tremor_-_hemorrhage]` | Tremor - Hemorrhage | - On Tremor Burst, take Lust Damage equal to (sum of Tremor Potency and Bleed Potency / 2), and lose 1 Bleed Count - When hit by Skills that trigger Tremor Burst, raise this unit's Stagger Threshold by the effect's Potency - Turn End: reduce the Count by 1 (Interacts the same way as normal Tremor does to effects that raise or reduce Tremor Potency/Count) |
+| `[tremor_-_reverb]` | Tremor - Reverb | - On Tremor Burst, take Sloth damage equal to Tremor Potency on self. - When Hit by Skills that trigger Tremor Burst, raise the Stagger Threshold by the effect's Potency - Turn End:reduce the Count by 1 (Interacts the same way as normal Tremor does to effects that raises or reduces Tremor Potency/Count) |
+| `[tremor_-_scorch]` | Tremor - Scorch | - On Tremor Burst, take Wrath Damage equal to (sum of Tremor Potency and Burn Potency / 2), and lose 1 Burn Count - When hit by Skills that trigger Tremor Burst, raise this unit's Stagger Threshold equal by the effect's Potency - Turn End: reduce the Count by 1 (Interacts the same way as normal Tremor does to effects that raise or reduce Tremor Potency/Count) |
+| `[tremor_-_superposition]` | Tremor - Superposition | - Gained through Amplitude Entanglement - When triggering Amplitude Conversion, add the effects of the resulting Tremor type to the list of active Tremor effects under Tremor - Superposition. |
+| `[tremor_burst]` | Tremor Burst | Raise target's Stagger Threshold by Tremor Potency on target |
+| `[trussed_[hong_lu]]` | Trussed [Hong Lu] | - Base Stack: 3 - Min & Max Speed -2 - Take +10% Pride Damage - Expires when the inflicter Retreats, is killed, or inflicts it on a different target. Replaced when Trussed by another unit. - Lose 1 Stack if the inflicter did not hit this unit this turn |
+| `[twisted_curse_talisman]` | Twisted Curse Talisman | - Max Stack: 10 - Expires at Turn End - At 10+ Stack, when taking 30+ damage from a Skill: gain +1 Rupture Count; take Gluttony damage equal to Rupture Potency on self (once per turn) - When this effect expires, gain (Stack / 4) Attack Power Down next turn (max 2) ※ Cannot gain additional Stacks of this effect while it is already active |
+| `[vendetta_mark]` | Vendetta Mark | - Max Stack: 10 - Consumed by certain Skills or Passives - Take +2% damage from The Middle enemies for every Stack (max 20%) - Turn End: The unit with the highest Stack of this effect gains 1 Sibling Vengeance Mark next turn (Counted separately from Vengeance Mark; if more than a single unit has the highest Stack of this effect, this effect targets the one that has a higher HP percentage) |
+| `[vengeance_mark]` | Vengeance Mark | Applies to the enemy that inflicted the most skill damage to allies. |
+| `[weakness_analyzed]` | Weakness Analyzed | A random "Endure" or "Normal" attack type resistance is weakened \[+0.2 to damage multiplier\] for one turn. |
+| `[wedge_-_don_quixote]` | Wedge - Don Quixote | - Max Stack: 8 - At sufficient Stacks, empower a certain Skill of Wedge Office Fixer Sinclair/Wedge Office Fixer Don Quixote\[1\] - Turn End: Gain +1 Tremor Count - Turn Start: If there are no enemy "Wedge Office" characters on the field, this effect expires |
+| `[wedge_-_sinclair]` | Wedge - Sinclair | - Max Stack: 8 - At sufficient Stacks, empower a certain Skill of Wedge Office Fixer Sinclair/Wedge Office Fixer Don Quixote\[1\] - Turn End: Gain +1 Tremor Count - Turn Start: If there are no enemy "Wedge Office" characters on the field, this effect expires |
+| `[wrath_dmg_down]` | Wrath DMG Down | Deal 10% less damage with Wrath skills per Count for one turn. (Max 10) |
+| `[wrath_fragility]` | Wrath Fragility | Take 10% more damage from Wrath skills per Count for one turn. (Max 10) |
+| `[wrath_power_down]` | Wrath Power Down | Wrath skills lose final Power by the effect's Count for one turn. |
+| `[wrath_resist_down]` | Wrath Resist Down | Increase Wrath Resistance based on Count (0.1 per Count) |
 
 ### Neutral
 
 Shown in the Neutral color: resources, counters, stances and Identity-specific mechanics.
 
-| Keyword | Shows as |
-| --- | --- |
-| `[aggro]` | Aggro |
-| `[ammo]` | Ammo |
-| `[ammo_-_atelier_logic]` | Ammo - Atelier Logic |
-| `[amplitude_conversion]` | Amplitude Conversion |
-| `[amplitude_entanglement]` | Amplitude Entanglement |
-| `[arrow_-_shi]` | Arrow-Shi |
-| `[ashen_bullet]` | Ashen Bullet |
-| `[assist_defense]` | Assist Defense |
-| `[battlefield_retreat]` | Battlefield Retreat |
-| `[blazing]` | Blazing |
-| `[bleed_identity]` | Bleed Identity |
-| `[bloodfeast]` | Bloodfeast |
-| `[bloodfeast_consumed]` | Bloodfeast Consumed |
-| `[bloodfeast_consumed_(shared)]` | Bloodfeast Consumed (shared) |
-| `[blubberbubble]` | Blubberbubble |
-| `[bullet_-_solitude]` | Bullet - Solitude |
-| `[burn_identity]` | Burn Identity |
-| `[changing_room]` | Changing Room |
-| `[charge_identity]` | Charge Identity |
-| `[clashable_guard]` | Clashable Guard |
-| `[courier_trunk]` | Courier Trunk |
-| `[curio]` | Curio |
-| `[dark_cloud]` | Dark Cloud |
-| `[dihui_star's_blade]` | Dihui Star's Blade |
-| `[discard]` | Discard |
-| `[district_12_fuel]` | District 12 Fuel |
-| `[duality]` | Duality |
-| `[escape_apparatus]` | Escape Apparatus |
-| `[exalted_command]` | Exalted Command |
-| `[excision_coin]` | Excision Coin |
-| `[final_augment]` | Final Augment |
-| `[fire_butterfly_coffin]` | Fire Butterfly Coffin |
-| `[first_seal_removed]` | First Seal Removed |
-| `[fixed_panic]` | Fixed Panic |
-| `[full_makeover]` | Full Makeover |
-| `[game_target]` | Game Target |
-| `[hand_-_blue_sakura_suit]` | Hand - Blue Sakura Suit |
-| `[hand_-_pine_crane_suit]` | Hand - Pine Crane Suit |
-| `[hand_-_susuki_grass_suit]` | Hand - Susuki Grass Suit |
-| `[hornet_[rifle]]` | Hornet [Rifle] |
-| `[hornet_[shotgun]]` | Hornet [Shotgun] |
-| `[hyped-up]` | Hyped-up |
-| `[insight]` | Insight |
-| `[k_corp_ampule]` | K Corp Ampule |
-| `[lamp]` | Lamp |
-| `[launcher_[始]]` | Launcher [始] |
-| `[lca_fracture_round]` | LCA Fracture Round |
-| `[lordsguard]` | LordsGuard |
-| `[lævateinn]` | Lævateinn |
-| `[magic_bullet]` | Magic Bullet |
-| `[mark_of_the_prescript]` | Mark of the Prescript |
-| `[melee_support]` | Melee Support |
-| `[overcharge]` | Overcharge |
-| `[overheated_fuel]` | Overheated Fuel |
-| `[overwatch_assignment]` | Overwatch Assignment |
-| `[poise_identity]` | Poise Identity |
-| `[prescript]` | Prescript |
-| `[prescript:_[device]]` | Prescript [Device] |
-| `[prescript:_[device]_i]` | Prescript [Device] I |
-| `[prescript:_[device]_ii]` | Prescript [Device] II |
-| `[prescript:_[device]_iii]` | Prescript [Device] III |
-| `[prescript:_[device]_iv]` | Prescript [Device] IV |
-| `[prescript:_[paper_slip]]` | Prescript [Paper Slip] |
-| `[prescript:_[paper_slip]_i]` | Prescript [Paper Slip] I |
-| `[prescript:_[paper_slip]_ii]` | Prescript [Paper Slip] II |
-| `[prescript:_[paper_slip]_iii]` | Prescript [Paper Slip] III |
-| `[prescript:_[paper_slip]_iv]` | Prescript [Paper Slip] IV |
-| `[procuration_[hermes]]` | Procuration [Hermes] |
-| `[ready_[待]]` | Ready [待] |
-| `[reload]` | Reload |
-| `[reload_[germination]]` | Reload [Germination] |
-| `[responsibility]` | Responsibility |
-| `[rising_fever]` | Rising Fever |
-| `[rupture_identity]` | Rupture Identity |
-| `[réflexion]` | Réflexion |
-| `[savage_tigermark_round]` | Savage Tigermark Round |
-| `[scorchfield]` | Scorchfield |
-| `[sealed_sword]` | Sealed Sword |
-| `[second_seal_removed]` | Second Seal Removed |
-| `[self_resonance_circuitry]` | Self Resonance Circuitry |
-| `[shallow_exhale]` | Shallow Exhale |
-| `[single_combat]` | Single Combat |
-| `[sinking_identity]` | Sinking Identity |
-| `[sp_heal_efficiency]` | SP Heal Efficiency |
-| `[sp_loss_efficiency]` | SP Loss Efficiency |
-| `[spore_round_[base]]` | Spore Round [Base] |
-| `[spore_round_[buckshot]]` | Spore Round [BuckShot] |
-| `[strategic_r&r_mode]` | Strategic R&R Mode |
-| `[surgery]` | Makeshift Surgery |
-| `[target_spotted]` | Target Spotted |
-| `[the_living_&_the_departed]` | The Living & The Departed |
-| `[the_prescript's_target]` | The Prescript's Target |
-| `[tianjiu_star's_blade]` | Tianjiu Star's Blade |
-| `[tigermark_round]` | Tigermark Round |
-| `[torn_memory]` | Torn Memory |
-| `[total_bloodfeast_consumed]` | Total Bloodfeast Consumed |
-| `[tremor_identity]` | Tremor Identity |
-| `[unbreakable_coin]` | Unbreakable Coin |
-| `[unfocused_volley]` | Unfocused Volley |
-| `[viewing_the_tableau]` | Viewing the Tableau |
-| `[volatile_passion]` | Volatile Passion |
-| `[your_will_guides_my_blade.]` | Your Will Guides My Blade |
+| Keyword | Shows as | Description |
+| --- | --- | --- |
+| `[aggro]` | Aggro | More likely to be targeted by enemies. |
+| `[ammo]` | Ammo | Spent by certain skills. Some attacks cancel if lacking Ammo. |
+| `[ammo_-_atelier_logic]` | Ammo - Atelier Logic | Unique Ammo Atelier Logic Workshop Special Ammo - This Ammo's Count cannot be gained or lost due to external effects |
+| `[amplitude_conversion]` | Amplitude Conversion | Converts Tremor or already converted Tremor on target to a different kind of Tremor Potency and Count values do not change over the conversion. |
+| `[amplitude_entanglement]` | Amplitude Entanglement | - Fuses the effects of the Tremor type added by Amplitude Entanglement and the Tremor type currently on the target together under Tremor - Superposition. - Potency and Count values do not change over Entanglement. - When triggering Amplitude Conversion on Tremor - Superposition, it activates as Amplitude Entanglement instead. - Turn End: converted into base Tremor. |
+| `[arrow_-_shi]` | Arrow-Shi | - Min Capacity: 0 - Max Capacity: 4 - Arrows spent by certain Skills |
+| `[ashen_bullet]` | Ashen Bullet |  |
+| `[assist_defense]` | Assist Defense | - Max Stack: 3 - When an ally is about to take an Unopposed Attack from an enemy, consume 1 Stack to redirect the enemy's targeting to self; then, use the unique Skill that activates for Assist Defense - When there are multiple allies that have Assist Defense Stacks, the ally that has the highest Stack has the highest activation priority - Does not activate for allies who equipped Defense Skills - Expires at Turn End |
+| `[attending_the_divine]` | Attending the Divine | - Unique Assist Defense - Max Stack: 1 - When Haute Couture::The Crimson God of Le Rouge Sinclair is about to take an Unopposed Attack from an enemy, consume 1 Stack to redirect the enemy's targeting to self · Then, copy and use Haute Couture::The Crimson God of Le Rouge Sinclair's "La Garde" - When there are multiple allies that have Assist Defense Stacks, the ally that has the highest Stack has the highest activation priority - This effect counts as Assist Defense, and is counted toward calculating Assist Defense Stacks - Turn End: This effect expires Let us attend to our new God. |
+| `[battlefield_retreat]` | Battlefield Retreat |  |
+| `[blazing]` | Blazing | - Min & Max Speed +1 - This turn's first-used Base Attack Skill gains Final Power +2 - Take 2% HP damage On Hit with the affected Skill (max 10%; this damage does not Stagger or reduce this unit's HP below 1) - Expires at Turn End |
+| `[bleed_identity]` | Bleed Identity |  |
+| `[bloodfeast]` | Bloodfeast | - Max Value: 999 - Stores all Bleed damage dealt in this zone - Resets when moving to a different zone - This value is shared by all characters - Among allies, if there is a higher Kindred who also consumes Bloodfeast in the same turn, this unit cannot consume Bloodfeast until that ally consumes it first. |
+| `[bloodfeast_consumed]` | Bloodfeast Consumed |  |
+| `[bloodfeast_consumed_(shared)]` | Bloodfeast Consumed (shared) | Total Bloodfeast consumed in this Encounter |
+| `[blubberbubble]` | Blubberbubble | - This effect counts as a 'Shield Management' effect. - Turn End: Reduce Count by 1 - This unit does not lose Shield at Turn End as long as it has the Blubberbubble effect (unless depleted by damage or effect) - If the Shield affected by Blubberbubble breaks due to taking damage, inflict 4 Sinking Potency/Count against the attacker. (How much of that '4' value is Potency or Count is randomly determined) - This unit can stack their Shield value by stacking this effect. However, as long as Blubberbubble is in effect, the Shield value cannot exceed 60% of this unit's Max HP. |
+| `[buffet]` | Buffet | - Max Value: 999 - This value is increased by (actual HP healed / 10) whenever allies' or enemies' HP is healed on the field · Rounded up for each instance · Healing from E.G.O Gifts does not count - This value is shared by all characters - Resets when moving to a different zone The Buffet of flesh and meat is served. Let this be a feasting hall for all. |
+| `[bullet_-_solitude]` | Bullet - Solitude | - Unique Ammo - Max Capacity: 6 Spent by certain Skills - This Ammo's count cannot be gained or lost due to external effects |
+| `[burn_identity]` | Burn Identity |  |
+| `[changing_room]` | Changing Room | - Max Stack: 2 - Fix this unit's Speed to 1 - Take -50% damage from Skills - Immediately after gaining this effect, remove Stagger Thresholds; when Staggered, recover from Stagger - Turn Start: Gain 10 Aggro - When hit, gain +1 Pulsation Count (20 times per turn) - Turn End: Lose 1 Stack - Cannot Retreat - Cannot enter E.G.O Corrosion; instead, enters default Panic state (is affected by Panic-changing effects) - While in this state, aside from its exclusive Skill "As the Voice Says, I Gladly Withdraw into Myself", cannot equip Defense Skills or E.G.O Skills Though it has become hardier, it has now become passive. When viewed through the lens of Le Rouge, however durable something might have become, what is passive is always fragile. But one must first come to a halt in order to usher in change. And that is what makes this process painful. |
+| `[charge_identity]` | Charge Identity |  |
+| `[clashable_guard]` | Clashable Guard | - On Clash Win: raise the target's Stagger Threshold by this unit's final Clash Power. - On Clash Lose: when hit, reduce the attacker's Final Skill Power by this unit's Final Power. - On Clash Lose: does not gain Final Power from the following sources: Resonance and the Level disparity against the Attack Skill |
+| `[courier_trunk]` | Courier Trunk | - Base Value: 0 - Turn Start: gain 3 Stack - Stack does not expire upon Retreat; it is stored instead - At 10+ Stack: raise Min & Max Speed values by 1 - At 20+ Stack: Gain 1 Clash Power Up and 1 Damage Type DMG Up · (Courier Trunk - Rodion: Slash DMG Up) · (Courier Trunk - Sinclair: Blunt DMG Up) - At 30+ Stack: · On Skill Use, take (Stack/3)% HP damage and (Stack/3) SP damage · On Turn End, take (Stack/2)% HP damage and (Stack/2) SP damage (applies before Retreat) |
+| `[curio]` | Curio | When certain conditions are fulfilled, replace this effect with 'Art Medium' |
+| `[dark_cloud]` | Dark Cloud | Max Stack: 1 Converts all of this unit's Base Attack Skill Coins used this turn into Unbreakable Coins, prevents damage from Staggering this unit until Skill End, and inflict +1 more of Bleed effects On Clash Lose: gain Final Power +3 Turn End: this effect expires |
+| `[dihui_star's_blade]` | Dihui Star's Blade | - Max Stack: 70 - Total sum of Bladetrail \[Afterimage\] Stacks inflicted by this unit - Can gain up to 25 Stack per turn Etch a mark into the earth. Such is the purpose this blade was made to serve. Into this sword was poured the light of a star, so that something may be left behind in this land. |
+| `[discard]` | Discard | - Delete Skills that fit the condition and are selectable during the Chaining Phase on the Dashboard. (Defensive & E.G.O Skills do not count. Does not delete the Skill from the upcoming Skills list) - Discarded Skills will not activate Skill effects or Coin effects other than effects from Discard, and will not give E.G.O resources. |
+| `[district_12_fuel]` | District 12 Fuel | Max Stack: 100 Consumed by certain Skills. At 50- Stack, become Overheated Fuel |
+| `[duality]` | Duality | - Skills can target allied Identities - Upon auto-targeting Skills, or in Regular Encounters, prioritize the ally with the earliest Deployment Order · If target is an ally, the attack does not hit, and does not trigger Defense Skills (including Clashable Defense Skills) - If target is an ally, activate this Skill at Combat Start |
+| `[escape_apparatus]` | Escape Apparatus | - When this unit takes damage that brings its HP to 10, this unit's HP does not drop below 10 for the turn - Turn End after the above effect activates: Recover from Stagger and Retreat from the Encounter (excluding forced Staggers; does not count as death; in Encounters where Retreat is disabled, the Retreat effect does not activate and expires at Turn End) - In Chain Battles, give this unit's Slots to a Substituted unit and move to the rearmost place in the Backup units' Deployment order (escape from the Encounter entirely if there are no other Backup Units remaining to swap places with next turn. When returning to battle, return in the order they retreated in) · When returning to battle, return with the same amount of HP and SP this unit had when it retreated, and eliminate all effects on self save for a select few (if this unit had less than 0 SP when retreating, reset SP to 0 instead) '… Live.' |
+| `[exalted_command]` | Exalted Command | - If unit A applies this effect to unit B: Unit B follows up with an Unopposed Attack with its Base Skill 3 against the same enemy unit A attacked with its Skill. Activates at unit A's Attack End. (Does not activate as Empowered Skills) - The Skill used as an Assist Attack does not affect Unit B's upcoming Skills list. - Does not activate if affected ally's Skill 3 is not unlocked. |
+| `[excision_coin]` | Excision Coin | - This Coin can destroy Unbreakable Coins in a Clash. - This Coin does not break upon Clash Lose. - If an Attack Skill has this Coin, attack with the Coin after getting hit. - On Clash Lose, fix the Coin Power of the unbroken Coin to 1 |
+| `[final_augment]` | Final Augment | Turn Start: Gain 3 Attack Power Up, Defense Power Up, and Haste; die when count reaches zero. |
+| `[fire_butterfly_coffin]` | Fire Butterfly Coffin | - Max Stack: 30 - Can gain up to 20 Stacks per turn - On Base Skill Hit: Gain 2 Stacks - Turn End: At 20+ Stacks, gain Burn next turn equal to half of surplus Stacks past 20 (rounded down) · At 30 Stacks, Gain 5 Burn and +2 Burn Count instead "Heated to a smoldering temperature within the coffin are butterflies, the kaleidoscope spilling forth to melt and tear the target apart. "This type of weapon is still too premature for you to wield, Sinclair, but it is advisable that you familiarize yourself with its properties." "The array of blades within the coffin affords considerable convenience in circumstances where time constraints prove solitary handling of requests impossible, or in combat against multiple adversaries." |
+| `[first_seal_removed]` | First Seal Removed | - Turn End: Gain 1 Haste next turn - Blunt Base Skills deal +2% damage for every 4 (Burn + Bleed) on target (max 10%) - On final Coin Hit using Base Skills, if target has 20+ (Burn + Bleed), deal (10% of the Coin's final damage) Blunt damage (rounded down) |
+| `[fixed_panic]` | Fixed Panic | This unit's Panic Type does not change when inflicted with an effect that changes Panic Types. Instead, this unit is inflicted with an effect that is inflicted against targets without SP. |
+| `[full_makeover]` | Full Makeover | - Min & Max Speed +1 - Max HP increased by 25% - Take -10% damage from Skills - Base Skills inflict +1 Bleed Potency on enemies Though she has emerged from the cocoon, she has failed to truly metamorphose—as that process involves the disintegration of the self. Still, the process has managed to boost her physical abilities. |
+| `[game_target]` | Game Target | - Take +15% damage from Base Skills used by The House of Spiders: The Thumb Nursefather Rodion |
+| `[hand_-_blue_sakura_suit]` | Hand - Blue Sakura Suit | - Skill 3 Base Power +1 When this unit equips and uses a Gloom Base Attack Skill or E.G.O Skill on its leftmost Skill Slot, activate the "forming a Hand" effects on the "Koi-Koi" Passive |
+| `[hand_-_pine_crane_suit]` | Hand - Pine Crane Suit | - Skill 1 Base Power +2 When this unit equips and uses a Wrath Base Attack Skill or E.G.O Skill on its leftmost Skill Slot, activate the "forming a Hand" effects on the "Koi-Koi" Passive |
+| `[hand_-_susuki_grass_suit]` | Hand - Susuki Grass Suit | - Skill 2 Base Power +1 When this unit equips and uses a Sloth Base Attack Skill or E.G.O Skill on its leftmost Skill Slot, activate the "forming a Hand" effects on the "Koi-Koi" Passive |
+| `[hornet_[rifle]]` | Hornet [Rifle] | Current Mode: Hornet \[Rifle\] |
+| `[hornet_[shotgun]]` | Hornet [Shotgun] | Current Mode: Hornet \[Shotgun\] Instead of deferring the definition to its rifle-form, gaze into the core essence of "Hornet." epoché |
+| `[hyped-up]` | Hyped-up | - Max Stack: 3 - For every Stack, deal +5% damage with Wrath and Lust Skills - When hit, raise this unit's Stagger Threshold by (5 x Stack) - Expires at Turn End |
+| `[insight]` | Insight | The rank of the last Skill Discarded by the unit with this effect (Base Value:1) |
+| `[joint_combo]` | Joint Combo | - If the pertinent Identity is on the field, alive, and isn't immobilized, activate the linked effects (does not activate if the pertinent Identity is in any of the following states: all types of immobilized states, E.G.O Corrosions, and Staggers) |
+| `[k_corp_ampule]` | K Corp Ampule | Turn Start: At less than 4 Count, heal by (Count \* 5)% of Max HP At 4+ Count, this unit dies |
+| `[lamp]` | Lamp | - Max Stack: 8 - Turn End: Gain 1 Bind next turn for every 2 Stack (max 4) - Turn End: At max Stack, if there are enemies on the field, consume all Stack to activate the following effects next turn: · Gain +10 Aggro to the leftmost Slot · Inflict 3 Dazzle to the enemy(Core) with the most current HP |
+| `[launcher_[始]]` | Launcher [始] | - Max Stack: 6 - Number of turns this unit spent active in the Encounter - Expires upon Retreat - Gain 1 Stack at Turn End |
+| `[lca_fracture_round]` | LCA Fracture Round | - Unique Ammo - Max Capacity: 16 - Spent by certain Skills - Some attacks cancel if lacking Ammo |
+| `[lordsguard]` | LordsGuard | - Unique Assist Defense - Max Stack: 1 - When The Lord of Hongyuan Hong Lu is about to take an Unopposed Attack from an enemy, consume 1 Stack to redirect the enemy's targeting to self; then, copy and use The Lord of Hongyuan Hong Lu's 'Lordsguard' Skill - When there are multiple allies that have Assist Defense Stacks, the ally that has the highest Stack has the highest activation priority - This effect counts as Assist Defense, and is counted toward calculating Assist Defense Stacks - Expires at Turn End |
+| `[lævateinn]` | Lævateinn | - Turn Start: Inflict 3 Burn on all units on the field - Replace this unit's Base Skills with Lævateinn-exclusive Skills corresponding to each Skill's rank - Blunt Base Skills deal +2% damage for every 4 (Burn + Bleed) on target (max 10%) - On final Coin Hit using Base Skills, if target has 20+ (Burn + Bleed), deal (10% of the Coin's final damage) Pierce damage (rounded down) |
+| `[magic_bullet]` | Magic Bullet | - Max: 7 - Value changes depending on certain Skill effects. - The higher the value, the higher the Base Power and Coin Power of Skill 3 |
+| `[mark_of_the_prescript]` | Mark of the Prescript | - Apply Mark of the Prescript to a Base Attack Skill on this unit's Dashboard |
+| `[melee_support]` | Melee Support | If unit A applied this effect to unit B: Unit B follows up with an Unopposed Attack with the 'Melee Support' Skill against the same enemy that attacked Unit A. Activates at Unit A's Attack End. - The Skill used due to the 'Melee Support' effect does not affect Unit B's upcoming Skills list. |
+| `[overcharge]` | Overcharge | - Max Value: 1 - Become Immobilized - Take 10 + (Charge Potency x 5)% less damage (max 25%) - Turn Start: Gain Charge Barrier based on Charge Potency on self (max 5) - Turn End: Gain +10 Charge Count and 2 Attack Power Up next turn, and lose this effect - Gain Aggro to this unit's leftmost Slot based on Charge Potency on self (max 5) - When hit, gain +1 Charge Count and 1 Load next turn (max 5 per turn) - If this unit is in Panic or E.G.O Corrosion at Turn Start, or if this unit is Staggered, lose this effect |
+| `[overheated_fuel]` | Overheated Fuel | Max Stack: 100 Consuming District 12 Fuel in Overheated Fuel State consumes Overheated Fuel instead Consuming Overheated Fuel also counts as consuming District 12 Fuel At over 50 Stack, become District 12 Fuel |
+| `[overwatch_assignment]` | Overwatch Assignment |  |
+| `[poise_identity]` | Poise Identity |  |
+| `[prescript]` | Prescript | - Receive 'Prescript: \[Paper Slip\]' under specific conditions The Prescripts are delivered by many means, their medium determined with finality akin to divine prophecy. Those who receive them hold no power over how they arrive. |
+| `[prescript:_[device]]` | Prescript [Device] |  |
+| `[prescript:_[device]_i]` | Prescript [Device] I | Use a Skill marked with Mark of the Prescript or hit a target with a marked Skill. - Turn Start: Gain this effect when this unit has no Unlock - Maximum stackable Grace of the Prescript with this Prescript is limited to 3 The Prescripts are delivered by many means, their medium determined with finality akin to divine prophecy. Those who receive them hold no power over how they arrive. |
+| `[prescript:_[device]_ii]` | Prescript [Device] II | Hit a target with a Skill marked with Mark of the Prescript. - Turn Start: Gain this effect when this unit has Unlock - I - Maximum stackable Grace of the Prescript with this Prescript is limited to 6 The Prescripts are delivered by many means, their medium determined with finality akin to divine prophecy. Those who receive them hold no power over how they arrive. |
+| `[prescript:_[device]_iii]` | Prescript [Device] III | Hit a target with E.G.O Awakening Skill, or, in Effloresced E.G.O::Procuration state, 'Skill 3' marked with Mark of the Prescript. - Turn Start: Gain this effect when this unit has Unlock - II - Maximum stackable Grace of the Prescript with this Prescript is limited to 9 The Prescripts are delivered by many means, their medium determined with finality akin to divine prophecy. Those who receive them hold no power over how they arrive. |
+| `[prescript:_[device]_iv]` | Prescript [Device] IV | Eliminate all enemies before the next Prescript arrives. - Turn Start: Gain this effect when this unit has Unlock - III The Prescripts are delivered by many means, their medium determined with finality akin to divine prophecy. Those who receive them hold no power over how they arrive. |
+| `[prescript:_[paper_slip]]` | Prescript [Paper Slip] |  |
+| `[prescript:_[paper_slip]_i]` | Prescript [Paper Slip] I | Use a Skill marked with Mark of the Prescript or hit a target with a marked Skill. - Turn Start: At 0~2 Grace of the Prescript, gain this effect - Maximum stackable Grace of the Prescript with this Prescript is limited to 3 The Prescripts are delivered by many means, their medium determined with finality akin to divine prophecy. Those who receive them hold no power over how they arrive. |
+| `[prescript:_[paper_slip]_ii]` | Prescript [Paper Slip] II | Hit a target with a Skill marked with Mark of the Prescript. - Turn Start: At 3~5 Grace of the Prescript, gain this effect - Maximum stackable Grace of the Prescript with this Prescript is limited to 6 The Prescripts are delivered by many means, their medium determined with finality akin to divine prophecy. Those who receive them hold no power over how they arrive. |
+| `[prescript:_[paper_slip]_iii]` | Prescript [Paper Slip] III | Hit a target with E.G.O Awakening Skill or 'Skill 3' marked with Mark of the Prescript. - Turn Start: At 6~8 Grace of the Prescript, gain this effect - Maximum stackable Grace of the Prescript with this Prescript is limited to 9 The Prescripts are delivered by many means, their medium determined with finality akin to divine prophecy. Those who receive them hold no power over how they arrive. |
+| `[prescript:_[paper_slip]_iv]` | Prescript [Paper Slip] IV | Eliminate all enemies before the next Prescript arrives. - Turn Start: At 9 Grace of the Prescript, gain this effect The Prescripts are delivered by many means, their medium determined with finality akin to divine prophecy. Those who receive them hold no power over how they arrive. |
+| `[procuration_[hermes]]` | Procuration [Hermes] | - Turn Start: at 9 Stack, a powerful Skill becomes available - Can be gained up to (Unlock stage + 2) Stack per turn Max Stack: 9 · At below Unlock - II, this effect's maximum stack is limited to 8 |
+| `[ready_[待]]` | Ready [待] | - Max Stack: 3 - Number of turns this unit spent in Retreat or as a Backup unit |
+| `[reload]` | Reload | Lose all currently owned Ammo, and reload back to full |
+| `[reload_[germination]]` | Reload [Germination] | - Effect applied to Spore Round (Unique Ammo) - Consume ((16 - sum of Spore Round) / 2) SP(rounded down), reset both Spore Round \[Base\] and Spore Round \[Buckshot\] to 0 Stacks, and gain them up to max Stacks |
+| `[responsibility]` | Responsibility | - Max Value: 1 - Clash Power +1 - Deal +20% more damage - Take +20% more damage |
+| `[rising_fever]` | Rising Fever | - Lose 1 Stack when meeting one of the following conditions: · Using the "Stamp of Vengeance" Skill (including activation via Counter) · At Turn End after activating 6+ Envy A-Reson. - At 0 Stack, use the "Time to Unpack!" Skill |
+| `[rupture_identity]` | Rupture Identity |  |
+| `[réflexion]` | Réflexion | - Max Stack: 2 - Cannot use "Critique" during the turn this unit has this effect - Turn Start: Heal 5 SP - Turn End: Lose 1 Stack - When this effect expires, gain L'Hommage next turn equal to the number of The Ring Student Identities on the field |
+| `[savage_tigermark_round]` | Savage Tigermark Round | - Unique Ammo - At 8+ (cumulative sum of Tigermark Rounds and Savage Tigermark Rounds spent), gain Shin (心) - Tiantui Star \[天退星\] instead of Tiantui Star \[天退星\] from this unit's Passive · Cumulative Rounds spent: X - Actives the same way as Tigermark Round does - Max Capacity: 8 |
+| `[scorchfield]` | Scorchfield | - Stores all Burn damage dealt in this zone - Resets when moving to a different zone - This value is shared by all characters Heat turns air into a breeze, a gust, a firestorm, scorching the forest with abandon as men and beasts alike depart. |
+| `[sealed_sword]` | Sealed Sword | - Turn End: Gain 2 Haste next turn - Blunt Base Skills deal +2% damage for every 4 Bleed on target (max 10%) - On final Coin Hit using Base Skills, if target has 20+ Bleed, deal (10% of the Coin's final damage) Blunt damage (rounded down) |
+| `[second_seal_removed]` | Second Seal Removed | - Turn End: Gain 1 Haste next turn - Blunt Base Skills deal 2% damage for every 4 (Burn + Bleed) on target (max 10%) - On final Coin Hit using Base Skills, if target has 20+ (Burn + Bleed), deal (10% of the Coin's final damage) Slash damage (rounded down) |
+| `[self_resonance_circuitry]` | Self Resonance Circuitry | Total sum of Charge Count currently owned by all allies Cumulative Charge Count consumed by allies: X On Hit with a Skill: deal +(sum of Charge Count on all allies / 3)% damage All allies gain 1 Offense Level Up for every 100 cumulative Charge Count consumed by allies (max 30) |
+| `[shallow_exhale]` | Shallow Exhale | - Max Value: 1 - At 20+ Poise Potency, gain +1 Poise Count as well whenever this unit gains Poise Potency with Skill and Coin effects - Expires at Turn End |
+| `[single_combat]` | Single Combat |  |
+| `[sinking_identity]` | Sinking Identity |  |
+| `[sp_heal_efficiency]` | SP Heal Efficiency | Amount of SP healed due to the Identity's 'Base factors increasing Sanity(SP)' (That is, +(Potency) to all SP healed by allies this turn (Potency may be a negative number)) |
+| `[sp_loss_efficiency]` | SP Loss Efficiency | Amount of SP lost due to the Identity's 'Base factors decreasing Sanity(SP)' (That is, +(Potency) to all SP lost by allies this turn (Potency may be a negative number)) |
+| `[spore_round_[base]]` | Spore Round [Base] | - Unique Ammo - Max Stack: 10 - Spent when using certain Skills - Some attacks cancel if lacking Ammo - When spent, inflict 2 Spore on target On Hit |
+| `[spore_round_[buckshot]]` | Spore Round [BuckShot] | - Unique Ammo - Max Stack: 6 - Spent when using certain Skills - Some attacks cancel if lacking Ammo - When spent, inflict 3 Spore on target On Hit |
+| `[strategic_r&r_mode]` | Strategic R&R Mode | - Turn End: Recover from Stagger and Retreat from the Encounter (excluding forced Staggers; does not count as death) · In Chain Battles, give this unit's Slots to a Substituted unit and move to the rearmost place in the Backup units' Deployment order (escape from the Encounter entirely if there are no other Backup Units remaining to swap places with next turn. When returning to battle, return in the order they retreated in) · When returning to battle, return with the same amount of HP and SP this unit had when it retreated, and eliminate all effects on self save for a select few (if this unit had less than 0 SP when retreating, reset SP to 0 instead) |
+| `[surgery]` | Makeshift Surgery | Die when Count reaches 5. Reduce Max HP by 20% (per Count). Deal +20% (per Count) damage. At the start of the turn, gain Haste by the effect's Count. |
+| `[target_spotted]` | Target Spotted | If unit A applied this effect to unit B: Unit B follows up with an Unopposed Attack with its Skill 2 against the same enemy unit A attacked with its Skill. Activates at Unit A's Attack End. - The Skill used due to this effect does not affect Unit B's upcoming Skills list. |
+| `[the_living_&_the_departed]` | The Living & The Departed | - Unique Ammo - The sum of Potency and Count maxes out at 20. - Consumed for certain Skills. - Whether The Living(Potency) or The Departed(Count) will be consumed for each shot is randomly determined - Some attacks cancel if this unit runs out of ammo. |
+| `[the_prescript's_target]` | The Prescript's Target | - Take +10% damage from The Index units - This effect is applied to a single target every turn regardless of the number of The Index units deployed |
+| `[tianjiu_star's_blade]` | Tianjiu Star's Blade | - Max Stack: 20 - At 10+ Stack: at Turn End, gain 1 Haste next turn - Used for certain Skills |
+| `[tigermark_round]` | Tigermark Round | - Unique Ammo - At 8+ (cumulative sum of Tigermark Rounds and Savage Tigermark Rounds spent), gain Shin (心) - Tiantui Star \[天退星\] instead of Tiantui Star \[天退星\] from this unit's Passive · Cumulative Rounds spent: X - Max Capacity: 12 |
+| `[tiny_and_sharp_nails]` | Tiny and Sharp Nails | - Max Stack: 30 |
+| `[torn_memory]` | Torn Memory | - Max Value: 7 - Used for certain Skills |
+| `[total_bloodfeast_consumed]` | Total Bloodfeast Consumed | - Max Value: 999 - Displays the total amount of Bloodfeast consumed in this Encounter |
+| `[tremor_identity]` | Tremor Identity |  |
+| `[unbreakable_coin]` | Unbreakable Coin | - This Coin does not break upon Clash Lose. - If an Attack Skill has this Coin, attack with this Coin after getting hit. - Upon Clash Lose, fix the Coin Power of the unbroken Coin to 1 |
+| `[unfocused_volley]` | Unfocused Volley | - When this Skill flips Coins, each Coin flips against a random enemy among its targets · The first Coin always targets the main target · All 'On Hit' effects and all damage dealt by each Coin are inflicted only against the random target the Coin selected |
+| `[viewing_the_tableau]` | Viewing the Tableau | - If The House of Spiders: The Ring Apprentice Faust is on the field, gain 2 Protection at Turn Start - Turn End: Lose 2 Stack |
+| `[volatile_passion]` | Volatile Passion | - On Hit, inflict 1 Burn - If the main target has Burn, Final Power +1 - When hit, if this unit had a Defense Skill chained at Combat Start, inflict 1 Burn per hit against the attacker for the turn - Turn End: lose (# of turns spent in Volatile E.G.O state x 5) SP. (Max SP Loss: 40) |
+| `[weathered_pride]` | Weathered Pride | - Max Stack: 999 - Can only be gained up to 500 Stacks per turn |
+| `[your_will_guides_my_blade.]` | Your Will Guides My Blade | - If unit A applies this effect to unit B: Unit B follows up with an Unopposed Attack with its Skill 1 against the same enemy unit A attacked with its Skill. Activates at unit A's Skill Attack End. - The Skill used as an Assist Attack does not affect Unit B's upcoming Skills list. |

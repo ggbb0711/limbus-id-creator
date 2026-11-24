@@ -69,15 +69,19 @@ function findKeywordKey(el: Element, matchList: KeywordMap, byHtml: Map<string, 
     return byName && Object.hasOwn(matchList, byName) ? byName : null
 }
 
-export const keywordKeyOf = (el: Element, matchList: KeywordMap): string | null =>
-    findKeywordKey(el, matchList, keysByHtml(matchList))
+export function keywordKeyFinder(matchList: KeywordMap): (el: Element) => string | null {
+    const byHtml = keysByHtml(matchList)
+    return el => findKeywordKey(el, matchList, byHtml)
+}
+
+export const keywordKeyOf = (el: Element, matchList: KeywordMap): string | null => keywordKeyFinder(matchList)(el)
 
 export function htmlToKeywordText(html: string, matchList: KeywordMap): string {
     const template = document.createElement("template")
     template.innerHTML = html
-    const byHtml = keysByHtml(matchList)
+    const findKey = keywordKeyFinder(matchList)
     return toPlainText(template.content, el => {
-        const key = findKeywordKey(el, matchList, byHtml)
+        const key = findKey(el)
         return key ? `[${key}]` : statusEffectName(el)
     })
 }

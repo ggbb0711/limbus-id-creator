@@ -1,8 +1,10 @@
 const fs = require("fs/promises")
 const axios = require('axios')
 const sharp = require('sharp')
+const { STATUSES_DIR } = require('./constants')
+const { updateBlog } = require('./updateBlog')
 
-const baseStatusUrl = "../src/features/cardCreator/utils/keywords/baseStatusEffects/statuses"
+const baseStatusUrl = STATUSES_DIR
 const baseDownloadUrlFolder = "../public/Images/status-effect"
 
 
@@ -25,13 +27,11 @@ async function downloadImages(newStatuses){
             await new Promise(resolve => setTimeout(resolve, 5000)); 
             const response = await axios.get(status.downloadUrl, { responseType: 'arraybuffer' });
             const imageBuffer = Buffer.from(response.data, 'binary');
-            const decodedImageName = decodeURIComponent(status.img)
-
-            console.log(`Downloading: ${decodedImageName}...`)
+            console.log(`Downloading: ${status.img}...`)
             await sharp(imageBuffer)
                 .webp()
-                .toFile(`${baseDownloadUrlFolder}/${decodedImageName}.webp`);
-            console.log(`Downloading: ${decodedImageName}, completed`)
+                .toFile(`${baseDownloadUrlFolder}/${status.img}.webp`);
+            console.log(`Downloading: ${status.img}, completed`)
         }
         catch(err){
             console.log(err)
@@ -44,9 +44,9 @@ async function updateSatuses(oldStatuses,newStatuses){
         oldStatuses[status.type][status.nameKey] = status.value
     })
     await Promise.all([
-        fs.writeFile(`${baseStatusUrl}/buff.json`,JSON.stringify(oldStatuses.buff,null,2),'utf-8'),
-        fs.writeFile(`${baseStatusUrl}/debuff.json`,JSON.stringify(oldStatuses.debuff,null,2),'utf-8'),
-        fs.writeFile(`${baseStatusUrl}/neutral.json`,JSON.stringify(oldStatuses.neutral,null,2),'utf-8')
+        fs.writeFile(`${baseStatusUrl}/buff.json`,JSON.stringify(oldStatuses.buff,null,2) + "\n",'utf-8'),
+        fs.writeFile(`${baseStatusUrl}/debuff.json`,JSON.stringify(oldStatuses.debuff,null,2) + "\n",'utf-8'),
+        fs.writeFile(`${baseStatusUrl}/neutral.json`,JSON.stringify(oldStatuses.neutral,null,2) + "\n",'utf-8')
     ])
 }
 
@@ -54,5 +54,6 @@ async function downloadAndUpdate(){
     const newStatuses = JSON.parse(await fs.readFile("temp.json","utf-8"))
     const statuses = await loadingOldStatusData()
     await Promise.all([downloadImages(newStatuses),updateSatuses(statuses,newStatuses)])
+    await updateBlog()
 }
 downloadAndUpdate()
