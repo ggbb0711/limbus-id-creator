@@ -10,6 +10,7 @@ import { readStorage, writeStorage } from "utils/storage";
 import { useAppDispatch } from "stores/AppStore";
 import { useCardActions, useCardSelector } from "features/cardCreator/hooks/useCardInfo";
 import { SkillDetail } from "features/cardCreator/types/SkillDetail";
+import { useSkillActions } from "features/cardCreator/hooks/useSkillActions";
 
 const STORAGE_KEY = "inputPanelWidth"
 
@@ -30,6 +31,7 @@ export default function InputTabContainer({
     const skillDetails = useCardSelector(info => info.skillDetails)
     const sinnerIcon = useCardSelector(info => info.sinnerIcon)
     const addAlert = useAddAlert()
+    const { moveSkill } = useSkillActions()
 
     const [panelWidth, setPanelWidth] = useState(getSavedWidth)
     const [isMobile, setIsMobile] = useState(() => window.matchMedia("(max-width: 768px)").matches)
@@ -100,7 +102,7 @@ export default function InputTabContainer({
 
     return <div className={"input-tab-container"} ref={containerRef} style={containerStyle}>
         <InputTabSide sinnerIcon={sinnerIcon} skillDetails={skillDetails} changeTab={changeActiveTab}
-        activeTab={activeTab} addTab={addTab} resetBtnHandler={resetBtnHandler}></InputTabSide>
+        activeTab={activeTab} addTab={addTab} resetBtnHandler={resetBtnHandler} moveSkill={moveSkill}></InputTabSide>
         {isPanelOpen && <>
             {activeTab === -1
                 ? <InfoStatPage collapsePage={()=>changeActiveTab(-2)}/>

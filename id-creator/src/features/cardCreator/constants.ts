@@ -73,3 +73,8 @@ export const RARITIES: readonly IconOption[] = [1, 2, 3].map(rank => ({
     src: `/Images/rarity/IDNumber${rank}.webp`,
     alt: `Rarity ${rank}`,
 }))
+
+export enum DndItemType {
+    CardSkill = "SinnerSkill",
+    SkillTab = "SkillTab",
+}

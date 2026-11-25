@@ -5,12 +5,11 @@ import { useStatusEffect } from './useStatusEffect'
 import { useCardActions, useCardSelector } from './useCardInfo'
 import { RegisterNumber, useNumberRegister } from './useNumberRegister'
 import { SkillDetail } from 'features/cardCreator/types/SkillDetail'
-import { SkillType } from 'features/cardCreator/types/SkillTypes'
-import { getSkillData } from 'features/cardCreator/skills/skillData'
+import { SkillActionsProps } from 'features/cardCreator/types/SkillActions'
+import { useSkillActions } from './useSkillActions'
 
 interface UseSkillFormReturn<T extends SkillDetail> extends UseFormReturn<T> {
-    deleteSkill: () => void
-    changeSkillType: (newType: SkillType) => void
+    actions: SkillActionsProps
     registerNumber: RegisterNumber<T>
     errors: FieldErrors<T>
     skill: T
@@ -19,7 +18,8 @@ interface UseSkillFormReturn<T extends SkillDetail> extends UseFormReturn<T> {
 
 export function useSkillForm<T extends SkillDetail>(index: number): UseSkillFormReturn<T> {
     const dispatch = useAppDispatch()
-    const { updateSkill, deleteSkill: deleteSkillAction } = useCardActions()
+    const { updateSkill } = useCardActions()
+    const { actionsFor } = useSkillActions()
 
     const skill = useCardSelector(info => info.skillDetails[index]) as T
 
@@ -36,15 +36,11 @@ export function useSkillForm<T extends SkillDetail>(index: number): UseSkillForm
         return () => sub.unsubscribe()
     }, [form.watch, index, updateSkill, dispatch])
 
-    const deleteSkill = () => dispatch(deleteSkillAction(skill.inputId))
-
-    const changeSkillType = (newType: SkillType) => {
-        dispatch(updateSkill({ index, skill: getSkillData(newType).create() }))
-    }
+    const actions = actionsFor(index)
 
     const registerNumber = useNumberRegister(form)
 
     const { errors } = form.formState
 
-    return { ...form, deleteSkill, changeSkillType, registerNumber, errors, skill, keyWordList }
+    return { ...form, actions, registerNumber, errors, skill, keyWordList }
 }

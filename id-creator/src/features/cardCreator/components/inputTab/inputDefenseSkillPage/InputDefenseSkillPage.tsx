@@ -15,7 +15,7 @@ import { useSkillForm } from "features/cardCreator/hooks/useSkillForm";
 import { isCounter } from "features/cardCreator/utils/card/skillIcons";
 
 export default function InputDefenseSkillPage({ index, collapsePage }: { index: number, collapsePage: () => void }): ReactElement {
-    const { register, setValue, watch, deleteSkill, changeSkillType, registerNumber, keyWordList, errors } = useSkillForm<IDefenseSkill>(index)
+    const { register, setValue, watch, actions, registerNumber, keyWordList, errors } = useSkillForm<IDefenseSkill>(index)
 
     const inputId = watch("inputId")
     const skillAffinity = watch("skillAffinity")
@@ -23,11 +23,10 @@ export default function InputDefenseSkillPage({ index, collapsePage }: { index: 
     const skillImage = watch("skillImage")
     const damageType = watch("damageType")
     const defenseType = watch("defenseType")
-    const type = watch("type")
     const skillEffect = watch("skillEffect")
 
-    return <SkillPageShell type={type} className="input-defense-skill-page" style={{ background: `var(--${skillAffinity}-input-page)` }}
-        collapsePage={collapsePage} onChangeType={changeSkillType} onDelete={deleteSkill}>
+    return <SkillPageShell className="input-defense-skill-page" style={{ background: `var(--${skillAffinity}-input-page)` }}
+        collapsePage={collapsePage} actions={actions}>
         <AccordionSection title="Skill Affinity and Type">
             <div className="input-group-container">
                 <div className="input-container">

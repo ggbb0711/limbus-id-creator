@@ -1,44 +1,28 @@
-import React, { CSSProperties, ReactElement, ReactNode, useState } from "react"
+import React, { CSSProperties, ReactElement, ReactNode } from "react"
 import "features/cardCreator/components/inputTab/InputPage.css"
 import ArrowDownIcon from "assets/icons/ArrowDownIcon"
-import DeleteIcon from "assets/icons/DeleteIcon"
-import ConfirmDialog from "components/ui/confirmDialog/ConfirmDialog"
-import ChangeInputType from "features/cardCreator/components/inputTab/components/changeInputType/ChangeInputType"
-import { SKILL_DATA } from "features/cardCreator/skills/skillData"
-import { SkillType } from "features/cardCreator/types/SkillTypes"
 import IconButton from "components/ui/iconButton/IconButton"
+import { SkillActionsDropdown } from "features/cardCreator/components/skillActionsMenu/SkillActionsMenu"
+import { SKILL_DATA } from "features/cardCreator/skills/skillData"
+import { SkillActionsProps } from "features/cardCreator/types/SkillActions"
 
 interface SkillPageShellProps {
-    type: SkillType
     className?: string
     style?: CSSProperties
     collapsePage: () => void
-    onChangeType: (type: SkillType) => void
-    onDelete: () => void
+    actions: SkillActionsProps
     children: ReactNode
 }
 
-export default function SkillPageShell({ type, className = "", style, collapsePage, onChangeType, onDelete, children }: SkillPageShellProps): ReactElement {
-    const [isConfirming, setIsConfirming] = useState(false)
-
+export default function SkillPageShell({ className = "", style, collapsePage, actions, children }: SkillPageShellProps): ReactElement {
     return <div className={`input-page ${className}`} style={style}>
         <div className="input-page-icon-container">
+            <SkillActionsDropdown {...actions}/>
             <IconButton className="collasp-icon" label="Collapse the input page" onClick={collapsePage}>
                 <ArrowDownIcon/>
             </IconButton>
         </div>
-        <div className="input-group-container">
-            <label className="input-label">Change skill:</label>
-            <ChangeInputType changeSkillType={onChangeType} type={type}/>
-        </div>
+        <h2 className="input-page-type">{SKILL_DATA[actions.type].label}</h2>
         {children}
-        <button className="main-button delete-skill-button" onClick={() => setIsConfirming(true)}>
-            <DeleteIcon/> Delete the skill
-        </button>
-        {isConfirming && <ConfirmDialog
-            message={`Are you sure you want to delete this ${SKILL_DATA[type].label}?`}
-            onConfirm={() => { setIsConfirming(false); onDelete() }}
-            onCancel={() => setIsConfirming(false)}
-        />}
     </div>
 }

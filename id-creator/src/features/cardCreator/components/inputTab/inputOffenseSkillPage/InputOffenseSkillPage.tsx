@@ -13,18 +13,17 @@ import EffectEditorField from "features/cardCreator/components/shared/EffectEdit
 import { useSkillForm } from "features/cardCreator/hooks/useSkillForm";
 
 export default function InputOffenseSkillPage({ index, collapsePage }: { index: number, collapsePage: () => void }): ReactElement {
-    const { register, setValue, watch, deleteSkill, changeSkillType, registerNumber, keyWordList, errors } = useSkillForm<IOffenseSkill>(index)
+    const { register, setValue, watch, actions, registerNumber, keyWordList, errors } = useSkillForm<IOffenseSkill>(index)
 
     const skillAffinity = watch("skillAffinity")
     const skillFrame = watch("skillFrame")
     const skillImage = watch("skillImage")
     const damageType = watch("damageType")
     const inputId = watch("inputId")
-    const type = watch("type")
     const skillEffect = watch("skillEffect")
 
-    return <SkillPageShell type={type} className="input-offense-skill-page" style={{ background: `var(--${skillAffinity}-input-page)` }}
-        collapsePage={collapsePage} onChangeType={changeSkillType} onDelete={deleteSkill}>
+    return <SkillPageShell className="input-offense-skill-page" style={{ background: `var(--${skillAffinity}-input-page)` }}
+        collapsePage={collapsePage} actions={actions}>
         <AccordionSection title="Skill Affinity and Type">
             <div className="input-group-container">
                 <div className="input-container">

@@ -1,0 +1,16 @@
+.skill-actions-button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    background: none;
+    border: 1px solid transparent;
+    fill: white;
+    cursor: pointer;
+}
+
+.skill-actions-button:hover,
+.skill-actions-button[data-state="open"]{
+    fill: var(--hover-border-color);
+    border-color: var(--hover-border-color);
+}

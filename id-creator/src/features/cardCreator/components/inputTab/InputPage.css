@@ -102,11 +102,11 @@
     margin-top: 2px;
 }
 
-.delete-skill-button{
-    width: 100%;
-    margin-top: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
+.input-page-type{
+    margin: 0 0 8px;
+    padding-right: 64px;
+    font-family: var(--font-mikodacs), var(--font-rubik), sans-serif;
+    font-size: 20px;
+    font-weight: normal;
+    color: var(--white-skin-color);
 }
