@@ -36,6 +36,18 @@
     border: 1px solid var(--hover-border-color);
 }
 
+.input-tab-side.dragging{
+    opacity: 0.35;
+}
+
+.input-tab-side.drop-target{
+    box-shadow: 0 0 0 2px var(--hover-border-color);
+}
+
+.input-tab-side.drag-preview{
+    border: 1px solid var(--hover-border-color);
+}
+
 .input-tab-delete-icon{
     width: 100%;
     height: 100%;

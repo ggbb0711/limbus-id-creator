@@ -9,12 +9,11 @@ import EffectEditorField from "features/cardCreator/components/shared/EffectEdit
 import { useSkillForm } from "features/cardCreator/hooks/useSkillForm";
 
 export default function InputPassivePage({ index, collapsePage }: { index: number, collapsePage: () => void }): ReactElement {
-    const { register, setValue, watch, deleteSkill, changeSkillType, registerNumber, keyWordList } = useSkillForm<IPassiveSkill>(index)
+    const { register, setValue, watch, actions, registerNumber, keyWordList } = useSkillForm<IPassiveSkill>(index)
     const inputId = watch("inputId")
-    const type = watch("type")
     const skillEffect = watch("skillEffect")
 
-    return <SkillPageShell type={type} className="input-passive-page" collapsePage={collapsePage} onChangeType={changeSkillType} onDelete={deleteSkill}>
+    return <SkillPageShell className="input-passive-page" collapsePage={collapsePage} actions={actions}>
         <AccordionSection title="Passive Requirements">
             <p className="input-label">Sin Own</p>
             <SinNumberInputs<IPassiveSkill> field="reqOwn" registerNumber={registerNumber} idSuffix={`own_${inputId}`} containerClassName="center-element-vertically"/>

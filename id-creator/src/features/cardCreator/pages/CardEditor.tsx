@@ -14,6 +14,7 @@ import { usePersistCurrentCard } from 'features/cardCreator/hooks/usePersistCurr
 import { useAppDispatch, useAppSelector } from 'stores/AppStore';
 import { StatusEffectPopupProvider } from 'features/cardCreator/contexts/StatusEffectPopupContext';
 import SectionErrorBoundary from "components/errorBoundary/SectionErrorBoundary";
+import { ActiveTabContext } from 'features/cardCreator/contexts/ActiveTabContext';
 
 export default function CardEditor({ editor }: { editor: CardEditorDefinition }): ReactElement {
     const dispatch = useAppDispatch()
@@ -29,6 +30,7 @@ export default function CardEditor({ editor }: { editor: CardEditorDefinition })
     }
 
     return <CardEditorContext.Provider value={editor}>
+        <ActiveTabContext.Provider value={setActiveTab}>
         <SettingMenu/>
         <DragAndDroppableSkillPreviewLayer/>
         <StatusEffectPopupProvider skills={skillDetails}>
@@ -48,5 +50,6 @@ export default function CardEditor({ editor }: { editor: CardEditorDefinition })
             </div>
         </StatusEffectPopupProvider>
         <CardMakerFooter/>
+        </ActiveTabContext.Provider>
     </CardEditorContext.Provider>
 }

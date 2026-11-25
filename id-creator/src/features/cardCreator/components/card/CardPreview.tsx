@@ -3,7 +3,7 @@ import './styles/Card.css'
 import SkillDetailContainer from "./components/skillDetailContainer/SkillDetailContainer";
 import CardZoomShell from "./components/cardZoomShell/CardZoomShell";
 import { useAppSelector } from "stores/AppStore";
-import { useMoveSkill } from "features/cardCreator/hooks/useMoveSkill";
+import { useSkillActions } from "features/cardCreator/hooks/useSkillActions";
 import { useCardEditor } from "features/cardCreator/editors/CardEditorContext";
 
 interface CardPreviewProps {
@@ -14,13 +14,13 @@ const CardPreview = forwardRef<HTMLDivElement, CardPreviewProps>(({ changeActive
     const editor = useCardEditor()
     const info = useAppSelector(editor.selectInfo)
     const [isDragging, setIsDragging] = useState(false)
-    const moveSkill = useMoveSkill(changeActiveTab)
+    const skillActions = useSkillActions()
     const { PreviewBody } = editor
 
     const isVertical = info.cardLayout === "Vertical"
     const sizeStyle = isVertical ? { width: info.cardWidth } : { height: info.cardHeight }
 
-    const skills = <SkillDetailContainer moveSkill={moveSkill} skillDetails={info.skillDetails} draggingHandler={setIsDragging} changeActiveTab={changeActiveTab} layout={info.cardLayout} cardHeight={info.cardHeight}/>
+    const skills = <SkillDetailContainer skillActions={skillActions} skillDetails={info.skillDetails} draggingHandler={setIsDragging} changeActiveTab={changeActiveTab} layout={info.cardLayout} cardHeight={info.cardHeight}/>
 
     return (
         <CardZoomShell isDragging={isDragging}>

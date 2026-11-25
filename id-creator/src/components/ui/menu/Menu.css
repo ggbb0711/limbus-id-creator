@@ -1,0 +1,88 @@
+.menu-content{
+    min-width: 190px;
+    padding: 4px;
+    background-color: var(--red-brown);
+    border: 2px solid var(--brown-pale);
+    border-radius: 4px;
+    box-shadow: 2px 2px 23px -4px rgba(0, 0, 0, 0.75);
+    color: var(--white-skin-color);
+    fill: var(--white-skin-color);
+    font-family: var(--font-rubik), sans-serif;
+    font-size: 14px;
+    z-index: 1000;
+}
+
+.menu-item{
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    background-color: black;
+    border: 1px solid var(--brown-pale);
+    cursor: pointer;
+    outline: none;
+    user-select: none;
+    transition: all .1s;
+}
+
+.menu-item + .menu-item{
+    margin-top: -1px;
+}
+
+.menu-item[data-highlighted],
+.menu-item[data-state="open"]{
+    z-index: 1;
+    border-color: var(--hover-border-color);
+    color: white;
+    fill: white;
+}
+
+.menu-item[data-disabled]{
+    color: rgba(211, 183, 148, 0.4);
+    fill: rgba(211, 183, 148, 0.4);
+    cursor: not-allowed;
+}
+
+.menu-item.danger{
+    color: #ff6b5e;
+    fill: #ff6b5e;
+}
+
+.menu-item.danger[data-highlighted]{
+    background-color: var(--Wrath-input-page);
+    border-color: red;
+    color: white;
+    fill: white;
+}
+
+.menu-sub-trigger::after{
+    content: "";
+    margin-left: auto;
+    width: 6px;
+    height: 6px;
+    border-top: 2px solid currentColor;
+    border-right: 2px solid currentColor;
+    transform: rotate(45deg);
+}
+
+.menu-separator{
+    height: 4px;
+}
+
+.menu-item-check{
+    width: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-item-icon{
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.menu-item[data-disabled] .menu-item-icon{
+    opacity: 0.4;
+}

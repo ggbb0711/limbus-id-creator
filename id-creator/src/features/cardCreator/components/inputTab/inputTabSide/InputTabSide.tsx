@@ -1,22 +1,58 @@
 import { appConfig } from "config/env.client";
 import AddIcon from "assets/icons/AddIcon";
-import { useState } from "react";
+import React, { ReactElement, useState } from "react";
+import { useDrag, useDrop } from "react-dnd";
 import "./InputTabSide.css"
 import ResetIcon from "assets/icons/ResetIcon";
 import { SkillDetail, isActiveSkill } from "features/cardCreator/types/SkillDetail";
 import { SKILL_TYPES } from "features/cardCreator/types/SkillTypes";
 import { SKILL_DATA, getSkillData } from "features/cardCreator/skills/skillData";
+import { DndItemType } from "features/cardCreator/constants";
+
+interface SkillTabDragItem {
+    skill: SkillDetail
+}
+
+function SkillTab({skill, isActive, onSelect, onDropSkill}:{
+        skill:SkillDetail,
+        isActive:boolean,
+        onSelect:()=>void,
+        onDropSkill:(fromId:string)=>void
+    }):ReactElement{
+    const skillData = getSkillData(skill.type)
+
+    const [{isDragging},drag] = useDrag(()=>({
+        type:DndItemType.SkillTab,
+        item:{skill},
+        collect:monitor=>({isDragging:monitor.isDragging()})
+    }),[skill])
+
+    const [{isOver},drop] = useDrop(()=>({
+        accept:DndItemType.SkillTab,
+        drop:(item:SkillTabDragItem)=>onDropSkill(item.skill.inputId),
+        collect:monitor=>({isOver:monitor.isOver() && monitor.getItem<SkillTabDragItem>()?.skill.inputId !== skill.inputId})
+    }),[onDropSkill, skill.inputId])
+
+    return <li ref={node => { drag(drop(node)) }} className={`input-tab-side ${isActive?"active":""} ${isDragging?"dragging":""} ${isOver?"drop-target":""}`}
+        onClick={onSelect} style={{
+            background:`var(--${isActiveSkill(skill)?skill.skillAffinity:"None"}-input-page)`
+        }}>
+        <img src={skillData.tabIcon(skill)} alt={skillData.tabLabel} crossOrigin="anonymous" draggable={false}/>
+    </li>
+}
 
 export default function InputTabSide({sinnerIcon,
     skillDetails,
     changeTab,
     activeTab,
     addTab,
-    resetBtnHandler}:{sinnerIcon:string,
+    resetBtnHandler,
+    moveSkill}:{sinnerIcon:string,
         skillDetails:SkillDetail[],changeTab:(newTab:number)=>void,
         activeTab:number,
         addTab:(skill:SkillDetail)=>void,
-        resetBtnHandler:()=>void}
+        resetBtnHandler:()=>void,
+        moveSkill:(fromId:string,toId:string)=>void}
     ){
     
     const [isAdding,setIsAdding] = useState(false)
@@ -34,17 +70,11 @@ export default function InputTabSide({sinnerIcon,
                 }}>
                 <img src={sinnerIcon} alt="Card info" crossOrigin="anonymous" />
             </li>
-            {skillDetails.map((skill,i)=>{
-                const skillData = getSkillData(skill.type)
-                const tabIcon = skillData.tabIcon(skill)
-
-                return <li className={`input-tab-side ${activeTab===i?"active":""}`} key={skill.inputId} 
-                onClick={()=>changeTab(i)} style={{
-                        background:`var(--${isActiveSkill(skill)?skill.skillAffinity:"None"}-input-page)`
-                    }}>
-                    <img src={tabIcon} alt={skillData.tabLabel} crossOrigin="anonymous"/>
-                </li>
-            })}
+            {skillDetails.map((skill,i)=>
+                <SkillTab key={skill.inputId} skill={skill} isActive={activeTab===i}
+                    onSelect={()=>changeTab(i)}
+                    onDropSkill={fromId=>moveSkill(fromId, skill.inputId)}/>
+            )}
         </ul>
         
         <li className="input-tab-side icon-side reset-icon-side"

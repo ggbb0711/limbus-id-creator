@@ -12,3 +12,6 @@ A document for the coding standard of the project
 
 ### Do not use type 'any':
     - When implementing code on the frontend do not use type 'any', instead try to create or reuse any type that is fit for the situation
+
+### Styling:
+    - Please use the existing styling and not make your own, even when trying to use a 3rd party library, please try a way to style them like our own

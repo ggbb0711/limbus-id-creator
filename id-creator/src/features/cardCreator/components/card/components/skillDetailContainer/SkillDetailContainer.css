@@ -23,3 +23,7 @@
     width: 100%;
     gap: 28px 40px;
 }
+
+.skill-context-trigger{
+    -webkit-touch-callout: none;
+}

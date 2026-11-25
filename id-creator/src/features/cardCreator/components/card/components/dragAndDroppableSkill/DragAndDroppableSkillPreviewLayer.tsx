@@ -2,17 +2,22 @@
 import React, { CSSProperties } from "react";
 import { useDragLayer, XYCoord } from "react-dnd";
 import SkillCardSection from "../skillCardSection/SkillCardSection";
+import { DndItemType } from "features/cardCreator/constants";
+import { getSkillData } from "features/cardCreator/skills/skillData";
+import { SkillDetail, isActiveSkill } from "features/cardCreator/types/SkillDetail";
 
 
 export default function DragAndDroppableSkillPreviewLayer(){
     const {
         item,
+        itemType,
         isDragging,
         initialCursorOffset,
         initialFileOffset,
         currentFileOffset,
       } = useDragLayer((monitor) => ({
         item: monitor.getItem(),
+        itemType: monitor.getItemType(),
         initialCursorOffset: monitor.getInitialClientOffset(),
         initialFileOffset: monitor.getInitialSourceClientOffset(),
         currentFileOffset: monitor.getSourceClientOffset(),
@@ -20,6 +25,21 @@ export default function DragAndDroppableSkillPreviewLayer(){
       }));
     
       if (!isDragging) {
+        return null;
+      }
+
+      if (itemType === DndItemType.SkillTab) {
+        const skillData = getSkillData(item.skill.type)
+        return (
+          <div style={layerStyles}>
+            <div className="input-tab-side drag-preview" style={getTabStyles(currentFileOffset, item.skill)}>
+              <img src={skillData.tabIcon(item.skill)} alt={skillData.tabLabel} crossOrigin="anonymous"/>
+            </div>
+          </div>
+        );
+      }
+
+      if (itemType !== DndItemType.CardSkill) {
         return null;
       }
 
@@ -48,6 +68,17 @@ const layerStyles: CSSProperties = {
     top: 0,
   };
   
+  function getTabStyles(currentOffset: XYCoord | null, skill: SkillDetail): CSSProperties {
+    if (!currentOffset) {
+      return { display: "none" };
+    }
+    return {
+      transform: `translate(${currentOffset.x}px, ${currentOffset.y}px)`,
+      background: `var(--${isActiveSkill(skill) ? skill.skillAffinity : "None"}-input-page)`,
+      opacity: 0.85,
+    };
+  }
+
   function getItemStyles(
     initialCursorOffset: XYCoord | null,
     initialOffset: XYCoord | null,

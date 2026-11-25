@@ -1,20 +1,28 @@
 import { fireEvent, render, screen } from '@testing-library/react'
+import { SkillActionsProps } from 'features/cardCreator/types/SkillActions'
 import SkillPageShell from './SkillPageShell'
 
-jest.mock('features/cardCreator/components/inputTab/components/changeInputType/ChangeInputType', () => ({
+jest.mock('features/cardCreator/components/skillActionsMenu/SkillActionsMenu', () => ({
     __esModule: true,
-    default: ({ type }: { type: string }) => <p>type:{type}</p>,
+    SkillActionsDropdown: ({ type, canMoveUp }: SkillActionsProps) => <p>actions:{type}:{String(canMoveUp)}</p>,
 }))
 
 function setup() {
-    const onDelete = jest.fn()
     const collapsePage = jest.fn()
+    const actions: SkillActionsProps = {
+        type: 'DefenseSkill',
+        canMoveUp: false,
+        canMoveDown: true,
+        onChangeType: jest.fn(),
+        onMove: jest.fn(),
+        onDelete: jest.fn(),
+    }
     const { container } = render(
-        <SkillPageShell type="DefenseSkill" className="extra" collapsePage={collapsePage} onChangeType={jest.fn()} onDelete={onDelete}>
+        <SkillPageShell className="extra" collapsePage={collapsePage} actions={actions}>
             <p>child field</p>
         </SkillPageShell>
     )
-    return { onDelete, collapsePage, container }
+    return { collapsePage, container }
 }
 
 describe('SkillPageShell', () => {
@@ -24,30 +32,24 @@ describe('SkillPageShell', () => {
         expect(container.firstChild).toHaveClass('input-page', 'extra')
     })
 
-    it('asks for confirmation using the registry label', () => {
+    it('shows the skill type label from the registry', () => {
         setup()
-        fireEvent.click(screen.getByText(/Delete the skill/))
-        expect(screen.getByText('Are you sure you want to delete this Defense skill?')).toBeInTheDocument()
+        expect(screen.getByRole('heading', { name: 'Defense skill' })).toBeInTheDocument()
     })
 
-    it('does not delete when cancelled', () => {
-        const { onDelete } = setup()
-        fireEvent.click(screen.getByText(/Delete the skill/))
-        fireEvent.click(screen.getByRole('button', { name: 'Cancel' }))
-        expect(onDelete).not.toHaveBeenCalled()
-        expect(screen.queryByText(/Are you sure/)).not.toBeInTheDocument()
+    it('puts the skill actions menu in the header', () => {
+        const { container } = setup()
+        expect(container.querySelector('.input-page-icon-container')).toHaveTextContent('actions:DefenseSkill:false')
     })
 
-    it('deletes when confirmed', () => {
-        const { onDelete } = setup()
-        fireEvent.click(screen.getByText(/Delete the skill/))
-        fireEvent.click(screen.getByRole('button', { name: 'Confirm' }))
-        expect(onDelete).toHaveBeenCalledTimes(1)
+    it('no longer has a delete button at the bottom', () => {
+        setup()
+        expect(screen.queryByText(/Delete the skill/)).not.toBeInTheDocument()
     })
 
     it('collapses the page', () => {
-        const { collapsePage, container } = setup()
-        fireEvent.click(container.querySelector('.collasp-icon') as Element)
+        const { collapsePage } = setup()
+        fireEvent.click(screen.getByRole('button', { name: 'Collapse the input page' }))
         expect(collapsePage).toHaveBeenCalled()
     })
 })

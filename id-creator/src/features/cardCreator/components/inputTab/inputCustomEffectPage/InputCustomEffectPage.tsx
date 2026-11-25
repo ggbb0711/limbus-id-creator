@@ -11,14 +11,13 @@ import ColorPicker from "features/cardCreator/components/colorPicker/ColorPicker
 import { CUSTOM_EFFECT_COLOR_GROUPS } from "features/cardCreator/components/colorPicker/ColorPresets";
 
 export default function InputCustomEffectPage({ index, collapsePage }: { index: number, collapsePage: () => void }): ReactElement {
-    const { register, setValue, watch, deleteSkill, changeSkillType, keyWordList } = useSkillForm<ICustomEffect>(index)
+    const { register, setValue, watch, actions, keyWordList } = useSkillForm<ICustomEffect>(index)
     const inputId = watch("inputId")
     const effectColor = watch("effectColor")
     const customImg = watch("customImg")
-    const type = watch("type")
     const effect = watch("effect")
 
-    return <SkillPageShell type={type} collapsePage={collapsePage} onChangeType={changeSkillType} onDelete={deleteSkill}>
+    return <SkillPageShell collapsePage={collapsePage} actions={actions}>
         <AccordionSection title="Effect Style">
             <div className="input-group-container">
                 <div className="input-container">

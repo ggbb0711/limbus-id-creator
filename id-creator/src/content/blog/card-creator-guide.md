@@ -10,8 +10,8 @@ This guide covers both the [Identity Creator](/creator/identity) and the [E.G.O 
 
 The editor has three parts:
 
-- **Input tabs (left).** The narrow column of icons switches between tabs. The first tab is always the stats tab, and each tab after it is one entry on the card (a skill, passive or effect). The panel can be collapsed, and you can drag its edge to resize it.
-- **Card preview (right).** A live preview of the card. You can drag skills on the preview to reorder them.
+- **Input tabs (left).** The narrow column of icons switches between tabs. The first tab is always the stats tab, and each tab after it is one entry on the card (a skill, passive or effect). Drag an entry's tab onto another tab to reorder the entries. The panel can be collapsed, and you can drag its edge to resize it.
+- **Card preview (right).** A live preview of the card. You can drag skills on the preview to reorder them, and right-click a skill (or press and hold it on a phone) to open its actions menu.
 - **Footer (bottom).** **Download** exports the card as an image, and **Setting/Saves** opens the save menu and custom keywords.
 
 Tab controls:
@@ -20,7 +20,23 @@ Tab controls:
 | --- | --- |
 | `+` | Adds a new entry: offense skill, defense skill, passive, custom effect or mental effect. A card can hold up to 40 entries. |
 | Reset | Resets the whole card to the default, after a confirmation. |
-| Change skill | A dropdown at the top of every entry that converts it to a different type (see [Entry types](#entry-types)). |
+| Skill actions | The `⋮` button at the top of every entry. It opens a menu to change the entry's type, move it up or down, or delete it (see [Managing entries](#managing-entries)). |
+
+### Managing entries
+
+Every entry has the same actions, and you can reach them in three ways:
+
+- **Skill actions menu.** Open an entry's tab and click the `⋮` button at the top.
+- **Right-click on the card preview.** Right-click a skill on the preview. On a phone or tablet, press and hold the skill until the menu opens. Right-clicking does not switch the open tab.
+- **Dragging.** Drag a tab in the left column, or a skill on the preview, onto another one to move it there. On a phone or tablet, hold the tab or skill for a moment before dragging so the column can still scroll.
+
+| Action | What it does |
+| --- | --- |
+| Change type | Converts the entry to another type. The current type is checked and can't be picked. |
+| Move up / Move down | Swaps the entry with the one before or after it. Unavailable on the first or last entry. |
+| Delete | Removes the entry after a confirmation. |
+
+When you move or delete an entry, the open tab stays on the entry you were editing.
 
 ## Stats tab
 
@@ -55,7 +71,7 @@ A new E.G.O starts with three entries: **Awakening**, **Corrosion** and a **Pass
 
 ## Entry types
 
-Every entry after the stats tab is one of five types. Switch between them with the **Change skill** dropdown. Changing the type replaces the entry with a blank entry of the new type, so pick the type before filling it in. Each entry also has a delete button to remove it from the card.
+Every entry after the stats tab is one of five types. Switch between them with **Change type** in the [skill actions menu](#managing-entries). Changing the type replaces the entry with a blank entry of the new type, so pick the type before filling it in. The same menu deletes the entry from the card.
 
 ### Offense skill
 

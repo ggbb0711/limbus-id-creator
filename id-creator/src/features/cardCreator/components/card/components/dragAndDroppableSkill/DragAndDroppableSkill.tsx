@@ -2,6 +2,7 @@ import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import "./DragAndDroppableSkill.css"
 import { SkillDetail } from "features/cardCreator/types/SkillDetail";
+import { DndItemType } from "features/cardCreator/constants";
 
 
 export default function DragAndDroppableSkill({skill,isDraggingHandler,dropHandler,children}:{
@@ -15,7 +16,7 @@ export default function DragAndDroppableSkill({skill,isDraggingHandler,dropHandl
     const [dimensions,setDimensions] = useState({ width: 0, height: 0 })
 
     const [{isDragging},drag] = useDrag(()=>({
-        type:"SinnerSkill",
+        type:DndItemType.CardSkill,
         item:{
             skill,
             skillWidth: dimensions.width,
@@ -28,7 +29,7 @@ export default function DragAndDroppableSkill({skill,isDraggingHandler,dropHandl
         }
     }),[skill,dimensions]) 
     const [{isOver},drop] = useDrop(()=>({
-        accept:"SinnerSkill",
+        accept:DndItemType.CardSkill,
         drop:dropHandler,
         collect(monitor) {
             return {
@@ -60,10 +61,15 @@ export default function DragAndDroppableSkill({skill,isDraggingHandler,dropHandl
     },[ ref?.current?.clientWidth, ref?.current?.clientHeight])
 
     
+    function pausePanning(e: React.MouseEvent){
+        if(e.button !== 0) return
+        isDraggingHandler(true)
+        window.addEventListener("mouseup", () => isDraggingHandler(false), { once: true })
+    }
+
     return (
         <div ref={ref}
-            onMouseDown={()=>isDraggingHandler(true)}
-            onMouseUp={()=>isDraggingHandler(false)}
+            onMouseDown={pausePanning}
             className={isOver?"hover-border":""}
         >
             {children}
